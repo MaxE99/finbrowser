@@ -1,0 +1,13 @@
+.layoutContainer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.firstSegment,
+.secondSegment,
+.thirdSegment {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
