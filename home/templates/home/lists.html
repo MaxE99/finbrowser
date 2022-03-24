@@ -1,0 +1,57 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'home/lists_style.css' %}">
+<title>Lists</title>
+{% endblock %}
+
+<div class="layoutContainer">
+{% block content %}
+{% if lists %}
+{% for list in lists %}
+<div class="browserCategory">{{ list.name }}</div>
+{% for source in list.sources.all %}
+<div class="categoryContainer">
+    <div class="sourceContainer" draggable="true">
+        <div class="iconContainer">
+            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon">
+            <a class="sourceLink" href="{{ source.url }}"></a>
+            <i class="fas fa-times sourceDeleteOptionOff"></i>
+        </div>
+        <div class="sourceNameContainer">{{ source.domain }}</div>
+    </div>
+</div>
+{% endfor %}
+{% endfor %}
+{% endif %}
+</div>
+
+    <!-- <div class="firstSegment">
+        <div class="browserCategory">Favorite Substack Writers</div>
+        <div class="categoryContainer"></div>
+        <div class="browserCategory">Favorite Twitter Accounts</div>
+        <div class="categoryContainer"></div>
+        <div class="browserCategory">Favorite Seeking Alpha Authors</div>
+        <div class="categoryContainer"></div>
+    </div>
+    <div class="secondSegment">
+        <div class="browserCategory">Big Picture</div>
+        <div class="categoryContainer"></div>
+        <div class="browserCategory">Geopolitics</div>
+        <div class="categoryContainer"></div>
+        <div class="browserCategory">Macroeconomics</div>
+        <div class="categoryContainer"></div>
+    </div>
+    <div class="thirdSegment">
+        <div class="browserCategory">Professional Investors</div>
+        <div class="categoryContainer"></div>
+        <div class="browserCategory">Great Storytellers</div>
+        <div class="categoryContainer"></div>
+        <div class="browserCategory">Upcoming Authors</div>
+        <div class="categoryContainer"></div>
+    </div> -->
+
+
+
+{% endblock %}
