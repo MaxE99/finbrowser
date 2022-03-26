@@ -229,7 +229,7 @@ header {
 main {
   display: flex;
   flex-direction: column;
-  width: 95%;
+  width: 85%;
   max-width: 1600px;
   margin: 0px auto 10px;
   min-height: calc(100vh - 95px);
@@ -297,25 +297,30 @@ main {
   display: flex;
   flex-wrap: wrap;
   min-height: 105px;
-  margin: 5px 0 0px;
-  padding: 0 40px;
+  padding: 0 20px;
 }
 
 .sourceContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90px;
-  margin: 0 5px;
-  padding: 5px 0px;
-  overflow-x: hidden;
+  overflow: hidden;
+  width: 100px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: var(--box-shadowScheme);
+  margin: 5px 10px;
+}
+
+.sourceContainer:hover {
+  transform: scale(1.1, 1.1);
 }
 
 .iconContainer {
-  position: relative;
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
 }
 
 .sourcePic {
@@ -330,8 +335,55 @@ main {
   width: 100%;
 }
 
-.sourceNameContainer {
-  font-size: 20px;
+.sourceNameOuterContainer {
+  background: black;
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 2px 0;
+}
+
+.sourceNameInnerContainer {
+  font-size: 17px;
   max-width: 90px;
   overflow: hidden;
+}
+
+.sourceDeleteOptionOn {
+  position: absolute;
+  left: 40px;
+  top: 0;
+  font-size: 15px;
+  padding: 0px 5px;
+  background: var(--neonRed);
+  box-shadow: var(--standardBoxShadow);
+  cursor: pointer;
+  color: white;
+}
+
+.categoryDeleteOptionOn {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  font-size: 30px;
+  padding: 0px 5px;
+  background: var(--neonRed);
+  box-shadow: var(--standardBoxShadow);
+  cursor: pointer;
+}
+
+.categoryDeleteOptionOff,
+.sourceDeleteOptionOff {
+  display: none !important;
+}
+
+h2 {
+  color: var(--primary-fontColor);
+  margin-top: 10px;
+}
+
+.explanation {
+  letter-spacing: 1.1px;
+  text-align: justify;
 }

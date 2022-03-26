@@ -1,13 +1,66 @@
-.layoutContainer {
-  margin-top: 10px;
+.filterBar {
   display: flex;
-  justify-content: space-around;
+  margin: 10px 0;
 }
 
-.firstSegment,
-.secondSegment,
-.thirdSegment {
-  width: 30%;
+select {
+  font-size: 17px;
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 0;
+  outline: 2px solid rgb(226, 230, 234);
+  border-right: 12px solid white;
+  background: white;
+  letter-spacing: 1.1px;
+}
+
+.filterBar .searchWrapper {
+  margin: unset;
+  margin-left: 15px;
+  font-size: 17px;
+  letter-spacing: 1.1px;
+}
+
+.filterBar .searchContainer {
+  height: unset;
+}
+
+.filterBar input {
+  border: 2px solid rgb(226, 230, 234);
+  padding: 10px 40px 10px 15px;
+  border-radius: 10px;
+  font-size: 17px;
+  letter-spacing: 1.1px;
+}
+
+.selectPlaceholder {
+  display: none;
+}
+
+#content,
+#sources {
+  margin-left: 15px;
+}
+
+.createList {
+  cursor: pointer;
+  margin-left: auto;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--primary-fontColor);
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  font-size: 17px;
+  letter-spacing: 1.1px;
+  border-radius: 10px;
+}
+
+.createList:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.createList i {
+  margin-left: 10px;
 }

@@ -1,5 +1,7 @@
 # Django imports
 from django.db import models
+# Local imports
+from home.logic.scrapper import website_scrapping_initiate
 
 
 class Source(models.Model):
@@ -16,6 +18,7 @@ class Source(models.Model):
         self.domain = self.url.replace("https://",
                                        "").replace("www.", "").split('.')[0]
         self.favicon_path = f'home/favicons/{self.domain}.png'
+        website_scrapping_initiate(self.url, self.domain)
         super(Source, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -38,6 +41,17 @@ class List(models.Model):
     name = models.CharField(max_length=100)
     sources = models.ManyToManyField(Source, related_name='lists', blank=True)
     likes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+
+class Sector(models.Model):
+    list_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    sources = models.ManyToManyField(Source,
+                                     related_name='sectors',
+                                     blank=True)
 
     def __str__(self):
         return self.name

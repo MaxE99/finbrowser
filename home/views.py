@@ -3,9 +3,7 @@ from django.shortcuts import redirect, render
 from django.core.cache import cache
 from django.contrib import messages
 # Local imports
-from home.logic.selectors import articles_search, website_scrapping_initiate
-from home.logic.pure_logic import paginator_create
-from home.models import BrowserSource, BrowserCategory, List
+from home.models import BrowserSource, BrowserCategory, List, Sector
 from home.forms import AddSourceForm
 
 
@@ -27,21 +25,13 @@ def browser(request):
             add_source_form.save()
             messages.success(request, f'Source has been added!')
             return redirect('../../home/browser/')
-    # search_settings_form = SearchSettingsForm()
     add_source_form = AddSourceForm()
     browser_sources = BrowserSource.objects.all().order_by('source')
     browser_categories = BrowserCategory.objects.all().order_by('name')
-    # search_articles = articles_search()
-    # search_articles, page = paginator_create(request, search_articles, 18)
     return render(
-        request,
-        'home/browser.html',
-        {
-            # 'search_articles': search_articles,
-            # 'page': page,
+        request, 'home/browser.html', {
             'browser_categories': browser_categories,
             'browser_sources': browser_sources,
-            # 'search_settings_form': search_settings_form,
             'add_source_form': add_source_form,
         })
 
@@ -49,3 +39,8 @@ def browser(request):
 def lists(request):
     lists = List.objects.all()
     return render(request, 'home/lists.html', {'lists': lists})
+
+
+def sectors(request):
+    sectors = Sector.objects.all()
+    return render(request, 'home/sectors.html', {'sectors': sectors})
