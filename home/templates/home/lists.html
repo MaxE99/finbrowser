@@ -6,51 +6,67 @@
 <title>Lists</title>
 {% endblock %}
 
-<div class="layoutContainer">
 {% block content %}
+<h2>Lists</h2>
+<div class="explanation">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim, velit rem quo minus consequuntur aspernatur tempore ipsum minima magnam libero nemo tenetur expedita explicabo et. Optio rem maiores vero distinctio. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos illum delectus dolorem assumenda quidem facere sunt aliquam modi aperiam blanditiis? At laborum reprehenderit repellat quam necessitatibus harum esse deserunt dolore!</div>
+
+<div class="filterBar">
+    <select id="timeframe">
+        <option value="" selected="selected" class="selectPlaceholder">Timeframe</option>
+        <option value="all">All</option>
+        <option value="seven">Last 7 days</option>
+        <option value="thirty">Last 30 days</option>
+        <option value="ninety">Last 90 days</option>
+        <option value="threeHundredSixtyFive">Last 365 days</option>
+    </select>
+    <select id="content">
+        <option value="" selected="selected" class="selectPlaceholder">Content</option>
+        <option value="all">All</option>
+        <option value="articles">Articles</option>
+        <option value="articles">Sources</option>
+    </select>
+    <select id="sources">
+        <option value="" selected="selected" class="selectPlaceholder">Sources</option>
+        <option value="all">All</option>
+        <option value="medium">Medium</option>
+        <option value="seekingalpha">Seeking Alpha</option>
+        <option value="spotify">Spotify</option>
+        <option value="substack">Substack</option>
+        <option value="twitter">Twitter</option>
+        <option value="youtube">YouTube</option>
+    </select>
+    <!-- <button class="filterButton"><i class="fas fa-filter"></i>Filters</button> -->
+    <div class="searchWrapper">
+        <div class="searchContainer">
+            <input id="autocomplete" type="text" class="inputSearch" placeholder="Search term">
+            <i class="fas fa-search"></i>
+        </div>
+        <div id="autocomplete_result"></div>
+    </div>
+    <button class="createList">Create List<i class="fas fa-plus"></i></button>
+</div>
+
+
+
 {% if lists %}
 {% for list in lists %}
 <div class="browserCategory">{{ list.name }}</div>
-{% for source in list.sources.all %}
 <div class="categoryContainer">
+{% for source in list.sources.all %}
     <div class="sourceContainer" draggable="true">
         <div class="iconContainer">
-            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon">
-            <a class="sourceLink" href="{{ source.url }}"></a>
+            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon"> 
             <i class="fas fa-times sourceDeleteOptionOff"></i>
         </div>
-        <div class="sourceNameContainer">{{ source.domain }}</div>
+        <a class="sourceLink" href="{{ source.url }}"></a>
+        <div class="sourceNameOuterContainer">
+            <div class="sourceNameInnerContainer">{{ source.domain }}</div>
+        </div>
     </div>
-</div>
 {% endfor %}
+</div>
 {% endfor %}
 {% endif %}
-</div>
-
-    <!-- <div class="firstSegment">
-        <div class="browserCategory">Favorite Substack Writers</div>
-        <div class="categoryContainer"></div>
-        <div class="browserCategory">Favorite Twitter Accounts</div>
-        <div class="categoryContainer"></div>
-        <div class="browserCategory">Favorite Seeking Alpha Authors</div>
-        <div class="categoryContainer"></div>
-    </div>
-    <div class="secondSegment">
-        <div class="browserCategory">Big Picture</div>
-        <div class="categoryContainer"></div>
-        <div class="browserCategory">Geopolitics</div>
-        <div class="categoryContainer"></div>
-        <div class="browserCategory">Macroeconomics</div>
-        <div class="categoryContainer"></div>
-    </div>
-    <div class="thirdSegment">
-        <div class="browserCategory">Professional Investors</div>
-        <div class="categoryContainer"></div>
-        <div class="browserCategory">Great Storytellers</div>
-        <div class="categoryContainer"></div>
-        <div class="browserCategory">Upcoming Authors</div>
-        <div class="categoryContainer"></div>
-    </div> -->
 
 
 

@@ -1,0 +1,40 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'home/sectors_style.css' %}">
+<title>Sectors</title>
+{% endblock %}
+
+{% block content %}
+<h2>Sectors</h2>
+<div class="explanation">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim, velit rem quo minus
+    consequuntur aspernatur tempore ipsum minima magnam libero nemo tenetur expedita explicabo et. Optio rem maiores
+    vero distinctio. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos illum delectus dolorem
+    assumenda quidem facere sunt aliquam modi aperiam blanditiis? At laborum reprehenderit repellat quam necessitatibus
+    harum esse deserunt dolore!</div>
+
+
+{% if sectors %}
+{% for sector in sectors %}
+<div class="browserCategory">{{ sector.name }}</div>
+<div class="categoryContainer">
+    {% for source in sector.sources.all %}
+    <div class="sourceContainer" draggable="true">
+        <div class="iconContainer">
+            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon">
+            <i class="fas fa-times sourceDeleteOptionOff"></i>
+        </div>
+        <a class="sourceLink" href="{{ source.url }}"></a>
+        <div class="sourceNameOuterContainer">
+            <div class="sourceNameInnerContainer">{{ source.domain }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endfor %}
+{% endif %}
+
+
+
+{% endblock %}
