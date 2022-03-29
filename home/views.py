@@ -2,9 +2,10 @@
 from django.shortcuts import redirect, render
 from django.core.cache import cache
 from django.contrib import messages
+from datetime import timedelta, date
 # Local imports
 from home.models import BrowserSource, BrowserCategory, List, Sector
-from home.forms import AddSourceForm
+from home.forms import AddSourceForm, AddListForm
 
 
 def browser(request):
@@ -18,7 +19,6 @@ def browser(request):
             'search_term': search_term
         })
     elif "addSourcesSettings" in request.POST:
-        print("ACTIVATED")
         add_source_form = AddSourceForm(request.POST)
         if add_source_form.is_valid():
             print("IS VALID")
@@ -37,8 +37,30 @@ def browser(request):
 
 
 def lists(request):
-    lists = List.objects.all()
-    return render(request, 'home/lists.html', {'lists': lists})
+    if 'createListForm' in request.POST:
+        add_list_form = AddListForm(request.POST)
+        if add_list_form.is_valid():
+            add_list_form.save()
+            messages.success(request, f'List has been created!')
+            return redirect('../../home/lists/')
+    timeframe = cache.get('timeframe')
+    content_type = cache.get('content_type')
+    sources = cache.get('sources')
+    if timeframe and timeframe != 'All':
+        lists = List.objects.filter(updated_at__gte=date.today() -
+                                    timedelta(days=int(timeframe)))
+    if content_type and content_type != 'All':
+        lists = lists.filter(content_type=content_type)
+    if sources and sources != 'All':
+        lists = lists.filter(main_website_source=sources)
+    else:
+        lists = List.objects.all()
+    cache.delete_many(['timeframe', 'content_type', 'sources'])
+    add_list_form = AddListForm()
+    return render(request, 'home/lists.html', {
+        'add_list_form': add_list_form,
+        'lists': lists,
+    })
 
 
 def sectors(request):
