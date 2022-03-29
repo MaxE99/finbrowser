@@ -9,7 +9,7 @@ function preparePageForMenu() {
   document.querySelectorAll(".popUpMenu").forEach((menu) => {
     menu.style.display = "none";
   });
-  overlay.style.settings = "0.5";
+  overlay.style.display = "0.5";
 }
 
 // Open settings menu

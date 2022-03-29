@@ -2,7 +2,7 @@
 from django import forms
 from django.forms import ModelForm
 # Local imports
-from home.models import BrowserSource
+from home.models import BrowserSource, List
 
 
 class AddSourceForm(ModelForm):
@@ -10,6 +10,14 @@ class AddSourceForm(ModelForm):
     class Meta:
         model = BrowserSource
         fields = ['source', 'category']
+
+
+class AddListForm(ModelForm):
+
+    class Meta:
+        model = List
+        fields = ['name', 'content_type', 'sources']
+        widgets = {'sources': forms.CheckboxSelectMultiple}
 
 
 # class SearchSettingsForm(forms.Form):

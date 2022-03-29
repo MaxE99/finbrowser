@@ -4,6 +4,15 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'home/lists_style.css' %}">
 <title>Lists</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
+    integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+    integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 {% endblock %}
 
 {% block content %}
@@ -13,11 +22,11 @@
 <div class="filterBar">
     <select id="timeframe">
         <option value="" selected="selected" class="selectPlaceholder">Timeframe</option>
-        <option value="all">All</option>
-        <option value="seven">Last 7 days</option>
-        <option value="thirty">Last 30 days</option>
-        <option value="ninety">Last 90 days</option>
-        <option value="threeHundredSixtyFive">Last 365 days</option>
+        <option value="All">All</option>
+        <option value="7">Last 7 days</option>
+        <option value="30">Last 30 days</option>
+        <option value="90">Last 90 days</option>
+        <option value="365">Last 365 days</option>
     </select>
     <select id="content">
         <option value="" selected="selected" class="selectPlaceholder">Content</option>
@@ -30,23 +39,35 @@
         <option value="all">All</option>
         <option value="medium">Medium</option>
         <option value="seekingalpha">Seeking Alpha</option>
-        <option value="spotify">Spotify</option>
         <option value="substack">Substack</option>
         <option value="twitter">Twitter</option>
         <option value="youtube">YouTube</option>
     </select>
-    <!-- <button class="filterButton"><i class="fas fa-filter"></i>Filters</button> -->
-    <div class="searchWrapper">
+    <div class="ui-widget searchWrapper">
         <div class="searchContainer">
-            <input id="autocomplete" type="text" class="inputSearch" placeholder="Search term">
+            <input id="search" placeholder="Search term">
             <i class="fas fa-search"></i>
         </div>
-        <div id="autocomplete_result"></div>
     </div>
-    <button class="createList">Create List<i class="fas fa-plus"></i></button>
+    <button class="searchButton">Search</button>
+    <button class="createListButton">Create List<i class="fas fa-plus"></i></button>
 </div>
 
 
+<div class="popUpMenu createListMenu">
+    <i class="fas fa-times red closeMenuButton"></i>
+    <div class="menuHeader">Create A New List</div>
+    <form action="" method="POST" class="createListForm">
+        {% csrf_token %}
+        {{ add_list_form }}
+        <div class="popUpButtonContainer">
+            <input name="createListForm" type="submit" class="green saveButton" value="Save">
+            <!-- <div class="red closeButton">Close</div> -->
+        </div>
+    </form>
+</div>
+
+<div class="overlay">
 
 {% if lists %}
 {% for list in lists %}
@@ -68,6 +89,6 @@
 {% endfor %}
 {% endif %}
 
-
-
+</div>
+<script src="{% static 'home/lists_script.js' %}"></script>
 {% endblock %}
