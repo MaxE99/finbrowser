@@ -1,22 +1,19 @@
 # Django imports
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-# Python imports
-from operator import attrgetter
 # Local imports
 from home.logic.services import article_create
 
 
-def paginator_create(request, lists, lists_per_site):
-    lists = sorted(lists, key=attrgetter('likes'), reverse=True)
-    paginator = Paginator(lists, lists_per_site)
+def paginator_create(request, objects, objects_per_site):
+    paginator = Paginator(objects, objects_per_site)
     page = request.GET.get('page')
     try:
-        articles = paginator.page(page)
+        objects = paginator.page(page)
     except PageNotAnInteger:
-        articles = paginator.page(1)
+        objects = paginator.page(1)
     except EmptyPage:
-        articles = paginator.page(paginator.num_pages)
-    return articles, page
+        objects = paginator.page(paginator.num_pages)
+    return objects, page
 
 def timeframe_check(timeframe, time_since_pub, articles, favicon, title, link,
                     pub_date):

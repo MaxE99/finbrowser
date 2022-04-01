@@ -62,3 +62,49 @@ def xml_scrape(source, domain):
     with open(os.path.join(settings.XML_FILE_DIRECTORY, f'{domain}.xml'),
               'wb') as f:
         f.write(website_xml)
+
+
+# Refactor this later this is just to get articles to work on my interface
+# Refactor this later this is just to get articles to work on my interface
+# Refactor this later this is just to get articles to work on my interface
+# Refactor this later this is just to get articles to work on my interface
+# Refactor this later this is just to get articles to work on my interface
+# import html
+
+# def article_components_get(item):
+#     """Goes through xml item and returns title, link and publishing date of article."""
+
+#     # some titles in the xml files have been escaped twice which makes it necesseary to ecape the titles more than once
+#     def double_escaped_string_unescape(title):
+#         unescaped = ""
+#         while unescaped != title:
+#             title = html.unescape(title)
+#             unescaped = html.unescape(title)
+#         return title
+
+#     title = double_escaped_string_unescape(item.find('.//title').text)
+#     link = item.find('.//link').text
+#     pub_date = item.find('.//pubDate').text[:-4]
+#     pub_date = datetime.strptime(pub_date, '%a, %d %b %Y %X')
+#     return title, link, pub_date
+
+# def articles_search():
+#     from home.models import Source, Article
+#     sources = Source.objects.all()
+#     for source in sources:
+#         root, _ = source_data_get(source)
+#         for item in root.findall('.//item'):
+#             try:
+#                 title, link, pub_date = article_components_get(item)
+#                 Article.objects.create(title=title,
+#                                        link=link,
+#                                        pub_date=pub_date,
+#                                        source=source)
+#             except Exception as e:
+#                 print(e)
+
+# Refactor this later this is just to get articles to work on my interface
+# Refactor this later this is just to get articles to work on my interface
+# Refactor this later this is just to get articles to work on my interface
+# Refactor this later this is just to get articles to work on my interface
+# Refactor this later this is just to get articles to work on my interface
