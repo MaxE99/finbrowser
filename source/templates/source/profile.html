@@ -1,11 +1,74 @@
-{% extends 'source/base.html' %}
-{% load static %}
-
-{% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/profile_style.css' %}">
+{% extends 'source/base.html' %} {% load static %} {% block head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'source/profile_style.css' %}"
+/>
 <title>Profile</title>
-{% endblock %}
-
-{% block content %}
-
+{% endblock %} {% block content %}
+<div class="pageContainer">
+  <div class="leftSide">
+    <div class="profileContainer">
+      <img
+        class="profilePicture"
+        src="{% static source.favicon_path %}"
+        alt="favicon"
+      />
+    </div>
+    <div class="containerHeader">Links:</div>
+    <div class="sourceContainer">
+      <div class="iconContainer">
+        <img
+          class="sourcePic"
+          src="{% static 'home/media/substack_logo.png' %}"
+          alt="substack_logo"
+        />
+      </div>
+      <a class="sourceLink" href="{{ source.url }}"></a>
+    </div>
+    <div class="containerHeader aboutHeader">About {{ source.domain }}:</div>
+    <div class="aboutSection">{{ source.about_text }}</div>
+  </div>
+  <div class="rightSide">
+    <div class="rightSideUpperContainer">
+      <h3>{{ source.domain }}</h3>
+      <div class="expertise">Macroenomics | Big Picture</div>
+      <div class="rankingsHeader">Rankings</div>
+      <div class="rankingsContainer">
+        <div class="avgRating">4.4</div>
+        <div class="rating">
+          <input type="radio" name="rating" id="rating-5" />
+          <label for="rating-5"></label>
+          <input type="radio" name="rating" id="rating-4" />
+          <label for="rating-4"></label>
+          <input type="radio" name="rating" id="rating-3" />
+          <label for="rating-3"></label>
+          <input type="radio" name="rating" id="rating-2" />
+          <label for="rating-2"></label>
+          <input type="radio" name="rating" id="rating-1" />
+          <label for="rating-1"></label>
+        </div>
+      </div>
+    </div>
+    <div class="listsAndArticlesWrapper">
+      <div class="articlesUpperContainer">
+        <div class="containerHeader">Latest Articles</div>
+        <div class="articlesContainer">
+          {% if articles %} {% for article in articles %}
+          <div class="article">
+            <img src="{% static 'home/media/substack_logo.png' %}" />
+            <div>{{ article.title }}</div>
+            <a href="{{ article.link }}"></a>
+          </div>
+          {% endfor %} {% endif %}
+        </div>
+        {% include "pagination.html" with page=articles %}
+      </div>
+      <div class="listsContainer">
+        <div class="containerHeader">Lists</div>
+        {% for list in lists %} {{ list.name }} {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}

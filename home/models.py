@@ -23,6 +23,7 @@ class Source(models.Model):
     website = models.CharField(max_length=100,
                                choices=WEBSITE_CHOICES,
                                default='None')
+    about_text = models.TextField(blank=True)
 
     def save(self, *args, **kwargs):
         self.domain = self.url.replace("https://",
@@ -39,6 +40,7 @@ class Article(models.Model):
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=500)
     link = models.URLField(unique=True)
+    pub_date = models.DateField()
     source = models.ForeignKey(Source, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):

@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.core.cache import cache
 from django.contrib import messages
 # Python imports
+from operator import attrgetter
 from datetime import timedelta, date
 # Local imports
 from home.models import BrowserSource, BrowserCategory, List, Sector
@@ -61,6 +62,7 @@ def lists(request):
     cache.delete_many(['timeframe', 'content_type', 'sources'])
     add_list_form = AddListForm()
     results_found = len(lists)
+    lists = sorted(lists, key=attrgetter('likes'), reverse=True)
     lists, page = paginator_create(request, lists, 10)
     return render(
         request, 'home/lists.html', {
