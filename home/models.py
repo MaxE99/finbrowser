@@ -1,9 +1,10 @@
 # Django imports
 from django.db import models
-# Python imports
-from operator import itemgetter
+from django.dispatch import receiver
+from django.db.models.signals import m2m_changed
 # Local imports
 from home.logic.scrapper import website_scrapping_initiate
+from home.logic.services import main_website_source_set
 
 
 class Source(models.Model):
@@ -58,32 +59,22 @@ class List(models.Model):
     main_website_source = models.CharField(max_length=100, blank=True)
 
     def save(self, *args, **kwargs):
-        # If more than 50% of websites are from one source, then set main_website_source to this source
-        list = List.objects.get(list_id=self.list_id)
-        websites = [["Medium", 0], ["Other", 0], ["SeekingAlpha", 0],
-                    ["Substack", 0], ["Twitter", 0], ["YouTube", 0]]
-        for source in list.sources.all():
-            for website in websites:
-                if source.website == website[0]:
-                    website[1] += 1
-                    break
-        websites = sorted(websites, key=itemgetter(1), reverse=True)
-        if (websites[0][1] / len(list.sources.all())) * 100 >= 50:
-            self.main_website_source = websites[0][0]
-        super(List, self).save(*args, **kwargs)
+        if self._state.adding is False:
+            instance = main_website_source_set(self)
+            super(List, instance).save(*args, **kwargs)
+        else:
+            super(List, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
 
 
-# 1.Zu jedem List-Objekt will ich speichern wie viel Prozent Quellen zu entsprechenden Webseiten sind
-# Möglichkeiten:
-# 1.Ich mach das ganze als Property und berechne es als Property jedes mal bei Abfrage
-# => beschissene Idee: So müsste ich jedes mal für jede Liste ne Berechnung durchführen, wenn jemand eine Filtersuche macht
-# 2.Ich muss also sehen, dass ich diese Berechnung jedes mal mache, wenn die List geupdated wird
-# Neue Idee:
-# Char Feld in dem ich Namen der Webseite abspeichere, wenn eine Quelle über 50% ausmacht, ansonsten lasse ich leer
-# Bei jedem speichern in save() Methode überprüfen ob eine Quelle mehr als 50% ausmacht und wenn ja Namen der Webseite abspeichern
+@receiver(m2m_changed, sender=List.sources.through)
+def list_main_website_source_calculate(sender, instance, action, *args,
+                                       **kwargs):
+    if action == "post_add" or action == "post_remove":
+        instance = main_website_source_set(instance)
+        instance.save()
 
 
 class Sector(models.Model):

@@ -1,6 +1,35 @@
 .filterBar {
   display: flex;
   margin: 10px 0;
+  border: 2px solid black;
+}
+
+.selectContainer {
+  border-right: 2px solid black;
+  position: relative;
+  width: 200px;
+}
+
+.selectContainer:last-of-type {
+  border-right: unset;
+}
+
+.searchSelectContainer {
+  width: 350px;
+}
+
+.selectContainer label {
+  margin: 3px 10px;
+  position: absolute;
+  color: var(--primary-fontColor);
+}
+
+.selectContainer select {
+  width: 100%;
+  height: 100%;
+  border-radius: unset;
+  outline: unset;
+  padding: 20px 0px 5px 10px;
 }
 
 select {
@@ -16,38 +45,32 @@ select {
 
 .filterBar .searchWrapper {
   margin: unset;
-  margin-left: 15px;
   font-size: 17px;
   letter-spacing: 1.1px;
+  width: 100%;
+  height: 100%;
 }
 
 .filterBar .searchContainer {
-  height: unset;
+  height: 100%;
 }
 
 .filterBar input {
-  border: 2px solid rgb(226, 230, 234);
+  border: 0;
   padding: 10px 40px 10px 15px;
-  border-radius: 10px;
-  font-size: 17px;
   letter-spacing: 1.1px;
   font-family: unset !important;
-  font-size: 17px !important;
+  width: 100%;
+  height: 100%;
 }
 
 .selectPlaceholder {
   display: none;
 }
 
-#content,
-#sources {
-  margin-left: 15px;
-}
-
 .createListButton,
 .searchButton {
   cursor: pointer;
-  margin-left: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,12 +80,13 @@ select {
   padding: 10px 15px;
   font-size: 17px;
   letter-spacing: 1.1px;
-  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
 }
 
-.searchButton {
-  margin-left: 15px;
-  text-decoration: none;
+.createListButton {
+  background: green;
 }
 
 .createListButton:hover,
@@ -179,4 +203,28 @@ select {
   color: black;
   border: 3px solid black;
   border-radius: 8px;
+}
+
+.lowerFilterBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.searchResultsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.lowerFilterBar h4 {
+  font-size: 25px;
+}
+
+.lowerFilterBar div {
+  font-size: 14px;
+}
+
+.lowerFilterBar div span {
+  color: var(--primary-fontColor);
 }

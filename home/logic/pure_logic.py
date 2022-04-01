@@ -6,9 +6,9 @@ from operator import attrgetter
 from home.logic.services import article_create
 
 
-def paginator_create(request, articles, articles_per_site):
-    articles = sorted(articles, key=attrgetter('pub_date'), reverse=True)
-    paginator = Paginator(articles, articles_per_site)
+def paginator_create(request, lists, lists_per_site):
+    lists = sorted(lists, key=attrgetter('likes'), reverse=True)
+    paginator = Paginator(lists, lists_per_site)
     page = request.GET.get('page')
     try:
         articles = paginator.page(page)

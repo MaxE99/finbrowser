@@ -387,3 +387,33 @@ h2 {
   letter-spacing: 1.1px;
   text-align: justify;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.pagination button,
+.pagination a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  margin: 5px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+
+.pagination button:hover,
+.currentPagination,
+.pagination a:hover,
+.currentPagination {
+  background: var(--primary-fontColor);
+  color: var(--primary-color) !important;
+}
