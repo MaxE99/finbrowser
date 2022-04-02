@@ -1,6 +1,6 @@
 {% extends 'home/base.html' %} {% load static %} {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'home/lists_style.css' %}" />
-<title>Lists</title>
+<title>ResearchBrowser | Lists</title>
 {% endblock %} {% block content %}
 <h2>Lists</h2>
 <div class="explanation">
@@ -26,20 +26,20 @@
   <div class="selectContainer">
     <label for="content">Content</label>
     <select id="content">
-      <option value="all" selected="selected">All</option>
-      <option value="articles">Articles</option>
-      <option value="articles">Sources</option>
+      <option value="All" selected="selected">All</option>
+      <option value="Articles">Articles</option>
+      <option value="Sources">Sources</option>
     </select>
   </div>
   <div class="selectContainer">
     <label for="sources">Sources</label>
     <select id="sources">
-      <option value="all" selected="selected">All</option>
-      <option value="medium">Medium</option>
-      <option value="seekingalpha">Seeking Alpha</option>
-      <option value="substack">Substack</option>
-      <option value="twitter">Twitter</option>
-      <option value="youtube">YouTube</option>
+      <option value="All" selected="selected">All</option>
+      <option value="Medium">Medium</option>
+      <option value="Seeking Alpha">Seeking Alpha</option>
+      <option value="Substack">Substack</option>
+      <option value="Twitter">Twitter</option>
+      <option value="Youtube">YouTube</option>
     </select>
   </div>
   <div class="selectContainer searchSelectContainer">

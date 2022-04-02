@@ -1,16 +1,22 @@
-function load_filters() {
+async function load_filters() {
   try {
     const res = await fetch(`../get_list_filters`, get_fetch_settings("GET"));
     if (!res.ok) {
       showMessage("Error: List filters couldn't be fetched!", "Error");
     } else {
       const context = await res.json();
-      console.log(context);
+      if (context[0] != null) {
+        document.getElementById("timeframe").value = context[0];
+        document.getElementById("content").value = context[1];
+        document.getElementById("sources").value = context[2];
+      }
     }
   } catch (e) {
     showMessage("Error: Network error detected!", "Error");
   }
 }
+
+load_filters();
 
 const createListMenu = document.querySelector(".createListMenu");
 const overlay = document.querySelector(".overlay");
@@ -33,6 +39,7 @@ document
     });
   });
 
+// Autocomplete for search
 document.getElementById("search").addEventListener("keyup", async () => {
   let search_term = document.getElementById("search").value;
   let results_list = document.getElementById("autocomplete_list_results");
@@ -56,9 +63,11 @@ document.getElementById("search").addEventListener("keyup", async () => {
     } catch (e) {
       showMessage("Error: Network error detected!", "Error");
     }
-    window.addEventListener("mousedown", () => {
-      results_list.style.display = "none";
-    });
+    document.onclick = function (e) {
+      if (e.target.id !== "autocomplete_list_results") {
+        results_list.style.display = "none";
+      }
+    };
   } else {
     results_list.style.display = "none";
   }
