@@ -16,6 +16,7 @@
 
 .searchSelectContainer {
   width: 350px;
+  position: relative;
 }
 
 .selectContainer label {
@@ -56,6 +57,7 @@ select {
 }
 
 .filterBar input {
+  font-size: 16px;
   border: 0;
   padding: 10px 40px 10px 15px;
   letter-spacing: 1.1px;
@@ -85,13 +87,16 @@ select {
   text-decoration: none;
 }
 
+.searchButton:hover {
+  background: rgb(26, 112, 239);
+}
+
 .createListButton {
   background: green;
 }
 
-.createListButton:hover,
-.searchButton:hover {
-  transform: scale(1.1, 1.1);
+.createListButton:hover {
+  background: rgb(8, 173, 8);
 }
 
 .createListButton i {
@@ -227,4 +232,21 @@ select {
 
 .lowerFilterBar div span {
   color: var(--primary-fontColor);
+}
+
+#autocomplete_list_results {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  background: white;
+  box-shadow: var(--box-shadowScheme);
+  z-index: 10;
+}
+
+.searchResult {
+  padding: 5px;
+  border-bottom: 1px solid rgb(226, 230, 234);
+  text-decoration: none;
+  color: black;
 }

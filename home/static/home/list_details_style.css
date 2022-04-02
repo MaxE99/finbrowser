@@ -1,0 +1,23 @@
+.nameContainer {
+  position: fixed;
+  width: 85%;
+  z-index: 5;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 25px;
+  border: 3px solid;
+  border-radius: 0 0 40px 40px;
+  color: white;
+  background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
+}
+
+.nameContainer h2 {
+  padding: 10px 0;
+  color: white;
+  margin-top: unset;
+}
+
+.categoryContainer {
+  margin-top: 60px;
+}

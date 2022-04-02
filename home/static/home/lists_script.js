@@ -1,3 +1,17 @@
+function load_filters() {
+  try {
+    const res = await fetch(`../get_list_filters`, get_fetch_settings("GET"));
+    if (!res.ok) {
+      showMessage("Error: List filters couldn't be fetched!", "Error");
+    } else {
+      const context = await res.json();
+      console.log(context);
+    }
+  } catch (e) {
+    showMessage("Error: Network error detected!", "Error");
+  }
+}
+
 const createListMenu = document.querySelector(".createListMenu");
 const overlay = document.querySelector(".overlay");
 
@@ -19,28 +33,35 @@ document
     });
   });
 
-$(function () {
-  $("#search").autocomplete({
-    source: function (request, response) {
-      $.ajax({
-        url: "/home/api/lists/?search=" + request.term,
-        type: "GET",
-        success: function (data) {
-          response(
-            $.map(data, function (item) {
-              return {
-                label: item.name,
-              };
-            })
-          );
-        },
-      });
-    },
-    select: function (event, ui) {
-      $("#search").val(ui.item.label);
-      return false;
-    },
-  });
+document.getElementById("search").addEventListener("keyup", async () => {
+  let search_term = document.getElementById("search").value;
+  let results_list = document.getElementById("autocomplete_list_results");
+  if (search_term && search_term.replaceAll(/\s/g, "") != "") {
+    try {
+      const res = await fetch(
+        `../search_lists/${search_term}`,
+        get_fetch_settings("GET")
+      );
+      if (!res.ok) {
+        showMessage("Error: List couldn't be filtered!", "Error");
+      } else {
+        const context = await res.json();
+        results_list.style.display = "flex";
+        results_list.innerHTML = "";
+        context.forEach((list) => {
+          const result = `<a href="../list/${list.list_id}" class="searchResult">${list.name}</a>`;
+          results_list.innerHTML += result;
+        });
+      }
+    } catch (e) {
+      showMessage("Error: Network error detected!", "Error");
+    }
+    window.addEventListener("mousedown", () => {
+      results_list.style.display = "none";
+    });
+  } else {
+    results_list.style.display = "none";
+  }
 });
 
 document.querySelector(".searchButton").addEventListener("click", async () => {
@@ -52,9 +73,6 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
     contentTypeSelect.options[contentTypeSelect.selectedIndex].innerText;
   const sourcesSelect = document.getElementById("sources");
   const sources = sourcesSelect.options[sourcesSelect.selectedIndex].innerText;
-  console.log(timeframe);
-  console.log(contentType);
-  console.log(sources);
   try {
     const res = await fetch(
       `../filter_list/${timeframe}/${contentType}/${sources}`,
@@ -67,7 +85,6 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
       window.location.href = "../../home/lists";
     }
   } catch (e) {
-    console.log(e);
     showMessage("Error: Network error detected!", "Error");
   }
 });
