@@ -2,109 +2,109 @@
 {% load static %}
 
 {% block head %}
-  <link rel="stylesheet" type="text/css" href="{% static 'home/browser_style.css' %}">
-  <title>Browser</title>
+<link rel="stylesheet" type="text/css" href="{% static 'home/browser_style.css' %}">
+<title>ResearchBrowser | Home</title>
 {% endblock %}
 
 {% block content %}
-    <div class="settingsMenu">
-      <div class="browserOptionionsContainer">
-        <div class="openOptionsButton"><i class="fas fa-bars"></i></div>
-        <div class="browserOptionionsLine"></div>
-        <div class="browserOption deleteCategoryButton">
-          <i class="fas fa-folder-minus"></i>
-          <span>Delete Category</span>
+<div class="settingsMenu">
+  <div class="browserOptionionsContainer">
+    <div class="openOptionsButton"><i class="fas fa-bars"></i></div>
+    <div class="browserOptionionsLine"></div>
+    <div class="browserOption deleteCategoryButton">
+      <i class="fas fa-folder-minus"></i>
+      <span>Delete Category</span>
+    </div>
+    <div class="browserOption addCategoryButton">
+      <i class="fas fa-folder-plus"></i>
+      <span>Add Category</span>
+    </div>
+    <div class="browserOption deleteSourceButton">
+      <i class="fas fa-trash-alt"></i>
+      <span>Delete Source</span>
+    </div>
+    <div class="browserOption addSourceButton">
+      <i class="fas fa-address-book"></i>
+      <span>Add Source</span>
+    </div>
+    <div class="browserOption settingsButton">
+      <i class="fas fa-search"></i>
+      <span>Search Settings</span>
+    </div>
+  </div>
+</div>
+
+<div class="popUpMenu searchSettingsMenu">
+  <img src="{% static 'home/media/substack_logo.png' %}" alt="substack_logo">
+  <i class="fas fa-times red closeMenuButton"></i>
+  <form action="" method="POST" class="selectSearchSettings">
+    {% csrf_token %}
+    {{ search_settings_form }}
+    <div class="popUpButtonContainer">
+      <input name="selectSearchSettings" type="submit" class="green saveButton" value="Save">
+      <div class="red closeButton">Close</div>
+    </div>
+  </form>
+</div>
+
+<div class="popUpMenu addSourcesMenu">
+  <img src="{% static 'home/media/substack_logo.png' %}" alt="substack_logo">
+  <i class="fas fa-times red closeButton"></i>
+  <h2>Add Source</h2>
+  <form action="" method="POST" class="addSourcesSettings">
+    {% csrf_token %}
+    {{ add_source_form }}
+    <div class="popUpButtonContainer">
+      <input name="addSourcesSettings" type="submit" class="green saveButton" value="Save">
+      <button class="red closeButton">Close</button>
+    </div>
+  </form>
+</div>
+
+<div class="overlay">
+
+  <div class="browserSourcesContainer">
+    {% if browser_categories %}
+    {% for category in browser_categories %}
+    <div class="browserCategory">{{ category.name }}
+      <i class="fas fa-times categoryDeleteOptionOff"></i>
+    </div>
+    <div class="categoryContainer">
+      {% if browser_sources %}
+      {% for source in browser_sources %}
+      {% if source.category.name == category.name %}
+      <div class="sourceContainer" draggable="true">
+        <div class="iconContainer">
+          <img class="sourcePic" src="{% static source.source.favicon_path %}" alt="favicon">
+          <a class="sourceLink" href="{{ source.source.url }}"></a>
+          <i class="fas fa-times sourceDeleteOptionOff"></i>
         </div>
-        <div class="browserOption addCategoryButton">
-          <i class="fas fa-folder-plus"></i>
-          <span>Add Category</span>
-        </div>
-        <div class="browserOption deleteSourceButton">
-          <i class="fas fa-trash-alt"></i>
-          <span>Delete Source</span>
-        </div>
-        <div class="browserOption addSourceButton">
-          <i class="fas fa-address-book"></i>
-          <span>Add Source</span>
-        </div>
-        <div class="browserOption settingsButton">
-          <i class="fas fa-search"></i>
-          <span>Search Settings</span>
-        </div>
+        <div class="sourceNameContainer">{{ source.source.domain }}</div>
       </div>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
     </div>
+    {% endfor %}
+    {% endif %}
+  </div>
 
-    <div class="popUpMenu searchSettingsMenu">
-      <img src="{% static 'home/media/substack_logo.png' %}" alt="substack_logo">
-      <i class="fas fa-times red closeMenuButton"></i>
-      <form action="" method="POST" class="selectSearchSettings">
-        {% csrf_token %}
-        {{ search_settings_form }}
-        <div class="popUpButtonContainer">
-          <input name="selectSearchSettings" type="submit" class="green saveButton" value="Save">
-          <div class="red closeButton">Close</div>
-        </div>
-      </form>
-    </div>
-
-    <div class="popUpMenu addSourcesMenu">
-      <img src="{% static 'home/media/substack_logo.png' %}" alt="substack_logo">
-      <i class="fas fa-times red closeButton"></i>
-      <h2>Add Source</h2>
-      <form action="" method="POST" class="addSourcesSettings">
-        {% csrf_token %}
-        {{ add_source_form }}
-        <div class="popUpButtonContainer">
-          <input name="addSourcesSettings" type="submit" class="green saveButton" value="Save">
-          <button class="red closeButton">Close</button>
-        </div>
-      </form>
-    </div>
-
-    <div class="overlay">
-
-      <div class="browserSourcesContainer">
-        {% if browser_categories %}
-        {% for category in browser_categories %}
-        <div class="browserCategory">{{ category.name }}
-          <i class="fas fa-times categoryDeleteOptionOff"></i>
-        </div>
-        <div class="categoryContainer">
-          {% if browser_sources %}
-          {% for source in browser_sources %}
-          {% if source.category.name == category.name %}
-          <div class="sourceContainer" draggable="true">
-            <div class="iconContainer">
-              <img class="sourcePic" src="{% static source.source.favicon_path %}" alt="favicon">
-              <a class="sourceLink" href="{{ source.source.url }}"></a>
-              <i class="fas fa-times sourceDeleteOptionOff"></i>
-            </div>
-            <div class="sourceNameContainer">{{ source.source.domain }}</div>
-          </div>
-          {% endif %}
-          {% endfor %}
-          {% endif %}
-        </div>
-        {% endfor %}
-        {% endif %}
+  <div class="upperArticlesContainer">
+    <div class="articlesHeader">Articles</div>
+    <div class="articlesContainer">
+      {% if search_articles %}
+      {% for article in search_articles %}
+      <div class="article">
+        <img src="{% static article.picture %}">
+        <div>{{ article.title }}</div>
+        <a href="{{ article.link }}"></a>
       </div>
-
-      <div class="upperArticlesContainer">
-        <div class="articlesHeader">Articles</div>
-        <div class="articlesContainer">
-          {% if search_articles %}
-          {% for article in search_articles %}
-          <div class="article">
-            <img src="{% static article.picture %}">
-            <div>{{ article.title }}</div>
-            <a href="{{ article.link }}"></a>
-          </div>
-          {% endfor %}
-          {% endif %}
-        </div>
-        {% include "pagination.html" with page=search_articles %}
-      </div>
-
+      {% endfor %}
+      {% endif %}
     </div>
+    {% include "pagination.html" with page=search_articles %}
+  </div>
+
+</div>
 <script src="{% static 'home/browser_script.js' %}"></script>
 {% endblock content %}

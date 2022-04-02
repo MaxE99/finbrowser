@@ -2,7 +2,7 @@
 from unicodedata import name
 from django.urls import path
 # Local imports
-from home.views import browser, lists, sectors, list_details
+from home.views import browser, lists, sectors, list_details, main
 from home.api import (source_delete, category_add, category_delete,
                       category_change, list_filter, FilteredList,
                       get_list_filters)
@@ -13,6 +13,7 @@ urlpatterns = [
     path('browser/', browser, name='home-browser'),
     path('lists/', lists, name="home-lists"),
     path('sectors/', sectors, name="home-sectors"),
+    path('main/', main, name="home-main"),
     path('list/<int:list_id>', list_details, name="home-list_details"),
     path('delete_source/<str:source>', source_delete, name='source-delete'),
     path('add_category/<str:category>', category_add, name='category-add'),

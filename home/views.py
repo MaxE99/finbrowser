@@ -59,7 +59,7 @@ def lists(request):
     filter_args = dict(
         (k, v) for k, v in filter_args.items() if v is not None and v != 'All')
     lists = List.objects.filter(**filter_args)
-    cache.delete_many(['timeframe', 'content_type', 'sources'])
+    # cache.delete_many(['timeframe', 'content_type', 'sources'])
     add_list_form = AddListForm()
     results_found = len(lists)
     lists = sorted(lists, key=attrgetter('likes'), reverse=True)
@@ -82,3 +82,7 @@ def list_details(request, list_id):
     list = get_object_or_404(List, list_id=list_id)
     context = {'list': list}
     return render(request, 'home/list_details.html', context)
+
+
+def main(request):
+    return render(request, 'home/main.html')

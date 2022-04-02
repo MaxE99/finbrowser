@@ -155,7 +155,8 @@
   width: 45%;
 }
 
-.articlesUpperContainer .containerHeader {
+.articlesUpperContainer .containerHeader,
+.listsContainer .containerHeader {
   margin-bottom: 10px;
 }
 

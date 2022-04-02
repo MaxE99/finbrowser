@@ -66,16 +66,21 @@ header {
   border-bottom: 1px solid rgb(226, 230, 234);
 }
 
-.logoSpace {
+.logoContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100%;
   width: 17.5%;
   max-width: 250px;
   border-right: 1px solid rgb(226, 230, 234);
   user-select: none;
+}
+
+.logoSpace {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .logoSpace span {
@@ -84,9 +89,15 @@ header {
   margin-top: 3px;
 }
 
-.logoSpace span:last-child {
+.logoSpace span:last-of-type {
   color: var(--primary-fontColor);
   margin-top: -25px;
+}
+
+.logoSpace a {
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
 .mainNavigation {
