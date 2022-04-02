@@ -1,5 +1,5 @@
 # Django imports
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from django.contrib import messages
 # Python imports
@@ -76,3 +76,9 @@ def lists(request):
 def sectors(request):
     sectors = Sector.objects.all()
     return render(request, 'home/sectors.html', {'sectors': sectors})
+
+
+def list_details(request, list_id):
+    list = get_object_or_404(List, list_id=list_id)
+    context = {'list': list}
+    return render(request, 'home/list_details.html', context)

@@ -1,0 +1,23 @@
+{% extends 'home/base.html' %} {% load static %} {% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'home/list_details_style.css' %}" />
+<title>{{ list.name }}</title>
+{% endblock %} {% block content %}
+<!-- <div class="nameContainer">
+    <h2>{{ list.name }}</h2>
+</div> -->
+<div class="nameContainer">{{ list.name }}</div>
+<div class="categoryContainer">
+    {% for source in list.sources.all %}
+    <div class="sourceContainer" draggable="true">
+        <div class="iconContainer">
+            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+            <i class="fas fa-times sourceDeleteOptionOff"></i>
+        </div>
+        <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
+        <div class="sourceNameOuterContainer">
+            <div class="sourceNameInnerContainer">{{ source.domain }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

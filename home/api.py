@@ -2,9 +2,9 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import filters, viewsets
-from django_filters.rest_framework import DjangoFilterBackend
 from django.core.cache import cache
+from django.http import JsonResponse
+from rest_framework.views import APIView
 # Local imports
 from home.models import BrowserSource, BrowserCategory, Source, List
 from home.serializers import List_Serializer
@@ -55,13 +55,17 @@ def list_filter(request, timeframe, content_type, sources):
     return Response("Lists have been filtered!")
 
 
-class ListViewSet(viewsets.ModelViewSet):
+@api_view(['GET'])
+def get_list_filters(request):
+    timeframe = cache.get('timeframe')
+    content_type = cache.get('content_type')
+    sources = cache.get('sources')
+    return Response([timeframe, content_type, sources])
 
-    serializer_class = List_Serializer
-    queryset = List.objects.all()
-    filter_backends = [
-        DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter
-    ]
-    filterset_fields = ['name', 'content_type', 'updated_at']
-    search_fields = ['name']
-    ordering_fields = ['updated_at']
+
+class FilteredList(APIView):
+
+    def get(self, request, search_term, format=None):
+        filtered_list = List.objects.filter(name__istartswith=search_term)[0:6]
+        serializer = List_Serializer(filtered_list, many=True)
+        return JsonResponse(serializer.data, safe=False)

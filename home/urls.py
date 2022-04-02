@@ -1,10 +1,11 @@
 # Django imports
+from unicodedata import name
 from django.urls import path
-from rest_framework.routers import DefaultRouter
 # Local imports
-from home.views import browser, lists, sectors
+from home.views import browser, lists, sectors, list_details
 from home.api import (source_delete, category_add, category_delete,
-                      category_change, list_filter, ListViewSet)
+                      category_change, list_filter, FilteredList,
+                      get_list_filters)
 
 app_name = 'home'
 
@@ -12,6 +13,7 @@ urlpatterns = [
     path('browser/', browser, name='home-browser'),
     path('lists/', lists, name="home-lists"),
     path('sectors/', sectors, name="home-sectors"),
+    path('list/<int:list_id>', list_details, name="home-list_details"),
     path('delete_source/<str:source>', source_delete, name='source-delete'),
     path('add_category/<str:category>', category_add, name='category-add'),
     path('delete_category/<str:category>',
@@ -23,9 +25,8 @@ urlpatterns = [
     path('filter_list/<str:timeframe>/<str:content_type>/<str:sources>',
          list_filter,
          name='list-filter'),
+    path('search_lists/<str:search_term>',
+         FilteredList.as_view(),
+         name="search-lists"),
+    path('get_list_filters', get_list_filters, name="get-list-filters")
 ]
-
-router = DefaultRouter()
-router.register("api/lists", ListViewSet, basename="lists")
-
-urlpatterns += router.urls
