@@ -26,10 +26,13 @@ class Source(models.Model):
     about_text = models.TextField(blank=True)
 
     def save(self, *args, **kwargs):
-        self.domain = self.url.replace("https://",
-                                       "").replace("www.", "").split('.')[0]
-        self.favicon_path = f'home/favicons/{self.domain}.png'
-        website_scrapping_initiate(self.url, self.domain)
+        if 'seekingalpha.com' not in self.url:
+            self.domain = self.url.replace("https://",
+                                           "").replace("www.",
+                                                       "").split('.')[0]
+            self.favicon_path = f'home/favicons/{self.domain}.png'
+        # Aufpassen SeekingAlpha nicht zu scrappen, bevor ich gebannt werde
+        # website_scrapping_initiate(self.url, self.domain)
         super(Source, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -56,7 +59,7 @@ class List(models.Model):
                                     choices=CONTENT_CHOICES,
                                     default='None')
     updated_at = models.DateTimeField(auto_now=True)
-    likes = models.IntegerField(default=0)
+    likes = models.PositiveIntegerField(default=0)
     sources = models.ManyToManyField(Source, related_name='lists', blank=True)
     main_website_source = models.CharField(max_length=100, blank=True)
 

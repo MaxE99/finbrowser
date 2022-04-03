@@ -1,0 +1,325 @@
+.pageWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftSide,
+.rightSide {
+  width: 47.5%;
+}
+
+.containerHeader {
+  position: relative;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 20px;
+  border: 3px solid;
+  border-radius: 40px;
+  color: white;
+  background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
+  width: 100%;
+  margin-top: 20px;
+}
+
+.articlesUpperContainer .containerHeader {
+  margin-bottom: 10px;
+}
+
+.articlesContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.article {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto 15px;
+  padding: 5px;
+  background: white;
+  border: 3px solid black;
+  border-radius: 8px;
+}
+
+.article:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.article div {
+  font-size: 20px;
+  padding-left: 7px;
+  color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 75ch;
+}
+
+.article a {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.article img {
+  width: 50px;
+  height: 50px;
+}
+
+/* Everything from filter_style -- refactoring => throw out garbage */
+
+.filterBar {
+  display: flex;
+  margin: 10px 0;
+  border: 2px solid black;
+}
+
+.selectContainer {
+  border-right: 2px solid black;
+  position: relative;
+  width: 200px;
+}
+
+.selectContainer:last-of-type {
+  border-right: unset;
+}
+
+.searchSelectContainer {
+  width: 350px;
+  position: relative;
+}
+
+.selectContainer label {
+  margin: 3px 10px;
+  position: absolute;
+  color: var(--primary-fontColor);
+}
+
+.selectContainer select {
+  width: 100%;
+  height: 100%;
+  border-radius: unset;
+  outline: unset;
+  padding: 20px 0px 5px 10px;
+}
+
+select {
+  font-size: 17px;
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 0;
+  outline: 2px solid rgb(226, 230, 234);
+  border-right: 12px solid white;
+  background: white;
+  letter-spacing: 1.1px;
+}
+
+.filterBar .searchWrapper {
+  margin: unset;
+  font-size: 17px;
+  letter-spacing: 1.1px;
+  width: 100%;
+  height: 100%;
+}
+
+.filterBar .searchContainer {
+  height: 100%;
+}
+
+.filterBar input {
+  font-size: 16px;
+  border: 0;
+  padding: 10px 40px 10px 15px;
+  letter-spacing: 1.1px;
+  font-family: unset !important;
+  width: 100%;
+  height: 100%;
+}
+
+.selectPlaceholder {
+  display: none;
+}
+
+.createListButton,
+.searchButton {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--primary-fontColor);
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  font-size: 17px;
+  letter-spacing: 1.1px;
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+}
+
+.searchButton:hover {
+  background: rgb(26, 112, 239);
+}
+
+.createListButton {
+  background: green;
+}
+
+.createListButton:hover {
+  background: rgb(8, 173, 8);
+}
+
+.createListButton i {
+  margin-left: 10px;
+}
+
+/* /--Popupmenu--> */ /* /--Popupmenu--> */ /* /--Popupmenu--> */ /* /--Popupmenu--> */ /* /--Popupmenu--> */ /* /--Popupmenu--> */
+
+.menuHeader {
+  border-bottom: 3px solid white;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.popUpMenu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: none;
+  flex-direction: column;
+  width: 300px;
+  margin: 180px auto 0px;
+  padding: 0px 0px 15px;
+  border: 3px solid;
+  border-radius: 20px;
+  background: var(--primary-fontColor);
+  color: white;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.popUpMenu form {
+  margin: 0 auto;
+  width: 85%;
+}
+
+.popUpMenu img {
+  position: absolute;
+  top: -51px;
+  right: 20px;
+  width: 100px;
+}
+
+.popUpMenu i {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  font-size: 35px;
+  padding: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popUpMenu h2 {
+  text-align: center;
+}
+
+.popUpMenu label {
+  display: block;
+  font-size: 16px;
+  margin: 5px 0 5px;
+  padding-left: 5px;
+}
+
+.popUpButtonContainer {
+  display: flex;
+  margin-top: 15px;
+}
+
+.popUpButtonContainer button,
+.popUpButtonContainer input,
+.popUpButtonContainer div {
+  text-transform: uppercase;
+  padding: 8px 50px;
+  font-size: 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  color: white;
+  width: 100%;
+}
+
+.popUpButtonContainer button:hover,
+.popUpButtonContainer input:hover,
+.closeMenuButton:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.overlay {
+  opacity: 1;
+}
+
+.popUpMenu select,
+#id_name {
+  width: 100%;
+  font-size: 15px;
+  padding: 8px 40px 8px 10px;
+  color: black;
+  border: 3px solid black;
+  border-radius: 8px;
+}
+
+#id_sources {
+  max-height: 105px;
+  overflow-y: scroll;
+  background: white;
+  color: black;
+  border: 3px solid black;
+  border-radius: 8px;
+}
+
+.lowerFilterBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.searchResultsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.lowerFilterBar h4 {
+  font-size: 25px;
+}
+
+.lowerFilterBar div {
+  font-size: 14px;
+}
+
+.lowerFilterBar div span {
+  color: var(--primary-fontColor);
+}
+
+#autocomplete_list_results {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  background: white;
+  box-shadow: var(--box-shadowScheme);
+  z-index: 10;
+}
+
+.searchResult {
+  padding: 5px;
+  border-bottom: 1px solid rgb(226, 230, 234);
+  text-decoration: none;
+  color: black;
+}

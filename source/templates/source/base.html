@@ -28,14 +28,14 @@
                 <div class="mainNavigationLink"><a href="{% url 'home:home-browser' %}"><span>Home</span></a></div>
                 <div class="mainNavigationLink"><a href="{% url 'home:home-lists' %}"><span>Lists</span></a></div>
                 <div class="mainNavigationLink"><a href="{% url 'home:home-sectors' %}"><span>Sectors</span></a></div>
-                <div class="mainNavigationLink"><a href="#"><span>Articles</span></a></div>
+                <div class="mainNavigationLink"><a href="{% url 'home:home-articles' %}"><span>Articles</span></a></div>
             </nav>
-            <div class="searchWrapper">
-                <div class="searchContainer">
-                    <input id="autocomplete" type="text" class="inputSearch" placeholder="Search">
+            <div class="mainSearchWrapper">
+                <div class="mainSearchContainer">
+                    <input id="mainAutocomplete" type="text" class="mainInputSearch" placeholder="Search">
                     <i class="fas fa-search"></i>
                 </div>
-                <div id="autocomplete_result"></div>
+                <div id="mainAutocomplete_result"></div>
             </div>
             <div class="userSpace">
                 <i class="fas fa-cog"></i>

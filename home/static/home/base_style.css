@@ -130,18 +130,19 @@ header {
   color: var(--primary-color);
 }
 
-.searchWrapper {
+.mainSearchWrapper {
   position: relative;
   margin: 0 auto;
 }
 
+.mainSearchContainer,
 .searchContainer {
   display: flex;
   align-items: center;
   height: 42px;
 }
 
-.inputSearch {
+.mainInputSearch {
   font-size: 14px;
   height: 100%;
   padding: 15px 120px 15px 15px;
@@ -149,6 +150,7 @@ header {
   border-radius: 12px;
 }
 
+.mainSearchContainer i,
 .searchContainer i {
   font-size: 16px;
   color: var(--primary-fontColor);
@@ -157,43 +159,30 @@ header {
   right: 16px;
 }
 
-#autocomplete_result {
+#mainAutocomplete_result {
   position: absolute;
   display: none;
+  flex-direction: column;
   width: 100%;
   background: white;
   box-shadow: var(--box-shadowScheme);
-  border: 4px solid var(--primary-fontColor);
+  z-index: 10;
 }
 
-#autocomplete_result div {
-  display: flex;
-  cursor: pointer;
-  border-bottom: 1px solid rgb(226, 230, 234);
-}
-
-.autocomplete_heading {
-  display: flex;
-  justify-content: center;
-  font-size: 15px;
-  padding: 1px 0 4px;
-  background: var(--primary-fontColor);
-  color: var(--primary-color);
-  border-bottom: 1px solid rgb(226, 230, 234);
-}
-
-#autocomplete_result div:hover {
+.searchResultHeader {
   background: var(--primary-fontColor);
   color: white;
+  text-align: center;
 }
 
-#autocomplete_result p {
-  padding: 5px 15px 5px 10px;
-  font-size: 14px;
-}
-
-#autocomplete_result div p:first-child {
-  width: 25%;
+.searchResult {
+  padding: 5px;
+  border-bottom: 1px solid rgb(226, 230, 234);
+  text-decoration: none;
+  color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .userSpace {
