@@ -2,9 +2,9 @@
 from unicodedata import name
 from django.urls import path
 # Local imports
-from home.views import browser, lists, sectors, list_details, main
+from home.views import browser, lists, sectors, list_details, main, articles
 from home.api import (source_delete, category_add, category_delete,
-                      category_change, list_filter, FilteredList,
+                      category_change, list_filter, FilteredList, FilteredSite,
                       get_list_filters)
 
 app_name = 'home'
@@ -13,6 +13,7 @@ urlpatterns = [
     path('browser/', browser, name='home-browser'),
     path('lists/', lists, name="home-lists"),
     path('sectors/', sectors, name="home-sectors"),
+    path('articles/', articles, name="home-articles"),
     path('main/', main, name="home-main"),
     path('list/<int:list_id>', list_details, name="home-list_details"),
     path('delete_source/<str:source>', source_delete, name='source-delete'),
@@ -29,5 +30,8 @@ urlpatterns = [
     path('search_lists/<str:search_term>',
          FilteredList.as_view(),
          name="search-lists"),
-    path('get_list_filters', get_list_filters, name="get-list-filters")
+    path('get_list_filters', get_list_filters, name="get-list-filters"),
+    path('search_site/<str:search_term>',
+         FilteredSite.as_view(),
+         name="search-site"),
 ]

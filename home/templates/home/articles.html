@@ -1,0 +1,137 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'home/articles_style.css' %}">
+<title>ResearchBrowser | Articles</title>
+{% endblock %}
+
+{% block content %}
+
+
+<h2>Articles</h2>
+<div class="explanation">
+    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim, velit rem quo
+    minus consequuntur aspernatur tempore ipsum minima magnam libero nemo tenetur
+    expedita explicabo et. Optio rem maiores vero distinctio. Lorem ipsum, dolor
+    sit amet consectetur adipisicing elit. Dignissimos illum delectus dolorem
+    assumenda quidem facere sunt aliquam modi aperiam blanditiis? At laborum
+    reprehenderit repellat quam necessitatibus harum esse deserunt dolore!
+</div>
+
+<div class="filterBar">
+    <div class="selectContainer">
+        <label for="timeframe">Timeframe</label>
+        <select id="timeframe">
+            <option value="All" selected="selected">All</option>
+            <option value="7">Last 7 days</option>
+            <option value="30">Last 30 days</option>
+            <option value="90">Last 90 days</option>
+            <option value="365">Last 365 days</option>
+        </select>
+    </div>
+    <div class="selectContainer">
+        <label for="content">Sector</label>
+        <select id="content">
+            <option value="All" selected="selected">All</option>
+            <option value="Articles">Articles</option>
+            <option value="Sources">Sources</option>
+        </select>
+    </div>
+    <div class="selectContainer">
+        <label for="content">Availability</label>
+        <select id="content">
+            <option value="All" selected="selected">All</option>
+            <option value="Articles">Free</option>
+            <option value="Sources">Paid</option>
+        </select>
+    </div>
+    <div class="selectContainer">
+        <label for="sources">Sources</label>
+        <select id="sources">
+            <option value="All" selected="selected">All</option>
+            <option value="Medium">Medium</option>
+            <option value="Seeking Alpha">Seeking Alpha</option>
+            <option value="Substack">Substack</option>
+            <option value="Twitter">Twitter</option>
+            <option value="Youtube">YouTube</option>
+        </select>
+    </div>
+    <div class="selectContainer searchSelectContainer">
+        <div class="searchContainer">
+            <input id="search" placeholder="Search term" type="text" autocomplete="off" />
+            <i class="fas fa-search"></i>
+        </div>
+        <div id="autocomplete_list_results"></div>
+    </div>
+    <div class="selectContainer">
+        <button class="searchButton">Search</button>
+    </div>
+</div>
+<div class="lowerFilterBar">
+    <div class="searchResultsContainer">
+        <h4>Search Results</h4>
+        <div><span>{{ results_found }}</span> Lists Found</div>
+    </div>
+    <div class="filterContainer">
+        <select id="sortBy">
+            <option value="" selected="selected" class="selectPlaceholder">
+                SortBy
+            </option>
+            <option value="likes">Likes</option>
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+        </select>
+    </div>
+</div>
+
+
+
+<div class="pageWrapper">
+    <div class="leftSide">
+        <div class="articlesUpperContainer">
+            <div class="containerHeader">Latest Articles</div>
+            <div class="articlesContainer">
+                {% if latest_articles %} {% for article in latest_articles %}
+                <div class="article">
+                    <img src="{% static article.source.favicon_path %}" />
+                    <div>{{ article.title }}</div>
+                    <a href="{{ article.link }}"></a>
+                </div>
+                {% endfor %} {% endif %}
+            </div>
+            {% include "pagination.html" with page=latest_articles %}
+        </div>
+    </div>
+    <div class="rightSide">
+        <div class="articlesUpperContainer">
+            <div class="containerHeader">Top Articles</div>
+            <div class="articlesContainer">
+                {% if latest_articles %} {% for article in top_articles %}
+                <div class="article">
+                    <img src="{% static article.source.favicon_path %}" />
+                    <div>{{ article.title }}</div>
+                    <a href="{{ article.link }}"></a>
+                </div>
+                {% endfor %} {% endif %}
+            </div>
+            <div class="pagination">
+                {% for article in top_articles %}
+                {% endfor %}
+                <span class="step-links">
+                    {% if top_articles.has_previous %}
+                    <a href="?page2={{ top_articles.previous_page_number }}"> previous </a>
+                    {% endif %}
+                    <span class="currentPagination">
+                        Page {{ top_articles.number }} of {{ top_articles.paginator.num_pages }}
+                    </span>
+                    {% if top_articles.has_next %}
+                    <a href="?page2={{ top_articles.next_page_number }}"> next </a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

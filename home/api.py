@@ -6,8 +6,8 @@ from django.core.cache import cache
 from django.http import JsonResponse
 from rest_framework.views import APIView
 # Local imports
-from home.models import BrowserSource, BrowserCategory, Source, List
-from home.serializers import List_Serializer
+from home.models import Article, BrowserSource, BrowserCategory, Source, List
+from home.serializers import List_Serializer, Article_Serializer, Source_Serializer
 
 
 @api_view(["DELETE"])
@@ -69,3 +69,22 @@ class FilteredList(APIView):
         filtered_list = List.objects.filter(name__istartswith=search_term)[0:6]
         serializer = List_Serializer(filtered_list, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+
+class FilteredSite(APIView):
+
+    def get(self, request, search_term, format=None):
+        filtered_lists = List.objects.filter(
+            name__istartswith=search_term)[0:3]
+        list_serializer = List_Serializer(filtered_lists, many=True)
+        filtered_sources = Source.objects.filter(
+            domain__istartswith=search_term)[0:3]
+        sources_serializer = Source_Serializer(filtered_sources, many=True)
+        filtered_articles = Article.objects.filter(
+            title__icontains=search_term)[0:3]
+        articles_serializer = Article_Serializer(filtered_articles, many=True)
+        return JsonResponse([
+            list_serializer.data, sources_serializer.data,
+            articles_serializer.data
+        ],
+                            safe=False)

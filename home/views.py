@@ -1,4 +1,5 @@
 # Django imports
+from audioop import reverse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from django.contrib import messages
@@ -6,7 +7,7 @@ from django.contrib import messages
 from operator import attrgetter
 from datetime import timedelta, date
 # Local imports
-from home.models import BrowserSource, BrowserCategory, List, Sector
+from home.models import Article, BrowserSource, BrowserCategory, List, Sector
 from home.forms import AddSourceForm, AddListForm
 from home.logic.pure_logic import paginator_create
 
@@ -76,6 +77,27 @@ def lists(request):
 def sectors(request):
     sectors = Sector.objects.all()
     return render(request, 'home/sectors.html', {'sectors': sectors})
+
+
+def articles(request):
+    latest_articles = Article.objects.all().order_by('-pub_date')
+    latest_articles, latest_page = paginator_create(request, latest_articles,
+                                                    6)
+    top_articles = Article.objects.all().order_by('title')
+    from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+    paginator = Paginator(top_articles, 6)
+    page = request.GET.get('page2')
+    try:
+        top_articles = paginator.page(page)
+    except PageNotAnInteger:
+        top_articles = paginator.page(1)
+    except EmptyPage:
+        top_articles = paginator.page(paginator.num_pages)
+    context = {
+        'latest_articles': latest_articles,
+        'top_articles': top_articles,
+    }
+    return render(request, 'home/articles.html', context)
 
 
 def list_details(request, list_id):
