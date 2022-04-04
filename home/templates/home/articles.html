@@ -31,19 +31,21 @@
         </select>
     </div>
     <div class="selectContainer">
-        <label for="content">Sector</label>
-        <select id="content">
+        <label for="sector">Sector</label>
+        <select id="sector">
             <option value="All" selected="selected">All</option>
-            <option value="Articles">Articles</option>
-            <option value="Sources">Sources</option>
+            {% for sector in sectors %}
+            <option value="{{ sector.name }}">{{ sector.name }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="selectContainer">
-        <label for="content">Availability</label>
-        <select id="content">
+        <label for="paywall">Paywall</label>
+        <select id="paywall">
             <option value="All" selected="selected">All</option>
-            <option value="Articles">Free</option>
-            <option value="Sources">Paid</option>
+            <option value="Yes">Yes</option>
+            <option value="Semi">Semi</option>
+            <option value="No">No</option>
         </select>
     </div>
     <div class="selectContainer">
@@ -71,7 +73,7 @@
 <div class="lowerFilterBar">
     <div class="searchResultsContainer">
         <h4>Search Results</h4>
-        <div><span>{{ results_found }}</span> Lists Found</div>
+        <div><span>{{ results_found }}</span> Articles Found</div>
     </div>
     <div class="filterContainer">
         <select id="sortBy">
@@ -85,53 +87,17 @@
     </div>
 </div>
 
-
-
-<div class="pageWrapper">
-    <div class="leftSide">
-        <div class="articlesUpperContainer">
-            <div class="containerHeader">Latest Articles</div>
-            <div class="articlesContainer">
-                {% if latest_articles %} {% for article in latest_articles %}
-                <div class="article">
-                    <img src="{% static article.source.favicon_path %}" />
-                    <div>{{ article.title }}</div>
-                    <a href="{{ article.link }}"></a>
-                </div>
-                {% endfor %} {% endif %}
-            </div>
-            {% include "pagination.html" with page=latest_articles %}
-        </div>
+<div class="articlesContainer">
+    {% for article in search_articles %}
+    <div class="article">
+        <img src="{% static article.source.favicon_path %}" />
+        <div>{{ article.title }}</div>
+        <a href="{{ article.link }}"></a>
     </div>
-    <div class="rightSide">
-        <div class="articlesUpperContainer">
-            <div class="containerHeader">Top Articles</div>
-            <div class="articlesContainer">
-                {% if latest_articles %} {% for article in top_articles %}
-                <div class="article">
-                    <img src="{% static article.source.favicon_path %}" />
-                    <div>{{ article.title }}</div>
-                    <a href="{{ article.link }}"></a>
-                </div>
-                {% endfor %} {% endif %}
-            </div>
-            <div class="pagination">
-                {% for article in top_articles %}
-                {% endfor %}
-                <span class="step-links">
-                    {% if top_articles.has_previous %}
-                    <a href="?page2={{ top_articles.previous_page_number }}"> previous </a>
-                    {% endif %}
-                    <span class="currentPagination">
-                        Page {{ top_articles.number }} of {{ top_articles.paginator.num_pages }}
-                    </span>
-                    {% if top_articles.has_next %}
-                    <a href="?page2={{ top_articles.next_page_number }}"> next </a>
-                    {% endif %}
-                </span>
-            </div>
-        </div>
-    </div>
+    {% endfor %}
+    {% include "pagination.html" with page=search_articles %}
 </div>
 
+
+<script src="{% static 'home/articles_script.js' %}"></script>
 {% endblock content %}

@@ -3,8 +3,68 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'home/search_results_style.css' %}">
-<title>ResearchBrowser | Search Results</title>
+<title>{{ search_term }} - Search Results | ResearchBrowser</title>
 {% endblock %}
-
 {% block content %}
+<div class="mainContent">
+    <h2>Search Results</h2>
+    <div class="mainSearchWrapper sr_mainSearchWrapper">
+        <div class="mainSearchContainer">
+            <input id="mainAutocomplete" type="text" class="mainInputSearch" value="{{ search_term }}"
+                placeholder="Search">
+            <i class="fas fa-search"></i>
+        </div>
+        <div id="mainAutocomplete_result"></div>
+    </div>
+    <div class="searchCategories">
+        <div class="searchCategoryTab searchCategoryTabActive" data-for-tab="0">Articles</div>
+        <div class="searchCategoryTab" data-for-tab="1">Lists</div>
+        <div class="searchCategoryTab" data-for-tab="2">Sources</div>
+    </div>
+    <div class="tabsContent tabsContentActive" data-tab="0">
+        <div class="articlesUpperContainer">
+            <div class="articlesContainer">
+                {% for article in filtered_articles %}
+                <div class="article">
+                    <img src="{% static article.source.favicon_path %}" />
+                    <div>{{ article.title }}</div>
+                    <a href="{{ article.link }}"></a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="tabsContent" data-tab="1">
+        <div class="listsContainer">
+            <div class="articlesContainer">
+                {% for list in filtered_lists %}
+                <div class="article">
+                    <img src="{% static 'home/media/bigger_favicon.png' %}" />
+                    <div>{{ list.name }}</div>
+                    <a href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="tabsContent" data-tab="2">
+        <div class="categoryContainer">
+            {% for source in filtered_sources %}
+            <div class="sourceContainer" draggable="true">
+                <div class="iconContainer">
+                    <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+                    <i class="fas fa-times sourceDeleteOptionOff"></i>
+                </div>
+                <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
+                <div class="sourceNameOuterContainer">
+                    <div class="sourceNameInnerContainer">{{ source.name }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+<script src="{% static 'home/search_results_script.js' %}"></script>
 {% endblock content %}

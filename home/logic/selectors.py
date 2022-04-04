@@ -77,3 +77,16 @@ def articles_search():
             except:
                 continue
     return articles
+
+
+def website_logo_get(source):
+    match source:
+        case 'SeekingAlpha':
+            return "/static/home/media/seekingalpha_logo.png"
+        case 'Substack':
+            return "/static/home/media/substack_logo.png"
+        case 'Twitter':
+            return "/static/home/media/twitter_logo.png"
+        # refactor this with a other logo
+        case _:
+            return "no logo found"

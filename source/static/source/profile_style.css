@@ -94,6 +94,12 @@
 
 .expertise {
   color: var(--primary-fontColor);
+  padding-right: 3px;
+}
+
+.expertise:nth-of-type(2) {
+  padding-left: 5px;
+  border-left: 3px solid var(--primary-fontColor);
 }
 
 .rankingsHeader {

@@ -73,6 +73,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
   }
 });
 
+//Filter functionality
 document.querySelector(".searchButton").addEventListener("click", async () => {
   const timeframeSelect = document.getElementById("timeframe");
   const timeframe =

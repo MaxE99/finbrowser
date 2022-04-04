@@ -307,11 +307,11 @@ main {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  width: 100px;
+  width: 150px;
   background: white;
   border-radius: 10px;
   box-shadow: var(--box-shadowScheme);
-  margin: 5px 10px;
+  margin: 10px;
 }
 
 .sourceContainer:hover {
@@ -319,8 +319,8 @@ main {
 }
 
 .iconContainer {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
 }
 
 .sourcePic {
@@ -341,12 +341,13 @@ main {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 2px 0;
+  padding: 5px 0;
+  white-space: nowrap;
+  font-size: 19px;
 }
 
 .sourceNameInnerContainer {
-  font-size: 17px;
-  max-width: 90px;
+  max-width: 90%;
   overflow: hidden;
 }
 

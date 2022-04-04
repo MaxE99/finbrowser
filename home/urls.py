@@ -1,11 +1,10 @@
 # Django imports
-from unicodedata import name
 from django.urls import path
 # Local imports
-from home.views import browser, lists, sectors, list_details, main, articles
+from home.views import browser, lists, sectors, list_details, main, articles, search_results
 from home.api import (source_delete, category_add, category_delete,
                       category_change, list_filter, FilteredList, FilteredSite,
-                      get_list_filters)
+                      get_list_filters, article_filter, get_article_filters)
 
 app_name = 'home'
 
@@ -15,6 +14,9 @@ urlpatterns = [
     path('sectors/', sectors, name="home-sectors"),
     path('articles/', articles, name="home-articles"),
     path('main/', main, name="home-main"),
+    path('search_results/<str:search_term>',
+         search_results,
+         name="home-search_results"),
     path('list/<int:list_id>', list_details, name="home-list_details"),
     path('delete_source/<str:source>', source_delete, name='source-delete'),
     path('add_category/<str:category>', category_add, name='category-add'),
@@ -34,4 +36,11 @@ urlpatterns = [
     path('search_site/<str:search_term>',
          FilteredSite.as_view(),
          name="search-site"),
+    path(
+        'filter_articles/<str:timeframe>/<str:sector>/<str:paywall>/<str:sources>',
+        article_filter,
+        name="article-filter"),
+    path('get_article_filters',
+         get_article_filters,
+         name="get_article_filters"),
 ]

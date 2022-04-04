@@ -56,11 +56,31 @@ def list_filter(request, timeframe, content_type, sources):
 
 
 @api_view(['GET'])
+def article_filter(request, timeframe, sector, paywall, sources):
+    cache.set_many({
+        'articles_timeframe': timeframe,
+        'articles_sector': sector,
+        'articles_paywall': paywall,
+        'articles_sources': sources
+    })
+    return Response("Lists have been filtered!")
+
+
+@api_view(['GET'])
 def get_list_filters(request):
     timeframe = cache.get('timeframe')
     content_type = cache.get('content_type')
     sources = cache.get('sources')
     return Response([timeframe, content_type, sources])
+
+
+@api_view(['GET'])
+def get_article_filters(request):
+    timeframe = cache.get('articles_timeframe')
+    sector = cache.get('articles_sector')
+    paywall = cache.get('articles_paywall')
+    sources = cache.get('articles_sources')
+    return Response([timeframe, sector, paywall, sources])
 
 
 class FilteredList(APIView):
