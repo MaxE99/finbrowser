@@ -16,6 +16,7 @@ class Source(models.Model):
     source_id = models.AutoField(primary_key=True)
     url = models.URLField(unique=True)
     domain = models.CharField(max_length=100, blank=True)
+    name = models.CharField(max_length=100, blank=True)
     favicon_path = models.CharField(max_length=500, blank=True)
     paywall = models.CharField(max_length=10,
                                choices=PAYWALL_CHOICES,
@@ -26,12 +27,14 @@ class Source(models.Model):
     about_text = models.TextField(blank=True)
 
     def save(self, *args, **kwargs):
-        if 'seekingalpha.com' not in self.url:
+        if not self.name:
+            self.name = self.domain.capitalize()
+        elif 'seekingalpha.com' not in self.url and 'twitter.com' not in self.url:
             self.domain = self.url.replace("https://",
                                            "").replace("www.",
                                                        "").split('.')[0]
             self.favicon_path = f'home/favicons/{self.domain}.png'
-        # Aufpassen SeekingAlpha nicht zu scrappen, bevor ich gebannt werde
+        # Aufpassen SeekingAlpha nicht zu scrappen, bevor ich noch gebannt werde
         # website_scrapping_initiate(self.url, self.domain)
         super(Source, self).save(*args, **kwargs)
 

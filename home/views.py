@@ -1,5 +1,6 @@
 # Django imports
 from audioop import reverse
+from re import search
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from django.contrib import messages
@@ -7,7 +8,7 @@ from django.contrib import messages
 from operator import attrgetter
 from datetime import timedelta, date
 # Local imports
-from home.models import Article, BrowserSource, BrowserCategory, List, Sector
+from home.models import Article, BrowserSource, BrowserCategory, List, Sector, Source
 from home.forms import AddSourceForm, AddListForm
 from home.logic.pure_logic import paginator_create
 
@@ -80,22 +81,27 @@ def sectors(request):
 
 
 def articles(request):
-    latest_articles = Article.objects.all().order_by('-pub_date')
-    latest_articles, latest_page = paginator_create(request, latest_articles,
-                                                    6)
-    top_articles = Article.objects.all().order_by('title')
-    from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-    paginator = Paginator(top_articles, 6)
-    page = request.GET.get('page2')
-    try:
-        top_articles = paginator.page(page)
-    except PageNotAnInteger:
-        top_articles = paginator.page(1)
-    except EmptyPage:
-        top_articles = paginator.page(paginator.num_pages)
+    timeframe = cache.get('articles_timeframe')
+    sector = cache.get('articles_sector')
+    paywall = cache.get('articles_paywall')
+    sources = cache.get('articles_sources')
+    filter_args = {'source__paywall': paywall, 'source__website': sources}
+    if timeframe != 'All' and timeframe != None:
+        filter_args['pub_date__gte'] = date.today() - timedelta(
+            days=int(timeframe))
+    filter_args = dict(
+        (k, v) for k, v in filter_args.items() if v is not None and v != 'All')
+    search_articles = Article.objects.filter(
+        **filter_args).order_by('-pub_date')
+    # if sector != 'All' and timeframe != None:
+    #     search_articles.filter(source__sectors=sector)
+    results_found = len(search_articles)
+    search_articles, page = paginator_create(request, search_articles, 10)
+    sectors = Sector.objects.all().order_by('name')
     context = {
-        'latest_articles': latest_articles,
-        'top_articles': top_articles,
+        'results_found': results_found,
+        'search_articles': search_articles,
+        'sectors': sectors
     }
     return render(request, 'home/articles.html', context)
 
@@ -108,3 +114,16 @@ def list_details(request, list_id):
 
 def main(request):
     return render(request, 'home/main.html')
+
+
+def search_results(request, search_term):
+    filtered_lists = List.objects.filter(name__istartswith=search_term)
+    filtered_sources = Source.objects.filter(domain__istartswith=search_term)
+    filtered_articles = Article.objects.filter(title__icontains=search_term)
+    context = {
+        'filtered_articles': filtered_articles,
+        'filtered_lists': filtered_lists,
+        'filtered_sources': filtered_sources,
+        'search_term': search_term
+    }
+    return render(request, 'home/search_results.html', context)
