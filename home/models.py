@@ -87,7 +87,7 @@ def list_main_website_source_calculate(sender, instance, action, *args,
 
 class Sector(models.Model):
     list_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     sources = models.ManyToManyField(Source,
                                      related_name='sectors',
                                      blank=True)

@@ -1,0 +1,92 @@
+main {
+  flex-direction: row;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+
+.settingSidebar {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+}
+
+.settingSidebar h3 {
+  margin: 0px auto 20px;
+  font-size: 25px;
+  color: var(--primary-fontColor);
+}
+
+.settingSidebar div {
+  padding: 10px 0px 10px 10px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.settingSidebar div:hover,
+.activeSettingOption {
+  background: var(--primary-fontColor);
+  color: white;
+}
+
+.contentSection {
+  width: 75%;
+}
+
+.profileSection {
+  display: flex;
+  align-items: center;
+}
+
+.profileBanner {
+  width: 100%;
+  height: 150px;
+  border-radius: 40px 5px 5px 5px;
+}
+
+.avatar {
+  border-radius: 50%;
+  height: 125px;
+  margin-left: 50px;
+  margin-top: -35px;
+}
+
+.innerProfileSection {
+  margin: 15px 0 0 15px;
+}
+
+.innerProfileSection div:first-child {
+  font-size: 25px;
+}
+
+.innerProfileSection div:last-child {
+  opacity: 0.8;
+}
+
+.buttonContainer {
+  margin-left: auto;
+  margin-right: 30px;
+}
+
+.buttonContainer button {
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: var(--box-shadowScheme);
+  color: white;
+}
+
+.buttonContainer button:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.cancelButton {
+  background: red;
+  margin-right: 10px;
+}
+
+.saveButton {
+  background: green;
+}

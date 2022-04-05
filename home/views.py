@@ -112,6 +112,16 @@ def list_details(request, list_id):
     return render(request, 'home/list_details.html', context)
 
 
+def sector_details(request, name):
+    sector = get_object_or_404(Sector, name=name.capitalize())
+    context = {'sector': sector}
+    return render(request, 'home/sector_details.html', context)
+
+
+def settings(request):
+    return render(request, 'home/settings.html')
+
+
 def main(request):
     return render(request, 'home/main.html')
 

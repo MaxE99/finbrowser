@@ -1,7 +1,8 @@
 # Django imports
 from django.urls import path
 # Local imports
-from home.views import browser, lists, sectors, list_details, main, articles, search_results
+from home.views import (browser, lists, sectors, list_details, main, articles,
+                        search_results, sector_details, settings)
 from home.api import (source_delete, category_add, category_delete,
                       category_change, list_filter, FilteredList, FilteredSite,
                       get_list_filters, article_filter, get_article_filters)
@@ -14,10 +15,12 @@ urlpatterns = [
     path('sectors/', sectors, name="home-sectors"),
     path('articles/', articles, name="home-articles"),
     path('main/', main, name="home-main"),
+    path('settings/', settings, name="home-settings"),
     path('search_results/<str:search_term>',
          search_results,
          name="home-search_results"),
     path('list/<int:list_id>', list_details, name="home-list_details"),
+    path('sector/<str:name>', sector_details, name="home-sector_details"),
     path('delete_source/<str:source>', source_delete, name='source-delete'),
     path('add_category/<str:category>', category_add, name='category-add'),
     path('delete_category/<str:category>',

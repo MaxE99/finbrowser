@@ -17,27 +17,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'home',
-    'taggit',
-    'django_filters',
-    'rest_framework',
-    'source',
+    'django.contrib.admin', 'django.contrib.auth',
+    'django.contrib.contenttypes', 'django.contrib.sessions',
+    'django.contrib.messages', 'django.contrib.staticfiles', 'home', 'taggit',
+    'django_filters', 'rest_framework', 'source', 'accounts'
 ]
 
-# REST_FRAMEWORK = {
-#     # Use Django's standard `django.contrib.auth` permissions,
-#     # or allow read-only access for unauthenticated users.
-#     'DEFAULT_PERMISSION_CLASSES':
-#     ['rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'],
-#     'DEFAULT_FILTER_BACKENDS':
-#     ['django_filters.rest_framework.DjangoFilterBackend']
-# }
+AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
