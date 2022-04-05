@@ -1,0 +1,35 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'home/settings_style.css' %}">
+<title>ResearchBrowser | Settings</title>
+{% endblock %}
+{% block content %}
+<div class="settingSidebar">
+    <h3>Settings</h3>
+    <div class="settingOption activeSettingOption" data-for-tab="0">Profile</div>
+    <div class="settingOption" data-for-tab="1">Password</div>
+    <div class="settingOption" data-for-tab="2">Notifications</div>
+    <div class="settingOption" data-for-tab="3">My Lists</div>
+</div>
+<div class="contentSection">
+    <div class="tabsContent tabsContentActive" data-tab="0">
+        <img class="profileBanner" src="{% static 'home/media/standard-banner.jpg' %}" alt="profile-banner">
+        <div class="profileSection">
+            <img class="avatar" src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
+            <div class="innerProfileSection">
+                <div>Profile</div>
+                <div>Update your profile picture, bio and links</div>
+            </div>
+            <div class="buttonContainer">
+                <button class="cancelButton">Cancel</button>
+                <button class="saveButton">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+{% endblock content %}

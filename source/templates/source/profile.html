@@ -21,7 +21,7 @@
     <div class="rightSideUpperContainer">
       <h3>{{ source.name }}</h3>
       {% for sector in sectors %}
-      <span class="expertise">{{ sector.name }}</span>
+      <a href="../../home/sector/{{ sector.name }}" class="expertise">{{ sector.name }}</a>
       {% empty %}
       <div class="expertise">No specific sector</div>
       {% endfor %}
