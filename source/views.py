@@ -13,7 +13,6 @@ def profile(request, domain):
     lists = List.objects.filter(sources__source_id=source.source_id)
     sectors = Sector.objects.filter(sources=source)
     website_logo = website_logo_get(source.website)
-    print(website_logo)
     context = {
         'articles': articles,
         'lists': lists,

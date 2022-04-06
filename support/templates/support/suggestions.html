@@ -1,0 +1,43 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'support/suggestions_style.css' %}">
+<title>ResearchBrowser | Feature Wishes</title>
+{% endblock %}
+{% block content %}
+{% if suggestionType %}
+<div class="reportReceivedAlert">Thank You! We received your report and will consider your suggestion!</div>
+{% endif %}
+<div class="suggestionsContainer">
+    <h2>Suggestions</h2>
+    <div>Help us to make this website even better and give us your suggestions on which features,
+        information, changes you would like us to implement.
+    </div>
+    <form action="{% url 'support:support-suggestions' %}" class="suggestionForm" method="POST">
+        {% csrf_token %}
+        <div class="suggestionsFormInner">
+            <div class="formLabel">
+                <span class="formText">Where</span>
+                <select class="multiselectBlock" name="suggestionArea">
+                    <option value="" disabled selected hidden>Which Part Of The Website</option>
+                    <option class="fieldMultiselect" value="Feed">Feed</option>
+                    <option class="fieldMultiselect" value="General">General/Other</option>
+                    <option class="fieldMultiselect" value="Groups">Groups</option>
+                    <option class="fieldMultiselect" value="Portfolio">Portfolio</option>
+                    <option class="fieldMultiselect" value="Stock Information">Stock Information</option>
+                </select>
+            </div>
+            <div>Suggestion</div>
+            <input name="suggestionType" class="suggestionType" type="text">
+            <div>Explanation</div>
+            <textarea name="suggestionExplanation" id="suggestionExplanation" cols="30" rows="9"></textarea>
+            <div class="suggestionsFormButtons">
+                <button class="sendButton" id="submitbutton" type="submit" disabled>Send</button>
+                <button class="btn-empty resetButton" type="button">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+<script src="{% static 'support/suggestions_script.js' %}"></script>
+{% endblock content %}
