@@ -1,0 +1,505 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'support/faq_style.css' %}">
+<title>ResearchBrowser | FAQ</title>
+{% endblock %}
+{% block content %}
+<h2 class="mainHeader">You Have A <span>Question?</span><br>Here Is Your Answer!</h2>
+<div class="faqSearchBar">
+    <input class="faqSearchInput" type="text" placeholder="Please enter your question">
+    <button><i class="fas fa-search"></i></button>
+</div>
+<div class="questionBar">
+    <div class="questionBarTab questionBarTabActive" data-for-tab="1">General</div>
+    <div class="questionBarTab" data-for-tab="2">Feed</div>
+    <div class="questionBarTab" data-for-tab="3">Portfolio</div>
+    <div class="questionBarTab" data-for-tab="4">Stocks</div>
+    <div class="questionBarTab" data-for-tab="5">Groups</div>
+    <div class="questionBarTab" data-for-tab="6">Marketplace</div>
+    <div class="questionBarTab" data-for-tab="7">Subscriptions</div>
+</div>
+
+<div class="tabsContent tabsContentActive" data-tab="1">
+    <div class="reportContent">
+        <div class="collapsibleCategory">General Question 1<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">General Question 2<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">General Question 3<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">General Question 4<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">General Question 5<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">General Question 6<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">General Question 7<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tabsContent" data-tab="2">
+    <div class="reportContent">
+        <div class="collapsibleCategory">Feed Question 1<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Feed Question 2<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Feed Question 3<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Feed Question 4<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Feed Question 5<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Feed Question 6<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Feed Question 7<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tabsContent" data-tab="3">
+    <div class="reportContent">
+        <div class="collapsibleCategory">Portfolio Question 1<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Portfolio Question 2<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Portfolio Question 3<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Portfolio Question 4<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Portfolio Question 5<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Portfolio Question 6<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Portfolio Question 7<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tabsContent" data-tab="4">
+    <div class="reportContent">
+        <div class="collapsibleCategory">Stocks Question 1<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Stocks Question 2<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Stocks Question 3<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Stocks Question 4<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Stocks Question 5<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Stocks Question 6<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Stocks Question 7<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tabsContent" data-tab="5">
+    <div class="reportContent">
+        <div class="collapsibleCategory">Groups Question 1<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Groups Question 2<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Groups Question 3<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Groups Question 4<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Groups Question 5<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Groups Question 6<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Groups Question 7<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tabsContent" data-tab="6">
+    <div class="reportContent">
+        <div class="collapsibleCategory">Marketplace Question 1<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Marketplace Question 2<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Marketplace Question 3<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Marketplace Question 4<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Marketplace Question 5<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Marketplace Question 6<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Marketplace Question 7<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tabsContent" data-tab="7">
+    <div class="reportContent">
+        <div class="collapsibleCategory">Subscription Question 1<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Subscription Question 2<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Subscription Question 3<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Subscription Question 4<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Subscription Question 5<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Subscription Question 6<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+        <div class="collapsibleCategory">Subscription Question 7<i class="fas fa-plus"></i></div>
+        <div class="collapsibleText">
+            <div class="reportItem">
+                <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque aliquam ad laborum alias. Soluta
+                    quod
+                    sint illo voluptatibus repudiandae voluptate, doloremque quibusdam ipsum dicta itaque tenetur minima
+                    expedita odio dolores.</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'support/faq_script.js' %}"></script>
+{% endblock content %}

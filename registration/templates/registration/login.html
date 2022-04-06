@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'registration/login_style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon" type="image/png" href="{% static 'home/media/favicon.png' %}">
+    <title>ResearchBrowser | Login</title>
+</head>
+
+<body>
+    <main>
+        <form action="" method="POST" class="loginUserForm">
+            <div id="info-wrapper">
+                <span class="brand">B</span>
+                <div class="notification">
+                    <h2>Special announcement</h2>
+                    <p>It's time to party! Phasellus semper augue quis metus imperdiet porttitor. Suspendisse suscipit
+                        cursus
+                        fermentum. Praesent vel erat vitae quam dapibus molestie. In malesuada finibus felis, vel
+                        faucibus ex
+                        pellentesque ac. Vivamus nec tellus ac ante vulputate luctus.</p>
+                </div>
+            </div>
+            <div id="form-wrapper">
+                <div>
+                    <h1>Login</h1>
+                    <p>Enter your credentials to continue.</p>
+                </div>
+                <div class="googleAuthContainer">
+                    <button class="googleAuthButton">
+                        <img class="googleLogo" src="{% static 'home/media/google_icon.png' %}" />
+                        Sign in with Google
+                    </button>
+                </div>
+
+                <div class="seperator">Or Sign In With Email</div>
+
+                <div>
+                    {% csrf_token %}
+                    {{ user_login_form }}
+
+                    <!-- <div class="input-wrapper">
+                        <input type="text" placeholder="Enter your username" />
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <input type="password" placeholder="Enter your password" />
+                        <i class="fas fa-key"></i>
+                    </div> -->
+
+                    <div class="rememberAndPwrecovery">
+                        <label class="container">Remember Password
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
+                        <a>Forgot Password?</a>
+                    </div>
+
+                    <input class="signInButton" name="loginUserForm" type="submit" value="Sign In">
+                    <!-- <button type="submit">
+                        Sign In
+                        <i class='fas fa-right-arrow-alt'></i>
+                    </button> -->
+                </div>
+                <div class="createAccount">Not registred yet? <a
+                        href="{% url 'registration:registration-register' %}">Create an Account</a></div>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

@@ -1,6 +1,4 @@
 # Django imports
-from audioop import reverse
-from re import search
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from django.contrib import messages

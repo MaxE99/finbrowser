@@ -20,7 +20,8 @@ INSTALLED_APPS = [
     'django.contrib.admin', 'django.contrib.auth',
     'django.contrib.contenttypes', 'django.contrib.sessions',
     'django.contrib.messages', 'django.contrib.staticfiles', 'home', 'taggit',
-    'django_filters', 'rest_framework', 'source', 'accounts'
+    'django_filters', 'rest_framework', 'source', 'accounts', 'registration',
+    'support'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

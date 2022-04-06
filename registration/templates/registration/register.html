@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'registration/register_style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon" type="image/png" href="{% static 'home/media/favicon.png' %}">
+    <title>ResearchBrowser | Register</title>
+</head>
+
+<body>
+    <main>
+        <form action="" method="POST" class="createUserForm">
+            <div id="info-wrapper">
+                <span class="brand">B</span>
+                <div class="notification">
+                    <h2>Special announcement</h2>
+                    <p>It's time to party! Phasellus semper augue quis metus imperdiet porttitor. Suspendisse suscipit
+                        cursus
+                        fermentum. Praesent vel erat vitae quam dapibus molestie. In malesuada finibus felis, vel
+                        faucibus ex
+                        pellentesque ac. Vivamus nec tellus ac ante vulputate luctus.</p>
+                </div>
+            </div>
+            <div id="form-wrapper">
+
+                <h1>Create Account</h1>
+                <div class="effect aeneas">
+                    <div class="buttons">
+                        <a href="#" class="g-plus" title="Join us on Google+"><i class="fab fa-google-plus-g"
+                                aria-hidden="true"></i></a>
+                        <a href="#" class="fb" title="Join us on Facebook"><i class="fab fa-facebook-f"
+                                aria-hidden="true"></i></a>
+                        <a href="#" class="apple" title="Join us on Apple"><i class="fab fa-apple"
+                                aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="seperator">or use your email for registration</div>
+                <div class="formContainer">
+                    {% csrf_token %}
+                    {{ user_creation_form }}
+                </div>
+                <!-- <div>
+                        <div class="input-wrapper">
+                            <input type="text" placeholder="Enter your username" />
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="text" placeholder="Enter your email" />
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="password" placeholder="Enter your password" />
+                            <i class="fas fa-key"></i>
+                        </div>
+                    </div> -->
+                <label class="container">I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+                    <input type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                </label>
+                <div class="actionButtonsContainer">
+                    <input class="signUpButton" name="createUserForm" type="submit" value="Sign Up"></input>
+                    <a href="{% url 'registration:registration-login' %}" class="signInButton">Sign In</a>
+                </div>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

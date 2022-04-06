@@ -81,14 +81,14 @@
                 <h2>Website</h2>
                 <ul>
                     <li><a href="#">Sitemap</a></li>
-                    <li><a href="#">Feature Wishes</a></li>
+                    <li><a href="{% url 'support:support-suggestions' %}">Feature Wishes</a></li>
                 </ul>
             </div>
             <div class="supportInformation">
                 <h2>Support</h2>
                 <ul>
-                    <li><a href="#">Support Center</a></li>
-                    <li><a href="#">Report A Bug</a></li>
+                    <li><a href="{% url 'support:support-faq' %}">Support Center</a></li>
+                    <li><a href="{% url 'support:support-report_bug' %}">Report A Bug</a></li>
                 </ul>
             </div>
         </div>
