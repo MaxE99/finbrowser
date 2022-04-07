@@ -1,8 +1,8 @@
-from distutils.command.upload import upload
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from django.contrib.postgres.fields import CICharField
 from django.contrib.auth import get_user_model
+from ckeditor.fields import RichTextField
 
 
 class UserManager(BaseUserManager):
@@ -94,10 +94,13 @@ User = get_user_model()
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
-    bio = models.TextField()
+    bio = RichTextField(blank=True, null=True)
     profile_pic = models.ImageField(null=True,
                                     blank=True,
                                     upload_to="profile_pics")
+    profile_banner = models.ImageField(null=True,
+                                       blank=True,
+                                       upload_to="profile_banner")
 
     def __str__(self):
         return str(self.user)

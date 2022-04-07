@@ -10,6 +10,7 @@ from datetime import timedelta, date
 from home.models import Article, BrowserSource, BrowserCategory, List, Sector, Source
 from home.forms import AddSourceForm, AddListForm
 from home.logic.pure_logic import paginator_create
+from accounts.forms import PasswordAndUsernameChangeForm, ProfileChangeForm
 
 
 @login_required(login_url="/registration/login/")
@@ -120,8 +121,15 @@ def sector_details(request, name):
     return render(request, 'home/sector_details.html', context)
 
 
+@login_required(login_url="/registration/login/")
 def settings(request):
-    return render(request, 'home/settings.html')
+    pw_and_name_change_form = PasswordAndUsernameChangeForm()
+    profile_change_form = ProfileChangeForm()
+    context = {
+        'pw_and_name_change_form': pw_and_name_change_form,
+        'profile_change_form': profile_change_form,
+    }
+    return render(request, 'home/settings.html', context)
 
 
 def main(request):

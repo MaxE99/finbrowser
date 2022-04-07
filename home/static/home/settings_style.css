@@ -49,6 +49,8 @@ main {
   height: 125px;
   margin-left: 50px;
   margin-top: -35px;
+  width: 125px;
+  border: 3px solid black;
 }
 
 .innerProfileSection {
@@ -89,4 +91,27 @@ main {
 
 .saveButton {
   background: green;
+}
+
+.editSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.editSection label {
+  display: none;
+}
+
+.editSection input {
+  border: 1px solid rgb(226, 230, 234);
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 13px 12px 13px 12px;
+  transition: border-color 250ms ease-in-out;
+  background: white;
+  opacity: 0.6;
+  margin-bottom: 15px;
+  width: 50%;
 }
