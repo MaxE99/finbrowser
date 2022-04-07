@@ -2,6 +2,7 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Python imports
 from operator import attrgetter
 from datetime import timedelta, date
@@ -11,7 +12,9 @@ from home.forms import AddSourceForm, AddListForm
 from home.logic.pure_logic import paginator_create
 
 
+@login_required(login_url="/registration/login/")
 def browser(request):
+    user = request.user
     if "selectSearchSettings" in request.POST:
         sources = request.POST.getlist('sources')
         timeframe = request.POST.get('timeframe')
@@ -36,6 +39,7 @@ def browser(request):
             'browser_categories': browser_categories,
             'browser_sources': browser_sources,
             'add_source_form': add_source_form,
+            'user': user
         })
 
 
