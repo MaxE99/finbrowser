@@ -190,7 +190,18 @@ header {
   height: 100%;
 }
 
-.userSpace i {
+/* .userSpace i {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+  padding: 0 25px;
+  color: #4c4a4a;
+  border-left: 1px solid rgb(226, 230, 234);
+} */
+
+.fa-cog,
+.fa-bell {
   position: relative;
   display: flex;
   align-items: center;
@@ -231,6 +242,53 @@ header {
   text-align: center;
   font-size: 14px;
   color: rgb(0, 128, 0);
+}
+
+.fa-sort-down {
+  cursor: pointer;
+  font-size: 20px;
+  color: #4c4a4a;
+  padding-bottom: 5px;
+}
+
+.profileMenu {
+  display: none;
+  position: absolute;
+  top: 85px;
+  background: white;
+  box-shadow: var(--box-shadowScheme);
+  width: 100%;
+  border-radius: 0 0 20px 20px;
+}
+
+.profileMenu a {
+  text-decoration: none;
+  color: unset;
+}
+
+.profileMenu div {
+  font-size: 16px;
+  color: var(--secondary-fontColor);
+  padding: 10px;
+  display: flex;
+  padding-left: 20%;
+  cursor: pointer;
+}
+
+.profileMenu div:hover {
+  background: var(--secondary-color);
+}
+
+.profileMenu div span:first-child {
+  width: 20%;
+  display: flex;
+  color: var(--primary-fontColor);
+  align-items: center;
+  font-size: 18px;
+}
+
+.profileMenu div span:last-child {
+  width: 80%;
 }
 
 main {

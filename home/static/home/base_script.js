@@ -110,3 +110,14 @@ document
       window.location.href = `../../home/search_results/${search_term}`;
     }
   });
+
+//Dropdown User Menu
+const dropdownButton = document.querySelector(".fa-sort-down");
+dropdownButton.addEventListener("click", () => {
+  const profileMenu = document.querySelector(".profileMenu");
+  if (profileMenu.style.display == "block") {
+    profileMenu.style.display = "none";
+  } else {
+    profileMenu.style.display = "block";
+  }
+});

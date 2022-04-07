@@ -1,6 +1,8 @@
+from distutils.command.upload import upload
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from django.contrib.postgres.fields import CICharField
+from django.contrib.auth import get_user_model
 
 
 class UserManager(BaseUserManager):
@@ -85,3 +87,17 @@ class User(AbstractBaseUser):
     def is_admin(self):
         "Is the user a admin member?"
         return self.admin
+
+
+User = get_user_model()
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
+    bio = models.TextField()
+    profile_pic = models.ImageField(null=True,
+                                    blank=True,
+                                    upload_to="profile_pics")
+
+    def __str__(self):
+        return str(self.user)
