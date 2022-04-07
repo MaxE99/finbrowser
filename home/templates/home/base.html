@@ -42,7 +42,11 @@
                 <i class="far fa-bell"></i>
                 <div class="profileWrapper">
                     <div class="userProfile">
+                        {% if user.profile.profile_pic %}
                         <img src="{{ user.profile.profile_pic.url }}" alt="user-profile-pic">
+                        {% else %}
+                        <img src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
+                        {% endif %}
                         <div class="userInformation">
                             <div class="userName">{{ user.username }}</div>
                             <div class="accountType">Premium</div>
@@ -51,32 +55,12 @@
                     </div>
                     <div class="profileMenu">
                         <div>
-                            <span><i class="far fa-user-circle"></i></span>
-                            <span>Profile</span>
-                        </div>
-                        <div>
-                            <span><i class="fas fa-envelope-open-text"></i></span>
-                            <span>>Chat</span>
-                        </div>
-                        <div>
-                            <span><i class="fas fa-money-check"></i></span>
-                            <span>Subscriptions</span>
-                        </div>
-                        <div>
-                            <span><i class="fas fa-sign-out-alt"></i></span>
-                            <span><a href="{% url 'registration:registration-logout' %}">Logout</a></span>
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                            <a href="{% url 'registration:registration-logout' %}"></a>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="profileWrapper">
-                    <div class="userProfile">
-                        <img src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
-                        <div class="userInformation">
-                            <div class="userName">{{ user.username }}</div>
-                            <div class="accountType">Premium</div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </header>

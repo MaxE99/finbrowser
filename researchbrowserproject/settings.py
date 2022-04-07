@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes', 'django.contrib.sessions',
     'django.contrib.messages', 'django.contrib.staticfiles', 'home', 'taggit',
     'django_filters', 'rest_framework', 'source', 'accounts', 'registration',
-    'support'
+    'support', 'ckeditor'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

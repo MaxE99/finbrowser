@@ -99,6 +99,8 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django import forms
+from ckeditor.fields import CKEditorWidget
+from accounts.models import Profile
 
 User = get_user_model()
 
@@ -148,3 +150,21 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
+
+
+class PasswordAndUsernameChangeForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+        widgets = {
+            'username': forms.TextInput(attrs={'placeholder': 'Username'}),
+            'email': forms.TextInput(attrs={'placeholder': 'Email'}),
+        }
+
+
+class ProfileChangeForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ('profile_pic', 'bio')

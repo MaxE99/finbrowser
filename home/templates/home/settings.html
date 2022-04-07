@@ -14,20 +14,36 @@
     <div class="settingOption" data-for-tab="3">My Lists</div>
 </div>
 <div class="contentSection">
-    <div class="tabsContent tabsContentActive" data-tab="0">
-        <img class="profileBanner" src="{% static 'home/media/standard-banner.jpg' %}" alt="profile-banner">
-        <div class="profileSection">
-            <img class="avatar" src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
-            <div class="innerProfileSection">
-                <div>Profile</div>
-                <div>Update your profile picture, bio and links</div>
+    <form action="">
+        <div class="tabsContent tabsContentActive" data-tab="0">
+            {% if user.profile.profile_banner %}
+            <img class="profileBanner" src="{{ user.profile.profile_banner.url }}" alt="profile-banner">
+            {% else %}
+            <img class="profileBanner" src="{% static 'home/media/standard-banner.jpg' %}" alt="profile-banner">
+            {% endif %}
+            <div class="profileSection">
+                {% if user.profile.profile_pic %}
+                <img class="avatar" src="{{ user.profile.profile_pic.url }}" alt="user-profile-pic">
+                {% else %}
+                <img class="avatar" src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
+                {% endif %}
+                <div class="innerProfileSection">
+                    <div>Profile</div>
+                    <div>Update your profile picture, bio and links</div>
+                </div>
+                <div class="buttonContainer">
+                    <button class="cancelButton">Cancel</button>
+                    <button class="saveButton">Save</button>
+                </div>
             </div>
-            <div class="buttonContainer">
-                <button class="cancelButton">Cancel</button>
-                <button class="saveButton">Save</button>
+            <div class="editSection">
+                {% csrf_token %}
+                {{ pw_and_name_change_form }}
+                {{ profile_change_form.media }}
+                {{ profile_change_form }}
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
 
