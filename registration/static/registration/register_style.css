@@ -41,7 +41,7 @@ form {
   height: 575px;
   overflow: hidden;
   width: 60%;
-  margin: 100px auto 80px;
+  margin: 75px auto 80px;
 }
 
 form #info-wrapper,
@@ -413,5 +413,25 @@ button:hover,
 
 .helptext,
 .formContainer label {
+  display: none;
+}
+
+.errorlist {
+  background: red;
+  position: absolute;
+  opacity: 1;
+  color: white;
+  font-size: 18px;
+  border-radius: 20px;
+  padding: 10px 20px;
+  list-style: none;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+  letter-spacing: 1.2px;
+  bottom: 15px;
+}
+
+.errorlist:last-of-type {
   display: none;
 }

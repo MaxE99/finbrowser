@@ -41,7 +41,7 @@ form {
   height: 550px;
   overflow: hidden;
   width: 60%;
-  margin: 100px auto 80px;
+  margin: 75px auto 105px;
 }
 
 form #info-wrapper,
@@ -305,4 +305,53 @@ button:hover {
 .createAccount a {
   color: var(--primary-fontColor);
   cursor: pointer;
+}
+
+.errorlist {
+  display: none;
+}
+
+.messages {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  -moz-animation: cssAnimation 0s ease-in 4s forwards;
+  -webkit-animation: cssAnimation 0s ease-in 4s forwards;
+  -o-animation: cssAnimation 0s ease-in 4s forwards;
+  animation: cssAnimation 0s ease-in 4s forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  z-index: 10;
+  margin-left: 8.75%;
+}
+
+.messages li {
+  color: white;
+  font-size: 18px;
+  border-radius: 20px;
+  padding: 10px 20px;
+  list-style: none;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+  letter-spacing: 1.2px;
+}
+
+.messages .success {
+  background: green;
+}
+
+.messages .error {
+  background: red;
+}
+
+@keyframes cssAnimation {
+  to {
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+  }
 }

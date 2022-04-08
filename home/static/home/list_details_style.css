@@ -21,3 +21,28 @@
 .categoryContainer {
   margin-top: 60px;
 }
+
+.subscribeButton {
+  font-size: 25px;
+  cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: var(--box-shadowScheme);
+  color: white;
+  text-decoration: none;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.subscribeButton:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.subscribed {
+  background: red;
+}
+
+.unsubscribed {
+  background: green;
+}

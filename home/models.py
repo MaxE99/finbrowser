@@ -2,9 +2,12 @@
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import m2m_changed
+from django.contrib.auth import get_user_model
 # Local imports
 from home.logic.scrapper import website_scrapping_initiate
 from home.logic.services import main_website_source_set
+
+User = get_user_model()
 
 
 class Source(models.Model):
@@ -55,14 +58,18 @@ class Article(models.Model):
 
 class List(models.Model):
     CONTENT_CHOICES = [('Articles', 'Articles'), ('Sources', 'Sources')]
-    # created_by + created_at + public(bool) + Likes by user
     list_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+    creator = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    subscribers = models.ManyToManyField(User,
+                                         related_name='subscriber_list',
+                                         blank=True)
     content_type = models.CharField(max_length=10,
                                     choices=CONTENT_CHOICES,
                                     default='None')
     updated_at = models.DateTimeField(auto_now=True)
     likes = models.PositiveIntegerField(default=0)
+    is_public = models.BooleanField(default=False)
     sources = models.ManyToManyField(Source, related_name='lists', blank=True)
     main_website_source = models.CharField(max_length=100, blank=True)
 

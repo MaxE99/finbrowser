@@ -1,21 +1,25 @@
 # Django imports
 from django.urls import path
 # Local imports
-from home.views import (browser, lists, sectors, list_details, main, articles,
+from home.views import (feed, lists, sectors, list_details, main, articles,
                         search_results, sector_details, settings)
 from home.api import (source_delete, category_add, category_delete,
                       category_change, list_filter, FilteredList, FilteredSite,
-                      get_list_filters, article_filter, get_article_filters)
+                      get_list_filters, article_filter, get_article_filters,
+                      list_change_subscribtion_status)
 
 app_name = 'home'
 
 urlpatterns = [
-    path('browser/', browser, name='home-browser'),
+    path('feed/', feed, name='home-feed'),
     path('lists/', lists, name="home-lists"),
     path('sectors/', sectors, name="home-sectors"),
     path('articles/', articles, name="home-articles"),
     path('main/', main, name="home-main"),
     path('settings/', settings, name="home-settings"),
+    path('list_change_subscribtion_status/<int:list_id>/<str:action>',
+         list_change_subscribtion_status,
+         name="home-list_change_subscribtion_status"),
     path('search_results/<str:search_term>',
          search_results,
          name="home-search_results"),

@@ -10,4 +10,5 @@ urlpatterns = [
     path('registration/', include('registration.urls',
                                   namespace='registration')),
     path('support/', include('support.urls', namespace='support')),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

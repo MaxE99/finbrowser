@@ -1,106 +1,10 @@
-# from django import forms
-# from django.contrib.auth import get_user_model
-# from django.contrib.auth.forms import ReadOnlyPasswordHashField
-
-# User = get_user_model()
-
-# class RegisterForm(forms.ModelForm):
-#     """
-#     The default
-
-#     """
-
-#     password = forms.CharField(widget=forms.PasswordInput(
-#         attrs={'placeholder': 'Enter Password'}))
-#     password_2 = forms.CharField(
-#         label='Confirm Password',
-#         widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
-
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email']
-#         widgets = {
-#             'username': forms.TextInput(attrs={'placeholder': 'Username'}),
-#             'email': forms.TextInput(attrs={'placeholder': 'Email'}),
-#         }
-
-#     def clean_email(self):
-#         '''
-#         Verify email is available.
-#         '''
-#         email = self.cleaned_data.get('email')
-#         qs = User.objects.filter(email=email)
-#         if qs.exists():
-#             raise forms.ValidationError("email is taken")
-#         return email
-
-#     def clean(self):
-#         '''
-#         Verify both passwords match.
-#         '''
-#         cleaned_data = super().clean()
-#         password = cleaned_data.get("password")
-#         password_2 = cleaned_data.get("password_2")
-#         if password is not None and password != password_2:
-#             self.add_error("password_2", "Your passwords must match")
-#         return cleaned_data
-
-# class UserAdminCreationForm(forms.ModelForm):
-#     """
-#     A form for creating new users. Includes all the required
-#     fields, plus a repeated password.
-#     """
-
-#     password = forms.CharField(widget=forms.PasswordInput)
-#     password_2 = forms.CharField(label='Confirm Password',
-#                                  widget=forms.PasswordInput)
-
-#     class Meta:
-#         model = User
-#         fields = ['email']
-
-#     def clean(self):
-#         '''
-#         Verify both passwords match.
-#         '''
-#         cleaned_data = super().clean()
-#         password = cleaned_data.get("password")
-#         password_2 = cleaned_data.get("password_2")
-#         if password is not None and password != password_2:
-#             self.add_error("password_2", "Your passwords must match")
-#         return cleaned_data
-
-#     def save(self, commit=True):
-#         # Save the provided password in hashed format
-#         user = super().save(commit=False)
-#         user.set_password(self.cleaned_data["password"])
-#         if commit:
-#             user.save()
-#         return user
-
-# class UserAdminChangeForm(forms.ModelForm):
-#     """A form for updating users. Includes all the fields on
-#     the user, but replaces the password field with admin's
-#     password hash display field.
-#     """
-#     password = ReadOnlyPasswordHashField()
-
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email', 'password', 'is_active', 'admin']
-
-#     def clean_password(self):
-#         # Regardless of what the user provides, return the initial value.
-#         # This is done here, rather than on the field, because the
-#         # field does not have access to the initial value
-#         return self.initial["password"]
-
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import PasswordChangeForm
 from django import forms
-from ckeditor.fields import CKEditorWidget
 from accounts.models import Profile
+from ckeditor.fields import CKEditorWidget
 
 User = get_user_model()
 
@@ -152,19 +56,75 @@ class UserChangeForm(forms.ModelForm):
         fields = ('username', 'email', 'password')
 
 
-class PasswordAndUsernameChangeForm(forms.ModelForm):
+class EmailAndUsernameChangeForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.username = kwargs.pop('username')
+        self.email = kwargs.pop('email')
+        super(EmailAndUsernameChangeForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget = forms.TextInput(
+            attrs={'value': self.username})
+        self.fields['email'].widget = forms.TextInput(
+            attrs={'value': self.email})
 
     class Meta:
         model = User
         fields = ('username', 'email')
         widgets = {
-            'username': forms.TextInput(attrs={'placeholder': 'Username'}),
+            'username': forms.TextInput(attrs={
+                'placeholder': 'Username',
+            }),
             'email': forms.TextInput(attrs={'placeholder': 'Email'}),
         }
 
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.exclude(pk=self.instance.pk).filter(
+                username=username).exists():
+            raise forms.ValidationError('Username is already in use.')
+        return username
 
-class ProfileChangeForm(forms.ModelForm):
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.exclude(pk=self.instance.pk).filter(
+                email=email).exists():
+            raise forms.ValidationError('Email is already in use.')
+        return email
+
+
+class ProfilePicChangeForm(forms.ModelForm):
+
+    # def __init__(self, *args, **kwargs):
+    #     self.bio = kwargs.pop('bio')
+    #     super(ProfileChangeForm, self).__init__(*args, **kwargs)
+    #     self.fields['bio'].widget = CKEditorWidget(
+    #         attrs={'blogBody': self.bio})
 
     class Meta:
         model = Profile
-        fields = ('profile_pic', 'bio')
+        fields = ('profile_pic', )
+
+
+class PasswordChangingForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        max_length=100,
+        widget=forms.PasswordInput(attrs={
+            'type': 'password',
+            'label': 'Old password',
+        }))
+    new_password1 = forms.CharField(
+        max_length=100,
+        widget=forms.PasswordInput(attrs={
+            'type': 'password',
+            'label': 'New password'
+        }))
+    new_password2 = forms.CharField(
+        max_length=100,
+        widget=forms.PasswordInput(attrs={
+            'type': 'password',
+            'label': 'Confirm new password'
+        }))
+
+    class Meta:
+        model = User
+        fields = ('old_password', 'new_password1', 'new_password2')

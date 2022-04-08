@@ -44,13 +44,42 @@ main {
   border-radius: 40px 5px 5px 5px;
 }
 
-.avatar {
-  border-radius: 50%;
+.avatarContainer {
+  position: relative;
   height: 125px;
   margin-left: 50px;
   margin-top: -35px;
   width: 125px;
+}
+
+.avatar {
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
   border: 3px solid black;
+}
+
+.avatarContainer label {
+  display: none;
+}
+
+.avatarContainer i {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  background: var(--primary-fontColor);
+  padding: 5px 10px;
+  color: white;
+  border-radius: 10px;
+}
+
+.avatarContainer input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin-top: -125px;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .innerProfileSection {
@@ -58,7 +87,7 @@ main {
 }
 
 .innerProfileSection div:first-child {
-  font-size: 25px;
+  font-size: 30px;
 }
 
 .innerProfileSection div:last-child {
@@ -70,27 +99,29 @@ main {
   margin-right: 30px;
 }
 
-.buttonContainer button {
+.cancelButton,
+.buttonContainer input {
   font-size: 18px;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   box-shadow: var(--box-shadowScheme);
   color: white;
+  background: var(--primary-fontColor);
+  width: 100px;
+  text-decoration: none;
 }
 
-.buttonContainer button:hover {
+.cancelButton:hover,
+.buttonContainer input:hover {
   transform: scale(1.1, 1.1);
 }
 
 .cancelButton {
-  background: red;
+  background: white !important;
   margin-right: 10px;
-}
-
-.saveButton {
-  background: green;
+  color: var(--primary-fontColor) !important;
 }
 
 .editSection {
@@ -100,11 +131,10 @@ main {
   margin: 20px 0;
 }
 
-.editSection label {
-  display: none;
-}
-
-.editSection input {
+.editSection input,
+#id_old_password,
+#id_new_password1,
+#id_new_password2 {
   border: 1px solid rgb(226, 230, 234);
   border-radius: 6px;
   font-size: 18px;
@@ -114,4 +144,39 @@ main {
   opacity: 0.6;
   margin-bottom: 15px;
   width: 50%;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.tabsContent {
+  display: none;
+  margin-top: 20px;
+}
+
+.tabsContentActive {
+  display: block;
+}
+
+.changePasswordForm {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  margin-bottom: 15px;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+.passwordChangeSubmit {
+  background: var(--primary-fontColor);
+  color: white;
+  padding: 13px 12px 13px 12px;
+  border-radius: 6px;
+  font-size: 18px;
+  width: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: var(--box-shadowScheme);
 }
