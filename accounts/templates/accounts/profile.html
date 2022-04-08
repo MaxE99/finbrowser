@@ -1,0 +1,19 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/profile_style.css' %}">
+<title>{{ profile.user.username }} Userprofile | ResearchBrowser</title>
+{% endblock %}
+
+{% block content %}
+
+
+<img class="profileBanner" src="{{ profile.profile_banner.url }}" alt="profile-banner">
+<img class="avatar" src="{{ profile.profile_pic.url }}" alt="user-profile-pic">
+
+<div style="margin-top: 40px;">{{ profile.user.username }}</div>
+<div style="margin-top: 40px;">{{ profile.bio|safe }}</div>
+
+
+{% endblock content %}

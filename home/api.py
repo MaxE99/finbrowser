@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.core.cache import cache
 from django.http import JsonResponse
+from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
 # Local imports
 from home.models import Article, BrowserSource, BrowserCategory, Source, List
@@ -43,6 +44,17 @@ def category_change(request, source, new_category):
     browser_source.save()
     return Response(
         f'"{str(source)}" has been added to category {new_category}')
+
+
+@api_view(['POST'])
+def list_change_subscribtion_status(request, list_id, action):
+    list = get_object_or_404(List, list_id=list_id)
+    if action == 'Subscribe':
+        list.subscribers.add(request.user.id)
+        return Response(f"You have subscribed to {list}")
+    else:
+        list.subscribers.remove(request.user)
+        return Response(f"You have unsubscribed from {list}")
 
 
 @api_view(['GET'])

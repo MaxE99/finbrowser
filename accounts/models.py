@@ -3,6 +3,7 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from django.contrib.postgres.fields import CICharField
 from django.contrib.auth import get_user_model
 from ckeditor.fields import RichTextField
+from django.template.defaultfilters import slugify
 
 
 class UserManager(BaseUserManager):
@@ -94,6 +95,7 @@ User = get_user_model()
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
+    slug = models.SlugField(unique=True)
     bio = RichTextField(blank=True, null=True)
     profile_pic = models.ImageField(null=True,
                                     blank=True,
@@ -101,6 +103,10 @@ class Profile(models.Model):
     profile_banner = models.ImageField(null=True,
                                        blank=True,
                                        upload_to="profile_banner")
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.user.username)
+        super(Profile, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.user)

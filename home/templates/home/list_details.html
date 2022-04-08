@@ -2,19 +2,27 @@
 <link rel="stylesheet" type="text/css" href="{% static 'home/list_details_style.css' %}" />
 <title>{{ list.name }} List | ResearchBrowser</title>
 {% endblock %} {% block content %}
-<div class="nameContainer">{{ list.name }}</div>
-<div class="categoryContainer">
-    {% for source in list.sources.all %}
-    <div class="sourceContainer" draggable="true">
-        <div class="iconContainer">
-            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
-            <i class="fas fa-times sourceDeleteOptionOff"></i>
+<div class="overlay">
+    <div class="nameContainer">{{ list.name }}</div>
+    <div class="categoryContainer">
+        {% for source in list.sources.all %}
+        <div class="sourceContainer" draggable="true">
+            <div class="iconContainer">
+                <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+                <i class="fas fa-times sourceDeleteOptionOff"></i>
+            </div>
+            <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
+            <div class="sourceNameOuterContainer">
+                <div class="sourceNameInnerContainer">{{ source.name }}</div>
+            </div>
         </div>
-        <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
-        <div class="sourceNameOuterContainer">
-            <div class="sourceNameInnerContainer">{{ source.name }}</div>
-        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+    {% if subscribed %}
+    <button class="subscribeButton subscribed">Unsubscribe</button>
+    {% else %}
+    <button class="subscribeButton unsubscribed">Subscribe</button>
+    {% endif %}
 </div>
+<script src="{% static 'home/list_details_script.js' %}"></script>
 {% endblock content %}

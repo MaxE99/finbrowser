@@ -3,45 +3,27 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import get_user_model
 # Python imports
 from operator import attrgetter
 from datetime import timedelta, date
 # Local imports
-from home.models import Article, BrowserSource, BrowserCategory, List, Sector, Source
+from home.models import Article, List, Sector, Source
 from home.forms import AddSourceForm, AddListForm
 from home.logic.pure_logic import paginator_create
-from accounts.forms import PasswordAndUsernameChangeForm, ProfileChangeForm
+from accounts.forms import EmailAndUsernameChangeForm, PasswordChangingForm, ProfilePicChangeForm
+from accounts.models import Profile
+
+User = get_user_model()
 
 
 @login_required(login_url="/registration/login/")
-def browser(request):
-    user = request.user
-    if "selectSearchSettings" in request.POST:
-        sources = request.POST.getlist('sources')
-        timeframe = request.POST.get('timeframe')
-        search_term = request.POST.get('search_term')
-        cache.set_many({
-            'sources': sources,
-            'timeframe': timeframe,
-            'search_term': search_term
-        })
-    elif "addSourcesSettings" in request.POST:
-        add_source_form = AddSourceForm(request.POST)
-        if add_source_form.is_valid():
-            print("IS VALID")
-            add_source_form.save()
-            messages.success(request, f'Source has been added!')
-            return redirect('../../home/browser/')
-    add_source_form = AddSourceForm()
-    browser_sources = BrowserSource.objects.all().order_by('source')
-    browser_categories = BrowserCategory.objects.all().order_by('name')
-    return render(
-        request, 'home/browser.html', {
-            'browser_categories': browser_categories,
-            'browser_sources': browser_sources,
-            'add_source_form': add_source_form,
-            'user': user
-        })
+def feed(request):
+    user_lists = List.objects.filter(creator=request.user)
+    subscribed_lists = List.objects.filter(subscribers=request.user)
+    context = {'user_lists': user_lists, 'subscribed_lists': subscribed_lists}
+    return render(request, 'home/feed.html', context)
 
 
 def lists(request):
@@ -111,7 +93,11 @@ def articles(request):
 
 def list_details(request, list_id):
     list = get_object_or_404(List, list_id=list_id)
-    context = {'list': list}
+    if request.user in list.subscribers.all():
+        subscribed = True
+    else:
+        subscribed = False
+    context = {'list': list, 'subscribed': subscribed}
     return render(request, 'home/list_details.html', context)
 
 
@@ -123,11 +109,39 @@ def sector_details(request, name):
 
 @login_required(login_url="/registration/login/")
 def settings(request):
-    pw_and_name_change_form = PasswordAndUsernameChangeForm()
-    profile_change_form = ProfileChangeForm()
+    if request.method == "POST":
+        if 'changeProfileForm' in request.POST:
+            email_and_name_change_form = EmailAndUsernameChangeForm(
+                request.POST,
+                username=request.user.username,
+                email=request.user.email,
+                instance=request.user)
+            profile_pic_change_form = ProfilePicChangeForm(
+                request.POST, request.FILES, instance=request.user.profile)
+            if profile_pic_change_form.is_valid():
+                profile_pic_change_form.save()
+                if email_and_name_change_form.is_valid():
+                    request.user.save()
+                    return redirect('../../home/settings/')
+                else:
+                    messages.error(request,
+                                   "Error: Username or email already exists!")
+        elif "changePasswordForm" in request.POST:
+            change_password_form = PasswordChangingForm(user=request.user,
+                                                        data=request.POST
+                                                        or None)
+            if change_password_form.is_valid():
+                change_password_form.save()
+                update_session_auth_hash(request, change_password_form.user)
+                return redirect('../../home/settings/')
+    email_and_name_change_form = EmailAndUsernameChangeForm(
+        username=request.user.username, email=request.user.email)
+    profile_pic_change_form = ProfilePicChangeForm()
+    change_password_form = PasswordChangingForm(request.user)
     context = {
-        'pw_and_name_change_form': pw_and_name_change_form,
-        'profile_change_form': profile_change_form,
+        'change_password_form': change_password_form,
+        'email_and_name_change_form': email_and_name_change_form,
+        'profile_pic_change_form': profile_pic_change_form,
     }
     return render(request, 'home/settings.html', context)
 
