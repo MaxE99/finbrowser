@@ -10,43 +10,44 @@
 
 
 <div class="contentSection">
-    {% if user.profile.profile_banner %}
-    <img class="profileBanner" src="{{ profile.profile_banner.url }}" alt="profile-banner">
-    {% else %}
-    <img class="profileBanner" src="{% static 'home/media/standard-banner.jpg' %}" alt="profile-banner">
-    {% endif %}
-    <div class="profileSection">
-        {% if user.profile.profile_pic %}
-        <div class="avatarContainer">
-            <img class="avatar" src="{{ profile.profile_pic.url }}" alt="user-profile-pic">
-        </div>
+    <div class="bannerProfileSocialContainer">
+        {% if user.profile.profile_banner %}
+        <img class="profileBanner" src="{{ profile.profile_banner.url }}" alt="profile-banner">
         {% else %}
-        <div class="avaterContainer">
-            <img class="avatar" src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
-        </div>
+        <img class="profileBanner" src="{% static 'home/media/standard-banner.jpg' %}" alt="profile-banner">
         {% endif %}
-        <div class="innerProfileSection">
-            <div>{{ profile.user.username }}</div>
-        </div>
-        <div class="socialMediaLinkContainer">
-            <div class="icon">
-                <i class="fab fa-facebook-f"></i>
+        <div class="profileSocialContainer">
+            <div class="avatarContainer">
+                {% if user.profile.profile_pic %}
+                <img class="avatar" src="{{ profile.profile_pic.url }}" alt="user-profile-pic">
+                {% else %}
+                <img class="avatar" src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
+                {% endif %}
+                <div class="profileUsername">{{ profile.user.username }}</div>
             </div>
-            <div class="icon">
-                <i class="fab fa-instagram"></i>
-            </div>
-            <div class="icon">
-                <i class="fab fa-linkedin"></i>
-            </div>
-            <div class="icon">
-                <i class="fab fa-twitter"></i>
-            </div>
-            <div class="icon">
-                <i class="fab fa-youtube"></i>
+            <div class="socialMediaLinkContainer">
+                <div class="icon">
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="icon">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <div class="icon">
+                    <i class="fab fa-linkedin"></i>
+                </div>
+                <div class="icon">
+                    <i class="fab fa-twitter"></i>
+                </div>
+                <div class="icon">
+                    <i class="fab fa-youtube"></i>
+                </div>
             </div>
         </div>
     </div>
-    <div class="bioContainer">{{ profile.bio|safe }}</div>
+    <div class="bioContainer">
+        <span>About:</span>
+        <div class="bio">{{ profile.bio|safe }}</div>
+    </div>
 
     <div class="browserCategory">Created Lists</div>
     <div class="carousel-container">

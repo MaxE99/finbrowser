@@ -33,6 +33,9 @@ function get_fetch_settings(inputMethod) {
 // Gives user feedback if action that includes DRF has been succesfull or not
 
 function showMessage(message, type) {
+  document.querySelectorAll(".messages").forEach((message) => {
+    message.innerHTML = "";
+  });
   const messages = document.createElement("ul");
   messages.classList.add("messages");
   const state = document.createElement("li");
@@ -56,7 +59,7 @@ document
       if (search_term && search_term.replaceAll(/\s/g, "") != "") {
         try {
           const res = await fetch(
-            `../search_site/${search_term}`,
+            `../../home/search_site/${search_term}`,
             get_fetch_settings("GET")
           );
           if (!res.ok) {
@@ -68,14 +71,14 @@ document
             if (context[0].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Lists</div>`;
               context[0].forEach((list) => {
-                const listRes = `<a href="../list/${list.list_id}" class="searchResult">${list.name}</a>`;
+                const listRes = `<a href="../../home/list/${list.list_id}" class="searchResult">${list.name}</a>`;
                 results_list.innerHTML += listRes;
               });
             }
             if (context[1].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Sources</div>`;
               context[1].forEach((source) => {
-                const sourceRes = `<a href="../../sourceprofile/${source.domain}" class="searchResult">${source.domain}</a>`;
+                const sourceRes = `<a href="../../source/profile/${source.domain}" class="searchResult">${source.domain}</a>`;
                 results_list.innerHTML += sourceRes;
               });
             }

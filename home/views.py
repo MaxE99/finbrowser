@@ -20,11 +20,12 @@ User = get_user_model()
 
 @login_required(login_url="/registration/login/")
 def feed(request):
-    user_lists = List.objects.filter(creator=request.user)
+    user_lists = List.objects.filter(creator=request.user).order_by('name')
     subscribed_lists = List.objects.filter(subscribers=request.user)
     subscribed_sources = Source.objects.filter(subscribers=request.user)
     subscribed_articles = Article.objects.filter(
         source__in=subscribed_sources).order_by('-pub_date')
+    subscribed_articles, _ = paginator_create(request, subscribed_articles, 10)
     context = {
         'user_lists': user_lists,
         'subscribed_lists': subscribed_lists,
@@ -58,12 +59,11 @@ def lists(request):
     add_list_form = AddListForm()
     results_found = len(lists)
     lists = sorted(lists, key=attrgetter('likes'), reverse=True)
-    lists, page = paginator_create(request, lists, 10)
+    lists, _ = paginator_create(request, lists, 10)
     return render(
         request, 'home/lists.html', {
             'add_list_form': add_list_form,
             'lists': lists,
-            'page': page,
             'results_found': results_found,
         })
 
@@ -89,7 +89,7 @@ def articles(request):
     # if sector != 'All' and timeframe != None:
     #     search_articles.filter(source__sectors=sector)
     results_found = len(search_articles)
-    search_articles, page = paginator_create(request, search_articles, 10)
+    search_articles, _ = paginator_create(request, search_articles, 10)
     sectors = Sector.objects.all().order_by('name')
     context = {
         'results_found': results_found,
@@ -101,11 +101,17 @@ def articles(request):
 
 def list_details(request, list_id):
     list = get_object_or_404(List, list_id=list_id)
+    if list.content_type == 'Sources':
+        articles = Article.objects.filter(
+            source__in=list.sources.all()).order_by('-pub_date')
+        articles, _ = paginator_create(request, articles, 10)
+    else:
+        articles = None
     if request.user in list.subscribers.all():
         subscribed = True
     else:
         subscribed = False
-    context = {'list': list, 'subscribed': subscribed}
+    context = {'list': list, 'subscribed': subscribed, 'articles': articles}
     return render(request, 'home/list_details.html', context)
 
 
@@ -130,6 +136,7 @@ def settings(request):
                 profile_pic_change_form.save()
                 if email_and_name_change_form.is_valid():
                     request.user.save()
+                    request.user.profile.save()
                     return redirect('../../home/settings/')
                 else:
                     messages.error(request,
