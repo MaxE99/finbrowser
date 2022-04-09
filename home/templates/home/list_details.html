@@ -6,10 +6,9 @@
     <div class="nameContainer">{{ list.name }}</div>
     <div class="categoryContainer">
         {% for source in list.sources.all %}
-        <div class="sourceContainer" draggable="true">
+        <div class="sourceContainer">
             <div class="iconContainer">
                 <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
-                <i class="fas fa-times sourceDeleteOptionOff"></i>
             </div>
             <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
             <div class="sourceNameOuterContainer">
@@ -22,6 +21,21 @@
     <button class="subscribeButton subscribed">Unsubscribe</button>
     {% else %}
     <button class="subscribeButton unsubscribed">Subscribe</button>
+    {% endif %}
+
+    <div class="browserCategory">Latest Articles From Sources</div>
+
+    {% if articles %}
+    <div class="articlesContainer">
+        {% for article in articles %}
+        <div class="article">
+            <img src="{% static article.source.favicon_path %}" />
+            <div>{{ article.title }}</div>
+            <a href="{{ article.link }}"></a>
+        </div>
+        {% endfor %}
+        {% include "pagination.html" with page=articles %}
+    </div>
     {% endif %}
 </div>
 <script src="{% static 'home/list_details_script.js' %}"></script>

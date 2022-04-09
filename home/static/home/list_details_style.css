@@ -46,3 +46,7 @@
 .unsubscribed {
   background: green;
 }
+
+.browserCategory {
+  margin: 20px 0 10px;
+}

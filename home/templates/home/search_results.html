@@ -50,10 +50,9 @@
     <div class="tabsContent" data-tab="2">
         <div class="categoryContainer">
             {% for source in filtered_sources %}
-            <div class="sourceContainer" draggable="true">
+            <div class="sourceContainer">
                 <div class="iconContainer">
                     <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
-                    <i class="fas fa-times sourceDeleteOptionOff"></i>
                 </div>
                 <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
                 <div class="sourceNameOuterContainer">

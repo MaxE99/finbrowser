@@ -17,7 +17,7 @@ subscribeButton.addEventListener("click", async () => {
       showMessage(context, "Success");
       if (action == "Subscribe") {
         subscribeButton.classList.replace("unsubscribed", "subscribed");
-        subscribeButton.innerText = "Unsubscribe";
+        subscribeButton.innerText = "Subscribed";
       } else {
         subscribeButton.classList.replace("subscribed", "unsubscribed");
         subscribeButton.innerText = "Subscribe";

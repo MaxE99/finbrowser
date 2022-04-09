@@ -7,49 +7,84 @@
 {% endblock %}
 
 {% block content %}
-<div class="browserCategory">Lists</div>
-<div class="listsWrapper">
-    <div class="myListsContainer">
-        <div class="browserCategory">My Lists</div>
-        <div class="articlesContainer">
+<div class="browserCategory">My Lists</div>
+<div class="carousel-container">
+    <div onClick="prev();" class="prev"></div>
+    <div class="carousel-list">
+        <ul class="slider-content">
             {% for list in user_lists %}
-            <div class="article">
-                <img src="{% static 'home/media/bigger_favicon.png' %}" />
-                <div>{{ list.name }}</div>
-                <a href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
-            </div>
+            <li>
+                <div class="sourceContainer">
+                    <div class="iconContainer">
+                        <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
+                    </div>
+                    <a class="sourceLink" href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
+                    <div class="sourceNameOuterContainer">
+                        <div class="sourceNameInnerContainer">{{ list.name }}</div>
+                    </div>
+                </div>
+            </li>
             {% endfor %}
-        </div>
+        </ul>
     </div>
-    <div class="subscribedListsContainer">
-        <div class="browserCategory">Subscribed Lists</div>
-        <div class="articlesContainer">
+    <div onClick="next();" class="next">
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </div>
+</div>
+
+<div class="browserCategory">Subscribed Lists</div>
+<div class="carousel-container">
+    <div onClick="prev();" class="prev"></div>
+    <div class="carousel-list">
+        <ul class="slider-content">
             {% for list in subscribed_lists %}
-            <div class="article">
-                <img src="{% static 'home/media/bigger_favicon.png' %}" />
-                <div>{{ list.name }}</div>
-                <a href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
-            </div>
+            <li>
+                <div class="sourceContainer">
+                    <div class="iconContainer">
+                        <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
+                    </div>
+                    <a class="sourceLink" href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
+                    <div class="sourceNameOuterContainer">
+                        <div class="sourceNameInnerContainer">{{ list.name }}</div>
+                    </div>
+                </div>
+            </li>
             {% endfor %}
-        </div>
+        </ul>
+    </div>
+    <div onClick="next();" class="next">
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
     </div>
 </div>
+
 <div class="browserCategory">Subscribed Sources</div>
-<div class="categoryContainer">
-    {% for source in subscribed_sources %}
-    <div class="sourceContainer" draggable="true">
-        <div class="iconContainer">
-            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
-            <i class="fas fa-times sourceDeleteOptionOff"></i>
-        </div>
-        <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
-        <div class="sourceNameOuterContainer">
-            <div class="sourceNameInnerContainer">{{ source.name }}</div>
-        </div>
+<div class="carousel-container">
+    <div onClick="prev();" class="prev"></div>
+    <div class="carousel-list">
+        <ul class="slider-content">
+            {% for source in subscribed_sources %}
+            <li>
+                <div class="sourceContainer">
+                    <div class="iconContainer">
+                        <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+                    </div>
+                    <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
+                    <div class="sourceNameOuterContainer">
+                        <div class="sourceNameInnerContainer">{{ source.name }}</div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
-    {% endfor %}
+    <div onClick="next();" class="next">
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </div>
 </div>
-<div class="browserCategory">Articles Of Subscribed Sources</div>
+
+
+
+<div class="browserCategory subscribedSourcesArticleHeader">Articles Of Subscribed Sources</div>
 <div class="articlesContainer">
     {% for article in subscribed_articles %}
     <div class="article">
@@ -58,5 +93,6 @@
         <a href="{{ article.link }}"></a>
     </div>
     {% endfor %}
+    {% include "pagination.html" with page=subscribed_articles %}
 </div>
 {% endblock content %}

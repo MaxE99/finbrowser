@@ -14,8 +14,8 @@ def profile(request, slug):
     # Highlighted Articles are currently subscribed articles => I must change this
     highlighted_articles = Article.objects.filter(
         source__in=subscribed_sources).order_by('-pub_date')
-    highlighted_articles, page = paginator_create(request,
-                                                  highlighted_articles, 7)
+    highlighted_articles, _ = paginator_create(request, highlighted_articles,
+                                               7)
     # Highlighted Articles are currently subscribed articles => I must change this
     context = {
         'profile': profile,
