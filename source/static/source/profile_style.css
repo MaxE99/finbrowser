@@ -88,6 +88,33 @@
   height: 200px;
 }
 
+.upperInnerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.subscribeButton {
+  padding: 8px 16px;
+  font-size: 18px;
+  color: white;
+  border: none;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.subscribeButton:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.subscribed {
+  background: red;
+}
+
+.unsubscribed {
+  background: green;
+}
+
 .rightSide h3 {
   font-size: 30px;
 }

@@ -13,6 +13,10 @@ def profile(request, domain):
     lists = List.objects.filter(sources__source_id=source.source_id)
     sectors = Sector.objects.filter(sources=source)
     website_logo = website_logo_get(source.website)
+    if request.user in source.subscribers.all():
+        subscribed = True
+    else:
+        subscribed = False
     context = {
         'articles': articles,
         'lists': lists,
@@ -20,5 +24,6 @@ def profile(request, domain):
         'sectors': sectors,
         'source': source,
         'website_logo': website_logo,
+        'subscribed': subscribed
     }
     return render(request, 'source/profile.html', context)
