@@ -22,7 +22,15 @@ User = get_user_model()
 def feed(request):
     user_lists = List.objects.filter(creator=request.user)
     subscribed_lists = List.objects.filter(subscribers=request.user)
-    context = {'user_lists': user_lists, 'subscribed_lists': subscribed_lists}
+    subscribed_sources = Source.objects.filter(subscribers=request.user)
+    subscribed_articles = Article.objects.filter(
+        source__in=subscribed_sources).order_by('-pub_date')
+    context = {
+        'user_lists': user_lists,
+        'subscribed_lists': subscribed_lists,
+        'subscribed_sources': subscribed_sources,
+        'subscribed_articles': subscribed_articles
+    }
     return render(request, 'home/feed.html', context)
 
 

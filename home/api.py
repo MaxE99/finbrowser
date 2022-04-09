@@ -57,6 +57,17 @@ def list_change_subscribtion_status(request, list_id, action):
         return Response(f"You have unsubscribed from {list}")
 
 
+@api_view(['POST'])
+def source_change_subscribtion_status(request, domain, action):
+    source = get_object_or_404(Source, domain=domain)
+    if action == 'Subscribe':
+        source.subscribers.add(request.user.id)
+        return Response(f"You have subscribed to {source}")
+    else:
+        source.subscribers.remove(request.user)
+        return Response(f"You have unsubscribed from {source}")
+
+
 @api_view(['GET'])
 def list_filter(request, timeframe, content_type, sources):
     cache.set_many({

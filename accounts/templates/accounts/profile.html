@@ -9,11 +9,132 @@
 {% block content %}
 
 
-<img class="profileBanner" src="{{ profile.profile_banner.url }}" alt="profile-banner">
-<img class="avatar" src="{{ profile.profile_pic.url }}" alt="user-profile-pic">
+<div class="contentSection">
+    {% if user.profile.profile_banner %}
+    <img class="profileBanner" src="{{ profile.profile_banner.url }}" alt="profile-banner">
+    {% else %}
+    <img class="profileBanner" src="{% static 'home/media/standard-banner.jpg' %}" alt="profile-banner">
+    {% endif %}
+    <div class="profileSection">
+        {% if user.profile.profile_pic %}
+        <div class="avatarContainer">
+            <img class="avatar" src="{{ profile.profile_pic.url }}" alt="user-profile-pic">
+        </div>
+        {% else %}
+        <div class="avaterContainer">
+            <img class="avatar" src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
+        </div>
+        {% endif %}
+        <div class="innerProfileSection">
+            <div>{{ profile.user.username }}</div>
+        </div>
+        <div class="socialMediaLinkContainer">
+            <div class="icon">
+                <i class="fab fa-facebook-f"></i>
+            </div>
+            <div class="icon">
+                <i class="fab fa-instagram"></i>
+            </div>
+            <div class="icon">
+                <i class="fab fa-linkedin"></i>
+            </div>
+            <div class="icon">
+                <i class="fab fa-twitter"></i>
+            </div>
+            <div class="icon">
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+    </div>
+    <div class="bioContainer">{{ profile.bio|safe }}</div>
 
-<div style="margin-top: 40px;">{{ profile.user.username }}</div>
-<div style="margin-top: 40px;">{{ profile.bio|safe }}</div>
+    <div class="browserCategory">Created Lists</div>
+    <div class="carousel-container">
+        <div onClick="prev();" class="prev"></div>
+        <div class="carousel-list">
+            <ul class="slider-content">
+                {% for list in created_lists %}
+                <li>
+                    <div class="sourceContainer">
+                        <div class="iconContainer">
+                            <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
+                        </div>
+                        <a class="sourceLink" href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
+                        <div class="sourceNameOuterContainer">
+                            <div class="sourceNameInnerContainer">{{ list.name }}</div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div onClick="next();" class="next">
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+    </div>
 
 
+    <div class="browserCategory">Subscribed Sources</div>
+    <div class="carousel-container">
+        <div onClick="prev();" class="prev"></div>
+        <div class="carousel-list">
+            <ul class="slider-content">
+                {% for source in subscribed_sources %}
+                <li>
+                    <div class="sourceContainer">
+                        <div class="iconContainer">
+                            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+                        </div>
+                        <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
+                        <div class="sourceNameOuterContainer">
+                            <div class="sourceNameInnerContainer">{{ source.name }}</div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div onClick="next();" class="next">
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+    </div>
+
+    <div class="browserCategory">List Subscribtions</div>
+    <div class="carousel-container">
+        <div onClick="prev();" class="prev"></div>
+        <div class="carousel-list">
+            <ul class="slider-content">
+                {% for list in subscribed_lists %}
+                <li>
+                    <div class="sourceContainer">
+                        <div class="iconContainer">
+                            <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
+                        </div>
+                        <a class="sourceLink" href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
+                        <div class="sourceNameOuterContainer">
+                            <div class="sourceNameInnerContainer">{{ list.name }}</div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div onClick="next();" class="next">
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div class="browserCategory highlightedArticlesHeader">Highlighted Articles</div>
+    <div class="articlesContainer">
+        {% for article in highlighted_articles %}
+        <div class="article">
+            <img src="{% static article.source.favicon_path %}" />
+            <div>{{ article.title }}</div>
+            <a href="{{ article.link }}"></a>
+        </div>
+        {% endfor %}
+        {% include "pagination.html" with page=highlighted_articles %}
+    </div>
+</div>
+
+<script src="{% static 'accounts/profile_script.js' %}"></script>
 {% endblock content %}

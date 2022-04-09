@@ -20,6 +20,9 @@ class Source(models.Model):
     url = models.URLField(unique=True)
     domain = models.CharField(max_length=100, blank=True)
     name = models.CharField(max_length=100, blank=True)
+    subscribers = models.ManyToManyField(User,
+                                         related_name='subscriber_source',
+                                         blank=True)
     favicon_path = models.CharField(max_length=500, blank=True)
     paywall = models.CharField(max_length=10,
                                choices=PAYWALL_CHOICES,

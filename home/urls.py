@@ -6,7 +6,8 @@ from home.views import (feed, lists, sectors, list_details, main, articles,
 from home.api import (source_delete, category_add, category_delete,
                       category_change, list_filter, FilteredList, FilteredSite,
                       get_list_filters, article_filter, get_article_filters,
-                      list_change_subscribtion_status)
+                      list_change_subscribtion_status,
+                      source_change_subscribtion_status)
 
 app_name = 'home'
 
@@ -20,6 +21,9 @@ urlpatterns = [
     path('list_change_subscribtion_status/<int:list_id>/<str:action>',
          list_change_subscribtion_status,
          name="home-list_change_subscribtion_status"),
+    path('source_change_subscribtion_status/<str:domain>/<str:action>',
+         source_change_subscribtion_status,
+         name="home-source_change_subscribtion_status"),
     path('search_results/<str:search_term>',
          search_results,
          name="home-search_results"),
