@@ -2,41 +2,113 @@
 <link rel="stylesheet" type="text/css" href="{% static 'home/list_details_style.css' %}" />
 <title>{{ list.name }} List | ResearchBrowser</title>
 {% endblock %} {% block content %}
-<div class="overlay">
-    <div class="nameContainer">{{ list.name }}</div>
-    <div class="categoryContainer">
-        {% for source in list.sources.all %}
-        <div class="sourceContainer">
-            <div class="iconContainer">
-                <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
-            </div>
-            <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
-            <div class="sourceNameOuterContainer">
-                <div class="sourceNameInnerContainer">{{ source.name }}</div>
+
+<div class="upperContainer">
+    <div class="leftInnerContainer">
+        <div class="listPictureContainer">
+            {% if list.list_pic %}
+            <img src="{{ list.list_pic.url }}">
+            {% else %}
+            <img src="{% static 'home/media/bigger_favicon.png' %}">
+            {% endif %}
+        </div>
+    </div>
+    <div class="rightInnerContainer">
+        <div class="rightFirstRowContainer">
+            <h3>{{ list.name }}</h3>
+            {% if subscribed %}
+            <button class="subscribeButton subscribed">Subscribed</button>
+            {% else %}
+            <button class="subscribeButton unsubscribed">Subscribe</button>
+            {% endif %}
+        </div>
+        <div class="creatorContainer">
+            <span>by </span>
+            <a href="{% url 'accounts:accounts-profile' slug=list.creator.profile.slug %}">
+                {{ list.creator.username }}</a>
+        </div>
+        <div class="rankingsHeader">Rankings</div>
+        <div class="rankingsContainer">
+            <div class="avgRating">4.4</div>
+            <div class="rating">
+                <input type="radio" name="rating" id="rating-5" />
+                <label for="rating-5"></label>
+                <input type="radio" name="rating" id="rating-4" />
+                <label for="rating-4"></label>
+                <input type="radio" name="rating" id="rating-3" />
+                <label for="rating-3"></label>
+                <input type="radio" name="rating" id="rating-2" />
+                <label for="rating-2"></label>
+                <input type="radio" name="rating" id="rating-1" />
+                <label for="rating-1"></label>
             </div>
         </div>
-        {% endfor %}
     </div>
-    {% if subscribed %}
-    <button class="subscribeButton subscribed">Unsubscribe</button>
-    {% else %}
-    <button class="subscribeButton unsubscribed">Subscribe</button>
-    {% endif %}
-
-    <div class="browserCategory">Latest Articles From Sources</div>
-
-    {% if articles %}
-    <div class="articlesContainer">
-        {% for article in articles %}
-        <div class="article">
-            <img src="{% static article.source.favicon_path %}" />
-            <div>{{ article.title }}</div>
-            <a href="{{ article.link }}"></a>
-        </div>
-        {% endfor %}
-        {% include "pagination.html" with page=articles %}
-    </div>
-    {% endif %}
 </div>
+
+<div class="browserCategory">Sources</div>
+<div class="carousel-container">
+    <div onClick="prev();" class="prev"></div>
+    <div class="carousel-list">
+        <ul class="slider-content">
+            {% for source in list.sources.all %}
+            <li>
+                <div class="sourceContainer">
+                    <div class="iconContainer">
+                        <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+                    </div>
+                    <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
+                    <div class="sourceNameOuterContainer">
+                        <div class="sourceNameInnerContainer">{{ source.name }}</div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div onClick="next();" class="next">
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="articleSpace">
+    <div class="leftSide">
+        <div class="browserCategory">Highlighted Articles</div>
+        {% if articles %}
+        <div class="articlesContainer">
+            {% for article in articles %}
+            <div class="article">
+                <img src="{% static article.source.favicon_path %}" />
+                <div>{{ article.title }}</div>
+                <a href="{{ article.link }}"></a>
+            </div>
+            {% endfor %}
+            {% include "pagination.html" with page=articles %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="rightSide">
+        <div class="browserCategory">Latest Articles From Sources</div>
+        {% if articles %}
+        <div class="articlesContainer">
+            {% for article in articles %}
+            <div class="article">
+                <img src="{% static article.source.favicon_path %}" />
+                <div>{{ article.title }}</div>
+                <a href="{{ article.link }}"></a>
+            </div>
+            {% endfor %}
+            {% include "pagination.html" with page=articles %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
 <script src="{% static 'home/list_details_script.js' %}"></script>
 {% endblock content %}

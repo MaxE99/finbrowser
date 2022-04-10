@@ -280,3 +280,69 @@ select {
   text-decoration: none;
   color: black;
 }
+
+/* NEXT styleNEXT styleNEXT styleNEXT styleNEXT styleNEXT styleNEXT styleNEXT styleNEXT styleNEXT styleNEXT styleNEXT style */
+
+details {
+  position: relative;
+  height: 100%;
+}
+
+details[open] {
+  z-index: 1;
+}
+
+details summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 10px;
+  height: 100%;
+  background: white;
+  padding: 20px 0px 5px 10px;
+  font-size: 17px;
+}
+
+details ul {
+  width: 100%;
+  background: white;
+  position: absolute;
+  top: 48px;
+  left: 0;
+  border: 2px solid #ccc;
+}
+
+details li {
+  border-bottom: 1px solid #ccc;
+  list-style: none;
+  padding: 10px 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+details img {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+details ul li:hover {
+  background: var(--primary-fontColor);
+  color: white;
+}
+
+.sourceLabel {
+  z-index: 5;
+}
+
+.filterBar select {
+  /* for Firefox */
+  -moz-appearance: none;
+  /* for Chrome */
+  -webkit-appearance: none;
+}
+
+/* For IE10 */
+.filterBar select::-ms-expand {
+  display: none;
+}

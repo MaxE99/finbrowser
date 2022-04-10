@@ -11,7 +11,7 @@
 
 <div class="contentSection">
     <div class="bannerProfileSocialContainer">
-        {% if user.profile.profile_banner %}
+        {% if profile.profile_banner %}
         <img class="profileBanner" src="{{ profile.profile_banner.url }}" alt="profile-banner">
         {% else %}
         <img class="profileBanner" src="{% static 'home/media/standard-banner.jpg' %}" alt="profile-banner">
@@ -45,10 +45,11 @@
         </div>
     </div>
     <div class="bioContainer">
-        <span>About:</span>
+        <div class="bioHeader">About:</div>
         <div class="bio">{{ profile.bio|safe }}</div>
     </div>
 
+    {% if created_lists %}
     <div class="browserCategory">Created Lists</div>
     <div class="carousel-container">
         <div onClick="prev();" class="prev"></div>
@@ -73,33 +74,9 @@
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
     </div>
+    {% endif %}
 
-
-    <div class="browserCategory">Subscribed Sources</div>
-    <div class="carousel-container">
-        <div onClick="prev();" class="prev"></div>
-        <div class="carousel-list">
-            <ul class="slider-content">
-                {% for source in subscribed_sources %}
-                <li>
-                    <div class="sourceContainer">
-                        <div class="iconContainer">
-                            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
-                        </div>
-                        <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
-                        <div class="sourceNameOuterContainer">
-                            <div class="sourceNameInnerContainer">{{ source.name }}</div>
-                        </div>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div onClick="next();" class="next">
-            <i class="fa fa-chevron-right" aria-hidden="true"></i>
-        </div>
-    </div>
-
+    {% if subscribed_lists %}
     <div class="browserCategory">List Subscribtions</div>
     <div class="carousel-container">
         <div onClick="prev();" class="prev"></div>
@@ -124,6 +101,36 @@
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
     </div>
+    {% endif %}
+
+    {% if subscribed_sources %}
+    <div class="browserCategory">Subscribed Sources</div>
+    <div class="carousel-container">
+        <div onClick="prev();" class="prev"></div>
+        <div class="carousel-list">
+            <ul class="slider-content">
+                {% for source in subscribed_sources %}
+                <li>
+                    <div class="sourceContainer">
+                        <div class="iconContainer">
+                            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+                        </div>
+                        <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
+                        <div class="sourceNameOuterContainer">
+                            <div class="sourceNameInnerContainer">{{ source.name }}</div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div onClick="next();" class="next">
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if highlighted_articles %}
     <div class="browserCategory highlightedArticlesHeader">Highlighted Articles</div>
     <div class="articlesContainer">
         {% for article in highlighted_articles %}
@@ -135,6 +142,9 @@
         {% endfor %}
         {% include "pagination.html" with page=highlighted_articles %}
     </div>
+    {% endif %}
+
+
 </div>
 
 <script src="{% static 'accounts/profile_script.js' %}"></script>

@@ -2,79 +2,77 @@
 <link rel="stylesheet" type="text/css" href="{% static 'source/profile_style.css' %}" />
 <title>{{ source.name }} Profile | ResearchBrowser</title>
 {% endblock %} {% block content %}
-<div class="overlay">
-  <div class="pageContainer">
-    <div class="leftSide">
-      <div class="profileContainer">
-        <img class="profilePicture" src="{% static source.favicon_path %}" alt="favicon" />
-      </div>
-      <div class="containerHeader">Links:</div>
-      <div class="sourceContainer">
-        <div class="iconContainer">
-          <img class="sourcePic" src="{{ website_logo }}" alt="website_logo" />
-        </div>
-        <a class="sourceLink" href="{{ source.url }}"></a>
-      </div>
-      <div class="containerHeader aboutHeader">About {{ source.name }}:</div>
-      <div class="aboutSection">{{ source.about_text }}</div>
+<div class="pageContainer">
+  <div class="leftSide">
+    <div class="profileContainer">
+      <img class="profilePicture" src="{% static source.favicon_path %}" alt="favicon" />
     </div>
-    <div class="rightSide">
-      <div class="rightSideUpperContainer">
-        <div class="upperInnerContainer">
-          <h3>{{ source.name }}</h3>
-          {% if subscribed %}
-          <button class="subscribeButton subscribed">Subscribed</button>
-          {% else %}
-          <button class="subscribeButton unsubscribed">Subscribe</button>
-          {% endif %}
-        </div>
-        {% for sector in sectors %}
-        <a href="../../home/sector/{{ sector.name }}" class="expertise">{{ sector.name }}</a>
-        {% empty %}
-        <div class="expertise">No specific sector</div>
-        {% endfor %}
-        <div class="rankingsHeader">Rankings</div>
-        <div class="rankingsContainer">
-          <div class="avgRating">4.4</div>
-          <div class="rating">
-            <input type="radio" name="rating" id="rating-5" />
-            <label for="rating-5"></label>
-            <input type="radio" name="rating" id="rating-4" />
-            <label for="rating-4"></label>
-            <input type="radio" name="rating" id="rating-3" />
-            <label for="rating-3"></label>
-            <input type="radio" name="rating" id="rating-2" />
-            <label for="rating-2"></label>
-            <input type="radio" name="rating" id="rating-1" />
-            <label for="rating-1"></label>
-          </div>
+    <div class="containerHeader">Links:</div>
+    <div class="sourceContainer">
+      <div class="iconContainer">
+        <img class="sourcePic" src="{{ website_logo }}" alt="website_logo" />
+      </div>
+      <a class="sourceLink" href="{{ source.url }}"></a>
+    </div>
+    <div class="containerHeader aboutHeader">About {{ source.name }}:</div>
+    <div class="aboutSection">{{ source.about_text }}</div>
+  </div>
+  <div class="rightSide">
+    <div class="rightSideUpperContainer">
+      <div class="upperInnerContainer">
+        <h3>{{ source.name }}</h3>
+        {% if subscribed %}
+        <button class="subscribeButton subscribed">Subscribed</button>
+        {% else %}
+        <button class="subscribeButton unsubscribed">Subscribe</button>
+        {% endif %}
+      </div>
+      {% for sector in sectors %}
+      <a href="../../home/sector/{{ sector.name }}" class="expertise">{{ sector.name }}</a>
+      {% empty %}
+      <div class="expertise">No specific sector</div>
+      {% endfor %}
+      <div class="rankingsHeader">Rankings</div>
+      <div class="rankingsContainer">
+        <div class="avgRating">4.4</div>
+        <div class="rating">
+          <input type="radio" name="rating" id="rating-5" />
+          <label for="rating-5"></label>
+          <input type="radio" name="rating" id="rating-4" />
+          <label for="rating-4"></label>
+          <input type="radio" name="rating" id="rating-3" />
+          <label for="rating-3"></label>
+          <input type="radio" name="rating" id="rating-2" />
+          <label for="rating-2"></label>
+          <input type="radio" name="rating" id="rating-1" />
+          <label for="rating-1"></label>
         </div>
       </div>
-      <div class="listsAndArticlesWrapper">
-        <div class="articlesUpperContainer">
-          <div class="containerHeader">Latest Articles</div>
-          <div class="articlesContainer">
-            {% if articles %} {% for article in articles %}
-            <div class="article">
-              <img src="{% static source.favicon_path %}" />
-              <div>{{ article.title }}</div>
-              <a href="{{ article.link }}"></a>
-            </div>
-            {% endfor %} {% endif %}
+    </div>
+    <div class="listsAndArticlesWrapper">
+      <div class="articlesUpperContainer">
+        <div class="containerHeader">Latest Articles</div>
+        <div class="articlesContainer">
+          {% if articles %} {% for article in articles %}
+          <div class="article">
+            <img src="{% static source.favicon_path %}" />
+            <div>{{ article.title }}</div>
+            <a href="{{ article.link }}"></a>
           </div>
-          {% include "pagination.html" with page=articles %}
+          {% endfor %} {% endif %}
         </div>
-        <div class="listsContainer">
-          <div class="containerHeader">Lists</div>
-          <div class="articlesContainer">
-            {% if lists %} {% for list in lists %}
-            <div class="article">
-              <img src="{% static 'home/media/bigger_favicon.png' %}" />
-              <div>{{ list.name }}</div>
-              <a href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
-            </div>
-            {% endfor %} {% endif %}
+        {% include "pagination.html" with page=articles %}
+      </div>
+      <div class="listsContainer">
+        <div class="containerHeader">Lists</div>
+        <div class="articlesContainer">
+          {% if lists %} {% for list in lists %}
+          <div class="article">
+            <img src="{% static 'home/media/bigger_favicon.png' %}" />
+            <div>{{ list.name }}</div>
+            <a href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
           </div>
+          {% endfor %} {% endif %}
         </div>
       </div>
     </div>
