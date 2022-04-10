@@ -1,7 +1,8 @@
-main {
+.overlay {
+  display: flex;
   flex-direction: row;
-  margin-top: 20px;
   justify-content: space-between;
+  margin-top: 20px;
 }
 
 .settingSidebar {

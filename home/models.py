@@ -71,6 +71,7 @@ class List(models.Model):
                                     choices=CONTENT_CHOICES,
                                     default='None')
     updated_at = models.DateTimeField(auto_now=True)
+    list_pic = models.ImageField(null=True, blank=True, upload_to="list_pic")
     likes = models.PositiveIntegerField(default=0)
     is_public = models.BooleanField(default=False)
     sources = models.ManyToManyField(Source, related_name='lists', blank=True)
@@ -104,24 +105,3 @@ class Sector(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class BrowserCategory(models.Model):
-    # user = UserModel
-    browser_category_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-
-class BrowserSource(models.Model):
-    # user = UserModel
-    browser_source_id = models.AutoField(primary_key=True)
-    category = models.ForeignKey(BrowserCategory,
-                                 null=True,
-                                 on_delete=models.SET_NULL)
-    source = models.ForeignKey(Source, null=True, on_delete=models.SET_NULL)
-
-    def __str__(self):
-        return f'{self.source} - {self.category}'

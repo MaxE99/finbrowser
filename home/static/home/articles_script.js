@@ -12,7 +12,7 @@ async function load_filters() {
         document.getElementById("timeframe").value = context[0];
         document.getElementById("sector").value = context[1];
         document.getElementById("paywall").value = context[2];
-        document.getElementById("sources").value = context[3];
+        document.querySelector("summary").innerText = context[3];
       }
     }
   } catch (e) {
@@ -31,8 +31,7 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   const sector = sectorSelect.options[sectorSelect.selectedIndex].value;
   const paywallSelect = document.getElementById("paywall");
   const paywall = paywallSelect.options[paywallSelect.selectedIndex].value;
-  const sourcesSelect = document.getElementById("sources");
-  const sources = sourcesSelect.options[sourcesSelect.selectedIndex].value;
+  const sources = document.querySelector("summary").innerText;
   try {
     const res = await fetch(
       `../filter_articles/${timeframe}/${sector}/${paywall}/${sources}`,
@@ -47,4 +46,12 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   } catch (e) {
     showMessage("Error: Network error detected!", "Error");
   }
+});
+
+// select sources
+document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
+  choice.addEventListener("click", () => {
+    document.querySelector("summary").innerText = choice.lastChild.innerText;
+    document.querySelector("details").removeAttribute("open");
+  });
 });

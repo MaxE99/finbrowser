@@ -10,7 +10,7 @@ from operator import attrgetter
 from datetime import timedelta, date
 # Local imports
 from home.models import Article, List, Sector, Source
-from home.forms import AddSourceForm, AddListForm
+from home.forms import AddListForm
 from home.logic.pure_logic import paginator_create
 from accounts.forms import EmailAndUsernameChangeForm, PasswordChangingForm, ProfilePicChangeForm
 from accounts.models import Profile

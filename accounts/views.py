@@ -8,9 +8,11 @@ from home.logic.pure_logic import paginator_create
 
 def profile(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
-    created_lists = List.objects.filter(creator=profile.user)
-    subscribed_sources = Source.objects.filter(subscribers=profile.user)
-    subscribed_lists = List.objects.filter(subscribers=profile.user)
+    created_lists = List.objects.filter(creator=profile.user).order_by('name')
+    subscribed_sources = Source.objects.filter(
+        subscribers=profile.user).order_by('name')
+    subscribed_lists = List.objects.filter(
+        subscribers=profile.user).order_by('name')
     # Highlighted Articles are currently subscribed articles => I must change this
     highlighted_articles = Article.objects.filter(
         source__in=subscribed_sources).order_by('-pub_date')

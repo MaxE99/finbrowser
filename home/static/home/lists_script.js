@@ -8,7 +8,7 @@ async function load_filters() {
       if (context[0] != null) {
         document.getElementById("timeframe").value = context[0];
         document.getElementById("content").value = context[1];
-        document.getElementById("sources").value = context[2];
+        document.querySelector("summary").innerText = context[2];
       }
     }
   } catch (e) {
@@ -81,8 +81,7 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   const contentTypeSelect = document.getElementById("content");
   const contentType =
     contentTypeSelect.options[contentTypeSelect.selectedIndex].innerText;
-  const sourcesSelect = document.getElementById("sources");
-  const sources = sourcesSelect.options[sourcesSelect.selectedIndex].innerText;
+  const sources = document.querySelector("summary").innerText;
   try {
     const res = await fetch(
       `../filter_list/${timeframe}/${contentType}/${sources}`,
@@ -97,4 +96,12 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   } catch (e) {
     showMessage("Error: Network error detected!", "Error");
   }
+});
+
+// select sources
+document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
+  choice.addEventListener("click", () => {
+    document.querySelector("summary").innerText = choice.lastChild.innerText;
+    document.querySelector("details").removeAttribute("open");
+  });
 });

@@ -1,0 +1,118 @@
+.overlay {
+  display: flex;
+  flex-direction: column;
+}
+
+.websiteBigNameContainer {
+  margin-top: 40px;
+  font-size: 100px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.websiteBigNameContainer div:first-child {
+  font-family: "Pacifico", cursive;
+}
+
+.websiteBigNameContainer div:last-child {
+  font-family: "Pacifico", cursive;
+  color: var(--primary-fontColor);
+  margin-top: -80px;
+}
+
+.websiteAbout {
+  width: 50%;
+  margin: 0 auto;
+  line-height: 1.5;
+  letter-spacing: 1.2px;
+  text-align: justify;
+  opacity: 0.8;
+  font-size: 20px;
+}
+
+.registrationButton {
+  text-decoration: none;
+  font-size: 20px;
+  padding: 20px 40px;
+  background: var(--primary-fontColor);
+  color: white;
+  margin: 20px auto;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+.registrationButton:hover {
+  transform: scale(1.1, 1.1);
+}
+
+/* MOVING BACKGROUND ANIMATIONMOVING BACKGROUND ANIMATIONMOVING BACKGROUND ANIMATIONMOVING BACKGROUND ANIMATIONMOVING BACKGROUND ANIMATIONMOVING BACKGROUND ANIMATION */
+
+/* Animations */
+@-webkit-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-moz-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-o-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-webkit-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+@-moz-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+@-o-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+@keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+
+body {
+  background-color: #e5e5f7;
+  background-image: linear-gradient(#b8c6db 2px, transparent 2px),
+    linear-gradient(90deg, #b8c6db 2px, transparent 2px),
+    linear-gradient(#b8c6db 1px, transparent 1px),
+    linear-gradient(90deg, #b8c6db 1px, #e5e5f7 1px);
+  background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+  -webkit-animation: bg-scrolling-reverse 0.92s infinite;
+  /*Safari 4+ */
+  -moz-animation: bg-scrolling-reverse 0.92s infinite;
+  /* Fx 5+ */
+  -o-animation: bg-scrolling-reverse 0.92s infinite;
+  /* Opera 12+ */
+  animation: bg-scrolling-reverse 0.92s infinite;
+  /* IE 10+ */
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  -o-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+
+.overlay {
+  opacity: 0.8;
+}

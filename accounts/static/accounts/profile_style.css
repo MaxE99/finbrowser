@@ -10,7 +10,7 @@
 .profileSocialContainer {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: calc(100% - 600px);
 }
 
 .profileBanner {
@@ -112,7 +112,7 @@
   box-shadow: var(--box-shadowScheme);
 }
 
-.bioContainer span {
+.bioHeader {
   width: 100%;
   display: flex;
   justify-content: center;

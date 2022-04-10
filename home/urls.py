@@ -3,8 +3,7 @@ from django.urls import path
 # Local imports
 from home.views import (feed, lists, sectors, list_details, main, articles,
                         search_results, sector_details, settings)
-from home.api import (source_delete, category_add, category_delete,
-                      category_change, list_filter, FilteredList, FilteredSite,
+from home.api import (list_filter, FilteredList, FilteredSite,
                       get_list_filters, article_filter, get_article_filters,
                       list_change_subscribtion_status,
                       source_change_subscribtion_status)
@@ -29,14 +28,6 @@ urlpatterns = [
          name="home-search_results"),
     path('list/<int:list_id>', list_details, name="home-list_details"),
     path('sector/<str:name>', sector_details, name="home-sector_details"),
-    path('delete_source/<str:source>', source_delete, name='source-delete'),
-    path('add_category/<str:category>', category_add, name='category-add'),
-    path('delete_category/<str:category>',
-         category_delete,
-         name='category-delete'),
-    path('change_category/<str:source>/<str:new_category>',
-         category_change,
-         name='category_change'),
     path('filter_list/<str:timeframe>/<str:content_type>/<str:sources>',
          list_filter,
          name='list-filter'),

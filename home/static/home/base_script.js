@@ -65,27 +65,29 @@ document
           if (!res.ok) {
             showMessage("Error: Site couldn't be searched!", "Error");
           } else {
+            document.querySelector(".mainInputSearch").style.borderRadius =
+              "8px 8px 0 0";
             const context = await res.json();
             results_list.style.display = "flex";
             results_list.innerHTML = "";
             if (context[0].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Lists</div>`;
               context[0].forEach((list) => {
-                const listRes = `<a href="../../home/list/${list.list_id}" class="searchResult">${list.name}</a>`;
+                const listRes = `<div class="searchResult"><img src="/static/home/media/bigger_favicon.png"><span>${list.name}</span><a href="../../home/list/${list.list_id}"></a></div>`;
                 results_list.innerHTML += listRes;
               });
             }
             if (context[1].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Sources</div>`;
               context[1].forEach((source) => {
-                const sourceRes = `<a href="../../source/profile/${source.domain}" class="searchResult">${source.domain}</a>`;
+                const sourceRes = `<div class="searchResult"><img src="/static/${source.favicon_path}"><span>${source.domain}</span><a href="../../source/profile/${source.domain}"></a></div>`;
                 results_list.innerHTML += sourceRes;
               });
             }
             if (context[2].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Articles</div>`;
               context[2].forEach((article) => {
-                const articleRes = `<a href="${article.link}" class="searchResult">${article.title}</a>`;
+                const articleRes = `<div class="searchResult"><img src="/static/${article.source.favicon_path}"><span>${article.title}</span><a href="${article.link}"></a></div>`;
                 results_list.innerHTML += articleRes;
               });
             }
@@ -96,10 +98,13 @@ document
         document.onclick = function (e) {
           if (e.target.id !== "autocomplete_list_results") {
             results_list.style.display = "none";
+            document.querySelector(".mainInputSearch").style.borderRadius =
+              "8px";
           }
         };
       } else {
         results_list.style.display = "none";
+        document.querySelector(".mainInputSearch").style.borderRadius = "8px";
       }
     }
   });
