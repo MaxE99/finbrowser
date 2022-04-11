@@ -35,7 +35,8 @@
   font-size: 30px;
 }
 
-.subscribeButton {
+.subscribeButton,
+.editButton {
   padding: 8px 16px;
   font-size: 18px;
   color: white;
@@ -44,8 +45,17 @@
   cursor: pointer;
 }
 
-.subscribeButton:hover {
+.subscribeButton:hover,
+.editButton:hover {
   transform: scale(1.1, 1.1);
+}
+
+.editButton {
+  background: var(--primary-fontColor);
+}
+
+.editButton i {
+  margin-right: 3px;
 }
 
 .subscribed {
@@ -127,7 +137,7 @@
 }
 
 .browserCategory {
-  margin: 20px 0 10px;
+  margin-bottom: 10px;
 }
 
 .listsWrapper {
@@ -156,9 +166,19 @@
 .articleSpace {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
 
 .leftSide,
 .rightSide {
-  width: 47.5%;
+  width: 49%;
+  background: white;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 8px;
+}
+
+form {
+  background: yellow;
+  z-index: 10;
+  position: relative;
 }

@@ -1,4 +1,5 @@
 # Django imports
+from django.core.cache import cache
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import m2m_changed
@@ -30,6 +31,7 @@ class Source(models.Model):
     website = models.CharField(max_length=100,
                                choices=WEBSITE_CHOICES,
                                default='None')
+    top_source = models.BooleanField(default=False)
     about_text = models.TextField(blank=True)
 
     def save(self, *args, **kwargs):
@@ -60,7 +62,8 @@ class Article(models.Model):
 
 
 class List(models.Model):
-    CONTENT_CHOICES = [('Articles', 'Articles'), ('Sources', 'Sources')]
+    CONTENT_CHOICES = [('All', 'All'), ('Articles', 'Articles'),
+                       ('Sources', 'Sources')]
     list_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     creator = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
@@ -82,6 +85,7 @@ class List(models.Model):
             instance = main_website_source_set(self)
             super(List, instance).save(*args, **kwargs)
         else:
+            self.creator = cache.get('current_user')
             super(List, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -97,7 +101,7 @@ def list_main_website_source_calculate(sender, instance, action, *args,
 
 
 class Sector(models.Model):
-    list_id = models.AutoField(primary_key=True)
+    sector_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, unique=True)
     sources = models.ManyToManyField(Source,
                                      related_name='sectors',

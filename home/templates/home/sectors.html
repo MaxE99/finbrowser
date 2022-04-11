@@ -23,6 +23,9 @@
     <div class="sourceContainer">
         <div class="iconContainer">
             <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon">
+            {% if source.top_source %}
+            <i class="fas fa-star"></i>
+            {% endif %}
         </div>
         <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
         <div class="sourceNameOuterContainer">

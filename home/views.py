@@ -10,10 +10,10 @@ from operator import attrgetter
 from datetime import timedelta, date
 # Local imports
 from home.models import Article, List, Sector, Source
-from home.forms import AddListForm
+from home.forms import AddListForm, ListPicChangeForm
 from home.logic.pure_logic import paginator_create
-from accounts.forms import EmailAndUsernameChangeForm, PasswordChangingForm, ProfilePicChangeForm
-from accounts.models import Profile
+from accounts.forms import (EmailAndUsernameChangeForm, PasswordChangingForm,
+                            ProfilePicChangeForm)
 
 User = get_user_model()
 
@@ -36,8 +36,9 @@ def feed(request):
 
 
 def lists(request):
+    cache.set('current_user', request.user)
     if 'createListForm' in request.POST:
-        add_list_form = AddListForm(request.POST)
+        add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
             add_list_form.save()
             messages.success(request, f'List has been created!')
@@ -86,8 +87,17 @@ def articles(request):
         (k, v) for k, v in filter_args.items() if v is not None and v != 'All')
     search_articles = Article.objects.filter(
         **filter_args).order_by('-pub_date')
-    # if sector != 'All' and timeframe != None:
-    #     search_articles.filter(source__sectors=sector)
+    notloesung_search_articles = []
+    if sector != 'All' and sector != None:
+        # Refactoring necceseary
+        sector = Sector.objects.get(name=sector)
+        for x in search_articles:
+            all_sectors = x.source.sectors.all()
+            if all_sectors.filter(name=str(sector)):
+                notloesung_search_articles.append(x)
+    if notloesung_search_articles:
+        search_articles = notloesung_search_articles
+        # Refactoring necceseary
     results_found = len(search_articles)
     search_articles, _ = paginator_create(request, search_articles, 10)
     sectors = Sector.objects.all().order_by('name')
@@ -100,7 +110,21 @@ def articles(request):
 
 
 def list_details(request, list_id):
+    print("CALLED")
     list = get_object_or_404(List, list_id=list_id)
+    if request.method == 'POST':
+        print(request)
+        print("POST")
+        print(request.POST)
+        if 'changeListPicForm' in request.POST:
+            print("LIST FORM")
+            change_list_pic_form = ListPicChangeForm(request.POST,
+                                                     request.FILES,
+                                                     instance=list)
+            if change_list_pic_form.is_valid:
+                print("VALID")
+                change_list_pic_form.save()
+                return redirect(f'../../home/list/{list_id}')
     if list.content_type == 'Sources':
         articles = Article.objects.filter(
             source__in=list.sources.all()).order_by('-pub_date')
@@ -111,7 +135,13 @@ def list_details(request, list_id):
         subscribed = True
     else:
         subscribed = False
-    context = {'list': list, 'subscribed': subscribed, 'articles': articles}
+    change_list_pic_form = ListPicChangeForm()
+    context = {
+        'change_list_pic_form': change_list_pic_form,
+        'list': list,
+        'subscribed': subscribed,
+        'articles': articles
+    }
     return render(request, 'home/list_details.html', context)
 
 
