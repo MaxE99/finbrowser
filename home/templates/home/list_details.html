@@ -6,20 +6,37 @@
 <div class="upperContainer">
     <div class="leftInnerContainer">
         <div class="listPictureContainer">
+            {% if list.creator == request.user %}
             {% if list.list_pic %}
             <img src="{{ list.list_pic.url }}">
             {% else %}
             <img src="{% static 'home/media/bigger_favicon.png' %}">
+            <form action="" id="changeListPicForm" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ change_list_pic_form }}
+                <input name="changeListPicForm" type="submit">
+            </form>
+            {% endif %}
+            {% else %}
+            {% if list.list_pic %}
+            <img src="{{ list.list_pic.url }}">
+            {% else %}
+            <img src="{% static 'home/media/bigger_favicon.png' %}">
+            {% endif %}
             {% endif %}
         </div>
     </div>
     <div class="rightInnerContainer">
         <div class="rightFirstRowContainer">
             <h3>{{ list.name }}</h3>
+            {% if list.creator == request.user %}
+            <button class="editButton"><i class="fas fa-edit"></i> Edit</button>
+            {% else %}
             {% if subscribed %}
             <button class="subscribeButton subscribed">Subscribed</button>
             {% else %}
             <button class="subscribeButton unsubscribed">Subscribe</button>
+            {% endif %}
             {% endif %}
         </div>
         <div class="creatorContainer">
@@ -46,31 +63,32 @@
     </div>
 </div>
 
-<div class="browserCategory">Sources</div>
-<div class="carousel-container">
-    <div onClick="prev();" class="prev"></div>
-    <div class="carousel-list">
-        <ul class="slider-content">
-            {% for source in list.sources.all %}
-            <li>
-                <div class="sourceContainer">
-                    <div class="iconContainer">
-                        <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+<div class="categoryWrapper">
+    <div class="categoryNameDiv">Sources</div>
+    <div class="carousel-container">
+        <div onClick="prev();" class="prev"></div>
+        <div class="carousel-list">
+            <ul class="slider-content">
+                {% for source in list.sources.all %}
+                <li>
+                    <div class="sourceContainer">
+                        <div class="iconContainer">
+                            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+                        </div>
+                        <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
+                        <div class="sourceNameOuterContainer">
+                            <div class="sourceNameInnerContainer">{{ source.name }}</div>
+                        </div>
                     </div>
-                    <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
-                    <div class="sourceNameOuterContainer">
-                        <div class="sourceNameInnerContainer">{{ source.name }}</div>
-                    </div>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div onClick="next();" class="next">
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div onClick="next();" class="next">
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
     </div>
 </div>
-
 
 
 

@@ -19,7 +19,7 @@ async function load_filters() {
 load_filters();
 
 const createListMenu = document.querySelector(".createListMenu");
-const overlay = document.querySelector(".overlay");
+const overlay = document.querySelector(".listOverlay");
 
 // Open settings menu
 document.querySelector(".createListButton").addEventListener("click", () => {

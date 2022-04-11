@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.core.cache import cache
 from django.http import JsonResponse
-from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
 # Local imports
 from home.models import Article, Source, List

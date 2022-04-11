@@ -85,29 +85,46 @@
 <div class="popUpMenu createListMenu">
   <i class="fas fa-times red closeMenuButton"></i>
   <div class="menuHeader">Create A New List</div>
-  <form action="" method="POST" class="createListForm">
+  <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
     {% csrf_token %} {{ add_list_form }}
     <div class="popUpButtonContainer">
-      <input name="createListForm" type="submit" class="green saveButton" value="Save" />
+      <input name="createListForm" type="submit" class="saveButton" value="Save" />
     </div>
   </form>
 </div>
 
-{% if lists %} {% for list in lists %}
-<div class="browserCategory">{{ list.name }}</div>
-<div class="categoryContainer">
-  {% for source in list.sources.all %}
-  <div class="sourceContainer">
-    <div class="iconContainer">
-      <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+<div class="listOverlay">
+
+  {% if lists %} {% for list in lists %}
+  <div class="browserCategory">{{ list.name }}</div>
+  <div class="categoryContainer">
+    {% for source in list.sources.all %}
+    <div class="sourceContainer">
+      <div class="iconContainer">
+        <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+        {% if source.paywall == "Yes" %}
+        <i class="fas fa-lock fullPaywall onlyIcon"></i>
+        {% elif source.paywall == "Semi" %}
+        <i class="fas fa-lock semiPaywall onlyIcon"></i>
+        {% endif %}
+        {% if source.top_source %}
+        <i class="fas fa-star"></i>
+        {% if source.paywall == "Yes" %}
+        <i class="fas fa-lock fullPaywall"></i>
+        {% elif source.paywall == "Semi" %}
+        <i class="fas fa-lock semiPaywall"></i>
+        {% endif %}
+        {% endif %}
+      </div>
+      <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
+      <div class="sourceNameOuterContainer">
+        <div class="sourceNameInnerContainer">{{ source.name }}</div>
+      </div>
     </div>
-    <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
-    <div class="sourceNameOuterContainer">
-      <div class="sourceNameInnerContainer">{{ source.name }}</div>
-    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
+  {% endfor %} {% endif %} {% include "pagination.html" with page=lists %}
+  <script src="{% static 'home/lists_script.js' %}"></script>
+  {% endblock %}
+
 </div>
-{% endfor %} {% endif %} {% include "pagination.html" with page=lists %}
-<script src="{% static 'home/lists_script.js' %}"></script>
-{% endblock %}
