@@ -7,10 +7,9 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import get_user_model
 from django.db.models import Sum
 # Python imports
-from operator import attrgetter
 from datetime import timedelta, date
 # Local imports
-from home.models import Article, List, Sector, Source, ListRating
+from home.models import Article, HighlightedArticle, List, Sector, Source, ListRating
 from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm)
 from home.logic.pure_logic import paginator_create
 from accounts.forms import (EmailAndUsernameChangeForm, PasswordChangingForm,
@@ -60,7 +59,6 @@ def lists(request):
     # cache.delete_many(['timeframe', 'content_type', 'sources'])
     add_list_form = AddListForm()
     results_found = len(lists)
-    lists = sorted(lists, key=attrgetter('likes'), reverse=True)
     lists, _ = paginator_create(request, lists, 10)
     return render(
         request, 'home/lists.html', {
@@ -102,10 +100,17 @@ def articles(request):
     results_found = len(search_articles)
     search_articles, _ = paginator_create(request, search_articles, 10)
     sectors = Sector.objects.all().order_by('name')
+    highlighted_articles = HighlightedArticle.objects.filter(user=request.user)
+    highlighted_articles_titles = []
+    for article in highlighted_articles:
+        highlighted_articles_titles.append(article.article.title)
+    user_lists = List.objects.filter(creator=request.user)
     context = {
         'results_found': results_found,
         'search_articles': search_articles,
-        'sectors': sectors
+        'sectors': sectors,
+        'highlighted_articles_titles': highlighted_articles_titles,
+        'user_lists': user_lists
     }
     return render(request, 'home/articles.html', context)
 
@@ -146,8 +151,11 @@ def list_details(request, list_id):
     list_ratings = ListRating.objects.filter(list_id=list_id)
     sum_ratings = ListRating.objects.filter(list_id=list_id).aggregate(
         Sum('rating'))
-    sum_ratings = sum_ratings.get("rating__sum", 0)
-    average_rating = sum_ratings / len(list_ratings)
+    sum_ratings = sum_ratings.get("rating__sum", None)
+    if sum_ratings == None:
+        average_rating = "None"
+    else:
+        average_rating = round(sum_ratings / len(list_ratings), 1)
     context = {
         'change_list_name_form': change_list_name_form,
         'change_list_pic_form': change_list_pic_form,

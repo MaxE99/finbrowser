@@ -380,3 +380,7 @@
   font-size: 25px;
   padding: 12.6px;
 }
+
+.articleInformationContainer {
+  max-width: 39ch !important;
+}

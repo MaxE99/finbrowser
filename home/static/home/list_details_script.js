@@ -246,14 +246,11 @@ const five = document.getElementById("fifth");
 
 // get the form, confirm-box and csrf token
 const form = document.querySelector(".rate-form");
-console.log(form);
 const confirmBox = document.getElementById("confirm-box");
 const csrf = document.getElementsByName("csrfmiddlewaretoken");
 
 const handleStarSelect = (size) => {
-  console.log(form);
   const children = form.children;
-  console.log(children);
   for (let i = 0; i < children.length; i++) {
     if (i <= size) {
       children[i].classList.add("checked");
@@ -347,6 +344,7 @@ if (one) {
           } else {
             const context = await res.json();
             showMessage(context, "Success");
+            window.location.reload();
           }
         } catch (e) {
           showMessage("Error: Network error detected!", "Error");

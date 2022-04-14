@@ -91,9 +91,10 @@
     </div>
 </div>
 
+
 <div class="articlesContainer">
     {% for article in search_articles %}
-    <div class="article">
+    <div class="article" id="article{{ article.article_id }}">
         <img src="{% static article.source.favicon_path %}" />
         <div class="articleInformationContainer">
             <div class="articleTitle">{{ article.title }}</div>
@@ -113,10 +114,44 @@
             </div>
         </div>
         <a class="articleLink" href="{{ article.link }}"></a>
+        <i class="fas fa-ellipsis-h"></i>
+        <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+            <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
+            {% if article.title in highlighted_articles_titles %}
+            <div id="{{ article.article_id }}" class="addToHighlighted"><i class="fas fa-times"></i><span>Unhighlight
+                    article</span></div>
+            {% else %}
+            <div id="{{ article.article_id }}" class="addToHighlighted"><i
+                    class="fas fa-highlighter"></i><span>Highlight
+                    article</span></div>
+            {% endif %}
+        </div>
+        <div class="addToListForm">
+            <i class="fas fa-times"></i>
+            <h3>Add to lists</h3>
+            <div class="listSelectionContainer">
+                {% for list in user_lists %}
+                <div class="listContainer">
+                    <label for="id_list_{{ list.list_id }}">
+                        {% if article.article_id in list.articles %}
+                        <input type="checkbox" value="Fuck Yeah!">
+                        {% else %}
+                        <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists" value="{{ list.list_id }}">
+                        {{ list }}
+                        {% endif %}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="saveButtonContainer">
+                <button class="saveButton">Save</button>
+            </div>
+        </div>
     </div>
     {% endfor %}
-    {% include "pagination.html" with page=search_articles %}
 </div>
+{% include "pagination.html" with page=search_articles %}
+
 
 
 <script src="{% static 'home/articles_script.js' %}"></script>
