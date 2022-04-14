@@ -5,12 +5,13 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import get_user_model
+from django.db.models import Sum
 # Python imports
 from operator import attrgetter
 from datetime import timedelta, date
 # Local imports
-from home.models import Article, List, Sector, Source
-from home.forms import AddListForm, ListPicChangeForm
+from home.models import Article, List, Sector, Source, ListRating
+from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm)
 from home.logic.pure_logic import paginator_create
 from accounts.forms import (EmailAndUsernameChangeForm, PasswordChangingForm,
                             ProfilePicChangeForm)
@@ -110,21 +111,19 @@ def articles(request):
 
 
 def list_details(request, list_id):
-    print("CALLED")
     list = get_object_or_404(List, list_id=list_id)
     if request.method == 'POST':
-        print(request)
-        print("POST")
-        print(request.POST)
-        if 'changeListPicForm' in request.POST:
-            print("LIST FORM")
+        if 'changeListForm' in request.POST:
+            change_list_name_form = ListNameChangeForm(request.POST,
+                                                       instance=list)
             change_list_pic_form = ListPicChangeForm(request.POST,
                                                      request.FILES,
                                                      instance=list)
             if change_list_pic_form.is_valid:
-                print("VALID")
                 change_list_pic_form.save()
-                return redirect(f'../../home/list/{list_id}')
+            if change_list_name_form.is_valid:
+                change_list_name_form.save()
+            return redirect(f'../../home/list/{list_id}')
     if list.content_type == 'Sources':
         articles = Article.objects.filter(
             source__in=list.sources.all()).order_by('-pub_date')
@@ -136,11 +135,27 @@ def list_details(request, list_id):
     else:
         subscribed = False
     change_list_pic_form = ListPicChangeForm()
+    change_list_name_form = ListNameChangeForm()
+    if ListRating.objects.filter(user=request.user, list_id=list_id).exists():
+        list_rating = get_object_or_404(ListRating,
+                                        user=request.user,
+                                        list_id=list_id)
+        user_rating = list_rating.rating
+    else:
+        user_rating = False
+    list_ratings = ListRating.objects.filter(list_id=list_id)
+    sum_ratings = ListRating.objects.filter(list_id=list_id).aggregate(
+        Sum('rating'))
+    sum_ratings = sum_ratings.get("rating__sum", 0)
+    average_rating = sum_ratings / len(list_ratings)
     context = {
+        'change_list_name_form': change_list_name_form,
         'change_list_pic_form': change_list_pic_form,
         'list': list,
         'subscribed': subscribed,
-        'articles': articles
+        'articles': articles,
+        'average_rating': average_rating,
+        'user_rating': user_rating
     }
     return render(request, 'home/list_details.html', context)
 

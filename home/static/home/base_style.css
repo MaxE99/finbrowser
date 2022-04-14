@@ -50,6 +50,9 @@ header {
   max-width: 1600px;
   margin: 0 auto;
   background: var(--primary-color);
+  /* new */
+  position: relative;
+  z-index: 1000;
 }
 
 .headerContainer {
@@ -429,7 +432,7 @@ main {
   height: 100%;
 }
 
-.fa-star {
+.iconContainer .fa-star {
   background: gold;
   position: absolute;
   color: white;
@@ -529,9 +532,10 @@ h2 {
   transform: scale(1.1, 1.1);
 }
 
-.article div {
-  font-size: 20px;
-  padding-left: 7px;
+.article .articleInformationContainer,
+.article .articleSectorAndDateContainer {
+  font-size: 21px;
+  padding-left: 5px;
   color: black;
   white-space: nowrap;
   overflow: hidden;
@@ -539,7 +543,46 @@ h2 {
   max-width: 75ch;
 }
 
-.article a {
+.article .articleSectorAndDateContainer a {
+  color: var(--primary-fontColor);
+  text-decoration: none;
+  font-size: 14px !important;
+  margin-right: 3px;
+  z-index: 10;
+}
+
+.articleSectorAndDateContainer {
+  display: flex;
+  padding-left: unset !important;
+}
+
+.articleSectorAndDateContainer i {
+  font-size: 10px;
+  padding: 3px;
+  margin-left: 3px;
+  color: white;
+  background: orange;
+}
+
+.articleSectorAndDateContainer .fa-star {
+  background: gold;
+}
+
+.articleSectorAndDateContainer .articleFullPaywall {
+  background: red;
+}
+
+.article .articleSectorAndDateContainer .articlePubDate {
+  font-size: 14px !important;
+}
+
+.article .articleTitle {
+  font-size: 21px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.article .articleLink {
   position: absolute;
   left: 0;
   width: 100%;
@@ -551,9 +594,27 @@ h2 {
   height: 50px;
 }
 
+.article .listLink {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
 .explanation {
   letter-spacing: 1.1px;
   text-align: justify;
+}
+
+.rankingStar {
+  font-size: 25px;
+  background-color: inherit !important;
+  border: 0 !important;
+  color: gainsboro;
+  cursor: pointer;
+}
+
+.checked {
+  color: var(--primary-fontColor);
 }
 
 .pagination {

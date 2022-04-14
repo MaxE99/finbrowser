@@ -103,8 +103,24 @@
     {% for article in subscribed_articles %}
     <div class="article">
         <img src="{% static article.source.favicon_path %}" />
-        <div>{{ article.title }}</div>
-        <a href="{{ article.link }}"></a>
+        <div class="articleInformationContainer">
+            <div class="articleTitle">{{ article.title }}</div>
+            <div class="articleSectorAndDateContainer">
+                {% for sector in article.source.sector.all %}
+                <a href="../../home/sector/{{ sector.name }}">{{ sector.name }}</a>
+                {% endfor %}
+                <div class="articlePubDate">{{ article.pub_date }}</div>
+                {% if article.source.top_source %}
+                <i class="fas fa-star articleTopSource"></i>
+                {% endif %}
+                {% if article.source.paywall == "Yes" %}
+                <i class="fas fa-lock articleFullPaywall"></i>
+                {% elif article.source.paywall == "Semi" %}
+                <i class="fas fa-lock articleSemiPaywall"></i>
+                {% endif %}
+            </div>
+        </div>
+        <a class="articleLink" href="{{ article.link }}"></a>
     </div>
     {% endfor %}
     {% include "pagination.html" with page=subscribed_articles %}

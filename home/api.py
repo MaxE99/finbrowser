@@ -6,7 +6,7 @@ from django.core.cache import cache
 from django.http import JsonResponse
 from rest_framework.views import APIView
 # Local imports
-from home.models import Article, Source, List
+from home.models import Article, Source, List, SourceRating, ListRating
 from home.serializers import List_Serializer, Article_Serializer, Source_Serializer
 
 
@@ -30,6 +30,47 @@ def source_change_subscribtion_status(request, domain, action):
     else:
         source.subscribers.remove(request.user)
         return Response(f"You have unsubscribed from {source}")
+
+
+@api_view(['POST'])
+def sources_add(request, sources, list_id):
+    list = get_object_or_404(List, list_id=list_id)
+    sources = sources.split(",")
+    print(sources)
+    for source in sources:
+        source = get_object_or_404(Source, domain=source)
+        list.sources.add(source)
+    return Response("Sources have been added!")
+
+
+@api_view(['POST'])
+def source_rate(request, source, rating):
+    source = get_object_or_404(Source, domain=source)
+    if SourceRating.objects.filter(user=request.user, source=source).exists():
+        source_rating = get_object_or_404(SourceRating,
+                                          user=request.user,
+                                          source=source)
+        source_rating.rating = rating
+        source_rating.save()
+    else:
+        SourceRating.objects.create(user=request.user,
+                                    source=source,
+                                    rating=rating)
+    return Response("Rating has been saved in the database")
+
+
+@api_view(['POST'])
+def list_rate(request, list_id, rating):
+    list = get_object_or_404(List, list_id=list_id)
+    if ListRating.objects.filter(user=request.user, list=list).exists():
+        list_rating = get_object_or_404(ListRating,
+                                        user=request.user,
+                                        list=list)
+        list_rating.rating = rating
+        list_rating.save()
+    else:
+        ListRating.objects.create(user=request.user, list=list, rating=rating)
+    return Response("Rating has been saved in the database")
 
 
 @api_view(['GET'])
@@ -68,6 +109,33 @@ def get_article_filters(request):
     paywall = cache.get('articles_paywall')
     sources = cache.get('articles_sources')
     return Response([timeframe, sector, paywall, sources])
+
+
+@api_view(['DELETE'])
+def delete_source_from_list(request, list_name, source):
+    list = get_object_or_404(List, name=list_name)
+    source = get_object_or_404(Source, name=source)
+    list.sources.remove(source.source_id)
+    return Response(f"{source} has been removed from {list_name}")
+
+
+@api_view(['DELETE'])
+def delete_list(request, list_id):
+    list = get_object_or_404(List, list_id=list_id)
+    list_name = str(list)
+    list.delete()
+    return Response(f"{list_name} has been deleted")
+
+
+class FilteredSource(APIView):
+
+    def get(self, request, list_id, search_term, format=None):
+        list = get_object_or_404(List, list_id=list_id)
+        filtered_sources = Source.objects.filter(
+            name__istartswith=search_term).exclude(
+                source_id__in=list.sources.all())[0:5]
+        serializer = Source_Serializer(filtered_sources, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
 
 class FilteredList(APIView):
