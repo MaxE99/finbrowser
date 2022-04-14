@@ -4,11 +4,20 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import m2m_changed
 from django.contrib.auth import get_user_model
+from django.core.validators import MaxValueValidator, MinValueValidator
 # Local imports
 from home.logic.scrapper import website_scrapping_initiate
 from home.logic.services import main_website_source_set
 
 User = get_user_model()
+
+
+class Sector(models.Model):
+    sector_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Source(models.Model):
@@ -33,6 +42,7 @@ class Source(models.Model):
                                default='None')
     top_source = models.BooleanField(default=False)
     about_text = models.TextField(blank=True)
+    sector = models.ManyToManyField(Sector, related_name='sectors', blank=True)
 
     def save(self, *args, **kwargs):
         if not self.name:
@@ -75,7 +85,6 @@ class List(models.Model):
                                     default='None')
     updated_at = models.DateTimeField(auto_now=True)
     list_pic = models.ImageField(null=True, blank=True, upload_to="list_pic")
-    likes = models.PositiveIntegerField(default=0)
     is_public = models.BooleanField(default=False)
     sources = models.ManyToManyField(Source, related_name='lists', blank=True)
     main_website_source = models.CharField(max_length=100, blank=True)
@@ -100,12 +109,27 @@ def list_main_website_source_calculate(sender, instance, action, *args,
         instance.save()
 
 
-class Sector(models.Model):
-    sector_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100, unique=True)
-    sources = models.ManyToManyField(Source,
-                                     related_name='sectors',
-                                     blank=True)
+class SourceRating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    source = models.ForeignKey(Source, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0,
+                                 validators=[
+                                     MaxValueValidator(5),
+                                     MinValueValidator(0),
+                                 ])
 
     def __str__(self):
-        return self.name
+        return f'{self.user}-{self.source}-{self.rating}'
+
+
+class ListRating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    list = models.ForeignKey(List, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0,
+                                 validators=[
+                                     MaxValueValidator(5),
+                                     MinValueValidator(0),
+                                 ])
+
+    def __str__(self):
+        return f'{self.user}-{self.list}-{self.rating}'

@@ -16,6 +16,13 @@ class AddListForm(ModelForm):
         labels = {'list_pic': 'Picture', 'is_public': 'Make playlist public'}
 
 
+class ListNameChangeForm(ModelForm):
+
+    class Meta:
+        model = List
+        fields = ('name', )
+
+
 class ListPicChangeForm(ModelForm):
 
     class Meta:

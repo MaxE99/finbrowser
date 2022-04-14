@@ -4,7 +4,7 @@
 {% endblock %} {% block content %}
 <div class="nameContainer">{{ sector.name }}</div>
 <div class="categoryContainer">
-    {% for source in sector.sources.all %}
+    {% for source in sector.sectors.all %}
     <div class="sourceContainer">
         <div class="iconContainer">
             <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />

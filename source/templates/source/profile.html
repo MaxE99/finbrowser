@@ -27,25 +27,25 @@
         <button class="subscribeButton unsubscribed">Subscribe</button>
         {% endif %}
       </div>
-      {% for sector in sectors %}
+      {% for sector in source.sector.all %}
       <a href="../../home/sector/{{ sector.name }}" class="expertise">{{ sector.name }}</a>
       {% empty %}
       <div class="expertise">No specific sector</div>
       {% endfor %}
       <div class="rankingsHeader">Rankings</div>
       <div class="rankingsContainer">
-        <div class="avgRating">4.4</div>
+        <div class="avgRating">{{ average_rating }}</div>
         <div class="rating">
-          <input type="radio" name="rating" id="rating-5" />
-          <label for="rating-5"></label>
-          <input type="radio" name="rating" id="rating-4" />
-          <label for="rating-4"></label>
-          <input type="radio" name="rating" id="rating-3" />
-          <label for="rating-3"></label>
-          <input type="radio" name="rating" id="rating-2" />
-          <label for="rating-2"></label>
-          <input type="radio" name="rating" id="rating-1" />
-          <label for="rating-1"></label>
+          <form class="rate-form" action="" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="fa fa-star rankingStar" id="first"></button>
+            <button type="submit" class="fa fa-star rankingStar" id="second"></button>
+            <button type="submit" class="fa fa-star rankingStar" id="third"></button>
+            <button type="submit" class="fa fa-star rankingStar" id="fourth"></button>
+            <button type="submit" class="fa fa-star rankingStar" id="fifth"></button>
+          </form>
+          <br>
+          <div id="confirm-box"></div>
         </div>
       </div>
     </div>
@@ -55,9 +55,25 @@
         <div class="articlesContainer">
           {% if articles %} {% for article in articles %}
           <div class="article">
-            <img src="{% static source.favicon_path %}" />
-            <div>{{ article.title }}</div>
-            <a href="{{ article.link }}"></a>
+            <img src="{% static article.source.favicon_path %}" />
+            <div class="articleInformationContainer">
+              <div class="articleTitle">{{ article.title }}</div>
+              <div class="articleSectorAndDateContainer">
+                {% for sector in article.source.sector.all %}
+                <a href="../../home/sector/{{ sector.name }}">{{ sector.name }}</a>
+                {% endfor %}
+                <div class="articlePubDate">{{ article.pub_date }}</div>
+                {% if article.source.top_source %}
+                <i class="fas fa-star articleTopSource"></i>
+                {% endif %}
+                {% if article.source.paywall == "Yes" %}
+                <i class="fas fa-lock articleFullPaywall"></i>
+                {% elif article.source.paywall == "Semi" %}
+                <i class="fas fa-lock articleSemiPaywall"></i>
+                {% endif %}
+              </div>
+            </div>
+            <a class="articleLink" href="{{ article.link }}"></a>
           </div>
           {% endfor %} {% endif %}
         </div>
@@ -74,7 +90,7 @@
             <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
             {% endif %}
             <div>{{ list.name }}</div>
-            <a href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
+            <a class="listLink" href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
           </div>
           {% endfor %} {% endif %}
         </div>
@@ -82,5 +98,6 @@
     </div>
   </div>
 </div>
+{{ user_rating|json_script:"user-rating" }}
 <script src="{% static 'source/profile_script.js' %}"></script>
 {% endblock content %}

@@ -3,10 +3,12 @@ from django.urls import path
 # Local imports
 from home.views import (feed, lists, sectors, list_details, main, articles,
                         search_results, sector_details, settings)
-from home.api import (list_filter, FilteredList, FilteredSite,
+from home.api import (list_filter, FilteredList, FilteredSite, FilteredSource,
                       get_list_filters, article_filter, get_article_filters,
                       list_change_subscribtion_status,
-                      source_change_subscribtion_status)
+                      source_change_subscribtion_status,
+                      delete_source_from_list, delete_list, sources_add,
+                      source_rate, list_rate)
 
 app_name = 'home'
 
@@ -31,6 +33,9 @@ urlpatterns = [
     path('filter_list/<str:timeframe>/<str:content_type>/<str:sources>',
          list_filter,
          name='list-filter'),
+    path('search_sources/<int:list_id>/<str:search_term>',
+         FilteredSource.as_view(),
+         name="home-search-sources"),
     path('search_lists/<str:search_term>',
          FilteredList.as_view(),
          name="search-lists"),
@@ -45,4 +50,17 @@ urlpatterns = [
     path('get_article_filters',
          get_article_filters,
          name="get_article_filters"),
+    path('delete_source_from_list/<str:list_name>/<str:source>',
+         delete_source_from_list,
+         name="home-delete_source_from_list"),
+    path('delete_list/<int:list_id>', delete_list, name="home-delete_list"),
+    path('add_sources/<str:sources>/<int:list_id>',
+         sources_add,
+         name="home-sources-add"),
+    path('rate_source/<str:source>/<int:rating>',
+         source_rate,
+         name="home-source_rate"),
+    path('rate_list/<int:list_id>/<int:rating>',
+         list_rate,
+         name="home-list_rate"),
 ]
