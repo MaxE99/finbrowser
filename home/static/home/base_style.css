@@ -538,9 +538,7 @@ h2 {
   padding-left: 5px;
   color: black;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 75ch;
+  max-width: 42ch;
 }
 
 .article .articleSectorAndDateContainer a {
@@ -579,7 +577,6 @@ h2 {
 .article .articleTitle {
   font-size: 21px;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .article .articleLink {
@@ -587,6 +584,14 @@ h2 {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.article .fa-ellipsis-h {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  cursor: pointer;
+  padding: 5px;
 }
 
 .article img {

@@ -68,14 +68,14 @@
             <div class="rankingsContainer">
                 <div class="avgRating">{{ average_rating }}</div>
                 <div class="rating">
-                    <div class="rate-form" action="" method="POST">
+                    <form class="rate-form" action="" method="POST">
                         {% csrf_token %}
                         <button type="submit" class="fa fa-star rankingStar" id="first"></button>
                         <button type="submit" class="fa fa-star rankingStar" id="second"></button>
                         <button type="submit" class="fa fa-star rankingStar" id="third"></button>
                         <button type="submit" class="fa fa-star rankingStar" id="fourth"></button>
                         <button type="submit" class="fa fa-star rankingStar" id="fifth"></button>
-                    </div>
+                    </form>
                     <br>
                     <div id="confirm-box"></div>
                 </div>
@@ -119,10 +119,6 @@
         </div>
     </div>
 
-
-
-
-
     <div class="articleSpace">
         <div class="leftSide">
             <div class="browserCategory">Highlighted Articles</div>
@@ -149,6 +145,7 @@
                         </div>
                     </div>
                     <a class="articleLink" href="{{ article.link }}"></a>
+                    <i class="fas fa-ellipsis-h"></i>
                 </div>
                 {% endfor %}
                 {% include "pagination.html" with page=articles %}
@@ -180,6 +177,7 @@
                         </div>
                     </div>
                     <a class="articleLink" href="{{ article.link }}"></a>
+                    <i class="fas fa-ellipsis-h"></i>
                 </div>
                 {% endfor %}
                 {% include "pagination.html" with page=articles %}

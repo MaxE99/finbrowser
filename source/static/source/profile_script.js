@@ -135,6 +135,7 @@ if (one) {
           } else {
             const context = await res.json();
             showMessage(context, "Success");
+            window.location.reload();
           }
         } catch (e) {
           showMessage("Error: Network error detected!", "Error");

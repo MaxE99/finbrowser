@@ -6,8 +6,31 @@ from django.core.cache import cache
 from django.http import JsonResponse
 from rest_framework.views import APIView
 # Local imports
-from home.models import Article, Source, List, SourceRating, ListRating
+from home.models import Article, HighlightedArticle, Source, List, SourceRating, ListRating
 from home.serializers import List_Serializer, Article_Serializer, Source_Serializer
+
+
+@api_view(["POST"])
+def lists_add_article(request, article_id, list_ids):
+    # add that articles that are already part of the list are checked
+    article = get_object_or_404(Article, article_id=article_id)
+    list_ids = list_ids.split(",")
+    for list_id in list_ids:
+        list = get_object_or_404(List, list_id=list_id)
+        list.articles.add(article)
+    return Response(f'{article} has been added to lists')
+
+
+@api_view(['POST'])
+def article_highlight(request, article_id, action):
+    article = get_object_or_404(Article, article_id=article_id)
+    if action == "highlight":
+        HighlightedArticle.objects.create(user=request.user, article=article)
+        return Response(f'{article.title} has been highlighted')
+    else:
+        HighlightedArticle.objects.filter(user=request.user,
+                                          article=article).delete()
+        return Response(f'{article.title} has been unhighlighted')
 
 
 @api_view(['POST'])

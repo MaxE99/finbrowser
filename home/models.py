@@ -87,6 +87,9 @@ class List(models.Model):
     list_pic = models.ImageField(null=True, blank=True, upload_to="list_pic")
     is_public = models.BooleanField(default=False)
     sources = models.ManyToManyField(Source, related_name='lists', blank=True)
+    articles = models.ManyToManyField(Article,
+                                      related_name='articles_list',
+                                      blank=True)
     main_website_source = models.CharField(max_length=100, blank=True)
 
     def save(self, *args, **kwargs):
@@ -119,7 +122,7 @@ class SourceRating(models.Model):
                                  ])
 
     def __str__(self):
-        return f'{self.user}-{self.source}-{self.rating}'
+        return f'{self.user} - {self.source} - {self.rating}'
 
 
 class ListRating(models.Model):
@@ -132,4 +135,12 @@ class ListRating(models.Model):
                                  ])
 
     def __str__(self):
-        return f'{self.user}-{self.list}-{self.rating}'
+        return f'{self.user} - {self.list} - {self.rating}'
+
+
+class HighlightedArticle(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user} - {self.article}'

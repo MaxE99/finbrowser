@@ -24,3 +24,14 @@
 .subscribedSourcesArticleHeader {
   margin-bottom: 10px;
 }
+
+.articlesContainer {
+  height: 400px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.article {
+  width: 47.5%;
+  margin: 7.5px 0px;
+}

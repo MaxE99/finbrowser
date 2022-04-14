@@ -27,8 +27,11 @@ def profile(request, domain):
     source_ratings = SourceRating.objects.filter(source=source)
     sum_ratings = SourceRating.objects.filter(source=source).aggregate(
         Sum('rating'))
-    sum_ratings = sum_ratings.get("rating__sum", 0)
-    average_rating = sum_ratings / len(source_ratings)
+    sum_ratings = sum_ratings.get("rating__sum", None)
+    if sum_ratings == None:
+        average_rating = "None"
+    else:
+        average_rating = round(sum_ratings / len(source_ratings), 1)
     context = {
         'articles': articles,
         'lists': lists,
