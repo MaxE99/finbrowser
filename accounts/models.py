@@ -1,3 +1,4 @@
+import profile
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from django.contrib.postgres.fields import CICharField
@@ -110,3 +111,17 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+class SocialLink(models.Model):
+    WEBSITE_CHOICES = [('Facebook', 'Facebook'), ('LinkedIn', 'LinkedIn'),
+                       ('Medium', 'Medium'), ('Other', 'Other'),
+                       ('SeekingAlpha', 'SeekingAlpha'),
+                       ('Substack', 'Substack'), ('Twitter', 'Twitter'),
+                       ('YouTube', 'YouTube')]
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    website = models.CharField(max_length=100, choices=WEBSITE_CHOICES)
+    url = models.URLField()
+
+    def __str__(self):
+        return f'{self.profile} - {self.website}'

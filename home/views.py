@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import get_user_model
-from django.db.models import Sum
 # Python imports
 from datetime import timedelta, date
 # Local imports
@@ -13,18 +12,19 @@ from home.models import Article, HighlightedArticle, List, Sector, Source, ListR
 from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm)
 from home.logic.pure_logic import paginator_create
 from accounts.forms import (EmailAndUsernameChangeForm, PasswordChangingForm,
-                            ProfilePicChangeForm)
+                            ProfilePicChangeForm, BioChangeForm,
+                            BannerChangeForm)
 
 User = get_user_model()
 
 
 @login_required(login_url="/registration/login/")
 def feed(request):
-    user_lists = List.objects.filter(creator=request.user).order_by('name')
-    subscribed_lists = List.objects.filter(subscribers=request.user)
-    subscribed_sources = Source.objects.filter(subscribers=request.user)
-    subscribed_articles = Article.objects.filter(
-        source__in=subscribed_sources).order_by('-pub_date')
+    user_lists = List.objects.get_created_lists(request.user)
+    subscribed_lists = List.objects.get_subscribed_lists(request.user)
+    subscribed_sources = Source.objects.get_subscribed_sources(request.user)
+    subscribed_articles = Article.objects.get_articles_from_subscribed_sources(
+        subscribed_sources)
     subscribed_articles, _ = paginator_create(request, subscribed_articles, 10)
     context = {
         'user_lists': user_lists,
@@ -69,7 +69,7 @@ def lists(request):
 
 
 def sectors(request):
-    sectors = Sector.objects.all()
+    sectors = Sector.objects.all().order_by('name')
     return render(request, 'home/sectors.html', {'sectors': sectors})
 
 
@@ -100,11 +100,9 @@ def articles(request):
     results_found = len(search_articles)
     search_articles, _ = paginator_create(request, search_articles, 10)
     sectors = Sector.objects.all().order_by('name')
-    highlighted_articles = HighlightedArticle.objects.filter(user=request.user)
-    highlighted_articles_titles = []
-    for article in highlighted_articles:
-        highlighted_articles_titles.append(article.article.title)
-    user_lists = List.objects.filter(creator=request.user)
+    highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
+        request.user)
+    user_lists = List.objects.get_created_lists(request.user)
     context = {
         'results_found': results_found,
         'search_articles': search_articles,
@@ -130,8 +128,7 @@ def list_details(request, list_id):
                 change_list_name_form.save()
             return redirect(f'../../home/list/{list_id}')
     if list.content_type == 'Sources':
-        articles = Article.objects.filter(
-            source__in=list.sources.all()).order_by('-pub_date')
+        articles = Article.objects.get_articles_from_list_sources(list)
         articles, _ = paginator_create(request, articles, 10)
     else:
         articles = None
@@ -141,21 +138,8 @@ def list_details(request, list_id):
         subscribed = False
     change_list_pic_form = ListPicChangeForm()
     change_list_name_form = ListNameChangeForm()
-    if ListRating.objects.filter(user=request.user, list_id=list_id).exists():
-        list_rating = get_object_or_404(ListRating,
-                                        user=request.user,
-                                        list_id=list_id)
-        user_rating = list_rating.rating
-    else:
-        user_rating = False
-    list_ratings = ListRating.objects.filter(list_id=list_id)
-    sum_ratings = ListRating.objects.filter(list_id=list_id).aggregate(
-        Sum('rating'))
-    sum_ratings = sum_ratings.get("rating__sum", None)
-    if sum_ratings == None:
-        average_rating = "None"
-    else:
-        average_rating = round(sum_ratings / len(list_ratings), 1)
+    user_rating = ListRating.objects.get_user_rating(request.user, list_id)
+    average_rating = ListRating.objects.get_average_rating(list_id)
     context = {
         'change_list_name_form': change_list_name_form,
         'change_list_pic_form': change_list_pic_form,
@@ -185,15 +169,25 @@ def settings(request):
                 instance=request.user)
             profile_pic_change_form = ProfilePicChangeForm(
                 request.POST, request.FILES, instance=request.user.profile)
+            bio_change_form = BioChangeForm(request.POST,
+                                            bio=request.user.profile.bio,
+                                            instance=request.user.profile)
+            banner_change_form = BannerChangeForm(
+                request.POST, request.FILES, instance=request.user.profile)
             if profile_pic_change_form.is_valid():
                 profile_pic_change_form.save()
-                if email_and_name_change_form.is_valid():
-                    request.user.save()
-                    request.user.profile.save()
-                    return redirect('../../home/settings/')
-                else:
-                    messages.error(request,
-                                   "Error: Username or email already exists!")
+                if bio_change_form.is_valid():
+                    bio_change_form.save()
+                    if banner_change_form.is_valid():
+                        banner_change_form.save()
+                        if email_and_name_change_form.is_valid():
+                            request.user.save()
+                            request.user.profile.save()
+                            return redirect('../../home/settings/')
+                        else:
+                            messages.error(
+                                request,
+                                "Error: Username or email already exists!")
         elif "changePasswordForm" in request.POST:
             change_password_form = PasswordChangingForm(user=request.user,
                                                         data=request.POST
@@ -205,8 +199,12 @@ def settings(request):
     email_and_name_change_form = EmailAndUsernameChangeForm(
         username=request.user.username, email=request.user.email)
     profile_pic_change_form = ProfilePicChangeForm()
+    banner_change_form = BannerChangeForm()
+    bio_change_form = BioChangeForm(bio=request.user.profile.bio)
     change_password_form = PasswordChangingForm(request.user)
     context = {
+        'banner_change_form': banner_change_form,
+        'bio_change_form': bio_change_form,
         'change_password_form': change_password_form,
         'email_and_name_change_form': email_and_name_change_form,
         'profile_pic_change_form': profile_pic_change_form,
@@ -219,9 +217,9 @@ def main(request):
 
 
 def search_results(request, search_term):
-    filtered_lists = List.objects.filter(name__istartswith=search_term)
-    filtered_sources = Source.objects.filter(domain__istartswith=search_term)
-    filtered_articles = Article.objects.filter(title__icontains=search_term)
+    filtered_lists = List.objects.filter_lists(search_term)
+    filtered_sources = Source.objects.filter_sources(search_term)
+    filtered_articles = Article.objects.filter_articles(search_term)
     context = {
         'filtered_articles': filtered_articles,
         'filtered_lists': filtered_lists,

@@ -8,6 +8,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 # Local imports
 from home.logic.scrapper import website_scrapping_initiate
 from home.logic.services import main_website_source_set
+from home.managers import (ListManager, SourceManager, ArticleManager,
+                           HighlightedArticlesManager, ListRatingManager)
 
 User = get_user_model()
 
@@ -44,6 +46,8 @@ class Source(models.Model):
     about_text = models.TextField(blank=True)
     sector = models.ManyToManyField(Sector, related_name='sectors', blank=True)
 
+    objects = SourceManager()
+
     def save(self, *args, **kwargs):
         if not self.name:
             self.name = self.domain.capitalize()
@@ -66,6 +70,8 @@ class Article(models.Model):
     link = models.URLField(unique=True)
     pub_date = models.DateField()
     source = models.ForeignKey(Source, null=True, on_delete=models.SET_NULL)
+
+    objects = ArticleManager()
 
     def __str__(self):
         return self.title
@@ -91,6 +97,8 @@ class List(models.Model):
                                       related_name='articles_list',
                                       blank=True)
     main_website_source = models.CharField(max_length=100, blank=True)
+
+    objects = ListManager()
 
     def save(self, *args, **kwargs):
         if self._state.adding is False:
@@ -134,6 +142,8 @@ class ListRating(models.Model):
                                      MinValueValidator(0),
                                  ])
 
+    objects = ListRatingManager()
+
     def __str__(self):
         return f'{self.user} - {self.list} - {self.rating}'
 
@@ -141,6 +151,8 @@ class ListRating(models.Model):
 class HighlightedArticle(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+
+    objects = HighlightedArticlesManager()
 
     def __str__(self):
         return f'{self.user} - {self.article}'

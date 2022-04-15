@@ -101,7 +101,7 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
 // select sources
 document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
   choice.addEventListener("click", () => {
-    document.querySelector("summary").innerText = choice.lastChild.innerText;
+    document.querySelector("summary").innerHTML = choice.innerHTML;
     document.querySelector("details").removeAttribute("open");
   });
 });

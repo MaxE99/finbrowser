@@ -14,43 +14,82 @@
     <div class="settingOption" data-for-tab="3">My Lists</div>
 </div>
 <div class="contentSection">
-    <form action="" class="changeProfileForm" method="POST" enctype="multipart/form-data">
-        <div class="tabsContent tabsContentActive" data-tab="0">
+
+    <div class="tabsContent tabsContentActive" data-tab="0">
+        <form action="" class="changeProfileForm" method="POST" enctype="multipart/form-data"></form>
+        <div class="bannerContainer">
             {% if user.profile.profile_banner %}
             <img class="profileBanner" src="{{ user.profile.profile_banner.url }}" alt="profile-banner">
             {% else %}
             <img class="profileBanner" src="{% static 'home/media/standard-banner.jpg' %}" alt="profile-banner">
             {% endif %}
-            <div class="profileSection">
-                {% if user.profile.profile_pic %}
-                <div class="avatarContainer">
-                    <img class="avatar" src="{{ user.profile.profile_pic.url }}" alt="user-profile-pic">
+            <div class="bannerChangeContainer">
+                <div class="bannerChangeInnerContainer">
+                    {{ banner_change_form }}
                     <i class="fas fa-camera"></i>
-                    {{ profile_pic_change_form }}
                 </div>
-                {% else %}
-                <div class="avatarContainer">
-                    <img class="avatar" src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
-                    <i class="fas fa-camera"></i>
-                    {{ profile_pic_change_form }}
-                </div>
-                {% endif %}
-                <div class="innerProfileSection">
-                    <div>Profile</div>
-                    <div>Update your profile picture, bio and links</div>
-                </div>
-                <div class="buttonContainer">
-                    <button href="../../home/settings" class="cancelButton">Cancel</button>
-                    <input name="changeProfileForm" type="submit" value="Save">
-                </div>
-            </div>
-            <div class="editSection">
-                {% csrf_token %}
-                {{ email_and_name_change_form }}
-
             </div>
         </div>
-    </form>
+        <div class="profileSection">
+            {% if user.profile.profile_pic %}
+            <div class="avatarContainer">
+                <img class="avatar" src="{{ user.profile.profile_pic.url }}" alt="user-profile-pic">
+                <i class="fas fa-camera"></i>
+                {{ profile_pic_change_form }}
+            </div>
+            {% else %}
+            <div class="avatarContainer">
+                <img class="avatar" src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
+                <i class="fas fa-camera"></i>
+                {{ profile_pic_change_form }}
+            </div>
+            {% endif %}
+            <div class="innerProfileSection">
+                <div>Profile</div>
+                <div>Update your profile picture, bio and links</div>
+            </div>
+            <div class="buttonContainer">
+                <button href="../../home/settings" class="cancelButton">Cancel</button>
+                <input name="changeProfileForm" type="submit" value="Save">
+            </div>
+        </div>
+        <div class="editSection">
+            {% csrf_token %}
+            {{ email_and_name_change_form }}
+            {{ bio_change_form.media }}
+            {{ bio_change_form }}
+        </div>
+
+        </form>
+        <form action="" class="addLinksContainer" method="POST">
+            <h3>Add Websites</h3>
+            <div class="selectContainer">
+                <details>
+                    <summary>Select Website</summary>
+                    <ul>
+                        <li><img src="{% static 'home/media/facebook_favicon.png' %}" alt=""><span>Facebook</span>
+                        </li>
+                        <li><img src="{% static 'home/media/linkedin_favicon.png' %}" alt=""><span>LinkedIn</span>
+                        </li>
+                        <li><img src="{% static 'home/media/medium_favicon.png' %}" alt=""><span>Medium</span></li>
+                        <li><img src="{% static 'home/media/seekingalpha_favicon.png' %}"
+                                alt=""><span>SeekingAlpha</span>
+                        </li>
+                        <li><img src="{% static 'home/media/substack__favicon.png' %}" alt=""><span>Substack</span>
+                        </li>
+                        <li><img src="{% static 'home/media/twitter_favicon.png' %}" alt=""><span>Twitter</span>
+                        </li>
+                        <li><img src="{% static 'home/media/youtube_favicon.png' %}" alt=""><span>YouTube</span>
+                        </li>
+                        <li><img src="{% static 'home/media/default_favicon.png' %}" alt=""><span>Other</span></li>
+                    </ul>
+                </details>
+            </div>
+            {% csrf_token %}
+            <input placeholder="Enter website url" class="linkInput" type="text">
+            <input name="addLinksContainer" type="submit" class="saveButton" value="Save">
+        </form>
+    </div>
     <div class="tabsContent" data-tab="1">
         <h2>Change Password</h2>
         <form action="" class="changePasswordForm" method="POST">
