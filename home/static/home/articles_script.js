@@ -51,7 +51,7 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
 // select sources
 document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
   choice.addEventListener("click", () => {
-    document.querySelector("summary").innerText = choice.lastChild.innerText;
+    document.querySelector("summary").innerHTML = choice.innerHTML;
     document.querySelector("details").removeAttribute("open");
   });
 });
@@ -119,7 +119,8 @@ document.querySelectorAll(".addToHighlighted").forEach((highlighterButton) => {
 // open addtolist menu
 document.querySelectorAll(".addToList").forEach((element) => {
   element.addEventListener("click", () => {
-    element.parentElement.nextElementSibling.style.display = "block";
+    const addToListForm = element.parentElement.nextElementSibling;
+    addToListForm.style.display = "block";
   });
 });
 

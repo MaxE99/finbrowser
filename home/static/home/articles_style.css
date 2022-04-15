@@ -293,6 +293,8 @@ details[open] {
 }
 
 details summary {
+  display: flex;
+  align-items: center;
   cursor: pointer;
   list-style: none;
   padding: 10px;

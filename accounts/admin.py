@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth import get_user_model
 from accounts.forms import UserCreationForm, UserChangeForm
-from accounts.models import Profile
+from accounts.models import Profile, SocialLink
 
 User = get_user_model()
 
@@ -37,3 +37,4 @@ admin.site.register(User, UserAdmin)
 admin.site.unregister(Group)
 
 admin.site.register(Profile)
+admin.site.register(SocialLink)

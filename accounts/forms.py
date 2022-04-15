@@ -94,15 +94,16 @@ class EmailAndUsernameChangeForm(forms.ModelForm):
 
 class ProfilePicChangeForm(forms.ModelForm):
 
-    # def __init__(self, *args, **kwargs):
-    #     self.bio = kwargs.pop('bio')
-    #     super(ProfileChangeForm, self).__init__(*args, **kwargs)
-    #     self.fields['bio'].widget = CKEditorWidget(
-    #         attrs={'blogBody': self.bio})
-
     class Meta:
         model = Profile
         fields = ('profile_pic', )
+
+
+class BannerChangeForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ('profile_banner', )
 
 
 class PasswordChangingForm(PasswordChangeForm):
@@ -128,3 +129,15 @@ class PasswordChangingForm(PasswordChangeForm):
     class Meta:
         model = User
         fields = ('old_password', 'new_password1', 'new_password2')
+
+
+class BioChangeForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.bio = kwargs.pop('bio')
+        super(BioChangeForm, self).__init__(*args, **kwargs)
+        self.fields['bio'].initial = self.bio
+
+    class Meta:
+        model = Profile
+        fields = ('bio', )

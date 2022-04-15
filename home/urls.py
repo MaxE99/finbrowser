@@ -3,11 +3,13 @@ from django.urls import path
 # Local imports
 from home.views import (feed, lists, sectors, list_details, main, articles,
                         search_results, sector_details, settings)
-from home.api import (
-    list_filter, FilteredList, FilteredSite, FilteredSource, get_list_filters,
-    article_filter, get_article_filters, list_change_subscribtion_status,
-    source_change_subscribtion_status, delete_source_from_list, delete_list,
-    sources_add, source_rate, list_rate, article_highlight, lists_add_article)
+from home.api import (list_filter, FilteredList, FilteredSite, FilteredSource,
+                      get_list_filters, article_filter, get_article_filters,
+                      list_change_subscribtion_status,
+                      source_change_subscribtion_status,
+                      delete_source_from_list, delete_list, sources_add,
+                      source_rate, list_rate, article_highlight,
+                      lists_add_article, profile_add_website_link)
 
 app_name = 'home'
 
@@ -67,5 +69,8 @@ urlpatterns = [
          name="home-article_highlight"),
     path('add_article_to_lists/<int:article_id>/<str:list_ids>',
          lists_add_article,
-         name="home-lists_add_article")
+         name="home-lists_add_article"),
+    path('profile_add_website_link/<str:website>/<str:link>',
+         profile_add_website_link,
+         name="home-profile_add_website_link")
 ]

@@ -7,7 +7,16 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 # Local imports
 from home.models import Article, HighlightedArticle, Source, List, SourceRating, ListRating
+from accounts.models import SocialLink
 from home.serializers import List_Serializer, Article_Serializer, Source_Serializer
+
+
+@api_view(["POST"])
+def profile_add_website_link(request, website, link):
+    SocialLink.objects.create(profile=request.user.profile,
+                              website=website,
+                              url=link)
+    return Response("Link has been added!")
 
 
 @api_view(["POST"])

@@ -12,3 +12,38 @@ categoryTabs.forEach((tab) => {
     tabsContent[tab.dataset.forTab].classList.add("tabsContentActive");
   });
 });
+
+// select websites in form
+document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
+  choice.addEventListener("click", () => {
+    document.querySelector("summary").innerHTML = choice.innerHTML;
+    // document.querySelector("summary").innerText = choice.lastChild.innerText;
+    document.querySelector("details").removeAttribute("open");
+  });
+});
+
+// add websites to profile
+const saveButton = document.querySelector(".addLinksContainer .saveButton");
+saveButton.addEventListener("click", async () => {
+  const website =
+    saveButton.previousElementSibling.previousElementSibling.previousElementSibling.querySelector(
+      "summary span"
+    ).innerText;
+  const link = saveButton.previousElementSibling.value;
+  try {
+    const res = await fetch(
+      `../profile_add_website_link/${website}/${link}`,
+      get_fetch_settings("POST")
+    );
+    if (!res.ok) {
+      showMessage("Error: List couldn't be filtered!", "Error");
+    } else {
+      const context = await res.json();
+      showMessage(context, "Success");
+    }
+  } catch (e) {
+    console.log(e);
+    setTimeout(console.log(e), 500000);
+    showMessage("Error: Network error detected!", "Error");
+  }
+});

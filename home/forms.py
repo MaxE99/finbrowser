@@ -28,12 +28,3 @@ class ListPicChangeForm(ModelForm):
     class Meta:
         model = List
         fields = ('list_pic', )
-        # widgets = {
-        #     'list_pic':
-        #     forms.FileInput(
-        #         attrs={
-        #             'onchange':
-        #             "document.querySelector('.changeListPicFormButton').submit();"
-        #         })
-        #     #
-        # }
