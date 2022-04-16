@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 # Local imports
 from home.models import Article, HighlightedArticle, Source, List, SourceRating, ListRating
 from accounts.models import SocialLink
-from home.serializers import List_Serializer, Article_Serializer, Source_Serializer
+from home.api.serializers import List_Serializer, Article_Serializer, Source_Serializer
 
 
 @api_view(["POST"])
@@ -23,10 +23,7 @@ def profile_add_website_link(request, website, link):
 def lists_add_article(request, article_id, list_ids):
     # add that articles that are already part of the list are checked
     article = get_object_or_404(Article, article_id=article_id)
-    list_ids = list_ids.split(",")
-    for list_id in list_ids:
-        list = get_object_or_404(List, list_id=list_id)
-        list.articles.add(article)
+    List.objects.add_articles(article, list_ids)
     return Response(f'{article} has been added to lists')
 
 
@@ -37,8 +34,8 @@ def article_highlight(request, article_id, action):
         HighlightedArticle.objects.create(user=request.user, article=article)
         return Response(f'{article.title} has been highlighted')
     else:
-        HighlightedArticle.objects.filter(user=request.user,
-                                          article=article).delete()
+        HighlightedArticle.objects.get(user=request.user,
+                                       article=article).delete()
         return Response(f'{article.title} has been unhighlighted')
 
 
@@ -67,41 +64,21 @@ def source_change_subscribtion_status(request, domain, action):
 @api_view(['POST'])
 def sources_add(request, sources, list_id):
     list = get_object_or_404(List, list_id=list_id)
-    sources = sources.split(",")
-    print(sources)
-    for source in sources:
-        source = get_object_or_404(Source, domain=source)
-        list.sources.add(source)
+    Source.objects.add_sources_to_list(sources, list)
     return Response("Sources have been added!")
 
 
 @api_view(['POST'])
 def source_rate(request, source, rating):
     source = get_object_or_404(Source, domain=source)
-    if SourceRating.objects.filter(user=request.user, source=source).exists():
-        source_rating = get_object_or_404(SourceRating,
-                                          user=request.user,
-                                          source=source)
-        source_rating.rating = rating
-        source_rating.save()
-    else:
-        SourceRating.objects.create(user=request.user,
-                                    source=source,
-                                    rating=rating)
+    SourceRating.objects.save_rating(request.user, source, rating)
     return Response("Rating has been saved in the database")
 
 
 @api_view(['POST'])
 def list_rate(request, list_id, rating):
     list = get_object_or_404(List, list_id=list_id)
-    if ListRating.objects.filter(user=request.user, list=list).exists():
-        list_rating = get_object_or_404(ListRating,
-                                        user=request.user,
-                                        list=list)
-        list_rating.rating = rating
-        list_rating.save()
-    else:
-        ListRating.objects.create(user=request.user, list=list, rating=rating)
+    ListRating.objects.save_rating(request.user, list, rating)
     return Response("Rating has been saved in the database")
 
 
@@ -163,9 +140,9 @@ class FilteredSource(APIView):
 
     def get(self, request, list_id, search_term, format=None):
         list = get_object_or_404(List, list_id=list_id)
-        filtered_sources = Source.objects.filter(
-            name__istartswith=search_term).exclude(
-                source_id__in=list.sources.all())[0:5]
+        # special filter case as sources that are already in list are removed
+        filtered_sources = Source.objects.filter_sources_not_in_list(
+            search_term, list)[0:5]
         serializer = Source_Serializer(filtered_sources, many=True)
         return JsonResponse(serializer.data, safe=False)
 
@@ -173,7 +150,7 @@ class FilteredSource(APIView):
 class FilteredList(APIView):
 
     def get(self, request, search_term, format=None):
-        filtered_list = List.objects.filter(name__istartswith=search_term)[0:6]
+        filtered_list = List.objects.filter_lists(search_term)[0:6]
         serializer = List_Serializer(filtered_list, many=True)
         return JsonResponse(serializer.data, safe=False)
 
@@ -181,14 +158,11 @@ class FilteredList(APIView):
 class FilteredSite(APIView):
 
     def get(self, request, search_term, format=None):
-        filtered_lists = List.objects.filter(
-            name__istartswith=search_term)[0:3]
+        filtered_lists = List.objects.filter_lists(search_term)[0:3]
         list_serializer = List_Serializer(filtered_lists, many=True)
-        filtered_sources = Source.objects.filter(
-            domain__istartswith=search_term)[0:3]
+        filtered_sources = Source.objects.filter_sources(search_term)[0:3]
         sources_serializer = Source_Serializer(filtered_sources, many=True)
-        filtered_articles = Article.objects.filter(
-            title__icontains=search_term)[0:3]
+        filtered_articles = Article.objects.filter_articles(search_term)[0:3]
         articles_serializer = Article_Serializer(filtered_articles, many=True)
         return JsonResponse([
             list_serializer.data, sources_serializer.data,

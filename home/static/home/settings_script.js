@@ -32,7 +32,7 @@ saveButton.addEventListener("click", async () => {
   const link = saveButton.previousElementSibling.value;
   try {
     const res = await fetch(
-      `../profile_add_website_link/${website}/${link}`,
+      `../api/profile_add_website_link/${website}/${link}`,
       get_fetch_settings("POST")
     );
     if (!res.ok) {

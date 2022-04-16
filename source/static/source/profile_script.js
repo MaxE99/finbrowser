@@ -7,7 +7,7 @@ subscribeButton.addEventListener("click", async () => {
     const domain = url.substring(index + 1);
     const action = subscribeButton.innerText;
     const res = await fetch(
-      `../../home/source_change_subscribtion_status/${domain}/${action}`,
+      `../../api/source_change_subscribtion_status/${domain}/${action}`,
       get_fetch_settings("POST")
     );
     if (!res.ok) {
@@ -127,7 +127,7 @@ if (one) {
         const domain = url.substring(index + 1);
         try {
           const res = await fetch(
-            `../../home/rate_source/${domain}/${val_num}`,
+            `../../api/rate_source/${domain}/${val_num}`,
             get_fetch_settings("POST")
           );
           if (!res.ok) {

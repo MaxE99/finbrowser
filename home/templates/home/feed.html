@@ -23,7 +23,7 @@
                             <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
                             {% endif %}
                         </div>
-                        <a class="sourceLink" href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
+                        <a class="sourceLink" href="{% url 'home:list-details' list_id=list.list_id %}"></a>
                         <div class="sourceNameOuterContainer">
                             <div class="sourceNameInnerContainer">{{ list.name }}</div>
                         </div>
@@ -54,7 +54,7 @@
                             <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
                             {% endif %}
                         </div>
-                        <a class="sourceLink" href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
+                        <a class="sourceLink" href="{% url 'home:list-details' list_id=list.list_id %}"></a>
                         <div class="sourceNameOuterContainer">
                             <div class="sourceNameInnerContainer">{{ list.name }}</div>
                         </div>
@@ -81,7 +81,7 @@
                         <div class="iconContainer">
                             <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
                         </div>
-                        <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
+                        <a class="sourceLink" href="{% url 'source:profile' domain=source.domain %}"></a>
                         <div class="sourceNameOuterContainer">
                             <div class="sourceNameInnerContainer">{{ source.name }}</div>
                         </div>
@@ -107,7 +107,7 @@
             <div class="articleTitle">{{ article.title }}</div>
             <div class="articleSectorAndDateContainer">
                 {% for sector in article.source.sector.all %}
-                <a href="../../home/sector/{{ sector.name }}">{{ sector.name }}</a>
+                <a href="../../sector/{{ sector.name }}">{{ sector.name }}</a>
                 {% endfor %}
                 <div class="articlePubDate">{{ article.pub_date }}</div>
                 {% if article.source.top_source %}

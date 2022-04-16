@@ -5,4 +5,4 @@ from source.views import profile
 
 app_name = 'source'
 
-urlpatterns = [path('profile/<str:domain>', profile, name='source-profile')]
+urlpatterns = [path('profile/<str:domain>', profile, name='profile')]

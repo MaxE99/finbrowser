@@ -9,7 +9,7 @@
         <div class="iconContainer">
             <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
         </div>
-        <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
+        <a class="sourceLink" href="{% url 'source:profile' domain=source.domain %}"></a>
         <div class="sourceNameOuterContainer">
             <div class="sourceNameInnerContainer">{{ source.name }}</div>
         </div>

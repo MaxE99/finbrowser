@@ -1,6 +1,9 @@
 async function load_filters() {
   try {
-    const res = await fetch(`../get_list_filters`, get_fetch_settings("GET"));
+    const res = await fetch(
+      `../api/get_list_filters`,
+      get_fetch_settings("GET")
+    );
     if (!res.ok) {
       showMessage("Error: List filters couldn't be fetched!", "Error");
     } else {
@@ -46,7 +49,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
   if (search_term && search_term.replaceAll(/\s/g, "") != "") {
     try {
       const res = await fetch(
-        `../search_lists/${search_term}`,
+        `../api/search_lists/${search_term}`,
         get_fetch_settings("GET")
       );
       if (!res.ok) {
@@ -84,14 +87,14 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   const sources = document.querySelector("summary").innerText;
   try {
     const res = await fetch(
-      `../filter_list/${timeframe}/${contentType}/${sources}`,
+      `../api/filter_list/${timeframe}/${contentType}/${sources}`,
       get_fetch_settings("GET")
     );
     if (!res.ok) {
       showMessage("Error: List couldn't be filtered!", "Error");
     } else {
       const context = await res.json();
-      window.location.href = "../../home/lists";
+      window.location.href = "../../lists";
     }
   } catch (e) {
     showMessage("Error: Network error detected!", "Error");

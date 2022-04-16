@@ -147,3 +147,7 @@
 .highlightedArticlesHeader {
   margin-bottom: 10px;
 }
+
+.articleInformationContainer {
+  max-width: 67ch !important;
+}

@@ -6,5 +6,5 @@ from accounts.views import profile
 app_name = 'accounts'
 
 urlpatterns = [
-    path('profile/<slug:slug>', profile, name="accounts-profile"),
+    path('profile/<slug:slug>', profile, name="profile"),
 ]

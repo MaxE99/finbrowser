@@ -1,7 +1,7 @@
 async function load_filters() {
   try {
     const res = await fetch(
-      `../get_article_filters`,
+      `../api/get_article_filters`,
       get_fetch_settings("GET")
     );
     if (!res.ok) {
@@ -34,14 +34,14 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   const sources = document.querySelector("summary").innerText;
   try {
     const res = await fetch(
-      `../filter_articles/${timeframe}/${sector}/${paywall}/${sources}`,
+      `../api/filter_articles/${timeframe}/${sector}/${paywall}/${sources}`,
       get_fetch_settings("GET")
     );
     if (!res.ok) {
       showMessage("Error: List couldn't be filtered!", "Error");
     } else {
       const context = await res.json();
-      window.location.href = "../../home/articles";
+      window.location.href = "../../articles";
     }
   } catch (e) {
     showMessage("Error: Network error detected!", "Error");
@@ -96,7 +96,7 @@ document.querySelectorAll(".addToHighlighted").forEach((highlighterButton) => {
     }
     try {
       const res = await fetch(
-        `../highlight_article/${article_id}/${action}`,
+        `../api/highlight_article/${article_id}/${action}`,
         get_fetch_settings("POST")
       );
       if (!res.ok) {
@@ -152,7 +152,7 @@ document
         });
       try {
         const res = await fetch(
-          `../add_article_to_lists/${article_id}/${list_ids}`,
+          `../api/add_article_to_lists/${article_id}/${list_ids}`,
           get_fetch_settings("POST")
         );
         if (!res.ok) {

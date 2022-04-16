@@ -61,7 +61,7 @@
             </div>
             <div class="creatorContainer">
                 <span>by </span>
-                <a href="{% url 'accounts:accounts-profile' slug=list.creator.profile.slug %}">
+                <a href="{% url 'accounts:profile' slug=list.creator.profile.slug %}">
                     {{ list.creator.username }}</a>
             </div>
             <div class="rankingsHeader">Rankings</div>
@@ -101,7 +101,7 @@
                             {% if list.creator == request.user %}
                             <i class="fas fa-trash sourceDeleteOption"></i>
                             {% endif %}
-                            <a class="sourceLink" href="{% url 'source:source-profile' domain=source.domain %}"></a>
+                            <a class="sourceLink" href="{% url 'source:profile' domain=source.domain %}"></a>
                             <div class="sourceNameOuterContainer">
                                 <div class="sourceNameInnerContainer">{{ source.name }}</div>
                             </div>
@@ -131,7 +131,7 @@
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
                             {% for sector in article.source.sector.all %}
-                            <a href="../../home/sector/{{ sector.name }}">{{ sector.name }}</a>
+                            <a href="../../sector/{{ sector.name }}">{{ sector.name }}</a>
                             {% endfor %}
                             <div class="articlePubDate">{{ article.pub_date }}</div>
                             {% if article.source.top_source %}
@@ -163,7 +163,7 @@
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
                             {% for sector in article.source.sector.all %}
-                            <a href="../../home/sector/{{ sector.name }}">{{ sector.name }}</a>
+                            <a href="../../sector/{{ sector.name }}">{{ sector.name }}</a>
                             {% endfor %}
                             <div class="articlePubDate">{{ article.pub_date }}</div>
                             {% if article.source.top_source %}
