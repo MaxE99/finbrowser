@@ -28,7 +28,7 @@
         {% endif %}
       </div>
       {% for sector in source.sector.all %}
-      <a href="../../home/sector/{{ sector.name }}" class="expertise">{{ sector.name }}</a>
+      <a href="../../sector/{{ sector.name }}" class="expertise">{{ sector.name }}</a>
       {% empty %}
       <div class="expertise">No specific sector</div>
       {% endfor %}
@@ -60,7 +60,7 @@
               <div class="articleTitle">{{ article.title }}</div>
               <div class="articleSectorAndDateContainer">
                 {% for sector in article.source.sector.all %}
-                <a href="../../home/sector/{{ sector.name }}">{{ sector.name }}</a>
+                <a href="../../sector/{{ sector.name }}">{{ sector.name }}</a>
                 {% endfor %}
                 <div class="articlePubDate">{{ article.pub_date }}</div>
                 {% if article.source.top_source %}
@@ -91,7 +91,7 @@
             <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
             {% endif %}
             <div>{{ list.name }}</div>
-            <a class="listLink" href="{% url 'home:home-list_details' list_id=list.list_id %}"></a>
+            <a class="listLink" href="{% url 'home:list-details' list_id=list.list_id %}"></a>
           </div>
           {% endfor %} {% endif %}
         </div>

@@ -100,7 +100,7 @@
             <div class="articleTitle">{{ article.title }}</div>
             <div class="articleSectorAndDateContainer">
                 {% for sector in article.source.sector.all %}
-                <a href="../../home/sector/{{ sector.name }}">{{ sector.name }}</a>
+                <a href="../../sector/{{ sector.name }}">{{ sector.name }}</a>
                 {% endfor %}
                 <div class="articlePubDate">{{ article.pub_date }}</div>
                 {% if article.source.top_source %}

@@ -133,7 +133,7 @@ document
       selected_list.style.display = "none";
       try {
         const res = await fetch(
-          `../../home/search_sources/${list_id}/${search_term}`,
+          `../../search_sources/${list_id}/${search_term}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {
@@ -219,7 +219,7 @@ document
     if (selected_sources.length) {
       try {
         const res = await fetch(
-          `../add_sources/${selected_sources}/${list_id}`,
+          `../api/add_sources/${selected_sources}/${list_id}`,
           get_fetch_settings("POST")
         );
         if (!res.ok) {
@@ -336,7 +336,7 @@ if (one) {
         const list_id = url.substring(index + 1);
         try {
           const res = await fetch(
-            `../../home/list_source/${list_id}/${val_num}`,
+            `../../api/list_source/${list_id}/${val_num}`,
             get_fetch_settings("POST")
           );
           if (!res.ok) {

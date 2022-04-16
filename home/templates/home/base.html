@@ -21,14 +21,14 @@
                 <div class="logoSpace">
                     <span>Research</span>
                     <span>Browser</span>
-                    <a href="{% url 'home:home-main' %}"></a>
+                    <a href="{% url 'home:main' %}"></a>
                 </div>
             </div>
             <nav class="mainNavigation" role="navigation" aria-label="Main">
-                <div class="mainNavigationLink"><span>Feed</span><a href="{% url 'home:home-feed' %}"></a></div>
-                <div class="mainNavigationLink"><span>Lists</span><a href="{% url 'home:home-lists' %}"></a></div>
-                <div class="mainNavigationLink"><span>Sectors</span><a href="{% url 'home:home-sectors' %}"></a></div>
-                <div class="mainNavigationLink"><span>Articles</span><a href="{% url 'home:home-articles' %}"></a></div>
+                <div class="mainNavigationLink"><span>Feed</span><a href="{% url 'home:feed' %}"></a></div>
+                <div class="mainNavigationLink"><span>Lists</span><a href="{% url 'home:lists' %}"></a></div>
+                <div class="mainNavigationLink"><span>Sectors</span><a href="{% url 'home:sectors' %}"></a></div>
+                <div class="mainNavigationLink"><span>Articles</span><a href="{% url 'home:articles' %}"></a></div>
             </nav>
             <div class="mainSearchWrapper">
                 <div class="mainSearchContainer">
@@ -38,7 +38,7 @@
                 <div id="mainAutocomplete_result"></div>
             </div>
             <div class="userSpace">
-                <i class="fas fa-cog"><a href="{% url 'home:home-settings' %}"></a></i>
+                <i class="fas fa-cog"><a href="{% url 'home:settings' %}"></a></i>
                 <i class="far fa-bell"></i>
                 <div class="profileWrapper">
                     <div class="userProfile">
@@ -57,7 +57,7 @@
                         <div>
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Logout</span>
-                            <a href="{% url 'registration:registration-logout' %}"></a>
+                            <a href="{% url 'registration:logout' %}"></a>
                         </div>
                     </div>
                 </div>
@@ -95,14 +95,14 @@
                 <h2>Website</h2>
                 <ul>
                     <li><a href="#">Sitemap</a></li>
-                    <li><a href="{% url 'support:support-suggestions' %}">Feature Wishes</a></li>
+                    <li><a href="{% url 'support:suggestions' %}">Feature Wishes</a></li>
                 </ul>
             </div>
             <div class="supportInformation">
                 <h2>Support</h2>
                 <ul>
-                    <li><a href="{% url 'support:support-faq' %}">Support Center</a></li>
-                    <li><a href="{% url 'support:support-report_bug' %}">Report A Bug</a></li>
+                    <li><a href="{% url 'support:faq' %}">Support Center</a></li>
+                    <li><a href="{% url 'support:report-bug' %}">Report A Bug</a></li>
                 </ul>
             </div>
         </div>

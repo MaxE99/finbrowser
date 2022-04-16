@@ -2,23 +2,18 @@
 from django.shortcuts import render, get_object_or_404
 # Local imports
 from accounts.models import Profile
-from home.models import Source, List, Article
+from home.models import HighlightedArticle, Source, List
 from home.logic.pure_logic import paginator_create
 
 
 def profile(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
-    created_lists = List.objects.filter(creator=profile.user).order_by('name')
-    subscribed_sources = Source.objects.filter(
-        subscribers=profile.user).order_by('name')
-    subscribed_lists = List.objects.filter(
-        subscribers=profile.user).order_by('name')
-    # Highlighted Articles are currently subscribed articles => I must change this
-    highlighted_articles = Article.objects.filter(
-        source__in=subscribed_sources).order_by('-pub_date')
+    created_lists = List.objects.get_created_lists(request.user)
+    subscribed_sources = Source.objects.get_subscribed_sources(request.user)
+    subscribed_lists = List.objects.get_subscribed_lists(request.user)
+    highlighted_articles = HighlightedArticle.objects.filter(user=request.user)
     highlighted_articles, _ = paginator_create(request, highlighted_articles,
                                                7)
-    # Highlighted Articles are currently subscribed articles => I must change this
     context = {
         'profile': profile,
         'created_lists': created_lists,

@@ -53,13 +53,13 @@ document
   .addEventListener("keyup", async function (e) {
     let search_term = document.getElementById("mainAutocomplete").value;
     if (e.key == "Enter" && search_term.replaceAll(/\s/g, "") != "") {
-      window.location.href = `../../home/search_results/${search_term}`;
+      window.location.href = `../../search_results/${search_term}`;
     } else {
       let results_list = document.getElementById("mainAutocomplete_result");
       if (search_term && search_term.replaceAll(/\s/g, "") != "") {
         try {
           const res = await fetch(
-            `../../home/search_site/${search_term}`,
+            `../../api/search_site/${search_term}`,
             get_fetch_settings("GET")
           );
           if (!res.ok) {
@@ -73,7 +73,7 @@ document
             if (context[0].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Lists</div>`;
               context[0].forEach((list) => {
-                const listRes = `<div class="searchResult"><img src="/static/home/media/bigger_favicon.png"><span>${list.name}</span><a href="../../home/list/${list.list_id}"></a></div>`;
+                const listRes = `<div class="searchResult"><img src="/static/home/media/bigger_favicon.png"><span>${list.name}</span><a href="../../list/${list.list_id}"></a></div>`;
                 results_list.innerHTML += listRes;
               });
             }
@@ -115,7 +115,7 @@ document
   .addEventListener("click", () => {
     search_term = document.querySelector(".mainInputSearch").value;
     if (search_term.replaceAll(/\s/g, "") != "") {
-      window.location.href = `../../home/search_results/${search_term}`;
+      window.location.href = `../../search_results/${search_term}`;
     }
   });
 

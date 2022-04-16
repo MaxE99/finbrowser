@@ -9,7 +9,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from home.logic.scrapper import website_scrapping_initiate
 from home.logic.services import main_website_source_set
 from home.managers import (ListManager, SourceManager, ArticleManager,
-                           HighlightedArticlesManager, ListRatingManager)
+                           HighlightedArticlesManager, ListRatingManager,
+                           SourceRatingManager)
 
 User = get_user_model()
 
@@ -128,6 +129,8 @@ class SourceRating(models.Model):
                                      MaxValueValidator(5),
                                      MinValueValidator(0),
                                  ])
+
+    objects = SourceRatingManager()
 
     def __str__(self):
         return f'{self.user} - {self.source} - {self.rating}'
