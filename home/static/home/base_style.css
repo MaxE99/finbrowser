@@ -652,6 +652,214 @@ h2 {
   color: var(--primary-color) !important;
 }
 
+*
+  NEXT
+  styleNEXT
+  styleNEXT
+  styleNEXT
+  styleNEXT
+  styleNEXT
+  styleNEXT
+  styleNEXT
+  styleNEXT
+  styleNEXT
+  styleNEXT
+  styleNEXT
+  style
+  */
+  details {
+  position: relative;
+  height: 100%;
+}
+
+details[open] {
+  z-index: 1;
+}
+
+details summary {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  list-style: none;
+  padding: 10px;
+  height: 100%;
+  background: white;
+  padding: 20px 0px 5px 10px;
+  font-size: 17px;
+}
+
+details ul {
+  width: 100%;
+  z-index: 15;
+  background: white;
+  position: absolute;
+  top: 48px;
+  left: 0;
+  border: 2px solid #ccc;
+}
+
+details li {
+  border-bottom: 1px solid #ccc;
+  list-style: none;
+  padding: 10px 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+details img {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+details ul li:hover {
+  background: var(--primary-fontColor);
+  color: white;
+}
+
+.sourceLabel {
+  z-index: 5;
+}
+
+.filterBar select {
+  /* for Firefox */
+  -moz-appearance: none;
+  /* for Chrome */
+  -webkit-appearance: none;
+}
+
+/* For IE10 */
+.filterBar select::-ms-expand {
+  display: none;
+}
+
+.articlesContainer {
+  height: 400px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.article {
+  width: 47.5%;
+  margin: 7.5px 0;
+}
+
+.articleOptionsContainer {
+  display: none;
+  position: absolute;
+  right: -35px;
+  border: 3px solid;
+  border-radius: 8px;
+  background: white;
+  top: 23px;
+  z-index: 2;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.articleOptionsContainer div:hover {
+  background: var(--primary-fontColor);
+  color: white;
+}
+
+.articleOptionsContainer .addToList {
+  padding: 5px 10px;
+  border-bottom: 3px solid;
+}
+
+.articleOptionsContainer i {
+  margin-right: 5px;
+  width: 13px;
+}
+
+.articleOptionsContainer .addToHighlighted {
+  padding: 5px 10px;
+}
+
+.article:hover {
+  box-shadow: var(--box-shadowScheme);
+  transform: unset;
+  background-color: #b8c6db;
+  background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
+}
+
+.addToListForm {
+  display: none;
+  background: white;
+  width: 250px;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 8px;
+  position: absolute;
+  z-index: 20;
+  top: 0px;
+  right: -110px;
+}
+
+.addToListForm .fa-times {
+  position: absolute;
+  right: 0;
+  color: white;
+  background: red;
+  padding: 5px;
+  font-size: 20.5px;
+  cursor: pointer;
+}
+
+.addToListForm h3 {
+  padding: 5px 0;
+  text-align: center;
+  font-size: 17px;
+  margin-bottom: 5px;
+  background: var(--primary-fontColor);
+  border-radius: 8px 8px 0 0;
+  color: white;
+}
+
+.addToListForm .listSelectionContainer {
+  max-height: 120px;
+  overflow-y: scroll;
+}
+
+.addToListForm .listContainer {
+  margin-left: 10px;
+  padding: 2.5px 0;
+}
+
+.addToListForm label {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.addToListForm input {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.addToListForm .saveButtonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.addToListForm .saveButton {
+  text-transform: uppercase;
+  padding: 5px 50px;
+  font-size: 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  color: white;
+  width: 80%;
+  background: var(--primary-fontColor);
+  margin: 7.5px auto 10px;
+}
+
+.addToListForm .saveButton:hover {
+  transform: scale(1.1, 1.1);
+}
+
 footer {
   position: relative;
   background: var(--primary-color);

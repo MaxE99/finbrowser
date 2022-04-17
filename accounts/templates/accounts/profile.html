@@ -148,7 +148,7 @@
                 <div class="articleTitle">{{ highlighted_article.article.title }}</div>
                 <div class="articleSectorAndDateContainer">
                     {% for sector in highlighted_article.article.source.sector.all %}
-                    <a href="../../sector/{{ sector.name }}">{{ sector.name }}</a>
+                    <a href="{% url 'home:sector-details' name=sector.name %}">{{ sector.name }}</a>
                     {% endfor %}
                     <div class="articlePubDate">{{ highlighted_article.article.pub_date }}</div>
                     {% if highlighted_article.article.source.top_source %}
@@ -162,10 +162,46 @@
                 </div>
             </div>
             <a class="articleLink" href="{{ highlighted_article.article.link }}"></a>
+            <i class="fas fa-ellipsis-h"></i>
+            <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+                <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
+                {% if article.title in highlighted_articles_titles %}
+                <div id="{{ article.article_id }}" class="addToHighlighted"><i
+                        class="fas fa-times"></i><span>Unhighlight
+                        article</span></div>
+                {% else %}
+                <div id="{{ article.article_id }}" class="addToHighlighted"><i
+                        class="fas fa-highlighter"></i><span>Highlight
+                        article</span></div>
+                {% endif %}
+            </div>
+            <div class="addToListForm">
+                <i class="fas fa-times"></i>
+                <h3>Add to lists</h3>
+                <div class="listSelectionContainer">
+                    {% for list in user_lists %}
+                    <div class="listContainer">
+                        <label for="id_list_{{ list.list_id }}">
+                            {% if article in list.articles.all %}
+                            <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists"
+                                value="{{ list.list_id }}" checked="True"> {{ list }}
+                            {% else %}
+                            <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists"
+                                value="{{ list.list_id }}">
+                            {{ list }}
+                            {% endif %}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="saveButtonContainer">
+                    <button class="saveButton">Save</button>
+                </div>
+            </div>
         </div>
         {% endfor %}
-        {% include "pagination.html" with page=highlighted_articles %}
     </div>
+    {% include "pagination.html" with page=highlighted_articles %}
     {% endif %}
 
 

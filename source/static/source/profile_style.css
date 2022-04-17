@@ -201,3 +201,18 @@
 .listsContainer .containerHeader {
   margin-bottom: 10px;
 }
+
+.articlesContainer {
+  height: unset;
+  flex-wrap: unset;
+  align-items: unset;
+}
+
+.articleInformationContainer {
+  max-width: 23ch !important;
+}
+
+.article {
+  width: unset;
+  margin: 7.5px 0;
+}

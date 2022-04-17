@@ -18,7 +18,7 @@ from accounts.forms import (EmailAndUsernameChangeForm, PasswordChangingForm,
 User = get_user_model()
 
 
-@login_required(login_url="/registration/login/")
+@login_required()
 def feed(request):
     user_lists = List.objects.get_created_lists(request.user)
     subscribed_lists = List.objects.get_subscribed_lists(request.user)
@@ -26,11 +26,15 @@ def feed(request):
     subscribed_articles = Article.objects.get_articles_from_subscribed_sources(
         subscribed_sources)
     subscribed_articles, _ = paginator_create(request, subscribed_articles, 10)
+    highlighted_articles = HighlightedArticle.objects.filter(user=request.user)
+    highlighted_articles, _ = paginator_create(request, highlighted_articles,
+                                               10)
     context = {
         'user_lists': user_lists,
         'subscribed_lists': subscribed_lists,
         'subscribed_sources': subscribed_sources,
-        'subscribed_articles': subscribed_articles
+        'subscribed_articles': subscribed_articles,
+        'highlighted_articles': highlighted_articles,
     }
     return render(request, 'home/feed.html', context)
 
@@ -42,7 +46,7 @@ def lists(request):
         if add_list_form.is_valid():
             add_list_form.save()
             messages.success(request, f'List has been created!')
-            return redirect('../../lists/')
+            return redirect('home:lists')
     timeframe = cache.get('timeframe')
     content_type = cache.get('content_type')
     sources = cache.get('sources')
@@ -126,7 +130,7 @@ def list_details(request, list_id):
                 change_list_pic_form.save()
             if change_list_name_form.is_valid:
                 change_list_name_form.save()
-            return redirect(f'../../list/{list_id}')
+            return redirect('home:list-details', list_id=list_id)
     if list.content_type == 'Sources':
         articles = Article.objects.get_articles_from_list_sources(list)
         articles, _ = paginator_create(request, articles, 10)
@@ -140,7 +144,7 @@ def list_details(request, list_id):
     change_list_name_form = ListNameChangeForm()
     user_rating = ListRating.objects.get_user_rating(request.user, list_id)
     average_rating = ListRating.objects.get_average_rating(list_id)
-    highlighted_articles = List.objects.get(list_id=list_id).articles.all()
+    highlighted_articles = List.objects.get_highlighted_articles(list_id)
     context = {
         'change_list_name_form': change_list_name_form,
         'change_list_pic_form': change_list_pic_form,
@@ -160,7 +164,7 @@ def sector_details(request, name):
     return render(request, 'home/sector_details.html', context)
 
 
-@login_required(login_url="/registration/login/")
+@login_required()
 def settings(request):
     if request.method == "POST":
         if 'changeProfileForm' in request.POST:
@@ -197,7 +201,7 @@ def settings(request):
             if change_password_form.is_valid():
                 change_password_form.save()
                 update_session_auth_hash(request, change_password_form.user)
-                return redirect('../../settings/')
+                return redirect('home:settings')
     email_and_name_change_form = EmailAndUsernameChangeForm(
         username=request.user.username, email=request.user.email)
     profile_pic_change_form = ProfilePicChangeForm()
