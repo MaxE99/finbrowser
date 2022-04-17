@@ -11,9 +11,10 @@ def profile(request, slug):
     created_lists = List.objects.get_created_lists(request.user)
     subscribed_sources = Source.objects.get_subscribed_sources(request.user)
     subscribed_lists = List.objects.get_subscribed_lists(request.user)
-    highlighted_articles = HighlightedArticle.objects.filter(user=request.user)
+    highlighted_articles = HighlightedArticle.objects.filter(
+        user=request.user).order_by('-article__pub_date')
     highlighted_articles, _ = paginator_create(request, highlighted_articles,
-                                               7)
+                                               10)
     context = {
         'profile': profile,
         'created_lists': created_lists,

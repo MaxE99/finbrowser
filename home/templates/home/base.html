@@ -73,9 +73,11 @@
                 {% endfor %}
             </ul>
             {% endif %}
-            <script src="{% static 'home/base_script.js' %}"></script>
+            <!-- I previously had it before content, however, then some eventListener didn't work anymore -->
+            <!-- <script src="{% static 'home/base_script.js' %}"></script> -->
             {% block content %}
             {% endblock %}
+            <script src="{% static 'home/base_script.js' %}"></script>
         </div>
     </main>
 </body>

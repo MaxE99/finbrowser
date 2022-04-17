@@ -28,6 +28,9 @@ def main_website_source_set(instance):
                 website[1] += 1
                 break
     websites = sorted(websites, key=itemgetter(1), reverse=True)
-    if (websites[0][1] / len(instance.sources.all())) * 100 >= 50:
+    if not instance.sources.all() or (websites[0][1] /
+                                      len(instance.sources.all())) * 100 <= 50:
+        instance.main_website_source = ''
+    else:
         instance.main_website_source = websites[0][0]
     return instance

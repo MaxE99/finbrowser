@@ -384,3 +384,14 @@
 .articleInformationContainer {
   max-width: 39ch !important;
 }
+
+.articlesContainer {
+  height: unset;
+  flex-wrap: unset;
+  align-items: unset;
+}
+
+.article {
+  width: unset;
+  margin: 7.5px 25px;
+}

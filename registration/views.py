@@ -13,7 +13,7 @@ def register(request):
             user = user_creation_form.save()
             Profile.objects.create(user=user)
             login(request, user)
-            return redirect('../../feed/')
+            return redirect('home:feed')
     else:
         user_creation_form = UserCreationForm()
     context = {'user_creation_form': user_creation_form}
@@ -30,7 +30,7 @@ def login_view(request):
                                 password=cleaned_password)
             if user:
                 login(request, user)
-                return redirect('../../feed/')
+                return redirect('home:feed')
             else:
                 messages.error(
                     request,
@@ -46,4 +46,4 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('../../registration/login/')
+    return redirect('registration:login')

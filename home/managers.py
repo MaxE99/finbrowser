@@ -14,6 +14,9 @@ class ListManager(models.Manager):
     def get_created_lists(self, user):
         return self.filter(creator=user).order_by('name')
 
+    def get_highlighted_articles(self, list_id):
+        return self.get(list_id=list_id).articles.all()
+
     def get_subscribed_lists(self, user):
         return self.filter(subscribers=user).order_by('name')
 
