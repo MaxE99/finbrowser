@@ -41,3 +41,18 @@
 .tabsContentActive {
   display: block;
 }
+
+.articlesContainer {
+  height: unset;
+  flex-wrap: unset;
+  align-items: unset;
+}
+
+.article {
+  width: unset;
+  margin: 7.5px 25px;
+}
+
+.article .articleTitle {
+  max-width: 41ch;
+}

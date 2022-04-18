@@ -121,11 +121,14 @@ def get_article_filters(request):
 
 
 @api_view(['DELETE'])
-def delete_source_from_list(request, list_name, source):
-    list = get_object_or_404(List, name=list_name)
+def delete_source_from_list(request, list_id, source):
+    print("AUFGRUFEN")
+    list = get_object_or_404(List, list_id=list_id)
+    print("list durchlaufen")
+    print(list)
     source = get_object_or_404(Source, name=source)
     list.sources.remove(source.source_id)
-    return Response(f"{source} has been removed from {list_name}")
+    return Response(f"{source} has been removed from {list}")
 
 
 @api_view(['DELETE'])
@@ -164,8 +167,11 @@ class FilteredSite(APIView):
         sources_serializer = Source_Serializer(filtered_sources, many=True)
         filtered_articles = Article.objects.filter_articles(search_term)[0:3]
         articles_serializer = Article_Serializer(filtered_articles, many=True)
+        article_favicon_paths = []
+        for article in filtered_articles:
+            article_favicon_paths.append(article.source.favicon_path)
         return JsonResponse([
             list_serializer.data, sources_serializer.data,
-            articles_serializer.data
+            articles_serializer.data, article_favicon_paths
         ],
                             safe=False)

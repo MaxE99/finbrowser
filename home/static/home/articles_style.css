@@ -38,6 +38,7 @@
   border-right: 2px solid black;
   position: relative;
   width: 200px;
+  z-index: 20;
 }
 
 .selectContainer:last-of-type {

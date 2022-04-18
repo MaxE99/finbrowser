@@ -27,24 +27,93 @@
                 {% for article in filtered_articles %}
                 <div class="article">
                     <img src="{% static article.source.favicon_path %}" />
-                    <div>{{ article.title }}</div>
+                    <div class="articleInformationContainer">
+                        <div class="articleTitle">{{ article.title }}</div>
+                        <div class="articleSectorAndDateContainer">
+                            {% for sector in article.source.sector.all %}
+                            <a href="{% url 'home:sector-details' name=sector.name %}">{{ sector.name }}</a>
+                            {% endfor %}
+                            <div class="articlePubDate">{{ article.pub_date }}</div>
+                            {% if article.source.top_source %}
+                            <i class="fas fa-star articleTopSource"></i>
+                            {% endif %}
+                            {% if article.source.paywall == "Yes" %}
+                            <i class="fas fa-lock articleFullPaywall"></i>
+                            {% elif article.source.paywall == "Semi" %}
+                            <i class="fas fa-lock articleSemiPaywall"></i>
+                            {% endif %}
+                        </div>
+                    </div>
                     <a href="{{ article.link }}"></a>
+                    <i class="fas fa-ellipsis-h"></i>
+                    <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+                        <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
+                        {% if article.title in highlighted_articles_titles %}
+                        <div id="{{ article.article_id }}" class="addToHighlighted"><i
+                                class="fas fa-times"></i><span>Unhighlight
+                                article</span></div>
+                        {% else %}
+                        <div id="{{ article.article_id }}" class="addToHighlighted"><i
+                                class="fas fa-highlighter"></i><span>Highlight
+                                article</span></div>
+                        {% endif %}
+                    </div>
+                    <div class="addToListForm">
+                        <i class="fas fa-times"></i>
+                        <h3>Add to lists</h3>
+                        <div class="listSelectionContainer">
+                            {% for list in user_lists %}
+                            <div class="listContainer">
+                                <label for="id_list_{{ list.list_id }}">
+                                    {% if article in list.articles.all %}
+                                    <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists"
+                                        value="{{ list.list_id }}" checked="True"> {{ list }}
+                                    {% else %}
+                                    <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists"
+                                        value="{{ list.list_id }}">
+                                    {{ list }}
+                                    {% endif %}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="saveButtonContainer">
+                            <button class="saveButton">Save</button>
+                        </div>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
+            {% if filtered_articles %}
+            {% include "pagination.html" with page=filtered_articles %}
+            {% endif %}
         </div>
     </div>
     <div class="tabsContent" data-tab="1">
         <div class="listsContainer">
             <div class="articlesContainer">
-                {% for list in filtered_lists %}
+                {% if filtered_lists %} {% for list in filtered_lists %}
                 <div class="article">
-                    <img src="{% static 'home/media/bigger_favicon.png' %}" />
-                    <div>{{ list.name }}</div>
-                    <a href="{% url 'home:list-details' list_id=list.list_id %}"></a>
+                    {% if list.list_pic %}
+                    <img class="sourcePic" src="{{ list.list_pic.url }}" alt="favicon" />
+                    {% else %}
+                    <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
+                    {% endif %}
+                    <div class="articleInformationContainer">
+                        <div class="articleTitle">{{ list.name }}</div>
+                        <div class="articleSectorAndDateContainer">
+                            <a href="{% url 'accounts:profile' slug=list.creator.profile.slug %}">
+                                {{ list.creator.username }}</a>
+                            <div class="articlePubDate">4.4</div>
+                        </div>
+                    </div>
+                    <a class="listLink" href="{% url 'home:list-details' list_id=list.list_id %}"></a>
                 </div>
-                {% endfor %}
+                {% endfor %} {% endif %}
             </div>
+            {% if filtered_lists %}
+            {% include "pagination.html" with page=filtered_lists %}
+            {% endif %}
         </div>
     </div>
     <div class="tabsContent" data-tab="2">

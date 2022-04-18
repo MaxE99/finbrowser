@@ -201,6 +201,8 @@ header {
 
 .searchResult span {
   margin-left: 5px;
+  max-width: 28ch;
+  overflow: hidden;
 }
 
 .searchResult a {
@@ -652,22 +654,7 @@ h2 {
   color: var(--primary-color) !important;
 }
 
-*
-  NEXT
-  styleNEXT
-  styleNEXT
-  styleNEXT
-  styleNEXT
-  styleNEXT
-  styleNEXT
-  styleNEXT
-  styleNEXT
-  styleNEXT
-  styleNEXT
-  styleNEXT
-  style
-  */
-  details {
+details {
   position: relative;
   height: 100%;
 }
@@ -1074,7 +1061,7 @@ footer {
 }
 
 .categoryNameDiv {
-  font-size: 25px;
+  font-size: 20px;
   background: var(--primary-fontColor);
   color: white;
   border-radius: 8px 8px 0 0;

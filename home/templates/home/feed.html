@@ -158,7 +158,9 @@
     </div>
     {% endfor %}
 </div>
+{% if subscribed_articles %}
 {% include "pagination.html" with page=subscribed_articles %}
+{% endif %}
 
 
 {% if highlighted_articles %}
@@ -184,9 +186,9 @@
                 {% endif %}
             </div>
         </div>
-        <a class="articleLink" href="{{ article.link }}"></a>
+        <a class="articleLink" href="{{ highlighted_article.article.link }}"></a>
         <i class="fas fa-ellipsis-h"></i>
-        <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+        <div class="articleOptionsContainer articleOptionsContainer{{ highlighted_article.article.article_id }}">
             <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
             {% if article.title in highlighted_articles_titles %}
             <div id="{{ article.article_id }}" class="addToHighlighted"><i class="fas fa-times"></i><span>Unhighlight
@@ -222,7 +224,10 @@
     </div>
     {% endfor %}
 </div>
+{% if highlighted_articles %}
 {% include "pagination.html" with page=highlighted_articles %}
+{% endif %}
+
 {% endif %}
 
 {% endblock content %}

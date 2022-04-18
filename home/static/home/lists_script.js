@@ -59,7 +59,12 @@ document.getElementById("search").addEventListener("keyup", async () => {
         results_list.style.display = "flex";
         results_list.innerHTML = "";
         context.forEach((list) => {
-          const result = `<a href="../list/${list.list_id}" class="searchResult">${list.name}</a>`;
+          let list_pic = "/static/home/media/bigger_favicon.png";
+          if (list.list_pic) {
+            list_pic = list.list_pic;
+          }
+          const result = `<div class="searchResult"><img src="${list_pic}"><span>${list.name}</span><a href="../../list/${list.list_id}"></a></div>`;
+          // const result = `<a href="../list/${list.list_id}" class="searchResult">${list.name}</a>`;
           results_list.innerHTML += result;
         });
       }

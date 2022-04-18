@@ -3,14 +3,14 @@
 <title>ResearchBrowser | Lists</title>
 {% endblock %} {% block content %}
 <h2>Lists</h2>
-<div class="explanation">
-  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim, velit rem quo
-  minus consequuntur aspernatur tempore ipsum minima magnam libero nemo tenetur
-  expedita explicabo et. Optio rem maiores vero distinctio. Lorem ipsum, dolor
-  sit amet consectetur adipisicing elit. Dignissimos illum delectus dolorem
-  assumenda quidem facere sunt aliquam modi aperiam blanditiis? At laborum
-  reprehenderit repellat quam necessitatibus harum esse deserunt dolore!
-</div>
+<!-- <div class="explanation">
+  Here you can search through all lists created by users of this site. You can
+  set a timeframe for when the list was last updated. You can decide if you want
+  to only see lists that include articles or sources. You can also decide to only
+  search for lists whose sources are more than 50% from a specific source. Then you
+  can also search for the name of a list. And last of all if no list fits you're criteria
+  you can also create a list yourself.
+</div> -->
 
 <div class="filterBar">
   <div class="selectContainer">
@@ -98,32 +98,92 @@
   {% if lists %} {% for list in lists %}
   <div class="browserCategory">{{ list.name }}</div>
   <div class="categoryContainer">
-    {% for source in list.sources.all %}
-    <div class="sourceContainer">
-      <div class="iconContainer">
-        <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
-        {% if source.paywall == "Yes" %}
-        <i class="fas fa-lock fullPaywall onlyIcon"></i>
-        {% elif source.paywall == "Semi" %}
-        <i class="fas fa-lock semiPaywall onlyIcon"></i>
-        {% endif %}
-        {% if source.top_source %}
-        <i class="fas fa-star"></i>
-        {% if source.paywall == "Yes" %}
-        <i class="fas fa-lock fullPaywall"></i>
-        {% elif source.paywall == "Semi" %}
-        <i class="fas fa-lock semiPaywall"></i>
-        {% endif %}
+    <div class="carousel-container">
+      <div onClick="prev();" class="prev"></div>
+      <div class="carousel-list">
+        <ul class="slider-content">
+          {% for source in list.sources.all %}
+          <li>
+            <div class="sourceContainer">
+              <div class="iconContainer">
+                <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+              </div>
+              <a class="sourceLink" href="{% url 'source:profile' domain=source.domain %}"></a>
+              <div class="sourceNameOuterContainer">
+                <div class="sourceNameInnerContainer">{{ source.name }}</div>
+              </div>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div onClick="next();" class="next">
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </div>
+    </div>
+    {% for article in list.articles.all %}
+    <div class="article">
+      <img src="{% static article.source.favicon_path %}" />
+      <div class="articleInformationContainer">
+        <div class="articleTitle">{{ article.title }}</div>
+        <div class="articleSectorAndDateContainer">
+          {% for sector in article.source.sector.all %}
+          <a href="{% url 'home:sector-details' name=sector.name %}">{{ sector.name }}</a>
+          {% endfor %}
+          <div class="articlePubDate">{{ article.pub_date }}</div>
+          {% if article.source.top_source %}
+          <i class="fas fa-star articleTopSource"></i>
+          {% endif %}
+          {% if article.source.paywall == "Yes" %}
+          <i class="fas fa-lock articleFullPaywall"></i>
+          {% elif article.source.paywall == "Semi" %}
+          <i class="fas fa-lock articleSemiPaywall"></i>
+          {% endif %}
+        </div>
+      </div>
+      <a class="articleLink" href="{{ article.link }}"></a>
+      <i class="fas fa-ellipsis-h"></i>
+      <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+        <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
+        {% if article.title in highlighted_articles_titles %}
+        <div id="{{ article.article_id }}" class="addToHighlighted"><i class="fas fa-times"></i><span>Unhighlight
+            article</span></div>
+        {% else %}
+        <div id="{{ article.article_id }}" class="addToHighlighted"><i class="fas fa-highlighter"></i><span>Highlight
+            article</span></div>
         {% endif %}
       </div>
-      <a class="sourceLink" href="{% url 'source:profile' domain=source.domain %}"></a>
-      <div class="sourceNameOuterContainer">
-        <div class="sourceNameInnerContainer">{{ source.name }}</div>
+      <div class="addToListForm">
+        <i class="fas fa-times"></i>
+        <h3>Add to lists</h3>
+        <div class="listSelectionContainer">
+          {% for list in user_lists %}
+          <div class="listContainer">
+            <label for="id_list_{{ list.list_id }}">
+              {% if article in list.articles.all %}
+              <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists" value="{{ list.list_id }}"
+                checked="True">
+              {{ list }}
+              {% else %}
+              <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists" value="{{ list.list_id }}">
+              {{ list }}
+              {% endif %}
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="saveButtonContainer">
+          <button class="saveButton">Save</button>
+        </div>
       </div>
     </div>
     {% endfor %}
   </div>
-  {% endfor %} {% endif %} {% include "pagination.html" with page=lists %}
+  {% endfor %}
+  {% endif %}
+  {% if lists %}
+  {% include "pagination.html" with page=lists %}
+  {% endif %}
   <script src="{% static 'home/lists_script.js' %}"></script>
   {% endblock %}
 
