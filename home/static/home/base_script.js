@@ -73,7 +73,11 @@ document
             if (context[0].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Lists</div>`;
               context[0].forEach((list) => {
-                const listRes = `<div class="searchResult"><img src="/static/home/media/bigger_favicon.png"><span>${list.name}</span><a href="../../list/${list.list_id}"></a></div>`;
+                let list_pic = "/static/home/media/bigger_favicon.png";
+                if (list.list_pic) {
+                  list_pic = list.list_pic;
+                }
+                const listRes = `<div class="searchResult"><img src="${list_pic}"><span>${list.name}</span><a href="../../list/${list.list_id}"></a></div>`;
                 results_list.innerHTML += listRes;
               });
             }
@@ -86,10 +90,13 @@ document
             }
             if (context[2].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Articles</div>`;
-              context[2].forEach((article) => {
-                const articleRes = `<div class="searchResult"><img src="/static/${article.source.favicon_path}"><span>${article.title}</span><a href="${article.link}"></a></div>`;
+              for (let i = 0, j = context[2].length; i < j; i++) {
+                let xfavicon = context[3][i];
+                let xtitle = context[2][i].title;
+                let xlink = context[2][i].link;
+                const articleRes = `<div class="searchResult"><img src="/static/${xfavicon}"><span>${xtitle}</span><a href="${xlink}"></a></div>`;
                 results_list.innerHTML += articleRes;
-              });
+              }
             }
           }
         } catch (e) {

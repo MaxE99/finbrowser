@@ -13,7 +13,7 @@
     <div>Help us to make this website even better and give us your suggestions on which features,
         information, changes you would like us to implement.
     </div>
-    <form action="{% url 'support:support-suggestions' %}" class="suggestionForm" method="POST">
+    <form action="{% url 'support:suggestions' %}" class="suggestionForm" method="POST">
         {% csrf_token %}
         <div class="suggestionsFormInner">
             <div class="formLabel">

@@ -14,7 +14,7 @@
         and we will fix it immediately.
         Thank you very much for your help!
     </div>
-    <form action="{% url 'support:support-report_bug' %}" class="reportBugForm" method="POST">
+    <form action="{% url 'support:report-bug' %}" class="reportBugForm" method="POST">
         {% csrf_token %}
         <div class="reportBugFormInner">
             <div class="formLabel">

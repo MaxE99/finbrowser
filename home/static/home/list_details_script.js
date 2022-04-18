@@ -1,27 +1,3 @@
-// async function get_sources() {
-//   try {
-//     const res = await fetch(
-//       `../list_change_subscribtion_status/${list_id}/${action}`,
-//       get_fetch_settings("POST")
-//     );
-//     if (!res.ok) {
-//       showMessage("Error: List can't be subscribed!", "Error");
-//     } else {
-//       const context = await res.json();
-//       showMessage(context, "Success");
-//       if (action == "Subscribe") {
-//         subscribeButton.classList.replace("unsubscribed", "subscribed");
-//         subscribeButton.innerText = "Unsubscribe";
-//       } else {
-//         subscribeButton.classList.replace("subscribed", "unsubscribed");
-//         subscribeButton.innerText = "Subscribe";
-//       }
-//     }
-//   } catch (e) {
-//     showMessage("Error: Network error detected!", "Error");
-//   }
-// }
-
 const subscribeButton = document.querySelector(".subscribeButton");
 
 if (subscribeButton) {
@@ -72,11 +48,14 @@ if (editButton) {
         trashButton.style.display = "block";
         trashButton.addEventListener("click", async () => {
           try {
+            const list_id = document
+              .querySelector(".rightFirstRowContainer h3")
+              .id.replace("list_detail_for_", "");
             const source =
               trashButton.nextElementSibling.nextElementSibling.children[0]
                 .innerText;
             const res = await fetch(
-              `../delete_source_from_list/${listName}/${source}`,
+              `../api/delete_source_from_list/${list_id}/${source}`,
               get_fetch_settings("DELETE")
             );
             if (!res.ok) {
@@ -103,7 +82,7 @@ document
       const index = url.lastIndexOf("/");
       const list_id = url.substring(index + 1);
       const res = await fetch(
-        `../delete_list/${list_id}`,
+        `../api/delete_list/${list_id}`,
         get_fetch_settings("DELETE")
       );
       if (!res.ok) {

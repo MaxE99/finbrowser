@@ -42,7 +42,7 @@
         </div>
         <div class="rightInnerContainer">
             <div class="rightFirstRowContainer">
-                <h3>{{ list.name }}</h3>
+                <h3 id="list_detail_for_{{ list.list_id }}">{{ list.name }}</h3>
                 <div class="nameChangeContainer">{{ change_list_name_form }}</div>
                 {% if list.creator == request.user %}
                 <button class="editButton"><i class="fas fa-edit"></i> Edit</button>

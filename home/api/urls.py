@@ -38,7 +38,7 @@ urlpatterns = [
     path('get_article_filters',
          get_article_filters,
          name="get_article_filters"),
-    path('delete_source_from_list/<str:list_name>/<str:source>',
+    path('delete_source_from_list/<int:list_id>/<str:source>',
          delete_source_from_list,
          name="home-delete_source_from_list"),
     path('delete_list/<int:list_id>', delete_list, name="home-delete_list"),

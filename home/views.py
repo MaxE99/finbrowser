@@ -95,7 +95,7 @@ def articles(request):
         # Refactoring necceseary
         sector = Sector.objects.get(name=sector)
         for x in search_articles:
-            all_sectors = x.source.sectors.all()
+            all_sectors = x.source.sector.all()
             if all_sectors.filter(name=str(sector)):
                 notloesung_search_articles.append(x)
     if notloesung_search_articles:
@@ -224,8 +224,10 @@ def main(request):
 
 def search_results(request, search_term):
     filtered_lists = List.objects.filter_lists(search_term)
+    filtered_lists, _ = paginator_create(request, filtered_lists, 10)
     filtered_sources = Source.objects.filter_sources(search_term)
     filtered_articles = Article.objects.filter_articles(search_term)
+    filtered_articles, _ = paginator_create(request, filtered_articles, 10)
     context = {
         'filtered_articles': filtered_articles,
         'filtered_lists': filtered_lists,

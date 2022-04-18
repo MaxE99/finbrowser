@@ -332,3 +332,15 @@ details ul li:hover {
 .filterBar select::-ms-expand {
   display: none;
 }
+
+.categoryContainer {
+  padding: unset;
+}
+
+.carousel-container {
+  width: 100%;
+}
+
+.carousel-container .carousel-list .slider-content li {
+  width: calc(12.6% - 8px);
+}

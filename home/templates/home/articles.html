@@ -10,14 +10,18 @@
 
 
 <h2>Articles</h2>
-<div class="explanation">
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim, velit rem quo
-    minus consequuntur aspernatur tempore ipsum minima magnam libero nemo tenetur
-    expedita explicabo et. Optio rem maiores vero distinctio. Lorem ipsum, dolor
-    sit amet consectetur adipisicing elit. Dignissimos illum delectus dolorem
-    assumenda quidem facere sunt aliquam modi aperiam blanditiis? At laborum
-    reprehenderit repellat quam necessitatibus harum esse deserunt dolore!
-</div>
+<!-- <div class="explanation">Here you can search through all the gathered articles. You have the possiblity to select the
+    timeframe
+    in which the article has been released. You can also search for articles specific to a sector. Then you have the
+    opportunity
+    to select only articles that are paywalled, that are not paywalled and some that are semi paywalled. To identify if
+    an article
+    is paywalled the source was proofed to be paywalled or not so some articles maybe not paywalled. Since we want to
+    give retail investors
+    only a view of accesible sources, all sources that are paywalled are not overly costly. Apart from those options you
+    can also only
+    search for articles from specific sources or search by name of the article
+</div> -->
 
 <div class="filterBar">
     <div class="selectContainer">
@@ -151,7 +155,9 @@
     </div>
     {% endfor %}
 </div>
+{% if search_articles %}
 {% include "pagination.html" with page=search_articles %}
+{% endif %}
 
 
 
