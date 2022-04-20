@@ -9,10 +9,7 @@ class AddListForm(ModelForm):
 
     class Meta:
         model = List
-        fields = ['name', 'list_pic', 'content_type', 'sources', 'is_public']
-        widgets = {
-            'sources': forms.CheckboxSelectMultiple,
-        }
+        fields = ['name', 'list_pic', 'content_type', 'is_public']
         labels = {'list_pic': 'Picture', 'is_public': 'Make playlist public'}
 
 

@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.db.models.signals import m2m_changed
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db.models import Sum
 # Local imports
 from home.logic.scrapper import website_scrapping_initiate
 from home.logic.services import main_website_source_set
@@ -100,6 +101,14 @@ class List(models.Model):
     main_website_source = models.CharField(max_length=100, blank=True)
 
     objects = ListManager()
+
+    @property
+    def get_average_rating(self):
+        return ListRating.objects.get_average_rating(self.list_id)
+
+    @property
+    def get_ammount_of_ratings(self):
+        return ListRating.objects.get_ammount_of_ratings(self.list_id)
 
     def save(self, *args, **kwargs):
         if self._state.adding is False:

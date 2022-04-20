@@ -1,0 +1,17 @@
+.overlay {
+  width: 60%;
+  margin: 20px auto;
+}
+
+h1,
+h2 {
+  color: var(--primary-fontColor);
+}
+
+li {
+  margin-left: 30px;
+}
+
+p {
+  text-align: justify;
+}

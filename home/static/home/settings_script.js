@@ -47,3 +47,24 @@ saveButton.addEventListener("click", async () => {
     showMessage("Error: Network error detected!", "Error");
   }
 });
+
+document
+  .querySelector(".removeProfilePicButton")
+  .addEventListener("click", async () => {
+    try {
+      const res = await fetch(
+        `../api/profile_add_website_link/${website}/${link}`,
+        get_fetch_settings("POST")
+      );
+      if (!res.ok) {
+        showMessage("Error: List couldn't be filtered!", "Error");
+      } else {
+        const context = await res.json();
+        showMessage(context, "Success");
+      }
+    } catch (e) {
+      console.log(e);
+      setTimeout(console.log(e), 500000);
+      showMessage("Error: Network error detected!", "Error");
+    }
+  });

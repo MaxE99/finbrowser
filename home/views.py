@@ -12,8 +12,8 @@ from home.models import Article, HighlightedArticle, List, Sector, Source, ListR
 from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm)
 from home.logic.pure_logic import paginator_create
 from accounts.forms import (EmailAndUsernameChangeForm, PasswordChangingForm,
-                            ProfilePicChangeForm, BioChangeForm,
-                            BannerChangeForm)
+                            ProfileChangeForm, ProfilePicChangeForm,
+                            BioChangeForm, BannerChangeForm)
 
 User = get_user_model()
 
@@ -44,9 +44,11 @@ def lists(request):
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
-            add_list_form.save()
+            new_list = add_list_form.save()
+            list_id = new_list.list_id
             messages.success(request, f'List has been created!')
-            return redirect('home:lists')
+            return redirect('home:list-details', list_id=list_id)
+            # return redirect('home:lists')
     timeframe = cache.get('timeframe')
     content_type = cache.get('content_type')
     sources = cache.get('sources')
@@ -143,9 +145,11 @@ def list_details(request, list_id):
     change_list_pic_form = ListPicChangeForm()
     change_list_name_form = ListNameChangeForm()
     user_rating = ListRating.objects.get_user_rating(request.user, list_id)
+    ammount_of_ratings = ListRating.objects.get_ammount_of_ratings(list_id)
     average_rating = ListRating.objects.get_average_rating(list_id)
     highlighted_articles = List.objects.get_highlighted_articles(list_id)
     context = {
+        'ammount_of_ratings': ammount_of_ratings,
         'change_list_name_form': change_list_name_form,
         'change_list_pic_form': change_list_pic_form,
         'list': list,
@@ -160,8 +164,75 @@ def list_details(request, list_id):
 
 def sector_details(request, name):
     sector = get_object_or_404(Sector, name=name.capitalize())
-    context = {'sector': sector}
+    articles_from_sector = Article.objects.get_articles_from_sector(sector)
+    articles_from_sector, _ = paginator_create(request, articles_from_sector,
+                                               10)
+    sources = sector.sectors.all().filter(top_source=True)
+    articles_from_top_sources = Article.objects.filter(
+        source__in=sources).order_by('-pub_date')
+    articles_from_top_sources, _ = paginator_create(request,
+                                                    articles_from_top_sources,
+                                                    10)
+    context = {
+        'articles_from_top_sources': articles_from_top_sources,
+        'articles_from_sector': articles_from_sector,
+        'sector': sector
+    }
     return render(request, 'home/sector_details.html', context)
+
+
+# @login_required()
+# def settings(request):
+#     if request.method == "POST":
+#         if 'changeProfileForm' in request.POST:
+#             email_and_name_change_form = EmailAndUsernameChangeForm(
+#                 request.POST,
+#                 username=request.user.username,
+#                 email=request.user.email,
+#                 instance=request.user)
+#             profile_pic_change_form = ProfilePicChangeForm(
+#                 request.POST, request.FILES, instance=request.user.profile)
+#             bio_change_form = BioChangeForm(request.POST,
+#                                             bio=request.user.profile.bio,
+#                                             instance=request.user.profile)
+#             banner_change_form = BannerChangeForm(
+#                 request.POST, request.FILES, instance=request.user.profile)
+#             if profile_pic_change_form.is_valid():
+#                 profile_pic_change_form.save()
+#                 if bio_change_form.is_valid():
+#                     bio_change_form.save()
+#                     if banner_change_form.is_valid():
+#                         banner_change_form.save()
+#                         if email_and_name_change_form.is_valid():
+#                             request.user.save()
+#                             request.user.profile.save()
+#                             return redirect('../../settings/')
+#                         else:
+#                             messages.error(
+#                                 request,
+#                                 "Error: Username or email already exists!")
+#         elif "changePasswordForm" in request.POST:
+#             change_password_form = PasswordChangingForm(user=request.user,
+#                                                         data=request.POST
+#                                                         or None)
+#             if change_password_form.is_valid():
+#                 change_password_form.save()
+#                 update_session_auth_hash(request, change_password_form.user)
+#                 return redirect('home:settings')
+#     email_and_name_change_form = EmailAndUsernameChangeForm(
+#         username=request.user.username, email=request.user.email)
+#     profile_pic_change_form = ProfilePicChangeForm()
+#     banner_change_form = BannerChangeForm()
+#     bio_change_form = BioChangeForm(bio=request.user.profile.bio)
+#     change_password_form = PasswordChangingForm(request.user)
+#     context = {
+#         'banner_change_form': banner_change_form,
+#         'bio_change_form': bio_change_form,
+#         'change_password_form': change_password_form,
+#         'email_and_name_change_form': email_and_name_change_form,
+#         'profile_pic_change_form': profile_pic_change_form,
+#     }
+#     return render(request, 'home/settings.html', context)
 
 
 @login_required()
@@ -202,6 +273,7 @@ def settings(request):
                 change_password_form.save()
                 update_session_auth_hash(request, change_password_form.user)
                 return redirect('home:settings')
+    profile_change_form = ProfileChangeForm(bio=request.user.profile.bio)
     email_and_name_change_form = EmailAndUsernameChangeForm(
         username=request.user.username, email=request.user.email)
     profile_pic_change_form = ProfilePicChangeForm()
@@ -214,8 +286,9 @@ def settings(request):
         'change_password_form': change_password_form,
         'email_and_name_change_form': email_and_name_change_form,
         'profile_pic_change_form': profile_pic_change_form,
+        'profile_change_form': profile_change_form
     }
-    return render(request, 'home/settings.html', context)
+    return render(request, 'home/new_settings.html', context)
 
 
 def main(request):

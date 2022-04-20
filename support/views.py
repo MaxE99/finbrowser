@@ -25,3 +25,15 @@ def suggestions(request):
                       {'suggestionType': suggestionType})
     else:
         return render(request, 'support/suggestions.html')
+
+
+def privacy_policy(request):
+    return render(request, 'support/privacy_policy.html')
+
+
+def cookie_statement(request):
+    return render(request, 'support/cookie_statement.html')
+
+
+def terms_of_service(request):
+    return render(request, 'support/terms_of_service.html')
