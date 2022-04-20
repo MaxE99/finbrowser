@@ -1,4 +1,5 @@
 # Django imports
+import re
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -7,7 +8,7 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 # Local imports
 from home.models import Article, HighlightedArticle, Source, List, SourceRating, ListRating
-from accounts.models import SocialLink
+from accounts.models import Profile, SocialLink
 from home.api.serializers import List_Serializer, Article_Serializer, Source_Serializer
 
 
@@ -137,6 +138,12 @@ def delete_list(request, list_id):
     list_name = str(list)
     list.delete()
     return Response(f"{list_name} has been deleted")
+
+
+@api_view(['DELETE'])
+def profile_pic_delete(request):
+    get_object_or_404(Profile, user=request.user).profile_pic.delete()
+    return Response("You're profile picture has been deleted!")
 
 
 class FilteredSource(APIView):

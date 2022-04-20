@@ -335,6 +335,10 @@ details ul li:hover {
 
 .categoryContainer {
   padding: unset;
+  width: 57.5%;
+  min-height: unset;
+  max-height: 355px;
+  overflow-y: scroll;
 }
 
 .carousel-container {
@@ -344,3 +348,89 @@ details ul li:hover {
 .carousel-container .carousel-list .slider-content li {
   width: calc(12.6% - 8px);
 }
+
+.outerCategoryWrapper {
+  display: none;
+}
+
+.articleContainer {
+  width: 42.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 355px;
+  overflow-y: scroll;
+}
+
+.article .articleInformationContainer {
+  max-width: 29ch;
+}
+
+.article {
+  width: 90%;
+}
+
+.sourceContainer {
+  width: 125px;
+}
+
+.iconContainer {
+  width: 125px;
+  height: 125px;
+}
+
+.listResultUpperCont,
+.listHeader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 8px;
+  box-shadow: var(--box-shadowScheme);
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.listResultUpperCont a {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.listResultUpperCont:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.listHeader {
+  background: var(--primary-fontColor);
+  color: white;
+}
+
+.listHeader div {
+  width: 25%;
+  font-size: 18px;
+  margin-left: 5%;
+}
+
+.listCont,
+.ratingsCont,
+.numberOfSourcesAndArticleCont,
+.creatorCont {
+  width: 25%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.listCont img,
+.creatorCont img {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  margin-right: 3px;
+}
+
+/* .listCont div,
+.creatorCont div {
+  font-size: 17px;
+} */

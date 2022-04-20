@@ -141,3 +141,15 @@ class BioChangeForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('bio', )
+
+
+class ProfileChangeForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.bio = kwargs.pop('bio')
+        super(ProfileChangeForm, self).__init__(*args, **kwargs)
+        self.fields['bio'].initial = self.bio
+
+    class Meta:
+        model = Profile
+        fields = ('profile_pic', 'profile_banner', 'bio')

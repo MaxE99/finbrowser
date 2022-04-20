@@ -64,7 +64,6 @@ document.getElementById("search").addEventListener("keyup", async () => {
             list_pic = list.list_pic;
           }
           const result = `<div class="searchResult"><img src="${list_pic}"><span>${list.name}</span><a href="../../list/${list.list_id}"></a></div>`;
-          // const result = `<a href="../list/${list.list_id}" class="searchResult">${list.name}</a>`;
           results_list.innerHTML += result;
         });
       }

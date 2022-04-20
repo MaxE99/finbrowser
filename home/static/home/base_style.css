@@ -398,6 +398,14 @@ main {
   box-shadow: var(--box-shadowScheme);
 }
 
+.browserCategory a {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
 .categoryContainer {
   display: flex;
   flex-wrap: wrap;
@@ -612,7 +620,8 @@ h2 {
   text-align: justify;
 }
 
-.rankingStar {
+.rankingStar,
+.ratedStar {
   font-size: 25px;
   background-color: inherit !important;
   border: 0 !important;
@@ -997,6 +1006,7 @@ footer {
   flex-wrap: nowrap;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
+  min-height: 222px;
 }
 .carousel-container .carousel-list .slider-content li {
   list-style-type: none;

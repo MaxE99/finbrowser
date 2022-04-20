@@ -124,6 +124,10 @@ form input[type="password"] {
   opacity: 0.6;
 }
 
+#id_password {
+  margin: 15px 0;
+}
+
 form input[type="text"]:focus,
 form input[type="password"]:focus {
   border-color: var(--active-input-border-color);
@@ -354,4 +358,13 @@ button:hover {
     padding: 0;
     overflow: hidden;
   }
+}
+
+.form-wrapper label {
+  display: none;
+}
+
+[for="id_username"],
+[for="id_password"] {
+  display: none;
 }

@@ -51,6 +51,10 @@ class ArticleManager(models.Manager):
     def get_articles_from_list_sources(self, list):
         return self.filter(source__in=list.sources.all()).order_by('-pub_date')
 
+    def get_articles_from_sector(self, sector):
+        return self.filter(
+            source__in=sector.sectors.all()).order_by('-pub_date')
+
     def filter_articles(self, search_term):
         return self.filter(title__icontains=search_term).order_by('-pub_date')
 
@@ -81,6 +85,9 @@ class ListRatingManager(models.Manager):
             return "None"
         else:
             return round(sum_ratings / len(list_ratings), 1)
+
+    def get_ammount_of_ratings(self, list_id):
+        return self.filter(list_id=list_id).count()
 
     def save_rating(self, user, list, rating):
         if self.filter(user=user, list=list).exists():

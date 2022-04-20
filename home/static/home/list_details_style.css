@@ -88,10 +88,60 @@
   text-decoration: none;
 }
 
-.rankingsHeader {
-  margin-top: 30px;
+.ratingsWrapper {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  align-items: baseline;
+}
+
+.rankingsUpperContainer {
+  position: relative;
+  width: 100%;
+}
+
+.rateListButton {
+  position: absolute;
+  bottom: -2px;
+  color: white;
+  background: var(--primary-fontColor);
+  border: 3px solid;
+  padding: 4px;
+  border-radius: 8px;
+  cursor: pointer;
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 12px;
+  right: 10px;
+}
+
+.rateListButton:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.rate-formUpperContainer {
+  display: none;
+  position: absolute;
+  z-index: 10;
+}
+
+.rate-formUpperContainer h3 {
+  text-align: center;
+  margin-bottom: 5px;
+  margin-top: -25px;
+}
+
+.rate-form {
+  background: white;
+  padding: 10px 20px;
+  left: 50px;
+  border-radius: 8px;
+}
+
+.rankingsHeader {
+  text-transform: uppercase;
+  font-size: 18px;
+  text-align: center;
 }
 
 .rankingsContainer {
@@ -104,11 +154,38 @@
 .rating {
   display: flex;
   width: 100%;
-  justify-content: flex-end;
   overflow: hidden;
-  flex-direction: row-reverse;
   position: relative;
-  margin-left: 5px;
+  align-items: center;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  margin: 5px 0;
+  justify-content: center;
+}
+
+.avgRating {
+  font-size: 15px;
+  color: black;
+  letter-spacing: 1.1px;
+  margin-left: 10px;
+}
+
+.ratedContainer {
+  display: flex;
+}
+
+.ratingsAmmountContainer {
+  font-size: 14px;
+  margin: 0 auto;
+}
+
+.ratedStar {
+  font-size: 20px !important;
+}
+
+.ratingsAmmount {
+  color: var(--primary-fontColor);
 }
 
 .rating > input {
@@ -394,4 +471,11 @@
 .article {
   width: unset;
   margin: 7.5px 25px;
+}
+
+.singleArticlesContainer {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
