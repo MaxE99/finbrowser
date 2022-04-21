@@ -6,6 +6,7 @@
 <title>ResearchBrowser | Settings</title>
 {% endblock %}
 {% block content %}
+
 <div class="settingSidebar">
     <h3>Settings</h3>
     <div class="settingOption activeSettingOption" data-for-tab="0">Profile</div>
@@ -16,79 +17,89 @@
 <div class="contentSection">
 
     <div class="tabsContent tabsContentActive" data-tab="0">
-        <form action="" class="changeProfileForm" method="POST" enctype="multipart/form-data"></form>
-        <div class="bannerContainer">
-            {% if user.profile.profile_banner %}
-            <img class="profileBanner" src="{{ user.profile.profile_banner.url }}" alt="profile-banner">
-            {% else %}
-            <img class="profileBanner" src="{% static 'home/media/standard-banner.jpg' %}" alt="profile-banner">
-            {% endif %}
-            <div class="bannerChangeContainer">
-                <div class="bannerChangeInnerContainer">
-                    {{ banner_change_form }}
-                    <i class="fas fa-camera"></i>
+        <form action="" class="editSection changeProfileForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>Account</h2>
+            <div class="usernameAndEmailContainer">
+                <div class="usernameContainer">
+                    {{ email_and_name_change_form.username.label_tag }}
+                    {{ email_and_name_change_form.username }}
+                </div>
+                <div class="emailContainer">
+                    {{ email_and_name_change_form.email.label_tag }}
+                    {{ email_and_name_change_form.email }}
                 </div>
             </div>
-        </div>
-        <div class="profileSection">
-            {% if user.profile.profile_pic %}
-            <div class="avatarContainer">
-                <img class="avatar" src="{{ user.profile.profile_pic.url }}" alt="user-profile-pic">
-                <i class="fas fa-camera"></i>
-                {{ profile_pic_change_form }}
+            <div class="profilePicAndBannerContainer">
+                <div class="profilePicContainer">
+                    {{ profile_change_form.profile_pic.label_tag }}
+                    <div class="profilePicInnerContainer">
+                        {% if user.profile.profile_pic %}
+                        <img src="{{ user.profile.profile_pic.url }}" alt="">
+                        {% else %}
+                        <img src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
+                        {% endif %}
+                        <div class="changeProfilePicButton">
+                            <span>Change</span>
+                            {{ profile_change_form.profile_pic }}
+                        </div>
+                        <button type="button" class="removeProfilePicButton">Remove</button>
+                    </div>
+                </div>
+                <div class="profileBannerContainer">
+                    {{ profile_change_form.profile_banner.label_tag }}
+                    <div class="profileBannerInnerContainer">
+                        {% if user.profile.profile_banner %}
+                        <img class="profileBanner" src="{{ user.profile.profile_banner.url }}" alt="profile-banner">
+                        {% else %}
+                        <img class="profileBanner" src="{% static 'home/media/standard-banner.jpg' %}"
+                            alt="profile-banner">
+                        {% endif %}
+                        <div class="changeProfileBannerButton">
+                            <span>Change</span>
+                            {{ profile_change_form.profile_banner }}
+                        </div>
+                        <button type="button" class="removeProfileBannerButton">Remove</button>
+                    </div>
+                </div>
             </div>
-            {% else %}
-            <div class="avatarContainer">
-                <img class="avatar" src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
-                <i class="fas fa-camera"></i>
-                {{ profile_pic_change_form }}
+            <label>Edit Social Links:</label>
+            {% for social in social_links %}
+            <div class="existingSocialContainer">
+                <img id="{{ social.website.name }}" src="{% static social.website.favicon %}" alt="">
+                <input type="text" value="{{ social.url }}">
+                <button type="button" class="removeSocialLinkButton">Remove</button>
             </div>
-            {% endif %}
-            <div class="innerProfileSection">
-                <div>Profile</div>
-                <div>Update your profile picture, bio and links</div>
+            {% endfor %}
+            <div class="socialLinksWrapper">
+                <div class="addSocialLinksContainer">
+                    <div class="selectContainer">
+                        <details>
+                            <summary><i class="fa fa-caret-down"></i></summary>
+                            <ul>
+                                {% for website in websites %}
+                                <li><img class="{{ website.name }}" src="{% static website.favicon %}" alt=""></li>
+                                {% endfor %}
+                            </ul>
+                        </details>
+                    </div>
+                    <input placeholder="Enter website url" class="linkInput" type="text">
+                </div>
+                <button type="button" name="changeProfileForm" class="addSocialLinkButton">Add</button>
             </div>
+
+            <div class="bioContainer">
+                {{ profile_change_form.bio.label_tag }}
+                {{ profile_change_form.media }}
+                {{ profile_change_form.bio }}
+            </div>
+
             <div class="buttonContainer">
                 <button href="{% url 'home:settings' %}" class="cancelButton">Cancel</button>
-                <input name="changeProfileForm" type="submit" value="Save">
+                <input class="saveButton" name="changeProfileForm" type="submit" value="Save">
             </div>
-        </div>
-        <div class="editSection">
-            {% csrf_token %}
-            {{ email_and_name_change_form }}
-            {{ bio_change_form.media }}
-            {{ bio_change_form }}
-        </div>
+        </form>
 
-        </form>
-        <form action="" class="addLinksContainer" method="POST">
-            <h3>Add Websites</h3>
-            <div class="selectContainer">
-                <details>
-                    <summary>Select Website</summary>
-                    <ul>
-                        <li><img src="{% static 'home/media/facebook_favicon.png' %}" alt=""><span>Facebook</span>
-                        </li>
-                        <li><img src="{% static 'home/media/linkedin_favicon.png' %}" alt=""><span>LinkedIn</span>
-                        </li>
-                        <li><img src="{% static 'home/media/medium_favicon.png' %}" alt=""><span>Medium</span></li>
-                        <li><img src="{% static 'home/media/seekingalpha_favicon.png' %}"
-                                alt=""><span>SeekingAlpha</span>
-                        </li>
-                        <li><img src="{% static 'home/media/substack__favicon.png' %}" alt=""><span>Substack</span>
-                        </li>
-                        <li><img src="{% static 'home/media/twitter_favicon.png' %}" alt=""><span>Twitter</span>
-                        </li>
-                        <li><img src="{% static 'home/media/youtube_favicon.png' %}" alt=""><span>YouTube</span>
-                        </li>
-                        <li><img src="{% static 'home/media/default_favicon.png' %}" alt=""><span>Other</span></li>
-                    </ul>
-                </details>
-            </div>
-            {% csrf_token %}
-            <input placeholder="Enter website url" class="linkInput" type="text">
-            <input name="addLinksContainer" type="submit" class="saveButton" value="Save">
-        </form>
     </div>
     <div class="tabsContent" data-tab="1">
         <h2>Change Password</h2>

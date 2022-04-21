@@ -153,3 +153,7 @@ class ProfileChangeForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('profile_pic', 'profile_banner', 'bio')
+        labels = {
+            'profile_pic': 'Profile Picture',
+            'profile_banner': 'Profile Banner'
+        }

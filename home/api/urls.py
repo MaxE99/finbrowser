@@ -6,7 +6,8 @@ from home.api.api import (
     article_filter, get_article_filters, list_change_subscribtion_status,
     source_change_subscribtion_status, delete_source_from_list, delete_list,
     sources_add, source_rate, list_rate, article_highlight, lists_add_article,
-    profile_add_website_link, profile_pic_delete)
+    profile_add_website_link, profile_pic_delete, profile_banner_delete,
+    social_link_delete, social_links_add)
 
 app_name = 'api'
 
@@ -37,5 +38,8 @@ urlpatterns = [
          lists_add_article),
     path('profile_add_website_link/<str:website>/<str:link>',
          profile_add_website_link),
-    path('delete_profile_pic', profile_pic_delete)
+    path('delete_profile_pic', profile_pic_delete),
+    path('delete_profile_banner', profile_banner_delete),
+    path('delete_social_link/<str:website>', social_link_delete),
+    path('add_social_links/<str:website>/<path:url>', social_links_add)
 ]

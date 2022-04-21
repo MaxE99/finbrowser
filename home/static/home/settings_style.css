@@ -141,11 +141,18 @@
 
 .buttonContainer {
   margin-left: auto;
-  margin-right: 30px;
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 .cancelButton,
-.buttonContainer input {
+.buttonContainer input,
+.changeProfilePicButton,
+.changeProfileBannerButton,
+.profilePicInnerContainer button,
+.profileBannerInnerContainer button,
+.addSocialLinkButton,
+.existingSocialContainer button {
   font-size: 18px;
   cursor: pointer;
   padding: 10px 20px;
@@ -159,7 +166,13 @@
 }
 
 .cancelButton:hover,
-.buttonContainer input:hover {
+.buttonContainer input:hover,
+.changeProfilePicButton:hover,
+.changeProfileBannerButton:hover,
+.profilePicInnerContainer button:hover,
+.profileBannerInnerContainer button:hover,
+.addSocialLinkButton:hover,
+.existingSocialContainer button:hover {
   transform: scale(1.1, 1.1);
 }
 
@@ -172,14 +185,21 @@
 .editSection {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 20px 0;
+  width: 75%;
 }
 
-.editSection input,
+.editSection label,
+.changePasswordForm label {
+  margin-bottom: 5px;
+}
+
+#id_email,
+#id_username,
 #id_old_password,
 #id_new_password1,
-#id_new_password2 {
+#id_new_password2,
+.existingSocialContainer input,
+.linkInput {
   border: 1px solid rgb(226, 230, 234);
   border-radius: 6px;
   font-size: 18px;
@@ -188,13 +208,15 @@
   background: white;
   opacity: 0.6;
   margin-bottom: 15px;
-  width: 50%;
   box-shadow: var(--box-shadowScheme);
+}
+
+.changePasswordForm input {
+  width: 50%;
 }
 
 .tabsContent {
   display: none;
-  margin-top: 20px;
 }
 
 .tabsContentActive {
@@ -207,11 +229,105 @@
 }
 
 h2 {
-  margin-bottom: 15px;
+  margin: 0 0 15px;
 }
 
-label {
-  margin-bottom: 5px;
+.usernameAndEmailContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.usernameContainer,
+.emailContainer {
+  display: flex;
+  flex-direction: column;
+  width: 47.5%;
+}
+
+.profilePicAndBannerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profilePicContainer,
+.profileBannerContainer {
+  width: 47.5%;
+  margin-bottom: 20px;
+}
+
+.profilePicContainer img,
+.profileBannerContainer img,
+.existingSocialContainer img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.profilePicInnerContainer,
+.profileBannerInnerContainer {
+  display: flex;
+  margin-top: 5px;
+}
+
+.changeProfilePicButton,
+.changeProfileBannerButton {
+  position: relative;
+  background: white;
+  color: black;
+  margin-left: 10px;
+}
+
+.changeProfilePicButton input,
+.changeProfileBannerButton input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.profilePicInnerContainer button,
+.profileBannerInnerContainer button,
+.existingSocialContainer button {
+  background: red;
+  color: white;
+  margin-left: 10px;
+}
+
+.socialLinksWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.addSocialLinksContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 5px 0;
+}
+
+.existingSocialContainer {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.existingSocialContainer input,
+.linkInput {
+  margin: 0 0 0 5px;
+  width: 100%;
+}
+
+.bioContainer {
+  overflow: hidden;
+  overflow-x: scroll;
+  margin-top: 15px;
+}
+
+.django-ckeditor-widget {
+  margin-top: 5px;
 }
 
 .passwordChangeSubmit {
@@ -247,13 +363,15 @@ label {
   width: 100%;
 }
 
-.selectContainer {
-  width: 85%;
+.addSocialLinkButton {
+  height: 45px;
+  width: 110px;
+  margin-left: 10px;
 }
 
-details {
-  position: relative;
-  height: 100%;
+.selectContainer {
+  width: 40px;
+  height: 40px;
 }
 
 details[open] {
@@ -262,15 +380,15 @@ details[open] {
 
 details summary {
   cursor: pointer;
-  background: white;
   list-style: none;
-  margin: 15px 0;
   display: flex;
   align-items: center;
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: 1px solid rgb(226, 230, 234);
+  padding: 10px 5px;
+  border-radius: 50%;
   font-size: 17px;
+  justify-content: center;
+  background: var(--primary-fontColor);
+  color: white;
 }
 
 details ul {
@@ -294,7 +412,7 @@ details li {
 details img {
   width: 16px;
   height: 16px;
-  margin-right: 5px;
+  margin: 0 auto;
 }
 
 details ul li:hover {
@@ -304,14 +422,6 @@ details ul li:hover {
 
 .sourceLabel {
   z-index: 5;
-}
-
-.linkInput {
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: 1px solid rgb(226, 230, 234);
-  width: 85%;
-  font-size: 17px;
 }
 
 .saveButton {
