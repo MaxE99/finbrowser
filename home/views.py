@@ -1,5 +1,6 @@
 # Django imports
-from django.shortcuts import redirect, render, get_object_or_404
+import re
+from django.shortcuts import get_list_or_404, redirect, render, get_object_or_404
 from django.core.cache import cache
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -7,6 +8,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import get_user_model
 # Python imports
 from datetime import timedelta, date
+from accounts.models import SocialLink, Website
 # Local imports
 from home.models import Article, HighlightedArticle, List, Sector, Source, ListRating
 from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm)
@@ -181,60 +183,6 @@ def sector_details(request, name):
     return render(request, 'home/sector_details.html', context)
 
 
-# @login_required()
-# def settings(request):
-#     if request.method == "POST":
-#         if 'changeProfileForm' in request.POST:
-#             email_and_name_change_form = EmailAndUsernameChangeForm(
-#                 request.POST,
-#                 username=request.user.username,
-#                 email=request.user.email,
-#                 instance=request.user)
-#             profile_pic_change_form = ProfilePicChangeForm(
-#                 request.POST, request.FILES, instance=request.user.profile)
-#             bio_change_form = BioChangeForm(request.POST,
-#                                             bio=request.user.profile.bio,
-#                                             instance=request.user.profile)
-#             banner_change_form = BannerChangeForm(
-#                 request.POST, request.FILES, instance=request.user.profile)
-#             if profile_pic_change_form.is_valid():
-#                 profile_pic_change_form.save()
-#                 if bio_change_form.is_valid():
-#                     bio_change_form.save()
-#                     if banner_change_form.is_valid():
-#                         banner_change_form.save()
-#                         if email_and_name_change_form.is_valid():
-#                             request.user.save()
-#                             request.user.profile.save()
-#                             return redirect('../../settings/')
-#                         else:
-#                             messages.error(
-#                                 request,
-#                                 "Error: Username or email already exists!")
-#         elif "changePasswordForm" in request.POST:
-#             change_password_form = PasswordChangingForm(user=request.user,
-#                                                         data=request.POST
-#                                                         or None)
-#             if change_password_form.is_valid():
-#                 change_password_form.save()
-#                 update_session_auth_hash(request, change_password_form.user)
-#                 return redirect('home:settings')
-#     email_and_name_change_form = EmailAndUsernameChangeForm(
-#         username=request.user.username, email=request.user.email)
-#     profile_pic_change_form = ProfilePicChangeForm()
-#     banner_change_form = BannerChangeForm()
-#     bio_change_form = BioChangeForm(bio=request.user.profile.bio)
-#     change_password_form = PasswordChangingForm(request.user)
-#     context = {
-#         'banner_change_form': banner_change_form,
-#         'bio_change_form': bio_change_form,
-#         'change_password_form': change_password_form,
-#         'email_and_name_change_form': email_and_name_change_form,
-#         'profile_pic_change_form': profile_pic_change_form,
-#     }
-#     return render(request, 'home/settings.html', context)
-
-
 @login_required()
 def settings(request):
     if request.method == "POST":
@@ -244,27 +192,20 @@ def settings(request):
                 username=request.user.username,
                 email=request.user.email,
                 instance=request.user)
-            profile_pic_change_form = ProfilePicChangeForm(
-                request.POST, request.FILES, instance=request.user.profile)
-            bio_change_form = BioChangeForm(request.POST,
-                                            bio=request.user.profile.bio,
-                                            instance=request.user.profile)
-            banner_change_form = BannerChangeForm(
-                request.POST, request.FILES, instance=request.user.profile)
-            if profile_pic_change_form.is_valid():
-                profile_pic_change_form.save()
-                if bio_change_form.is_valid():
-                    bio_change_form.save()
-                    if banner_change_form.is_valid():
-                        banner_change_form.save()
-                        if email_and_name_change_form.is_valid():
-                            request.user.save()
-                            request.user.profile.save()
-                            return redirect('../../settings/')
-                        else:
-                            messages.error(
-                                request,
-                                "Error: Username or email already exists!")
+            profile_change_form = ProfileChangeForm(
+                request.POST,
+                request.FILES,
+                bio=request.user.profile.bio,
+                instance=request.user.profile)
+            if profile_change_form.is_valid():
+                profile_change_form.save()
+                if email_and_name_change_form.is_valid():
+                    request.user.save()
+                    request.user.profile.save()
+                    return redirect('../../settings/')
+                else:
+                    messages.error(request,
+                                   "Error: Username or email already exists!")
         elif "changePasswordForm" in request.POST:
             change_password_form = PasswordChangingForm(user=request.user,
                                                         data=request.POST
@@ -276,19 +217,17 @@ def settings(request):
     profile_change_form = ProfileChangeForm(bio=request.user.profile.bio)
     email_and_name_change_form = EmailAndUsernameChangeForm(
         username=request.user.username, email=request.user.email)
-    profile_pic_change_form = ProfilePicChangeForm()
-    banner_change_form = BannerChangeForm()
-    bio_change_form = BioChangeForm(bio=request.user.profile.bio)
     change_password_form = PasswordChangingForm(request.user)
+    websites = Website.objects.all()
+    social_links = SocialLink.objects.filter(profile=request.user.profile)
     context = {
-        'banner_change_form': banner_change_form,
-        'bio_change_form': bio_change_form,
         'change_password_form': change_password_form,
         'email_and_name_change_form': email_and_name_change_form,
-        'profile_pic_change_form': profile_pic_change_form,
-        'profile_change_form': profile_change_form
+        'profile_change_form': profile_change_form,
+        'social_links': social_links,
+        'websites': websites
     }
-    return render(request, 'home/new_settings.html', context)
+    return render(request, 'home/settings.html', context)
 
 
 def main(request):

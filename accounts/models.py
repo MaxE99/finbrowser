@@ -113,14 +113,18 @@ class Profile(models.Model):
         return str(self.user)
 
 
+class Website(models.Model):
+    name = models.CharField(max_length=100, blank=True, unique=True)
+    url = models.URLField(blank=True)
+    favicon = models.CharField(max_length=500, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class SocialLink(models.Model):
-    WEBSITE_CHOICES = [('Facebook', 'Facebook'), ('LinkedIn', 'LinkedIn'),
-                       ('Medium', 'Medium'), ('Other', 'Other'),
-                       ('SeekingAlpha', 'SeekingAlpha'),
-                       ('Substack', 'Substack'), ('Twitter', 'Twitter'),
-                       ('YouTube', 'YouTube')]
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    website = models.CharField(max_length=100, choices=WEBSITE_CHOICES)
+    website = models.ForeignKey(Website, on_delete=models.CASCADE)
     url = models.URLField()
 
     def __str__(self):

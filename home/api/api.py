@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 # Local imports
 from home.models import Article, HighlightedArticle, Source, List, SourceRating, ListRating
-from accounts.models import Profile, SocialLink
+from accounts.models import Profile, SocialLink, Website
 from home.api.serializers import List_Serializer, Article_Serializer, Source_Serializer
 
 
@@ -83,6 +83,15 @@ def list_rate(request, list_id, rating):
     return Response("Rating has been saved in the database")
 
 
+@api_view(["POST"])
+def social_links_add(request, website, url):
+    website = get_object_or_404(Website, name=website)
+    SocialLink.objects.create(profile=request.user.profile,
+                              website=website,
+                              url=url.replace('"', ""))
+    return Response("Link has been created!")
+
+
 @api_view(['GET'])
 def list_filter(request, timeframe, content_type, sources):
     cache.set_many({
@@ -144,6 +153,21 @@ def delete_list(request, list_id):
 def profile_pic_delete(request):
     get_object_or_404(Profile, user=request.user).profile_pic.delete()
     return Response("You're profile picture has been deleted!")
+
+
+@api_view(['DELETE'])
+def profile_banner_delete(request):
+    get_object_or_404(Profile, user=request.user).profile_banner.delete()
+    return Response("You're profile banner has been deleted!")
+
+
+@api_view(['DELETE'])
+def social_link_delete(request, website):
+    website = get_object_or_404(Website, name=website)
+    get_object_or_404(SocialLink,
+                      profile=request.user.profile,
+                      website=website).delete()
+    return Response("Link has been deleted!")
 
 
 class FilteredSource(APIView):
