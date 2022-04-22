@@ -7,6 +7,29 @@
 {% endblock %}
 
 {% block content %}
+
+<div class="popUpMenu createListMenu">
+    <i class="fas fa-times red closeMenuButton"></i>
+    <div class="menuHeader">Create A New List</div>
+    <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+        {% csrf_token %} {{ add_list_form }}
+        <div class="popUpButtonContainer">
+            <input name="createListForm" type="submit" class="saveButton" value="Save" />
+        </div>
+    </form>
+</div>
+
+<div class="addSourcesForm">
+    <h3>Add Sources</h3>
+    <i class="fas fa-times addSourcesCloseButton"></i>
+    <input id="addSourcesInput" type="text">
+    <div class="sourceSearchResultContainer">
+        <div id="sourceSearchResults"></div>
+        <div class="selectedSourcesContainer"></div>
+    </div>
+    <button>Add</button>
+</div>
+
 <div class="categoryWrapper">
     <div class="categoryNameDiv">My Lists</div>
     <div class="carousel-container">
@@ -30,6 +53,9 @@
                     </div>
                 </li>
                 {% endfor %}
+                <li>
+                    <div class="sourceContainer addSourcesButton createListButton"><i class="fas fa-plus"></i></div>
+                </li>
             </ul>
         </div>
         <div onClick="next();" class="next">
@@ -61,6 +87,9 @@
                     </div>
                 </li>
                 {% endfor %}
+                <li>
+                    <div class="sourceContainer addSourcesButton"><i class="fas fa-plus"></i></div>
+                </li>
             </ul>
         </div>
         <div onClick="next();" class="next">
@@ -88,6 +117,9 @@
                     </div>
                 </li>
                 {% endfor %}
+                <li>
+                    <div class="sourceContainer addSourcesButton"><i class="fas fa-plus"></i></div>
+                </li>
             </ul>
         </div>
         <div onClick="next();" class="next">
@@ -107,7 +139,7 @@
             <div class="articleTitle">{{ article.title }}</div>
             <div class="articleSectorAndDateContainer">
                 {% for sector in article.source.sector.all %}
-                <a href="{% url 'home:sector-details' name=sector.name %}">{{ sector.name }}</a>
+                <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
                 {% endfor %}
                 <div class="articlePubDate">{{ article.pub_date }}</div>
                 {% if article.source.top_source %}
@@ -173,7 +205,7 @@
             <div class="articleTitle">{{ highlighted_article.article.title }}</div>
             <div class="articleSectorAndDateContainer">
                 {% for sector in highlighted_article.article.source.sector.all %}
-                <a href="{% url 'home:sector-details' name=sector.name %}">{{ sector.name }}</a>
+                <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
                 {% endfor %}
                 <div class="articlePubDate">{{ highlighted_article.article.pub_date }}</div>
                 {% if highlighted_article.article.source.top_source %}
@@ -229,5 +261,5 @@
 {% endif %}
 
 {% endif %}
-
+<script src="{% static 'home/feed_script.js' %}"></script>
 {% endblock content %}

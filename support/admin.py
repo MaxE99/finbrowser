@@ -1,3 +1,6 @@
+# Django imports
 from django.contrib import admin
+# Local imports
+from support.models import SourceSuggestion
 
-# Register your models here.
+admin.site.register(SourceSuggestion)

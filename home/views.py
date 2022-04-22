@@ -1,6 +1,5 @@
 # Django imports
-import re
-from django.shortcuts import get_list_or_404, redirect, render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -22,6 +21,12 @@ User = get_user_model()
 
 @login_required()
 def feed(request):
+    if 'createListForm' in request.POST:
+        add_list_form = AddListForm(request.POST, request.FILES)
+        if add_list_form.is_valid():
+            add_list_form.save()
+            messages.success(request, f'List has been created!')
+            return redirect('home:feed')
     user_lists = List.objects.get_created_lists(request.user)
     subscribed_lists = List.objects.get_subscribed_lists(request.user)
     subscribed_sources = Source.objects.get_subscribed_sources(request.user)
@@ -31,7 +36,9 @@ def feed(request):
     highlighted_articles = HighlightedArticle.objects.filter(user=request.user)
     highlighted_articles, _ = paginator_create(request, highlighted_articles,
                                                10)
+    add_list_form = AddListForm()
     context = {
+        'add_list_form': add_list_form,
         'user_lists': user_lists,
         'subscribed_lists': subscribed_lists,
         'subscribed_sources': subscribed_sources,
@@ -50,7 +57,6 @@ def lists(request):
             list_id = new_list.list_id
             messages.success(request, f'List has been created!')
             return redirect('home:list-details', list_id=list_id)
-            # return redirect('home:lists')
     timeframe = cache.get('timeframe')
     content_type = cache.get('content_type')
     sources = cache.get('sources')
@@ -86,6 +92,12 @@ def articles(request):
     sector = cache.get('articles_sector')
     paywall = cache.get('articles_paywall')
     sources = cache.get('articles_sources')
+    if 'createListForm' in request.POST:
+        add_list_form = AddListForm(request.POST, request.FILES)
+        if add_list_form.is_valid():
+            add_list_form.save()
+            messages.success(request, f'List has been created!')
+            return redirect('home:articles')
     filter_args = {'source__paywall': paywall, 'source__website': sources}
     if timeframe != 'All' and timeframe != None:
         filter_args['pub_date__gte'] = date.today() - timedelta(
@@ -108,10 +120,16 @@ def articles(request):
     results_found = len(search_articles)
     search_articles, _ = paginator_create(request, search_articles, 10)
     sectors = Sector.objects.all().order_by('name')
-    highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
-        request.user)
-    user_lists = List.objects.get_created_lists(request.user)
+    if request.user.is_authenticated:
+        highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
+            request.user)
+        user_lists = List.objects.get_created_lists(request.user)
+    else:
+        highlighted_articles_titles = None
+        user_lists = None
+    add_list_form = AddListForm()
     context = {
+        'add_list_form': add_list_form,
         'results_found': results_found,
         'search_articles': search_articles,
         'sectors': sectors,
@@ -140,16 +158,25 @@ def list_details(request, list_id):
         articles, _ = paginator_create(request, articles, 10)
     else:
         articles = None
-    if request.user in list.subscribers.all():
-        subscribed = True
-    else:
-        subscribed = False
     change_list_pic_form = ListPicChangeForm()
     change_list_name_form = ListNameChangeForm()
-    user_rating = ListRating.objects.get_user_rating(request.user, list_id)
     ammount_of_ratings = ListRating.objects.get_ammount_of_ratings(list_id)
     average_rating = ListRating.objects.get_average_rating(list_id)
     highlighted_articles = List.objects.get_highlighted_articles(list_id)
+    if request.user.is_authenticated:
+        highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
+            request.user)
+        user_lists = List.objects.get_created_lists(request.user)
+        if request.user in list.subscribers.all():
+            subscribed = True
+        else:
+            subscribed = False
+        user_rating = ListRating.objects.get_user_rating(request.user, list_id)
+    else:
+        highlighted_articles_titles = None
+        user_lists = None
+        subscribed = False  # Refactoren
+        user_rating = None
     context = {
         'ammount_of_ratings': ammount_of_ratings,
         'change_list_name_form': change_list_name_form,
@@ -159,13 +186,15 @@ def list_details(request, list_id):
         'articles': articles,
         'average_rating': average_rating,
         'user_rating': user_rating,
-        'highlighted_articles': highlighted_articles
+        'highlighted_articles': highlighted_articles,
+        'highlighted_articles_titles': highlighted_articles_titles,
+        'user_lists': user_lists
     }
     return render(request, 'home/list_details.html', context)
 
 
-def sector_details(request, name):
-    sector = get_object_or_404(Sector, name=name.capitalize())
+def sector_details(request, slug):
+    sector = get_object_or_404(Sector, slug=slug)
     articles_from_sector = Article.objects.get_articles_from_sector(sector)
     articles_from_sector, _ = paginator_create(request, articles_from_sector,
                                                10)

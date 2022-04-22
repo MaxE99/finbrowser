@@ -130,10 +130,10 @@ document
 const dropdownButton = document.querySelector(".fa-sort-down");
 dropdownButton.addEventListener("click", () => {
   const profileMenu = document.querySelector(".profileMenu");
-  if (profileMenu.style.display == "block") {
+  if (profileMenu.style.display == "flex") {
     profileMenu.style.display = "none";
   } else {
-    profileMenu.style.display = "block";
+    profileMenu.style.display = "flex";
   }
 });
 
@@ -146,8 +146,8 @@ document.querySelectorAll(".article .fa-ellipsis-h").forEach((ellipsis) => {
       previousOptionsContainer.style.display = "none";
     }
     const articleOptionsContainer = ellipsis.nextElementSibling;
-    if (articleOptionsContainer.style.display != "block") {
-      articleOptionsContainer.style.display = "block";
+    if (articleOptionsContainer.style.display != "flex") {
+      articleOptionsContainer.style.display = "flex";
       document.onclick = function (e) {
         if (
           e.target.className !== ellipsis.nextElementSibling.classList[1] &&
@@ -249,5 +249,24 @@ document
       } catch (e) {
         showMessage("Error: Network error detected!", "Error");
       }
+    });
+  });
+
+// everything regarding create list menu
+const createListMenu = document.querySelector(".createListMenu");
+
+// Open settings menu
+document.querySelector(".createListButton").addEventListener("click", () => {
+  createListMenu.style.display = "flex";
+});
+
+// Close menus
+document
+  .querySelectorAll(".closeMenuButton, .closeButton")
+  .forEach((button) => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".popUpMenu").forEach((menu) => {
+        menu.style.display = "none";
+      });
     });
   });

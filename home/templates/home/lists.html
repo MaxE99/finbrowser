@@ -60,9 +60,15 @@
     <button class="searchButton">Search</button>
   </div>
   <div class="selectContainer">
+    {% if request.user.is_authenticated %}
     <button class="createListButton">
       Create List<i class="fas fa-plus"></i>
     </button>
+    {% else %}
+    <a href="{% url 'registration:login' %}" class="createListButton">
+      Create List<i class="fas fa-plus"></i>
+    </a>
+    {% endif %}
   </div>
 </div>
 <div class="lowerFilterBar">

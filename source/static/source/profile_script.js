@@ -28,7 +28,7 @@ subscribeButton.addEventListener("click", async () => {
   }
 });
 
-// get all the stars
+// rating functions
 const one = document.getElementById("first");
 const two = document.getElementById("second");
 const three = document.getElementById("third");
@@ -36,14 +36,14 @@ const four = document.getElementById("fourth");
 const five = document.getElementById("fifth");
 
 // get the form, confirm-box and csrf token
-const form = document.querySelector(".rate-form");
+// const form = document.querySelector(".rate-form");
 const confirmBox = document.getElementById("confirm-box");
-const csrf = document.getElementsByName("csrfmiddlewaretoken");
+// const csrf = document.getElementsByName("csrfmiddlewaretoken");
 
-const handleStarSelect = (size) => {
+const handleStarSelect = (size, form) => {
   const children = form.children;
   for (let i = 0; i < children.length; i++) {
-    if (i <= size) {
+    if (i < size) {
       children[i].classList.add("checked");
     } else {
       children[i].classList.remove("checked");
@@ -52,29 +52,30 @@ const handleStarSelect = (size) => {
 };
 
 const handleSelect = (selection) => {
+  let form = document.querySelector(".rate-form");
   switch (selection) {
     case "first": {
-      handleStarSelect(1);
+      handleStarSelect(1, form);
       return;
     }
     case "second": {
-      handleStarSelect(2);
+      handleStarSelect(2, form);
       return;
     }
     case "third": {
-      handleStarSelect(3);
+      handleStarSelect(3, form);
       return;
     }
     case "fourth": {
-      handleStarSelect(4);
+      handleStarSelect(4, form);
       return;
     }
     case "fifth": {
-      handleStarSelect(5);
+      handleStarSelect(5, form);
       return;
     }
     default: {
-      handleStarSelect(0);
+      handleStarSelect(0, form);
     }
   }
 };
@@ -105,46 +106,52 @@ if (one) {
       handleSelect(event.target.id);
     })
   );
-
-  arr.forEach((item) =>
-    item.addEventListener("click", (event) => {
-      // value of the rating not numeric
-      const val = event.target.id;
-
-      let isSubmit = false;
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        if (isSubmit) {
-          return;
-        }
-        isSubmit = true;
-        // picture id
-        const id = e.target.id;
-        // value of the rating translated into numeric
-        const val_num = getNumericValue(val);
-        const url = window.location.href;
-        const index = url.lastIndexOf("/");
-        const domain = url.substring(index + 1);
-        try {
-          const res = await fetch(
-            `../../api/rate_source/${domain}/${val_num}`,
-            get_fetch_settings("POST")
-          );
-          if (!res.ok) {
-            showMessage("Error: Source can't be subscribed!", "Error");
-          } else {
-            const context = await res.json();
-            showMessage(context, "Success");
-            window.location.reload();
-          }
-        } catch (e) {
-          showMessage("Error: Network error detected!", "Error");
-        }
-      });
-    })
-  );
 }
+
+document.querySelectorAll(".rankingStar").forEach((star) => {
+  star.addEventListener("click", async (e) => {
+    const id = e.target.id;
+    // value of the rating translated into numeric
+    const val_num = getNumericValue(id);
+    const url = window.location.href;
+    const index = url.lastIndexOf("/");
+    const list_id = url.substring(index + 1);
+    try {
+      const res = await fetch(
+        `../../api/rate_source/${list_id}/${val_num}`,
+        get_fetch_settings("POST")
+      );
+      if (!res.ok) {
+        showMessage("Error: Source can't be subscribed!", "Error");
+      } else {
+        const context = await res.json();
+        showMessage(context, "Success");
+        window.location.reload();
+      }
+    } catch (e) {
+      showMessage("Error: Network error detected!", "Error");
+    }
+  });
+});
+
+//set stars to average rating
+if (document.querySelector(".avgRating span")) {
+  const average_rating = Math.round(
+    document.querySelector(".avgRating span").innerText
+  );
+  handleStarSelect(average_rating, document.querySelector(".ratedContainer"));
+}
+
+// open rate list menu
+document.querySelector(".rateListButton").addEventListener("click", () => {
+  document.querySelector(".rate-formUpperContainer").style.display = "block";
+  document.querySelector(".rating").style.opacity = "0";
+  document.querySelector(".ratingsAmmountContainer").style.opacity = "0";
+  document.querySelector(".rateListButton").style.opacity = "0";
+  document.querySelector(".rankingsHeader").style.opacity = "0";
+});
 
 // if user already rated source = set stars to this rating
 const user_rating = document.getElementById("user-rating").innerText;
-handleStarSelect(user_rating);
+let form = document.querySelector(".rate-form");
+handleStarSelect(user_rating, form);

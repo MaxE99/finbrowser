@@ -35,3 +35,95 @@
   width: 47.5%;
   margin: 7.5px 0px;
 }
+
+.addSourcesForm {
+  display: none;
+  width: 400px;
+  background: white;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  box-shadow: var(--box-shadowScheme);
+  margin: 20px auto;
+  position: absolute;
+  left: 575px;
+  z-index: 1;
+  top: 275px;
+}
+
+.addSourcesForm h3 {
+  font-size: 25px;
+  background: var(--primary-fontColor);
+  width: 100%;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+}
+
+.addSourcesForm #addSourcesInput {
+  margin: 10px auto 0;
+  width: 90%;
+  font-size: 14px;
+  height: 100%;
+  padding: 12px 120px 12px 15px;
+  border: 1px solid rgb(226, 230, 234);
+  border-radius: 12px;
+}
+
+.addSourcesForm .sourceSearchResultContainer {
+  position: relative;
+  height: 200px;
+  width: 90%;
+  overflow-y: scroll;
+  margin: 10px 0 20px;
+}
+
+.addSourcesForm .sourceSearchResultContainer #sourceSearchResults {
+  z-index: 5;
+}
+
+.addSourcesForm .sourceSearchResultContainer #sourceSearchResults,
+.addSourcesForm .sourceSearchResultContainer .selectedSourcesContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.addSourcesForm button {
+  background: var(--primary-fontColor);
+  color: white;
+  padding: 5px 0;
+  width: 90%;
+  font-size: 20px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.addSourcesForm button:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.searchResult {
+  cursor: pointer;
+}
+
+.searchResult i {
+  margin-left: auto;
+  margin-right: 20px;
+  color: white;
+  background: red;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+
+.addSourcesCloseButton {
+  display: block;
+  font-size: 25px;
+  padding: 12.6px;
+}

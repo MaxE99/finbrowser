@@ -3,8 +3,6 @@
 <title>{{ list.name }} List | ResearchBrowser</title>
 {% endblock %} {% block content %}
 
-
-
 <div class="addSourcesForm">
     <h3>Add Sources</h3>
     <i class="fas fa-times addSourcesCloseButton"></i>
@@ -45,17 +43,21 @@
                 <h3 id="list_detail_for_{{ list.list_id }}">{{ list.name }}</h3>
                 <div class="nameChangeContainer">{{ change_list_name_form }}</div>
                 {% if list.creator == request.user %}
-                <button class="editButton"><i class="fas fa-edit"></i> Edit</button>
+                <button type="button" class="editButton"><i class="fas fa-edit"></i> Edit</button>
                 <div class="buttonContainer">
-                    <button class="deleteListButton">Delete List</button>
+                    <button type="button" class="deleteListButton">Delete List</button>
                     <a href="{{ list.list_id }}" class="cancelButton">Cancel</a>
                     <input name="changeListForm" type="submit" value="Save">
                 </div>
                 {% else %}
+                {% if request.user.is_authenticated %}
                 {% if subscribed %}
-                <button class="subscribeButton subscribed">Subscribed</button>
+                <button type="button" class="subscribeButton subscribed">Subscribed</button>
                 {% else %}
-                <button class="subscribeButton unsubscribed">Subscribe</button>
+                <button type="button" class="subscribeButton unsubscribed">Subscribe</button>
+                {% endif %}
+                {% else %}
+                <a href="{% url 'registration:login' %}" class="subscribeButton unsubscribed">Subscribe</a>
                 {% endif %}
                 {% endif %}
             </div>
@@ -67,7 +69,11 @@
             <div class="ratingsWrapper">
                 <div class="rankingsUpperContainer">
                     <div class="rankingsHeader">Ratings</div>
-                    <button class="rateListButton">Rate List</button>
+                    {% if request.user.is_authenticated %}
+                    <button type="button" class="rateListButton">Rate List</button>
+                    {% else %}
+                    <a href="{% url 'registration:login' %}" class="rateListButton">Rate List</a>
+                    {% endif %}
                     <div class="rate-formUpperContainer">
                         <h3>Rate {{ list.name }}</h3>
                         <div class="rate-form" action="" method="POST">
@@ -82,11 +88,11 @@
                 <div class="rankingsContainer">
                     <div class="rating">
                         <div class="ratedContainer">
-                            <button class="fa fa-star ratedStar" id="first"></button>
-                            <button class="fa fa-star ratedStar" id="second"></button>
-                            <button class="fa fa-star ratedStar" id="third"></button>
-                            <button class="fa fa-star ratedStar" id="fourth"></button>
-                            <button class="fa fa-star ratedStar" id="fifth"></button>
+                            <button type="button" class="fa fa-star ratedStar" id="first"></button>
+                            <button type="button" class="fa fa-star ratedStar" id="second"></button>
+                            <button type="button" class="fa fa-star ratedStar" id="third"></button>
+                            <button type="button" class="fa fa-star ratedStar" id="fourth"></button>
+                            <button type="button" class="fa fa-star ratedStar" id="fifth"></button>
                         </div>
                         {% if average_rating != "None" %}
                         <div class="avgRating"><span>{{ average_rating }}</span> out of 5</div>
@@ -127,7 +133,9 @@
                     </li>
                     {% endfor %}
                     {% if list.creator == request.user %}
-                    <div class="sourceContainer addSourcesButton"><i class="fas fa-plus"></i></div>
+                    <li>
+                        <div class="sourceContainer addSourcesButton"><i class="fas fa-plus"></i></div>
+                    </li>
                     {% endif %}
                 </ul>
             </div>
@@ -150,7 +158,7 @@
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
                             {% for sector in article.source.sector.all %}
-                            <a href="{% url 'home:sector-details' name=sector.name %}">{{ sector.name }}</a>
+                            <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
                             {% endfor %}
                             <div class="articlePubDate">{{ article.pub_date }}</div>
                             {% if article.source.top_source %}
@@ -166,6 +174,7 @@
                     <a class="articleLink" href="{{ article.link }}"></a>
                     <i class="fas fa-ellipsis-h"></i>
                     <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+                        {% if request.user.is_authenticated %}
                         <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
                         {% if article.title in highlighted_articles_titles %}
                         <div id="{{ article.article_id }}" class="addToHighlighted"><i
@@ -175,6 +184,13 @@
                         <div id="{{ article.article_id }}" class="addToHighlighted"><i
                                 class="fas fa-highlighter"></i><span>Highlight
                                 article</span></div>
+                        {% endif %}
+                        {% else %}
+                        <a href="{% url 'registration:login' %}" class="addToList"><i class="fas fa-list"></i>Add to
+                            list</a>
+                        <a href="{% url 'registration:login' %}" id="{{ article.article_id }}"
+                            class="addToHighlighted"><i class="fas fa-highlighter"></i><span>Highlight
+                                article</span></a>
                         {% endif %}
                     </div>
                     <div class="addToListForm">
@@ -216,7 +232,7 @@
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
                             {% for sector in article.source.sector.all %}
-                            <a href="{% url 'home:sector-details' name=sector.name %}">{{ sector.name }}</a>
+                            <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
                             {% endfor %}
                             <div class="articlePubDate">{{ article.pub_date }}</div>
                             {% if article.source.top_source %}
@@ -232,6 +248,7 @@
                     <a class="articleLink" href="{{ article.link }}"></a>
                     <i class="fas fa-ellipsis-h"></i>
                     <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+                        {% if request.user.is_authenticated %}
                         <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
                         {% if article.title in highlighted_articles_titles %}
                         <div id="{{ article.article_id }}" class="addToHighlighted"><i
@@ -241,6 +258,13 @@
                         <div id="{{ article.article_id }}" class="addToHighlighted"><i
                                 class="fas fa-highlighter"></i><span>Highlight
                                 article</span></div>
+                        {% endif %}
+                        {% else %}
+                        <a href="{% url 'registration:login' %}" class="addToList"><i class="fas fa-list"></i>Add to
+                            list</a>
+                        <a href="{% url 'registration:login' %}" id="{{ article.article_id }}"
+                            class="addToHighlighted"><i class="fas fa-highlighter"></i><span>Highlight
+                                article</span></a>
                         {% endif %}
                     </div>
                     <div class="addToListForm">
@@ -282,7 +306,7 @@
                     <div class="articleTitle">{{ article.title }}</div>
                     <div class="articleSectorAndDateContainer">
                         {% for sector in article.source.sector.all %}
-                        <a href="{% url 'home:sector-details' name=sector.name %}">{{ sector.name }}</a>
+                        <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
                         {% endfor %}
                         <div class="articlePubDate">{{ article.pub_date }}</div>
                         {% if article.source.top_source %}
@@ -298,6 +322,7 @@
                 <a class="articleLink" href="{{ article.link }}"></a>
                 <i class="fas fa-ellipsis-h"></i>
                 <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+                    {% if request.user.is_authenticated %}
                     <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
                     {% if article.title in highlighted_articles_titles %}
                     <div id="{{ article.article_id }}" class="addToHighlighted"><i
@@ -307,6 +332,13 @@
                     <div id="{{ article.article_id }}" class="addToHighlighted"><i
                             class="fas fa-highlighter"></i><span>Highlight
                             article</span></div>
+                    {% endif %}
+                    {% else %}
+                    <a href="{% url 'registration:login' %}" class="addToList"><i class="fas fa-list"></i>Add to
+                        list</a>
+                    <a href="{% url 'registration:login' %}" id="{{ article.article_id }}" class="addToHighlighted"><i
+                            class="fas fa-highlighter"></i><span>Highlight
+                            article</span></a>
                     {% endif %}
                 </div>
                 <div class="addToListForm">

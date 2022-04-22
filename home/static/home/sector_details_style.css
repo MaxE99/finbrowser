@@ -252,3 +252,14 @@
   width: unset;
   margin: 7.5px 25px;
 }
+
+.singleArticlesContainerHeader {
+  margin-bottom: 10px;
+}
+
+.singleArticlesContainer {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}

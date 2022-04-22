@@ -95,6 +95,16 @@
     </div>
 </div>
 
+<div class="popUpMenu createListMenu">
+    <i class="fas fa-times red closeMenuButton"></i>
+    <div class="menuHeader">Create A New List</div>
+    <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+        {% csrf_token %} {{ add_list_form }}
+        <div class="popUpButtonContainer">
+            <input name="createListForm" type="submit" class="saveButton" value="Save" />
+        </div>
+    </form>
+</div>
 
 <div class="articlesContainer">
     {% for article in search_articles %}
@@ -104,7 +114,7 @@
             <div class="articleTitle">{{ article.title }}</div>
             <div class="articleSectorAndDateContainer">
                 {% for sector in article.source.sector.all %}
-                <a href="{% url 'home:sector-details' name=sector.name %}">{{ sector.name }}</a>
+                <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
                 {% endfor %}
                 <div class="articlePubDate">{{ article.pub_date }}</div>
                 {% if article.source.top_source %}
@@ -120,6 +130,7 @@
         <a class="articleLink" href="{{ article.link }}"></a>
         <i class="fas fa-ellipsis-h"></i>
         <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+            {% if request.user.is_authenticated %}
             <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
             {% if article.title in highlighted_articles_titles %}
             <div id="{{ article.article_id }}" class="addToHighlighted"><i class="fas fa-times"></i><span>Unhighlight
@@ -129,10 +140,17 @@
                     class="fas fa-highlighter"></i><span>Highlight
                     article</span></div>
             {% endif %}
+            {% else %}
+            <a href="{% url 'registration:login' %}" class="addToList"><i class="fas fa-list"></i>Add to list</a>
+            <a href="{% url 'registration:login' %}" id="{{ article.article_id }}" class="addToHighlighted"><i
+                    class="fas fa-highlighter"></i><span>Highlight
+                    article</span></a>
+            {% endif %}
         </div>
         <div class="addToListForm">
             <i class="fas fa-times"></i>
             <h3>Add to lists</h3>
+            {% if user_lists %}
             <div class="listSelectionContainer">
                 {% for list in user_lists %}
                 <div class="listContainer">
@@ -148,9 +166,13 @@
                 </div>
                 {% endfor %}
             </div>
-            <div class="saveButtonContainer">
+            <div class="buttonsContainer">
                 <button class="saveButton">Save</button>
+                <button class="createNewListButton">Create</button>
             </div>
+            {% else %}
+            <div class="listContainer">You haven't created any lists so far!</div>
+            {% endif %}
         </div>
     </div>
     {% endfor %}

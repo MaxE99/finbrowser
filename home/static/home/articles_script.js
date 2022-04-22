@@ -55,3 +55,28 @@ document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
     document.querySelector("details").removeAttribute("open");
   });
 });
+
+// Open settings menu
+const createListMenu = document.querySelector(".createListMenu");
+let article_id;
+
+document.querySelectorAll(".createNewListButton").forEach((button) => {
+  button.addEventListener("click", () => {
+    article_id = button.parentElement.parentElement.parentElement.id.replace(
+      "article",
+      ""
+    );
+    createListMenu.style.display = "flex";
+  });
+});
+
+// Close menus
+document
+  .querySelectorAll(".closeMenuButton, .closeButton")
+  .forEach((button) => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".popUpMenu").forEach((menu) => {
+        menu.style.display = "none";
+      });
+    });
+  });

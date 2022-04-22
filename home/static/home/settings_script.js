@@ -1,3 +1,20 @@
+// show only logos that are not already selected
+function checkSocialLogos() {
+  existingSocialLinks = [];
+  document.querySelectorAll(".existingSocialContainer img").forEach((image) => {
+    existingSocialLinks.push(image.className);
+  });
+  document.querySelectorAll(".addSocialLinksContainer img").forEach((image) => {
+    if (existingSocialLinks.includes(image.className)) {
+      image.parentElement.style.display = "none";
+    } else {
+      image.parentElement.style.display = "flex";
+    }
+  });
+}
+
+checkSocialLogos();
+
 //change tabs
 const categoryTabs = document.querySelectorAll(".settingOption");
 const tabsContent = document.querySelectorAll(".tabsContent");
@@ -13,6 +30,9 @@ categoryTabs.forEach((tab) => {
   });
 });
 
+// refresh logos when clicking summary
+document.querySelector("summary").addEventListener("click", checkSocialLogos);
+
 // select websites in form
 document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
   choice.addEventListener("click", () => {
@@ -27,7 +47,7 @@ async function deleteSocialLinks(e) {
   const socialContainer = e.target.parentElement;
   socialContainer.remove();
   if (!socialContainer.classList.contains("newlyAdded")) {
-    const website = socialContainer.querySelector("img").id;
+    const website = socialContainer.querySelector("img").className;
     try {
       const res = await fetch(
         `../api/delete_social_link/${website}`,
@@ -160,30 +180,3 @@ addSocialLinkButton.addEventListener("click", async () => {
 document.querySelectorAll(".removeSocialLinkButton").forEach((button) => {
   button.addEventListener("click", deleteSocialLinks);
 });
-
-//look for added social links when saving and if new links exist add them to database
-// document
-//   .querySelector(".changeProfileForm .saveButton")
-//   .addEventListener("click", async () => {
-//     const newlyAdded = document.querySelectorAll(".newlyAdded");
-//     if (newlyAdded) {
-//       for (let i = 0, j = newlyAdded.length; i < j; i++) {
-//         const website = newlyAdded[i].document.querySelector("img").className;
-//         const url = newlyAdded[i].document.querySelector("input").value;
-//         try {
-//           const res = await fetch(
-//             `../api/add_social_links/${website}/${url}`,
-//             get_fetch_settings("POST")
-//           );
-//           if (!res.ok) {
-//             showMessage("Error: List couldn't be filtered!", "Error");
-//           } else {
-//             const context = await res.json();
-//             showMessage(context, "Success");
-//           }
-//         } catch (e) {
-//           showMessage("Error: Network error detected!", "Error");
-//         }
-//       }
-//     }
-//   });

@@ -1,5 +1,4 @@
 # Django imports
-from django import forms
 from django.forms import ModelForm
 # Local imports
 from home.models import List

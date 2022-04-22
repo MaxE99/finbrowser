@@ -5,7 +5,7 @@ from django.dispatch import receiver
 from django.db.models.signals import m2m_changed
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db.models import Sum
+from django.template.defaultfilters import slugify
 # Local imports
 from home.logic.scrapper import website_scrapping_initiate
 from home.logic.services import main_website_source_set
@@ -19,6 +19,11 @@ User = get_user_model()
 class Sector(models.Model):
     sector_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Sector, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
