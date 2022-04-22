@@ -323,6 +323,34 @@ header {
   border-radius: 0 0 20px 20px;
 }
 
+.headerButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 80%;
+}
+
+.headerButtonContainer a {
+  padding: 8px 16px;
+  font-size: 18px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--primary-fontColor);
+  border: 3px solid var(--primary-fontColor);
+  text-decoration: none;
+}
+
+.headerButtonContainer a:first-child {
+  color: var(--primary-fontColor);
+  background: white;
+}
+
+.headerButtonContainer a:hover {
+  transform: scale(1.1, 1.1);
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -743,6 +771,7 @@ details ul li:hover {
 
 .articleOptionsContainer {
   display: none;
+  flex-direction: column;
   position: absolute;
   right: -35px;
   border: 3px solid;
@@ -754,7 +783,13 @@ details ul li:hover {
   font-size: 13px;
 }
 
-.articleOptionsContainer div:hover {
+.articleOptionsContainer a {
+  color: black;
+  text-decoration: none;
+}
+
+.articleOptionsContainer div:hover,
+.articleOptionsContainer a:hover {
   background: var(--primary-fontColor);
   color: white;
 }
@@ -834,26 +869,158 @@ details ul li:hover {
   cursor: pointer;
 }
 
-.addToListForm .saveButtonContainer {
+.addToListForm .buttonsContainer {
   display: flex;
+  justify-content: space-between;
+  margin: 10px auto;
+  width: 80%;
+}
+
+.addToListForm button {
+  padding: 4px 16px;
+  font-size: 15px;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--primary-fontColor);
+  border: 1px solid var(--primary-fontColor);
+  width: 47.5%;
+}
+
+.addToListForm button:last-child {
+  color: var(--primary-fontColor);
+  background: white;
+}
+
+.addToListForm button:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.ratingsWrapper {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  align-items: baseline;
+}
+
+.rankingsUpperContainer {
+  position: relative;
+  width: 100%;
+}
+
+.rateListButton {
+  position: absolute;
+  bottom: -2px;
+  color: white;
+  background: var(--primary-fontColor);
+  border: 3px solid;
+  padding: 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 12px;
+  right: 10px;
+  text-decoration: none;
+}
+
+.rateListButton:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.rate-formUpperContainer {
+  display: none;
+  position: absolute;
+  z-index: 10;
+}
+
+.rate-formUpperContainer h3 {
+  text-align: center;
+  margin-bottom: 5px;
+  margin-top: -25px;
+}
+
+.rate-form {
+  background: white;
+  padding: 10px 20px;
+  left: 50px;
+  border-radius: 8px;
+}
+
+.rankingsHeader {
+  text-transform: uppercase;
+  font-size: 18px;
+  text-align: center;
+}
+
+.rankingsContainer {
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+  color: var(--primary-fontColor);
+}
+
+.rating {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  align-items: center;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  margin: 5px 0;
   justify-content: center;
 }
 
-.addToListForm .saveButton {
-  text-transform: uppercase;
-  padding: 5px 50px;
+.avgRating {
   font-size: 15px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  color: white;
-  width: 80%;
-  background: var(--primary-fontColor);
-  margin: 7.5px auto 10px;
+  color: black;
+  letter-spacing: 1.1px;
+  margin-left: 10px;
 }
 
-.addToListForm .saveButton:hover {
-  transform: scale(1.1, 1.1);
+.ratedContainer {
+  display: flex;
+}
+
+.ratingsAmmountContainer {
+  font-size: 14px;
+  margin: 0 auto;
+}
+
+.ratedStar {
+  font-size: 20px !important;
+}
+
+.ratingsAmmount {
+  color: var(--primary-fontColor);
+}
+
+.rating > input {
+  display: none;
+}
+
+.rating > label {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  margin-top: auto;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23e3e3e3' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 76%;
+  transition: 0.3s;
+}
+
+.rating > input:checked ~ label,
+.rating > input:checked ~ label ~ label {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23fcd93a' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
+}
+
+.rating > input:not(:checked) ~ label:hover,
+.rating > input:not(:checked) ~ label:hover ~ label {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23d8b11e' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
 }
 
 footer {
@@ -1020,7 +1187,6 @@ footer {
   width: 100%;
 } */
 .carousel-container .carousel-list .slider-content li div img {
-  border-radius: 8px;
   width: 100%;
 }
 .carousel-container .carousel-list .slider-content li:nth-of-type(3),
@@ -1078,4 +1244,94 @@ footer {
   padding: 10px 40px;
   text-align: center;
   box-shadow: var(--box-shadowScheme);
+}
+
+.addSourcesButton {
+  font-size: 50px;
+  background: var(--primary-fontColor);
+  color: white;
+  opacity: 0.5;
+  cursor: pointer;
+  height: 203px;
+}
+
+/* CREATE LIST POPUP menu */ /* CREATE LIST POPUP menu */ /* CREATE LIST POPUP menu */ /* CREATE LIST POPUP menu */ /* CREATE LIST POPUP menu */
+
+.menuHeader {
+  border-bottom: 3px solid white;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 5px;
+  background: var(--primary-fontColor);
+  border-radius: 8px 8px 0 0;
+}
+
+.popUpMenu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: none;
+  flex-direction: column;
+  width: 400px;
+  margin: 0px auto;
+  padding: 0px 0px 15px;
+  border-radius: 8px;
+  background: white;
+  color: white;
+  box-shadow: var(--box-shadowScheme);
+  z-index: 25;
+}
+
+.popUpMenu form {
+  margin: 0 auto;
+  width: 85%;
+}
+
+.popUpMenu img {
+  position: absolute;
+  top: -51px;
+  right: 20px;
+  width: 100px;
+}
+
+.popUpMenu i {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  font-size: 35px;
+  padding: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popUpMenu h2 {
+  text-align: center;
+}
+
+.popUpMenu label {
+  display: block;
+  font-size: 16px;
+  margin: 5px 0 5px;
+  padding-left: 5px;
+  color: black;
+}
+
+.popUpButtonContainer {
+  display: flex;
+  margin-top: 15px;
+}
+
+.popUpButtonContainer button,
+.popUpButtonContainer input,
+.popUpButtonContainer div {
+  text-transform: uppercase;
+  padding: 8px 50px;
+  font-size: 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  color: white;
+  width: 100%;
+  background: var(--primary-fontColor);
 }

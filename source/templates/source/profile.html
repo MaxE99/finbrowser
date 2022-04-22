@@ -2,6 +2,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'source/profile_style.css' %}" />
 <title>{{ source.name }} Profile | ResearchBrowser</title>
 {% endblock %} {% block content %}
+
 <div class="pageContainer">
   <div class="leftSide">
     <div class="profileContainer">
@@ -21,32 +22,58 @@
     <div class="rightSideUpperContainer">
       <div class="upperInnerContainer">
         <h3>{{ source.name }}</h3>
+        {% if request.user.is_authenticated %}
         {% if subscribed %}
         <button class="subscribeButton subscribed">Subscribed</button>
         {% else %}
         <button class="subscribeButton unsubscribed">Subscribe</button>
         {% endif %}
+        {% else %}
+        <a href="{% url 'registration:login' %}" class="subscribeButton unsubscribed">Subscribe</a>
+        {% endif %}
       </div>
       {% for sector in source.sector.all %}
-      <a href="{% url 'home:sector-details' name=sector.name %}" class="expertise">{{ sector.name }}</a>
+      <a href="{% url 'home:sector-details' slug=sector.slug %}" class="expertise">{{ sector.name }}</a>
       {% empty %}
       <div class="expertise">No specific sector</div>
       {% endfor %}
-      <div class="rankingsHeader">Rankings</div>
-      <div class="rankingsContainer">
-        <div class="avgRating">{{ average_rating }}</div>
-        <div class="rating">
-          <form class="rate-form" action="" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="fa fa-star rankingStar" id="first"></button>
-            <button type="submit" class="fa fa-star rankingStar" id="second"></button>
-            <button type="submit" class="fa fa-star rankingStar" id="third"></button>
-            <button type="submit" class="fa fa-star rankingStar" id="fourth"></button>
-            <button type="submit" class="fa fa-star rankingStar" id="fifth"></button>
-          </form>
-          <br>
-          <div id="confirm-box"></div>
+      <div class="ratingsWrapper">
+        <div class="rankingsUpperContainer">
+          <div class="rankingsHeader">Ratings</div>
+          {% if request.user.is_authenticated %}
+          <button type="button" class="rateListButton">Rate List</button>
+          {% else %}
+          <a href="{% url 'registration:login' %}" class="rateListButton">Rate List</a>
+          {% endif %}
+          <div class="rate-formUpperContainer">
+            <h3>Rate {{ source.name }}</h3>
+            <div class="rate-form" action="" method="POST">
+              <button type="submit" class="fa fa-star rankingStar" id="first"></button>
+              <button type="submit" class="fa fa-star rankingStar" id="second"></button>
+              <button type="submit" class="fa fa-star rankingStar" id="third"></button>
+              <button type="submit" class="fa fa-star rankingStar" id="fourth"></button>
+              <button type="submit" class="fa fa-star rankingStar" id="fifth"></button>
+            </div>
+          </div>
         </div>
+        <div class="rankingsContainer">
+          <div class="rating">
+            <div class="ratedContainer">
+              <button type="button" class="fa fa-star ratedStar" id="first"></button>
+              <button type="button" class="fa fa-star ratedStar" id="second"></button>
+              <button type="button" class="fa fa-star ratedStar" id="third"></button>
+              <button type="button" class="fa fa-star ratedStar" id="fourth"></button>
+              <button type="button" class="fa fa-star ratedStar" id="fifth"></button>
+            </div>
+            {% if average_rating != "None" %}
+            <div class="avgRating"><span>{{ average_rating }}</span> out of 5</div>
+            {% else %}
+            <div class="avgRating">No Ratings</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="ratingsAmmountContainer">based on <span class="ratingsAmmount">
+            {{ ammount_of_ratings }}</span> ratings</div>
       </div>
     </div>
     <div class="listsAndArticlesWrapper">
@@ -59,9 +86,8 @@
             <div class="articleInformationContainer">
               <div class="articleTitle">{{ article.title }}</div>
               <div class="articleSectorAndDateContainer">
-                {% for sector in article.source.sector.all %}
-                <a href="{% url 'home:sector-details' name=sector.name %}">{{ sector.name }}</a>
-                {% endfor %}
+                <a href="{% url 'home:sector-details' article.source.sector.first.slug %}">
+                  {{ article.source.sector.first.name }}</a>
                 <div class="articlePubDate">{{ article.pub_date }}</div>
                 {% if article.source.top_source %}
                 <i class="fas fa-star articleTopSource"></i>
@@ -76,6 +102,7 @@
             <a class="articleLink" href="{{ article.link }}"></a>
             <i class="fas fa-ellipsis-h"></i>
             <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+              {% if request.user.is_authenticated %}
               <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
               {% if article.title in highlighted_articles_titles %}
               <div id="{{ article.article_id }}" class="addToHighlighted"><i class="fas fa-times"></i><span>Unhighlight
@@ -84,6 +111,12 @@
               <div id="{{ article.article_id }}" class="addToHighlighted"><i
                   class="fas fa-highlighter"></i><span>Highlight
                   article</span></div>
+              {% endif %}
+              {% else %}
+              <a href="{% url 'registration:login' %}" class="addToList"><i class="fas fa-list"></i>Add to list</a>
+              <a href="{% url 'registration:login' %}" id="{{ article.article_id }}" class="addToHighlighted"><i
+                  class="fas fa-highlighter"></i><span>Highlight
+                  article</span></a>
               {% endif %}
             </div>
             <div class="addToListForm">

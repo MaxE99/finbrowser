@@ -115,6 +115,9 @@ class SourceRatingManager(models.Manager):
         else:
             return round(sum_ratings / len(list_ratings), 1)
 
+    def get_ammount_of_ratings(self, source):
+        return self.filter(source=source).count()
+
     def save_rating(self, user, source, rating):
         if self.filter(user=user, source=source).exists():
             source_rating = self.get(user=user, source=source)

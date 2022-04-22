@@ -41,6 +41,7 @@
                 <i class="fas fa-cog"><a href="{% url 'home:settings' %}"></a></i>
                 <i class="far fa-bell"></i>
                 <div class="profileWrapper">
+                    {% if request.user.is_authenticated %}
                     <div class="userProfile">
                         {% if user.profile.profile_pic %}
                         <img src="{{ user.profile.profile_pic.url }}" alt="user-profile-pic">
@@ -60,6 +61,12 @@
                             <a href="{% url 'registration:logout' %}"></a>
                         </div>
                     </div>
+                    {% else %}
+                    <div class="headerButtonContainer">
+                        <a href="{% url 'registration:login' %}">Login</a>
+                        <a href="{% url 'registration:register' %}">Sign Up</a>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -97,6 +104,7 @@
                 <h2>Website</h2>
                 <ul>
                     <li><a href="#">Sitemap</a></li>
+                    <li><a href="{% url 'support:suggest-sources' %}">Suggest Sources</a></li>
                     <li><a href="{% url 'support:suggestions' %}">Feature Wishes</a></li>
                 </ul>
             </div>

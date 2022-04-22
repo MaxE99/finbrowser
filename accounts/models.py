@@ -1,4 +1,3 @@
-import profile
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from django.contrib.postgres.fields import CICharField

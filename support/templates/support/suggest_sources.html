@@ -1,0 +1,22 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'support/suggestions_style.css' %}">
+<title>ResearchBrowser | Suggest Sources</title>
+{% endblock %}
+{% block content %}
+
+<form action="" class="suggestionsContainer" method="POST">
+    <h2>Source Suggestion</h2>
+    <div>Here you can suggest that we add further sources. Criteria's are: a) being investment related b) in-depth
+        analysis or unique datapoints</div>
+    {% csrf_token %}
+    {{ source_suggestion_form }}
+    <div class="suggestionsFormButtons">
+        <input class="sendButton" id="submitbutton" type="submit" value="Send">
+        <button class="btn-empty resetButton" type="button">Reset</button>
+    </div>
+</form>
+
+
+{% endblock content %}

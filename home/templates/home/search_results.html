@@ -31,7 +31,7 @@
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
                             {% for sector in article.source.sector.all %}
-                            <a href="{% url 'home:sector-details' name=sector.name %}">{{ sector.name }}</a>
+                            <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
                             {% endfor %}
                             <div class="articlePubDate">{{ article.pub_date }}</div>
                             {% if article.source.top_source %}
@@ -47,6 +47,7 @@
                     <a href="{{ article.link }}"></a>
                     <i class="fas fa-ellipsis-h"></i>
                     <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+                        {% if request.user.is_authenticated %}
                         <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
                         {% if article.title in highlighted_articles_titles %}
                         <div id="{{ article.article_id }}" class="addToHighlighted"><i
@@ -56,6 +57,13 @@
                         <div id="{{ article.article_id }}" class="addToHighlighted"><i
                                 class="fas fa-highlighter"></i><span>Highlight
                                 article</span></div>
+                        {% endif %}
+                        {% else %}
+                        <a href="{% url 'registration:login' %}" class="addToList"><i class="fas fa-list"></i>Add to
+                            list</a>
+                        <a href="{% url 'registration:login' %}" id="{{ article.article_id }}"
+                            class="addToHighlighted"><i class="fas fa-highlighter"></i><span>Highlight
+                                article</span></a>
                         {% endif %}
                     </div>
                     <div class="addToListForm">

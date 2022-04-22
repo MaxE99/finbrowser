@@ -17,6 +17,6 @@ urlpatterns = [
          search_results,
          name="search-results"),
     path('list/<int:list_id>', list_details, name="list-details"),
-    path('sector/<str:name>', sector_details, name="sector-details"),
+    path('sector/<slug:slug>', sector_details, name="sector-details"),
     path('api/', include('home.api.urls', namespace='api')),
 ]

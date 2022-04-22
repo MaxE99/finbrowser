@@ -99,6 +99,7 @@ if (document.querySelector(".deleteListButton")) {
         } else {
           const context = await res.json();
           showMessage(context, "Success");
+          window.location.href = "../lists";
         }
       } catch (e) {
         showMessage("Error: Network error detected!", "Error");
@@ -228,6 +229,15 @@ document
     }
   });
 
+const highlightedArticles = document.querySelector(
+  ".highlightedArticlesContainer"
+);
+
+// If there are no highlightedArticles change style of container so that flex-wrap is effective
+if (!highlightedArticles) {
+  document.querySelector(".articleSpace").style.display = "block";
+}
+
 // rating functions
 const one = document.getElementById("first");
 const two = document.getElementById("second");
@@ -355,12 +365,3 @@ document.querySelector(".rateListButton").addEventListener("click", () => {
 const user_rating = document.getElementById("user-rating").innerText;
 let form = document.querySelector(".rate-form");
 handleStarSelect(user_rating, form);
-
-const highlightedArticles = document.querySelector(
-  ".highlightedArticlesContainer"
-);
-
-// If there are no highlightedArticles change style of container so that flex-wrap is effective
-if (!highlightedArticles) {
-  document.querySelector(".articleSpace").style.display = "block";
-}

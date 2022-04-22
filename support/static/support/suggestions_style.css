@@ -1,140 +1,150 @@
-.suggestionsContainer{
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    border-radius: 20px;
-    box-shadow: var(--box-shadowScheme);
-    margin: 20px auto;
-    background: white;
-    padding: 25px;
+.suggestionsContainer {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  box-shadow: var(--box-shadowScheme);
+  margin: 20px auto;
+  background: white;
+  padding: 20px 25px;
 }
 
-.suggestionsContainer h2{
-    color: var(--primary-fontColor);
-    margin-bottom: 20px;
-    font-size: 35px;
-    text-align: center;  
+.suggestionsContainer h2 {
+  color: var(--primary-fontColor);
+  margin-bottom: 20px;
+  font-size: 35px;
+  text-align: center;
 }
 
-.suggestionForm{
-    margin-top: 20px;
+.suggestionForm {
+  margin-top: 20px;
 }
 
 .formLabel {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .formText {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 15px;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 15px;
 }
 .formText:after {
-    content: "*";
-    position: relative;
-    top: 0;
-    font-size: 13px;
-    color: #f00;
+  content: "*";
+  position: relative;
+  top: 0;
+  font-size: 13px;
+  color: #f00;
 }
 
-.suggestionType, .suggestionExplanation, .multiselectBlock  {
-    display: block;
-    border: 1px solid #cdd6f3;
-    border-radius: 8px;
-    padding: 13px 40px 13px 5px;
-    font-size: 14px;
-    color: #a8acc9;
+.suggestionType,
+.suggestionExplanation,
+.multiselectBlock,
+#id_url,
+#id_sector {
+  display: block;
+  border: 1px solid #cdd6f3;
+  border-radius: 8px;
+  padding: 13px 40px 13px 5px;
+  font-size: 14px;
 }
 
-.suggestionType, .suggestionExplanation{
-    margin-top: 5px;
-    margin-bottom: 20px;
-    width: 100%;
-    color: var(--secondary-fontColor);
+.suggestionType,
+.suggestionExplanation {
+  margin-top: 5px;
+  margin-bottom: 20px;
+  width: 100%;
+  color: var(--secondary-fontColor);
 }
 
-#suggestionExplanation{
-    width: 100%;
-    border: 1px solid #cdd6f3;
-    border-radius: 8px;
-    padding: 13px 40px 13px 16px;
-    font-size: 14px;
-    margin: 5px 0;
-    resize: none;
+#suggestionExplanation {
+  width: 100%;
+  border: 1px solid #cdd6f3;
+  border-radius: 8px;
+  padding: 13px 40px 13px 16px;
+  font-size: 14px;
+  margin: 5px 0;
+  resize: none;
 }
 
 input.multiselectCheckbox {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 40px;
-    height: 40px;
-    border: none;
-    opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  opacity: 0;
 }
 
 .multiselectBlock {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
-option{
-    padding: 13px 40px 13px 16px; 
+option {
+  padding: 13px 40px 13px 16px;
 }
 
 .suggestionsFormButtons {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-a[disabled], button[disabled] {
-    background: #e3e8f0 !important;
-    color: #b5c3d6;
-    border-color: transparent;
+a[disabled],
+button[disabled] {
+  background: #e3e8f0 !important;
+  color: #b5c3d6;
+  border-color: transparent;
 }
 
-button {
-    display: inline-block;
-    width: 138px;
-    height: 40px;
-    line-height: 40px;
-    color: #fff;
-    font-weight: 700;
-    font-size: 12px;
-    border-radius: 8px;
-    text-transform: uppercase;
-    text-align: center;
-    transition: background 0.2s ease-in;
-    background: rgb(0, 85, 212);
-    box-sizing: border-box;
-    border: 1px solid transparent;
-    height: 44px;
-    line-height: 44px; 
-    cursor: pointer;
-    width: 180px;
+button,
+.sendButton {
+  display: inline-block;
+  width: 138px;
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  text-align: center;
+  transition: background 0.2s ease-in;
+  background: rgb(0, 85, 212);
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  height: 44px;
+  line-height: 44px;
+  cursor: pointer;
+  width: 180px;
 }
 
-button:active{
-    transform: translateY(2px);
+button:active {
+  transform: translateY(2px);
 }
 
 .btn-empty {
-    border-color: rgb(0, 85, 212);
-    background: none;
-    color: rgb(0, 85, 212);
+  border-color: rgb(0, 85, 212);
+  background: none;
+  color: rgb(0, 85, 212);
 }
 .btn-empty:hover {
-    color: #fff;
-    background: rgb(0, 85, 212);
+  color: #fff;
+  background: rgb(0, 85, 212);
 }
 
-.reportReceivedAlert{
-    display: flex;
-    justify-content: center;
-    padding: 15px 0px;
-    background: var(--primary-fontColor);
-    color: white;
-    font-size: 20px;
+.reportReceivedAlert {
+  display: flex;
+  justify-content: center;
+  padding: 15px 0px;
+  background: var(--primary-fontColor);
+  color: white;
+  font-size: 20px;
+}
+
+form label {
+  margin: 10px 0 5px;
 }
