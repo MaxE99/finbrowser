@@ -116,7 +116,7 @@
             <div onClick="prev();" class="prev"></div>
             <div class="carousel-list">
                 <ul class="slider-content">
-                    {% for source in list.sources.all %}
+                    {% for source in list.sources.all|dictsort:"name" %}
                     <li>
                         <div class="sourceContainer">
                             <div class="iconContainer">
@@ -157,9 +157,8 @@
                     <div class="articleInformationContainer">
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
-                            {% for sector in article.source.sector.all %}
-                            <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
-                            {% endfor %}
+                            <a href="{% url 'home:sector-details' article.source.sector.first.slug %}">
+                                {{ article.source.sector.first.name }}</a>
                             <div class="articlePubDate">{{ article.pub_date }}</div>
                             {% if article.source.top_source %}
                             <i class="fas fa-star articleTopSource"></i>
@@ -231,9 +230,8 @@
                     <div class="articleInformationContainer">
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
-                            {% for sector in article.source.sector.all %}
-                            <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
-                            {% endfor %}
+                            <a href="{% url 'home:sector-details' article.source.sector.first.slug %}">
+                                {{ article.source.sector.first.name }}</a>
                             <div class="articlePubDate">{{ article.pub_date }}</div>
                             {% if article.source.top_source %}
                             <i class="fas fa-star articleTopSource"></i>
@@ -305,9 +303,8 @@
                 <div class="articleInformationContainer">
                     <div class="articleTitle">{{ article.title }}</div>
                     <div class="articleSectorAndDateContainer">
-                        {% for sector in article.source.sector.all %}
-                        <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
-                        {% endfor %}
+                        <a href="{% url 'home:sector-details' article.source.sector.first.slug %}">
+                            {{ article.source.sector.first.name }}</a>
                         <div class="articlePubDate">{{ article.pub_date }}</div>
                         {% if article.source.top_source %}
                         <i class="fas fa-star articleTopSource"></i>

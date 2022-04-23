@@ -2,12 +2,14 @@
 from django.urls import path
 # Local imports
 from home.api.api import (
-    list_filter, FilteredList, FilteredSite, FilteredSource, get_list_filters,
-    article_filter, get_article_filters, list_change_subscribtion_status,
-    source_change_subscribtion_status, delete_source_from_list, delete_list,
-    sources_add, source_rate, list_rate, article_highlight, lists_add_article,
-    profile_add_website_link, profile_pic_delete, profile_banner_delete,
-    social_link_delete, social_links_add)
+    list_filter, FilteredList, FilteredSite, FilteredSourceForLists,
+    FilteredSource, FilteredSourceForFeed, FilteredListForFeed,
+    get_list_filters, article_filter, get_article_filters,
+    list_change_subscribtion_status, source_change_subscribtion_status,
+    delete_source_from_list, delete_list, sources_add, source_rate, list_rate,
+    article_highlight, lists_add_article, profile_add_website_link,
+    profile_pic_delete, profile_banner_delete, social_link_delete,
+    social_links_add, external_article_delete)
 
 app_name = 'api'
 
@@ -18,8 +20,8 @@ urlpatterns = [
          source_change_subscribtion_status),
     path('filter_list/<str:timeframe>/<str:content_type>/<str:sources>',
          list_filter),
-    path('search_sources/<int:list_id>/<str:search_term>',
-         FilteredSource.as_view()),
+    path('search_sources_for_list/<int:list_id>/<str:search_term>',
+         FilteredSourceForLists.as_view()),
     path('search_lists/<str:search_term>', FilteredList.as_view()),
     path('get_list_filters', get_list_filters),
     path('search_site/<str:search_term>', FilteredSite.as_view()),
@@ -41,5 +43,12 @@ urlpatterns = [
     path('delete_profile_pic', profile_pic_delete),
     path('delete_profile_banner', profile_banner_delete),
     path('delete_social_link/<str:website>', social_link_delete),
-    path('add_social_links/<str:website>/<path:url>', social_links_add)
+    path('add_social_links/<str:website>/<path:url>', social_links_add),
+    path('search_sources/<str:search_term>', FilteredSource.as_view()),
+    path('filter_sources_from_feed/<str:search_term>',
+         FilteredSourceForFeed.as_view()),
+    path('filter_lists_from_feed/<str:search_term>',
+         FilteredListForFeed.as_view()),
+    path('delete_external_article/<int:external_article_id>',
+         external_article_delete),
 ]

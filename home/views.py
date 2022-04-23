@@ -7,14 +7,15 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import get_user_model
 # Python imports
 from datetime import timedelta, date
-from accounts.models import SocialLink, Website
 # Local imports
-from home.models import Article, HighlightedArticle, List, Sector, Source, ListRating
-from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm)
+from accounts.models import SocialLink, Website
+from home.models import (Article, HighlightedArticle, List, Sector, Source,
+                         ListRating, ExternalArticle)
+from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm,
+                        AddExternalArticlesForm)
 from home.logic.pure_logic import paginator_create
 from accounts.forms import (EmailAndUsernameChangeForm, PasswordChangingForm,
-                            ProfileChangeForm, ProfilePicChangeForm,
-                            BioChangeForm, BannerChangeForm)
+                            ProfileChangeForm)
 
 User = get_user_model()
 
@@ -27,17 +28,36 @@ def feed(request):
             add_list_form.save()
             messages.success(request, f'List has been created!')
             return redirect('home:feed')
+    elif 'addExternalArticlesForm' in request.POST:
+        add_external_articles_form = AddExternalArticlesForm(request.POST)
+        if add_external_articles_form.is_valid():
+            data = add_external_articles_form.cleaned_data
+            title = data['title']
+            link = data['link']
+            sector = data['sector']
+            pub_date = data['pub_date']
+            external_article = ExternalArticle.objects.create(
+                user=request.user,
+                title=title,
+                link=link,
+                sector=sector,
+                pub_date=pub_date)
+            HighlightedArticle.objects.create(
+                user=request.user, external_article=external_article)
     user_lists = List.objects.get_created_lists(request.user)
     subscribed_lists = List.objects.get_subscribed_lists(request.user)
     subscribed_sources = Source.objects.get_subscribed_sources(request.user)
     subscribed_articles = Article.objects.get_articles_from_subscribed_sources(
         subscribed_sources)
     subscribed_articles, _ = paginator_create(request, subscribed_articles, 10)
-    highlighted_articles = HighlightedArticle.objects.filter(user=request.user)
+    highlighted_articles = HighlightedArticle.objects.filter(
+        user=request.user).order_by('-article__pub_date')
     highlighted_articles, _ = paginator_create(request, highlighted_articles,
                                                10)
     add_list_form = AddListForm()
+    add_external_articles_form = AddExternalArticlesForm()
     context = {
+        'add_external_articles_form': add_external_articles_form,
         'add_list_form': add_list_form,
         'user_lists': user_lists,
         'subscribed_lists': subscribed_lists,
@@ -69,7 +89,7 @@ def lists(request):
             days=int(timeframe))
     filter_args = dict(
         (k, v) for k, v in filter_args.items() if v is not None and v != 'All')
-    lists = List.objects.filter(**filter_args)
+    lists = List.objects.filter(**filter_args).order_by('name')
     # cache.delete_many(['timeframe', 'content_type', 'sources'])
     add_list_form = AddListForm()
     results_found = len(lists)

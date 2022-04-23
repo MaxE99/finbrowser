@@ -8,26 +8,45 @@
 
 {% block content %}
 
-<div class="popUpMenu createListMenu">
-    <i class="fas fa-times red closeMenuButton"></i>
-    <div class="menuHeader">Create A New List</div>
+<div class="createListMenu formContainer">
+    <h3>Create A New List</h3>
+    <i class="fas fa-times closeFormContainerButton"></i>
     <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
         {% csrf_token %} {{ add_list_form }}
-        <div class="popUpButtonContainer">
-            <input name="createListForm" type="submit" class="saveButton" value="Save" />
-        </div>
+        <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
     </form>
 </div>
 
-<div class="addSourcesForm">
+<div class="addSourcesForm formContainer">
     <h3>Add Sources</h3>
-    <i class="fas fa-times addSourcesCloseButton"></i>
-    <input id="addSourcesInput" type="text">
-    <div class="sourceSearchResultContainer">
-        <div id="sourceSearchResults"></div>
-        <div class="selectedSourcesContainer"></div>
+    <i class="fas fa-times closeFormContainerButton"></i>
+    <input id="textInput" type="text">
+    <div class="searchResultWrapper">
+        <div id="searchResultsContainer"></div>
+        <div class="selectionContainer"></div>
     </div>
-    <button>Add</button>
+    <button class="formSubmitButton">Add</button>
+</div>
+
+<div class="addListsForm formContainer">
+    <h3>Add Lists</h3>
+    <i class="fas fa-times closeFormContainerButton"></i>
+    <input id="textInput" type="text">
+    <div class="searchResultWrapper">
+        <div id="searchResultsContainer"></div>
+        <div class="selectionContainer"></div>
+    </div>
+    <button class="formSubmitButton">Add</button>
+</div>
+
+
+<div class="addExternalLinksContainer formContainer">
+    <h3>Add External Articles</h3>
+    <i class="fas fa-times closeFormContainerButton"></i>
+    <form action="" enctype="multipart/form-data" method="POST" class="addExternalArticlesForm">
+        {% csrf_token %} {{ add_external_articles_form }}
+        <input name="addExternalArticlesForm" type="submit" class="formSubmitButton" value="Save" />
+    </form>
 </div>
 
 <div class="categoryWrapper">
@@ -54,7 +73,7 @@
                 </li>
                 {% endfor %}
                 <li>
-                    <div class="sourceContainer addSourcesButton createListButton"><i class="fas fa-plus"></i></div>
+                    <div class="sourceContainer addXButton createListButton"><i class="fas fa-plus"></i></div>
                 </li>
             </ul>
         </div>
@@ -88,7 +107,7 @@
                 </li>
                 {% endfor %}
                 <li>
-                    <div class="sourceContainer addSourcesButton"><i class="fas fa-plus"></i></div>
+                    <div class="sourceContainer addXButton addListsButton"><i class="fas fa-plus"></i></div>
                 </li>
             </ul>
         </div>
@@ -118,7 +137,7 @@
                 </li>
                 {% endfor %}
                 <li>
-                    <div class="sourceContainer addSourcesButton"><i class="fas fa-plus"></i></div>
+                    <div class="sourceContainer addXButton addSourcesButton"><i class="fas fa-plus"></i></div>
                 </li>
             </ul>
         </div>
@@ -129,7 +148,7 @@
 </div>
 
 
-
+{% if subscribed_articles %}
 <div class="browserCategory subscribedSourcesArticleHeader">Articles Of Subscribed Sources</div>
 <div class="articlesContainer">
     {% for article in subscribed_articles %}
@@ -138,9 +157,8 @@
         <div class="articleInformationContainer">
             <div class="articleTitle">{{ article.title }}</div>
             <div class="articleSectorAndDateContainer">
-                {% for sector in article.source.sector.all %}
-                <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
-                {% endfor %}
+                <a href="{% url 'home:sector-details' article.source.sector.first.slug %}">
+                    {{ article.source.sector.first.name }}</a>
                 <div class="articlePubDate">{{ article.pub_date }}</div>
                 {% if article.source.top_source %}
                 <i class="fas fa-star articleTopSource"></i>
@@ -193,20 +211,20 @@
 {% if subscribed_articles %}
 {% include "pagination.html" with page=subscribed_articles %}
 {% endif %}
-
+{% endif %}
 
 {% if highlighted_articles %}
 <div class="browserCategory subscribedSourcesArticleHeader">Highlighted Articles</div>
 <div class="articlesContainer">
     {% for highlighted_article in highlighted_articles %}
+    {% if highlighted_article.article %}
     <div class="article">
         <img src="{% static highlighted_article.article.source.favicon_path %}" />
         <div class="articleInformationContainer">
             <div class="articleTitle">{{ highlighted_article.article.title }}</div>
             <div class="articleSectorAndDateContainer">
-                {% for sector in highlighted_article.article.source.sector.all %}
-                <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
-                {% endfor %}
+                <a href="{% url 'home:sector-details' highlighted_article.article.source.sector.first.slug %}">
+                    {{ highlighted_article.article.source.sector.first.name }}</a>
                 <div class="articlePubDate">{{ highlighted_article.article.pub_date }}</div>
                 {% if highlighted_article.article.source.top_source %}
                 <i class="fas fa-star articleTopSource"></i>
@@ -254,10 +272,34 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="article">
+        <i class="fas fa-question-circle"></i>
+        <div class="articleInformationContainer">
+            <div class="articleTitle">{{ highlighted_article.external_article.title }}</div>
+            <div class="articleSectorAndDateContainer">
+                <a href="{% url 'home:sector-details' slug=highlighted_article.external_article.sector.slug %}">
+                    {{ highlighted_article.external_article.sector }}</a>
+                <div class="articlePubDate">{{ highlighted_article.external_article.pub_date }}</div>
+            </div>
+        </div>
+        <a class="articleLink" href="{{ highlighted_article.external_article.link }}"></a>
+        <i class="fas fa-ellipsis-h"></i>
+        <div
+            class="articleOptionsContainer articleOptionsContainer{{ highlighted_article.external_article.article_id }}">
+            <div id="{{ highlighted_article.external_article.article_id }}" class="deleteExternalLink"><i
+                    class="fas fa-times"></i><span>Unhighlight
+                    article</span></div>
+        </div>
+    </div>
+    {% endif %}
     {% endfor %}
 </div>
 {% if highlighted_articles %}
-{% include "pagination.html" with page=highlighted_articles %}
+<div class="paginationAndAddExternalContainer">
+    {% include "pagination.html" with page=highlighted_articles %}
+    <button class="addExternalLinkButton"><i class="fas fa-plus"></i>Add External Source</button>
+</div>
 {% endif %}
 
 {% endif %}

@@ -165,11 +165,29 @@ class ListRating(models.Model):
         return f'{self.user} - {self.list} - {self.rating}'
 
 
+class ExternalArticle(models.Model):
+    article_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=500)
+    link = models.URLField()
+    sector = models.ForeignKey(Sector, on_delete=models.CASCADE)
+    pub_date = models.DateField()
+
+    def __str__(self):
+        return f'{self.user} - {self.link}'
+
+
 class HighlightedArticle(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
+    external_article = models.ForeignKey(ExternalArticle,
+                                         on_delete=models.CASCADE,
+                                         null=True)
 
     objects = HighlightedArticlesManager()
 
     def __str__(self):
-        return f'{self.user} - {self.article}'
+        if self.article:
+            return f'{self.user} - {self.article}'
+        else:
+            return f'{self.user} - {self.external_article}'

@@ -11,7 +11,8 @@ def profile(request, domain):
     source = get_object_or_404(Source, domain=domain)
     articles = Article.objects.filter(source=source).order_by('-pub_date')
     articles, _ = paginator_create(request, articles, 5)
-    lists = List.objects.filter(sources__source_id=source.source_id)
+    lists = List.objects.filter(
+        sources__source_id=source.source_id).order_by('name')
     lists, _ = paginator_create(request, lists, 5)
     website_logo = website_logo_get(source.website)
     average_rating = SourceRating.objects.get_average_rating(source)

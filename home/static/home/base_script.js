@@ -251,22 +251,3 @@ document
       }
     });
   });
-
-// everything regarding create list menu
-const createListMenu = document.querySelector(".createListMenu");
-
-// Open settings menu
-document.querySelector(".createListButton").addEventListener("click", () => {
-  createListMenu.style.display = "flex";
-});
-
-// Close menus
-document
-  .querySelectorAll(".closeMenuButton, .closeButton")
-  .forEach((button) => {
-    button.addEventListener("click", () => {
-      document.querySelectorAll(".popUpMenu").forEach((menu) => {
-        menu.style.display = "none";
-      });
-    });
-  });

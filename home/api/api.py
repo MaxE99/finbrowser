@@ -1,5 +1,4 @@
 # Django imports
-import re
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -7,7 +6,7 @@ from django.core.cache import cache
 from django.http import JsonResponse
 from rest_framework.views import APIView
 # Local imports
-from home.models import Article, HighlightedArticle, Source, List, SourceRating, ListRating
+from home.models import Article, ExternalArticle, HighlightedArticle, Source, List, SourceRating, ListRating
 from accounts.models import Profile, SocialLink, Website
 from home.api.serializers import List_Serializer, Article_Serializer, Source_Serializer
 
@@ -170,13 +169,45 @@ def social_link_delete(request, website):
     return Response("Link has been deleted!")
 
 
-class FilteredSource(APIView):
+@api_view(["DELETE"])
+def external_article_delete(request, external_article_id):
+    get_object_or_404(ExternalArticle, article_id=external_article_id).delete()
+    return Response("External article has been deleted!")
+
+
+class FilteredSourceForLists(APIView):
 
     def get(self, request, list_id, search_term, format=None):
         list = get_object_or_404(List, list_id=list_id)
         # special filter case as sources that are already in list are removed
         filtered_sources = Source.objects.filter_sources_not_in_list(
             search_term, list)[0:5]
+        serializer = Source_Serializer(filtered_sources, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+
+class FilteredSourceForFeed(APIView):
+
+    def get(self, request, search_term):
+        filtered_sources = Source.objects.filter_sources_not_subscribed(
+            search_term, request.user)
+        serializer = Source_Serializer(filtered_sources, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+
+class FilteredListForFeed(APIView):
+
+    def get(self, request, search_term):
+        filtered_lists = List.objects.filter_lists_not_subscribed(
+            search_term, request.user)
+        serializer = List_Serializer(filtered_lists, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+
+class FilteredSource(APIView):
+
+    def get(self, request, search_term, format=None):
+        filtered_sources = Source.objects.filter_sources(search_term)[0:6]
         serializer = Source_Serializer(filtered_sources, many=True)
         return JsonResponse(serializer.data, safe=False)
 

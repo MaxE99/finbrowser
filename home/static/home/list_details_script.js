@@ -6,9 +6,14 @@ if (subscribeButton) {
       const url = window.location.href;
       const index = url.lastIndexOf("/");
       const list_id = url.substring(index + 1);
-      const action = subscribeButton.innerText;
+      let action = subscribeButton.innerText;
+      if (action === "Subscribed") {
+        action = "Unsubscribe";
+      } else {
+        action = "Subscribe";
+      }
       const res = await fetch(
-        `../list_change_subscribtion_status/${list_id}/${action}`,
+        `../api/list_change_subscribtion_status/${list_id}/${action}`,
         get_fetch_settings("POST")
       );
       if (!res.ok) {
@@ -123,7 +128,7 @@ document
       selected_list.style.display = "none";
       try {
         const res = await fetch(
-          `../../api/search_sources/${list_id}/${search_term}`,
+          `../../api/search_sources_for_list/${list_id}/${search_term}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {

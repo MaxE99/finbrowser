@@ -632,9 +632,11 @@ h2 {
   padding: 5px;
 }
 
-.article img {
+.article img,
+.article .fa-question-circle {
   width: 50px;
   height: 50px;
+  font-size: 50px;
 }
 
 .article .listLink {
@@ -804,7 +806,8 @@ details ul li:hover {
   width: 13px;
 }
 
-.articleOptionsContainer .addToHighlighted {
+.articleOptionsContainer .addToHighlighted,
+.deleteExternalLink {
   padding: 5px 10px;
 }
 
@@ -1246,6 +1249,7 @@ footer {
   box-shadow: var(--box-shadowScheme);
 }
 
+.addXButton,
 .addSourcesButton {
   font-size: 50px;
   background: var(--primary-fontColor);

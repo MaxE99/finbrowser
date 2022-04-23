@@ -15,13 +15,17 @@ class ListManager(models.Manager):
         return self.filter(creator=user).order_by('name')
 
     def get_highlighted_articles(self, list_id):
-        return self.get(list_id=list_id).articles.all()
+        return self.get(list_id=list_id).articles.all().order_by('-pub_date')
 
     def get_subscribed_lists(self, user):
         return self.filter(subscribers=user).order_by('name')
 
     def filter_lists(self, search_term):
         return self.filter(name__istartswith=search_term)
+
+    def filter_lists_not_subscribed(self, search_term, user):
+        return self.filter(name__istartswith=search_term).exclude(
+            creator=user).exclude(subscribers=user).order_by('name')
 
 
 class SourceManager(models.Manager):
@@ -41,6 +45,10 @@ class SourceManager(models.Manager):
     def filter_sources_not_in_list(self, search_term, list):
         return self.filter(name__istartswith=search_term).exclude(
             source_id__in=list.sources.all()).order_by('name')
+
+    def filter_sources_not_subscribed(self, search_term, user):
+        return self.filter(name__istartswith=search_term).exclude(
+            subscribers=user).order_by('name')
 
 
 class ArticleManager(models.Manager):
