@@ -134,90 +134,6 @@ select {
   margin-left: 10px;
 }
 
-/* /--Popupmenu--> */ /* /--Popupmenu--> */ /* /--Popupmenu--> */ /* /--Popupmenu--> */ /* /--Popupmenu--> */ /* /--Popupmenu--> */
-
-.menuHeader {
-  border-bottom: 3px solid white;
-  padding: 10px 0;
-  text-align: center;
-  font-size: 20px;
-  margin-bottom: 5px;
-}
-
-.popUpMenu {
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  display: none;
-  flex-direction: column;
-  width: 300px;
-  margin: 180px auto 0px;
-  padding: 0px 0px 15px;
-  border: 3px solid;
-  border-radius: 20px;
-  background: var(--primary-fontColor);
-  color: white;
-  box-shadow: var(--box-shadowScheme);
-}
-
-.popUpMenu form {
-  margin: 0 auto;
-  width: 85%;
-}
-
-.popUpMenu img {
-  position: absolute;
-  top: -51px;
-  right: 20px;
-  width: 100px;
-}
-
-.popUpMenu i {
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  font-size: 35px;
-  padding: 0 5px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.popUpMenu h2 {
-  text-align: center;
-}
-
-.popUpMenu label {
-  display: block;
-  font-size: 16px;
-  margin: 5px 0 5px;
-  padding-left: 5px;
-}
-
-.popUpButtonContainer {
-  display: flex;
-  margin-top: 15px;
-}
-
-.popUpButtonContainer button,
-.popUpButtonContainer input,
-.popUpButtonContainer div {
-  text-transform: uppercase;
-  padding: 8px 50px;
-  font-size: 20px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  color: white;
-  width: 100%;
-}
-
-.popUpButtonContainer button:hover,
-.popUpButtonContainer input:hover,
-.closeMenuButton:hover {
-  transform: scale(1.1, 1.1);
-}
-
 .overlay {
   opacity: 1;
 }
@@ -280,4 +196,13 @@ select {
   border-bottom: 1px solid rgb(226, 230, 234);
   text-decoration: none;
   color: black;
+}
+
+.createFirstList {
+  color: white !important;
+  background: var(--primary-fontColor) !important;
+  width: 80% !important;
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
 }

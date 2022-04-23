@@ -56,27 +56,9 @@ document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
   });
 });
 
-// Open settings menu
-const createListMenu = document.querySelector(".createListMenu");
-let article_id;
-
+// open List Create Menu
 document.querySelectorAll(".createNewListButton").forEach((button) => {
   button.addEventListener("click", () => {
-    article_id = button.parentElement.parentElement.parentElement.id.replace(
-      "article",
-      ""
-    );
-    createListMenu.style.display = "flex";
+    document.querySelector(".createListMenu").style.display = "block";
   });
 });
-
-// Close menus
-document
-  .querySelectorAll(".closeMenuButton, .closeButton")
-  .forEach((button) => {
-    button.addEventListener("click", () => {
-      document.querySelectorAll(".popUpMenu").forEach((menu) => {
-        menu.style.display = "none";
-      });
-    });
-  });

@@ -1,20 +1,50 @@
+// Open settings menu
+document.querySelector(".createListButton").addEventListener("click", () => {
+  document.querySelector(".createListMenu").style.display = "flex";
+});
+
+// Close menus
+document
+  .querySelector(".createListMenu .closeFormContainerButton")
+  .addEventListener("click", () => {
+    document.querySelector(".createListMenu").style.display = "none";
+  });
+
+//open add sources menu
+if (document.querySelector(".addSourcesButton")) {
+  document.querySelector(".addSourcesButton").addEventListener("click", () => {
+    document.querySelector(".addSourcesForm").style.display = "flex";
+  });
+}
+
+//close add sources menu
+document
+  .querySelector(".addSourcesForm .closeFormContainerButton")
+  .addEventListener("click", () => {
+    document.querySelector(".addSourcesForm").style.display = "none";
+  });
+
 // add Sources Search
 let selected_sources = [];
 document
-  .getElementById("addSourcesInput")
+  .querySelector(".addSourcesForm #textInput")
   .addEventListener("keyup", async function (e) {
-    let search_term = document.getElementById("addSourcesInput").value;
-    let results_list = document.getElementById("sourceSearchResults");
-    let selected_list = document.querySelector(".selectedSourcesContainer");
-    const url = window.location.href;
-    const index = url.lastIndexOf("/");
-    const list_id = url.substring(index + 1);
+    let search_term = document.querySelector(
+      ".addSourcesForm #textInput"
+    ).value;
+    let results_list = document.querySelector(
+      ".addSourcesForm #searchResultsContainer"
+    );
+    let selected_list = document.querySelector(
+      ".addSourcesForm .selectionContainer"
+    );
+    // die art an list_id heranzukommen unterscheidet sich überall von daher muss ich das anpassen, wenn ich refactore und alles zusammenlege
     if (search_term && search_term.replaceAll(/\s/g, "") != "") {
       results_list.style.display = "block";
       selected_list.style.display = "none";
       try {
         const res = await fetch(
-          `../../api/search_sources/${list_id}/${search_term}`,
+          `../../api/filter_sources_from_feed/${search_term}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {
@@ -60,7 +90,8 @@ document
                     selected_list.appendChild(searchResult);
                     results_list.style.display = "none";
                     selected_list.style.display = "block";
-                    document.getElementById("addSourcesInput").value = "";
+                    document.querySelector(".addSourcesForm #textInput").value =
+                      "";
                   }
                 );
               }
@@ -76,46 +107,201 @@ document
     }
   });
 
-//open add sources menu
-if (document.querySelector(".addSourcesButton")) {
-  document.querySelector(".addSourcesButton").addEventListener("click", () => {
-    document.querySelector(".addSourcesForm").style.display = "flex";
-    document.querySelector(".listOverlay").style.opacity = "0.5";
-  });
-}
-
-//close add sources menu
-document
-  .querySelector(".addSourcesCloseButton")
-  .addEventListener("click", () => {
-    document.querySelector(".addSourcesForm").style.display = "none";
-    document.querySelector(".listOverlay").style.opacity = "1";
-  });
-
 // add/confirm sources to list
 document
-  .querySelector(".addSourcesForm button")
+  .querySelector(".addSourcesForm .formSubmitButton")
   .addEventListener("click", async () => {
-    const url = window.location.href;
-    const index = url.lastIndexOf("/");
-    const list_id = url.substring(index + 1);
     if (selected_sources.length) {
-      try {
-        const res = await fetch(
-          `../api/add_sources/${selected_sources}/${list_id}`,
-          get_fetch_settings("POST")
-        );
-        if (!res.ok) {
-          showMessage("Error: List can't be subscribed!", "Error");
-        } else {
-          const context = await res.json();
-          showMessage(context, "Success");
-          window.location.reload();
+      for (let i = 0, j = selected_sources.length; i < j; i++) {
+        try {
+          const res = await fetch(
+            `../api/source_change_subscribtion_status/${selected_sources[i]}/Subscribe`,
+            get_fetch_settings("POST")
+          );
+          if (!res.ok) {
+            showMessage("Error: List can't be subscribed!", "Error");
+          } else {
+            const context = await res.json();
+            showMessage(context, "Success");
+            window.location.reload();
+          }
+        } catch (e) {
+          showMessage("Error: Network error detected!", "Error");
         }
-      } catch (e) {
-        showMessage("Error: Network error detected!", "Error");
       }
     } else {
       showMessage("You need to select sources!", "Error");
     }
   });
+
+// add list Search
+// add list Search
+// add list Search
+// add list Search
+// add list Search
+
+//open add lists menu
+if (document.querySelector(".addListsButton")) {
+  document.querySelector(".addListsButton").addEventListener("click", () => {
+    document.querySelector(".addListsForm").style.display = "flex";
+  });
+}
+
+//close add lists menu
+document
+  .querySelector(".addListsForm .closeFormContainerButton")
+  .addEventListener("click", () => {
+    document.querySelector(".addListsForm").style.display = "none";
+  });
+
+let selected_lists = [];
+document
+  .querySelector(".addListsForm #textInput")
+  .addEventListener("keyup", async function (e) {
+    let search_term = document.querySelector(".addListsForm #textInput").value;
+    let results_list = document.querySelector(
+      ".addListsForm #searchResultsContainer"
+    );
+    let selected_list = document.querySelector(
+      ".addListsForm .selectionContainer"
+    );
+    // die art an list_id heranzukommen unterscheidet sich überall von daher muss ich das anpassen, wenn ich refactore und alles zusammenlege
+    if (search_term && search_term.replaceAll(/\s/g, "") != "") {
+      results_list.style.display = "block";
+      selected_list.style.display = "none";
+      try {
+        const res = await fetch(
+          `../../api/filter_lists_from_feed/${search_term}`,
+          get_fetch_settings("GET")
+        );
+        if (!res.ok) {
+          showMessage("Error: Site couldn't be searched!", "Error");
+        } else {
+          const context = await res.json();
+          results_list.innerHTML = "";
+          if (context.length > 0) {
+            const resultHeader = document.createElement("div");
+            resultHeader.innerText = "Results:";
+            results_list.append(resultHeader);
+            context.forEach((list) => {
+              if (selected_lists.includes(list.name) == false) {
+                const searchResult = document.createElement("div");
+                searchResult.classList.add("searchResult");
+                const resultImage = document.createElement("img");
+                if (list.list_pic) {
+                  resultImage.src = list.list_pic;
+                } else {
+                  resultImage.src = "/static/home/media/bigger_favicon.png";
+                }
+                const listName = document.createElement("span");
+                listName.innerText = list.name;
+                listName.id = `list_${list.list_id}`;
+                searchResult.append(resultImage, listName);
+                results_list.appendChild(searchResult);
+                searchResult.addEventListener(
+                  "click",
+                  function addSelectedSource() {
+                    // Remove the listener from the element the first time the listener is run:
+                    searchResult.removeEventListener(
+                      "click",
+                      addSelectedSource
+                    );
+                    selected_lists.push(list.list_id);
+                    const removeListButton = document.createElement("i");
+                    removeListButton.classList.add("fas", "fa-trash");
+                    removeListButton.addEventListener("click", () => {
+                      selected_lists = selected_lists.filter(function (e) {
+                        return (
+                          e.toString() !==
+                          removeListButton.previousElementSibling.id.replace(
+                            "list_",
+                            ""
+                          )
+                        );
+                      });
+                      removeListButton.parentElement.remove();
+                    });
+                    console.log(selected_lists);
+                    searchResult.appendChild(removeListButton);
+                    selected_list.appendChild(searchResult);
+                    results_list.style.display = "none";
+                    selected_list.style.display = "block";
+                    document.querySelector(".addListsForm #textInput").value =
+                      "";
+                  }
+                );
+              }
+            });
+          }
+        }
+      } catch (e) {
+        showMessage("Error: Network error detected!", "Error");
+      }
+    } else {
+      results_list.style.display = "none";
+      selected_list.style.display = "block";
+    }
+  });
+
+// add/confirm lists
+document
+  .querySelector(".addListsForm button")
+  .addEventListener("click", async () => {
+    if (selected_lists.length) {
+      for (let i = 0, j = selected_lists.length; i < j; i++) {
+        try {
+          const res = await fetch(
+            `../api/list_change_subscribtion_status/${selected_lists[i]}/Subscribe`,
+            get_fetch_settings("POST")
+          );
+          if (!res.ok) {
+            showMessage("Error: List can't be subscribed!", "Error");
+          } else {
+            const context = await res.json();
+            showMessage(context, "Success");
+            window.location.reload();
+          }
+        } catch (e) {
+          showMessage("Error: Network error detected!", "Error");
+        }
+      }
+    } else {
+      showMessage("You need to select sources!", "Error");
+    }
+  });
+
+// open add external link menu
+document
+  .querySelector(".addExternalLinkButton")
+  .addEventListener("click", () => {
+    document.querySelector(".addExternalLinksContainer").style.display = "flex";
+  });
+
+// close external link menu
+document
+  .querySelector(".addExternalLinksContainer .closeFormContainerButton")
+  .addEventListener("click", () => {
+    document.querySelector(".addExternalLinksContainer").style.display = "none";
+  });
+
+// delete external link
+document.querySelectorAll(".deleteExternalLink").forEach((element) => {
+  element.addEventListener("click", async () => {
+    const externalArticleID = element.id;
+    try {
+      const res = await fetch(
+        `../api/delete_external_article/${externalArticleID}`,
+        get_fetch_settings("DELETE")
+      );
+      if (!res.ok) {
+        showMessage("Error: List can't be subscribed!", "Error");
+      } else {
+        const context = await res.json();
+        showMessage(context, "Success");
+        element.parentElement.parentElement.remove();
+      }
+    } catch (e) {
+      showMessage("Error: Network error detected!", "Error");
+    }
+  });
+});

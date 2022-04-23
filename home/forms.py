@@ -1,7 +1,7 @@
 # Django imports
 from django.forms import ModelForm
 # Local imports
-from home.models import List
+from home.models import List, ExternalArticle
 
 
 class AddListForm(ModelForm):
@@ -24,3 +24,10 @@ class ListPicChangeForm(ModelForm):
     class Meta:
         model = List
         fields = ('list_pic', )
+
+
+class AddExternalArticlesForm(ModelForm):
+
+    class Meta:
+        model = ExternalArticle
+        fields = ('title', 'link', 'sector', 'pub_date')

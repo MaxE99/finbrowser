@@ -10,18 +10,19 @@
 
 
 <h2>Articles</h2>
-<!-- <div class="explanation">Here you can search through all the gathered articles. You have the possiblity to select the
-    timeframe
-    in which the article has been released. You can also search for articles specific to a sector. Then you have the
-    opportunity
-    to select only articles that are paywalled, that are not paywalled and some that are semi paywalled. To identify if
-    an article
-    is paywalled the source was proofed to be paywalled or not so some articles maybe not paywalled. Since we want to
-    give retail investors
-    only a view of accesible sources, all sources that are paywalled are not overly costly. Apart from those options you
-    can also only
-    search for articles from specific sources or search by name of the article
-</div> -->
+
+
+<div class="popUpMenu createListMenu">
+    <i class="fas fa-times red closeMenuButton"></i>
+    <div class="menuHeader">Create A New List</div>
+    <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+        {% csrf_token %} {{ add_list_form }}
+        <div class="popUpButtonContainer">
+            <input name="createListForm" type="submit" class="saveButton" value="Save" />
+        </div>
+    </form>
+</div>
+
 
 <div class="filterBar">
     <div class="selectContainer">
@@ -60,7 +61,7 @@
                 <li><img src="{% static 'home/media/infinity_favicon.png' %}" alt=""><span>All</span></li>
                 <li><img src="{% static 'home/media/medium_favicon.png' %}" alt=""><span>Medium</span></li>
                 <li><img src="{% static 'home/media/seekingalpha_favicon.png' %}" alt=""><span>SeekingAlpha</span></li>
-                <li><img src="{% static 'home/media/substack__favicon.png' %}" alt=""><span>Substack</span></li>
+                <li><img src="{% static 'home/media/substack_favicon.png' %}" alt=""><span>Substack</span></li>
                 <li><img src="{% static 'home/media/twitter_favicon.png' %}" alt=""><span>Twitter</span></li>
                 <li><img src="{% static 'home/media/youtube_favicon.png' %}" alt=""><span>YouTube</span></li>
                 <li><img src="{% static 'home/media/default_favicon.png' %}" alt=""><span>Other</span></li>
@@ -83,16 +84,6 @@
         <h4>Search Results</h4>
         <div><span>{{ results_found }}</span> Articles Found</div>
     </div>
-    <div class="filterContainer">
-        <select id="sortBy">
-            <option value="" selected="selected" class="selectPlaceholder">
-                SortBy
-            </option>
-            <option value="likes">Likes</option>
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
-        </select>
-    </div>
 </div>
 
 <div class="popUpMenu createListMenu">
@@ -113,9 +104,8 @@
         <div class="articleInformationContainer">
             <div class="articleTitle">{{ article.title }}</div>
             <div class="articleSectorAndDateContainer">
-                {% for sector in article.source.sector.all %}
-                <a href="{% url 'home:sector-details' slug=sector.slug %}">{{ sector.name }}</a>
-                {% endfor %}
+                <a href="{% url 'home:sector-details' article.source.sector.first.slug %}">
+                    {{ article.source.sector.first.name }}</a>
                 <div class="articlePubDate">{{ article.pub_date }}</div>
                 {% if article.source.top_source %}
                 <i class="fas fa-star articleTopSource"></i>
@@ -171,7 +161,8 @@
                 <button class="createNewListButton">Create</button>
             </div>
             {% else %}
-            <div class="listContainer">You haven't created any lists so far!</div>
+            <div class="listContainer">You haven't created any lists!</div>
+            <button class="createNewListButton createFirstList">Create First List</button>
             {% endif %}
         </div>
     </div>
