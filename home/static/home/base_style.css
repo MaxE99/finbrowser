@@ -230,10 +230,13 @@ header {
   padding: 0 25px;
   color: #4c4a4a;
   border-left: 1px solid rgb(226, 230, 234);
+  cursor: pointer;
 }
 
 .userSpace i a {
   position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
 }
@@ -825,7 +828,7 @@ details ul li:hover {
   box-shadow: var(--box-shadowScheme);
   border-radius: 8px;
   position: absolute;
-  z-index: 20;
+  z-index: 1000;
   top: 0px;
   right: -110px;
 }
@@ -1031,7 +1034,7 @@ footer {
   background: var(--primary-color);
   color: var(--secondary-fontColor);
   z-index: 999;
-  padding: 35px 50px 0;
+  padding: 20px 50px 0;
   width: 100%;
   max-width: 1600px;
   margin: 0px auto;
@@ -1045,6 +1048,7 @@ footer {
   border-bottom: 2px solid rgb(226, 230, 234);
   max-width: 900px;
   margin: 0 auto;
+  padding-bottom: 10px;
 }
 
 .leftFooter {
@@ -1338,4 +1342,124 @@ footer {
   color: white;
   width: 100%;
   background: var(--primary-fontColor);
+}
+
+/* # New Form template */ /* # New Form template */ /* # New Form template */ /* # New Form template */ /* # New Form template */
+
+.formContainer {
+  display: none;
+  width: 400px;
+  background: white;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  box-shadow: var(--box-shadowScheme);
+  margin: 20px auto;
+  position: absolute;
+  left: 575px;
+  z-index: 25;
+  top: 275px;
+}
+
+.formContainer h3 {
+  font-size: 22px;
+  background: var(--primary-fontColor);
+  width: 100%;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+}
+
+.formContainer .closeFormContainerButton {
+  position: absolute;
+  display: block;
+  color: white;
+  background: red;
+  padding: 10.8px;
+  font-size: 25px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  box-shadow: var(--box-shadowScheme);
+  z-index: 100;
+}
+
+.formContainer #textInput {
+  margin: 10px auto 0;
+  width: 90%;
+  font-size: 14px;
+  height: 100%;
+  padding: 10px 40px 10px 15px;
+  border: 1px solid rgb(226, 230, 234);
+  border-radius: 12px;
+}
+
+.formContainer .searchResultWrapper {
+  position: relative;
+  height: 200px;
+  width: 90%;
+  overflow-y: scroll;
+  margin: 10px 0 20px;
+}
+
+.formContainer .searchResultWrapper #searchResultsContainer,
+.formContainer .searchResultWrapper .selectionContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.formContainer .searchResultWrapper #searchResultsContainer {
+  z-index: 5;
+}
+
+.formContainer .formSubmitButton {
+  background: var(--primary-fontColor);
+  color: white;
+  padding: 8px 0;
+  width: 90%;
+  font-size: 20px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.formContainer form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.formContainer form input,
+.formContainer form select {
+  width: 100%;
+  font-size: 15px;
+  padding: 7px 20px 7px 10px;
+  color: black;
+  border: 2px solid rgb(226, 230, 234);
+  border-radius: 8px;
+}
+
+.formContainer form #id_is_public {
+  width: 20px;
+  height: 20px;
+  margin-left: 155px;
+  margin-top: -24px;
+}
+
+.formContainer form label {
+  margin: 10px 0 5px;
+}
+
+.formContainer form .formSubmitButton {
+  width: 100%;
+  margin: 20px auto;
+}
+
+.formContainer form .formSubmitButton:hover {
+  transform: scale(1.1, 1.1);
 }

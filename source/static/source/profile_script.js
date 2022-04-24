@@ -155,3 +155,34 @@ document.querySelector(".rateListButton").addEventListener("click", () => {
 const user_rating = document.getElementById("user-rating").innerText;
 let form = document.querySelector(".rate-form");
 handleStarSelect(user_rating, form);
+
+//Notifications
+const notificationButton = document.querySelector(
+  ".notificationAndSubscribtionContainer .fa-bell"
+);
+if (notificationButton) {
+  notificationButton.addEventListener("click", async () => {
+    try {
+      const source_id = document
+        .querySelector("h3")
+        .id.replace("source_id_", "");
+      const res = await fetch(
+        `../../api/change_source_notification/${source_id}`,
+        get_fetch_settings("POST")
+      );
+      if (!res.ok) {
+        showMessage("Error: Source can't be subscribed!", "Error");
+      } else {
+        const context = await res.json();
+        showMessage(context, "Success");
+        if (notificationButton.classList.contains("notificationActivated")) {
+          notificationButton.classList.remove("notificationActivated");
+        } else {
+          notificationButton.classList.add("notificationActivated");
+        }
+      }
+    } catch (e) {
+      showMessage("Error: Network error detected!", "Error");
+    }
+  });
+}

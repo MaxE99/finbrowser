@@ -6,7 +6,7 @@ from django.core.cache import cache
 from django.http import JsonResponse
 from rest_framework.views import APIView
 # Local imports
-from home.models import Article, ExternalArticle, HighlightedArticle, Source, List, SourceRating, ListRating
+from home.models import Article, ExternalArticle, HighlightedArticle, Notification, Source, List, SourceRating, ListRating
 from accounts.models import Profile, SocialLink, Website
 from home.api.serializers import List_Serializer, Article_Serializer, Source_Serializer
 
@@ -89,6 +89,30 @@ def social_links_add(request, website, url):
                               website=website,
                               url=url.replace('"', ""))
     return Response("Link has been created!")
+
+
+@api_view(["POST"])
+def notification_change_source(request, source_id):
+    source = get_object_or_404(Source, source_id=source_id)
+    notification, created = Notification.objects.get_or_create(
+        user=request.user, source=source)
+    if created:
+        return Response("Notification has been added!")
+    else:
+        notification.delete()
+        return Response("Notification has been removed!")
+
+
+@api_view(["POST"])
+def notification_change_list(request, list_id):
+    list = get_object_or_404(List, list_id=list_id)
+    notification, created = Notification.objects.get_or_create(
+        user=request.user, list=list)
+    if created:
+        return Response("Notification has been added!")
+    else:
+        notification.delete()
+        return Response("Notification has been removed!")
 
 
 @api_view(['GET'])

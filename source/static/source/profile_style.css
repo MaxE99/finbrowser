@@ -179,3 +179,11 @@
   font-size: 18px !important;
   margin-top: -20px !important;
 }
+
+.notificationAndSubscribtionContainer {
+  display: flex;
+}
+
+.notificationAndSubscribtionContainer .notificationActivated {
+  color: var(--primary-fontColor);
+}

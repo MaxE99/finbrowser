@@ -50,7 +50,7 @@
                         {% endif %}
                         <div class="userInformation">
                             <div class="userName">{{ user.username }}</div>
-                            <div class="accountType">Premium</div>
+                            <div class="accountType">{{ user.profile.account_type }}</div>
                         </div>
                         <i class="fas fa-sort-down"></i>
                     </div>
@@ -96,8 +96,6 @@
                 <ul>
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Contact</a></li>
-                    <li><a href="#">Advertise</a></li>
-                    <li><a href="#">Press</a></li>
                 </ul>
             </div>
             <div class="websiteInformation">

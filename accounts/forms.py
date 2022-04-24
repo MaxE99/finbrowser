@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
 from django import forms
 from accounts.models import Profile
-from ckeditor.fields import CKEditorWidget
 
 User = get_user_model()
 

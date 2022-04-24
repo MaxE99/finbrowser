@@ -59,6 +59,14 @@ document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
 // open List Create Menu
 document.querySelectorAll(".createNewListButton").forEach((button) => {
   button.addEventListener("click", () => {
-    document.querySelector(".createListMenu").style.display = "block";
+    button.parentElement.parentElement.remove();
+    document.querySelector(".createListMenu").style.display = "flex";
   });
 });
+
+// close list create menu
+document
+  .querySelector(".createListMenu .closeFormContainerButton")
+  .addEventListener("click", () => {
+    document.querySelector(".createListMenu").style.display = "none";
+  });

@@ -8,7 +8,8 @@ from home.logic.pure_logic import paginator_create
 
 def profile(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
-    created_lists = List.objects.get_created_lists(profile.user)
+    created_lists = List.objects.get_created_lists(
+        profile.user).filter(is_public=True)
     subscribed_sources = Source.objects.get_subscribed_sources(profile.user)
     subscribed_lists = List.objects.get_subscribed_lists(profile.user)
     highlighted_articles = HighlightedArticle.objects.filter(

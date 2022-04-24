@@ -59,17 +59,9 @@
 .selectContainer select {
   width: 100%;
   height: 100%;
-  border-radius: unset;
-  outline: unset;
   padding: 20px 0px 5px 10px;
-}
-
-select {
   font-size: 17px;
-  padding: 10px 10px;
-  border-radius: 10px;
   border: 0;
-  outline: 2px solid rgb(226, 230, 234);
   border-right: 12px solid white;
   background: white;
   letter-spacing: 1.1px;
@@ -136,25 +128,6 @@ select {
 
 .overlay {
   opacity: 1;
-}
-
-.popUpMenu select,
-#id_name {
-  width: 100%;
-  font-size: 15px;
-  padding: 8px 40px 8px 10px;
-  color: black;
-  border: 3px solid black;
-  border-radius: 8px;
-}
-
-#id_sources {
-  max-height: 105px;
-  overflow-y: scroll;
-  background: white;
-  color: black;
-  border: 3px solid black;
-  border-radius: 8px;
 }
 
 .lowerFilterBar {
