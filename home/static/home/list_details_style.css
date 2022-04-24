@@ -232,13 +232,16 @@
   height: 100%;
 }
 
+.addSourcesButtonLi {
+  display: none;
+}
+
 .addSourcesButton {
   font-size: 50px;
   background: var(--primary-fontColor);
   color: white;
   opacity: 0.5;
   cursor: pointer;
-  display: none;
 }
 
 .addSourcesForm {
@@ -353,4 +356,12 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+}
+
+.notificationAndSubscribtionContainer {
+  display: flex;
+}
+
+.notificationAndSubscribtionContainer .notificationActivated {
+  color: var(--primary-fontColor);
 }

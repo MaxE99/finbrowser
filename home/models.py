@@ -191,3 +191,18 @@ class HighlightedArticle(models.Model):
             return f'{self.user} - {self.article}'
         else:
             return f'{self.user} - {self.external_article}'
+
+
+class Notification(models.Model):
+    notification_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    list = models.ForeignKey(List, on_delete=models.CASCADE, null=True)
+    source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField(auto_now=True)
+    user_has_seen = models.BooleanField(default=False)
+
+    def __str__(self):
+        if self.list:
+            return f'{self.user} - {self.list}'
+        else:
+            return f'{self.user} - {self.source}'

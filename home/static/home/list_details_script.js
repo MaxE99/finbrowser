@@ -46,7 +46,7 @@ function openEditMenu() {
   document.getElementById("id_list_pic").style.display = "block";
   document.querySelector(".fa-camera").style.display = "block";
   document.querySelector(".buttonContainer").style.display = "flex";
-  document.querySelector(".addSourcesButton").style.display = "flex";
+  document.querySelector(".addSourcesButtonLi").style.display = "flex";
   document.querySelectorAll(".sourceDeleteOption").forEach((trashButton) => {
     if (trashButton.style.display == "none" || !trashButton.style.display) {
       trashButton.style.display = "block";
@@ -83,7 +83,7 @@ if (editButton) {
 
 // If list has no sources = directly open edit menu
 const sources = document.querySelectorAll(".slider-content li");
-if (!sources.length) {
+if (sources.length === 1) {
   openEditMenu();
 }
 
@@ -111,6 +111,22 @@ if (document.querySelector(".deleteListButton")) {
       }
     });
 }
+
+//open add sources menu
+if (document.querySelector(".addSourcesButton")) {
+  document.querySelector(".addSourcesButton").addEventListener("click", () => {
+    document.querySelector(".addSourcesForm").style.display = "flex";
+    document.querySelector(".listOverlay").style.opacity = "0.5";
+  });
+}
+
+//close add sources menu
+document
+  .querySelector(".addSourcesCloseButton")
+  .addEventListener("click", () => {
+    document.querySelector(".addSourcesForm").style.display = "none";
+    document.querySelector(".listOverlay").style.opacity = "1";
+  });
 
 // add Sources Search
 let selected_sources = [];
@@ -190,22 +206,6 @@ document
     }
   });
 
-//open add sources menu
-if (document.querySelector(".addSourcesButton")) {
-  document.querySelector(".addSourcesButton").addEventListener("click", () => {
-    document.querySelector(".addSourcesForm").style.display = "flex";
-    document.querySelector(".listOverlay").style.opacity = "0.5";
-  });
-}
-
-//close add sources menu
-document
-  .querySelector(".addSourcesCloseButton")
-  .addEventListener("click", () => {
-    document.querySelector(".addSourcesForm").style.display = "none";
-    document.querySelector(".listOverlay").style.opacity = "1";
-  });
-
 // add/confirm sources to list
 document
   .querySelector(".addSourcesForm button")
@@ -239,7 +239,7 @@ const highlightedArticles = document.querySelector(
 );
 
 // If there are no highlightedArticles change style of container so that flex-wrap is effective
-if (!highlightedArticles) {
+if (!highlightedArticles && document.querySelector(".articleSpace")) {
   document.querySelector(".articleSpace").style.display = "block";
 }
 
@@ -370,3 +370,35 @@ document.querySelector(".rateListButton").addEventListener("click", () => {
 const user_rating = document.getElementById("user-rating").innerText;
 let form = document.querySelector(".rate-form");
 handleStarSelect(user_rating, form);
+
+//Notifications
+const notificationButton = document.querySelector(
+  ".notificationAndSubscribtionContainer .fa-bell"
+);
+if (notificationButton) {
+  notificationButton.addEventListener("click", async () => {
+    try {
+      const list_id = document
+        .querySelector(".rightFirstRowContainer h3")
+        .id.replace("list_detail_for_", "");
+      console.log(document.querySelector("h3"));
+      const res = await fetch(
+        `../../api/change_list_notification/${list_id}`,
+        get_fetch_settings("POST")
+      );
+      if (!res.ok) {
+        showMessage("Error: Source can't be subscribed!", "Error");
+      } else {
+        const context = await res.json();
+        showMessage(context, "Success");
+        if (notificationButton.classList.contains("notificationActivated")) {
+          notificationButton.classList.remove("notificationActivated");
+        } else {
+          notificationButton.classList.add("notificationActivated");
+        }
+      }
+    } catch (e) {
+      showMessage("Error: Network error detected!", "Error");
+    }
+  });
+}

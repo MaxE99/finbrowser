@@ -137,30 +137,58 @@ dropdownButton.addEventListener("click", () => {
   }
 });
 
+function checkForOpenContainers() {
+  let allContainersClosed = true;
+  const addToListForms = document.querySelectorAll(".addToListForm");
+  const formContainers = document.querySelectorAll(".formContainer");
+  for (let i = 0, j = addToListForms.length; i < j; i++) {
+    if (
+      addToListForms[i].style.display != "none" &&
+      addToListForms[i].style.display
+    ) {
+      allContainersClosed = false;
+      return allContainersClosed;
+    }
+  }
+  for (let i = 0, j = formContainers.length; i < j; i++) {
+    if (
+      formContainers[i].style.display != "none" &&
+      formContainers[i].style.display
+    ) {
+      allContainersClosed = false;
+      return allContainersClosed;
+    }
+  }
+  return allContainersClosed;
+}
+
 // article ellipsis options
 let previousOptionsContainer;
 let previousEllipsis;
 document.querySelectorAll(".article .fa-ellipsis-h").forEach((ellipsis) => {
   ellipsis.addEventListener("click", function (e) {
-    if (previousOptionsContainer && e.target !== previousEllipsis) {
-      previousOptionsContainer.style.display = "none";
+    const allContainersClosed = checkForOpenContainers();
+    if (allContainersClosed) {
+      if (previousOptionsContainer && e.target !== previousEllipsis) {
+        previousOptionsContainer.style.display = "none";
+      }
+      const articleOptionsContainer = ellipsis.nextElementSibling;
+      if (articleOptionsContainer.style.display != "flex") {
+        articleOptionsContainer.style.display = "flex";
+        document.onclick = function (e) {
+          if (
+            e.target.className !== ellipsis.nextElementSibling.classList[1] &&
+            e.target !== ellipsis
+          ) {
+            ellipsis.nextElementSibling.style.display = "none";
+          }
+        };
+      } else {
+        articleOptionsContainer.style.display = "none";
+      }
+      previousOptionsContainer = ellipsis.nextElementSibling;
+      previousEllipsis = ellipsis;
     }
-    const articleOptionsContainer = ellipsis.nextElementSibling;
-    if (articleOptionsContainer.style.display != "flex") {
-      articleOptionsContainer.style.display = "flex";
-      document.onclick = function (e) {
-        if (
-          e.target.className !== ellipsis.nextElementSibling.classList[1] &&
-          e.target !== ellipsis
-        ) {
-          ellipsis.nextElementSibling.style.display = "none";
-        }
-      };
-    } else {
-      articleOptionsContainer.style.display = "none";
-    }
-    previousOptionsContainer = ellipsis.nextElementSibling;
-    previousEllipsis = ellipsis;
   });
 });
 
@@ -200,11 +228,11 @@ document.querySelectorAll(".addToHighlighted").forEach((highlighterButton) => {
 // open addtolist menu
 document.querySelectorAll(".addToList").forEach((element) => {
   element.addEventListener("click", () => {
-    document.querySelectorAll(".addToListForm").forEach((element) => {
-      element.style.display = "none";
-    });
-    const addToListForm = element.parentElement.nextElementSibling;
-    addToListForm.style.display = "block";
+    const allContainersClosed = checkForOpenContainers();
+    if (allContainersClosed) {
+      const addToListForm = element.parentElement.nextElementSibling;
+      addToListForm.style.display = "block";
+    }
   });
 });
 

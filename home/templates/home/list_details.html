@@ -50,15 +50,22 @@
                     <input name="changeListForm" type="submit" value="Save">
                 </div>
                 {% else %}
-                {% if request.user.is_authenticated %}
-                {% if subscribed %}
-                <button type="button" class="subscribeButton subscribed">Subscribed</button>
-                {% else %}
-                <button type="button" class="subscribeButton unsubscribed">Subscribe</button>
-                {% endif %}
-                {% else %}
-                <a href="{% url 'registration:login' %}" class="subscribeButton unsubscribed">Subscribe</a>
-                {% endif %}
+                <div class="notificationAndSubscribtionContainer">
+                    {% if request.user.is_authenticated %}
+                    {% if notifications_activated %}
+                    <i class="fas fa-bell notificationActivated"></i>
+                    {% else %}
+                    <i class="fas fa-bell"></i>
+                    {% endif %}
+                    {% if subscribed %}
+                    <button class="subscribeButton subscribed">Subscribed</button>
+                    {% else %}
+                    <button class="subscribeButton unsubscribed">Subscribe</button>
+                    {% endif %}
+                    {% else %}
+                    <a href="{% url 'registration:login' %}" class="subscribeButton unsubscribed">Subscribe</a>
+                    {% endif %}
+                </div>
                 {% endif %}
             </div>
             <div class="creatorContainer">
@@ -133,7 +140,7 @@
                     </li>
                     {% endfor %}
                     {% if list.creator == request.user %}
-                    <li>
+                    <li class="addSourcesButtonLi">
                         <div class="sourceContainer addSourcesButton"><i class="fas fa-plus"></i></div>
                     </li>
                     {% endif %}

@@ -52,10 +52,10 @@ document
         } else {
           const context = await res.json();
           results_list.innerHTML = "";
+          const resultHeader = document.createElement("div");
+          resultHeader.innerText = "Results:";
+          results_list.append(resultHeader);
           if (context.length > 0) {
-            const resultHeader = document.createElement("div");
-            resultHeader.innerText = "Results:";
-            results_list.append(resultHeader);
             context.forEach((source) => {
               if (selected_sources.includes(source.domain) == false) {
                 const searchResult = document.createElement("div");
@@ -179,12 +179,12 @@ document
         } else {
           const context = await res.json();
           results_list.innerHTML = "";
+          const resultHeader = document.createElement("div");
+          resultHeader.innerText = "Results:";
+          results_list.append(resultHeader);
           if (context.length > 0) {
-            const resultHeader = document.createElement("div");
-            resultHeader.innerText = "Results:";
-            results_list.append(resultHeader);
             context.forEach((list) => {
-              if (selected_lists.includes(list.name) == false) {
+              if (selected_lists.includes(list.list_id) == false) {
                 const searchResult = document.createElement("div");
                 searchResult.classList.add("searchResult");
                 const resultImage = document.createElement("img");

@@ -94,6 +94,8 @@ User = get_user_model()
 
 
 class Profile(models.Model):
+    ACCOUNT_TYPES = [('Standard', 'Standard'), ('Premium', 'Premium'),
+                     ('Admin', 'Admin')]
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
     slug = models.SlugField(unique=True)
     bio = RichTextField(blank=True, null=True)
@@ -103,6 +105,9 @@ class Profile(models.Model):
     profile_banner = models.ImageField(null=True,
                                        blank=True,
                                        upload_to="profile_banner")
+    account_type = models.CharField(max_length=50,
+                                    choices=ACCOUNT_TYPES,
+                                    default="Standard")
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.user.username)

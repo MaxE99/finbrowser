@@ -44,6 +44,8 @@ def feed(request):
                 pub_date=pub_date)
             HighlightedArticle.objects.create(
                 user=request.user, external_article=external_article)
+            messages.success(request, f'Article has been added!')
+            return redirect('home:feed')
     user_lists = List.objects.get_created_lists(request.user)
     subscribed_lists = List.objects.get_subscribed_lists(request.user)
     subscribed_sources = Source.objects.get_subscribed_sources(request.user)
@@ -89,7 +91,8 @@ def lists(request):
             days=int(timeframe))
     filter_args = dict(
         (k, v) for k, v in filter_args.items() if v is not None and v != 'All')
-    lists = List.objects.filter(**filter_args).order_by('name')
+    lists = List.objects.filter(**filter_args).filter(
+        is_public=True).order_by('name')
     # cache.delete_many(['timeframe', 'content_type', 'sources'])
     add_list_form = AddListForm()
     results_found = len(lists)

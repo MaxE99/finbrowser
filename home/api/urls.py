@@ -9,7 +9,8 @@ from home.api.api import (
     delete_source_from_list, delete_list, sources_add, source_rate, list_rate,
     article_highlight, lists_add_article, profile_add_website_link,
     profile_pic_delete, profile_banner_delete, social_link_delete,
-    social_links_add, external_article_delete)
+    social_links_add, external_article_delete, notification_change_source,
+    notification_change_list)
 
 app_name = 'api'
 
@@ -51,4 +52,7 @@ urlpatterns = [
          FilteredListForFeed.as_view()),
     path('delete_external_article/<int:external_article_id>',
          external_article_delete),
+    path('change_source_notification/<int:source_id>',
+         notification_change_source),
+    path('change_list_notification/<int:list_id>', notification_change_list),
 ]
