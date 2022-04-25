@@ -64,7 +64,8 @@ class ArticleManager(models.Manager):
             source__in=sector.sectors.all()).order_by('-pub_date')
 
     def filter_articles(self, search_term):
-        return self.filter(title__icontains=search_term).order_by('-pub_date')
+        return self.filter(external_source=None).filter(
+            title__icontains=search_term).order_by('-pub_date')
 
 
 class HighlightedArticlesManager(models.Manager):

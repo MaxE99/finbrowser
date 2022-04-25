@@ -6,7 +6,7 @@ from django.core.cache import cache
 from django.http import JsonResponse
 from rest_framework.views import APIView
 # Local imports
-from home.models import Article, ExternalArticle, HighlightedArticle, Notification, Source, List, SourceRating, ListRating
+from home.models import Article, HighlightedArticle, Notification, Source, List, SourceRating, ListRating
 from accounts.models import Profile, SocialLink, Website
 from home.api.serializers import List_Serializer, Article_Serializer, Source_Serializer
 
@@ -193,12 +193,6 @@ def social_link_delete(request, website):
     return Response("Link has been deleted!")
 
 
-@api_view(["DELETE"])
-def external_article_delete(request, external_article_id):
-    get_object_or_404(ExternalArticle, article_id=external_article_id).delete()
-    return Response("External article has been deleted!")
-
-
 class FilteredSourceForLists(APIView):
 
     def get(self, request, list_id, search_term, format=None):
@@ -244,18 +238,62 @@ class FilteredList(APIView):
         return JsonResponse(serializer.data, safe=False)
 
 
-class FilteredSite(APIView):
+class FilteredArticles(APIView):
 
     def get(self, request, search_term, format=None):
-        filtered_lists = List.objects.filter_lists(search_term)[0:3]
-        list_serializer = List_Serializer(filtered_lists, many=True)
-        filtered_sources = Source.objects.filter_sources(search_term)[0:3]
-        sources_serializer = Source_Serializer(filtered_sources, many=True)
-        filtered_articles = Article.objects.filter_articles(search_term)[0:3]
-        articles_serializer = Article_Serializer(filtered_articles, many=True)
+        filtered_articles = Article.objects.filter_articles(search_term)[0:6]
+        serializer = Article_Serializer(filtered_articles, many=True)
         article_favicon_paths = []
         for article in filtered_articles:
             article_favicon_paths.append(article.source.favicon_path)
+        return JsonResponse([serializer.data, article_favicon_paths],
+                            safe=False)
+
+
+class FilteredSite(APIView):
+
+    def get(self, request, search_term, format=None):
+        filtered_lists = List.objects.filter_lists(search_term)
+        filtered_sources = Source.objects.filter_sources(search_term)
+        filtered_articles = Article.objects.filter_articles(search_term)
+        # rebalance spots that are displayed
+        display_spots_lists = 3
+        display_spots_sources = 3
+        display_spots_articles = 3
+        len_filtered_lists = len(filtered_lists)
+        len_filtered_sources = len(filtered_sources)
+        len_filtered_articles = len(filtered_articles)
+        if len_filtered_lists < 3:
+            display_spots_lists = len(filtered_lists)
+        if len_filtered_sources < 3:
+            display_spots_sources = len_filtered_sources
+        if len_filtered_articles < 3:
+            display_spots_articles = len_filtered_articles
+        all_spots = display_spots_lists + display_spots_sources + display_spots_articles
+        iteration = 1 + 3
+        all_spots_previous_iteration = 0
+        while all_spots < 9:
+            if len_filtered_lists > iteration:
+                display_spots_lists += 1
+                all_spots += 1
+            if len_filtered_sources > iteration:
+                display_spots_sources += 1
+                all_spots += 1
+            if len_filtered_articles > iteration:
+                display_spots_articles += 1
+                all_spots += 1
+            if all_spots_previous_iteration == all_spots:
+                break
+            all_spots_previous_iteration = all_spots
+        article_favicon_paths = []
+        for article in filtered_articles:
+            article_favicon_paths.append(article.source.favicon_path)
+        list_serializer = List_Serializer(
+            filtered_lists[0:display_spots_lists], many=True)
+        sources_serializer = Source_Serializer(
+            filtered_sources[0:display_spots_sources], many=True)
+        articles_serializer = Article_Serializer(
+            filtered_articles[0:display_spots_articles], many=True)
         return JsonResponse([
             list_serializer.data, sources_serializer.data,
             articles_serializer.data, article_favicon_paths
