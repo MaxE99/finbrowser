@@ -254,7 +254,7 @@
 }
 
 .singleArticlesContainerHeader {
-  margin-bottom: 10px;
+  margin: 20px 0 5px;
 }
 
 .singleArticlesContainer {
@@ -262,4 +262,17 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+}
+
+.sectorSourcesHeader {
+  margin-top: 20px;
+}
+
+.iconContainer {
+  width: 170px;
+  height: 170px;
+}
+
+.carousel-container .carousel-list .slider-content li {
+  width: calc(12.6% - 8px);
 }

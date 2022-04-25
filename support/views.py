@@ -2,7 +2,7 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 # Local imports
-from support.forms import SourceSuggestionForm
+from support.forms import SourceSuggestionForm, BugReportForm, FeatureSuggestionForm
 
 
 def faq(request):
@@ -11,24 +11,28 @@ def faq(request):
 
 def report_bug(request):
     if request.method == "POST":
-        reportArea = request.POST['reportArea'],
-        reportTopic = request.POST['reportTopic'],
-        reportExplanation = request.POST['reportExplanation'],
-        return render(request, 'support/report_bug.html',
-                      {'reportTopic': reportTopic})
-    else:
-        return render(request, 'support/report_bug.html')
+        bug_report_form = BugReportForm(request.POST)
+        if bug_report_form.is_valid():
+            bug_report_form.save()
+            messages.success(request,
+                             f"Thank you! You're report has been send!")
+            return redirect('support:report-bug')
+    bug_report_form = BugReportForm()
+    context = {'bug_report_form': bug_report_form}
+    return render(request, 'support/report_bug.html', context)
 
 
 def suggestions(request):
     if request.method == "POST":
-        suggestionArea = request.POST['suggestionArea'],
-        suggestionType = request.POST['suggestionType'],
-        suggestionExplanation = request.POST['suggestionExplanation'],
-        return render(request, 'support/suggestions.html',
-                      {'suggestionType': suggestionType})
-    else:
-        return render(request, 'support/suggestions.html')
+        feature_suggestion_form = FeatureSuggestionForm(request.POST)
+        if feature_suggestion_form.is_valid():
+            feature_suggestion_form.save()
+            messages.success(request,
+                             f"Thank you! You're report has been send!")
+            return redirect('support:suggestions')
+    feature_suggestion_form = FeatureSuggestionForm()
+    context = {'feature_suggestion_form': feature_suggestion_form}
+    return render(request, 'support/suggestions.html', context)
 
 
 def privacy_policy(request):
