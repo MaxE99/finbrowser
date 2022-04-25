@@ -294,3 +294,125 @@ document
   .addEventListener("click", () => {
     document.querySelector(".createListMenu").style.display = "none";
   });
+
+// Carousell Container Functionality
+const sliderContent = document.querySelector(".slider-content");
+const contentArray = sliderContent.children;
+var isTouched = false;
+
+var next = function () {
+  sliderContent.classList.add("next-animation");
+  if (isTouched) {
+    sliderContent.style.transform = "translate3d(-200%, 0px, 0px)";
+    sliderContent.addEventListener("transitionend", nextTouched, false);
+  } else if (!isTouched) {
+    sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
+    sliderContent.addEventListener("transitionend", afterAnimation, false);
+  }
+};
+
+var prev = function () {
+  if (isTouched) {
+    var content = Array.from(contentArray);
+    var getSplice = content.splice(contentArray.length - 3);
+    var newArr = getSplice.concat(content);
+
+    for (let i = 0; i < content.length; i++) {
+      content[i].classList.remove("is-active");
+    }
+
+    for (let j = 3; j < newArr.length && j < 6; j++) {
+      newArr[j].classList.add("is-active");
+    }
+
+    for (let len = contentArray.length - 1; len >= 0; --len) {
+      sliderContent.insertBefore(newArr[len], sliderContent.firstChild);
+    }
+
+    sliderContent.style.transform = "translate3d(-200%, 0px, 0px)";
+
+    setTimeout(function () {
+      sliderContent.classList.add("next-animation");
+      sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
+      sliderContent.addEventListener("transitionend", afterAnimation, false);
+    });
+  }
+};
+
+var afterAnimation = function () {
+  sliderContent.classList.remove("next-animation");
+
+  if (!isTouched) {
+    var icon = document.createElement("i");
+    icon.classList.add("fa", "fa-chevron-left");
+    document.querySelector(".prev").appendChild(icon);
+    isTouched = true;
+  }
+
+  sliderContent.removeEventListener("transitionend", afterAnimation);
+};
+
+var nextTouched = function () {
+  var content = Array.from(contentArray);
+  var getSplice = content.splice(0, 3);
+  var newArr = content.concat(getSplice);
+
+  for (let i = 0; i < content.length; i++) {
+    content[i].classList.remove("is-active");
+  }
+
+  for (let i = 3; j < newArr.length && j < 6; j++) {
+    newArr[j].classList.add("is-active");
+  }
+
+  for (let len = contentArray.length - 1; len >= 0; --len) {
+    sliderContent.insertBefore(newArr[len], sliderContent.firstChild);
+  }
+
+  sliderContent.classList.remove("next-animation");
+  sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
+  sliderContent.removeEventListener("transitionend", nextTouched);
+};
+
+let span = document.getElementsByTagName("span");
+let product = document.getElementsByClassName("product");
+let product_page = Math.ceil(product.length / 4);
+let l = 0;
+let movePer = 25.34;
+let maxMove = 203;
+// mobile_view
+let mob_view = window.matchMedia("(max-width: 768px)");
+if (mob_view.matches) {
+  movePer = 50.36;
+  maxMove = 504;
+}
+
+let right_mover = () => {
+  l = l + movePer;
+  if (product == 1) {
+    l = 0;
+  }
+  for (const i of product) {
+    if (l > maxMove) {
+      l = l - movePer;
+    }
+    i.style.left = "-" + l + "%";
+  }
+};
+let left_mover = () => {
+  l = l - movePer;
+  if (l <= 0) {
+    l = 0;
+  }
+  for (const i of product) {
+    if (product_page > 1) {
+      i.style.left = "-" + l + "%";
+    }
+  }
+};
+span[1].onclick = () => {
+  right_mover();
+};
+span[0].onclick = () => {
+  left_mover();
+};

@@ -5,39 +5,11 @@
 <title>ResearchBrowser | Bug Report</title>
 {% endblock %}
 {% block content %}
-{% if reportTopic %}
-<div class="reportReceivedAlert">Thank You! We received your report and will fix the bug as soon as possible!</div>
-{% endif %}
-<div class="suggestionsContainer">
-    <h2>Report A Bug</h2>
-    <div>We apologize if a bug or incorrect data has crept into our site. Please report to us where this error occurred
-        and we will fix it immediately.
-        Thank you very much for your help!
-    </div>
-    <form action="{% url 'support:report-bug' %}" class="reportBugForm" method="POST">
-        {% csrf_token %}
-        <div class="reportBugFormInner">
-            <div class="formLabel">
-                <span class="formText">Where</span>
-                <select class="multiselectBlock" name="reportArea">
-                    <option value="" disabled selected hidden>Where did the bug occur?</option>
-                    <option class="fieldMultiselect" value="Feed">Feed</option>
-                    <option class="fieldMultiselect" value="General">General/Other</option>
-                    <option class="fieldMultiselect" value="Groups">Groups</option>
-                    <option class="fieldMultiselect" value="Portfolio">Portfolio</option>
-                    <option class="fieldMultiselect" value="Stock Information">Stock Information</option>
-                </select>
-            </div>
-            <div>Type</div>
-            <input name="reportTopic" class="reportTopic" type="text">
-            <div>Explanation</div>
-            <textarea name="reportExplanation" id="reportExplanation" cols="30" rows="8"></textarea>
-            <!-- <input class="reportExplanation" type="text">                                         -->
-            <div class="reportBugFormButtons">
-                <button class="sendButton" id="submitbutton" type="submit" disabled>Send</button>
-                <button class="btn-empty resetButton" type="button">Reset</button>
-            </div>
-        </div>
+<div class="formContainer">
+    <h3>Report Bug</h3>
+    <form action="" enctype="multipart/form-data" method="POST" class="createBugReportForm">
+        {% csrf_token %} {{ bug_report_form }}
+        <input name="createBugReportForm" type="submit" class="formSubmitButton" value="Save" />
     </form>
 </div>
 <script src="{% static 'support/report_bug_script.js' %}"></script>
