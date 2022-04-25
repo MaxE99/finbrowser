@@ -1,13 +1,21 @@
 # Django import
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 # Local import
 from home.models import (Notification, Source, Article, List, SourceRating,
                          HighlightedArticle)
 from home.logic.pure_logic import paginator_create
 from home.logic.selectors import website_logo_get
+from home.forms import AddListForm
 
 
 def profile(request, domain):
+    if 'createListForm' in request.POST:
+        add_list_form = AddListForm(request.POST, request.FILES)
+        if add_list_form.is_valid():
+            add_list_form.save()
+            messages.success(request, f'List has been created!')
+            return redirect('home:feed')
     source = get_object_or_404(Source, domain=domain)
     articles = Article.objects.filter(source=source).order_by('-pub_date')
     articles, _ = paginator_create(request, articles, 5)
@@ -19,6 +27,7 @@ def profile(request, domain):
     ammount_of_ratings = SourceRating.objects.get_ammount_of_ratings(source)
     notifications_activated = Notification.objects.filter(
         user=request.user, source=source).exists()
+    add_list_form = AddListForm()
     if request.user.is_authenticated:
         if request.user in source.subscribers.all():
             subscribed = True
@@ -35,6 +44,7 @@ def profile(request, domain):
         highlighted_articles_titles = None
         user_lists = None
     context = {
+        'add_list_form': add_list_form,
         'ammount_of_ratings': ammount_of_ratings,
         'articles': articles,
         'lists': lists,

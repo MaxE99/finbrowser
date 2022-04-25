@@ -4,13 +4,12 @@ from django.urls import path
 from home.api.api import (
     list_filter, FilteredList, FilteredSite, FilteredSourceForLists,
     FilteredSource, FilteredSourceForFeed, FilteredListForFeed,
-    get_list_filters, article_filter, get_article_filters,
+    FilteredArticles, get_list_filters, article_filter, get_article_filters,
     list_change_subscribtion_status, source_change_subscribtion_status,
     delete_source_from_list, delete_list, sources_add, source_rate, list_rate,
     article_highlight, lists_add_article, profile_add_website_link,
     profile_pic_delete, profile_banner_delete, social_link_delete,
-    social_links_add, external_article_delete, notification_change_source,
-    notification_change_list)
+    social_links_add, notification_change_source, notification_change_list)
 
 app_name = 'api'
 
@@ -50,9 +49,8 @@ urlpatterns = [
          FilteredSourceForFeed.as_view()),
     path('filter_lists_from_feed/<str:search_term>',
          FilteredListForFeed.as_view()),
-    path('delete_external_article/<int:external_article_id>',
-         external_article_delete),
     path('change_source_notification/<int:source_id>',
          notification_change_source),
     path('change_list_notification/<int:list_id>', notification_change_list),
+    path('search_articles/<str:search_term>', FilteredArticles.as_view()),
 ]

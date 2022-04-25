@@ -283,25 +283,3 @@ document
   .addEventListener("click", () => {
     document.querySelector(".addExternalLinksContainer").style.display = "none";
   });
-
-// delete external link
-document.querySelectorAll(".deleteExternalLink").forEach((element) => {
-  element.addEventListener("click", async () => {
-    const externalArticleID = element.id;
-    try {
-      const res = await fetch(
-        `../api/delete_external_article/${externalArticleID}`,
-        get_fetch_settings("DELETE")
-      );
-      if (!res.ok) {
-        showMessage("Error: List can't be subscribed!", "Error");
-      } else {
-        const context = await res.json();
-        showMessage(context, "Success");
-        element.parentElement.parentElement.remove();
-      }
-    } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
-    }
-  });
-});

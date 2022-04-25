@@ -186,6 +186,7 @@
         <div class="addToListForm">
             <i class="fas fa-times"></i>
             <h3>Add to lists</h3>
+            {% if user_lists %}
             <div class="listSelectionContainer">
                 {% for list in user_lists %}
                 <div class="listContainer">
@@ -201,9 +202,14 @@
                 </div>
                 {% endfor %}
             </div>
-            <div class="saveButtonContainer">
+            <div class="buttonsContainer">
                 <button class="saveButton">Save</button>
+                <button class="createNewListButton">Create</button>
             </div>
+            {% else %}
+            <div class="listContainer">You haven't created any lists!</div>
+            <button class="createNewListButton createFirstList">Create First List</button>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
@@ -213,38 +219,51 @@
 {% endif %}
 {% endif %}
 
+
 {% if highlighted_articles %}
 <div class="browserCategory subscribedSourcesArticleHeader">Highlighted Articles</div>
 <div class="articlesContainer">
-    {% for highlighted_article in highlighted_articles %}
-    {% if highlighted_article.article %}
-    <div class="article">
-        <img src="{% static highlighted_article.article.source.favicon_path %}" />
+    {% for article in highlighted_articles %}
+    <div class="article" id="article{{ article.article_id }}">
+        {% if article.article.source %}
+        <img src="{% static article.article.source.favicon_path %}" />
         <div class="articleInformationContainer">
-            <div class="articleTitle">{{ highlighted_article.article.title }}</div>
+            <div class="articleTitle">{{ article.article.title }}</div>
             <div class="articleSectorAndDateContainer">
-                <a href="{% url 'home:sector-details' highlighted_article.article.source.sector.first.slug %}">
-                    {{ highlighted_article.article.source.sector.first.name }}</a>
-                <div class="articlePubDate">{{ highlighted_article.article.pub_date }}</div>
-                {% if highlighted_article.article.source.top_source %}
+                <a href="{% url 'home:sector-details' article.article.source.sector.first.slug %}">
+                    {{ article.article.source.sector.first.name }}</a>
+                <div class="articlePubDate">{{ article.article.pub_date }}</div>
+                {% if article.article.source.top_source %}
                 <i class="fas fa-star articleTopSource"></i>
                 {% endif %}
-                {% if highlighted_article.article.source.paywall == "Yes" %}
+                {% if article.article.source.paywall == "Yes" %}
                 <i class="fas fa-lock articleFullPaywall"></i>
-                {% elif highlighted_article.article.source.paywall == "Semi" %}
+                {% elif article.article.source.paywall == "Semi" %}
                 <i class="fas fa-lock articleSemiPaywall"></i>
                 {% endif %}
             </div>
         </div>
-        <a class="articleLink" href="{{ highlighted_article.article.link }}"></a>
+        {% else %}
+        <i class="fas fa-question-circle"></i>
+        <div class="articleInformationContainer">
+            <div class="articleTitle">{{ article.article.title }}</div>
+            <div class="articleSectorAndDateContainer">
+                <a href="{% url 'home:sector-details' article.article.external_source.sector.all.first.slug %}">
+                    {{ article.article.external_source.sector.all.first }}</a>
+                <div class="articlePubDate">{{ article.article.pub_date }}</div>
+            </div>
+        </div>
+        {% endif %}
+        <a class="articleLink" href="{{ article.link }}"></a>
         <i class="fas fa-ellipsis-h"></i>
-        <div class="articleOptionsContainer articleOptionsContainer{{ highlighted_article.article.article_id }}">
+        <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
             <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
-            {% if article.title in highlighted_articles_titles %}
-            <div id="{{ article.article_id }}" class="addToHighlighted"><i class="fas fa-times"></i><span>Unhighlight
+            {% if article.article.title in highlighted_articles_titles %}
+            <div id="{{ article.article.article_id }}" class="addToHighlighted"><i
+                    class="fas fa-times"></i><span>Unhighlight
                     article</span></div>
             {% else %}
-            <div id="{{ article.article_id }}" class="addToHighlighted"><i
+            <div id="{{ article.article.article_id }}" class="addToHighlighted"><i
                     class="fas fa-highlighter"></i><span>Highlight
                     article</span></div>
             {% endif %}
@@ -252,11 +271,12 @@
         <div class="addToListForm">
             <i class="fas fa-times"></i>
             <h3>Add to lists</h3>
+            {% if user_lists %}
             <div class="listSelectionContainer">
                 {% for list in user_lists %}
                 <div class="listContainer">
                     <label for="id_list_{{ list.list_id }}">
-                        {% if highlighted_article.article in list.articles.all %}
+                        {% if article in list.articles.all %}
                         <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists" value="{{ list.list_id }}"
                             checked="True"> {{ list }}
                         {% else %}
@@ -267,34 +287,19 @@
                 </div>
                 {% endfor %}
             </div>
-            <div class="saveButtonContainer">
+            <div class="buttonsContainer">
                 <button class="saveButton">Save</button>
+                <button class="createNewListButton">Create</button>
             </div>
+            {% else %}
+            <div class="listContainer">You haven't created any lists!</div>
+            <button class="createNewListButton createFirstList">Create First List</button>
+            {% endif %}
         </div>
     </div>
-    {% else %}
-    <div class="article">
-        <i class="fas fa-question-circle"></i>
-        <div class="articleInformationContainer">
-            <div class="articleTitle">{{ highlighted_article.external_article.title }}</div>
-            <div class="articleSectorAndDateContainer">
-                <a href="{% url 'home:sector-details' slug=highlighted_article.external_article.sector.slug %}">
-                    {{ highlighted_article.external_article.sector }}</a>
-                <div class="articlePubDate">{{ highlighted_article.external_article.pub_date }}</div>
-            </div>
-        </div>
-        <a class="articleLink" href="{{ highlighted_article.external_article.link }}"></a>
-        <i class="fas fa-ellipsis-h"></i>
-        <div
-            class="articleOptionsContainer articleOptionsContainer{{ highlighted_article.external_article.article_id }}">
-            <div id="{{ highlighted_article.external_article.article_id }}" class="deleteExternalLink"><i
-                    class="fas fa-times"></i><span>Unhighlight
-                    article</span></div>
-        </div>
-    </div>
-    {% endif %}
     {% endfor %}
 </div>
+
 {% if highlighted_articles %}
 <div class="paginationAndAddExternalContainer">
     {% include "pagination.html" with page=highlighted_articles %}

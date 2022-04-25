@@ -71,12 +71,28 @@ class Source(models.Model):
         return self.domain
 
 
+class ExternalSource(models.Model):
+    external_source_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    website_name = models.CharField(max_length=100, blank=True)
+    sector = models.ManyToManyField(Sector,
+                                    related_name='external_sectors',
+                                    blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user} - {self.website_name}'
+
+
 class Article(models.Model):
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=500)
     link = models.URLField(unique=True)
     pub_date = models.DateField()
     source = models.ForeignKey(Source, null=True, on_delete=models.SET_NULL)
+    external_source = models.ForeignKey(ExternalSource,
+                                        null=True,
+                                        on_delete=models.SET_NULL)
 
     objects = ArticleManager()
 
@@ -165,32 +181,14 @@ class ListRating(models.Model):
         return f'{self.user} - {self.list} - {self.rating}'
 
 
-class ExternalArticle(models.Model):
-    article_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=500)
-    link = models.URLField()
-    sector = models.ForeignKey(Sector, on_delete=models.CASCADE)
-    pub_date = models.DateField()
-
-    def __str__(self):
-        return f'{self.user} - {self.link}'
-
-
 class HighlightedArticle(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
-    external_article = models.ForeignKey(ExternalArticle,
-                                         on_delete=models.CASCADE,
-                                         null=True)
 
     objects = HighlightedArticlesManager()
 
     def __str__(self):
-        if self.article:
-            return f'{self.user} - {self.article}'
-        else:
-            return f'{self.user} - {self.external_article}'
+        return f'{self.user} - {self.article}'
 
 
 class Notification(models.Model):

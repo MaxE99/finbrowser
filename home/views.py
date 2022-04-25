@@ -10,9 +10,9 @@ from datetime import timedelta, date
 # Local imports
 from accounts.models import SocialLink, Website
 from home.models import (Article, HighlightedArticle, List, Sector, Source,
-                         ListRating, ExternalArticle)
+                         ListRating, ExternalSource, Notification)
 from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm,
-                        AddExternalArticlesForm)
+                        AddExternalArticleForm)
 from home.logic.pure_logic import paginator_create
 from accounts.forms import (EmailAndUsernameChangeForm, PasswordChangingForm,
                             ProfileChangeForm)
@@ -29,21 +29,23 @@ def feed(request):
             messages.success(request, f'List has been created!')
             return redirect('home:feed')
     elif 'addExternalArticlesForm' in request.POST:
-        add_external_articles_form = AddExternalArticlesForm(request.POST)
+        add_external_articles_form = AddExternalArticleForm(request.POST)
         if add_external_articles_form.is_valid():
             data = add_external_articles_form.cleaned_data
+            website_name = data['website_name']
+            sector = data['sector']
             title = data['title']
             link = data['link']
-            sector = data['sector']
             pub_date = data['pub_date']
-            external_article = ExternalArticle.objects.create(
-                user=request.user,
-                title=title,
-                link=link,
-                sector=sector,
-                pub_date=pub_date)
-            HighlightedArticle.objects.create(
-                user=request.user, external_article=external_article)
+            external_source = ExternalSource.objects.create(
+                user=request.user, website_name=website_name)
+            external_source.sector.add(sector)
+            article = Article.objects.create(title=title,
+                                             link=link,
+                                             pub_date=pub_date,
+                                             external_source=external_source)
+            HighlightedArticle.objects.create(user=request.user,
+                                              article=article)
             messages.success(request, f'Article has been added!')
             return redirect('home:feed')
     user_lists = List.objects.get_created_lists(request.user)
@@ -57,7 +59,9 @@ def feed(request):
     highlighted_articles, _ = paginator_create(request, highlighted_articles,
                                                10)
     add_list_form = AddListForm()
-    add_external_articles_form = AddExternalArticlesForm()
+    add_external_articles_form = AddExternalArticleForm()
+    highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
+        request.user)
     context = {
         'add_external_articles_form': add_external_articles_form,
         'add_list_form': add_list_form,
@@ -66,6 +70,7 @@ def feed(request):
         'subscribed_sources': subscribed_sources,
         'subscribed_articles': subscribed_articles,
         'highlighted_articles': highlighted_articles,
+        'highlighted_articles_titles': highlighted_articles_titles
     }
     return render(request, 'home/feed.html', context)
 
@@ -127,7 +132,7 @@ def articles(request):
             days=int(timeframe))
     filter_args = dict(
         (k, v) for k, v in filter_args.items() if v is not None and v != 'All')
-    search_articles = Article.objects.filter(
+    search_articles = Article.objects.filter(external_source=None).filter(
         **filter_args).order_by('-pub_date')
     notloesung_search_articles = []
     if sector != 'All' and sector != None:
@@ -176,6 +181,12 @@ def list_details(request, list_id):
             if change_list_name_form.is_valid:
                 change_list_name_form.save()
             return redirect('home:list-details', list_id=list_id)
+        elif 'createListForm' in request.POST:
+            add_list_form = AddListForm(request.POST, request.FILES)
+            if add_list_form.is_valid():
+                add_list_form.save()
+                messages.success(request, f'List has been created!')
+                return redirect('home:feed')
     if list.content_type == 'Sources':
         articles = Article.objects.get_articles_from_list_sources(list)
         articles, _ = paginator_create(request, articles, 10)
@@ -186,6 +197,9 @@ def list_details(request, list_id):
     ammount_of_ratings = ListRating.objects.get_ammount_of_ratings(list_id)
     average_rating = ListRating.objects.get_average_rating(list_id)
     highlighted_articles = List.objects.get_highlighted_articles(list_id)
+    add_list_form = AddListForm()
+    notifications_activated = Notification.objects.filter(user=request.user,
+                                                          list=list).exists()
     if request.user.is_authenticated:
         highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
             request.user)
@@ -201,6 +215,7 @@ def list_details(request, list_id):
         subscribed = False  # Refactoren
         user_rating = None
     context = {
+        'add_list_form': add_list_form,
         'ammount_of_ratings': ammount_of_ratings,
         'change_list_name_form': change_list_name_form,
         'change_list_pic_form': change_list_pic_form,
@@ -211,7 +226,8 @@ def list_details(request, list_id):
         'user_rating': user_rating,
         'highlighted_articles': highlighted_articles,
         'highlighted_articles_titles': highlighted_articles_titles,
-        'user_lists': user_lists
+        'user_lists': user_lists,
+        'notifications_activated': notifications_activated,
     }
     return render(request, 'home/list_details.html', context)
 
@@ -287,15 +303,32 @@ def main(request):
 
 
 def search_results(request, search_term):
+    if 'createListForm' in request.POST:
+        add_list_form = AddListForm(request.POST, request.FILES)
+        if add_list_form.is_valid():
+            add_list_form.save()
+            messages.success(request, f'List has been created!')
+            return redirect('home:feed')
     filtered_lists = List.objects.filter_lists(search_term)
     filtered_lists, _ = paginator_create(request, filtered_lists, 10)
     filtered_sources = Source.objects.filter_sources(search_term)
     filtered_articles = Article.objects.filter_articles(search_term)
     filtered_articles, _ = paginator_create(request, filtered_articles, 10)
+    add_list_form = AddListForm()
+    if request.user.is_authenticated:
+        highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
+            request.user)
+        user_lists = List.objects.get_created_lists(request.user)
+    else:
+        highlighted_articles_titles = None
+        user_lists = None
     context = {
+        'add_list_form': add_list_form,
         'filtered_articles': filtered_articles,
         'filtered_lists': filtered_lists,
         'filtered_sources': filtered_sources,
-        'search_term': search_term
+        'search_term': search_term,
+        'highlighted_articles_titles': highlighted_articles_titles,
+        'user_lists': user_lists
     }
     return render(request, 'home/search_results.html', context)

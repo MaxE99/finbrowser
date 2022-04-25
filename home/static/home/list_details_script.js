@@ -1,3 +1,11 @@
+const highlightedArticles = document.querySelector(
+  ".highlightedArticlesContainer"
+);
+// If there are no highlightedArticles change style of container so that flex-wrap is effective
+if (!highlightedArticles && document.querySelector(".articleSpace")) {
+  document.querySelector(".articleSpace").style.display = "block";
+}
+
 const subscribeButton = document.querySelector(".subscribeButton");
 
 if (subscribeButton) {
@@ -233,15 +241,6 @@ document
       showMessage("You need to select sources!", "Error");
     }
   });
-
-const highlightedArticles = document.querySelector(
-  ".highlightedArticlesContainer"
-);
-
-// If there are no highlightedArticles change style of container so that flex-wrap is effective
-if (!highlightedArticles && document.querySelector(".articleSpace")) {
-  document.querySelector(".articleSpace").style.display = "block";
-}
 
 // rating functions
 const one = document.getElementById("first");

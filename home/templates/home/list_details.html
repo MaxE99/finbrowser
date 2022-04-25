@@ -14,6 +14,15 @@
     <button>Add</button>
 </div>
 
+<div class="createListMenu formContainer">
+    <h3>Create A New List</h3>
+    <i class="fas fa-times closeFormContainerButton"></i>
+    <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+        {% csrf_token %} {{ add_list_form }}
+        <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+    </form>
+</div>
+
 <form action="" class="changeListForm" method="POST" enctype="multipart/form-data">
     <div class="upperContainer">
         <div class="leftInnerContainer">
@@ -74,6 +83,7 @@
                     {{ list.creator.username }}</a>
             </div>
             <div class="ratingsWrapper">
+                {% if list.creator != request.user %}
                 <div class="rankingsUpperContainer">
                     <div class="rankingsHeader">Ratings</div>
                     {% if request.user.is_authenticated %}
@@ -92,6 +102,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 <div class="rankingsContainer">
                     <div class="rating">
                         <div class="ratedContainer">
@@ -159,7 +170,8 @@
             <div class="browserCategory">Highlighted Articles</div>
             <div class="articlesContainer highlightedArticlesContainer">
                 {% for article in highlighted_articles %}
-                <div class="article">
+                <div class="article" id="article{{ article.article_id }}">
+                    {% if article.source %}
                     <img src="{% static article.source.favicon_path %}" />
                     <div class="articleInformationContainer">
                         <div class="articleTitle">{{ article.title }}</div>
@@ -177,6 +189,17 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% else %}
+                    <i class="fas fa-question-circle"></i>
+                    <div class="articleInformationContainer">
+                        <div class="articleTitle">{{ article.title }}</div>
+                        <div class="articleSectorAndDateContainer">
+                            <a href="{% url 'home:sector-details' article.external_source.sector.all.first.slug %}">
+                                {{ article.external_source.sector.all.first }}</a>
+                            <div class="articlePubDate">{{ article.pub_date }}</div>
+                        </div>
+                    </div>
+                    {% endif %}
                     <a class="articleLink" href="{{ article.link }}"></a>
                     <i class="fas fa-ellipsis-h"></i>
                     <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
@@ -202,6 +225,7 @@
                     <div class="addToListForm">
                         <i class="fas fa-times"></i>
                         <h3>Add to lists</h3>
+                        {% if user_lists %}
                         <div class="listSelectionContainer">
                             {% for list in user_lists %}
                             <div class="listContainer">
@@ -218,13 +242,17 @@
                             </div>
                             {% endfor %}
                         </div>
-                        <div class="saveButtonContainer">
+                        <div class="buttonsContainer">
                             <button class="saveButton">Save</button>
+                            <button class="createNewListButton">Create</button>
                         </div>
+                        {% else %}
+                        <div class="listContainer">You haven't created any lists!</div>
+                        <button class="createNewListButton createFirstList">Create First List</button>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
-                {% include "pagination.html" with page=articles %}
             </div>
         </div>
         <div class="rightSide">
@@ -275,6 +303,7 @@
                     <div class="addToListForm">
                         <i class="fas fa-times"></i>
                         <h3>Add to lists</h3>
+                        {% if user_lists %}
                         <div class="listSelectionContainer">
                             {% for list in user_lists %}
                             <div class="listContainer">
@@ -291,9 +320,14 @@
                             </div>
                             {% endfor %}
                         </div>
-                        <div class="saveButtonContainer">
+                        <div class="buttonsContainer">
                             <button class="saveButton">Save</button>
+                            <button class="createNewListButton">Create</button>
                         </div>
+                        {% else %}
+                        <div class="listContainer">You haven't created any lists!</div>
+                        <button class="createNewListButton createFirstList">Create First List</button>
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
@@ -348,6 +382,7 @@
                 <div class="addToListForm">
                     <i class="fas fa-times"></i>
                     <h3>Add to lists</h3>
+                    {% if user_lists %}
                     <div class="listSelectionContainer">
                         {% for list in user_lists %}
                         <div class="listContainer">
@@ -364,9 +399,14 @@
                         </div>
                         {% endfor %}
                     </div>
-                    <div class="saveButtonContainer">
+                    <div class="buttonsContainer">
                         <button class="saveButton">Save</button>
+                        <button class="createNewListButton">Create</button>
                     </div>
+                    {% else %}
+                    <div class="listContainer">You haven't created any lists!</div>
+                    <button class="createNewListButton createFirstList">Create First List</button>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

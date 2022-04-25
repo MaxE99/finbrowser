@@ -279,3 +279,18 @@ document
       }
     });
   });
+
+// open List Create Menu
+document.querySelectorAll(".createNewListButton").forEach((button) => {
+  button.addEventListener("click", () => {
+    button.parentElement.parentElement.remove();
+    document.querySelector(".createListMenu").style.display = "flex";
+  });
+});
+
+// close list create menu
+document
+  .querySelector(".createListMenu .closeFormContainerButton")
+  .addEventListener("click", () => {
+    document.querySelector(".createListMenu").style.display = "none";
+  });

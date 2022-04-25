@@ -56,17 +56,41 @@ document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
   });
 });
 
-// open List Create Menu
-document.querySelectorAll(".createNewListButton").forEach((button) => {
-  button.addEventListener("click", () => {
-    button.parentElement.parentElement.remove();
-    document.querySelector(".createListMenu").style.display = "flex";
-  });
+// Autocomplete for search
+document.getElementById("search").addEventListener("keyup", async () => {
+  let search_term = document.getElementById("search").value;
+  let results_list = document.getElementById("autocomplete_list_results");
+  if (search_term && search_term.replaceAll(/\s/g, "") != "") {
+    try {
+      const res = await fetch(
+        `../api/search_articles/${search_term}`,
+        get_fetch_settings("GET")
+      );
+      if (!res.ok) {
+        showMessage("Error: List couldn't be filtered!", "Error");
+      } else {
+        const context = await res.json();
+        results_list.style.display = "flex";
+        results_list.innerHTML = "";
+        if (context[0].length > 0) {
+          for (let i = 0, j = context[0].length; i < j; i++) {
+            let favicon = context[1][i];
+            let title = context[0][i].title;
+            let link = context[0][i].link;
+            const articleRes = `<div class="searchResult"><img src="/static/${favicon}"><span>${title}</span><a href="${link}"></a></div>`;
+            results_list.innerHTML += articleRes;
+          }
+        }
+      }
+    } catch (e) {
+      showMessage("Error: Network error detected!", "Error");
+    }
+    document.onclick = function (e) {
+      if (e.target.id !== "autocomplete_list_results") {
+        results_list.style.display = "none";
+      }
+    };
+  } else {
+    results_list.style.display = "none";
+  }
 });
-
-// close list create menu
-document
-  .querySelector(".createListMenu .closeFormContainerButton")
-  .addEventListener("click", () => {
-    document.querySelector(".createListMenu").style.display = "none";
-  });
