@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
 from django import forms
-from accounts.models import Profile
+from accounts.models import PrivacySettings, Profile
 
 User = get_user_model()
 
@@ -156,3 +156,11 @@ class ProfileChangeForm(forms.ModelForm):
             'profile_pic': 'Profile Picture',
             'profile_banner': 'Profile Banner'
         }
+
+
+class PrivacySettingsForm(forms.ModelForm):
+
+    class Meta:
+        model = PrivacySettings
+        fields = ('list_subscribtions_public', 'subscribed_sources_public',
+                  'highlighted_articles_public')

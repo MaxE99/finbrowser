@@ -128,14 +128,16 @@ document
 
 //Dropdown User Menu
 const dropdownButton = document.querySelector(".fa-sort-down");
-dropdownButton.addEventListener("click", () => {
-  const profileMenu = document.querySelector(".profileMenu");
-  if (profileMenu.style.display == "flex") {
-    profileMenu.style.display = "none";
-  } else {
-    profileMenu.style.display = "flex";
-  }
-});
+if (dropdownButton) {
+  dropdownButton.addEventListener("click", () => {
+    const profileMenu = document.querySelector(".profileMenu");
+    if (profileMenu.style.display == "flex") {
+      profileMenu.style.display = "none";
+    } else {
+      profileMenu.style.display = "flex";
+    }
+  });
+}
 
 function checkForOpenContainers() {
   let allContainersClosed = true;
@@ -195,32 +197,34 @@ document.querySelectorAll(".article .fa-ellipsis-h").forEach((ellipsis) => {
 // (un)highlight articles
 document.querySelectorAll(".addToHighlighted").forEach((highlighterButton) => {
   highlighterButton.addEventListener("click", async () => {
-    const article_id = highlighterButton.id;
-    const highlightState = highlighterButton.lastElementChild.innerText;
-    let action;
-    if (highlightState == "Highlight article") {
-      action = "highlight";
-    } else {
-      action = "unhighlight";
-    }
-    try {
-      const res = await fetch(
-        `../api/highlight_article/${article_id}/${action}`,
-        get_fetch_settings("POST")
-      );
-      if (!res.ok) {
-        showMessage("Error: List couldn't be filtered!", "Error");
+    if (!highlighterButton.classList.contains("registrationLink")) {
+      const article_id = highlighterButton.id;
+      const highlightState = highlighterButton.lastElementChild.innerText;
+      let action;
+      if (highlightState == "Highlight article") {
+        action = "highlight";
       } else {
-        const context = await res.json();
-        showMessage(context, "Success");
-        if (action == "highlight") {
-          highlighterButton.innerHTML = `<i class="fas fa-times"></i><span>Unhighlight article</span>`;
-        } else {
-          highlighterButton.innerHTML = `<i class="fas fa-highlighter"></i><span>Highlight article</span>`;
-        }
+        action = "unhighlight";
       }
-    } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
+      try {
+        const res = await fetch(
+          `../api/highlight_article/${article_id}`,
+          get_fetch_settings("POST")
+        );
+        if (!res.ok) {
+          showMessage("Error: List couldn't be filtered!", "Error");
+        } else {
+          const context = await res.json();
+          showMessage(context, "Success");
+          if (action == "highlight") {
+            highlighterButton.innerHTML = `<i class="fas fa-times"></i><span>Unhighlight article</span>`;
+          } else {
+            highlighterButton.innerHTML = `<i class="fas fa-highlighter"></i><span>Highlight article</span>`;
+          }
+        }
+      } catch (e) {
+        showMessage("Error: Network error detected!", "Error");
+      }
     }
   });
 });
@@ -228,10 +232,12 @@ document.querySelectorAll(".addToHighlighted").forEach((highlighterButton) => {
 // open addtolist menu
 document.querySelectorAll(".addToList").forEach((element) => {
   element.addEventListener("click", () => {
-    const allContainersClosed = checkForOpenContainers();
-    if (allContainersClosed) {
-      const addToListForm = element.parentElement.nextElementSibling;
-      addToListForm.style.display = "block";
+    if (!element.classList.contains("registrationLink")) {
+      const allContainersClosed = checkForOpenContainers();
+      if (allContainersClosed) {
+        const addToListForm = element.parentElement.nextElementSibling;
+        addToListForm.style.display = "block";
+      }
     }
   });
 });
@@ -283,8 +289,10 @@ document
 // open List Create Menu
 document.querySelectorAll(".createNewListButton").forEach((button) => {
   button.addEventListener("click", () => {
-    button.parentElement.parentElement.remove();
-    document.querySelector(".createListMenu").style.display = "flex";
+    if (!button.classList.contains("registrationLink")) {
+      button.parentElement.parentElement.remove();
+      document.querySelector(".createListMenu").style.display = "flex";
+    }
   });
 });
 
@@ -372,47 +380,4 @@ var nextTouched = function () {
   sliderContent.classList.remove("next-animation");
   sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
   sliderContent.removeEventListener("transitionend", nextTouched);
-};
-
-let span = document.getElementsByTagName("span");
-let product = document.getElementsByClassName("product");
-let product_page = Math.ceil(product.length / 4);
-let l = 0;
-let movePer = 25.34;
-let maxMove = 203;
-// mobile_view
-let mob_view = window.matchMedia("(max-width: 768px)");
-if (mob_view.matches) {
-  movePer = 50.36;
-  maxMove = 504;
-}
-
-let right_mover = () => {
-  l = l + movePer;
-  if (product == 1) {
-    l = 0;
-  }
-  for (const i of product) {
-    if (l > maxMove) {
-      l = l - movePer;
-    }
-    i.style.left = "-" + l + "%";
-  }
-};
-let left_mover = () => {
-  l = l - movePer;
-  if (l <= 0) {
-    l = 0;
-  }
-  for (const i of product) {
-    if (product_page > 1) {
-      i.style.left = "-" + l + "%";
-    }
-  }
-};
-span[1].onclick = () => {
-  right_mover();
-};
-span[0].onclick = () => {
-  left_mover();
 };

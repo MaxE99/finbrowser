@@ -12,7 +12,7 @@
     <div class="settingOption activeSettingOption" data-for-tab="0">Profile</div>
     <div class="settingOption" data-for-tab="1">Password</div>
     <div class="settingOption" data-for-tab="2">Notifications</div>
-    <div class="settingOption" data-for-tab="3">My Lists</div>
+    <div class="settingOption" data-for-tab="3">Privacy</div>
 </div>
 <div class="contentSection">
 
@@ -69,6 +69,7 @@
                 <img class="{{ social.website.name }}" src="{% static social.website.favicon %}" alt="">
                 <input type="text" value="{{ social.url }}">
                 <button type="button" class="removeSocialLinkButton">Remove</button>
+                <button type="button" class="saveSocialLinkChanges">Save</button>
             </div>
             {% endfor %}
             <div class="socialLinksWrapper">
@@ -110,7 +111,22 @@
         </form>
     </div>
     <div class="tabsContent" data-tab="2"></div>
-    <div class="tabsContent" data-tab="3"></div>
-</div>
-<script src="{% static 'home/settings_script.js' %}"></script>
-{% endblock content %}
+
+
+    <div class="tabsContent" data-tab="3">
+        <h2>Change Privacy Settings</h2>
+        <form action="" class="changePrivacySettingsForm" method="POST">
+            {% csrf_token %}
+            {% for field in privacy_settings_form %}
+            <div class="privacySettingsContainer">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <input id="{{ field.id_for_label }}" type="checkbox" name="{{ field.name }}" {% if field.value %}
+                    checked {% endif %}>
+            </div>
+            {% endfor %}
+            <input name="changePrivacySettingsForm" type="submit" class="privacySettingsChangeSubmit" value="Save" />
+        </form>
+
+    </div>
+    <script src="{% static 'home/settings_script.js' %}"></script>
+    {% endblock content %}

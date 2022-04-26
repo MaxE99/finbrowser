@@ -1,19 +1,7 @@
 .pageContainer {
   display: flex;
-}
-
-.leftSide,
-.rightSide {
-  display: flex;
-  flex-direction: column;
-  margin-top: 40px;
-}
-
-.leftSide {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
 }
 
 .profileContainer {
@@ -55,16 +43,18 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  width: 70px;
   background: white;
-  border-radius: 10px;
+  border-radius: 4px;
   box-shadow: var(--box-shadowScheme);
-  margin: 10px 10px 0px;
+  width: 40px;
+  height: 40px;
+  margin-right: auto;
+  margin: 0 auto 0 10px;
 }
 
 .iconContainer {
-  width: 70px;
-  height: 70px;
+  width: unset;
+  height: unset;
 }
 
 .sourceLink {
@@ -72,16 +62,6 @@
   left: 0;
   height: 100%;
   width: 100%;
-}
-
-.aboutSection {
-  margin-top: 10px;
-  text-align: justify;
-}
-
-.rightSide {
-  width: 65%;
-  margin-left: 5%;
 }
 
 .rightSideUpperContainer {
@@ -160,19 +140,21 @@
   height: unset;
   flex-wrap: unset;
   align-items: unset;
+  padding-bottom: 65px;
 }
 
 .articleInformationContainer {
-  max-width: 23ch !important;
+  max-width: 39ch !important;
 }
 
 .article {
   width: unset;
-  margin: 7.5px 0;
+  margin: 7.5px 25px;
 }
 
 .ratingsWrapper {
   margin-top: 30px !important;
+  margin-left: -50px;
 }
 
 .rate-formUpperContainer h3 {
@@ -186,4 +168,76 @@
 
 .notificationAndSubscribtionContainer .notificationActivated {
   color: var(--primary-fontColor);
+}
+
+/* # New Style # New style */ /* # New Style # New style */ /* # New Style # New style */ /* # New Style # New style */ /* # New Style # New style */ /* # New Style # New style */
+
+.upperContainer {
+  display: flex;
+  margin-top: 40px;
+}
+
+.leftInnerContainer {
+  width: 30%;
+}
+
+.rightInnerContainer {
+  width: 65%;
+  margin-left: 5%;
+}
+
+.listPictureContainer {
+  position: relative;
+  background: white;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  margin: 0 auto;
+  height: 200px;
+  width: 200px;
+}
+
+.listPictureContainer img {
+  width: 100%;
+  height: 100%;
+}
+
+.rightFirstRowContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rightFirstRowContainer {
+  font-size: 30px;
+}
+
+.upperInnerContainer h3 {
+  font-size: 30px;
+}
+
+.leftSide,
+.rightSide {
+  position: relative;
+  width: 49%;
+  background: white;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 8px;
+}
+
+.leftSide .pagination,
+.rightSide .pagination {
+  display: flex;
+  justify-content: center;
+  margin: 5px auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.articlesContainer .article:first-child {
+  margin-top: 15px;
+}
+
+.rate-formUpperContainer {
+  margin-left: 30px;
 }

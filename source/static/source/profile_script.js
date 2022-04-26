@@ -1,30 +1,32 @@
 const subscribeButton = document.querySelector(".subscribeButton");
 
 subscribeButton.addEventListener("click", async () => {
-  try {
-    const url = window.location.href;
-    const index = url.lastIndexOf("/");
-    const domain = url.substring(index + 1);
-    const action = subscribeButton.innerText;
-    const res = await fetch(
-      `../../api/source_change_subscribtion_status/${domain}/${action}`,
-      get_fetch_settings("POST")
-    );
-    if (!res.ok) {
-      showMessage("Error: Source can't be subscribed!", "Error");
-    } else {
-      const context = await res.json();
-      showMessage(context, "Success");
-      if (action == "Subscribe") {
-        subscribeButton.classList.replace("unsubscribed", "subscribed");
-        subscribeButton.innerText = "Subscribed";
+  if (!subscribeButton.classList.contains("registrationLink")) {
+    try {
+      const url = window.location.href;
+      const index = url.lastIndexOf("/");
+      const domain = url.substring(index + 1);
+      const action = subscribeButton.innerText;
+      const res = await fetch(
+        `../../api/source_change_subscribtion_status/${domain}`,
+        get_fetch_settings("POST")
+      );
+      if (!res.ok) {
+        showMessage("Error: Source can't be subscribed!", "Error");
       } else {
-        subscribeButton.classList.replace("subscribed", "unsubscribed");
-        subscribeButton.innerText = "Subscribe";
+        const context = await res.json();
+        showMessage(context, "Success");
+        if (action == "Subscribe") {
+          subscribeButton.classList.replace("unsubscribed", "subscribed");
+          subscribeButton.innerText = "Subscribed";
+        } else {
+          subscribeButton.classList.replace("subscribed", "unsubscribed");
+          subscribeButton.innerText = "Subscribe";
+        }
       }
+    } catch (e) {
+      showMessage("Error: Network error detected!", "Error");
     }
-  } catch (e) {
-    showMessage("Error: Network error detected!", "Error");
   }
 });
 
@@ -143,13 +145,19 @@ if (document.querySelector(".avgRating span")) {
 }
 
 // open rate list menu
-document.querySelector(".rateListButton").addEventListener("click", () => {
-  document.querySelector(".rate-formUpperContainer").style.display = "block";
-  document.querySelector(".rating").style.opacity = "0";
-  document.querySelector(".ratingsAmmountContainer").style.opacity = "0";
-  document.querySelector(".rateListButton").style.opacity = "0";
-  document.querySelector(".rankingsHeader").style.opacity = "0";
-});
+const rateListButton = document.querySelector(".rateListButton");
+rateListButton
+  .querySelector(".rateListButton")
+  .addEventListener("click", () => {
+    if (!rateListButton.classList.contains("registrationLink")) {
+      document.querySelector(".rate-formUpperContainer").style.display =
+        "block";
+      document.querySelector(".rating").style.opacity = "0";
+      document.querySelector(".ratingsAmmountContainer").style.opacity = "0";
+      document.querySelector(".rateListButton").style.opacity = "0";
+      document.querySelector(".rankingsHeader").style.opacity = "0";
+    }
+  });
 
 // if user already rated source = set stars to this rating
 const user_rating = document.getElementById("user-rating").innerText;

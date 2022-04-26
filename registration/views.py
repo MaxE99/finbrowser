@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 # Local imports
-from accounts.models import Profile
+from accounts.models import PrivacySettings, Profile
 from accounts.forms import UserCreationForm
 from registration.forms import UserLoginForm
 
@@ -14,7 +14,8 @@ def register(request):
         user_creation_form = UserCreationForm(request.POST)
         if user_creation_form.is_valid():
             user = user_creation_form.save()
-            Profile.objects.create(user=user)
+            profile = Profile.objects.create(user=user)
+            PrivacySettings.objects.create(profile=profile)
             login(request, user)
             return redirect('home:feed')
     else:

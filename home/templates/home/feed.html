@@ -215,7 +215,19 @@
     {% endfor %}
 </div>
 {% if subscribed_articles %}
-{% include "pagination.html" with page=subscribed_articles %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% for i in subscribed_articles.paginator.page_range %}
+        {% if subscribed_articles.number == i %}
+        <button class="currentPagination">{{ subscribed_articles.number }}</button>
+        {% elif i > subscribed_articles.number|add:'-3' and i < subscribed_articles.number|add:'3' %} <a
+            href="?subscribed_articles={{ i }}">{{ i }}</a>
+            {% endif %}
+            {% endfor %}
+    </span>
+</div>
+
 {% endif %}
 {% endif %}
 
@@ -301,10 +313,21 @@
 </div>
 
 {% if highlighted_articles %}
-<div class="paginationAndAddExternalContainer">
-    {% include "pagination.html" with page=highlighted_articles %}
-    <button class="addExternalLinkButton"><i class="fas fa-plus"></i>Add External Source</button>
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% for i in highlighted_articles.paginator.page_range %}
+        {% if highlighted_articles.number == i %}
+        <button class="currentPagination">{{ highlighted_articles.number }}</button>
+        {% elif i > highlighted_articles.number|add:'-3' and i < highlighted_articles.number|add:'3' %} <a
+            href="?highlighted_articles={{ i }}">{{ i }}</a>
+            {% endif %}
+            {% endfor %}
+    </span>
 </div>
+
+
 {% endif %}
 
 {% endif %}

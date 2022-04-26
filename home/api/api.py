@@ -1,4 +1,5 @@
 # Django imports
+from xml import dom
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -28,37 +29,38 @@ def lists_add_article(request, article_id, list_ids):
 
 
 @api_view(['POST'])
-def article_highlight(request, article_id, action):
+def article_highlight(request, article_id):
     article = get_object_or_404(Article, article_id=article_id)
-    if action == "highlight":
-        HighlightedArticle.objects.create(user=request.user, article=article)
-        return Response(f'{article.title} has been highlighted')
-    else:
+    if HighlightedArticle.objects.filter(user=request.user,
+                                         article=article).exists():
         HighlightedArticle.objects.get(user=request.user,
                                        article=article).delete()
         return Response(f'{article.title} has been unhighlighted')
+    else:
+        HighlightedArticle.objects.create(user=request.user, article=article)
+        return Response(f'{article.title} has been highlighted')
 
 
 @api_view(['POST'])
-def list_change_subscribtion_status(request, list_id, action):
+def list_change_subscribtion_status(request, list_id):
     list = get_object_or_404(List, list_id=list_id)
-    if action == 'Subscribe':
-        list.subscribers.add(request.user.id)
-        return Response(f"You have subscribed to {list}")
-    else:
+    if list.subscribers.filter(username=request.user.username).exists():
         list.subscribers.remove(request.user)
         return Response(f"You have unsubscribed from {list}")
+    else:
+        list.subscribers.add(request.user.id)
+        return Response(f"You have subscribed to {list}")
 
 
 @api_view(['POST'])
-def source_change_subscribtion_status(request, domain, action):
+def source_change_subscribtion_status(request, domain):
     source = get_object_or_404(Source, domain=domain)
-    if action == 'Subscribe':
-        source.subscribers.add(request.user.id)
-        return Response(f"You have subscribed to {source}")
-    else:
+    if source.subscribers.filter(username=request.user.username).exists():
         source.subscribers.remove(request.user)
         return Response(f"You have unsubscribed from {source}")
+    else:
+        source.subscribers.add(request.user.id)
+        return Response(f"You have subscribed to {source}")
 
 
 @api_view(['POST'])
@@ -92,6 +94,17 @@ def social_links_add(request, website, url):
 
 
 @api_view(["POST"])
+def social_link_change(request, website, new_link):
+    website = get_object_or_404(Website, name=website)
+    social_link = get_object_or_404(SocialLink,
+                                    website=website,
+                                    profile=request.user.profile)
+    social_link.url = new_link.replace('"', "")
+    social_link.save()
+    return Response("Link has been changed!")
+
+
+@api_view(["POST"])
 def notification_change_source(request, source_id):
     source = get_object_or_404(Source, source_id=source_id)
     notification, created = Notification.objects.get_or_create(
@@ -116,12 +129,8 @@ def notification_change_list(request, list_id):
 
 
 @api_view(['GET'])
-def list_filter(request, timeframe, content_type, sources):
-    cache.set_many({
-        'timeframe': timeframe,
-        'content_type': content_type,
-        'sources': sources
-    })
+def list_filter(request, timeframe, sources):
+    cache.set_many({'timeframe': timeframe, 'sources': sources})
     return Response("Lists have been filtered!")
 
 
@@ -139,9 +148,8 @@ def article_filter(request, timeframe, sector, paywall, sources):
 @api_view(['GET'])
 def get_list_filters(request):
     timeframe = cache.get('timeframe')
-    content_type = cache.get('content_type')
     sources = cache.get('sources')
-    return Response([timeframe, content_type, sources])
+    return Response([timeframe, sources])
 
 
 @api_view(['GET'])
@@ -155,13 +163,17 @@ def get_article_filters(request):
 
 @api_view(['DELETE'])
 def delete_source_from_list(request, list_id, source):
-    print("AUFGRUFEN")
     list = get_object_or_404(List, list_id=list_id)
-    print("list durchlaufen")
-    print(list)
     source = get_object_or_404(Source, name=source)
     list.sources.remove(source.source_id)
     return Response(f"{source} has been removed from {list}")
+
+
+@api_view(['DELETE'])
+def delete_article_from_list(request, list_id, article_id):
+    list = get_object_or_404(List, list_id=list_id)
+    list.articles.remove(article_id)
+    return Response(f"Article has been removed from {list}")
 
 
 @api_view(['DELETE'])

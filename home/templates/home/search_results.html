@@ -56,6 +56,7 @@
                     <a class="articleLink" href="{{ article.link }}"></a>
                     <i class="fas fa-ellipsis-h"></i>
                     <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+                        {% if request.user.is_authenticated %}
                         <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
                         {% if article.title in highlighted_articles_titles %}
                         <div id="{{ article.article_id }}" class="addToHighlighted"><i
@@ -65,6 +66,14 @@
                         <div id="{{ article.article_id }}" class="addToHighlighted"><i
                                 class="fas fa-highlighter"></i><span>Highlight
                                 article</span></div>
+                        {% endif %}
+                        {% else %}
+                        <a href="{% url 'registration:login' %}" class="addToList registrationLink"><i
+                                class="fas fa-list"></i>Add
+                            to list</a>
+                        <a href="{% url 'registration:login' %}" id="{{ article.article_id }}"
+                            class="addToHighlighted registrationLink"><i class="fas fa-highlighter"></i><span>Highlight
+                                article</span></a>
                         {% endif %}
                     </div>
                     <div class="addToListForm">
@@ -100,7 +109,17 @@
                 {% endfor %}
             </div>
             {% if filtered_articles %}
-            {% include "pagination.html" with page=filtered_articles %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% for i in filtered_articles.paginator.page_range %}
+                    {% if filtered_articles.number == i %}
+                    <button class="currentPagination">{{ filtered_articles.number }}</button>
+                    {% elif i > filtered_articles.number|add:'-3' and i < filtered_articles.number|add:'3' %} <a
+                        href="?filtered_articles={{ i }}">{{ i }}</a>
+                        {% endif %}
+                        {% endfor %}
+                </span>
+            </div>
             {% endif %}
         </div>
     </div>
@@ -127,7 +146,17 @@
                 {% endfor %} {% endif %}
             </div>
             {% if filtered_lists %}
-            {% include "pagination.html" with page=filtered_lists %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% for i in filtered_lists.paginator.page_range %}
+                    {% if filtered_lists.number == i %}
+                    <button class="currentPagination">{{ filtered_lists.number }}</button>
+                    {% elif i > filtered_lists.number|add:'-3' and i < filtered_lists.number|add:'3' %} <a
+                        href="?filtered_lists={{ i }}">{{ i }}</a>
+                        {% endif %}
+                        {% endfor %}
+                </span>
+            </div>
             {% endif %}
         </div>
     </div>

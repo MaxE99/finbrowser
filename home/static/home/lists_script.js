@@ -10,8 +10,7 @@ async function load_filters() {
       const context = await res.json();
       if (context[0] != null) {
         document.getElementById("timeframe").value = context[0];
-        document.getElementById("content").value = context[1];
-        document.querySelector("summary").innerText = context[2];
+        document.querySelector("summary").innerText = context[1];
       }
     }
   } catch (e) {
@@ -20,27 +19,6 @@ async function load_filters() {
 }
 
 load_filters();
-
-const createListMenu = document.querySelector(".createListMenu");
-const overlay = document.querySelector(".listOverlay");
-
-// Open settings menu
-document.querySelector(".createListButton").addEventListener("click", () => {
-  overlay.style.opacity = "0.5";
-  createListMenu.style.display = "flex";
-});
-
-// Close menus
-document
-  .querySelectorAll(".closeMenuButton, .closeButton")
-  .forEach((button) => {
-    button.addEventListener("click", () => {
-      overlay.style.opacity = "1";
-      document.querySelectorAll(".popUpMenu").forEach((menu) => {
-        menu.style.display = "none";
-      });
-    });
-  });
 
 // Autocomplete for search
 document.getElementById("search").addEventListener("keyup", async () => {
@@ -85,13 +63,10 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   const timeframeSelect = document.getElementById("timeframe");
   const timeframe =
     timeframeSelect.options[timeframeSelect.selectedIndex].value;
-  const contentTypeSelect = document.getElementById("content");
-  const contentType =
-    contentTypeSelect.options[contentTypeSelect.selectedIndex].innerText;
   const sources = document.querySelector("summary").innerText;
   try {
     const res = await fetch(
-      `../api/filter_list/${timeframe}/${contentType}/${sources}`,
+      `../api/filter_list/${timeframe}/${sources}`,
       get_fetch_settings("GET")
     );
     if (!res.ok) {
@@ -111,4 +86,12 @@ document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
     document.querySelector("summary").innerHTML = choice.innerHTML;
     document.querySelector("details").removeAttribute("open");
   });
+});
+
+//open create List Menu
+const createListButton = document.querySelector(".createListButton");
+createListButton.addEventListener("click", () => {
+  if (!createListButton.classList.contains("registrationLink")) {
+    document.querySelector(".createListMenu").style.display = "flex";
+  }
 });

@@ -4,9 +4,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from home.logic.services import article_create
 
 
-def paginator_create(request, objects, objects_per_site):
+def paginator_create(request, objects, objects_per_site, page_name='page'):
     paginator = Paginator(objects, objects_per_site)
-    page = request.GET.get('page')
+    page = request.GET.get(page_name)
     try:
         objects = paginator.page(page)
     except PageNotAnInteger:
