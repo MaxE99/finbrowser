@@ -10,7 +10,7 @@ class AddListForm(ModelForm):
 
     class Meta:
         model = List
-        fields = ['name', 'list_pic', 'content_type', 'is_public']
+        fields = ['name', 'list_pic', 'is_public']
         labels = {'list_pic': 'Picture', 'is_public': 'Make playlist public'}
 
 

@@ -9,17 +9,17 @@ from home.api.api import (
     delete_source_from_list, delete_list, sources_add, source_rate, list_rate,
     article_highlight, lists_add_article, profile_add_website_link,
     profile_pic_delete, profile_banner_delete, social_link_delete,
-    social_links_add, notification_change_source, notification_change_list)
+    social_links_add, notification_change_source, notification_change_list,
+    social_link_change, delete_article_from_list)
 
 app_name = 'api'
 
 urlpatterns = [
-    path('list_change_subscribtion_status/<int:list_id>/<str:action>',
+    path('list_change_subscribtion_status/<int:list_id>',
          list_change_subscribtion_status),
-    path('source_change_subscribtion_status/<str:domain>/<str:action>',
+    path('source_change_subscribtion_status/<str:domain>',
          source_change_subscribtion_status),
-    path('filter_list/<str:timeframe>/<str:content_type>/<str:sources>',
-         list_filter),
+    path('filter_list/<str:timeframe>/<str:sources>', list_filter),
     path('search_sources_for_list/<int:list_id>/<str:search_term>',
          FilteredSourceForLists.as_view()),
     path('search_lists/<str:search_term>', FilteredList.as_view()),
@@ -35,7 +35,7 @@ urlpatterns = [
     path('add_sources/<str:sources>/<int:list_id>', sources_add),
     path('rate_source/<str:source>/<int:rating>', source_rate),
     path('rate_list/<int:list_id>/<int:rating>', list_rate),
-    path('highlight_article/<int:article_id>/<str:action>', article_highlight),
+    path('highlight_article/<int:article_id>', article_highlight),
     path('add_article_to_lists/<int:article_id>/<str:list_ids>',
          lists_add_article),
     path('profile_add_website_link/<str:website>/<str:link>',
@@ -53,4 +53,8 @@ urlpatterns = [
          notification_change_source),
     path('change_list_notification/<int:list_id>', notification_change_list),
     path('search_articles/<str:search_term>', FilteredArticles.as_view()),
+    path('change_social_link/<str:website>/<path:new_link>',
+         social_link_change),
+    path('delete_article_from_list/<int:list_id>/<int:article_id>',
+         delete_article_from_list)
 ]

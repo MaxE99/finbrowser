@@ -1,4 +1,5 @@
 # Django imports
+from django.http import Http404
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
 from django.contrib import messages
@@ -15,19 +16,23 @@ from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm,
                         AddExternalArticleForm)
 from home.logic.pure_logic import paginator_create
 from accounts.forms import (EmailAndUsernameChangeForm, PasswordChangingForm,
-                            ProfileChangeForm)
+                            ProfileChangeForm, PrivacySettingsForm)
 
 User = get_user_model()
 
 
 @login_required()
 def feed(request):
+    cache.set('current_user', request.user)
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
-            add_list_form.save()
+            new_list = add_list_form.save(commit=False)
+            new_list.creator = request.user
+            new_list.save()
+            list_id = new_list.list_id
             messages.success(request, f'List has been created!')
-            return redirect('home:feed')
+            return redirect('home:list-details', list_id=list_id)
     elif 'addExternalArticlesForm' in request.POST:
         add_external_articles_form = AddExternalArticleForm(request.POST)
         if add_external_articles_form.is_valid():
@@ -53,18 +58,19 @@ def feed(request):
     subscribed_sources = Source.objects.get_subscribed_sources(request.user)
     subscribed_articles = Article.objects.get_articles_from_subscribed_sources(
         subscribed_sources)
-    subscribed_articles, _ = paginator_create(request, subscribed_articles, 10)
+    subscribed_articles, _ = paginator_create(request, subscribed_articles, 10,
+                                              'subscribed_articles')
     highlighted_articles = HighlightedArticle.objects.filter(
         user=request.user).order_by('-article__pub_date')
     highlighted_articles, _ = paginator_create(request, highlighted_articles,
-                                               10)
+                                               10, 'highlighted_articles')
     add_list_form = AddListForm()
     add_external_articles_form = AddExternalArticleForm()
     highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
         request.user)
     context = {
-        'add_external_articles_form': add_external_articles_form,
         'add_list_form': add_list_form,
+        'add_external_articles_form': add_external_articles_form,
         'user_lists': user_lists,
         'subscribed_lists': subscribed_lists,
         'subscribed_sources': subscribed_sources,
@@ -76,21 +82,18 @@ def feed(request):
 
 
 def lists(request):
-    cache.set('current_user', request.user)
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
-            new_list = add_list_form.save()
+            new_list = add_list_form.save(commit=False)
+            new_list.creator = request.user
+            new_list.save()
             list_id = new_list.list_id
             messages.success(request, f'List has been created!')
             return redirect('home:list-details', list_id=list_id)
     timeframe = cache.get('timeframe')
-    content_type = cache.get('content_type')
     sources = cache.get('sources')
-    filter_args = {
-        'content_type': content_type,
-        'main_website_source': sources
-    }
+    filter_args = {'main_website_source': sources}
     if timeframe != 'All' and timeframe != None:
         filter_args['updated_at__gte'] = date.today() - timedelta(
             days=int(timeframe))
@@ -98,7 +101,7 @@ def lists(request):
         (k, v) for k, v in filter_args.items() if v is not None and v != 'All')
     lists = List.objects.filter(**filter_args).filter(
         is_public=True).order_by('name')
-    # cache.delete_many(['timeframe', 'content_type', 'sources'])
+    # cache.delete_many(['timeframe', 'sources'])
     add_list_form = AddListForm()
     results_found = len(lists)
     lists, _ = paginator_create(request, lists, 10)
@@ -123,9 +126,12 @@ def articles(request):
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
-            add_list_form.save()
+            new_list = add_list_form.save(commit=False)
+            new_list.creator = request.user
+            new_list.save()
+            list_id = new_list.list_id
             messages.success(request, f'List has been created!')
-            return redirect('home:articles')
+            return redirect('home:list-details', list_id=list_id)
     filter_args = {'source__paywall': paywall, 'source__website': sources}
     if timeframe != 'All' and timeframe != None:
         filter_args['pub_date__gte'] = date.today() - timedelta(
@@ -169,70 +175,88 @@ def articles(request):
 
 def list_details(request, list_id):
     list = get_object_or_404(List, list_id=list_id)
-    if request.method == 'POST':
-        if 'changeListForm' in request.POST:
-            change_list_name_form = ListNameChangeForm(request.POST,
-                                                       instance=list)
-            change_list_pic_form = ListPicChangeForm(request.POST,
-                                                     request.FILES,
-                                                     instance=list)
-            if change_list_pic_form.is_valid:
-                change_list_pic_form.save()
-            if change_list_name_form.is_valid:
-                change_list_name_form.save()
-            return redirect('home:list-details', list_id=list_id)
-        elif 'createListForm' in request.POST:
-            add_list_form = AddListForm(request.POST, request.FILES)
-            if add_list_form.is_valid():
-                add_list_form.save()
-                messages.success(request, f'List has been created!')
-                return redirect('home:feed')
-    if list.content_type == 'Sources':
-        articles = Article.objects.get_articles_from_list_sources(list)
-        articles, _ = paginator_create(request, articles, 10)
-    else:
-        articles = None
-    change_list_pic_form = ListPicChangeForm()
-    change_list_name_form = ListNameChangeForm()
-    ammount_of_ratings = ListRating.objects.get_ammount_of_ratings(list_id)
-    average_rating = ListRating.objects.get_average_rating(list_id)
-    highlighted_articles = List.objects.get_highlighted_articles(list_id)
-    add_list_form = AddListForm()
-    notifications_activated = Notification.objects.filter(user=request.user,
-                                                          list=list).exists()
-    if request.user.is_authenticated:
-        highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
-            request.user)
-        user_lists = List.objects.get_created_lists(request.user)
-        if request.user in list.subscribers.all():
-            subscribed = True
+    if list.creator == request.user or list.is_public == True:
+        if request.method == 'POST':
+            if 'changeListForm' in request.POST:
+                change_list_name_form = ListNameChangeForm(request.POST,
+                                                           instance=list)
+                change_list_pic_form = ListPicChangeForm(request.POST,
+                                                         request.FILES,
+                                                         instance=list)
+                if change_list_pic_form.is_valid:
+                    change_list_pic_form.save()
+                if change_list_name_form.is_valid:
+                    change_list_name_form.save()
+                return redirect('home:list-details', list_id=list_id)
+            elif 'createListForm' in request.POST:
+                add_list_form = AddListForm(request.POST, request.FILES)
+                if add_list_form.is_valid():
+                    new_list = add_list_form.save(commit=False)
+                    new_list.creator = request.user
+                    new_list.save()
+                    list_id = new_list.list_id
+                    messages.success(request, f'List has been created!')
+                    return redirect('home:list-details', list_id=list_id)
+        latest_articles = Article.objects.get_articles_from_list_sources(list)
+        latest_articles, _ = paginator_create(request, latest_articles, 10,
+                                              'latest_articles')
+        change_list_pic_form = ListPicChangeForm()
+        change_list_name_form = ListNameChangeForm()
+        ammount_of_ratings = ListRating.objects.get_ammount_of_ratings(list_id)
+        average_rating = ListRating.objects.get_average_rating(list_id)
+        highlighted_articles = List.objects.get_highlighted_articles(list_id)
+        highlighted_articles, _ = paginator_create(request,
+                                                   highlighted_articles, 10,
+                                                   'highlighted_articles')
+        add_list_form = AddListForm()
+        if request.user.is_authenticated:
+            highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
+                request.user)
+            user_lists = List.objects.get_created_lists(request.user)
+            notifications_activated = Notification.objects.filter(
+                user=request.user, list=list).exists()
+            if request.user in list.subscribers.all():
+                subscribed = True
+            else:
+                subscribed = False
+            user_rating = ListRating.objects.get_user_rating(
+                request.user, list_id)
         else:
-            subscribed = False
-        user_rating = ListRating.objects.get_user_rating(request.user, list_id)
+            highlighted_articles_titles = None
+            user_lists = None
+            subscribed = False  # Refactoren
+            user_rating = None
+            notifications_activated = None
+        context = {
+            'add_list_form': add_list_form,
+            'ammount_of_ratings': ammount_of_ratings,
+            'change_list_name_form': change_list_name_form,
+            'change_list_pic_form': change_list_pic_form,
+            'list': list,
+            'subscribed': subscribed,
+            'latest_articles': latest_articles,
+            'average_rating': average_rating,
+            'user_rating': user_rating,
+            'highlighted_articles': highlighted_articles,
+            'highlighted_articles_titles': highlighted_articles_titles,
+            'user_lists': user_lists,
+            'notifications_activated': notifications_activated,
+        }
+        return render(request, 'home/list_details.html', context)
     else:
-        highlighted_articles_titles = None
-        user_lists = None
-        subscribed = False  # Refactoren
-        user_rating = None
-    context = {
-        'add_list_form': add_list_form,
-        'ammount_of_ratings': ammount_of_ratings,
-        'change_list_name_form': change_list_name_form,
-        'change_list_pic_form': change_list_pic_form,
-        'list': list,
-        'subscribed': subscribed,
-        'articles': articles,
-        'average_rating': average_rating,
-        'user_rating': user_rating,
-        'highlighted_articles': highlighted_articles,
-        'highlighted_articles_titles': highlighted_articles_titles,
-        'user_lists': user_lists,
-        'notifications_activated': notifications_activated,
-    }
-    return render(request, 'home/list_details.html', context)
+        raise Http404("This list does not exist!")
 
 
 def sector_details(request, slug):
+    if 'createListForm' in request.POST:
+        add_list_form = AddListForm(request.POST, request.FILES)
+        if add_list_form.is_valid():
+            new_list = add_list_form.save(commit=False)
+            new_list.creator = request.user
+            new_list.save()
+            list_id = new_list.list_id
+            messages.success(request, f'List has been created!')
+            return redirect('home:list-details', list_id=list_id)
     sector = get_object_or_404(Sector, slug=slug)
     articles_from_sector = Article.objects.get_articles_from_sector(sector)
     articles_from_sector, _ = paginator_create(request, articles_from_sector,
@@ -243,10 +267,21 @@ def sector_details(request, slug):
     articles_from_top_sources, _ = paginator_create(request,
                                                     articles_from_top_sources,
                                                     10)
+    add_list_form = AddListForm()
+    if request.user.is_authenticated:
+        highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
+            request.user)
+        user_lists = List.objects.get_created_lists(request.user)
+    else:
+        highlighted_articles_titles = None
+        user_lists = None
     context = {
+        'add_list_form': add_list_form,
         'articles_from_top_sources': articles_from_top_sources,
         'articles_from_sector': articles_from_sector,
-        'sector': sector
+        'sector': sector,
+        'highlighted_articles_titles': highlighted_articles_titles,
+        'user_lists': user_lists,
     }
     return render(request, 'home/sector_details.html', context)
 
@@ -282,18 +317,29 @@ def settings(request):
                 change_password_form.save()
                 update_session_auth_hash(request, change_password_form.user)
                 return redirect('home:settings')
+        elif 'changePrivacySettingsForm' in request.POST:
+            privacy_settings_form = PrivacySettingsForm(
+                request.POST, instance=request.user.profile.privacysettings)
+            if privacy_settings_form.is_valid():
+                form = privacy_settings_form.save(commit=False)
+                form.profile = request.user.profile
+                form.save()
+                return redirect('home:settings')
     profile_change_form = ProfileChangeForm(bio=request.user.profile.bio)
     email_and_name_change_form = EmailAndUsernameChangeForm(
         username=request.user.username, email=request.user.email)
     change_password_form = PasswordChangingForm(request.user)
     websites = Website.objects.all()
     social_links = SocialLink.objects.filter(profile=request.user.profile)
+    privacy_settings_form = PrivacySettingsForm(
+        instance=request.user.profile.privacysettings)
     context = {
         'change_password_form': change_password_form,
         'email_and_name_change_form': email_and_name_change_form,
         'profile_change_form': profile_change_form,
         'social_links': social_links,
-        'websites': websites
+        'websites': websites,
+        'privacy_settings_form': privacy_settings_form
     }
     return render(request, 'home/settings.html', context)
 
@@ -306,14 +352,19 @@ def search_results(request, search_term):
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
-            add_list_form.save()
+            new_list = add_list_form.save(commit=False)
+            new_list.creator = request.user
+            new_list.save()
+            list_id = new_list.list_id
             messages.success(request, f'List has been created!')
-            return redirect('home:feed')
+            return redirect('home:list-details', list_id=list_id)
     filtered_lists = List.objects.filter_lists(search_term)
-    filtered_lists, _ = paginator_create(request, filtered_lists, 10)
+    filtered_lists, _ = paginator_create(request, filtered_lists, 10,
+                                         'filtered_lists')
     filtered_sources = Source.objects.filter_sources(search_term)
     filtered_articles = Article.objects.filter_articles(search_term)
-    filtered_articles, _ = paginator_create(request, filtered_articles, 10)
+    filtered_articles, _ = paginator_create(request, filtered_articles, 10,
+                                            'filtered_articles')
     add_list_form = AddListForm()
     if request.user.is_authenticated:
         highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(

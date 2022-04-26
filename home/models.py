@@ -101,17 +101,12 @@ class Article(models.Model):
 
 
 class List(models.Model):
-    CONTENT_CHOICES = [('All', 'All'), ('Articles', 'Articles'),
-                       ('Sources', 'Sources')]
     list_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     creator = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     subscribers = models.ManyToManyField(User,
                                          related_name='subscriber_list',
                                          blank=True)
-    content_type = models.CharField(max_length=10,
-                                    choices=CONTENT_CHOICES,
-                                    default='None')
     updated_at = models.DateTimeField(auto_now=True)
     list_pic = models.ImageField(null=True, blank=True, upload_to="list_pic")
     is_public = models.BooleanField(default=False)
@@ -136,7 +131,6 @@ class List(models.Model):
             instance = main_website_source_set(self)
             super(List, instance).save(*args, **kwargs)
         else:
-            self.creator = cache.get('current_user')
             super(List, self).save(*args, **kwargs)
 
     def __str__(self):

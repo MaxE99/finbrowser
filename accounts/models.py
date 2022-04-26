@@ -126,6 +126,16 @@ class Website(models.Model):
         return self.name
 
 
+class PrivacySettings(models.Model):
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    list_subscribtions_public = models.BooleanField(default=True)
+    subscribed_sources_public = models.BooleanField(default=True)
+    highlighted_articles_public = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f'{self.profile} - Privacy Settings'
+
+
 class SocialLink(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     website = models.ForeignKey(Website, on_delete=models.CASCADE)

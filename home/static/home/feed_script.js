@@ -115,7 +115,7 @@ document
       for (let i = 0, j = selected_sources.length; i < j; i++) {
         try {
           const res = await fetch(
-            `../api/source_change_subscribtion_status/${selected_sources[i]}/Subscribe`,
+            `../api/source_change_subscribtion_status/${selected_sources[i]}`,
             get_fetch_settings("POST")
           );
           if (!res.ok) {
@@ -221,7 +221,6 @@ document
                       });
                       removeListButton.parentElement.remove();
                     });
-                    console.log(selected_lists);
                     searchResult.appendChild(removeListButton);
                     selected_list.appendChild(searchResult);
                     results_list.style.display = "none";
@@ -251,7 +250,7 @@ document
       for (let i = 0, j = selected_lists.length; i < j; i++) {
         try {
           const res = await fetch(
-            `../api/list_change_subscribtion_status/${selected_lists[i]}/Subscribe`,
+            `../api/list_change_subscribtion_status/${selected_lists[i]}`,
             get_fetch_settings("POST")
           );
           if (!res.ok) {

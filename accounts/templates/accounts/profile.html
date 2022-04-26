@@ -26,7 +26,7 @@
         {% endif %}
         <div class="profileSocialContainer">
             <div class="avatarContainer">
-                {% if user.profile.profile_pic %}
+                {% if profile.profile_pic %}
                 <img class="avatar" src="{{ profile.profile_pic.url }}" alt="user-profile-pic">
                 {% else %}
                 <img class="avatar" src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
@@ -81,7 +81,8 @@
     </div>
     {% endif %}
 
-    {% if subscribed_lists %}
+
+    {% if subscribed_lists and privacy_settings.list_subscribtions_public %}
     <div class="browserCategory">List Subscribtions</div>
     <div class="carousel-container">
         <div onClick="prev();" class="prev"></div>
@@ -112,7 +113,7 @@
     </div>
     {% endif %}
 
-    {% if subscribed_sources %}
+    {% if subscribed_sources and privacy_settings.subscribed_sources_public %}
     <div class="browserCategory">Subscribed Sources</div>
     <div class="carousel-container">
         <div onClick="prev();" class="prev"></div>
@@ -139,7 +140,7 @@
     </div>
     {% endif %}
 
-    {% if highlighted_articles %}
+    {% if highlighted_articles and privacy_settings.highlighted_articles_public %}
     <div class="browserCategory highlightedArticlesHeader">Highlighted Articles</div>
     <div class="articlesContainer">
         {% for article in highlighted_articles %}
@@ -176,15 +177,23 @@
             <a class="articleLink" href="{{ highlighted_article.article.link }}"></a>
             <i class="fas fa-ellipsis-h"></i>
             <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+                {% if request.user.is_authenticated %}
                 <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
                 {% if article.article.title in highlighted_articles_titles %}
-                <div id="{{ article.article_id }}" class="addToHighlighted"><i
-                        class="fas fa-times"></i><span>Unhighlight
-                        article</span></div>
+                <div id="{{ article.article_id }}" class="addToHighlighted">
+                    <i class="fas fa-times"></i><span>Unhighlight article</span>
+                </div>
                 {% else %}
-                <div id="{{ article.article_id }}" class="addToHighlighted"><i
-                        class="fas fa-highlighter"></i><span>Highlight
-                        article</span></div>
+                <div id="{{ article.article_id }}" class="addToHighlighted">
+                    <i class="fas fa-highlighter"></i><span>Highlight article</span>
+                </div>
+                {% endif %}
+                {% else %}
+                <a href="{% url 'registration:login' %}" class="addToList registrationLink">
+                    <i class="fas fa-list"></i>Add to list</a>
+                <a href="{% url 'registration:login' %}" id="{{ article.article_id }}"
+                    class="addToHighlighted registrationLink"><i class="fas fa-highlighter"></i>
+                    <span>Highlight article</span></a>
                 {% endif %}
             </div>
             <div class="addToListForm">

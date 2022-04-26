@@ -10,35 +10,32 @@ const subscribeButton = document.querySelector(".subscribeButton");
 
 if (subscribeButton) {
   subscribeButton.addEventListener("click", async () => {
-    try {
-      const url = window.location.href;
-      const index = url.lastIndexOf("/");
-      const list_id = url.substring(index + 1);
-      let action = subscribeButton.innerText;
-      if (action === "Subscribed") {
-        action = "Unsubscribe";
-      } else {
-        action = "Subscribe";
-      }
-      const res = await fetch(
-        `../api/list_change_subscribtion_status/${list_id}/${action}`,
-        get_fetch_settings("POST")
-      );
-      if (!res.ok) {
-        showMessage("Error: List can't be subscribed!", "Error");
-      } else {
-        const context = await res.json();
-        showMessage(context, "Success");
-        if (action == "Subscribe") {
-          subscribeButton.classList.replace("unsubscribed", "subscribed");
-          subscribeButton.innerText = "Unsubscribe";
+    if (!subscribeButton.classList.contains("registrationLink")) {
+      try {
+        const url = window.location.href;
+        const index = url.lastIndexOf("/");
+        const list_id = url.substring(index + 1);
+        let action = subscribeButton.innerText;
+        const res = await fetch(
+          `../api/list_change_subscribtion_status/${list_id}`,
+          get_fetch_settings("POST")
+        );
+        if (!res.ok) {
+          showMessage("Error: List can't be subscribed!", "Error");
         } else {
-          subscribeButton.classList.replace("subscribed", "unsubscribed");
-          subscribeButton.innerText = "Subscribe";
+          const context = await res.json();
+          showMessage(context, "Success");
+          if (action == "Subscribe") {
+            subscribeButton.classList.replace("unsubscribed", "subscribed");
+            subscribeButton.innerText = "Subscribed";
+          } else {
+            subscribeButton.classList.replace("subscribed", "unsubscribed");
+            subscribeButton.innerText = "Subscribe";
+          }
         }
+      } catch (e) {
+        showMessage("Error: Network error detected!", "Error");
       }
-    } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
     }
   });
 }
@@ -55,6 +52,34 @@ function openEditMenu() {
   document.querySelector(".fa-camera").style.display = "block";
   document.querySelector(".buttonContainer").style.display = "flex";
   document.querySelector(".addSourcesButtonLi").style.display = "flex";
+  document.querySelectorAll(".article .fa-ellipsis-h").forEach((ellipsis) => {
+    ellipsis.style.display = "none";
+  });
+  const deleteArticlesButton = document.querySelectorAll(".article .fa-times");
+  deleteArticlesButton.forEach((closeButton) => {
+    closeButton.style.display = "block";
+    closeButton.addEventListener("click", async () => {
+      try {
+        const list_id = document
+          .querySelector(".rightFirstRowContainer h3")
+          .id.replace("list_detail_for_", "");
+        const article_id = closeButton.parentElement.id.replace("article", "");
+        const res = await fetch(
+          `../api/delete_article_from_list/${list_id}/${article_id}`,
+          get_fetch_settings("DELETE")
+        );
+        if (!res.ok) {
+          showMessage("Error: List can't be subscribed!", "Error");
+        } else {
+          const context = await res.json();
+          showMessage(context, "Success");
+          closeButton.parentElement.remove();
+        }
+      } catch (e) {
+        showMessage("Error: Network error detected!", "Error");
+      }
+    });
+  });
   document.querySelectorAll(".sourceDeleteOption").forEach((trashButton) => {
     if (trashButton.style.display == "none" || !trashButton.style.display) {
       trashButton.style.display = "block";
@@ -357,12 +382,15 @@ if (document.querySelector(".avgRating span")) {
 }
 
 // open rate list menu
-document.querySelector(".rateListButton").addEventListener("click", () => {
-  document.querySelector(".rate-formUpperContainer").style.display = "block";
-  document.querySelector(".rating").style.opacity = "0";
-  document.querySelector(".ratingsAmmountContainer").style.opacity = "0";
-  document.querySelector(".rateListButton").style.opacity = "0";
-  document.querySelector(".rankingsHeader").style.opacity = "0";
+const rateListButton = document.querySelector(".rateListButton");
+rateListButton.addEventListener("click", () => {
+  if (!rateListButton.classList.contains("registrationLink")) {
+    document.querySelector(".rate-formUpperContainer").style.display = "block";
+    document.querySelector(".rating").style.opacity = "0";
+    document.querySelector(".ratingsAmmountContainer").style.opacity = "0";
+    document.querySelector(".rateListButton").style.opacity = "0";
+    document.querySelector(".rankingsHeader").style.opacity = "0";
+  }
 });
 
 // if user already rated source = set stars to this rating
@@ -380,7 +408,6 @@ if (notificationButton) {
       const list_id = document
         .querySelector(".rightFirstRowContainer h3")
         .id.replace("list_detail_for_", "");
-      console.log(document.querySelector("h3"));
       const res = await fetch(
         `../../api/change_list_notification/${list_id}`,
         get_fetch_settings("POST")

@@ -20,7 +20,6 @@ const categoryTabs = document.querySelectorAll(".settingOption");
 const tabsContent = document.querySelectorAll(".tabsContent");
 categoryTabs.forEach((tab) => {
   tab.addEventListener("click", () => {
-    console.log(tab);
     for (let i = 0, j = categoryTabs.length; i < j; i++) {
       categoryTabs[i].classList.remove("activeSettingOption");
       tabsContent[i].classList.remove("tabsContentActive");
@@ -179,4 +178,47 @@ addSocialLinkButton.addEventListener("click", async () => {
 // eventListener on all socialLink remove Buttons
 document.querySelectorAll(".removeSocialLinkButton").forEach((button) => {
   button.addEventListener("click", deleteSocialLinks);
+});
+
+let socialLinkInitialUrls = [];
+
+const socialLinkInput = document.querySelectorAll(
+  ".existingSocialContainer input"
+);
+
+for (let i = 0, j = socialLinkInput.length; i < j; i++) {
+  socialLinkInitialUrls.push(socialLinkInput[i].value);
+  socialLinkInput[i].addEventListener("keyup", () => {
+    if (socialLinkInput[i].value != socialLinkInitialUrls[i]) {
+      socialLinkInput[i].nextElementSibling.style.display = "none";
+      socialLinkInput[i].nextElementSibling.nextElementSibling.style.display =
+        "block";
+    } else {
+      socialLinkInput[i].nextElementSibling.style.display = "block";
+      socialLinkInput[i].nextElementSibling.nextElementSibling.style.display =
+        "none";
+    }
+  });
+}
+
+document.querySelectorAll(".saveSocialLinkChanges").forEach((socialLink) => {
+  socialLink.addEventListener("click", async () => {
+    const website = socialLink.parentElement.querySelector("img").className;
+    const newLink = socialLink.parentElement.querySelector("input").value;
+    try {
+      const res = await fetch(
+        `../api/change_social_link/${website}/"${newLink}"`,
+        get_fetch_settings("POST")
+      );
+      if (!res.ok) {
+        showMessage("Error: Link couldn't be changed!", "Error");
+      } else {
+        const context = await res.json();
+        showMessage(context, "Success");
+        window.location.reload();
+      }
+    } catch (e) {
+      showMessage("Error: Network error detected!", "Error");
+    }
+  });
 });

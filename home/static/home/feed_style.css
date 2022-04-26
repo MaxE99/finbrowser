@@ -28,7 +28,6 @@
 .articlesContainer {
   height: 400px;
   flex-wrap: wrap;
-  align-items: center;
 }
 
 .article {
