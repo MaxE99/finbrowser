@@ -303,6 +303,22 @@ document
     document.querySelector(".createListMenu").style.display = "none";
   });
 
+// select sources
+document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
+  choice.addEventListener("click", () => {
+    document.querySelector("summary").innerHTML = choice.innerHTML;
+    document.querySelector("details").removeAttribute("open");
+  });
+});
+
+document.querySelector("details").addEventListener("click", () => {
+  document.onclick = function (e) {
+    if (e.target != document.querySelector("summary ul")) {
+      document.querySelector("details").removeAttribute("open");
+    }
+  };
+});
+
 // Carousell Container Functionality
 const sliderContent = document.querySelector(".slider-content");
 const contentArray = sliderContent.children;

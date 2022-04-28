@@ -48,14 +48,6 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   }
 });
 
-// select sources
-document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
-  choice.addEventListener("click", () => {
-    document.querySelector("summary").innerHTML = choice.innerHTML;
-    document.querySelector("details").removeAttribute("open");
-  });
-});
-
 // Autocomplete for search
 document.getElementById("search").addEventListener("keyup", async () => {
   let search_term = document.getElementById("search").value;

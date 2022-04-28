@@ -14,13 +14,19 @@
 </div>
 
 
-<div class="browserCategory sectorSourcesHeader">Sources</div>
-<div class="carousel-container">
-    <div onClick="prev();" class="prev"></div>
-    <div class="carousel-list">
-        <ul class="slider-content">
+
+<div class="row">
+    <div class="header">
+        <div>Sources</div>
+        <div class="progress-bar"></div>
+    </div>
+    <div class="container">
+        <button class="handle left-handle">
+            <div class="text">&#8249;</div>
+        </button>
+        <div class="slider">
             {% for source in sector.sectors.all|dictsort:"name" %}
-            <li>
+            <div class="sourceWrapper">
                 <div class="sourceContainer">
                     <div class="iconContainer">
                         <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
@@ -30,12 +36,14 @@
                         <div class="sourceNameInnerContainer">{{ source.name }}</div>
                     </div>
                 </div>
-            </li>
+            </div>
+
+
             {% endfor %}
-        </ul>
-    </div>
-    <div onClick="next();" class="next">
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+        <button class="handle right-handle">
+            <div class="text">&#8250;</div>
+        </button>
     </div>
 </div>
 
@@ -287,4 +295,6 @@
 {% endif %}
 {% endif %}
 
+
+<script src="{% static 'home/sector_details_script.js' %}"></script>
 {% endblock content %}

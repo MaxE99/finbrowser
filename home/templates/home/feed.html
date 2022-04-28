@@ -314,18 +314,21 @@
 
 {% if highlighted_articles %}
 
-
-<div class="pagination">
-    <span class="step-links">
-        {% for i in highlighted_articles.paginator.page_range %}
-        {% if highlighted_articles.number == i %}
-        <button class="currentPagination">{{ highlighted_articles.number }}</button>
-        {% elif i > highlighted_articles.number|add:'-3' and i < highlighted_articles.number|add:'3' %} <a
-            href="?highlighted_articles={{ i }}">{{ i }}</a>
-            {% endif %}
-            {% endfor %}
-    </span>
+<div class="paginationAndAddExternalContainer">
+    <div class="pagination">
+        <span class="step-links">
+            {% for i in highlighted_articles.paginator.page_range %}
+            {% if highlighted_articles.number == i %}
+            <button class="currentPagination">{{ highlighted_articles.number }}</button>
+            {% elif i > highlighted_articles.number|add:'-3' and i < highlighted_articles.number|add:'3' %} <a
+                href="?highlighted_articles={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+        </span>
+    </div>
+    <button class="addExternalLinkButton"><i class="fas fa-plus"></i>Add External Articles</button>
 </div>
+
 
 
 {% endif %}

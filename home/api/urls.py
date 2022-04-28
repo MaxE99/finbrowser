@@ -19,7 +19,9 @@ urlpatterns = [
          list_change_subscribtion_status),
     path('source_change_subscribtion_status/<str:domain>',
          source_change_subscribtion_status),
-    path('filter_list/<str:timeframe>/<str:sources>', list_filter),
+    path(
+        'filter_list/<str:timeframe>/<str:content_type>/<str:minimum_rating>/<str:sources>',
+        list_filter),
     path('search_sources_for_list/<int:list_id>/<str:search_term>',
          FilteredSourceForLists.as_view()),
     path('search_lists/<str:search_term>', FilteredList.as_view()),

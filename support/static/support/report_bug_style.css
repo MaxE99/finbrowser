@@ -6,6 +6,5 @@
 .formContainer {
   display: flex;
   top: 100px;
-  width: 600px;
   left: unset;
 }

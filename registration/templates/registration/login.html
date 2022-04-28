@@ -45,29 +45,10 @@
                     {% csrf_token %}
                     {{ user_login_form }}
 
-                    <!-- <div class="input-wrapper">
-                        <input type="text" placeholder="Enter your username" />
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-
-                    <div class="input-wrapper">
-                        <input type="password" placeholder="Enter your password" />
-                        <i class="fas fa-key"></i>
-                    </div> -->
-
-                    <div class="rememberAndPwrecovery">
-                        <label class="container">Remember Password
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                        </label>
-                        <a>Forgot Password?</a>
-                    </div>
+                    <a class="forgotPassword">Forgot Password?</a>
 
                     <input class="signInButton" name="loginUserForm" type="submit" value="Sign In">
-                    <!-- <button type="submit">
-                        Sign In
-                        <i class='fas fa-right-arrow-alt'></i>
-                    </button> -->
+
                 </div>
                 <div class="createAccount">Not registred yet? <a href="{% url 'registration:register' %}">Create an
                         Account</a></div>

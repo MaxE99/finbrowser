@@ -10,7 +10,9 @@ async function load_filters() {
       const context = await res.json();
       if (context[0] != null) {
         document.getElementById("timeframe").value = context[0];
-        document.querySelector("summary").innerText = context[1];
+        document.getElementById("content").value = context[1];
+        document.getElementById("minimum_rating").value = context[2];
+        document.querySelector("summary").innerText = context[3];
       }
     }
   } catch (e) {
@@ -63,10 +65,16 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   const timeframeSelect = document.getElementById("timeframe");
   const timeframe =
     timeframeSelect.options[timeframeSelect.selectedIndex].value;
+  const contentTypeSelect = document.getElementById("content");
+  const contentType =
+    contentTypeSelect.options[contentTypeSelect.selectedIndex].value;
+  const minimumRatingSelect = document.getElementById("minimum_rating");
+  const minimum_rating =
+    minimumRatingSelect.options[minimumRatingSelect.selectedIndex].value;
   const sources = document.querySelector("summary").innerText;
   try {
     const res = await fetch(
-      `../api/filter_list/${timeframe}/${sources}`,
+      `../api/filter_list/${timeframe}/${contentType}/${minimum_rating}/${sources}`,
       get_fetch_settings("GET")
     );
     if (!res.ok) {
@@ -78,14 +86,6 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   } catch (e) {
     showMessage("Error: Network error detected!", "Error");
   }
-});
-
-// select sources
-document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
-  choice.addEventListener("click", () => {
-    document.querySelector("summary").innerHTML = choice.innerHTML;
-    document.querySelector("details").removeAttribute("open");
-  });
 });
 
 //open create List Menu
