@@ -45,21 +45,8 @@
                     {% csrf_token %}
                     {{ user_creation_form }}
                 </div>
-                <!-- <div>
-                        <div class="input-wrapper">
-                            <input type="text" placeholder="Enter your username" />
-                            <i class="fas fa-user-circle"></i>
-                        </div>
-                        <div class="input-wrapper">
-                            <input type="text" placeholder="Enter your email" />
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="input-wrapper">
-                            <input type="password" placeholder="Enter your password" />
-                            <i class="fas fa-key"></i>
-                        </div>
-                    </div> -->
-                <label class="container">I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+                <label class="container">I agree to the <a href="{% url 'support:terms-of-service' %}">Terms</a> and <a
+                        href="{% url 'support:privacy-policy' %}">Privacy Policy</a>.
                     <input type="checkbox" checked="checked">
                     <span class="checkmark"></span>
                 </label>

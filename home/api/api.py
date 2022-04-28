@@ -1,5 +1,4 @@
 # Django imports
-from xml import dom
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -129,8 +128,13 @@ def notification_change_list(request, list_id):
 
 
 @api_view(['GET'])
-def list_filter(request, timeframe, sources):
-    cache.set_many({'timeframe': timeframe, 'sources': sources})
+def list_filter(request, timeframe, content_type, minimum_rating, sources):
+    cache.set_many({
+        'timeframe': timeframe,
+        'content_type': content_type,
+        'minimum_rating': minimum_rating,
+        'sources': sources
+    })
     return Response("Lists have been filtered!")
 
 
@@ -148,8 +152,10 @@ def article_filter(request, timeframe, sector, paywall, sources):
 @api_view(['GET'])
 def get_list_filters(request):
     timeframe = cache.get('timeframe')
+    content_type = cache.get('content_type')
+    minimum_rating = cache.get('minimum_rating')
     sources = cache.get('sources')
-    return Response([timeframe, sources])
+    return Response([timeframe, content_type, minimum_rating, sources])
 
 
 @api_view(['GET'])

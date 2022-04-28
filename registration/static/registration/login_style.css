@@ -103,14 +103,15 @@ form p {
   margin: 2px 0px 10px;
 }
 
-form a {
-  color: var(--form-link-color);
-  text-decoration: none;
-  transition: color 300ms ease-in-out;
+form .forgotPassword {
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
 }
 
-form a:hover {
-  color: var(--form-link-hover-color);
+form a {
+  color: var(--primary-fontColor);
+  text-decoration: none;
 }
 
 form input[type="text"],
@@ -162,8 +163,8 @@ form button[type="submit"],
   font-size: 16px;
   padding: 18px 10px;
   width: 480px;
-  transition: background 250ms ease-in-out;
   position: relative;
+  margin-top: 15px;
 }
 
 form button[type="submit"] i {

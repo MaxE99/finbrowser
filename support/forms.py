@@ -18,9 +18,9 @@ class FeatureSuggestionForm(ModelForm):
         model = FeatureSuggestion
         fields = ('website_part', 'suggestion', 'explanation')
         labels = {
-            'website_part': 'Where in website should this new feature be?:',
-            'suggestion': 'Type of feature:',
-            'explanation': 'Explanation of the feature:'
+            'website_part': 'Where should the new feature be used?:',
+            'suggestion': 'What kind of feature is it?:',
+            'explanation': 'Please describe the feature:'
         }
         widgets = {
             'explanation':
@@ -38,9 +38,9 @@ class BugReportForm(ModelForm):
         model = BugReport
         fields = ('url', 'type', 'explanation')
         labels = {
-            'url': 'URL where bug occured:',
-            'type': 'Type of bug:',
-            'explanation': 'Explanation of the bug:'
+            'url': 'Enter the URL where the bug occurred:',
+            'type': 'What kind of bug is it?:',
+            'explanation': 'Please describe the bug:'
         }
         widgets = {
             'explanation':

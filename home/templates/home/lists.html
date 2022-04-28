@@ -33,7 +33,18 @@
       <option value="Sources">Sources</option>
     </select>
   </div>
-
+  <div class="selectContainer">
+    <label for="minimum_rating">Minimum Rating</label>
+    <select id="minimum_rating">
+      <option value="All" selected="selected">All</option>
+      <option value="4.5">4.5 Stars</option>
+      <option value="4">4.0 Stars </option>
+      <option value="3.5">3.5 Stars</option>
+      <option value="3">3.0 Stars</option>
+      <option value="2.5">2.5 Stars</option>
+      <option value="2">2.0 Stars</option>
+    </select>
+  </div>
   <div class="selectContainer">
     <label class="sourceLabel" for="sources">Sources</label>
     <details>
@@ -49,8 +60,6 @@
       </ul>
     </details>
   </div>
-
-
   <div class="selectContainer searchSelectContainer">
     <div class="searchContainer">
       <input id="search" placeholder="Search term" type="text" autocomplete="off" />
@@ -61,23 +70,21 @@
   <div class="selectContainer">
     <button class="searchButton">Search</button>
   </div>
-  <div class="selectContainer">
-    {% if request.user.is_authenticated %}
-    <button class="createListButton">
-      Create List<i class="fas fa-plus"></i>
-    </button>
-    {% else %}
-    <a href="{% url 'registration:login' %}" class="createListButton registrationLink">
-      Create List<i class="fas fa-plus"></i>
-    </a>
-    {% endif %}
-  </div>
 </div>
 <div class="lowerFilterBar">
   <div class="searchResultsContainer">
     <h4>Search Results</h4>
     <div><span>{{ results_found }}</span> Lists Found</div>
   </div>
+  {% if request.user.is_authenticated %}
+  <button class="createListButton">
+    <i class="fas fa-plus"></i>Create List
+  </button>
+  {% else %}
+  <a href="{% url 'registration:login' %}" class="createListButton registrationLink">
+    <i class="fas fa-plus"></i>Create List
+  </a>
+  {% endif %}
 </div>
 
 <div class="listOverlay">

@@ -1,4 +1,5 @@
 # Django imports
+from tkinter.messagebox import NO
 from django.http import Http404
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
@@ -92,6 +93,8 @@ def lists(request):
             messages.success(request, f'List has been created!')
             return redirect('home:list-details', list_id=list_id)
     timeframe = cache.get('timeframe')
+    content_type = cache.get('content_type')
+    minimum_rating = cache.get('minimum_rating')
     sources = cache.get('sources')
     filter_args = {'main_website_source': sources}
     if timeframe != 'All' and timeframe != None:
@@ -101,6 +104,38 @@ def lists(request):
         (k, v) for k, v in filter_args.items() if v is not None and v != 'All')
     lists = List.objects.filter(**filter_args).filter(
         is_public=True).order_by('name')
+    ##########################################################################
+    # filter content_type
+    if content_type != 'All':
+        exclude_list = []
+        if content_type == "Articles":
+            for list in lists:
+                if len(list.articles.all()) <= len(list.sources.all()):
+                    exclude_list.append(list)
+                    # lists.exclude(list_id=list.list_id)
+        else:
+            for list in lists:
+                if len(list.articles.all()) >= len(list.sources.all()):
+                    exclude_list.append(list)
+                    # lists.exclude(list_id=list.list_id)
+        if len(exclude_list):
+            for list in exclude_list:
+                lists = lists.exclude(list_id=list.list_id)
+
+    # filter minimum_rating
+    exclude_list = []
+    if minimum_rating != 'All' and minimum_rating is not None:
+        minimum_rating = float(minimum_rating)
+        for list in lists:
+            if list.get_average_rating is not "None":
+                if list.get_average_rating < minimum_rating:
+                    exclude_list.append(list)
+            else:
+                exclude_list.append(list)
+    if len(exclude_list):
+        for list in exclude_list:
+            lists = lists.exclude(list_id=list.list_id)
+    ##########################################################################
     # cache.delete_many(['timeframe', 'sources'])
     add_list_form = AddListForm()
     results_found = len(lists)

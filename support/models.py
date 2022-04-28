@@ -13,6 +13,9 @@ class SourceSuggestion(models.Model):
                       ('Accepted', 'Accepted'), ('Declined', 'Declined')]
     DECLINED_REASONS = [('Not enough depth', 'Not enough depth'),
                         ('Not investment related', 'Not investment related')]
+    reporting_user = models.ForeignKey(User,
+                                       null=True,
+                                       on_delete=models.SET_NULL)
     url = models.URLField(max_length=250, unique=True)
     suggestion_date = models.DateTimeField(auto_now=True)
     sector = models.ForeignKey(Sector, null=True, on_delete=models.SET_NULL)
