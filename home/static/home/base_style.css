@@ -379,7 +379,6 @@ main {
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
   z-index: 10;
-  margin-left: 8.75%;
 }
 
 .messages li {

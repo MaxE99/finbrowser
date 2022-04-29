@@ -6,6 +6,7 @@ from django.db.models.signals import m2m_changed
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 # Local imports
 from home.logic.scrapper import website_scrapping_initiate
 from home.logic.services import main_website_source_set
@@ -24,6 +25,9 @@ class Sector(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Sector, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('home:sector-details', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name
@@ -66,6 +70,9 @@ class Source(models.Model):
         # Aufpassen SeekingAlpha nicht zu scrappen, bevor ich noch gebannt werde
         # website_scrapping_initiate(self.url, self.domain)
         super(Source, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('source:profile', kwargs={'domain': self.domain})
 
     def __str__(self):
         return self.domain
@@ -132,6 +139,9 @@ class List(models.Model):
             super(List, instance).save(*args, **kwargs)
         else:
             super(List, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('home:list-details', kwargs={'list_id': self.list_id})
 
     def __str__(self):
         return self.name

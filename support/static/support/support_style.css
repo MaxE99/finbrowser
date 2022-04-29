@@ -1,0 +1,37 @@
+.overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer {
+  display: flex;
+  top: 100px;
+  left: unset;
+}
+
+.aboutContainer {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 0 0 8px 8px;
+  box-shadow: var(--box-shadowScheme);
+  width: 60%;
+  padding: 10px 15px;
+  text-align: justify;
+}
+
+p {
+  letter-spacing: 1.1px;
+  line-height: 1.4;
+}
+
+.aboutHeader {
+  width: 60%;
+  margin-top: 20px;
+}
+
+h3 {
+  color: var(--primary-fontColor);
+}

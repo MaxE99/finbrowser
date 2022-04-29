@@ -144,7 +144,7 @@
     <div class="browserCategory highlightedArticlesHeader">Highlighted Articles</div>
     <div class="articlesContainer">
         {% for article in highlighted_articles %}
-        <div class="article">
+        <div class="article" id="article{{ article.article_id }}">
             {% if article.article.source %}
             <img src="{% static article.article.source.favicon_path %}" />
             <div class="articleInformationContainer">
@@ -230,9 +230,7 @@
     </div>
     {% include "pagination.html" with page=highlighted_articles %}
     {% endif %}
-
-
 </div>
 
-<script src="{% static 'accounts/profile_script.js' %}"></script>
+
 {% endblock content %}
