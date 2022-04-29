@@ -32,7 +32,7 @@ def feed(request):
             new_list.creator = request.user
             new_list.save()
             list_id = new_list.list_id
-            messages.success(request, f'List has been created!')
+            messages.success(request, 'List has been created!')
             return redirect('home:list-details', list_id=list_id)
     elif 'addExternalArticlesForm' in request.POST:
         add_external_articles_form = AddExternalArticleForm(request.POST)
@@ -52,7 +52,7 @@ def feed(request):
                                              external_source=external_source)
             HighlightedArticle.objects.create(user=request.user,
                                               article=article)
-            messages.success(request, f'Article has been added!')
+            messages.success(request, 'Article has been added!')
             return redirect('home:feed')
     user_lists = List.objects.get_created_lists(request.user)
     subscribed_lists = List.objects.get_subscribed_lists(request.user)

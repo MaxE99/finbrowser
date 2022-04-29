@@ -24,7 +24,7 @@ def lists_add_article(request, article_id, list_ids):
     # add that articles that are already part of the list are checked
     article = get_object_or_404(Article, article_id=article_id)
     List.objects.add_articles(article, list_ids)
-    return Response(f'{article} has been added to lists')
+    return Response("Article has been added to list!")
 
 
 @api_view(['POST'])
@@ -34,10 +34,10 @@ def article_highlight(request, article_id):
                                          article=article).exists():
         HighlightedArticle.objects.get(user=request.user,
                                        article=article).delete()
-        return Response(f'{article.title} has been unhighlighted')
+        return Response(f'Article has been unhighlighted!')
     else:
         HighlightedArticle.objects.create(user=request.user, article=article)
-        return Response(f'{article.title} has been highlighted')
+        return Response(f'Article has been highlighted!')
 
 
 @api_view(['POST'])
@@ -45,10 +45,10 @@ def list_change_subscribtion_status(request, list_id):
     list = get_object_or_404(List, list_id=list_id)
     if list.subscribers.filter(username=request.user.username).exists():
         list.subscribers.remove(request.user)
-        return Response(f"You have unsubscribed from {list}")
+        return Response("List has been unsubscribed!")
     else:
         list.subscribers.add(request.user.id)
-        return Response(f"You have subscribed to {list}")
+        return Response("List has been subscribed!")
 
 
 @api_view(['POST'])
@@ -56,10 +56,10 @@ def source_change_subscribtion_status(request, domain):
     source = get_object_or_404(Source, domain=domain)
     if source.subscribers.filter(username=request.user.username).exists():
         source.subscribers.remove(request.user)
-        return Response(f"You have unsubscribed from {source}")
+        return Response("Source has been unsubscribed!")
     else:
         source.subscribers.add(request.user.id)
-        return Response(f"You have subscribed to {source}")
+        return Response("Source has been subscribed!")
 
 
 @api_view(['POST'])
@@ -172,14 +172,14 @@ def delete_source_from_list(request, list_id, source):
     list = get_object_or_404(List, list_id=list_id)
     source = get_object_or_404(Source, name=source)
     list.sources.remove(source.source_id)
-    return Response(f"{source} has been removed from {list}")
+    return Response("Source has been removed from list!")
 
 
 @api_view(['DELETE'])
 def delete_article_from_list(request, list_id, article_id):
     list = get_object_or_404(List, list_id=list_id)
     list.articles.remove(article_id)
-    return Response(f"Article has been removed from {list}")
+    return Response("Article has been removed from list!")
 
 
 @api_view(['DELETE'])
@@ -187,19 +187,19 @@ def delete_list(request, list_id):
     list = get_object_or_404(List, list_id=list_id)
     list_name = str(list)
     list.delete()
-    return Response(f"{list_name} has been deleted")
+    return Response("List has been deleted!")
 
 
 @api_view(['DELETE'])
 def profile_pic_delete(request):
     get_object_or_404(Profile, user=request.user).profile_pic.delete()
-    return Response("You're profile picture has been deleted!")
+    return Response("Profile picture has been deleted!")
 
 
 @api_view(['DELETE'])
 def profile_banner_delete(request):
     get_object_or_404(Profile, user=request.user).profile_banner.delete()
-    return Response("You're profile banner has been deleted!")
+    return Response("Profile banner has been deleted!")
 
 
 @api_view(['DELETE'])

@@ -69,3 +69,11 @@ def suggest_sources(request):
     source_suggestion_form = SourceSuggestionForm()
     context = {'source_suggestion_form': source_suggestion_form}
     return render(request, 'support/suggest_sources.html', context)
+
+
+def sitemap(request):
+    return render(request, 'support/sitemap.html')
+
+
+def about(request):
+    return render(request, 'support/about.html')

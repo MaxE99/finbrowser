@@ -92,16 +92,15 @@
     <div class="footerContainer">
         <div class="leftFooter">
             <div class="companyInformation">
-                <h2>Company</h2>
+                <h2>Website</h2>
                 <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="{% url 'support:about' %}">About</a></li>
+                    <li><a href="{% url 'support:sitemap' %}">Sitemap</a></li>
                 </ul>
             </div>
             <div class="websiteInformation">
-                <h2>Website</h2>
+                <h2>Suggestions</h2>
                 <ul>
-                    <li><a href="#">Sitemap</a></li>
                     <li><a href="{% url 'support:suggest-sources' %}">Suggest Sources</a></li>
                     <li><a href="{% url 'support:suggestions' %}">Suggest Features</a></li>
                 </ul>

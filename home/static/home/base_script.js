@@ -208,11 +208,11 @@ document.querySelectorAll(".addToHighlighted").forEach((highlighterButton) => {
       }
       try {
         const res = await fetch(
-          `../api/highlight_article/${article_id}`,
+          `http://127.0.0.1:8000/api/highlight_article/${article_id}`,
           get_fetch_settings("POST")
         );
         if (!res.ok) {
-          showMessage("Error: List couldn't be filtered!", "Error");
+          showMessage("Error: Article couldn't be filtered!", "Error");
         } else {
           const context = await res.json();
           showMessage(context, "Success");
@@ -270,11 +270,11 @@ document
         });
       try {
         const res = await fetch(
-          `../api/add_article_to_lists/${article_id}/${list_ids}`,
+          `http://127.0.0.1:8000/api/add_article_to_lists/${article_id}/${list_ids}`,
           get_fetch_settings("POST")
         );
         if (!res.ok) {
-          showMessage("Error: Article couldn't be saved!", "Error");
+          showMessage("Error: Article couldn't be added to list!", "Error");
         } else {
           const context = await res.json();
           showMessage(context, "Success");
@@ -320,80 +320,80 @@ document.querySelector("details").addEventListener("click", () => {
 });
 
 // Carousell Container Functionality
-const sliderContent = document.querySelector(".slider-content");
-const contentArray = sliderContent.children;
-var isTouched = false;
+// const sliderContent = document.querySelector(".slider-content");
+// const contentArray = sliderContent.children;
+// var isTouched = false;
 
-var next = function () {
-  sliderContent.classList.add("next-animation");
-  if (isTouched) {
-    sliderContent.style.transform = "translate3d(-200%, 0px, 0px)";
-    sliderContent.addEventListener("transitionend", nextTouched, false);
-  } else if (!isTouched) {
-    sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
-    sliderContent.addEventListener("transitionend", afterAnimation, false);
-  }
-};
+// var next = function () {
+//   sliderContent.classList.add("next-animation");
+//   if (isTouched) {
+//     sliderContent.style.transform = "translate3d(-200%, 0px, 0px)";
+//     sliderContent.addEventListener("transitionend", nextTouched, false);
+//   } else if (!isTouched) {
+//     sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
+//     sliderContent.addEventListener("transitionend", afterAnimation, false);
+//   }
+// };
 
-var prev = function () {
-  if (isTouched) {
-    var content = Array.from(contentArray);
-    var getSplice = content.splice(contentArray.length - 3);
-    var newArr = getSplice.concat(content);
+// var prev = function () {
+//   if (isTouched) {
+//     var content = Array.from(contentArray);
+//     var getSplice = content.splice(contentArray.length - 3);
+//     var newArr = getSplice.concat(content);
 
-    for (let i = 0; i < content.length; i++) {
-      content[i].classList.remove("is-active");
-    }
+//     for (let i = 0; i < content.length; i++) {
+//       content[i].classList.remove("is-active");
+//     }
 
-    for (let j = 3; j < newArr.length && j < 6; j++) {
-      newArr[j].classList.add("is-active");
-    }
+//     for (let j = 3; j < newArr.length && j < 6; j++) {
+//       newArr[j].classList.add("is-active");
+//     }
 
-    for (let len = contentArray.length - 1; len >= 0; --len) {
-      sliderContent.insertBefore(newArr[len], sliderContent.firstChild);
-    }
+//     for (let len = contentArray.length - 1; len >= 0; --len) {
+//       sliderContent.insertBefore(newArr[len], sliderContent.firstChild);
+//     }
 
-    sliderContent.style.transform = "translate3d(-200%, 0px, 0px)";
+//     sliderContent.style.transform = "translate3d(-200%, 0px, 0px)";
 
-    setTimeout(function () {
-      sliderContent.classList.add("next-animation");
-      sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
-      sliderContent.addEventListener("transitionend", afterAnimation, false);
-    });
-  }
-};
+//     setTimeout(function () {
+//       sliderContent.classList.add("next-animation");
+//       sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
+//       sliderContent.addEventListener("transitionend", afterAnimation, false);
+//     });
+//   }
+// };
 
-var afterAnimation = function () {
-  sliderContent.classList.remove("next-animation");
+// var afterAnimation = function () {
+//   sliderContent.classList.remove("next-animation");
 
-  if (!isTouched) {
-    var icon = document.createElement("i");
-    icon.classList.add("fa", "fa-chevron-left");
-    document.querySelector(".prev").appendChild(icon);
-    isTouched = true;
-  }
+//   if (!isTouched) {
+//     var icon = document.createElement("i");
+//     icon.classList.add("fa", "fa-chevron-left");
+//     document.querySelector(".prev").appendChild(icon);
+//     isTouched = true;
+//   }
 
-  sliderContent.removeEventListener("transitionend", afterAnimation);
-};
+//   sliderContent.removeEventListener("transitionend", afterAnimation);
+// };
 
-var nextTouched = function () {
-  var content = Array.from(contentArray);
-  var getSplice = content.splice(0, 3);
-  var newArr = content.concat(getSplice);
+// var nextTouched = function () {
+//   var content = Array.from(contentArray);
+//   var getSplice = content.splice(0, 3);
+//   var newArr = content.concat(getSplice);
 
-  for (let i = 0; i < content.length; i++) {
-    content[i].classList.remove("is-active");
-  }
+//   for (let i = 0; i < content.length; i++) {
+//     content[i].classList.remove("is-active");
+//   }
 
-  for (let i = 3; j < newArr.length && j < 6; j++) {
-    newArr[j].classList.add("is-active");
-  }
+//   for (let i = 3; j < newArr.length && j < 6; j++) {
+//     newArr[j].classList.add("is-active");
+//   }
 
-  for (let len = contentArray.length - 1; len >= 0; --len) {
-    sliderContent.insertBefore(newArr[len], sliderContent.firstChild);
-  }
+//   for (let len = contentArray.length - 1; len >= 0; --len) {
+//     sliderContent.insertBefore(newArr[len], sliderContent.firstChild);
+//   }
 
-  sliderContent.classList.remove("next-animation");
-  sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
-  sliderContent.removeEventListener("transitionend", nextTouched);
-};
+//   sliderContent.classList.remove("next-animation");
+//   sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
+//   sliderContent.removeEventListener("transitionend", nextTouched);
+// };

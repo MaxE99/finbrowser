@@ -1,9 +1,11 @@
+# Django imports
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from django.contrib.postgres.fields import CICharField
 from django.contrib.auth import get_user_model
 from ckeditor.fields import RichTextField
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 
 class UserManager(BaseUserManager):
@@ -112,6 +114,9 @@ class Profile(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.user.username)
         super(Profile, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('accounts:profile', kwargs={'slug': self.slug})
 
     def __str__(self):
         return str(self.user)
