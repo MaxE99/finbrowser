@@ -20,7 +20,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin', 'django.contrib.auth',
     'django.contrib.contenttypes', 'django.contrib.sessions',
-    'django.contrib.messages', 'django.contrib.staticfiles', 'home', 'taggit',
+    'django.contrib.messages', 'django.contrib.staticfiles', 'home',
     'django_filters', 'rest_framework', 'source', 'accounts', 'registration',
     'support', 'ckeditor', 'django.contrib.sitemaps', 'django.contrib.sites'
 ]
