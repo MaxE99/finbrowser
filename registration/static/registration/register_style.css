@@ -1,4 +1,4 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -237,7 +237,6 @@ button:hover,
   cursor: pointer;
 }
 
-/* Customize the label (the container) */
 .container {
   display: block;
   position: relative;
@@ -247,7 +246,6 @@ button:hover,
   margin-right: auto;
 }
 
-/* Hide the browser's default checkbox */
 .container input {
   position: absolute;
   opacity: 0;
@@ -256,7 +254,6 @@ button:hover,
   width: 0;
 }
 
-/* Create a custom checkbox */
 .checkmark {
   position: absolute;
   top: 0;
@@ -266,29 +263,24 @@ button:hover,
   background-color: #eee;
 }
 
-/* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
   background-color: #ccc;
 }
 
-/* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
   background-color: var(--primary-fontColor);
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
 
-/* Show the checkmark when checked */
 .container input:checked ~ .checkmark:after {
   display: block;
 }
 
-/* Style the checkmark/indicator */
 .container .checkmark:after {
   left: 6px;
   top: 2px;
@@ -310,13 +302,6 @@ button:hover,
   color: var(--primary-fontColor);
   cursor: pointer;
 }
-
-/* ************************************************************************* */
-/* ************************************************************************* */
-/* ************************************************************************* */
-/* ************************************************************************* */
-/* ************************************************************************* */
-/* ************************************************************************* */
 
 .effect a {
   text-decoration: none !important;
@@ -346,7 +331,6 @@ button:hover,
   background-color: #dd4b39;
 }
 
-/* aeneas effect */
 .effect.aeneas a {
   transition: transform 0.4s linear 0s, border-top-left-radius 0.1s linear 0s,
     border-top-right-radius 0.1s linear 0.1s,
@@ -433,5 +417,428 @@ button:hover,
 }
 
 .errorlist:last-of-type {
+  display: none;
+} */
+
+/* ************************************************************************* */
+/* ************************************************************************* */
+/* ************************************************************************* */
+/* ************************************************************************* */
+/* ************************************************************************* */
+/* ************************************************************************* */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Lato, sans-serif;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #fff;
+  --secondary-color: rgb(238, 238, 238);
+  --primary-fontColor: rgb(0, 85, 212);
+  --secondary-fontColor: rgb(34, 45, 59);
+  --box-shadowScheme: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  --neonGreen: rgb(57, 255, 20);
+  --neonRed: rgb(247, 33, 25);
+  --standardBoxShadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+body {
+  color: var(--secondary-fontColor);
+  background-color: #b8c6db;
+  background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
+}
+
+form {
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  box-shadow: rgba(74, 79, 97, 0.25) 0px 13px 27px -5px,
+    rgba(74, 79, 97, 0.3) 0px 8px 16px -8px;
+  height: 575px;
+  overflow: hidden;
+  width: 60%;
+  margin: 75px auto 80px;
+}
+
+form #info-wrapper,
+form #form-wrapper {
+  padding: 20px 35px;
+}
+
+form #info-wrapper {
+  background: linear-gradient(225deg, var(--primary-fontColor) 16%, blue 100%);
+  color: #fff;
+  padding-left: 50px;
+  width: 40%;
+}
+
+form #form-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  width: 60%;
+}
+
+form i {
+  color: #fff;
+  font-size: 30px;
+  transition: color 250ms ease-in;
+}
+
+form div.input-wrapper {
+  margin-bottom: 15px;
+  position: relative;
+  width: 480px;
+}
+
+form div.input-wrapper i {
+  color: var(--input-icon-color);
+  position: absolute;
+  opacity: 0.85;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+form h1 {
+  color: var(--primary-fontColor);
+  letter-spacing: 0px;
+  margin-top: 15px;
+}
+
+form p {
+  font-size: 18px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+form a {
+  color: var(--form-link-color);
+  text-decoration: none;
+  transition: color 300ms ease-in-out;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+  border: 1px solid rgb(226, 230, 234);
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 13px 12px 13px 12px;
+  transition: border-color 250ms ease-in-out;
+  background: rgb(226, 230, 234);
+  opacity: 0.6;
+  margin-bottom: 15px;
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form input[type="email"]:focus {
+  border-color: var(--active-input-border-color);
+  outline: none;
+}
+
+form input[type="text"]:focus + i,
+form input[type="password"]:focus + i,
+form input[type="email"]:focus + i {
+  color: var(--active-input-border-color);
+}
+
+form input {
+  width: 100%;
+}
+
+form ::placeholder {
+  color: var(--placeholder-text-color);
+  font-size: 17px;
+  opacity: 1;
+}
+
+.actionButtonsContainer button,
+.actionButtonsContainer a {
+  padding: 8px 16px;
+  font-size: 18px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--primary-fontColor);
+  border: 3px solid var(--primary-fontColor);
+  text-decoration: none;
+  width: 150px;
+}
+
+form button[type="submit"] i {
+  margin-left: 5px;
+}
+
+form .brand {
+  background: white;
+  border-radius: 10px;
+  color: black;
+  display: flex;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 50px;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  opacity: 0.9;
+  width: 50px;
+}
+
+.ui.button.google-auth__button.disabled,
+.ui.button.google-auth__button:disabled {
+  background: #eee;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+}
+
+.googleAuthContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.googleAuthButton {
+  padding: 12px 16px;
+  background: #fff;
+  border-radius: 25px;
+  font-size: 16px;
+  line-height: 1.5em;
+  letter-spacing: 0.22px;
+  border: 1px solid;
+  width: 100%;
+  cursor: pointer;
+}
+
+button:hover,
+.actionButtonsContainer input:hover,
+.actionButtonsContainer a:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.googleLogo {
+  display: inline-block;
+  margin-right: 16px;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  vertical-align: top;
+}
+
+.seperator {
+  margin: 20px 0;
+}
+
+.rememberAndPwrecovery {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+}
+
+.rememberAndPwrecovery a {
+  color: var(--primary-fontColor);
+  cursor: pointer;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 20px;
+  user-select: none;
+  margin-right: auto;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #eee;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: var(--primary-fontColor);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.createAccount {
+  margin-top: 20px;
+  margin-right: auto;
+}
+
+.createAccount a {
+  color: var(--primary-fontColor);
+  cursor: pointer;
+}
+
+.effect a {
+  text-decoration: none !important;
+  color: #fff;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin-right: 20px;
+  font-size: 25px;
+  overflow: hidden;
+  position: relative;
+}
+.effect a i {
+  position: relative;
+  z-index: 3;
+}
+.effect a.fb {
+  background-color: #3b5998;
+}
+.effect a.apple {
+  background-color: rgb(162, 170, 173);
+}
+.effect a.g-plus {
+  background-color: #dd4b39;
+}
+
+.effect.aeneas a {
+  transition: transform 0.4s linear 0s, border-top-left-radius 0.1s linear 0s,
+    border-top-right-radius 0.1s linear 0.1s,
+    border-bottom-right-radius 0.1s linear 0.2s,
+    border-bottom-left-radius 0.1s linear 0.3s;
+}
+.effect.aeneas a i {
+  transition: transform 0.4s linear 0s;
+}
+.effect.aeneas a:hover {
+  transform: rotate(360deg);
+  border-radius: 50%;
+}
+.effect.aeneas a:hover i {
+  transform: rotate(-360deg);
+}
+
+.useYourEmail {
+  color: var(--primary-fontColor);
+  text-align: center;
+  margin: 15px 0;
+}
+
+.buttons {
+  display: flex;
+  margin: 10px auto 20px;
+}
+
+.seperator {
+  margin: 0 0 20px;
+  opacity: 0.8;
+  letter-spacing: 1.1px;
+}
+
+.container a {
+  color: var(--primary-fontColor);
+  cursor: pointer;
+}
+
+.actionButtonsContainer {
+  width: 70%;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.actionButtonsContainer a,
+.actionButtonsContainer input {
+  border: 2px solid var(--primary-fontColor);
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 16px;
+  width: 47.5%;
+  background: white;
+  color: var(--primary-fontColor);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.actionButtonsContainer input {
+  background: var(--primary-fontColor);
+  color: white;
+}
+
+.helptext,
+.formContainer label {
+  display: none;
+}
+
+.errorlist {
+  background: red;
+  position: absolute;
+  opacity: 1;
+  color: white;
+  font-size: 18px;
+  border-radius: 20px;
+  padding: 10px 20px;
+  list-style: none;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+  letter-spacing: 1.2px;
+  bottom: 15px;
+}
+
+.errorlist:last-of-type {
+  display: none;
+}
+
+label {
   display: none;
 }

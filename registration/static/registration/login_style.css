@@ -1,4 +1,4 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -239,7 +239,6 @@ button:hover {
   cursor: pointer;
 }
 
-/* Customize the label (the container) */
 .container {
   display: block;
   position: relative;
@@ -248,7 +247,6 @@ button:hover {
   user-select: none;
 }
 
-/* Hide the browser's default checkbox */
 .container input {
   position: absolute;
   opacity: 0;
@@ -257,7 +255,7 @@ button:hover {
   width: 0;
 }
 
-/* Create a custom checkbox */
+
 .checkmark {
   position: absolute;
   top: 0;
@@ -267,29 +265,29 @@ button:hover {
   background-color: #eee;
 }
 
-/* On mouse-over, add a grey background color */
+
 .container:hover input ~ .checkmark {
   background-color: #ccc;
 }
 
-/* When the checkbox is checked, add a blue background */
+
 .container input:checked ~ .checkmark {
   background-color: var(--primary-fontColor);
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
+
 .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
 
-/* Show the checkmark when checked */
+
 .container input:checked ~ .checkmark:after {
   display: block;
 }
 
-/* Style the checkmark/indicator */
+
 .container .checkmark:after {
   left: 6px;
   top: 2px;
@@ -368,4 +366,413 @@ button:hover {
 [for="id_username"],
 [for="id_password"] {
   display: none;
+} */
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////7 */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Lato, sans-serif;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #fff;
+  --secondary-color: rgb(238, 238, 238);
+  --primary-fontColor: rgb(0, 85, 212);
+  --secondary-fontColor: rgb(34, 45, 59);
+  --box-shadowScheme: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  --neonGreen: rgb(57, 255, 20);
+  --neonRed: rgb(247, 33, 25);
+  --standardBoxShadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+body {
+  color: var(--secondary-fontColor);
+  background-color: #b8c6db;
+  background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
+}
+
+.loginUserForm {
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  box-shadow: rgba(74, 79, 97, 0.25) 0px 13px 27px -5px,
+    rgba(74, 79, 97, 0.3) 0px 8px 16px -8px;
+  height: 550px;
+  overflow: hidden;
+  width: 60%;
+  margin: 75px auto 105px;
+}
+
+.loginUserForm #info-wrapper,
+.loginUserForm #form-wrapper {
+  padding: 40px 35px 40px 35px;
+}
+
+.loginUserForm #info-wrapper {
+  background: linear-gradient(225deg, var(--primary-fontColor) 16%, blue 100%);
+  color: #fff;
+  padding-left: 50px;
+}
+
+.loginUserForm #info-wrapper p {
+  color: var(--info-text-color);
+  font-size: 18px;
+}
+
+.loginUserForm #form-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.loginUserForm i {
+  color: #fff;
+  font-size: 30px;
+  transition: color 250ms ease-in;
+}
+
+.loginUserForm div.input-wrapper {
+  margin-bottom: 20px;
+  position: relative;
+  width: 480px;
+}
+
+.loginUserForm div.input-wrapper:last-of-type {
+  margin-bottom: 30px;
+}
+
+.loginUserForm div.input-wrapper i {
+  color: var(--input-icon-color);
+  position: absolute;
+  opacity: 0.85;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.loginUserForm h1 {
+  color: var(--primary-fontColor);
+  letter-spacing: 0px;
+}
+
+.loginUserForm p {
+  font-size: 18px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.loginUserForm .forgotPassword {
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
+  margin-top: -20px;
+  margin-left: auto;
+}
+
+.loginUserForm a {
+  color: var(--primary-fontColor);
+  text-decoration: none;
+}
+
+.loginUserForm input[type="text"],
+.loginUserForm input[type="password"] {
+  border: 1px solid rgb(226, 230, 234);
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 13px 12px 13px 12px;
+  transition: border-color 250ms ease-in-out;
+  background: rgb(226, 230, 234);
+  opacity: 0.6;
+}
+
+#id_password {
+  margin: 15px 0;
+}
+
+.loginUserForm input[type="text"]:focus,
+.loginUserForm input[type="password"]:focus {
+  border-color: var(--active-input-border-color);
+  outline: none;
+}
+
+.loginUserForm input[type="text"]:focus + i,
+.loginUserForm input[type="password"]:focus + i {
+  color: var(--active-input-border-color);
+}
+
+.loginUserForm input {
+  width: 100%;
+}
+
+.loginUserForm ::placeholder {
+  color: var(--placeholder-text-color);
+  font-size: 17px;
+  opacity: 1;
+}
+
+.loginUserForm button[type="submit"],
+.signInButton {
+  background: var(--primary-fontColor);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  padding: 18px 10px;
+  width: 480px;
+  position: relative;
+  margin-top: 15px;
+}
+
+.loginUserForm button[type="submit"] i {
+  margin-left: 5px;
+}
+
+.loginUserForm .brand {
+  background: white;
+  border-radius: 10px;
+  color: black;
+  display: flex;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 50px;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  opacity: 0.9;
+  width: 50px;
+}
+
+.ui.button.google-auth__button.disabled,
+.ui.button.google-auth__button:disabled {
+  background: #eee;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+}
+
+.googleAuthContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.googleAuthButton {
+  position: relative;
+  padding: 12px 16px;
+  background: #fff;
+  border-radius: 25px;
+  font-size: 16px;
+  line-height: 1.5em;
+  letter-spacing: 0.22px;
+  border: 1px solid;
+  width: 100%;
+  cursor: pointer;
+}
+
+.googleAuthButton a {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+button:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.googleLogo {
+  display: inline-block;
+  margin-right: 16px;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  vertical-align: top;
+}
+
+.seperator {
+  margin: 20px 0;
+}
+
+.rememberAndPwrecovery {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+}
+
+.rememberAndPwrecovery a {
+  color: var(--primary-fontColor);
+  cursor: pointer;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 12px;
+  user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #eee;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: var(--primary-fontColor);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.createAccount {
+  margin-top: 20px;
+  margin-right: auto;
+}
+
+.createAccount a {
+  color: var(--primary-fontColor);
+  cursor: pointer;
+}
+
+.errorlist {
+  display: none;
+}
+
+.messages {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  -moz-animation: cssAnimation 0s ease-in 4s forwards;
+  -webkit-animation: cssAnimation 0s ease-in 4s forwards;
+  -o-animation: cssAnimation 0s ease-in 4s forwards;
+  animation: cssAnimation 0s ease-in 4s forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  z-index: 10;
+  margin-left: 8.75%;
+}
+
+.messages li {
+  color: white;
+  font-size: 18px;
+  border-radius: 20px;
+  padding: 10px 20px;
+  list-style: none;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+  letter-spacing: 1.2px;
+}
+
+.messages .success {
+  background: green;
+}
+
+.messages .error {
+  background: red;
+}
+
+@keyframes cssAnimation {
+  to {
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+}
+
+.form-wrapper label {
+  display: none;
+}
+
+[for="id_username"],
+[for="id_password"] {
+  display: none;
+}
+
+.enterCredentialsSeperator {
+  margin: 10px auto;
+}
+
+#id_remember {
+  margin-right: auto;
+  margin-left: 5px;
+  width: 15px;
+  height: 15px;
+}
+
+label {
+  font-size: 16px;
+}
+
+label[for="id_login"] {
+  display: none;
+}
+
+.googleSignButton input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  opacity: 0;
+  cursor: pointer;
 }
