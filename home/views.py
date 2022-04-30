@@ -1,5 +1,5 @@
 # Django imports
-from tkinter.messagebox import NO
+import re
 from django.http import Http404
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.cache import cache
@@ -10,14 +10,15 @@ from django.contrib.auth import get_user_model
 # Python imports
 from datetime import timedelta, date
 # Local imports
-from accounts.models import SocialLink, Website
+from accounts.models import CookieSettings, SocialLink, Website
 from home.models import (Article, HighlightedArticle, List, Sector, Source,
                          ListRating, ExternalSource, Notification)
 from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm,
                         AddExternalArticleForm)
 from home.logic.pure_logic import paginator_create
 from accounts.forms import (EmailAndUsernameChangeForm, PasswordChangingForm,
-                            ProfileChangeForm, PrivacySettingsForm)
+                            ProfileChangeForm, PrivacySettingsForm,
+                            CookieSettingsForm)
 
 User = get_user_model()
 
@@ -380,7 +381,9 @@ def settings(request):
 
 
 def main(request):
-    return render(request, 'home/main.html')
+    cookie_settings_form = CookieSettingsForm()
+    context = {'cookie_settings_form': cookie_settings_form}
+    return render(request, 'home/main.html', context)
 
 
 def search_results(request, search_term):

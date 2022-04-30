@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+{% load account socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,15 +58,21 @@
                     </div>
                     <div class="profileMenu">
                         <div>
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span>Logout</span>
-                            <a href="{% url 'registration:logout' %}"></a>
+                            <form method="post" action="{% url 'account_logout' %}">
+
+                                {% csrf_token %}
+                                {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}"
+                                    value="{{ redirect_field_value }}" />
+                                {% endif %}
+                                <button type="submit"><i class="fas fa-sign-out-alt"></i>{% trans 'Sign Out' %}</button>
+                            </form>
                         </div>
                     </div>
                     {% else %}
                     <div class="headerButtonContainer">
-                        <a href="{% url 'registration:login' %}">Login</a>
-                        <a href="{% url 'registration:register' %}">Sign Up</a>
+                        <a href="http://127.0.0.1:8000/registration/login/">Login</a>
+                        <a href="http://127.0.0.1:8000/registration/signup/">Sign Up</a>
                     </div>
                     {% endif %}
                 </div>
@@ -86,6 +94,8 @@
             {% endblock %}
             <script src="{% static 'home/base_script.js' %}"></script>
         </div>
+
+        {% include "cookie_banner.html" %}
     </main>
 </body>
 <footer>
@@ -115,11 +125,6 @@
         </div>
         <div class="rightFooter">
             <img src="{% static 'home/media/bigger_favicon.png' %}" alt="logo">
-            <p>Get the latest stock news, portfolio notifications and more.</p>
-            <div class="emailInputContainer">
-                <input class="emailInput" type="text" placeholder="Please enter your email">
-                <div>SUBSCRIBE</div>
-            </div>
         </div>
     </div>
     <div class="lowerFooter">

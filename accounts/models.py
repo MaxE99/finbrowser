@@ -6,6 +6,8 @@ from django.contrib.auth import get_user_model
 from ckeditor.fields import RichTextField
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class UserManager(BaseUserManager):
@@ -95,6 +97,14 @@ class User(AbstractBaseUser):
 User = get_user_model()
 
 
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        user = instance
+        profile = Profile.objects.create(user=user)
+        PrivacySettings.objects.create(profile=profile)
+
+
 class Profile(models.Model):
     ACCOUNT_TYPES = [('Standard', 'Standard'), ('Premium', 'Premium'),
                      ('Admin', 'Admin')]
@@ -139,6 +149,12 @@ class PrivacySettings(models.Model):
 
     def __str__(self):
         return f'{self.profile} - Privacy Settings'
+
+
+class CookieSettings(models.Model):
+    marketing = models.BooleanField(default=False)
+    preferences = models.BooleanField(default=False)
+    statistics = models.BooleanField(default=False)
 
 
 class SocialLink(models.Model):

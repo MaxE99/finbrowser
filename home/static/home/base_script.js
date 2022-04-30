@@ -397,3 +397,17 @@ document.querySelector("details").addEventListener("click", () => {
 //   sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
 //   sliderContent.removeEventListener("transitionend", nextTouched);
 // };
+
+const cookieContainer = document.querySelector(".cookie-container");
+const cookieButton = document.querySelector(".cookie-btn");
+
+cookieButton.addEventListener("click", () => {
+  cookieContainer.classList.remove("active");
+  localStorage.setItem("cookieBannerDisplayed", "true");
+});
+
+setTimeout(() => {
+  if (!localStorage.getItem("cookieBannerDisplayed")) {
+    cookieContainer.classList.add("active");
+  }
+}, 2000);

@@ -299,6 +299,23 @@ header {
   border-radius: 0 0 20px 20px;
 }
 
+.profileMenu form {
+  display: flex;
+  padding: 10px;
+}
+
+.profileMenu button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 17px;
+}
+
 .profileMenu a {
   position: absolute;
   width: 100%;
@@ -319,13 +336,13 @@ header {
 
 .profileMenu div i {
   color: var(--primary-fontColor);
-  padding-right: 10px;
+  padding-right: 5px;
 }
 
-.profileMenu div:hover,
-.profileMenu div:hover * {
+.profileMenu div form button:hover,
+.profileMenu div form button:hover i {
   background: var(--primary-fontColor);
-  color: white;
+  color: white !important;
   border-radius: 0 0 20px 20px;
 }
 
@@ -1104,9 +1121,12 @@ footer {
 }
 
 .rightFooter img {
-  height: 50px;
+  /* height: 50px;
   width: 80px;
-  margin: 0 auto;
+  margin: 0 auto; */
+  height: 150px;
+  margin-right: auto;
+  margin-top: -20px;
 }
 
 .rightFooter p {
@@ -1465,4 +1485,87 @@ footer {
 
 .formContainer form .formSubmitButton:hover {
   transform: scale(1.1, 1.1);
+}
+
+.cookie-container {
+  display: flex;
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  background: var(--primary-fontColor);
+  color: white;
+  padding: 15px 30px;
+  transition: 400ms;
+  z-index: 1000;
+  box-shadow: var(--box-shadowScheme);
+  opacity: 0.9;
+  margin: 0 160px;
+  border-radius: 20px;
+}
+
+.cookie-container .leftCookieSide {
+  width: 75%;
+}
+
+.cookie-container .leftCookieSide h3 {
+  font-size: 30px;
+}
+
+.cookie-container .leftCookieSide p {
+  margin: 10px 0;
+}
+
+.cookie-container .leftCookieSide p a {
+  color: #2cce88;
+  text-decoration: none;
+}
+
+.cookie-container .leftCookieSide div {
+  display: flex;
+  align-items: center;
+}
+
+.cookie-container .leftCookieSide div label {
+  font-size: 18px;
+}
+
+.cookie-container .leftCookieSide div input {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  margin-left: 5px;
+  accent-color: #2cce88;
+}
+
+.cookie-container .rightCookieSide {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.cookie-container .rightCookieSide .cookie-btn {
+  background: #2cce88;
+  border: 0;
+  color: #f5f6fa;
+  padding: 12px 48px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 200px;
+}
+
+.cookie-container .rightCookieSide .cookie-btn:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.cookie-container .rightCookieSide .cookie-btn:last-child {
+  color: var(--primary-fontColor);
+  background: white;
+}
+
+.cookie-container.active {
+  bottom: 0;
 }
