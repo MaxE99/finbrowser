@@ -57,13 +57,13 @@ document
           results_list.append(resultHeader);
           if (context.length > 0) {
             context.forEach((source) => {
-              if (selected_sources.includes(source.domain) == false) {
+              if (selected_sources.includes(source.name) == false) {
                 const searchResult = document.createElement("div");
                 searchResult.classList.add("searchResult");
                 const resultImage = document.createElement("img");
                 resultImage.src = `/static/${source.favicon_path}`;
                 const sourceName = document.createElement("span");
-                sourceName.innerText = source.domain;
+                sourceName.innerText = source.name;
                 searchResult.append(resultImage, sourceName);
                 results_list.appendChild(searchResult);
                 searchResult.addEventListener(
@@ -74,7 +74,7 @@ document
                       "click",
                       addSelectedSource
                     );
-                    selected_sources.push(source.domain);
+                    selected_sources.push(source.name);
                     const removeSourceButton = document.createElement("i");
                     removeSourceButton.classList.add("fas", "fa-trash");
                     removeSourceButton.addEventListener("click", () => {
