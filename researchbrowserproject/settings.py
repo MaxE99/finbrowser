@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'cookie_consent',
+    'scrapper',
+    'django_celery_beat'
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -99,6 +102,10 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -165,3 +172,4 @@ EMAIL_HOST_USER = 'accnameaccname5@gmail.com'
 EMAIL_HOST_PASSWORD = 'xkftgdnrzamnlvwp'
 EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = False
+
