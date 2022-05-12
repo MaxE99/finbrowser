@@ -56,6 +56,7 @@ class Source(models.Model):
     top_source = models.BooleanField(default=False)
     about_text = models.TextField(blank=True)
     sector = models.ManyToManyField(Sector, related_name='sectors', blank=True)
+    external_id = models.CharField(unique=True, null=True, blank=True, max_length=100)
 
     objects = SourceManager()
 
@@ -100,6 +101,7 @@ class Article(models.Model):
     external_source = models.ForeignKey(ExternalSource,
                                         null=True,
                                         on_delete=models.SET_NULL)
+    external_id = models.CharField(unique=True, null=True, blank=True, max_length=100)
 
     objects = ArticleManager()
 

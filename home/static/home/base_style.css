@@ -1204,6 +1204,7 @@ footer {
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   min-height: 222px;
+  overflow-x: scroll;
 }
 .carousel-container .carousel-list .slider-content li {
   list-style-type: none;

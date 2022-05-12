@@ -1,4 +1,5 @@
 # Django imports
+from itertools import count
 from django.conf import settings
 # Python imports
 from urllib.request import Request, urlopen
@@ -8,6 +9,9 @@ import xml.etree.cElementTree as ET
 import requests
 from datetime import datetime, timedelta
 import concurrent.futures
+import tweepy
+
+from accounts.models import Website
 # Local imports
 
 
@@ -62,6 +66,36 @@ def xml_scrape(source, domain):
     with open(os.path.join(settings.XML_FILE_DIRECTORY, f'{domain}.xml'),
               'wb') as f:
         f.write(website_xml)
+
+
+def twitter_scrape_followings():
+    from home.models import Source
+    # assign the values accordingly
+    consumer_key = 'XOoUFKNcJeHoSkGxkZUSraU4x'
+    consumer_secret = '18fAwnwdZLqYDmkWzxuQwL8GalXguNskhnYv8dMPr8ZYhRez0y'
+    access_token = '1510667747365109763-ak8OKMTG45Q5GW2HrNlGhJL5Oyss49'
+    access_token_secret = "8NqJl5H97t6C11PdDYjksk5rHhVLpfiGsNcAZeMbNfviP"
+    # authorization of consumer key and consumer secret
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    # set access to user's access key and access secret 
+    auth.set_access_token(access_token, access_token_secret)
+    # calling the api 
+    api = tweepy.API(auth)
+    # fetching the statuses
+    followings = api.get_friends(count=71)
+    for follow in followings:
+        if Source.objects.filter(external_id=follow.id).exists():
+            continue
+        else:
+            url = f'https://twitter.com/{follow.screen_name}'
+            domain = follow.screen_name
+            name = follow.name
+            external_id = follow.id
+            import urllib.request
+            urllib.request.urlretrieve(follow.profile_image_url_https.replace("_normal", ""), os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{domain}.png'))
+            favicon_path = f'home/favicons/{domain}.png'
+            Source.objects.create(url=url, domain=domain, name=name, favicon_path=favicon_path, paywall='No', website='Twitter', external_id=external_id)
+
 
 
 # Refactor this later this is just to get articles to work on my interface

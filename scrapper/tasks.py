@@ -1,15 +1,33 @@
 from __future__ import absolute_import, unicode_literals
-
+# Django imports
+from django.core.cache import cache
 from celery import shared_task
-
+from django.shortcuts import get_object_or_404
+# Python imports
 import tweepy
 
-@shared_task
-def add(x,y):
-    return x+y
+import logging
+import os
+import sys
+from celery import Celery
+from celery.signals import after_setup_logger
+
+@after_setup_logger.connect
+def setup_loggers(logger, *args, **kwargs):
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    # add filehandler
+    fh = logging.FileHandler('logs.log')
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+logger = logging.getLogger(__name__)
 
 @shared_task
 def scrape_twitter():    
+    # logger.info("ACTIVATED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    from home.models import Source, Article
     # assign the values accordingly
     consumer_key = 'XOoUFKNcJeHoSkGxkZUSraU4x'
     consumer_secret = '18fAwnwdZLqYDmkWzxuQwL8GalXguNskhnYv8dMPr8ZYhRez0y'
@@ -22,12 +40,25 @@ def scrape_twitter():
     # calling the api 
     api = tweepy.API(auth)
     # fetching the statuses
-    statuses = api.home_timeline(count=1, tweet_mode='extended')
+    last_id = cache.get('last_id')
+    if last_id:
+        statuses = api.home_timeline(count=200, tweet_mode='extended', since_id=last_id)
+    else:
+        statuses = api.home_timeline(count=200, tweet_mode='extended')
     # printing the screen names of each status
+    logger.info(len(statuses))
     for status in statuses:
-        user_name = status.user.name
-        user_id = status.user.id
-        text = status.full_text
-        creation_date = status.created_at
-        tweet_link = f'https://twitter.com/{status.user.screen_name}/status/{status.id}'
-        return user_name
+        if Article.objects.filter(external_id=status.id).exists():
+            continue
+        else:
+            title = status.full_text
+            link = f'https://twitter.com/{status.user.screen_name}/status/{status.id}'
+            pub_date = status.created_at
+            if Source.objects.filter(external_id=status.user.id).exists():
+                source = get_object_or_404(Source, external_id=status.user.id)
+                external_id = status.id
+                Article.objects.create(title=title, link=link, pub_date=pub_date, source=source, external_id=external_id)
+            else:
+                continue
+        last_id = status.id
+    cache.set('last_id', last_id)

@@ -33,14 +33,14 @@ class SourceManager(models.Manager):
     def add_sources_to_list(self, sources, list):
         sources = sources.split(",")
         for source in sources:
-            source = self.get(domain=source)
+            source = self.get(name=source)
             list.sources.add(source)
 
     def get_subscribed_sources(self, user):
         return self.filter(subscribers=user).order_by('name')
 
     def filter_sources(self, search_term):
-        return self.filter(domain__istartswith=search_term).order_by('name')
+        return self.filter(name__istartswith=search_term).order_by('name')
 
     def filter_sources_not_in_list(self, search_term, list):
         return self.filter(name__istartswith=search_term).exclude(

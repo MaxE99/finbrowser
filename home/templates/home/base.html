@@ -59,7 +59,6 @@
                     <div class="profileMenu">
                         <div>
                             <form method="post" action="{% url 'account_logout' %}">
-
                                 {% csrf_token %}
                                 {% if redirect_field_value %}
                                 <input type="hidden" name="{{ redirect_field_name }}"

@@ -129,9 +129,9 @@
                     article</span></div>
             {% endif %}
             {% else %}
-            <a href="{% url 'registration:login' %}" class="addToList registrationLink"><i class="fas fa-list"></i>Add
+            <a href="http://127.0.0.1:8000/registration/login/" class="addToList registrationLink"><i class="fas fa-list"></i>Add
                 to list</a>
-            <a href="{% url 'registration:login' %}" id="{{ article.article_id }}"
+            <a href="http://127.0.0.1:8000/registration/login/" id="{{ article.article_id }}"
                 class="addToHighlighted registrationLink"><i class="fas fa-highlighter"></i><span>Highlight
                     article</span></a>
             {% endif %}
