@@ -70,8 +70,8 @@
                     </div>
                     {% else %}
                     <div class="headerButtonContainer">
-                        <a href="http://127.0.0.1:8000/registration/login/">Login</a>
-                        <a href="http://127.0.0.1:8000/registration/signup/">Sign Up</a>
+                        <a href="{% url 'account_login' %}">Login</a>
+                        <a href="{% url 'account_signup' %}">Sign Up</a>
                     </div>
                     {% endif %}
                 </div>
@@ -87,8 +87,7 @@
                 {% endfor %}
             </ul>
             {% endif %}
-            <!-- I previously had it before content, however, then some eventListener didn't work anymore -->
-            <!-- <script src="{% static 'home/base_script.js' %}"></script> -->
+
             {% block content %}
             {% endblock %}
             <script src="{% static 'home/base_script.js' %}"></script>

@@ -127,46 +127,6 @@ def notification_change_list(request, list_id):
         return Response("Notification has been removed!")
 
 
-@api_view(['GET'])
-def list_filter(request, timeframe, content_type, minimum_rating, sources):
-    cache.set_many({
-        'timeframe': timeframe,
-        'content_type': content_type,
-        'minimum_rating': minimum_rating,
-        'sources': sources
-    })
-    return Response("Lists have been filtered!")
-
-
-@api_view(['GET'])
-def article_filter(request, timeframe, sector, paywall, sources):
-    cache.set_many({
-        'articles_timeframe': timeframe,
-        'articles_sector': sector,
-        'articles_paywall': paywall,
-        'articles_sources': sources
-    })
-    return Response("Lists have been filtered!")
-
-
-@api_view(['GET'])
-def get_list_filters(request):
-    timeframe = cache.get('timeframe')
-    content_type = cache.get('content_type')
-    minimum_rating = cache.get('minimum_rating')
-    sources = cache.get('sources')
-    return Response([timeframe, content_type, minimum_rating, sources])
-
-
-@api_view(['GET'])
-def get_article_filters(request):
-    timeframe = cache.get('articles_timeframe')
-    sector = cache.get('articles_sector')
-    paywall = cache.get('articles_paywall')
-    sources = cache.get('articles_sources')
-    return Response([timeframe, sector, paywall, sources])
-
-
 @api_view(['DELETE'])
 def delete_source_from_list(request, list_id, source):
     list = get_object_or_404(List, list_id=list_id)
@@ -185,7 +145,6 @@ def delete_article_from_list(request, list_id, article_id):
 @api_view(['DELETE'])
 def delete_list(request, list_id):
     list = get_object_or_404(List, list_id=list_id)
-    list_name = str(list)
     list.delete()
     return Response("List has been deleted!")
 

@@ -1,26 +1,13 @@
-async function load_filters() {
-  try {
-    const res = await fetch(
-      `../api/get_list_filters`,
-      get_fetch_settings("GET")
-    );
-    if (!res.ok) {
-      showMessage("Error: List filters couldn't be fetched!", "Error");
-    } else {
-      const context = await res.json();
-      if (context[0] != null) {
-        document.getElementById("timeframe").value = context[0];
-        document.getElementById("content").value = context[1];
-        document.getElementById("minimum_rating").value = context[2];
-        document.querySelector("summary").innerText = context[3];
-      }
-    }
-  } catch (e) {
-    showMessage("Error: Network error detected!", "Error");
-  }
+if (sessionStorage.getItem("listSearchSettings")) {
+  const listSearchSettings = JSON.parse(
+    sessionStorage.getItem("listSearchSettings")
+  );
+  document.getElementById("timeframe").value = listSearchSettings[0];
+  document.getElementById("content").value = listSearchSettings[1];
+  document.getElementById("minimum_rating").value = listSearchSettings[2];
+  document.querySelector("summary").innerText = listSearchSettings[3];
+  sessionStorage.removeItem("listSearchSettings");
 }
-
-load_filters();
 
 // Autocomplete for search
 document.getElementById("search").addEventListener("keyup", async () => {
@@ -72,20 +59,12 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   const minimum_rating =
     minimumRatingSelect.options[minimumRatingSelect.selectedIndex].value;
   const sources = document.querySelector("summary").innerText;
-  try {
-    const res = await fetch(
-      `../api/filter_list/${timeframe}/${contentType}/${minimum_rating}/${sources}`,
-      get_fetch_settings("GET")
-    );
-    if (!res.ok) {
-      showMessage("Error: List couldn't be filtered!", "Error");
-    } else {
-      const context = await res.json();
-      window.location.href = "../../lists";
-    }
-  } catch (e) {
-    showMessage("Error: Network error detected!", "Error");
-  }
+  const listSearchSettings = [timeframe, contentType, minimum_rating, sources];
+  sessionStorage.setItem(
+    "listSearchSettings",
+    JSON.stringify(listSearchSettings)
+  );
+  window.location = `../lists/${timeframe}/${contentType}/${minimum_rating}/${sources}`;
 });
 
 //open create List Menu

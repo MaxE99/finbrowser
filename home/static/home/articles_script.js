@@ -1,26 +1,13 @@
-async function load_filters() {
-  try {
-    const res = await fetch(
-      `../api/get_article_filters`,
-      get_fetch_settings("GET")
-    );
-    if (!res.ok) {
-      showMessage("Error: Article filters couldn't be fetched!", "Error");
-    } else {
-      const context = await res.json();
-      if (context[0] != null) {
-        document.getElementById("timeframe").value = context[0];
-        document.getElementById("sector").value = context[1];
-        document.getElementById("paywall").value = context[2];
-        document.querySelector("summary").innerText = context[3];
-      }
-    }
-  } catch (e) {
-    showMessage("Error: Network error detected!", "Error");
-  }
+if (sessionStorage.getItem("articleSearchSettings")) {
+  const articleSearchSettings = JSON.parse(
+    sessionStorage.getItem("articleSearchSettings")
+  );
+  document.getElementById("timeframe").value = articleSearchSettings[0];
+  document.getElementById("sector").value = articleSearchSettings[1];
+  document.getElementById("paywall").value = articleSearchSettings[2];
+  document.querySelector("summary").innerText = articleSearchSettings[3];
+  sessionStorage.removeItem("articleSearchSettings");
 }
-
-load_filters();
 
 //Filter functionality
 document.querySelector(".searchButton").addEventListener("click", async () => {
@@ -32,20 +19,12 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   const paywallSelect = document.getElementById("paywall");
   const paywall = paywallSelect.options[paywallSelect.selectedIndex].value;
   const sources = document.querySelector("summary").innerText;
-  try {
-    const res = await fetch(
-      `../api/filter_articles/${timeframe}/${sector}/${paywall}/${sources}`,
-      get_fetch_settings("GET")
-    );
-    if (!res.ok) {
-      showMessage("Error: List couldn't be filtered!", "Error");
-    } else {
-      const context = await res.json();
-      window.location.href = "../../articles";
-    }
-  } catch (e) {
-    showMessage("Error: Network error detected!", "Error");
-  }
+  const articleSearchSettings = [timeframe, sector, paywall, sources];
+  sessionStorage.setItem(
+    "articleSearchSettings",
+    JSON.stringify(articleSearchSettings)
+  );
+  window.location = `../articles/${timeframe}/${sector}/${paywall}/${sources}`;
 });
 
 // Autocomplete for search

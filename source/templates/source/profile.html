@@ -40,12 +40,12 @@
         <button class="subscribeButton unsubscribed">Subscribe</button>
         {% endif %}
         {% else %}
-        <a href="{% url 'registration:login' %}" class="subscribeButton unsubscribed registrationLink">Subscribe</a>
+        <a href="{% url 'account_login' %}" class="subscribeButton unsubscribed registrationLink">Subscribe</a>
         {% endif %}
       </div>
     </div>
     {% for sector in source.sector.all %}
-    <a href="{% url 'home:sector-details' slug=sector.slug %}" class="expertise">{{ sector.name }}</a>
+    <a href="{{ sector.get_absolute_url }}" class="expertise">{{ sector.name }}</a>
     {% empty %}
     <div class="expertise">No specific sector</div>
     {% endfor %}
@@ -55,7 +55,7 @@
         {% if request.user.is_authenticated %}
         <button type="button" class="rateListButton">Rate</button>
         {% else %}
-        <a href="{% url 'registration:login' %}" class="rateListButton registrationLink">Rate</a>
+        <a href="{% url 'account_login' %}" class="rateListButton registrationLink">Rate</a>
         {% endif %}
         <div class="rate-formUpperContainer">
           <h3>Rate {{ source.name }}</h3>
@@ -101,7 +101,7 @@
         <div class="articleInformationContainer">
           <div class="articleTitle">{{ article.title }}</div>
           <div class="articleSectorAndDateContainer">
-            <a href="{% url 'home:sector-details' article.source.sector.first.slug %}">
+            <a href="{{ article.source.sector.first.get_absolute_url }}">
               {{ article.source.sector.first.name }}</a>
             <div class="articlePubDate">{{ article.pub_date }}</div>
             {% if article.source.top_source %}
@@ -127,10 +127,10 @@
               article</span></div>
           {% endif %}
           {% else %}
-          <a href="{% url 'registration:login' %}" class="addToList registrationLink"><i class="fas fa-list"></i>Add to
+          <a href="{% url 'account_login' %}" class="addToList registrationLink"><i class="fas fa-list"></i>Add to
             list</a>
-          <a href="{% url 'registration:login' %}" id="{{ article.article_id }}"
-            class="addToHighlighted registrationLink"><i class="fas fa-highlighter"></i><span>Highlight
+          <a href="{% url 'account_login' %}" id="{{ article.article_id }}" class="addToHighlighted registrationLink"><i
+              class="fas fa-highlighter"></i><span>Highlight
               article</span></a>
           {% endif %}
         </div>
@@ -172,8 +172,8 @@
         <button class="currentPagination">{{ latest_articles.number }}</button>
         {% elif i > latest_articles.number|add:'-3' and i < latest_articles.number|add:'3' %} <a
           href="?latest_articles={{ i }}">{{ i }}</a>
-          {% endif %}
-          {% endfor %}
+        {% endif %}
+        {% endfor %}
       </span>
     </div>
     {% endif %}
@@ -191,7 +191,7 @@
         <div class="articleInformationContainer">
           <div class="articleTitle">{{ list.name }}</div>
           <div class="articleSectorAndDateContainer">
-            <a href="{% url 'accounts:profile' slug=list.creator.profile.slug %}">{{ list.creator.username }}</a>
+            <a href="{{ list.creator.profile.get_absolute_url }}">{{ list.creator.username }}</a>
             {% if list.get_average_rating != "None" %}
             <div class="articlePubDate">{{ list.get_average_rating }}</div>
             {% else %}
@@ -199,7 +199,7 @@
             {% endif %}
           </div>
         </div>
-        <a class="listLink" href="{% url 'home:list-details' list_id=list.list_id %}"></a>
+        <a class="listLink" href="{{ list.get_absolute_url }}"></a>
       </div>
       {% endfor %} {% endif %}
     </div>
@@ -210,8 +210,8 @@
         {% if lists.number == i %}
         <button class="currentPagination">{{ lists.number }}</button>
         {% elif i > lists.number|add:'-3' and i < lists.number|add:'3' %} <a href="?lists={{ i }}">{{ i }}</a>
-          {% endif %}
-          {% endfor %}
+        {% endif %}
+        {% endfor %}
       </span>
     </div>
     {% endif %}

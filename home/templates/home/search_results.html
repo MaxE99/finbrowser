@@ -40,7 +40,7 @@
                     <div class="articleInformationContainer">
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
-                            <a href="{% url 'home:sector-details' article.source.sector.first.slug %}">
+                            <a href="{{ article.source.sector.first.get_absolute_url }}">
                                 {{ article.source.sector.first.name }}</a>
                             <div class="articlePubDate">{{ article.pub_date }}</div>
                             {% if article.source.top_source %}
@@ -68,10 +68,10 @@
                                 article</span></div>
                         {% endif %}
                         {% else %}
-                        <a href="{% url 'registration:login' %}" class="addToList registrationLink"><i
+                        <a href="{% url 'account_login' %}" class="addToList registrationLink"><i
                                 class="fas fa-list"></i>Add
                             to list</a>
-                        <a href="{% url 'registration:login' %}" id="{{ article.article_id }}"
+                        <a href="{% url 'account_login' %}" id="{{ article.article_id }}"
                             class="addToHighlighted registrationLink"><i class="fas fa-highlighter"></i><span>Highlight
                                 article</span></a>
                         {% endif %}
@@ -116,8 +116,8 @@
                     <button class="currentPagination">{{ filtered_articles.number }}</button>
                     {% elif i > filtered_articles.number|add:'-3' and i < filtered_articles.number|add:'3' %} <a
                         href="?filtered_articles={{ i }}">{{ i }}</a>
-                        {% endif %}
-                        {% endfor %}
+                    {% endif %}
+                    {% endfor %}
                 </span>
             </div>
             {% endif %}
@@ -136,12 +136,12 @@
                     <div class="articleInformationContainer">
                         <div class="articleTitle">{{ list.name }}</div>
                         <div class="articleSectorAndDateContainer">
-                            <a href="{% url 'accounts:profile' slug=list.creator.profile.slug %}">
+                            <a href="{{ list.creator.profile.get_absolute_url }}">
                                 {{ list.creator.username }}</a>
                             <div class="articlePubDate">4.4</div>
                         </div>
                     </div>
-                    <a class="listLink" href="{% url 'home:list-details' list_id=list.list_id %}"></a>
+                    <a class="listLink" href="{{ list.get_absolute_url }}"></a>
                 </div>
                 {% endfor %} {% endif %}
             </div>
@@ -153,8 +153,8 @@
                     <button class="currentPagination">{{ filtered_lists.number }}</button>
                     {% elif i > filtered_lists.number|add:'-3' and i < filtered_lists.number|add:'3' %} <a
                         href="?filtered_lists={{ i }}">{{ i }}</a>
-                        {% endif %}
-                        {% endfor %}
+                    {% endif %}
+                    {% endfor %}
                 </span>
             </div>
             {% endif %}
@@ -167,7 +167,7 @@
                 <div class="iconContainer">
                     <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
                 </div>
-                <a class="sourceLink" href="{% url 'source:profile' domain=source.domain %}"></a>
+                <a class="sourceLink" href="{{ source.get_absolute_url }}"></a>
                 <div class="sourceNameOuterContainer">
                     <div class="sourceNameInnerContainer">{{ source.name }}</div>
                 </div>
