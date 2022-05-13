@@ -297,11 +297,15 @@ document.querySelectorAll(".createNewListButton").forEach((button) => {
 });
 
 // close list create menu
-document
-  .querySelector(".createListMenu .closeFormContainerButton")
-  .addEventListener("click", () => {
-    document.querySelector(".createListMenu").style.display = "none";
-  });
+if(document
+  .querySelector(".createListMenu .closeFormContainerButton")){
+    document
+    .querySelector(".createListMenu .closeFormContainerButton")
+    .addEventListener("click", () => {
+      document.querySelector(".createListMenu").style.display = "none";
+    });
+  }
+
 
 // select sources
 document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
@@ -311,13 +315,16 @@ document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
   });
 });
 
-document.querySelector("details").addEventListener("click", () => {
-  document.onclick = function (e) {
-    if (e.target != document.querySelector("summary ul")) {
-      document.querySelector("details").removeAttribute("open");
-    }
-  };
-});
+if(document.querySelector("details")){
+  document.querySelector("details").addEventListener("click", () => {
+    document.onclick = function (e) {
+      if (e.target != document.querySelector("summary ul")) {
+        document.querySelector("details").removeAttribute("open");
+      }
+    };
+  });
+}
+
 
 // Carousell Container Functionality
 // const sliderContent = document.querySelector(".slider-content");
@@ -398,16 +405,19 @@ document.querySelector("details").addEventListener("click", () => {
 //   sliderContent.removeEventListener("transitionend", nextTouched);
 // };
 
-const cookieContainer = document.querySelector(".cookie-container");
-const cookieButton = document.querySelector(".cookie-btn");
+// const cookieContainer = document.querySelector(".cookie-container");
+// const cookieButton = document.querySelector(".cookie-btn");
 
-cookieButton.addEventListener("click", () => {
-  cookieContainer.classList.remove("active");
-  localStorage.setItem("cookieBannerDisplayed", "true");
-});
+// if(cookieButton){
+//   cookieButton.addEventListener("click", () => {
+//     cookieContainer.classList.remove("active");
+//     localStorage.setItem("cookieBannerDisplayed", "true");
+//   });
+// }
 
-setTimeout(() => {
-  if (!localStorage.getItem("cookieBannerDisplayed")) {
-    cookieContainer.classList.add("active");
-  }
-}, 2000);
+
+// setTimeout(() => {
+//   if (!localStorage.getItem("cookieBannerDisplayed")) {
+//     cookieContainer.classList.add("active");
+//   }
+// }, 2000);

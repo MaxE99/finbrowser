@@ -81,7 +81,7 @@
     <i class="fas fa-plus"></i>Create List
   </button>
   {% else %}
-  <a href="{% url 'registration:login' %}" class="createListButton registrationLink">
+  <a href="{% url 'account_login' %}" class="createListButton registrationLink">
     <i class="fas fa-plus"></i>Create List
   </a>
   {% endif %}
@@ -120,7 +120,7 @@
       {% endif %}
       <div>{{ list.creator.username }}</div>
     </div>
-    <a href="{% url 'home:list-details' list_id=list.list_id  %}"></a>
+    <a href="{{ list.get_absolute_url }}"></a>
   </div>
   {% endfor %}
   {% endif %}

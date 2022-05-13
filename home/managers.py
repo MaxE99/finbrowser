@@ -21,10 +21,10 @@ class ListManager(models.Manager):
         return self.filter(subscribers=user).order_by('name')
 
     def filter_lists(self, search_term):
-        return self.filter(name__istartswith=search_term)
+        return self.filter(name__istartswith=search_term, is_public=True)
 
     def filter_lists_not_subscribed(self, search_term, user):
-        return self.filter(name__istartswith=search_term).exclude(
+        return self.filter(name__istartswith=search_term, is_public=True).exclude(
             creator=user).exclude(subscribers=user).order_by('name')
 
 

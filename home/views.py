@@ -25,7 +25,7 @@ User = get_user_model()
 
 @login_required()
 def feed(request):
-    cache.set('current_user', request.user)
+    # cache.set('current_user', request.user)
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
@@ -93,10 +93,28 @@ def lists(request):
             list_id = new_list.list_id
             messages.success(request, f'List has been created!')
             return redirect('home:list-details', list_id=list_id)
-    timeframe = cache.get('timeframe')
-    content_type = cache.get('content_type')
-    minimum_rating = cache.get('minimum_rating')
-    sources = cache.get('sources')
+    lists = List.objects.filter(is_public=True).order_by('name')
+    add_list_form = AddListForm()
+    results_found = len(lists)
+    lists, _ = paginator_create(request, lists, 10)
+    return render(
+        request, 'home/lists.html', {
+            'add_list_form': add_list_form,
+            'lists': lists,
+            'results_found': results_found,
+        })
+
+
+def lists_search(request, timeframe, content_type, minimum_rating, sources):
+    if 'createListForm' in request.POST:
+        add_list_form = AddListForm(request.POST, request.FILES)
+        if add_list_form.is_valid():
+            new_list = add_list_form.save(commit=False)
+            new_list.creator = request.user
+            new_list.save()
+            list_id = new_list.list_id
+            messages.success(request, f'List has been created!')
+            return redirect('home:list-details', list_id=list_id)
     filter_args = {'main_website_source': sources}
     if timeframe != 'All' and timeframe != None:
         filter_args['updated_at__gte'] = date.today() - timedelta(
@@ -137,7 +155,6 @@ def lists(request):
         for list in exclude_list:
             lists = lists.exclude(list_id=list.list_id)
     ##########################################################################
-    # cache.delete_many(['timeframe', 'sources'])
     add_list_form = AddListForm()
     results_found = len(lists)
     lists, _ = paginator_create(request, lists, 10)
@@ -149,16 +166,46 @@ def lists(request):
         })
 
 
+
 def sectors(request):
     sectors = Sector.objects.all().order_by('name')
     return render(request, 'home/sectors.html', {'sectors': sectors})
 
 
 def articles(request):
-    timeframe = cache.get('articles_timeframe')
-    sector = cache.get('articles_sector')
-    paywall = cache.get('articles_paywall')
-    sources = cache.get('articles_sources')
+    if 'createListForm' in request.POST:
+        add_list_form = AddListForm(request.POST, request.FILES)
+        if add_list_form.is_valid():
+            new_list = add_list_form.save(commit=False)
+            new_list.creator = request.user
+            new_list.save()
+            list_id = new_list.list_id
+            messages.success(request, f'List has been created!')
+            return redirect('home:list-details', list_id=list_id)
+    search_articles = Article.objects.filter(external_source=None).order_by('-pub_date')
+    results_found = len(search_articles)
+    search_articles, _ = paginator_create(request, search_articles, 10)
+    sectors = Sector.objects.all().order_by('name')
+    if request.user.is_authenticated:
+        highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
+            request.user)
+        user_lists = List.objects.get_created_lists(request.user)
+    else:
+        highlighted_articles_titles = None
+        user_lists = None
+    add_list_form = AddListForm()
+    context = {
+        'add_list_form': add_list_form,
+        'results_found': results_found,
+        'search_articles': search_articles,
+        'sectors': sectors,
+        'highlighted_articles_titles': highlighted_articles_titles,
+        'user_lists': user_lists
+    }
+    return render(request, 'home/articles.html', context)
+
+
+def articles_search(request, timeframe, sector, paywall, sources):
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
@@ -206,8 +253,7 @@ def articles(request):
         'highlighted_articles_titles': highlighted_articles_titles,
         'user_lists': user_lists
     }
-    return render(request, 'home/articles.html', context)
-
+    return render(request, 'home/articles.html', context)    
 
 def list_details(request, list_id):
     list = get_object_or_404(List, list_id=list_id)
