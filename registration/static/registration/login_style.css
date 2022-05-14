@@ -482,6 +482,7 @@ body {
   cursor: pointer;
   margin-top: -20px;
   margin-left: auto;
+  width: fit-content;
 }
 
 .loginUserForm a {
@@ -690,7 +691,29 @@ button:hover {
 }
 
 .errorlist {
-  display: none;
+  background: red;
+  position: absolute;
+  opacity: 1;
+  color: white;
+  font-size: 18px;
+  border-radius: 20px;
+  padding: 10px 20px;
+  list-style: none;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: rgb(0 0 0 / 35%) 0px -50px 36px -28px inset;
+  letter-spacing: 1.2px;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  -moz-animation: cssAnimation 0s ease-in 4s forwards;
+  -webkit-animation: cssAnimation 0s ease-in 4s forwards;
+  -o-animation: cssAnimation 0s ease-in 4s forwards;
+  animation: cssAnimation 0s ease-in 4s forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  z-index: 10;
 }
 
 .messages {
