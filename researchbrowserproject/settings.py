@@ -158,6 +158,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
 MEDIA_URL = '/uploads/'
 
 
+ACCOUNT_FORMS = {'signup': 'registration.forms.CustomSignUpForm'}
 
 LOGIN_URL = '/registration/login/'
 
@@ -174,4 +175,8 @@ EMAIL_HOST_USER = 'accnameaccname5@gmail.com'
 EMAIL_HOST_PASSWORD = 'xkftgdnrzamnlvwp'
 EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = False
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
 

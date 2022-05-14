@@ -1,17 +1,7 @@
 # Django imports
-from django.contrib.auth.forms import AuthenticationForm, UsernameField
 from django import forms
+from allauth.account.forms import SignupForm
 
-
-class UserLoginForm(AuthenticationForm):
-
-    def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(*args, **kwargs)
-
-    username = UsernameField(widget=forms.TextInput(attrs={
-        'placeholder': 'Email',
-    }))
-    password = forms.CharField(widget=forms.PasswordInput(
-        attrs={
-            'placeholder': 'Password',
-        }))
+class CustomSignUpForm(SignupForm):
+    terms_and_privacy = forms.BooleanField(required=True)
+    field_order = ['username', 'email', 'password1', 'password2', 'terms_and_privacy']
