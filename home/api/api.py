@@ -20,11 +20,18 @@ def profile_add_website_link(request, website, link):
 
 
 @api_view(["POST"])
-def lists_add_article(request, article_id, list_ids):
-    # add that articles that are already part of the list are checked
+def list_change_article_status(request, article_id, lists_status):
     article = get_object_or_404(Article, article_id=article_id)
-    List.objects.add_articles(article, list_ids)
-    return Response("Article has been added to list!")
+    lists_status = lists_status.split(",")
+    user_lists = List.objects.get_created_lists(request.user)
+    for i in range(len(lists_status)):
+        if lists_status[i] == "True":
+            if article not in user_lists[i].articles.all():
+                user_lists[i].articles.add(article)
+        else:
+            if article in user_lists[i].articles.all():
+                user_lists[i].articles.remove(article)
+    return Response("Lists have been changed!")
 
 
 @api_view(['POST'])

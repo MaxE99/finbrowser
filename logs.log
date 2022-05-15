@@ -1,224 +1,515 @@
-2022-05-13 07:26:44,413 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
-2022-05-13 07:26:44,914 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
-2022-05-13 07:26:44,917 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
-2022-05-13 07:26:44,922 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
-2022-05-13 07:26:45,938 - celery.worker.consumer.mingle - INFO - mingle: all alone
-2022-05-13 07:26:45,964 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+2022-05-14 10:45:20,900 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-14 10:45:20,916 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e825abe1-68fb-4adc-ae29-3126fe8d02b7] received
+2022-05-14 10:45:22,144 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 10:45:22,144 - scrapper.tasks - INFO - 2022-05-14 02:53:09+00:00
+2022-05-14 10:45:22,144 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 10:45:22,144 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 10:45:22,144 - scrapper.tasks - INFO - 20220514-025309
+2022-05-14 10:45:22,146 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 10:45:22,146 - scrapper.tasks - INFO - 2022-05-14 02:52:36+00:00
+2022-05-14 10:45:22,146 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 10:45:22,146 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 10:45:22,146 - scrapper.tasks - INFO - 20220514-025236
+2022-05-14 10:45:22,147 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 10:45:22,147 - scrapper.tasks - INFO - 2022-05-14 02:52:08+00:00
+2022-05-14 10:45:22,147 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 10:45:22,147 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 10:45:22,147 - scrapper.tasks - INFO - 20220514-025208
+2022-05-14 10:45:22,149 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 10:45:22,149 - scrapper.tasks - INFO - 2022-05-14 02:48:38+00:00
+2022-05-14 10:45:22,149 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 10:45:22,149 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 10:45:22,149 - scrapper.tasks - INFO - 20220514-024838
+2022-05-14 10:45:22,150 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 10:45:22,150 - scrapper.tasks - INFO - 2022-05-14 02:47:50+00:00
+2022-05-14 10:45:22,150 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 10:45:22,151 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 10:45:22,151 - scrapper.tasks - INFO - 20220514-024750
+2022-05-14 10:45:22,158 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 10:45:22,158 - scrapper.tasks - INFO - 2022-05-13 23:47:38+00:00
+2022-05-14 10:45:22,158 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 10:45:22,158 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 10:45:22,158 - scrapper.tasks - INFO - 20220513-234738
+2022-05-14 10:45:22,161 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 10:45:22,162 - scrapper.tasks - INFO - 2022-05-13 21:06:15+00:00
+2022-05-14 10:45:22,162 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 10:45:22,162 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 10:45:22,162 - scrapper.tasks - INFO - 20220513-210615
+2022-05-14 10:45:22,168 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 10:45:22,168 - scrapper.tasks - INFO - 2022-05-13 20:16:48+00:00
+2022-05-14 10:45:22,168 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 10:45:22,168 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 10:45:22,168 - scrapper.tasks - INFO - 20220513-201648
+2022-05-14 10:45:22,178 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 10:45:22,178 - scrapper.tasks - INFO - 2022-05-13 18:01:09+00:00
+2022-05-14 10:45:22,179 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 10:45:22,179 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 10:45:22,179 - scrapper.tasks - INFO - 20220513-180109
+2022-05-14 10:45:22,186 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 10:45:22,187 - scrapper.tasks - INFO - 2022-05-13 16:31:18+00:00
+2022-05-14 10:45:22,187 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 10:45:22,187 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 10:45:22,187 - scrapper.tasks - INFO - 20220513-163118
+2022-05-14 10:45:22,189 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 10:45:22,189 - scrapper.tasks - INFO - 2022-05-13 16:20:49+00:00
+2022-05-14 10:45:22,189 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 10:45:22,189 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 10:45:22,189 - scrapper.tasks - INFO - 20220513-162049
+2022-05-14 10:45:22,218 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e825abe1-68fb-4adc-ae29-3126fe8d02b7] succeeded in 1.3010347979979997s: None
+2022-05-14 11:00:20,904 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-14 11:00:20,907 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[525c1067-ee88-4541-864f-4034f28f0a93] received
+2022-05-14 11:00:21,727 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 11:00:21,727 - scrapper.tasks - INFO - 2022-05-14 10:55:11+00:00
+2022-05-14 11:00:21,728 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 11:00:21,728 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 11:00:21,728 - scrapper.tasks - INFO - 20220514-105511
+2022-05-14 11:00:21,743 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[525c1067-ee88-4541-864f-4034f28f0a93] raised unexpected: ValidationError(['“20220514-105511” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format.'])
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 62, in scrape_twitter
+    Article.objects.create(title=title, link=link, pub_date=pub_date, source=source, external_id=external_id)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 453, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 739, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 776, in save_base
+    updated = self._save_table(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 881, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 919, in _do_insert
+    return manager._insert(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1270, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1415, in execute_sql
+    for sql, params in self.as_sql():
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1358, in as_sql
+    value_rows = [
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1359, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1359, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1300, in prepare_value
+    value = field.get_db_prep_save(value, connection=self.connection)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 842, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1427, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1406, in get_prep_value
+    value = super().get_prep_value(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1266, in get_prep_value
+    return self.to_python(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1388, in to_python
+    raise exceptions.ValidationError(
+django.core.exceptions.ValidationError: ['“20220514-105511” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format.']
+2022-05-14 11:15:20,912 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-14 11:15:20,914 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b17fd41d-0cd6-4fee-a98d-5b69e1bd0326] received
+2022-05-14 11:15:21,741 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 11:15:21,741 - scrapper.tasks - INFO - 2022-05-14 10:55:11+00:00
+2022-05-14 11:15:21,741 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 11:15:21,741 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 11:15:21,742 - scrapper.tasks - INFO - 20220514-105511
+2022-05-14 11:15:21,745 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[b17fd41d-0cd6-4fee-a98d-5b69e1bd0326] raised unexpected: ValidationError(['“20220514-105511” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format.'])
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 62, in scrape_twitter
+    Article.objects.create(title=title, link=link, pub_date=pub_date, source=source, external_id=external_id)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 453, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 739, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 776, in save_base
+    updated = self._save_table(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 881, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 919, in _do_insert
+    return manager._insert(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1270, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1415, in execute_sql
+    for sql, params in self.as_sql():
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1358, in as_sql
+    value_rows = [
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1359, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1359, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1300, in prepare_value
+    value = field.get_db_prep_save(value, connection=self.connection)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 842, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1427, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1406, in get_prep_value
+    value = super().get_prep_value(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1266, in get_prep_value
+    return self.to_python(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1388, in to_python
+    raise exceptions.ValidationError(
+django.core.exceptions.ValidationError: ['“20220514-105511” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format.']
+2022-05-14 11:30:20,919 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-14 11:30:20,921 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a8e31acd-fabd-4240-98b8-fd0ea6372d03] received
+2022-05-14 11:30:21,765 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 11:30:21,765 - scrapper.tasks - INFO - 2022-05-14 10:55:11+00:00
+2022-05-14 11:30:21,765 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 11:30:21,765 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 11:30:21,765 - scrapper.tasks - INFO - 20220514-105511
+2022-05-14 11:30:21,772 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[a8e31acd-fabd-4240-98b8-fd0ea6372d03] raised unexpected: ValidationError(['“20220514-105511” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format.'])
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 62, in scrape_twitter
+    Article.objects.create(title=title, link=link, pub_date=pub_date, source=source, external_id=external_id)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 453, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 739, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 776, in save_base
+    updated = self._save_table(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 881, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 919, in _do_insert
+    return manager._insert(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1270, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1415, in execute_sql
+    for sql, params in self.as_sql():
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1358, in as_sql
+    value_rows = [
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1359, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1359, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1300, in prepare_value
+    value = field.get_db_prep_save(value, connection=self.connection)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 842, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1427, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1406, in get_prep_value
+    value = super().get_prep_value(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1266, in get_prep_value
+    return self.to_python(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1388, in to_python
+    raise exceptions.ValidationError(
+django.core.exceptions.ValidationError: ['“20220514-105511” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format.']
+2022-05-14 11:44:25,559 - celery.beat - INFO - beat: Starting...
+2022-05-14 11:44:29,751 - celery.redirected - WARNING - Exception ignored in atexit callback
+2022-05-14 11:44:29,751 - celery.redirected - WARNING - : 
+2022-05-14 11:44:29,751 - celery.redirected - WARNING - <function _exit_function at 0x7f45a0622d40>
+2022-05-14 11:44:29,751 - celery.redirected - WARNING - Traceback (most recent call last):
+2022-05-14 11:44:29,751 - celery.redirected - WARNING -   File "/usr/lib/python3.10/multiprocessing/util.py", line 334, in _exit_function
+2022-05-14 11:44:29,754 - celery.redirected - WARNING -     
+2022-05-14 11:44:29,754 - celery.redirected - WARNING - _run_finalizers(0)
+2022-05-14 11:44:29,755 - celery.redirected - WARNING -   File "/usr/lib/python3.10/multiprocessing/util.py", line 300, in _run_finalizers
+2022-05-14 11:44:29,755 - celery.redirected - WARNING -     
+2022-05-14 11:44:29,755 - celery.redirected - WARNING - finalizer()
+2022-05-14 11:44:29,755 - celery.redirected - WARNING -   File "/usr/lib/python3.10/multiprocessing/util.py", line 224, in __call__
+2022-05-14 11:44:29,756 - celery.redirected - WARNING -     
+2022-05-14 11:44:29,756 - celery.redirected - WARNING - res = self._callback(*self._args, **self._kwargs)
+2022-05-14 11:44:29,756 - celery.redirected - WARNING -   File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/billiard/pool.py", line 1662, in _terminate_pool
+2022-05-14 11:44:29,757 - celery.redirected - WARNING -     
+2022-05-14 11:44:29,758 - celery.redirected - WARNING - cls._help_stuff_finish(*help_stuff_finish_args)
+2022-05-14 11:44:29,758 - celery.redirected - WARNING -   File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/concurrency/asynpool.py", line 1341, in _help_stuff_finish
+2022-05-14 11:44:29,759 - celery.redirected - WARNING -     
+2022-05-14 11:44:29,759 - celery.redirected - WARNING - readable, _, again = _select(inqR, timeout=0.5)
+2022-05-14 11:44:29,759 - celery.redirected - WARNING -   File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/concurrency/asynpool.py", line 165, in _select
+2022-05-14 11:44:29,760 - celery.redirected - WARNING -     
+2022-05-14 11:44:29,760 - celery.redirected - WARNING - return poll(readers, writers, err, timeout)
+2022-05-14 11:44:29,760 - celery.redirected - WARNING -   File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/concurrency/asynpool.py", line 121, in _select_imp
+2022-05-14 11:44:29,760 - celery.redirected - WARNING -     
+2022-05-14 11:44:29,761 - celery.redirected - WARNING - events = poller.poll(timeout)
+2022-05-14 11:44:29,761 - celery.redirected - WARNING -   File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/apps/worker.py", line 299, in _handle_request
+2022-05-14 11:44:29,761 - celery.redirected - WARNING -     
+2022-05-14 11:44:29,762 - celery.redirected - WARNING - raise exc(exitcode)
+2022-05-14 11:44:29,762 - celery.redirected - WARNING - celery.exceptions
+2022-05-14 11:44:29,762 - celery.redirected - WARNING - .
+2022-05-14 11:44:29,762 - celery.redirected - WARNING - WorkerTerminate
+2022-05-14 11:44:29,762 - celery.redirected - WARNING - : 
+2022-05-14 11:44:29,763 - celery.redirected - WARNING - 1
+2022-05-14 11:44:31,843 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-14 11:44:32,393 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-14 11:44:32,396 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-14 11:44:32,401 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-14 11:44:33,413 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-14 11:44:33,438 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
             leak, never use this setting in production environments!
   warnings.warn('''Using settings.DEBUG leads to a memory
 
-2022-05-13 07:26:45,964 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
-2022-05-13 07:27:09,466 - celery.worker.control - INFO - Events of group {task} enabled by remote.
-2022-05-13 07:27:27,811 - celery.beat - INFO - beat: Starting...
-2022-05-13 07:27:27,880 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 07:27:27,889 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9eb30c51-aa82-4d9f-830e-90fa1d583e16] received
-2022-05-13 07:27:28,582 - scrapper.tasks - INFO - 195
-2022-05-13 07:27:29,145 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9eb30c51-aa82-4d9f-830e-90fa1d583e16] succeeded in 1.2553174700001364s: None
-2022-05-13 07:42:27,886 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 07:42:27,889 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0bf271f9-b260-4c30-9e7e-4119538ae474] received
-2022-05-13 07:42:28,615 - scrapper.tasks - INFO - 195
-2022-05-13 07:42:28,813 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0bf271f9-b260-4c30-9e7e-4119538ae474] succeeded in 0.9221613559998332s: None
-2022-05-13 07:57:27,895 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 07:57:27,898 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[917990ce-fa17-4443-bd7b-b799775b80ac] received
-2022-05-13 07:57:28,562 - scrapper.tasks - INFO - 195
-2022-05-13 07:57:28,750 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[917990ce-fa17-4443-bd7b-b799775b80ac] succeeded in 0.8506601379999665s: None
-2022-05-13 08:12:27,902 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 08:12:27,904 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d4f6729d-ba33-41d0-ace5-784f1d6a339a] received
-2022-05-13 08:12:28,707 - scrapper.tasks - INFO - 195
-2022-05-13 08:12:28,858 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d4f6729d-ba33-41d0-ace5-784f1d6a339a] succeeded in 0.9523741409993818s: None
-2022-05-13 08:27:27,910 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 08:27:27,913 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[310bca2e-92a7-4c45-b6cc-41570971ff0a] received
-2022-05-13 08:27:28,641 - scrapper.tasks - INFO - 195
-2022-05-13 08:27:28,798 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[310bca2e-92a7-4c45-b6cc-41570971ff0a] succeeded in 0.8837526790002812s: None
-2022-05-13 08:42:27,919 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 08:42:27,922 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5c5ec3da-b13b-4bd9-b976-9ee3e174b525] received
-2022-05-13 08:42:28,644 - scrapper.tasks - INFO - 195
-2022-05-13 08:42:28,857 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5c5ec3da-b13b-4bd9-b976-9ee3e174b525] succeeded in 0.9330445030000192s: None
-2022-05-13 08:57:27,928 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 08:57:27,931 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8d71c045-0969-4cec-a2b6-816f4426701e] received
-2022-05-13 08:57:28,653 - scrapper.tasks - INFO - 194
-2022-05-13 08:57:28,879 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8d71c045-0969-4cec-a2b6-816f4426701e] succeeded in 0.947068178000336s: None
-2022-05-13 09:12:27,936 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 09:12:27,939 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0e131e77-26a9-48d2-8ad4-609da5c6213a] received
-2022-05-13 09:12:28,676 - scrapper.tasks - INFO - 194
-2022-05-13 09:12:28,799 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0e131e77-26a9-48d2-8ad4-609da5c6213a] succeeded in 0.8586424860004627s: None
-2022-05-13 09:27:27,940 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 09:27:27,942 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[21a137e3-f662-4179-af72-afa4a3f57492] received
-2022-05-13 09:27:28,760 - scrapper.tasks - INFO - 194
-2022-05-13 09:27:28,971 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[21a137e3-f662-4179-af72-afa4a3f57492] succeeded in 1.0274745500009885s: None
-2022-05-13 09:42:27,946 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 09:42:27,948 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e4ad35dc-e08e-48a8-9bbe-3ccd047258ab] received
-2022-05-13 09:42:28,639 - scrapper.tasks - INFO - 194
-2022-05-13 09:42:28,892 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e4ad35dc-e08e-48a8-9bbe-3ccd047258ab] succeeded in 0.9420136690005165s: None
-2022-05-13 09:57:27,951 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 09:57:27,953 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6a6b283a-5f35-4bf4-adc9-9f34e752fc3a] received
-2022-05-13 09:57:33,748 - scrapper.tasks - INFO - 193
-2022-05-13 09:57:33,862 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6a6b283a-5f35-4bf4-adc9-9f34e752fc3a] succeeded in 5.908329391000734s: None
-2022-05-13 10:12:27,955 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 10:12:27,957 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a3517f4a-4fed-46c5-aaa5-a7e451017339] received
-2022-05-13 10:12:28,861 - scrapper.tasks - INFO - 193
-2022-05-13 10:12:28,972 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a3517f4a-4fed-46c5-aaa5-a7e451017339] succeeded in 1.0137099679996027s: None
-2022-05-13 10:27:27,961 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 10:27:27,964 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f63adf2e-9ab0-4211-b7fd-47e9e701ddc9] received
-2022-05-13 10:27:28,720 - scrapper.tasks - INFO - 193
-2022-05-13 10:27:28,898 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f63adf2e-9ab0-4211-b7fd-47e9e701ddc9] succeeded in 0.9327177010000014s: None
-2022-05-13 10:42:27,969 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 10:42:27,971 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d4994dae-d35c-4616-861e-dc5459a60c42] received
-2022-05-13 10:42:28,717 - scrapper.tasks - INFO - 193
-2022-05-13 10:42:28,907 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d4994dae-d35c-4616-861e-dc5459a60c42] succeeded in 0.9346885209997708s: None
-2022-05-13 10:57:27,976 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 10:57:27,979 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ec295903-46bf-4b73-9bb2-112447b0f71f] received
-2022-05-13 10:57:28,649 - scrapper.tasks - INFO - 193
-2022-05-13 10:57:28,886 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ec295903-46bf-4b73-9bb2-112447b0f71f] succeeded in 0.9055263689988351s: None
-2022-05-13 11:12:27,984 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 11:12:27,986 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[bf4107e5-e83d-4753-aa7d-2881f2d76007] received
-2022-05-13 11:12:28,774 - scrapper.tasks - INFO - 193
-2022-05-13 11:12:28,992 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[bf4107e5-e83d-4753-aa7d-2881f2d76007] succeeded in 1.0046250659997895s: None
-2022-05-13 11:27:27,992 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 11:27:27,994 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2268c26a-9f1b-488c-82d6-4a7d600c774e] received
-2022-05-13 11:27:28,833 - scrapper.tasks - INFO - 193
-2022-05-13 11:27:29,049 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2268c26a-9f1b-488c-82d6-4a7d600c774e] succeeded in 1.0525877319996653s: None
-2022-05-13 11:42:27,997 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 11:42:28,000 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2c46b6ac-47fb-4995-a865-52b267720d08] received
-2022-05-13 11:42:29,215 - scrapper.tasks - INFO - 193
-2022-05-13 11:42:29,297 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2c46b6ac-47fb-4995-a865-52b267720d08] succeeded in 1.2953500510011509s: None
-2022-05-13 11:57:28,009 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 11:57:28,012 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[00c86c51-1f79-4a81-b048-6343f0d20a0c] received
-2022-05-13 11:57:29,117 - scrapper.tasks - INFO - 193
-2022-05-13 11:57:29,250 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[00c86c51-1f79-4a81-b048-6343f0d20a0c] succeeded in 1.2368123480009672s: None
-2022-05-13 12:12:28,017 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 12:12:28,019 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b7c0b036-31c2-4060-9bf3-de80d7ba7a9d] received
-2022-05-13 12:12:28,753 - scrapper.tasks - INFO - 193
-2022-05-13 12:12:28,851 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b7c0b036-31c2-4060-9bf3-de80d7ba7a9d] succeeded in 0.8302303969976492s: None
-2022-05-13 12:27:28,025 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 12:27:28,028 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b24fb16f-c4e6-47f8-932f-1832d490c961] received
-2022-05-13 12:27:28,869 - scrapper.tasks - INFO - 193
-2022-05-13 12:27:29,121 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b24fb16f-c4e6-47f8-932f-1832d490c961] succeeded in 1.091780671999004s: None
-2022-05-13 12:42:28,029 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 12:42:28,031 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[faae76ef-9b1c-4d6d-ab2b-0d7ac54ebaa5] received
-2022-05-13 12:42:28,739 - scrapper.tasks - INFO - 193
-2022-05-13 12:42:28,989 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[faae76ef-9b1c-4d6d-ab2b-0d7ac54ebaa5] succeeded in 0.956052796998847s: None
-2022-05-13 12:57:28,038 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 12:57:28,040 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[51361228-be1a-4611-9c0b-f278af1c5a43] received
-2022-05-13 12:57:28,923 - scrapper.tasks - INFO - 194
-2022-05-13 12:57:29,115 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[51361228-be1a-4611-9c0b-f278af1c5a43] succeeded in 1.073433344001387s: None
-2022-05-13 13:12:28,046 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 13:12:28,048 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2dfd6ba2-62fd-4d69-b4da-78d11dcf786e] received
-2022-05-13 13:12:28,858 - scrapper.tasks - INFO - 194
-2022-05-13 13:12:29,113 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2dfd6ba2-62fd-4d69-b4da-78d11dcf786e] succeeded in 1.0631944359993213s: None
-2022-05-13 13:27:28,054 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 13:27:28,056 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a8518e1a-fa1d-4113-9070-353375cf97b5] received
-2022-05-13 13:27:28,835 - scrapper.tasks - INFO - 194
-2022-05-13 13:27:28,921 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a8518e1a-fa1d-4113-9070-353375cf97b5] succeeded in 0.8637917970008857s: None
-2022-05-13 13:42:28,063 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 13:42:28,065 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fb9ad3fe-2e97-40a1-9b69-45eb447a2e5c] received
-2022-05-13 13:42:28,950 - scrapper.tasks - INFO - 194
-2022-05-13 13:42:29,173 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fb9ad3fe-2e97-40a1-9b69-45eb447a2e5c] succeeded in 1.106833441001072s: None
-2022-05-13 13:57:28,065 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 13:57:28,067 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3e365f67-30cb-4ca1-ba0b-6b74688dbe56] received
-2022-05-13 13:57:28,826 - scrapper.tasks - INFO - 194
-2022-05-13 13:57:28,993 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3e365f67-30cb-4ca1-ba0b-6b74688dbe56] succeeded in 0.9228754819996539s: None
-2022-05-13 14:12:28,069 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 14:12:28,071 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6801d070-fc50-4504-9962-0292f52bd3ad] received
-2022-05-13 14:12:28,838 - scrapper.tasks - INFO - 194
-2022-05-13 14:12:28,998 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6801d070-fc50-4504-9962-0292f52bd3ad] succeeded in 0.9256452010013163s: None
-2022-05-13 14:27:28,071 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 14:27:28,073 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8eb8bfe4-eea9-455a-a5e0-3496dd69f964] received
-2022-05-13 14:27:29,826 - scrapper.tasks - INFO - 194
-2022-05-13 14:27:29,952 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8eb8bfe4-eea9-455a-a5e0-3496dd69f964] succeeded in 1.87724311400234s: None
-2022-05-13 14:42:28,077 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 14:42:28,079 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e31724f3-3412-4cfa-9ca8-50e024391fa6] received
-2022-05-13 14:42:28,825 - scrapper.tasks - INFO - 194
-2022-05-13 14:42:28,982 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e31724f3-3412-4cfa-9ca8-50e024391fa6] succeeded in 0.9009502100016107s: None
-2022-05-13 14:57:28,080 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 14:57:28,082 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[67dc3eaa-1247-4e0b-8838-3b83403314b2] received
-2022-05-13 14:57:28,995 - scrapper.tasks - INFO - 195
-2022-05-13 14:57:29,151 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[67dc3eaa-1247-4e0b-8838-3b83403314b2] succeeded in 1.0688760980010557s: None
-2022-05-13 15:12:28,087 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 15:12:28,090 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ac25006f-dad6-4b68-a431-d94584c6490c] received
-2022-05-13 15:12:28,816 - scrapper.tasks - INFO - 195
-2022-05-13 15:12:29,005 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ac25006f-dad6-4b68-a431-d94584c6490c] succeeded in 0.9135426630018628s: None
-2022-05-13 15:27:28,092 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 15:27:28,094 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[90a5b3d6-9096-4fd3-a38e-2178a07c79f2] received
-2022-05-13 15:27:29,262 - scrapper.tasks - INFO - 195
-2022-05-13 15:27:29,409 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[90a5b3d6-9096-4fd3-a38e-2178a07c79f2] succeeded in 1.3143934860017907s: None
-2022-05-13 15:42:28,102 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 15:42:28,104 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[906e9bfb-bfbf-4bf0-81b8-114d8eb64fc8] received
-2022-05-13 15:42:28,853 - scrapper.tasks - INFO - 196
-2022-05-13 15:42:28,978 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[906e9bfb-bfbf-4bf0-81b8-114d8eb64fc8] succeeded in 0.8720879690008587s: None
-2022-05-13 15:57:28,106 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 15:57:28,108 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[584f62e2-523a-47ab-97e2-837b714adb78] received
-2022-05-13 15:57:29,009 - scrapper.tasks - INFO - 196
-2022-05-13 15:57:29,105 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[584f62e2-523a-47ab-97e2-837b714adb78] succeeded in 0.9957694029981212s: None
-2022-05-13 16:12:28,110 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 16:12:28,112 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[32d553f4-4058-4e4b-b613-4f44bfe36c49] received
-2022-05-13 16:12:29,872 - scrapper.tasks - INFO - 197
-2022-05-13 16:12:30,059 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[32d553f4-4058-4e4b-b613-4f44bfe36c49] succeeded in 1.9447859439969761s: None
-2022-05-13 16:27:28,118 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 16:27:28,122 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0bfde96e-e3b3-42e9-832a-7da5fe586adc] received
-2022-05-13 16:27:28,895 - scrapper.tasks - INFO - 197
-2022-05-13 16:27:29,121 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0bfde96e-e3b3-42e9-832a-7da5fe586adc] succeeded in 0.997077800995612s: None
-2022-05-13 16:42:28,122 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 16:42:28,124 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ea93b7b9-7560-4418-bb13-2218c33911d9] received
-2022-05-13 16:42:28,947 - scrapper.tasks - INFO - 197
-2022-05-13 16:42:29,059 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ea93b7b9-7560-4418-bb13-2218c33911d9] succeeded in 0.9340772719951929s: None
-2022-05-13 16:57:28,127 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 16:57:28,129 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5d240940-70f3-478c-b045-21f8bfaf8215] received
-2022-05-13 16:57:29,269 - scrapper.tasks - INFO - 197
-2022-05-13 16:57:29,364 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5d240940-70f3-478c-b045-21f8bfaf8215] succeeded in 1.234012275999703s: None
-2022-05-13 17:12:28,130 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 17:12:28,132 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f5fe98d8-fd1f-481c-a887-eb652b97652c] received
-2022-05-13 17:12:29,008 - scrapper.tasks - INFO - 197
-2022-05-13 17:12:29,166 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f5fe98d8-fd1f-481c-a887-eb652b97652c] succeeded in 1.032554388999415s: None
-2022-05-13 17:27:28,134 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-13 17:27:28,136 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d4b647e1-33e2-453f-a845-e8d3a67e78fb] received
-2022-05-13 17:27:29,114 - scrapper.tasks - INFO - 197
-2022-05-13 17:27:29,256 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d4b647e1-33e2-453f-a845-e8d3a67e78fb] succeeded in 1.1185479709965875s: None
-2022-05-14 05:29:24,005 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
-2022-05-14 05:29:24,524 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
-2022-05-14 05:29:24,527 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
-2022-05-14 05:29:24,532 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
-2022-05-14 05:29:25,543 - celery.worker.consumer.mingle - INFO - mingle: all alone
-2022-05-14 05:29:25,565 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+2022-05-14 11:44:33,438 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-14 11:44:35,042 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-14 12:15:20,941 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-14 12:15:20,946 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3129b05b-30dc-48c0-a557-d72d1e7eb634] received
+2022-05-14 12:15:21,754 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:15:21,754 - scrapper.tasks - INFO - 2022-05-14 12:15:10+00:00
+2022-05-14 12:15:21,754 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 12:15:21,754 - scrapper.tasks - INFO - <class 'float'>
+2022-05-14 12:15:21,754 - scrapper.tasks - INFO - 1652530510.0
+2022-05-14 12:15:21,757 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[3129b05b-30dc-48c0-a557-d72d1e7eb634] raised unexpected: TypeError('expected string or bytes-like object')
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 62, in scrape_twitter
+    cache.set('last_id', last_id)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 453, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 739, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 776, in save_base
+    updated = self._save_table(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 881, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 919, in _do_insert
+    return manager._insert(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1270, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1415, in execute_sql
+    for sql, params in self.as_sql():
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1358, in as_sql
+    value_rows = [
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1359, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1359, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1300, in prepare_value
+    value = field.get_db_prep_save(value, connection=self.connection)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 842, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1427, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1406, in get_prep_value
+    value = super().get_prep_value(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1266, in get_prep_value
+    return self.to_python(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1367, in to_python
+    parsed = parse_datetime(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/utils/dateparse.py", line 107, in parse_datetime
+    match = datetime_re.match(value)
+TypeError: expected string or bytes-like object
+2022-05-14 12:17:57,522 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-14 12:17:58,032 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-14 12:17:58,038 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-14 12:17:58,044 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-14 12:17:59,055 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-14 12:17:59,075 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
             leak, never use this setting in production environments!
   warnings.warn('''Using settings.DEBUG leads to a memory
 
-2022-05-14 05:29:25,565 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
-2022-05-14 05:29:58,955 - celery.worker.control - INFO - Events of group {task} enabled by remote.
-2022-05-14 05:30:20,685 - celery.beat - INFO - beat: Starting...
-2022-05-14 05:30:20,761 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-14 05:30:20,776 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c1d68946-58ec-4eb6-ac46-88b0c2ad9f81] received
-2022-05-14 05:30:21,622 - scrapper.tasks - INFO - 192
-2022-05-14 05:30:21,916 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c1d68946-58ec-4eb6-ac46-88b0c2ad9f81] succeeded in 1.1392061369999738s: None
-2022-05-14 05:45:20,766 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-14 05:45:20,769 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6bd752c8-6be2-4ea0-a6a4-c0c02edad3a3] received
-2022-05-14 05:45:21,565 - scrapper.tasks - INFO - 192
-2022-05-14 05:45:21,698 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6bd752c8-6be2-4ea0-a6a4-c0c02edad3a3] succeeded in 0.9275739910001448s: None
-2022-05-14 06:00:20,774 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-14 06:00:20,777 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d97d00d3-d1cd-450c-a708-0d114a7738e1] received
-2022-05-14 06:00:21,642 - scrapper.tasks - INFO - 192
-2022-05-14 06:00:21,741 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d97d00d3-d1cd-450c-a708-0d114a7738e1] succeeded in 0.9612245210000765s: None
-2022-05-14 06:15:20,783 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-14 06:15:20,787 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6d9b7a5d-150a-4a20-8c4f-34aa94e76768] received
-2022-05-14 06:15:21,652 - scrapper.tasks - INFO - 192
-2022-05-14 06:15:21,814 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6d9b7a5d-150a-4a20-8c4f-34aa94e76768] succeeded in 1.0258882779999112s: None
-2022-05-14 06:30:20,791 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-14 06:30:20,793 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[77db6065-9938-4416-b2c0-c528d3293172] received
-2022-05-14 06:30:21,620 - scrapper.tasks - INFO - 192
-2022-05-14 06:30:21,723 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[77db6065-9938-4416-b2c0-c528d3293172] succeeded in 0.929126133000409s: None
-2022-05-14 06:45:20,800 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-14 06:45:20,802 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[37183f8f-0546-454c-b133-6748ef0aeec1] received
-2022-05-14 06:45:21,615 - scrapper.tasks - INFO - 192
-2022-05-14 06:45:21,693 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[37183f8f-0546-454c-b133-6748ef0aeec1] succeeded in 0.8896037659997091s: None
-2022-05-14 07:00:20,808 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-14 07:00:20,810 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c474d806-8eef-42ba-ab65-bc1da7f4975f] received
-2022-05-14 07:00:21,644 - scrapper.tasks - INFO - 192
-2022-05-14 07:00:21,737 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c474d806-8eef-42ba-ab65-bc1da7f4975f] succeeded in 0.9233688779995646s: None
-2022-05-14 07:15:20,817 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-14 07:15:20,819 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d502747c-249e-4cf8-a1c1-8d6906d788f2] received
-2022-05-14 07:15:21,733 - scrapper.tasks - INFO - 192
-2022-05-14 07:15:21,964 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d502747c-249e-4cf8-a1c1-8d6906d788f2] succeeded in 1.1436416820006343s: None
-2022-05-14 07:30:20,824 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-14 07:30:20,827 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c04ce183-d774-44ac-ad64-05f058fdaa3a] received
-2022-05-14 07:30:21,662 - scrapper.tasks - INFO - 192
-2022-05-14 07:30:21,802 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c04ce183-d774-44ac-ad64-05f058fdaa3a] succeeded in 0.9728295839995553s: None
+2022-05-14 12:17:59,075 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-14 12:18:16,642 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-14 12:18:26,059 - celery.beat - INFO - beat: Starting...
+2022-05-14 12:18:26,144 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-14 12:18:26,152 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[613a0ca2-8ac2-4a53-a9e9-a6503c8222b4] received
+2022-05-14 12:18:26,962 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:26,966 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:26,975 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:26,981 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:26,987 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:26,993 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:26,999 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,005 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,011 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,020 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,026 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,032 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,038 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,044 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,050 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,052 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,055 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,083 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,086 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,089 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,094 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,097 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,117 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,125 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,141 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,168 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,188 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,193 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:18:27,251 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[613a0ca2-8ac2-4a53-a9e9-a6503c8222b4] succeeded in 1.0985599829982675s: None
+2022-05-14 12:33:26,149 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-14 12:33:26,152 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9396cc43-b163-46c4-88c8-3b70451351c3] received
+2022-05-14 12:33:27,054 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,067 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,069 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,095 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,097 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,099 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,104 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,107 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,127 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,134 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,149 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,183 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,208 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,214 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:33:27,269 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9396cc43-b163-46c4-88c8-3b70451351c3] succeeded in 1.1157525369999348s: None
+2022-05-14 12:37:40,583 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-14 12:37:41,124 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-14 12:37:41,127 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-14 12:37:41,131 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-14 12:37:42,140 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-14 12:37:42,153 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-14 12:37:42,153 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-14 12:37:55,496 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-14 12:38:01,602 - celery.beat - INFO - beat: Starting...
+2022-05-14 12:48:26,166 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-14 12:48:26,181 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2018d1cb-6584-4ae3-a313-d46a0bf44ed0] received
+2022-05-14 12:48:27,068 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 12:48:27,068 - scrapper.tasks - INFO - 2022-05-14 12:48:07+00:00
+2022-05-14 12:48:27,068 - scrapper.tasks - INFO - <class 'datetime.datetime'>
+2022-05-14 12:48:27,068 - scrapper.tasks - INFO - YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]
+2022-05-14 12:48:27,068 - scrapper.tasks - INFO - <class 'str'>
+2022-05-14 12:48:27,082 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[2018d1cb-6584-4ae3-a313-d46a0bf44ed0] raised unexpected: ValidationError(['“YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format.'])
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 62, in scrape_twitter
+    Article.objects.create(title=title, link=link, pub_date=pub_date, source=source, external_id=external_id)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 453, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 739, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 776, in save_base
+    updated = self._save_table(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 881, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 919, in _do_insert
+    return manager._insert(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1270, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1415, in execute_sql
+    for sql, params in self.as_sql():
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1358, in as_sql
+    value_rows = [
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1359, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1359, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1300, in prepare_value
+    value = field.get_db_prep_save(value, connection=self.connection)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 842, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1427, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1406, in get_prep_value
+    value = super().get_prep_value(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1266, in get_prep_value
+    return self.to_python(value)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py", line 1388, in to_python
+    raise exceptions.ValidationError(
+django.core.exceptions.ValidationError: ['“YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format.']
+2022-05-14 12:57:17,676 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-14 12:57:18,242 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-14 12:57:18,245 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-14 12:57:18,249 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-14 12:57:19,259 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-14 12:57:19,269 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-14 12:57:19,269 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-14 12:57:28,245 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-14 12:57:29,701 - celery.beat - INFO - beat: Starting...
+2022-05-14 13:03:26,167 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-14 13:03:26,184 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[64b5fa29-ef82-4729-84d3-95aeedfe86c2] received
+2022-05-14 13:03:27,079 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,090 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,096 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,114 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,117 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,144 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,147 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,150 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,155 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,158 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,180 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,188 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,203 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,225 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,232 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,234 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:03:27,257 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[64b5fa29-ef82-4729-84d3-95aeedfe86c2] succeeded in 1.071642716997303s: None
+2022-05-14 13:18:26,172 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-14 13:18:26,175 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[beb66de2-5b4a-4bd7-b5d0-585f22b5a482] received
+2022-05-14 13:18:27,063 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,070 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,072 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,083 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,084 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,085 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,087 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,089 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,096 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,099 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,105 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,117 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,124 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,127 - scrapper.tasks - INFO - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2022-05-14 13:18:27,150 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[beb66de2-5b4a-4bd7-b5d0-585f22b5a482] succeeded in 0.9730412339995382s: None
+2022-05-15 06:03:29,186 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-15 06:03:29,708 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-15 06:03:29,712 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-15 06:03:29,726 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-15 06:03:30,739 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-15 06:03:30,759 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-15 06:03:30,760 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-15 06:03:59,089 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-15 06:04:19,529 - celery.beat - INFO - beat: Starting...
+2022-05-15 06:04:19,604 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 06:04:19,611 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b0250a80-79f4-48cc-aaf8-cf5a0a1b7b39] received
+2022-05-15 06:04:21,027 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b0250a80-79f4-48cc-aaf8-cf5a0a1b7b39] succeeded in 1.4147976009999752s: None
+2022-05-15 06:19:19,609 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 06:19:19,612 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b5aaa484-0757-451e-8eb2-f668e4abfe79] received
+2022-05-15 06:19:20,640 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b5aaa484-0757-451e-8eb2-f668e4abfe79] succeeded in 1.026817458000096s: None
+2022-05-15 06:34:19,613 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 06:34:19,615 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5a4ea00a-7644-411f-a97f-a6c3a3a5d34f] received
+2022-05-15 06:34:21,305 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5a4ea00a-7644-411f-a97f-a6c3a3a5d34f] succeeded in 1.6879922109997096s: None
+2022-05-15 06:49:19,621 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 06:49:19,624 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8e3455f8-3e65-420b-ba98-43a8ff8c3f4e] received
+2022-05-15 06:49:20,681 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8e3455f8-3e65-420b-ba98-43a8ff8c3f4e] succeeded in 1.0558503859997472s: None
+2022-05-15 07:04:19,629 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 07:04:19,631 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d0ba55dc-b767-4567-bfaf-134e1dbd5345] received
+2022-05-15 07:04:20,602 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d0ba55dc-b767-4567-bfaf-134e1dbd5345] succeeded in 0.9688271340000938s: None
+2022-05-15 07:19:19,636 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 07:19:19,639 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3196b0cf-b592-4237-9b36-1eb040b79125] received
+2022-05-15 07:19:20,583 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3196b0cf-b592-4237-9b36-1eb040b79125] succeeded in 0.9425648280002861s: None

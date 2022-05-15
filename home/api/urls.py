@@ -6,7 +6,7 @@ from home.api.api import (
     FilteredSource, FilteredSourceForFeed, FilteredListForFeed,
     FilteredArticles, list_change_subscribtion_status, source_change_subscribtion_status,
     delete_source_from_list, delete_list, sources_add, source_rate, list_rate,
-    article_highlight, lists_add_article, profile_add_website_link,
+    article_highlight, list_change_article_status, profile_add_website_link,
     profile_pic_delete, profile_banner_delete, social_link_delete,
     social_links_add, notification_change_source, notification_change_list,
     social_link_change, delete_article_from_list)
@@ -29,8 +29,7 @@ urlpatterns = [
     path('rate_source/<str:source>/<int:rating>', source_rate),
     path('rate_list/<int:list_id>/<int:rating>', list_rate),
     path('highlight_article/<int:article_id>', article_highlight),
-    path('add_article_to_lists/<int:article_id>/<str:list_ids>',
-         lists_add_article),
+    path('list_change_article_status/<int:article_id>/<str:lists_status>', list_change_article_status),
     path('profile_add_website_link/<str:website>/<str:link>',
          profile_add_website_link),
     path('delete_profile_pic', profile_pic_delete),

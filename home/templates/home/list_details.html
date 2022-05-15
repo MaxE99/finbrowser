@@ -174,7 +174,10 @@
                 <div class="article" id="article{{ article.article_id }}">
                     <i class="fas fa-times"></i>
                     {% if article.source %}
-                    <img src="{% static article.source.favicon_path %}" />
+                    <div class="authorImageContainer">
+                        <img src="{% static article.source.favicon_path %}" />
+                        <a href="{{ article.source.get_absolute_url }}"></a>
+                    </div>
                     <div class="articleInformationContainer">
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
@@ -275,7 +278,10 @@
             <div class="articlesContainer">
                 {% for article in latest_articles %}
                 <div class="article">
-                    <img src="{% static article.source.favicon_path %}" />
+                    <div class="authorImageContainer">
+                        <img src="{% static article.source.favicon_path %}" />
+                        <a href="{{ article.source.get_absolute_url }}"></a>
+                    </div>
                     <div class="articleInformationContainer">
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
@@ -367,7 +373,10 @@
     <div class="singleArticlesContainer">
         {% for article in latest_articles %}
         <div class="article">
-            <img src="{% static article.source.favicon_path %}" />
+            <div class="authorImageContainer">
+                <img src="{% static article.source.favicon_path %}" />
+                <a href="{{ article.source.get_absolute_url }}"></a>
+            </div>
             <div class="articleInformationContainer">
                 <div class="articleTitle">{{ article.title }}</div>
                 <div class="articleSectorAndDateContainer">
