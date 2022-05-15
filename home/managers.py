@@ -9,7 +9,7 @@ class ListManager(models.Manager):
         list_ids = list_ids.split(",")
         for list_id in list_ids:
             list = self.get(list_id=list_id)
-            list.articles.add(article)
+            list.articles.add(article)                
 
     def get_created_lists(self, user):
         return self.filter(creator=user).order_by('name')

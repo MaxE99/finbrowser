@@ -96,9 +96,9 @@ class Article(models.Model):
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=500)
     link = models.URLField(unique=True)
-    pub_date = models.DateField()
-    source = models.ForeignKey(Source, null=True, on_delete=models.SET_NULL)
-    external_source = models.ForeignKey(ExternalSource,
+    pub_date = models.DateTimeField()
+    source = models.ForeignKey(Source, blank=True, null=True, on_delete=models.SET_NULL)
+    external_source = models.ForeignKey(ExternalSource, blank=True,
                                         null=True,
                                         on_delete=models.SET_NULL)
     external_id = models.CharField(unique=True, null=True, blank=True, max_length=100)

@@ -146,7 +146,10 @@
         {% for article in highlighted_articles %}
         <div class="article" id="article{{ article.article_id }}">
             {% if article.article.source %}
-            <img src="{% static article.article.source.favicon_path %}" />
+            <div class="authorImageContainer">
+                <img src="{% static article.article.source.favicon_path %}" />
+                <a href="{{ article.article.source.get_absolute_url }}"></a>
+            </div>
             <div class="articleInformationContainer">
                 <div class="articleTitle">{{ article.article.title }}</div>
                 <div class="articleSectorAndDateContainer">

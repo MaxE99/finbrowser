@@ -253,24 +253,30 @@ document.querySelectorAll(".addToListForm .fa-times").forEach((element) => {
 document
   .querySelectorAll(".addToListForm .saveButton")
   .forEach((saveButton) => {
-    let list_ids;
     saveButton.addEventListener("click", async () => {
       let article_id = saveButton.parentElement.parentElement.parentElement.id;
       article_id = article_id.replace("article", "");
+      let lists_status;
       saveButton.parentElement.previousElementSibling
         .querySelectorAll("input")
         .forEach((input) => {
           if (input.checked) {
-            if (list_ids) {
-              list_ids += "," + input.value;
+            if (lists_status == undefined) {
+              lists_status = "True";
             } else {
-              list_ids = input.value;
+              lists_status += "," + "True";
+            }
+          } else {
+            if (lists_status == undefined) {
+              lists_status = "False";
+            } else {
+              lists_status += "," + "False";
             }
           }
         });
       try {
         const res = await fetch(
-          `http://127.0.0.1:8000/api/add_article_to_lists/${article_id}/${list_ids}`,
+          `http://127.0.0.1:8000/api/list_change_article_status/${article_id}/${lists_status}`,
           get_fetch_settings("POST")
         );
         if (!res.ok) {
@@ -297,15 +303,13 @@ document.querySelectorAll(".createNewListButton").forEach((button) => {
 });
 
 // close list create menu
-if(document
-  .querySelector(".createListMenu .closeFormContainerButton")){
-    document
+if (document.querySelector(".createListMenu .closeFormContainerButton")) {
+  document
     .querySelector(".createListMenu .closeFormContainerButton")
     .addEventListener("click", () => {
       document.querySelector(".createListMenu").style.display = "none";
     });
-  }
-
+}
 
 // select sources
 document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
@@ -315,7 +319,7 @@ document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
   });
 });
 
-if(document.querySelector("details")){
+if (document.querySelector("details")) {
   document.querySelector("details").addEventListener("click", () => {
     document.onclick = function (e) {
       if (e.target != document.querySelector("summary ul")) {
@@ -324,7 +328,6 @@ if(document.querySelector("details")){
     };
   });
 }
-
 
 // Carousell Container Functionality
 // const sliderContent = document.querySelector(".slider-content");
@@ -414,7 +417,6 @@ if(document.querySelector("details")){
 //     localStorage.setItem("cookieBannerDisplayed", "true");
 //   });
 // }
-
 
 // setTimeout(() => {
 //   if (!localStorage.getItem("cookieBannerDisplayed")) {

@@ -5,11 +5,8 @@ from celery import shared_task
 from django.shortcuts import get_object_or_404
 # Python imports
 import tweepy
-
+from datetime import datetime
 import logging
-import os
-import sys
-from celery import Celery
 from celery.signals import after_setup_logger
 
 @after_setup_logger.connect
@@ -46,7 +43,7 @@ def scrape_twitter():
     else:
         statuses = api.home_timeline(count=200, tweet_mode='extended')
     # printing the screen names of each status
-    logger.info(len(statuses))
+    # logger.info(len(statuses))
     for status in statuses:
         if Article.objects.filter(external_id=status.id).exists():
             continue

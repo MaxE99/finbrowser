@@ -153,7 +153,10 @@
 <div class="articlesContainer">
     {% for article in subscribed_articles %}
     <div class="article">
-        <img src="{% static article.source.favicon_path %}" />
+        <div class="authorImageContainer">
+            <img src="{% static article.source.favicon_path %}" />
+            <a href="{{ article.source.get_absolute_url }}"></a>
+        </div>
         <div class="articleInformationContainer">
             <div class="articleTitle">{{ article.title }}</div>
             <div class="articleSectorAndDateContainer">
@@ -238,7 +241,10 @@
     {% for article in highlighted_articles %}
     <div class="article" id="article{{ article.article_id }}">
         {% if article.article.source %}
-        <img src="{% static article.article.source.favicon_path %}" />
+        <div class="authorImageContainer">
+            <img src="{% static article.article.source.favicon_path %}" />
+            <a href="{{ article.article.source.get_absolute_url }}"></a>
+        </div>
         <div class="articleInformationContainer">
             <div class="articleTitle">{{ article.article.title }}</div>
             <div class="articleSectorAndDateContainer">
@@ -266,7 +272,7 @@
             </div>
         </div>
         {% endif %}
-        <a class="articleLink" href="{{ article.link }}"></a>
+        <a class="articleLink" href="{{ article.article.link }}"></a>
         <i class="fas fa-ellipsis-h"></i>
         <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
             <div class="addToList"><i class="fas fa-list"></i>Add to list</div>

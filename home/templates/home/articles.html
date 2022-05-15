@@ -98,7 +98,10 @@
 <div class="articlesContainer">
     {% for article in search_articles %}
     <div class="article" id="article{{ article.article_id }}">
-        <img src="{% static article.source.favicon_path %}" />
+        <div class="authorImageContainer">
+            <img src="{% static article.source.favicon_path %}" />
+            <a href="{{ article.source.get_absolute_url }}"></a>
+        </div>
         <div class="articleInformationContainer">
             <div class="articleTitle">{{ article.title }}</div>
             <div class="articleSectorAndDateContainer">
