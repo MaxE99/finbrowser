@@ -25,7 +25,7 @@
                     {{ email_and_name_change_form.username.label_tag }}
                     {{ email_and_name_change_form.username }}
                 </div>
-                <div class="emailContainer">
+                <div class="emailContainer" id="{{ user.profile.id }}">
                     {{ email_and_name_change_form.email.label_tag }}
                     {{ email_and_name_change_form.email }}
                 </div>
@@ -66,9 +66,10 @@
             <label>Edit Social Links:</label>
             {% for social in social_links %}
             <div class="existingSocialContainer">
-                <img class="{{ social.website.name }}" src="{% static social.website.favicon %}" alt="">
+                <img class="{{ social.website.name }}" src="{% static social.website.favicon %}"
+                    id="existing_website_id_{{ social.website.id }}" alt="">
                 <input type="text" value="{{ social.url }}">
-                <button type="button" class="removeSocialLinkButton">Remove</button>
+                <button type="button" class="removeSocialLinkButton" id="social_link_id_{{ social.id }}">Remove</button>
                 <button type="button" class="saveSocialLinkChanges">Save</button>
             </div>
             {% endfor %}
@@ -79,7 +80,8 @@
                             <summary><i class="fa fa-caret-down"></i></summary>
                             <ul>
                                 {% for website in websites %}
-                                <li><img class="{{ website.name }}" src="{% static website.favicon %}" alt=""></li>
+                                <li><img class="{{ website.name }}" src="{% static website.favicon %}" alt=""
+                                        id="website_id_{{ website.id }}"></li>
                                 {% endfor %}
                             </ul>
                         </details>

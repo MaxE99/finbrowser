@@ -17,7 +17,7 @@ if (subscribeButton) {
         const list_id = url.substring(index + 1);
         let action = subscribeButton.innerText;
         const res = await fetch(
-          `../api/list_change_subscribtion_status/${list_id}`,
+          `http://127.0.0.1:8000/api/lists/${list_id}/list_change_subscribtion_status/`,
           get_fetch_settings("POST")
         );
         if (!res.ok) {
@@ -65,11 +65,11 @@ function openEditMenu() {
           .id.replace("list_detail_for_", "");
         const article_id = closeButton.parentElement.id.replace("article", "");
         const res = await fetch(
-          `../api/delete_article_from_list/${list_id}/${article_id}`,
+          `http://127.0.0.1:8000/api/lists/${list_id}/delete_article_from_list/${article_id}/`,
           get_fetch_settings("DELETE")
         );
         if (!res.ok) {
-          showMessage("Error: List can't be subscribed!", "Error");
+          showMessage("Error: Article can't be deleted!", "Error");
         } else {
           const context = await res.json();
           showMessage(context, "Success");
@@ -88,11 +88,9 @@ function openEditMenu() {
           const list_id = document
             .querySelector(".rightFirstRowContainer h3")
             .id.replace("list_detail_for_", "");
-          const source =
-            trashButton.nextElementSibling.nextElementSibling.children[0]
-              .innerText;
+          const source_id = trashButton.id.replace("source_id_", "");
           const res = await fetch(
-            `../api/delete_source_from_list/${list_id}/${source}`,
+            `http://127.0.0.1:8000/api/lists/${list_id}/delete_source_from_list/${source_id}/`,
             get_fetch_settings("DELETE")
           );
           if (!res.ok) {
@@ -129,7 +127,7 @@ if (document.querySelector(".deleteListButton")) {
         const index = url.lastIndexOf("/");
         const list_id = url.substring(index + 1);
         const res = await fetch(
-          `../api/delete_list/${list_id}`,
+          `http://127.0.0.1:8000/api/lists/${list_id}/`,
           get_fetch_settings("DELETE")
         );
         if (!res.ok) {
@@ -190,7 +188,7 @@ document
             resultHeader.innerText = "Results:";
             results_list.append(resultHeader);
             context.forEach((source) => {
-              if (selected_sources.includes(source.name) == false) {
+              if (selected_sources.includes(source.source_id) == false) {
                 const searchResult = document.createElement("div");
                 searchResult.classList.add("searchResult");
                 const resultImage = document.createElement("img");
@@ -207,17 +205,17 @@ document
                       "click",
                       addSelectedSource
                     );
-                    selected_sources.push(source.name);
+                    selected_sources.push(source.source_id);
                     const removeSourceButton = document.createElement("i");
                     removeSourceButton.classList.add("fas", "fa-trash");
+                    removeSourceButton.id =
+                      "remove_source_id_" + source.source_id;
                     removeSourceButton.addEventListener("click", () => {
                       removeSourceButton.parentElement.remove();
-                      selected_sources = selected_sources.filter(function (e) {
-                        return (
-                          e !==
-                          removeSourceButton.previousElementSibling.innerText
-                        );
-                      });
+                      const index = selected_sources.indexOf(
+                        removeSourceButton.id.replace("remove_source_id_", "")
+                      );
+                      selected_sources.splice(index, 1); // 2nd parameter means remove one item only
                     });
                     searchResult.appendChild(removeSourceButton);
                     selected_list.appendChild(searchResult);
@@ -247,20 +245,23 @@ document
     const index = url.lastIndexOf("/");
     const list_id = url.substring(index + 1);
     if (selected_sources.length) {
-      try {
-        const res = await fetch(
-          `../api/add_sources/${selected_sources}/${list_id}`,
-          get_fetch_settings("POST")
-        );
-        if (!res.ok) {
-          showMessage("Error: List can't be subscribed!", "Error");
-        } else {
-          const context = await res.json();
-          showMessage(context, "Success");
-          window.location.reload();
+      for (let i = 0, j = selected_sources.length; i < j; i++) {
+        try {
+          const res = await fetch(
+            `http://127.0.0.1:8000/api/lists/${list_id}/add_source/${selected_sources[i]}/`,
+            get_fetch_settings("POST")
+          );
+          if (!res.ok) {
+            showMessage("Error: List can't be subscribed!", "Error");
+          } else {
+            console.log(res);
+            const context = await res.json();
+            showMessage(context, "Success");
+            window.location.reload();
+          }
+        } catch (e) {
+          showMessage("Error: Network error detected!", "Error");
         }
-      } catch (e) {
-        showMessage("Error: Network error detected!", "Error");
       }
     } else {
       showMessage("You need to select sources!", "Error");
@@ -351,15 +352,22 @@ document.querySelectorAll(".rankingStar").forEach((star) => {
   star.addEventListener("click", async (e) => {
     const id = e.target.id;
     // value of the rating translated into numeric
-    const val_num = getNumericValue(id);
+    const rating = getNumericValue(id);
     const url = window.location.href;
     const index = url.lastIndexOf("/");
     const list_id = url.substring(index + 1);
     try {
-      const res = await fetch(
-        `../../api/rate_list/${list_id}/${val_num}`,
-        get_fetch_settings("POST")
-      );
+      const data = { list_id: list_id, rating: rating };
+      const res = await fetch(`http://127.0.0.1:8000/api/list_ratings/`, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        mode: "same-origin",
+        body: JSON.stringify(data),
+      });
       if (!res.ok) {
         showMessage("Error: Source can't be subscribed!", "Error");
       } else {
