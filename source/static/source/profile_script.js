@@ -3,12 +3,12 @@ const subscribeButton = document.querySelector(".subscribeButton");
 subscribeButton.addEventListener("click", async () => {
   if (!subscribeButton.classList.contains("registrationLink")) {
     try {
-      const url = window.location.href;
-      const index = url.lastIndexOf("/");
-      const domain = url.substring(index + 1);
+      const source_id = document
+        .querySelector(".upperInnerContainer h3")
+        .id.replace("source_id_", "");
       const action = subscribeButton.innerText;
       const res = await fetch(
-        `../../api/source_change_subscribtion_status/${domain}`,
+        `http://127.0.0.1:8000/api/sources/${source_id}/source_change_subscribtion_status/`,
         get_fetch_settings("POST")
       );
       if (!res.ok) {
@@ -25,6 +25,7 @@ subscribeButton.addEventListener("click", async () => {
         }
       }
     } catch (e) {
+      console.log(e);
       showMessage("Error: Network error detected!", "Error");
     }
   }
@@ -114,15 +115,22 @@ document.querySelectorAll(".rankingStar").forEach((star) => {
   star.addEventListener("click", async (e) => {
     const id = e.target.id;
     // value of the rating translated into numeric
-    const val_num = getNumericValue(id);
-    const url = window.location.href;
-    const index = url.lastIndexOf("/");
-    const list_id = url.substring(index + 1);
+    const rating = getNumericValue(id);
+    const source_id = document
+      .querySelector(".upperInnerContainer h3")
+      .id.replace("source_id_", "");
     try {
-      const res = await fetch(
-        `../../api/rate_source/${list_id}/${val_num}`,
-        get_fetch_settings("POST")
-      );
+      const data = { source_id: source_id, rating: rating };
+      const res = await fetch(`http://127.0.0.1:8000/api/source_ratings/`, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        mode: "same-origin",
+        body: JSON.stringify(data),
+      });
       if (!res.ok) {
         showMessage("Error: Source can't be subscribed!", "Error");
       } else {
@@ -145,19 +153,13 @@ if (document.querySelector(".avgRating span")) {
 }
 
 // open rate list menu
-const rateListButton = document.querySelector(".rateListButton");
-rateListButton
-  .querySelector(".rateListButton")
-  .addEventListener("click", () => {
-    if (!rateListButton.classList.contains("registrationLink")) {
-      document.querySelector(".rate-formUpperContainer").style.display =
-        "block";
-      document.querySelector(".rating").style.opacity = "0";
-      document.querySelector(".ratingsAmmountContainer").style.opacity = "0";
-      document.querySelector(".rateListButton").style.opacity = "0";
-      document.querySelector(".rankingsHeader").style.opacity = "0";
-    }
-  });
+document.querySelector(".openRateListButton").addEventListener("click", () => {
+  document.querySelector(".rate-formUpperContainer").style.display = "block";
+  document.querySelector(".rating").style.opacity = "0";
+  document.querySelector(".ratingsAmmountContainer").style.opacity = "0";
+  document.querySelector(".rateListButton").style.opacity = "0";
+  document.querySelector(".rankingsHeader").style.opacity = "0";
+});
 
 // if user already rated source = set stars to this rating
 const user_rating = document.getElementById("user-rating").innerText;

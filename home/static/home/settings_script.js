@@ -46,10 +46,10 @@ async function deleteSocialLinks(e) {
   const socialContainer = e.target.parentElement;
   socialContainer.remove();
   if (!socialContainer.classList.contains("newlyAdded")) {
-    const website = socialContainer.querySelector("img").className;
+    const social_link_id = e.target.id.replace("social_link_id_", "");
     try {
       const res = await fetch(
-        `../api/delete_social_link/${website}`,
+        `http://127.0.0.1:8000/api/social_links/${social_link_id}/`,
         get_fetch_settings("DELETE")
       );
       if (!res.ok) {
@@ -64,36 +64,37 @@ async function deleteSocialLinks(e) {
   }
 }
 
-// add websites to profile
-const saveButton = document.querySelector(".editSection .saveButton");
-saveButton.addEventListener("click", async () => {
-  const website =
-    saveButton.previousElementSibling.previousElementSibling.previousElementSibling.querySelector(
-      "summary span"
-    ).innerText;
-  const link = saveButton.previousElementSibling.value;
-  try {
-    const res = await fetch(
-      `../api/profile_add_website_link/${website}/${link}`,
-      get_fetch_settings("POST")
-    );
-    if (!res.ok) {
-      showMessage("Error: List couldn't be filtered!", "Error");
-    } else {
-      const context = await res.json();
-      showMessage(context, "Success");
-    }
-  } catch (e) {
-    showMessage("Error: Network error detected!", "Error");
-  }
-});
+// // add websites to profile
+// const saveButton = document.querySelector(".editSection .saveButton");
+// saveButton.addEventListener("click", async () => {
+//   const website =
+//     saveButton.previousElementSibling.previousElementSibling.previousElementSibling.querySelector(
+//       "summary span"
+//     ).innerText;
+//   const link = saveButton.previousElementSibling.value;
+//   try {
+//     const res = await fetch(
+//       `../api/profile_add_website_link/${website}/${link}`,
+//       get_fetch_settings("POST")
+//     );
+//     if (!res.ok) {
+//       showMessage("Error: List couldn't be filtered!", "Error");
+//     } else {
+//       const context = await res.json();
+//       showMessage(context, "Success");
+//     }
+//   } catch (e) {
+//     showMessage("Error: Network error detected!", "Error");
+//   }
+// });
 
 document
   .querySelector(".removeProfilePicButton")
   .addEventListener("click", async () => {
+    const user = document.querySelector(".emailContainer").id;
     try {
       const res = await fetch(
-        `../api/delete_profile_pic`,
+        `http://127.0.0.1:8000/api/profiles/${user}/profile_pic_delete/`,
         get_fetch_settings("DELETE")
       );
       if (!res.ok) {
@@ -110,9 +111,10 @@ document
 document
   .querySelector(".removeProfileBannerButton")
   .addEventListener("click", async () => {
+    const user = document.querySelector(".emailContainer").id;
     try {
       const res = await fetch(
-        `../api/delete_profile_banner`,
+        `http://127.0.0.1:8000/api/profiles/${user}/profile_banner_delete/`,
         get_fetch_settings("DELETE")
       );
       if (!res.ok) {
@@ -132,8 +134,9 @@ addSocialLinkButton.addEventListener("click", async () => {
     addSocialLinkButton.parentElement.querySelector("input").value;
   const website_img =
     addSocialLinkButton.parentElement.querySelector("summary img").src;
-  const websiteName =
-    addSocialLinkButton.parentElement.querySelector("summary img").className;
+  const websiteID = addSocialLinkButton.parentElement
+    .querySelector("summary img")
+    .id.replace("website_id_", "");
   const existingSocialContainer = document.createElement("div");
   existingSocialContainer.classList.add(
     "existingSocialContainer",
@@ -141,7 +144,6 @@ addSocialLinkButton.addEventListener("click", async () => {
   );
   const social_img = document.createElement("img");
   social_img.src = website_img;
-  social_img.classList.add(websiteName);
   const social_input = document.createElement("input");
   social_input.type = "text";
   social_input.value = website_link;
@@ -160,10 +162,17 @@ addSocialLinkButton.addEventListener("click", async () => {
   ).innerHTML = `<i class="fa fa-caret-down"></i>`;
   document.querySelector(".linkInput").value = "";
   try {
-    const res = await fetch(
-      `../api/add_social_links/${websiteName}/"${website_link}"`,
-      get_fetch_settings("POST")
-    );
+    const data = { website: websiteID, url: website_link };
+    const res = await fetch(`http://127.0.0.1:8000/api/social_links/`, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": getCookie("csrftoken"),
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      mode: "same-origin",
+      body: JSON.stringify(data),
+    });
     if (!res.ok) {
       showMessage("Error: List couldn't be filtered!", "Error");
     } else {
@@ -203,12 +212,28 @@ for (let i = 0, j = socialLinkInput.length; i < j; i++) {
 
 document.querySelectorAll(".saveSocialLinkChanges").forEach((socialLink) => {
   socialLink.addEventListener("click", async () => {
-    const website = socialLink.parentElement.querySelector("img").className;
-    const newLink = socialLink.parentElement.querySelector("input").value;
+    const social_link_id = socialLink.previousElementSibling.id.replace(
+      "social_link_id_",
+      ""
+    );
+    const websiteID = socialLink.parentElement
+      .querySelector("img")
+      .id.replace("existing_website_id_", "");
+    const website_link = socialLink.parentElement.querySelector("input").value;
     try {
+      const data = { website: websiteID, url: website_link };
       const res = await fetch(
-        `../api/change_social_link/${website}/"${newLink}"`,
-        get_fetch_settings("POST")
+        `http://127.0.0.1:8000/api/social_links/${social_link_id}/`,
+        {
+          method: "PUT",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          mode: "same-origin",
+          body: JSON.stringify(data),
+        }
       );
       if (!res.ok) {
         showMessage("Error: Link couldn't be changed!", "Error");
@@ -218,6 +243,7 @@ document.querySelectorAll(".saveSocialLinkChanges").forEach((socialLink) => {
         window.location.reload();
       }
     } catch (e) {
+      console.log(e);
       showMessage("Error: Network error detected!", "Error");
     }
   });

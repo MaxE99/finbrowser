@@ -513,3 +513,267 @@ django.core.exceptions.ValidationError: ['â€œYYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]â
 2022-05-15 07:19:19,636 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
 2022-05-15 07:19:19,639 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3196b0cf-b592-4237-9b36-1eb040b79125] received
 2022-05-15 07:19:20,583 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3196b0cf-b592-4237-9b36-1eb040b79125] succeeded in 0.9425648280002861s: None
+2022-05-15 07:34:19,645 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 07:34:19,647 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[333fbfe9-f1d1-4d8c-b87a-7efcd816641f] received
+2022-05-15 07:34:20,651 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[333fbfe9-f1d1-4d8c-b87a-7efcd816641f] succeeded in 1.0023042969996823s: None
+2022-05-15 07:49:19,650 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 07:49:19,652 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c4292f81-25e1-441e-a9de-4f682567ed03] received
+2022-05-15 07:49:25,664 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c4292f81-25e1-441e-a9de-4f682567ed03] succeeded in 6.01083675100017s: None
+2022-05-15 08:04:19,651 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 08:04:19,653 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c885b932-1e73-4ce9-9057-401b80b6ccd4] received
+2022-05-15 08:04:20,689 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c885b932-1e73-4ce9-9057-401b80b6ccd4] succeeded in 1.0345966639997641s: None
+2022-05-15 08:19:19,654 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 08:19:19,656 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[85cc670c-e26a-4dfd-ba76-7156ff7182d3] received
+2022-05-15 08:19:20,596 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[85cc670c-e26a-4dfd-ba76-7156ff7182d3] succeeded in 0.9384977319987229s: None
+2022-05-15 08:34:19,660 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 08:34:19,663 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[cf3997f9-73aa-4203-9b19-ef7123825aa3] received
+2022-05-15 08:34:20,747 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[cf3997f9-73aa-4203-9b19-ef7123825aa3] succeeded in 1.0831241819996649s: None
+2022-05-15 08:49:19,668 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 08:49:19,671 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e9be7b78-a570-4083-8479-3ce0004f20e0] received
+2022-05-15 08:49:20,734 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e9be7b78-a570-4083-8479-3ce0004f20e0] succeeded in 1.0619436870001664s: None
+2022-05-15 09:04:19,677 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 09:04:19,679 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e1bb0ddf-b992-4cfc-85c8-86a93b0086a8] received
+2022-05-15 09:04:20,728 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e1bb0ddf-b992-4cfc-85c8-86a93b0086a8] succeeded in 1.0476529040006426s: None
+2022-05-15 09:19:19,684 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 09:19:19,686 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1c1d6a11-cd82-45e8-af65-9c63c2017389] received
+2022-05-15 09:19:20,728 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1c1d6a11-cd82-45e8-af65-9c63c2017389] succeeded in 1.0407590319991868s: None
+2022-05-15 09:34:19,689 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 09:34:19,690 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d76b3e7e-edb4-4411-a52e-5dd8418f6457] received
+2022-05-15 09:34:20,793 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d76b3e7e-edb4-4411-a52e-5dd8418f6457] succeeded in 1.1009754080005223s: None
+2022-05-15 09:49:19,698 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 09:49:19,700 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7541934d-8c03-47ed-82d9-6bc5676975e6] received
+2022-05-15 09:49:20,824 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7541934d-8c03-47ed-82d9-6bc5676975e6] succeeded in 1.1221691869995993s: None
+2022-05-15 10:04:19,707 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 10:04:19,709 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e49214f6-1392-45b4-8cd5-3e4481587453] received
+2022-05-15 10:04:20,620 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e49214f6-1392-45b4-8cd5-3e4481587453] succeeded in 0.9095417999997153s: None
+2022-05-15 10:19:19,714 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 10:19:19,715 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c0c40403-9068-4a2a-8294-da80f6637764] received
+2022-05-15 10:19:20,752 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c0c40403-9068-4a2a-8294-da80f6637764] succeeded in 1.0352385839996714s: None
+2022-05-15 10:34:19,718 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 10:34:19,721 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f10a860c-0704-4f23-8b68-1a56895db285] received
+2022-05-15 10:34:32,181 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f10a860c-0704-4f23-8b68-1a56895db285] succeeded in 12.45846082800199s: None
+2022-05-15 10:49:19,725 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 10:49:19,729 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d87b2307-2f6b-477b-90be-deddca016c67] received
+2022-05-15 10:49:20,735 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d87b2307-2f6b-477b-90be-deddca016c67] succeeded in 1.004684849998739s: None
+2022-05-15 11:04:19,733 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 11:04:19,736 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5bf5b57c-762e-45a2-b9c9-c11646036b53] received
+2022-05-15 11:04:20,698 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5bf5b57c-762e-45a2-b9c9-c11646036b53] succeeded in 0.9611234969997895s: None
+2022-05-15 11:19:19,741 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 11:19:19,744 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a74a1dd4-b257-408f-ae7c-7531c3b0099a] received
+2022-05-15 11:19:20,751 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a74a1dd4-b257-408f-ae7c-7531c3b0099a] succeeded in 1.005611074000626s: None
+2022-05-15 11:34:19,743 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 11:34:19,745 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[de3de3fb-e00a-48f4-bbeb-0865e1557fc3] received
+2022-05-15 11:34:20,827 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[de3de3fb-e00a-48f4-bbeb-0865e1557fc3] succeeded in 1.079889598000591s: None
+2022-05-15 11:49:19,751 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 11:49:19,754 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[251e9d2a-f4cf-4bc7-bc1c-2d307e9b3e95] received
+2022-05-15 11:49:20,799 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[251e9d2a-f4cf-4bc7-bc1c-2d307e9b3e95] succeeded in 1.0442504599996028s: None
+2022-05-15 12:04:19,760 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 12:04:19,762 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c56ec1ec-e79a-40c1-9732-71a93dea8b97] received
+2022-05-15 12:04:20,807 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c56ec1ec-e79a-40c1-9732-71a93dea8b97] succeeded in 1.0433865410013823s: None
+2022-05-15 12:19:19,768 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 12:19:19,771 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a0417b0a-78f4-4a14-b283-80b6afb17a08] received
+2022-05-15 12:19:20,846 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a0417b0a-78f4-4a14-b283-80b6afb17a08] succeeded in 1.0730322370000067s: None
+2022-05-15 12:34:19,776 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 12:34:19,779 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2efa742b-9b11-4281-8214-65dbbb16e4fa] received
+2022-05-15 12:34:20,870 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2efa742b-9b11-4281-8214-65dbbb16e4fa] succeeded in 1.0889358870008436s: None
+2022-05-15 12:49:19,784 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 12:49:19,786 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6f6dd62c-8481-4c70-a74e-6bc1adaa25b5] received
+2022-05-15 12:49:20,840 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6f6dd62c-8481-4c70-a74e-6bc1adaa25b5] succeeded in 1.0519879430030414s: None
+2022-05-15 13:04:19,791 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 13:04:19,793 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[4877a3ff-cd13-47d7-9f67-1f2b51070d2b] received
+2022-05-15 13:04:20,856 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[4877a3ff-cd13-47d7-9f67-1f2b51070d2b] succeeded in 1.0612804999982473s: None
+2022-05-15 13:19:19,798 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 13:19:19,800 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[49b2388d-796d-45aa-8b0e-26cf41ceab8d] received
+2022-05-15 13:19:20,847 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[49b2388d-796d-45aa-8b0e-26cf41ceab8d] succeeded in 1.0460207639989676s: None
+2022-05-15 13:34:19,804 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 13:34:19,806 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5ac6520d-0816-416d-b5d2-517a9f444c71] received
+2022-05-15 13:34:20,905 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5ac6520d-0816-416d-b5d2-517a9f444c71] succeeded in 1.09683028499785s: None
+2022-05-15 13:49:19,813 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 13:49:19,816 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8e552832-3f1b-4f60-9010-9363fce7e4fc] received
+2022-05-15 13:49:20,842 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8e552832-3f1b-4f60-9010-9363fce7e4fc] succeeded in 1.0248260299995309s: None
+2022-05-15 14:04:19,822 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 14:04:19,825 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[75d85dcf-8bd9-440d-82ea-6decc685a5f8] received
+2022-05-15 14:04:20,918 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[75d85dcf-8bd9-440d-82ea-6decc685a5f8] succeeded in 1.092042811000283s: None
+2022-05-15 14:19:19,830 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 14:19:19,832 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[634a7e49-d36c-43ca-8985-8d0efb983c21] received
+2022-05-15 14:19:20,930 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[634a7e49-d36c-43ca-8985-8d0efb983c21] succeeded in 1.096971050999855s: None
+2022-05-15 14:34:19,838 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 14:34:19,841 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[961ab1a7-790c-464a-9283-685087c052aa] received
+2022-05-15 14:34:20,946 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[961ab1a7-790c-464a-9283-685087c052aa] succeeded in 1.1038280469983874s: None
+2022-05-15 14:49:19,848 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 14:49:19,852 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c9ffbfd8-a067-4a63-ad92-b820d2a130d5] received
+2022-05-15 14:49:20,955 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c9ffbfd8-a067-4a63-ad92-b820d2a130d5] succeeded in 1.1017984110003454s: None
+2022-05-15 15:04:19,849 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 15:04:19,850 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b8b414c5-bdf1-410b-be83-8898491e5f7f] received
+2022-05-15 15:04:20,844 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b8b414c5-bdf1-410b-be83-8898491e5f7f] succeeded in 0.9928378679978778s: None
+2022-05-15 15:19:19,857 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 15:19:19,859 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c67be617-ac29-4199-aa6d-890005bb0aaa] received
+2022-05-15 15:19:21,020 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c67be617-ac29-4199-aa6d-890005bb0aaa] succeeded in 1.1604612469964195s: None
+2022-05-15 15:34:19,865 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 15:34:19,869 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2e2ab8fa-13f0-4487-885e-26b8d746cc25] received
+2022-05-15 15:34:20,989 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2e2ab8fa-13f0-4487-885e-26b8d746cc25] succeeded in 1.1178659559955122s: None
+2022-05-15 15:49:19,873 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 15:49:19,876 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[aa233262-de23-461c-9ea0-3471b235fece] received
+2022-05-15 15:49:21,089 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[aa233262-de23-461c-9ea0-3471b235fece] succeeded in 1.2116717239987338s: None
+2022-05-15 16:04:19,881 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 16:04:19,884 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ae6ec147-8569-47f5-8bdb-cae0d1aa3b7f] received
+2022-05-15 16:04:20,840 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ae6ec147-8569-47f5-8bdb-cae0d1aa3b7f] succeeded in 0.955031568002596s: None
+2022-05-15 16:19:19,889 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 16:19:19,891 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[10457b87-834b-47b9-ae7d-5a6f8ef73be9] received
+2022-05-15 16:19:20,974 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[10457b87-834b-47b9-ae7d-5a6f8ef73be9] succeeded in 1.0816527050046716s: None
+2022-05-15 16:34:19,889 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 16:34:19,890 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6068a705-69e3-4e3d-b8e1-a6ad8874d7bc] received
+2022-05-15 16:34:20,976 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6068a705-69e3-4e3d-b8e1-a6ad8874d7bc] succeeded in 1.084029563004151s: None
+2022-05-15 16:49:19,897 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 16:49:19,901 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8109696d-4a24-4325-a3c1-c0998bcac883] received
+2022-05-15 16:49:20,863 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8109696d-4a24-4325-a3c1-c0998bcac883] succeeded in 0.9598387660007575s: None
+2022-05-15 17:04:19,907 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 17:04:19,909 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[4e7a3550-0825-4c02-8f14-465900a85a05] received
+2022-05-15 17:04:20,962 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[4e7a3550-0825-4c02-8f14-465900a85a05] succeeded in 1.0509080920019187s: None
+2022-05-15 17:19:19,913 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-15 17:19:19,915 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1885db25-79e3-46ff-ab16-4ec4b3ff30f6] received
+2022-05-15 17:19:20,989 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1885db25-79e3-46ff-ab16-4ec4b3ff30f6] succeeded in 1.072206360004202s: None
+2022-05-16 06:31:28,696 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-16 06:31:29,188 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-16 06:31:29,192 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-16 06:31:29,198 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-16 06:31:30,211 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-16 06:31:30,234 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-16 06:31:30,234 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-16 06:31:52,646 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-16 06:32:03,510 - celery.beat - INFO - beat: Starting...
+2022-05-16 06:32:03,583 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 06:32:03,591 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f965ef04-c532-4e7f-840b-9c5e44f53675] received
+2022-05-16 06:32:04,722 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f965ef04-c532-4e7f-840b-9c5e44f53675] succeeded in 1.1300137550001637s: None
+2022-05-16 06:47:03,590 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 06:47:03,594 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[716d2a7a-4e33-4c3b-ba40-824f36b1131e] received
+2022-05-16 06:47:04,597 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[716d2a7a-4e33-4c3b-ba40-824f36b1131e] succeeded in 1.0018781310000122s: None
+2022-05-16 07:02:03,594 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 07:02:03,595 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[849712d9-807c-49cc-ad6a-6ff69750e43e] received
+2022-05-16 07:02:04,390 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[849712d9-807c-49cc-ad6a-6ff69750e43e] succeeded in 0.7929100269998344s: None
+2022-05-16 07:17:03,602 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 07:17:03,605 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[cf57ae71-9d27-4d32-bd0c-a4abd6f1006b] received
+2022-05-16 07:17:04,589 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[cf57ae71-9d27-4d32-bd0c-a4abd6f1006b] succeeded in 0.9824386569998751s: None
+2022-05-16 07:32:03,610 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 07:32:03,613 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1fe44d30-7c6d-4b0a-9e73-355b2f9b20e8] received
+2022-05-16 07:32:04,675 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1fe44d30-7c6d-4b0a-9e73-355b2f9b20e8] succeeded in 1.060695518999637s: None
+2022-05-16 07:47:03,618 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 07:47:03,621 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f657c221-8f8f-4a8d-930a-ee3e58a9b8dd] received
+2022-05-16 07:47:04,455 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f657c221-8f8f-4a8d-930a-ee3e58a9b8dd] succeeded in 0.8333607330005179s: None
+2022-05-16 08:02:03,627 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 08:02:03,629 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b331a173-0328-47a4-8de1-7eac720849d5] received
+2022-05-16 08:02:04,563 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b331a173-0328-47a4-8de1-7eac720849d5] succeeded in 0.9320107300000018s: None
+2022-05-16 08:17:03,630 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 08:17:03,632 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a5225344-429d-49f4-9623-4d6232bcb328] received
+2022-05-16 08:17:04,611 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a5225344-429d-49f4-9623-4d6232bcb328] succeeded in 0.9778952010001376s: None
+2022-05-16 08:32:03,634 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 08:32:03,635 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8d6bbf2c-47c2-469e-938a-f97623ca7849] received
+2022-05-16 08:32:04,770 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8d6bbf2c-47c2-469e-938a-f97623ca7849] succeeded in 1.1333998769987375s: None
+2022-05-16 08:39:40,192 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-16 08:39:40,697 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-16 08:39:40,700 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-16 08:39:40,705 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-16 08:39:41,716 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-16 08:39:41,735 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-16 08:39:41,735 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-16 08:39:54,573 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-16 08:39:59,197 - celery.beat - INFO - beat: Starting...
+2022-05-16 08:47:03,643 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 08:47:03,660 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7ddb02f2-6f61-45dd-bc87-071f6c85202b] received
+2022-05-16 08:47:04,618 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7ddb02f2-6f61-45dd-bc87-071f6c85202b] succeeded in 0.9568373130005057s: None
+2022-05-16 09:02:03,647 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 09:02:03,650 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5f8bd270-00cc-436a-b479-2752dc0ee55e] received
+2022-05-16 09:02:04,664 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5f8bd270-00cc-436a-b479-2752dc0ee55e] succeeded in 1.0120177360004163s: None
+2022-05-16 09:17:03,656 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 09:17:03,658 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[91ff7b32-234f-4892-931a-bad981d4625f] received
+2022-05-16 09:17:04,576 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[91ff7b32-234f-4892-931a-bad981d4625f] succeeded in 0.916462129998763s: None
+2022-05-16 11:18:07,814 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-16 11:18:08,322 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-16 11:18:08,326 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-16 11:18:08,331 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-16 11:18:09,342 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-16 11:18:09,365 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-16 11:18:09,365 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-16 11:18:27,255 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-16 11:18:33,866 - celery.beat - INFO - beat: Starting...
+2022-05-16 11:18:33,937 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 11:18:33,943 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3b357902-8d04-4d16-ad24-0b139428ea53] received
+2022-05-16 11:18:34,988 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3b357902-8d04-4d16-ad24-0b139428ea53] succeeded in 1.043751881999924s: None
+2022-05-16 11:33:33,944 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 11:33:33,946 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9f13bfb4-8207-47b7-ad94-ebb11b9780c5] received
+2022-05-16 11:33:34,928 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9f13bfb4-8207-47b7-ad94-ebb11b9780c5] succeeded in 0.9800666160008404s: None
+2022-05-16 11:48:33,952 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 11:48:33,955 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[06f858a4-c649-4b4c-99b6-34a8fb8fed50] received
+2022-05-16 11:48:34,967 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[06f858a4-c649-4b4c-99b6-34a8fb8fed50] succeeded in 1.0106207190001442s: None
+2022-05-16 12:03:33,961 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 12:03:33,963 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1f006a4e-8f09-4625-b8f7-5828b732c603] received
+2022-05-16 12:03:34,914 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1f006a4e-8f09-4625-b8f7-5828b732c603] succeeded in 0.9488894599999185s: None
+2022-05-16 12:18:33,969 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 12:18:33,972 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[87f915e0-0870-4d36-aaa9-766f0c156a1b] received
+2022-05-16 12:18:35,003 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[87f915e0-0870-4d36-aaa9-766f0c156a1b] succeeded in 1.0293517479985894s: None
+2022-05-16 12:33:33,978 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 12:33:33,980 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[73b63b2f-6384-4de6-ac4c-3f27ec57d5f6] received
+2022-05-16 12:33:35,027 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[73b63b2f-6384-4de6-ac4c-3f27ec57d5f6] succeeded in 1.0450792589981575s: None
+2022-05-16 12:48:33,985 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 12:48:33,987 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e0fa0206-b04b-4a24-bb08-5cc5a9d370b6] received
+2022-05-16 12:48:34,860 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e0fa0206-b04b-4a24-bb08-5cc5a9d370b6] succeeded in 0.8715320560004329s: None
+2022-05-16 13:03:33,987 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 13:03:33,990 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c55e150a-c05c-4f6f-bc89-a1fecd4a0718] received
+2022-05-16 13:03:35,244 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c55e150a-c05c-4f6f-bc89-a1fecd4a0718] succeeded in 1.2528620049997699s: None
+2022-05-16 13:18:33,996 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 13:18:33,999 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d15e2982-b012-43b9-9d62-08fe589ea043] received
+2022-05-16 13:18:35,009 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d15e2982-b012-43b9-9d62-08fe589ea043] succeeded in 1.0087815840015537s: None
+2022-05-16 13:33:34,002 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 13:33:34,005 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ae1751e3-b193-495c-bc6b-28652707cfeb] received
+2022-05-16 13:33:35,025 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ae1751e3-b193-495c-bc6b-28652707cfeb] succeeded in 1.0186987089982722s: None
+2022-05-16 13:48:34,010 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 13:48:34,012 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[49472137-503d-4d12-a7c2-7f67c9c5ad1c] received
+2022-05-16 13:48:35,014 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[49472137-503d-4d12-a7c2-7f67c9c5ad1c] succeeded in 0.9997603140000138s: None
+2022-05-16 14:03:34,012 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 14:03:34,015 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2b2180b7-9db5-4570-91ce-7d30965bede7] received
+2022-05-16 14:03:34,956 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2b2180b7-9db5-4570-91ce-7d30965bede7] succeeded in 0.9401612419969751s: None
+2022-05-16 14:18:34,017 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 14:18:34,018 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7054c521-a445-458e-abb5-09623a61b231] received
+2022-05-16 14:18:35,147 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7054c521-a445-458e-abb5-09623a61b231] succeeded in 1.127597689999675s: None
+2022-05-16 14:33:34,025 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 14:33:34,028 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3027f0c3-4f82-42da-8eaa-5e5ebaaf8598] received
+2022-05-16 14:33:35,054 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3027f0c3-4f82-42da-8eaa-5e5ebaaf8598] succeeded in 1.0247761360005825s: None
+2022-05-16 14:48:34,034 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 14:48:34,037 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5e8d68bc-7852-4b77-82f7-099eb6c88923] received
+2022-05-16 14:48:35,024 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5e8d68bc-7852-4b77-82f7-099eb6c88923] succeeded in 0.9848959180017118s: None
+2022-05-16 15:03:34,044 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 15:03:34,046 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[06fd8ccb-0b65-4152-bbc7-3a84aa79cb3c] received
+2022-05-16 15:03:35,119 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[06fd8ccb-0b65-4152-bbc7-3a84aa79cb3c] succeeded in 1.0713062119975802s: None
+2022-05-16 15:18:34,052 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 15:18:34,055 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fa6a9c31-dea1-4f0e-8e4b-b66684449c26] received
+2022-05-16 15:18:35,032 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fa6a9c31-dea1-4f0e-8e4b-b66684449c26] succeeded in 0.9751865090001957s: None
+2022-05-16 15:33:34,059 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 15:33:34,061 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[661ca0fe-3e68-4cf8-b467-d8f0b710b056] received
+2022-05-16 15:33:35,134 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[661ca0fe-3e68-4cf8-b467-d8f0b710b056] succeeded in 1.0715108379954472s: None
+2022-05-16 15:48:34,066 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 15:48:34,069 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[50e384d8-63b7-4f9a-9dc5-395d03920b4f] received
+2022-05-16 15:48:35,038 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[50e384d8-63b7-4f9a-9dc5-395d03920b4f] succeeded in 0.9677790190035012s: None
+2022-05-16 16:03:34,073 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 16:03:34,076 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[bad6e653-27a1-4888-90f9-6af693afd4bf] received
+2022-05-16 16:03:35,171 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[bad6e653-27a1-4888-90f9-6af693afd4bf] succeeded in 1.0940112339958432s: None
+2022-05-16 16:18:34,082 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 16:18:34,084 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3f0ed5b6-faca-467e-a1a3-7b5faba6093f] received
+2022-05-16 16:18:34,997 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3f0ed5b6-faca-467e-a1a3-7b5faba6093f] succeeded in 0.9118851110033575s: None
+2022-05-16 16:33:34,090 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 16:33:34,093 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[049b8c21-3e71-497a-90fd-a5ffb1b1da33] received
+2022-05-16 16:33:35,199 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[049b8c21-3e71-497a-90fd-a5ffb1b1da33] succeeded in 1.1039589670035639s: None
+2022-05-16 16:48:34,098 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 16:48:34,100 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d2c3c743-7ab6-4cd7-895f-00fab27fd006] received
+2022-05-16 16:48:35,190 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d2c3c743-7ab6-4cd7-895f-00fab27fd006] succeeded in 1.088534027003334s: None
+2022-05-16 17:03:34,106 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-16 17:03:34,108 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9a0f721e-e077-4a66-9160-8539b854dcef] received
+2022-05-16 17:03:35,117 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9a0f721e-e077-4a66-9160-8539b854dcef] succeeded in 1.007733956001175s: None

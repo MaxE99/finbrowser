@@ -53,7 +53,7 @@
       <div class="rankingsUpperContainer">
         <div class="rankingsHeader">Ratings</div>
         {% if request.user.is_authenticated %}
-        <button type="button" class="rateListButton">Rate</button>
+        <button type="button" class="rateListButton openRateListButton">Rate</button>
         {% else %}
         <a href="{% url 'account_login' %}" class="rateListButton registrationLink">Rate</a>
         {% endif %}
@@ -149,7 +149,8 @@
                 <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists" value="{{ list.list_id }}"
                   checked="True"> {{ list }}
                 {% else %}
-                <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists" value="{{ list.list_id }}">
+                <input id="id_list_{{ list.list_id }}" class="articleNotInList" type="checkbox" name="lists"
+                  value="{{ list.list_id }}">
                 {{ list }}
                 {% endif %}
               </label>

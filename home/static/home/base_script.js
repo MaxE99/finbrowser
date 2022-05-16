@@ -207,9 +207,19 @@ document.querySelectorAll(".addToHighlighted").forEach((highlighterButton) => {
         action = "unhighlight";
       }
       try {
+        const data = { article_id: article_id };
         const res = await fetch(
-          `http://127.0.0.1:8000/api/highlight_article/${article_id}`,
-          get_fetch_settings("POST")
+          `http://127.0.0.1:8000/api/highlighted_articles/`,
+          {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": getCookie("csrftoken"),
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            mode: "same-origin",
+            body: JSON.stringify(data),
+          }
         );
         if (!res.ok) {
           showMessage("Error: Article couldn't be filtered!", "Error");
@@ -254,40 +264,78 @@ document
   .querySelectorAll(".addToListForm .saveButton")
   .forEach((saveButton) => {
     saveButton.addEventListener("click", async () => {
-      let article_id = saveButton.parentElement.parentElement.parentElement.id;
-      article_id = article_id.replace("article", "");
-      let lists_status;
+      console.log(saveButton);
+      let article_id =
+        saveButton.parentElement.parentElement.parentElement.id.replace(
+          "article",
+          ""
+        );
+      console.log(article_id);
+      let lists_status = [];
+      let initial_lists_status = [];
+      let list_ids = [];
+      const input_list =
+        saveButton.parentElement.parentElement.querySelectorAll(
+          ".listContainer input"
+        );
+      for (let i = 0, j = input_list.length; i < j; i++) {
+        initial_lists_status.push(input_list[i].className);
+        list_ids.push(input_list[i].id.replace("id_list_", ""));
+      }
       saveButton.parentElement.previousElementSibling
         .querySelectorAll("input")
         .forEach((input) => {
           if (input.checked) {
-            if (lists_status == undefined) {
-              lists_status = "True";
-            } else {
-              lists_status += "," + "True";
-            }
+            lists_status.push("articleInList");
           } else {
-            if (lists_status == undefined) {
-              lists_status = "False";
-            } else {
-              lists_status += "," + "False";
-            }
+            lists_status.push("articleNotInList");
           }
         });
-      try {
-        const res = await fetch(
-          `http://127.0.0.1:8000/api/list_change_article_status/${article_id}/${lists_status}`,
-          get_fetch_settings("POST")
-        );
-        if (!res.ok) {
-          showMessage("Error: Article couldn't be added to list!", "Error");
-        } else {
-          const context = await res.json();
-          showMessage(context, "Success");
-          window.location.reload();
+
+      for (let i = 0, j = lists_status.length; i < j; i++) {
+        if (lists_status[i] != initial_lists_status[i]) {
+          if (initial_lists_status[i] == "articleNotInList") {
+            let list_id = list_ids[i];
+            try {
+              const res = await fetch(
+                `http://127.0.0.1:8000/api/lists/${list_id}/add_article_to_list/${article_id}/`,
+                get_fetch_settings("POST")
+              );
+              if (!res.ok) {
+                showMessage(
+                  "Error: Article couldn't be added to list!",
+                  "Error"
+                );
+              } else {
+                const context = await res.json();
+                showMessage(context, "Success");
+                window.location.reload();
+              }
+            } catch (e) {
+              showMessage("Error: Network error detected!", "Error");
+            }
+          } else {
+            try {
+              let list_id = list_ids[i];
+              const res = await fetch(
+                `http://127.0.0.1:8000/api/lists/${list_id}/delete_article_from_list/${article_id}/`,
+                get_fetch_settings("DELETE")
+              );
+              if (!res.ok) {
+                showMessage(
+                  "Error: Article couldn't be added to list!",
+                  "Error"
+                );
+              } else {
+                const context = await res.json();
+                showMessage(context, "Success");
+                window.location.reload();
+              }
+            } catch (e) {
+              showMessage("Error: Network error detected!", "Error");
+            }
+          }
         }
-      } catch (e) {
-        showMessage("Error: Network error detected!", "Error");
       }
     });
   });
