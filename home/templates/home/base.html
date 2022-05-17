@@ -41,7 +41,37 @@
             </div>
             <div class="userSpace">
                 <i class="fas fa-cog"><a href="{% url 'home:settings' %}"></a></i>
-                <i class="far fa-bell"></i>
+                <i class="far fa-bell">
+                    <span class="unseenNotifications">{{ unseen_notifications }}</span>
+                </i>
+                <div class="notificationContainer">
+                    <div class="notificationHeadersContainer">
+                        <div class="activeNotificationCategory">Source Notifications</div>
+                        <div>List Notifications</div>
+                    </div>
+                    <div class="notificationsContainer activeNotificationContainer">
+                        {% for notification in notifications %}
+                        {% if notification.notification.source %}
+                        <div class="notificationMessageContainer">
+                            <img src="{% static notification.article.source.favicon_path %}" />
+                            <span>{{ notification.article.title }}</span>
+                            <a href="{{ notification.article.link }}"></a>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="notificationsContainer">
+                        {% for notification in notifications %}
+                        {% if notification.notification.list %}
+                        <div class="notificationMessageContainer">
+                            <img src="{% static notification.article.source.favicon_path %}" />
+                            <span>{{ notification.article.title }}</span>
+                            <a href="{{ notification.article.link }}"></a>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
                 <div class="profileWrapper">
                     {% if request.user.is_authenticated %}
                     <div class="userProfile">

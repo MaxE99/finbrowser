@@ -1,5 +1,9 @@
 # Python import
+from datetime import datetime
 from operator import itemgetter
+
+from django.shortcuts import get_object_or_404
+from pytz import timezone
 
 
 class Article(object):
@@ -34,3 +38,16 @@ def main_website_source_set(instance):
     else:
         instance.main_website_source = websites[0][0]
     return instance
+
+
+def notifications_create(source, article):
+    from home.models import Notification, NotificationMessage
+    source_notifications = Notification.objects.filter(source=source)
+    for source_notification in source_notifications:
+        NotificationMessage.objects.create(notification=source_notification, article=article)
+    sources_in_lists = source.lists.all()
+    for list in sources_in_lists:
+        if Notification.objects.filter(list=list).exists():
+            list_notifications = Notification.objects.filter(list=list)
+            for list_notification in list_notifications:
+                NotificationMessage.objects.create(notification=list_notification, article=article)

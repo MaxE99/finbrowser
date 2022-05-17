@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from django.db.models.signals import m2m_changed
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 # Local imports
@@ -211,9 +212,9 @@ class Notification(models.Model):
 class NotificationMessage(models.Model):
     notification_message_id = models.AutoField(primary_key=True)
     notification = models.ForeignKey(Notification, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
     user_has_seen = models.BooleanField(default=False)
 
     def __str__(self):
-        if self.list:
-            return f'{self.user} - {self.list}'
+        return f'{self.notification} - {self.article}'

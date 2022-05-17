@@ -377,6 +377,44 @@ if (document.querySelector("details")) {
   });
 }
 
+//activate notification popup
+document.querySelector(".userSpace .fa-bell").addEventListener("click", () => {
+  const notificationPopup = document.querySelector(
+    ".userSpace .notificationContainer"
+  );
+  if (notificationPopup.style.display == "block") {
+    notificationPopup.style.display = "none";
+  } else {
+    notificationPopup.style.display = "block";
+  }
+});
+
+//Notification switch
+document
+  .querySelectorAll(".notificationHeadersContainer div")
+  .forEach((headerContainer) => {
+    headerContainer.addEventListener("click", () => {
+      document
+        .querySelectorAll(".notificationHeadersContainer div")
+        .forEach((header) => {
+          if (header.classList.contains("activeNotificationCategory")) {
+            header.classList.remove("activeNotificationCategory");
+          } else {
+            header.classList.add("activeNotificationCategory");
+          }
+        });
+      document
+        .querySelectorAll(".notificationsContainer")
+        .forEach((container) => {
+          if (container.classList.contains("activeNotificationContainer")) {
+            container.classList.remove("activeNotificationContainer");
+          } else {
+            container.classList.add("activeNotificationContainer");
+          }
+        });
+    });
+  });
+
 // Carousell Container Functionality
 // const sliderContent = document.querySelector(".slider-content");
 // const contentArray = sliderContent.children;

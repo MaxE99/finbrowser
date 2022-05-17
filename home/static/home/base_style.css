@@ -244,6 +244,84 @@ header {
   height: 100%;
 }
 
+.userSpace i .unseenNotifications {
+  position: absolute;
+  font-size: 14px;
+  top: 20px;
+  right: 12px;
+  background: var(--primary-fontColor);
+  color: white;
+  padding: 3px 6px;
+  border-radius: 50%;
+}
+
+.userSpace .notificationContainer {
+  display: none;
+  position: absolute;
+  width: 327px;
+  background: white;
+  margin-top: 85px;
+  top: 0;
+  right: 0;
+  overflow-y: scroll;
+  max-height: calc(100vh - 85px);
+}
+
+.userSpace .notificationContainer .notificationHeadersContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid;
+  color: var((var(--primary-fontColor)));
+  cursor: pointer;
+}
+
+.userSpace .notificationContainer .activeNotificationCategory {
+  color: white;
+  background: var(--primary-fontColor);
+  padding: 5px 0px;
+}
+
+.userSpace .notificationContainer .notificationHeadersContainer div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.userSpace .notificationContainer .notificationMessageContainer {
+  position: relative;
+  display: flex;
+  padding: 5px 10px 5px 5px;
+  border-bottom: 1px solid;
+}
+
+.userSpace .notificationContainer .notificationsContainer {
+  display: none;
+}
+
+.userSpace .notificationContainer .activeNotificationContainer {
+  display: block;
+}
+
+.userSpace .notificationContainer .notificationMessageContainer img {
+  width: 35px;
+  height: 35px;
+  margin-right: 5px;
+}
+
+.userSpace .notificationContainer .notificationMessageContainer span {
+  text-align: justify;
+}
+
+.userSpace .notificationContainer .notificationMessageContainer a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .profileWrapper {
   position: relative;
   display: flex;
