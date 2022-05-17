@@ -174,12 +174,19 @@ if (notificationButton) {
   notificationButton.addEventListener("click", async () => {
     try {
       const source_id = document
-        .querySelector("h3")
+        .querySelector(".upperInnerContainer h3")
         .id.replace("source_id_", "");
-      const res = await fetch(
-        `../../api/change_source_notification/${source_id}`,
-        get_fetch_settings("POST")
-      );
+      const data = { source_id: source_id };
+      const res = await fetch(`http://127.0.0.1:8000/api/notifications/`, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        mode: "same-origin",
+        body: JSON.stringify(data),
+      });
       if (!res.ok) {
         showMessage("Error: Source can't be subscribed!", "Error");
       } else {

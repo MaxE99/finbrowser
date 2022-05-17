@@ -1,5 +1,4 @@
 # Django imports
-from django.core.cache import cache
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import m2m_changed
@@ -8,7 +7,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 # Local imports
-from home.logic.scrapper import website_scrapping_initiate
 from home.logic.services import main_website_source_set
 from home.managers import (ListManager, SourceManager, ArticleManager,
                            HighlightedArticlesManager, ListRatingManager,
@@ -202,11 +200,20 @@ class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     list = models.ForeignKey(List, on_delete=models.CASCADE, null=True)
     source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True)
-    date = models.DateTimeField(auto_now=True)
-    user_has_seen = models.BooleanField(default=False)
 
     def __str__(self):
         if self.list:
             return f'{self.user} - {self.list}'
         else:
             return f'{self.user} - {self.source}'
+
+
+class NotificationMessage(models.Model):
+    notification_message_id = models.AutoField(primary_key=True)
+    notification = models.ForeignKey(Notification, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now=True)
+    user_has_seen = models.BooleanField(default=False)
+
+    def __str__(self):
+        if self.list:
+            return f'{self.user} - {self.list}'

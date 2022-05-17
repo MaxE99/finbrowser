@@ -175,7 +175,7 @@ document
       selected_list.style.display = "none";
       try {
         const res = await fetch(
-          `../../api/search_sources_for_list/${list_id}/${search_term}`,
+          `http://127.0.0.1:8000/api/sources/?list_search=${search_term}&list_id=${list_id}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {
@@ -416,10 +416,17 @@ if (notificationButton) {
       const list_id = document
         .querySelector(".rightFirstRowContainer h3")
         .id.replace("list_detail_for_", "");
-      const res = await fetch(
-        `../../api/change_list_notification/${list_id}`,
-        get_fetch_settings("POST")
-      );
+      const data = { list_id: list_id };
+      const res = await fetch(`http://127.0.0.1:8000/api/notifications/`, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        mode: "same-origin",
+        body: JSON.stringify(data),
+      });
       if (!res.ok) {
         showMessage("Error: Source can't be subscribed!", "Error");
       } else {

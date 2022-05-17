@@ -1,7 +1,7 @@
 # Django imports
 from rest_framework import serializers
 # Local imports
-from home.models import (Source, List, Article, HighlightedArticle, SourceRating, ListRating)
+from home.models import (Source, List, Article, HighlightedArticle, SourceRating, ListRating, Notification)
 from accounts.models import Profile, SocialLink
 
 
@@ -56,4 +56,10 @@ class ListRating_Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = ListRating
+        fields = '__all__'
+
+class Notification_Serializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Notification
         fields = '__all__'
