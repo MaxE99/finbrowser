@@ -44,7 +44,7 @@ document
       selected_list.style.display = "none";
       try {
         const res = await fetch(
-          `../../api/filter_sources_from_feed/${search_term}`,
+          `http://127.0.0.1:8000/api/sources/?feed_search=${search_term}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {
@@ -171,7 +171,7 @@ document
       selected_list.style.display = "none";
       try {
         const res = await fetch(
-          `../../api/filter_lists_from_feed/${search_term}`,
+          `http://127.0.0.1:8000/api/lists/?feed_search=${search_term}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {
