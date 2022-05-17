@@ -1,8 +1,6 @@
 # Django imports
-import re
 from django.http import Http404
 from django.shortcuts import redirect, render, get_object_or_404
-from django.core.cache import cache
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
@@ -12,7 +10,7 @@ from datetime import timedelta, date
 # Local imports
 from accounts.models import CookieSettings, SocialLink, Website
 from home.models import (Article, HighlightedArticle, List, Sector, Source,
-                         ListRating, ExternalSource, Notification)
+                         ListRating, ExternalSource, Notification, NotificationMessage)
 from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm,
                         AddExternalArticleForm)
 from home.logic.pure_logic import paginator_create
@@ -25,6 +23,8 @@ User = get_user_model()
 
 @login_required()
 def feed(request):
+    notifications = Notification.objects.filter(user=request.user)
+    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     # cache.set('current_user', request.user)
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
@@ -78,12 +78,15 @@ def feed(request):
         'subscribed_sources': subscribed_sources,
         'subscribed_articles': subscribed_articles,
         'highlighted_articles': highlighted_articles,
-        'highlighted_articles_titles': highlighted_articles_titles
+        'highlighted_articles_titles': highlighted_articles_titles,
+        'unseen_notifications': unseen_notifications
     }
     return render(request, 'home/feed.html', context)
 
 
 def lists(request):
+    notifications = Notification.objects.filter(user=request.user)
+    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
@@ -102,10 +105,13 @@ def lists(request):
             'add_list_form': add_list_form,
             'lists': lists,
             'results_found': results_found,
+            'unseen_notifications': unseen_notifications
         })
 
 
 def lists_search(request, timeframe, content_type, minimum_rating, sources):
+    notifications = Notification.objects.filter(user=request.user)
+    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
@@ -146,7 +152,7 @@ def lists_search(request, timeframe, content_type, minimum_rating, sources):
     if minimum_rating != 'All' and minimum_rating is not None:
         minimum_rating = float(minimum_rating)
         for list in lists:
-            if list.get_average_rating is not "None":
+            if list.get_average_rating != "None":
                 if list.get_average_rating < minimum_rating:
                     exclude_list.append(list)
             else:
@@ -163,16 +169,21 @@ def lists_search(request, timeframe, content_type, minimum_rating, sources):
             'add_list_form': add_list_form,
             'lists': lists,
             'results_found': results_found,
+            'unseen_notifications': unseen_notifications
         })
 
 
 
 def sectors(request):
+    notifications = Notification.objects.filter(user=request.user)
+    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     sectors = Sector.objects.all().order_by('name')
-    return render(request, 'home/sectors.html', {'sectors': sectors})
+    return render(request, 'home/sectors.html', {'sectors': sectors, 'unseen_notifications': unseen_notifications})
 
 
 def articles(request):
+    notifications = Notification.objects.filter(user=request.user)
+    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
@@ -200,12 +211,15 @@ def articles(request):
         'search_articles': search_articles,
         'sectors': sectors,
         'highlighted_articles_titles': highlighted_articles_titles,
-        'user_lists': user_lists
+        'user_lists': user_lists,
+        'unseen_notifications': unseen_notifications
     }
     return render(request, 'home/articles.html', context)
 
 
 def articles_search(request, timeframe, sector, paywall, sources):
+    notifications = Notification.objects.filter(user=request.user)
+    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
@@ -251,11 +265,14 @@ def articles_search(request, timeframe, sector, paywall, sources):
         'search_articles': search_articles,
         'sectors': sectors,
         'highlighted_articles_titles': highlighted_articles_titles,
-        'user_lists': user_lists
+        'user_lists': user_lists,
+        'unseen_notifications': unseen_notifications
     }
     return render(request, 'home/articles.html', context)    
 
 def list_details(request, list_id):
+    notifications = Notification.objects.filter(user=request.user)
+    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     list = get_object_or_404(List, list_id=list_id)
     if list.creator == request.user or list.is_public == True:
         if request.method == 'POST':
@@ -323,6 +340,7 @@ def list_details(request, list_id):
             'highlighted_articles_titles': highlighted_articles_titles,
             'user_lists': user_lists,
             'notifications_activated': notifications_activated,
+            'unseen_notifications': unseen_notifications
         }
         return render(request, 'home/list_details.html', context)
     else:
@@ -330,6 +348,8 @@ def list_details(request, list_id):
 
 
 def sector_details(request, slug):
+    notifications = Notification.objects.filter(user=request.user)
+    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
@@ -364,12 +384,15 @@ def sector_details(request, slug):
         'sector': sector,
         'highlighted_articles_titles': highlighted_articles_titles,
         'user_lists': user_lists,
+        'unseen_notifications': unseen_notifications
     }
     return render(request, 'home/sector_details.html', context)
 
 
 @login_required()
 def settings(request):
+    notifications = Notification.objects.filter(user=request.user)
+    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if request.method == "POST":
         if 'changeProfileForm' in request.POST:
             email_and_name_change_form = EmailAndUsernameChangeForm(
@@ -421,18 +444,24 @@ def settings(request):
         'profile_change_form': profile_change_form,
         'social_links': social_links,
         'websites': websites,
-        'privacy_settings_form': privacy_settings_form
+        'privacy_settings_form': privacy_settings_form,
+        'unseen_notifications': unseen_notifications
     }
     return render(request, 'home/settings.html', context)
 
 
 def main(request):
     cookie_settings_form = CookieSettingsForm()
-    context = {'cookie_settings_form': cookie_settings_form}
+    notifications_subscribtions = Notification.objects.filter(user=request.user)
+    notifications = NotificationMessage.objects.filter(notification__in=notifications_subscribtions, user_has_seen=False)
+    unseen_notifications = notifications.count()
+    context = {'cookie_settings_form': cookie_settings_form, 'unseen_notifications': unseen_notifications, 'notifications': notifications}
     return render(request, 'home/main.html', context)
 
 
 def search_results(request, search_term):
+    notifications = Notification.objects.filter(user=request.user)
+    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
@@ -464,6 +493,7 @@ def search_results(request, search_term):
         'filtered_sources': filtered_sources,
         'search_term': search_term,
         'highlighted_articles_titles': highlighted_articles_titles,
-        'user_lists': user_lists
+        'user_lists': user_lists, 
+        'unseen_notifications': unseen_notifications
     }
     return render(request, 'home/search_results.html', context)

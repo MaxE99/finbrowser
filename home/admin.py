@@ -2,8 +2,8 @@
 from django.contrib import admin
 # Local imports
 from home.models import (Source, List, Sector, SourceRating, ListRating,
-                         HighlightedArticle, Article, Notification,
-                         ExternalSource)
+                         HighlightedArticle, Article, Notification, 
+                         NotificationMessage, ExternalSource)
 
 admin.site.register(Source)
 admin.site.register(List)
@@ -13,4 +13,5 @@ admin.site.register(ListRating)
 admin.site.register(HighlightedArticle)
 admin.site.register(Article)
 admin.site.register(Notification)
+admin.site.register(NotificationMessage)
 admin.site.register(ExternalSource)

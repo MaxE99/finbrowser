@@ -8,6 +8,8 @@ import tweepy
 from datetime import datetime
 import logging
 from celery.signals import after_setup_logger
+# Local imports
+from home.logic.services import notifications_create
 
 @after_setup_logger.connect
 def setup_loggers(logger, *args, **kwargs):
@@ -54,8 +56,13 @@ def scrape_twitter():
             if Source.objects.filter(external_id=status.user.id).exists():
                 source = get_object_or_404(Source, external_id=status.user.id)
                 external_id = status.id
-                Article.objects.create(title=title, link=link, pub_date=pub_date, source=source, external_id=external_id)
+                article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source, external_id=external_id)
+                notifications_create(source, article)
             else:
                 continue
         last_id = status.id
     cache.set('last_id', last_id)
+
+
+
+
