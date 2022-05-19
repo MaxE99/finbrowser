@@ -8,22 +8,25 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from rest_framework.decorators import action
 # Local imports
-from home.models import Article, HighlightedArticle, Source, List, SourceRating, ListRating, Notification
+from home.models import Article, HighlightedArticle, NotificationMessage, Source, List, SourceRating, ListRating, Notification
 from accounts.models import Profile, SocialLink, Website
 from home.api.serializers import (List_Serializer, Article_Serializer, Source_Serializer, Profile_Serializer, HighlightedArticle_Serializer, SocialLink_Serializer, SourceRating_Serializer, ListRating_Serializer, Notification_Serializer)
 from home.api.permissions import IsListCreator, IsUser
 
 class ProfileViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated, IsUser]
+    authentication_classes=[SessionAuthentication]
     queryset = Profile.objects.all()
     serializer_class = Profile_Serializer
+    http_method_names = ["delete"]
 
-    @action(detail=True, methods=['delete'], authentication_classes=[SessionAuthentication], permission_classes=[IsAuthenticated, IsUser])
+    @action(detail=True, methods=['delete'])
     def profile_pic_delete(self, request, *args, **kwargs):
         profile = self.get_object()
         profile.profile_pic.delete()
         return Response("Profile picture has been deleted!")
 
-    @action(detail=True, methods=['delete'], authentication_classes=[SessionAuthentication], permission_classes=[IsAuthenticated, IsUser])
+    @action(detail=True, methods=['delete'])
     def profile_banner_delete(self, request, *args, **kwargs):
         profile = self.get_object()
         profile.profile_banner.delete()
@@ -31,8 +34,11 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
 
 class HighlightedArticleViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    authentication_classes=[SessionAuthentication]
     queryset = HighlightedArticle.objects.all()
     serializer_class = HighlightedArticle_Serializer
+    http_method_names = ["post"]
 
     def create(self, request):
         article_id = request.data['article_id']
@@ -48,7 +54,10 @@ class HighlightedArticleViewSet(viewsets.ModelViewSet):
 
 class SocialLinkViewSet(viewsets.ModelViewSet):
     queryset = SocialLink.objects.all()
-    serializer_class = SocialLink_Serializer    
+    serializer_class = SocialLink_Serializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes=[SessionAuthentication] 
+    http_method_names = ["post", "put", "delete"]   
 
     def create(self, request):
         website = request.data['website']
@@ -82,6 +91,9 @@ class SocialLinkViewSet(viewsets.ModelViewSet):
 class SourceRatingViewSet(viewsets.ModelViewSet):
     queryset = SourceRating.objects.all()
     serializer_class = SourceRating_Serializer    
+    permission_classes = [IsAuthenticated]
+    authentication_classes=[SessionAuthentication] 
+    http_method_names = ["post"] 
 
     def create(self, request):
         source_id = request.data['source_id']
@@ -100,6 +112,9 @@ class SourceRatingViewSet(viewsets.ModelViewSet):
 class ListRatingViewSet(viewsets.ModelViewSet):
     queryset = ListRating.objects.all()
     serializer_class = ListRating_Serializer    
+    permission_classes = [IsAuthenticated]
+    authentication_classes=[SessionAuthentication]  
+    http_method_names = ["post"]
 
     def create(self, request):
         list_id = request.data['list_id']
@@ -118,6 +133,7 @@ class ListRatingViewSet(viewsets.ModelViewSet):
 class SourceViewSet(viewsets.ModelViewSet):
     queryset = Source.objects.all()
     serializer_class = Source_Serializer
+    http_method_names = ["post"]
 
     def get_queryset(self):
         list_id = self.request.GET.get("list_id", None)
@@ -149,6 +165,7 @@ class SourceViewSet(viewsets.ModelViewSet):
 class ListViewSet(viewsets.ModelViewSet):
     queryset = List.objects.all()
     serializer_class = List_Serializer
+    http_method_names = ["post", "delete"]
 
     def get_queryset(self):
         feed_search = self.request.GET.get("feed_search", None)
@@ -181,53 +198,42 @@ class ListViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['delete'], authentication_classes=[SessionAuthentication], url_path=r'delete_source_from_list/(?P<source_id>\d+)', permission_classes=[IsAuthenticated, IsListCreator])
     def delete_source_from_list(self, request, pk, source_id):
         list = self.get_object()
-        source = get_object_or_404(Source, source_id=source_id)
-        list.sources.remove(source)
-        return Response("Source has been removed from list!")
+        if list.creator == request.user:
+            source = get_object_or_404(Source, source_id=source_id)
+            list.sources.remove(source)
+            return Response("Source has been removed from list!")
+        else:
+            return Response("Access Denied")
 
     @action(detail=True, methods=['delete'], authentication_classes=[SessionAuthentication], url_path=r'delete_article_from_list/(?P<article_id>\d+)', permission_classes=[IsAuthenticated, IsListCreator])
     def delete_article_from_list(self, request, pk, article_id):
         list = self.get_object()
-        article = get_object_or_404(Article, article_id=article_id)
-        list.articles.remove(article)
-        return Response("Article has been removed from list!")
+        if list.creator == request.user:
+            article = get_object_or_404(Article, article_id=article_id)
+            list.articles.remove(article)
+            return Response("Article has been removed from list!")
+        else:
+            return Response("Access Denied")
 
     @action(detail=True, methods=['post'], authentication_classes=[SessionAuthentication], url_path=r'add_source/(?P<source_id>\d+)', permission_classes=[IsAuthenticated, IsListCreator])
     def add_source(self, request, pk, source_id):
         list = self.get_object()
-        source = get_object_or_404(Source, source_id=source_id)
-        list.sources.add(source)
-        return Response("Source has been added to list!")
+        if list.creator == request.user:
+            source = get_object_or_404(Source, source_id=source_id)
+            list.sources.add(source)
+            return Response("Source has been added to list!")
+        else:
+            return Response("Access Denied")
 
     @action(detail=True, methods=['post'], authentication_classes=[SessionAuthentication], url_path=r'add_article_to_list/(?P<article_id>\d+)', permission_classes=[IsAuthenticated])
     def add_article_to_list(self, request, pk, article_id):
         list = self.get_object()
-        article = get_object_or_404(Article, article_id=article_id)
-        list.articles.add(article)
-        return Response("Article has been added to list!")
-
-
-class NotificationViewSet(viewsets.ModelViewSet):
-    queryset = Notification.objects.all()
-    serializer_class = Notification_Serializer    
-
-    def create(self, request):
-        source_id = request.data.get('source_id', None)
-        list_id = request.data.get('list_id', None)
-        if source_id != None:
-            source = get_object_or_404(Source, source_id=source_id)
-            notification, created = Notification.objects.get_or_create(
-                user=request.user, source=source)
-        elif list_id != None:
-            list = get_object_or_404(List, list_id=list_id)
-            notification, created = Notification.objects.get_or_create(
-                user=request.user, list=list)
-        if created:
-            return Response("Notification has been added!")
+        if list.creator == request.user:
+            article = get_object_or_404(Article, article_id=article_id)
+            list.articles.add(article)
+            return Response("Article has been added to list!")
         else:
-            notification.delete()
-            return Response("Notification has been removed!")
-
+            return Response("Access Denied")
 
 class FilteredArticles(APIView):
 
@@ -292,4 +298,31 @@ class FilteredSite(APIView):
                             safe=False)
 
 
+class NotificationViewSet(viewsets.ModelViewSet):
+    queryset = Notification.objects.all()
+    serializer_class = Notification_Serializer    
 
+    def create(self, request):
+        source_id = request.data.get('source_id', None)
+        list_id = request.data.get('list_id', None)
+        if source_id != None:
+            source = get_object_or_404(Source, source_id=source_id)
+            notification, created = Notification.objects.get_or_create(
+                user=request.user, source=source)
+        elif list_id != None:
+            list = get_object_or_404(List, list_id=list_id)
+            notification, created = Notification.objects.get_or_create(
+                user=request.user, list=list)
+        if created:
+            return Response("Notification has been added!")
+        else:
+            notification.delete()
+            return Response("Notification has been removed!")
+
+    def put(self, request, *args, **kwargs):
+        notification_subs = Notification.objects.filter(user=request.user)
+        notifications = NotificationMessage.objects.filter(notification__in=notification_subs)
+        for notification in notifications:
+            notification.user_has_seen = True
+            notification.save()
+        return Response("Notifications have been marked as seen!")

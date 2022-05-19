@@ -5,9 +5,10 @@ from celery import shared_task
 from django.shortcuts import get_object_or_404
 # Python imports
 import tweepy
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import logging
 from celery.signals import after_setup_logger
+import html
 # Local imports
 from home.logic.services import notifications_create
 
@@ -26,7 +27,7 @@ logger = logging.getLogger(__name__)
 @shared_task
 def scrape_twitter():    
     # logger.info("ACTIVATED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    from home.models import Source, Article
+    from home.models import Source, Article, NotificationMessage
     # assign the values accordingly
     consumer_key = 'XOoUFKNcJeHoSkGxkZUSraU4x'
     consumer_secret = '18fAwnwdZLqYDmkWzxuQwL8GalXguNskhnYv8dMPr8ZYhRez0y'
@@ -50,7 +51,7 @@ def scrape_twitter():
         if Article.objects.filter(external_id=status.id).exists():
             continue
         else:
-            title = status.full_text
+            title = html.unescape(status.full_text)
             link = f'https://twitter.com/{status.user.screen_name}/status/{status.id}'
             pub_date = status.created_at
             if Source.objects.filter(external_id=status.user.id).exists():
@@ -62,6 +63,10 @@ def scrape_twitter():
                 continue
         last_id = status.id
     cache.set('last_id', last_id)
+    notification_messages = NotificationMessage.objects.all()
+    for notification_message in notification_messages:
+        if (datetime.now(timezone.utc) - notification_message.date) > timedelta(hours=24):
+            notification_message.delete()
 
 
 

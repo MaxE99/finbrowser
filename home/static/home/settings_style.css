@@ -487,3 +487,27 @@ details ul li:hover {
   margin-top: 15px;
   width: 100%;
 }
+
+.notificationContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 25px;
+  color: var(--primary-fontColor);
+}
+
+.iconContainer .fa-trash {
+  position: absolute;
+  color: white;
+  background: red;
+  padding: 10px;
+  font-size: 20px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  box-shadow: var(--box-shadowScheme);
+  z-index: 100;
+}

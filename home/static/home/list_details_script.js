@@ -12,9 +12,9 @@ if (subscribeButton) {
   subscribeButton.addEventListener("click", async () => {
     if (!subscribeButton.classList.contains("registrationLink")) {
       try {
-        const url = window.location.href;
-        const index = url.lastIndexOf("/");
-        const list_id = url.substring(index + 1);
+        const list_id = document
+          .querySelector(".rightFirstRowContainer h3")
+          .id.replace("list_detail_for_", "");
         let action = subscribeButton.innerText;
         const res = await fetch(
           `http://127.0.0.1:8000/api/lists/${list_id}/list_change_subscribtion_status/`,
@@ -123,9 +123,9 @@ if (document.querySelector(".deleteListButton")) {
     .querySelector(".deleteListButton")
     .addEventListener("click", async () => {
       try {
-        const url = window.location.href;
-        const index = url.lastIndexOf("/");
-        const list_id = url.substring(index + 1);
+        const list_id = document
+          .querySelector(".rightFirstRowContainer h3")
+          .id.replace("list_detail_for_", "");
         const res = await fetch(
           `http://127.0.0.1:8000/api/lists/${list_id}/`,
           get_fetch_settings("DELETE")
@@ -135,7 +135,7 @@ if (document.querySelector(".deleteListButton")) {
         } else {
           const context = await res.json();
           showMessage(context, "Success");
-          window.location.href = "../lists";
+          window.location.href = "/lists";
         }
       } catch (e) {
         showMessage("Error: Network error detected!", "Error");
@@ -167,9 +167,9 @@ document
     let search_term = document.getElementById("addSourcesInput").value;
     let results_list = document.getElementById("sourceSearchResults");
     let selected_list = document.querySelector(".selectedSourcesContainer");
-    const url = window.location.href;
-    const index = url.lastIndexOf("/");
-    const list_id = url.substring(index + 1);
+    const list_id = document
+      .querySelector(".rightFirstRowContainer h3")
+      .id.replace("list_detail_for_", "");
     if (search_term && search_term.replaceAll(/\s/g, "") != "") {
       results_list.style.display = "block";
       selected_list.style.display = "none";
@@ -241,9 +241,9 @@ document
 document
   .querySelector(".addSourcesForm button")
   .addEventListener("click", async () => {
-    const url = window.location.href;
-    const index = url.lastIndexOf("/");
-    const list_id = url.substring(index + 1);
+    const list_id = document
+      .querySelector(".rightFirstRowContainer h3")
+      .id.replace("list_detail_for_", "");
     if (selected_sources.length) {
       for (let i = 0, j = selected_sources.length; i < j; i++) {
         try {

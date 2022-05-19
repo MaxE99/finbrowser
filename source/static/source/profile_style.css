@@ -210,7 +210,7 @@
   font-size: 30px;
 }
 
-.upperInnerContainer h3 {
+.upperInnerContainer .sourceName {
   font-size: 30px;
 }
 
@@ -240,4 +240,94 @@
 
 .rate-formUpperContainer {
   margin-left: 30px;
+}
+
+.addToListButton {
+  margin-right: 25px;
+  background: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+  color: var(--primary-fontColor);
+}
+
+.addSourceToListForm {
+  position: absolute;
+  display: none;
+  background: white;
+  width: 250px;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 8px;
+  z-index: 1000;
+  top: 180px;
+  right: 140px;
+}
+
+.addSourceToListForm .fa-times {
+  position: absolute;
+  right: 0;
+  color: white;
+  background: red;
+  padding: 5px;
+  font-size: 20.5px;
+  cursor: pointer;
+}
+
+.addSourceToListForm h3 {
+  padding: 5px 0;
+  text-align: center;
+  font-size: 17px;
+  margin-bottom: 5px;
+  background: var(--primary-fontColor);
+  border-radius: 8px 8px 0 0;
+  color: white;
+}
+
+.addSourceToListForm .listSelectionContainer {
+  max-height: 120px;
+  overflow-y: scroll;
+}
+
+.addSourceToListForm .listContainer {
+  margin-left: 10px;
+  padding: 2.5px 0;
+}
+
+.addSourceToListForm label {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.addSourceToListForm input {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.addSourceToListForm .buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px auto;
+  width: 80%;
+}
+
+.addSourceToListForm button {
+  padding: 4px 16px;
+  font-size: 15px;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--primary-fontColor);
+  border: 1px solid var(--primary-fontColor);
+  width: 47.5%;
+}
+
+.addSourceToListForm button:last-child {
+  color: var(--primary-fontColor);
+  background: white;
+}
+
+.addSourceToListForm button:hover {
+  transform: scale(1.1, 1.1);
 }

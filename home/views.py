@@ -14,6 +14,7 @@ from home.models import (Article, HighlightedArticle, List, Sector, Source,
 from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm,
                         AddExternalArticleForm)
 from home.logic.pure_logic import paginator_create
+from home.logic.selectors import notifications_get
 from accounts.forms import (EmailAndUsernameChangeForm, PasswordChangingForm,
                             ProfileChangeForm, PrivacySettingsForm,
                             CookieSettingsForm)
@@ -23,18 +24,20 @@ User = get_user_model()
 
 @login_required()
 def feed(request):
-    notifications = Notification.objects.filter(user=request.user)
-    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
-    # cache.set('current_user', request.user)
+    unseen_notifications, source_notifications, list_notifications = notifications_get(request.user)
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
             new_list = add_list_form.save(commit=False)
-            new_list.creator = request.user
-            new_list.save()
-            list_id = new_list.list_id
-            messages.success(request, 'List has been created!')
-            return redirect('home:list-details', list_id=list_id)
+            if List.objects.filter(name=new_list.name, creator=request.user).exists():
+                messages.error(request, 'You already have crated a list with this name!')
+            else:
+                new_list.creator = request.user
+                new_list.save()
+                profile_slug = new_list.creator.profile.slug
+                list_slug = new_list.slug
+                messages.success(request, 'List has been created!')
+                return redirect('home:list-details', profile_slug=profile_slug, list_slug=list_slug)
     elif 'addExternalArticlesForm' in request.POST:
         add_external_articles_form = AddExternalArticleForm(request.POST)
         if add_external_articles_form.is_valid():
@@ -79,48 +82,62 @@ def feed(request):
         'subscribed_articles': subscribed_articles,
         'highlighted_articles': highlighted_articles,
         'highlighted_articles_titles': highlighted_articles_titles,
-        'unseen_notifications': unseen_notifications
+        'unseen_notifications': unseen_notifications,
+        'source_notifications': source_notifications,
+        'list_notifications': list_notifications,
     }
     return render(request, 'home/feed.html', context)
 
 
 def lists(request):
-    notifications = Notification.objects.filter(user=request.user)
-    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
             new_list = add_list_form.save(commit=False)
-            new_list.creator = request.user
-            new_list.save()
-            list_id = new_list.list_id
-            messages.success(request, f'List has been created!')
-            return redirect('home:list-details', list_id=list_id)
+            if List.objects.filter(name=new_list.name, creator=request.user).exists():
+                messages.error(request, 'You already have crated a list with this name!')
+            else:
+                new_list.creator = request.user
+                new_list.save()
+                profile_slug = new_list.creator.profile.slug
+                list_slug = new_list.slug
+                messages.success(request, 'List has been created!')
+                return redirect('home:list-details', profile_slug=profile_slug, list_slug=list_slug)
     lists = List.objects.filter(is_public=True).order_by('name')
     add_list_form = AddListForm()
     results_found = len(lists)
     lists, _ = paginator_create(request, lists, 10)
+    if request.user.is_authenticated:
+        unseen_notifications, source_notifications, list_notifications = notifications_get(request.user)
+    else:
+        unseen_notifications = None
+        source_notifications = None
+        list_notifications = None
     return render(
         request, 'home/lists.html', {
             'add_list_form': add_list_form,
             'lists': lists,
             'results_found': results_found,
-            'unseen_notifications': unseen_notifications
+            'unseen_notifications': unseen_notifications,
+            'source_notifications': source_notifications,
+            'list_notifications': list_notifications,
         })
 
 
 def lists_search(request, timeframe, content_type, minimum_rating, sources):
-    notifications = Notification.objects.filter(user=request.user)
-    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
             new_list = add_list_form.save(commit=False)
-            new_list.creator = request.user
-            new_list.save()
-            list_id = new_list.list_id
-            messages.success(request, f'List has been created!')
-            return redirect('home:list-details', list_id=list_id)
+            if List.objects.filter(name=new_list.name, creator=request.user).exists():
+                messages.error(request, 'You already have crated a list with this name!')
+            else:
+                new_list.creator = request.user
+                new_list.save()
+                profile_slug = new_list.creator.profile.slug
+                list_slug = new_list.slug
+                messages.success(request, 'List has been created!')
+                return redirect('home:list-details', profile_slug=profile_slug, list_slug=list_slug)
     filter_args = {'main_website_source': sources}
     if timeframe != 'All' and timeframe != None:
         filter_args['updated_at__gte'] = date.today() - timedelta(
@@ -164,35 +181,54 @@ def lists_search(request, timeframe, content_type, minimum_rating, sources):
     add_list_form = AddListForm()
     results_found = len(lists)
     lists, _ = paginator_create(request, lists, 10)
+    if request.user.is_authenticated:
+        unseen_notifications, source_notifications, list_notifications = notifications_get(request.user)
+    else:
+        unseen_notifications = None
+        source_notifications = None
+        list_notifications = None
     return render(
         request, 'home/lists.html', {
             'add_list_form': add_list_form,
             'lists': lists,
             'results_found': results_found,
-            'unseen_notifications': unseen_notifications
+            'unseen_notifications': unseen_notifications,
+            'source_notifications': source_notifications,
+            'list_notifications': list_notifications,
         })
 
 
 
 def sectors(request):
-    notifications = Notification.objects.filter(user=request.user)
-    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     sectors = Sector.objects.all().order_by('name')
-    return render(request, 'home/sectors.html', {'sectors': sectors, 'unseen_notifications': unseen_notifications})
+    if request.user.is_authenticated:
+        unseen_notifications, source_notifications, list_notifications = notifications_get(request.user)
+    else:
+        unseen_notifications = None
+        source_notifications = None
+        list_notifications = None
+    return render(request, 'home/sectors.html', {
+        'sectors': sectors, 
+        'unseen_notifications': unseen_notifications,
+        'source_notifications': source_notifications,
+        'list_notifications': list_notifications
+        })
 
 
 def articles(request):
-    notifications = Notification.objects.filter(user=request.user)
-    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
             new_list = add_list_form.save(commit=False)
-            new_list.creator = request.user
-            new_list.save()
-            list_id = new_list.list_id
-            messages.success(request, f'List has been created!')
-            return redirect('home:list-details', list_id=list_id)
+            if List.objects.filter(name=new_list.name, creator=request.user).exists():
+                messages.error(request, 'You already have crated a list with this name!')
+            else:
+                new_list.creator = request.user
+                new_list.save()
+                profile_slug = new_list.creator.profile.slug
+                list_slug = new_list.slug
+                messages.success(request, 'List has been created!')
+                return redirect('home:list-details', profile_slug=profile_slug, list_slug=list_slug)
     search_articles = Article.objects.filter(external_source=None).order_by('-pub_date')
     results_found = len(search_articles)
     search_articles, _ = paginator_create(request, search_articles, 10)
@@ -201,9 +237,13 @@ def articles(request):
         highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
             request.user)
         user_lists = List.objects.get_created_lists(request.user)
+        unseen_notifications, source_notifications, list_notifications = notifications_get(request.user)
     else:
         highlighted_articles_titles = None
         user_lists = None
+        unseen_notifications = None
+        source_notifications = None
+        list_notifications = None
     add_list_form = AddListForm()
     context = {
         'add_list_form': add_list_form,
@@ -212,23 +252,27 @@ def articles(request):
         'sectors': sectors,
         'highlighted_articles_titles': highlighted_articles_titles,
         'user_lists': user_lists,
-        'unseen_notifications': unseen_notifications
+        'unseen_notifications': unseen_notifications,
+        'source_notifications': source_notifications,
+        'list_notifications': list_notifications,
     }
     return render(request, 'home/articles.html', context)
 
 
 def articles_search(request, timeframe, sector, paywall, sources):
-    notifications = Notification.objects.filter(user=request.user)
-    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
             new_list = add_list_form.save(commit=False)
-            new_list.creator = request.user
-            new_list.save()
-            list_id = new_list.list_id
-            messages.success(request, f'List has been created!')
-            return redirect('home:list-details', list_id=list_id)
+            if List.objects.filter(name=new_list.name, creator=request.user).exists():
+                messages.error(request, 'You already have crated a list with this name!')
+            else:
+                new_list.creator = request.user
+                new_list.save()
+                profile_slug = new_list.creator.profile.slug
+                list_slug = new_list.slug
+                messages.success(request, 'List has been created!')
+                return redirect('home:list-details', profile_slug=profile_slug, list_slug=list_slug)
     filter_args = {'source__paywall': paywall, 'source__website': sources}
     if timeframe != 'All' and timeframe != None:
         filter_args['pub_date__gte'] = date.today() - timedelta(
@@ -252,12 +296,16 @@ def articles_search(request, timeframe, sector, paywall, sources):
     search_articles, _ = paginator_create(request, search_articles, 10)
     sectors = Sector.objects.all().order_by('name')
     if request.user.is_authenticated:
+        unseen_notifications, source_notifications, list_notifications = notifications_get(request.user)
         highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
             request.user)
         user_lists = List.objects.get_created_lists(request.user)
     else:
         highlighted_articles_titles = None
         user_lists = None
+        unseen_notifications = None
+        source_notifications = None
+        list_notifications = None
     add_list_form = AddListForm()
     context = {
         'add_list_form': add_list_form,
@@ -266,14 +314,14 @@ def articles_search(request, timeframe, sector, paywall, sources):
         'sectors': sectors,
         'highlighted_articles_titles': highlighted_articles_titles,
         'user_lists': user_lists,
-        'unseen_notifications': unseen_notifications
+        'unseen_notifications': unseen_notifications,
+        'source_notifications': source_notifications,
+        'list_notifications': list_notifications,
     }
     return render(request, 'home/articles.html', context)    
 
-def list_details(request, list_id):
-    notifications = Notification.objects.filter(user=request.user)
-    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
-    list = get_object_or_404(List, list_id=list_id)
+def list_details(request, profile_slug, list_slug):
+    list = get_object_or_404(List, slug=list_slug)
     if list.creator == request.user or list.is_public == True:
         if request.method == 'POST':
             if 'changeListForm' in request.POST:
@@ -286,21 +334,26 @@ def list_details(request, list_id):
                     change_list_pic_form.save()
                 if change_list_name_form.is_valid:
                     change_list_name_form.save()
-                return redirect('home:list-details', list_id=list_id)
+                return redirect('home:list-details', profile_slug=profile_slug , list_slug=list_slug)
             elif 'createListForm' in request.POST:
                 add_list_form = AddListForm(request.POST, request.FILES)
                 if add_list_form.is_valid():
                     new_list = add_list_form.save(commit=False)
-                    new_list.creator = request.user
-                    new_list.save()
-                    list_id = new_list.list_id
-                    messages.success(request, f'List has been created!')
-                    return redirect('home:list-details', list_id=list_id)
+                    if List.objects.filter(name=new_list.name, creator=request.user).exists():
+                        messages.error(request, 'You already have crated a list with this name!')
+                    else:
+                        new_list.creator = request.user
+                        new_list.save()
+                        profile_slug = new_list.creator.profile.slug
+                        list_slug = new_list.slug
+                        messages.success(request, 'List has been created!')
+                        return redirect('home:list-details', profile_slug=profile_slug, list_slug=list_slug)
         latest_articles = Article.objects.get_articles_from_list_sources(list)
         latest_articles, _ = paginator_create(request, latest_articles, 10,
                                               'latest_articles')
         change_list_pic_form = ListPicChangeForm()
         change_list_name_form = ListNameChangeForm()
+        list_id = list.list_id
         ammount_of_ratings = ListRating.objects.get_ammount_of_ratings(list_id)
         average_rating = ListRating.objects.get_average_rating(list_id)
         highlighted_articles = List.objects.get_highlighted_articles(list_id)
@@ -309,6 +362,7 @@ def list_details(request, list_id):
                                                    'highlighted_articles')
         add_list_form = AddListForm()
         if request.user.is_authenticated:
+            unseen_notifications, source_notifications, list_notifications = notifications_get(request.user)
             highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
                 request.user)
             user_lists = List.objects.get_created_lists(request.user)
@@ -326,6 +380,9 @@ def list_details(request, list_id):
             subscribed = False  # Refactoren
             user_rating = None
             notifications_activated = None
+            unseen_notifications = None
+            list_notifications = None
+            source_notifications = None
         context = {
             'add_list_form': add_list_form,
             'ammount_of_ratings': ammount_of_ratings,
@@ -340,7 +397,9 @@ def list_details(request, list_id):
             'highlighted_articles_titles': highlighted_articles_titles,
             'user_lists': user_lists,
             'notifications_activated': notifications_activated,
-            'unseen_notifications': unseen_notifications
+            'unseen_notifications': unseen_notifications,
+            'source_notifications': source_notifications,
+            'list_notifications': list_notifications,
         }
         return render(request, 'home/list_details.html', context)
     else:
@@ -348,17 +407,19 @@ def list_details(request, list_id):
 
 
 def sector_details(request, slug):
-    notifications = Notification.objects.filter(user=request.user)
-    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
             new_list = add_list_form.save(commit=False)
-            new_list.creator = request.user
-            new_list.save()
-            list_id = new_list.list_id
-            messages.success(request, f'List has been created!')
-            return redirect('home:list-details', list_id=list_id)
+            if List.objects.filter(name=new_list.name, creator=request.user).exists():
+                messages.error(request, 'You already have crated a list with this name!')
+            else:
+                new_list.creator = request.user
+                new_list.save()
+                profile_slug = new_list.creator.profile.slug
+                list_slug = new_list.slug
+                messages.success(request, 'List has been created!')
+                return redirect('home:list-details', profile_slug=profile_slug, list_slug=list_slug)
     sector = get_object_or_404(Sector, slug=slug)
     articles_from_sector = Article.objects.get_articles_from_sector(sector)
     articles_from_sector, _ = paginator_create(request, articles_from_sector,
@@ -374,9 +435,13 @@ def sector_details(request, slug):
         highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
             request.user)
         user_lists = List.objects.get_created_lists(request.user)
+        unseen_notifications, source_notifications, list_notifications = notifications_get(request.user)
     else:
         highlighted_articles_titles = None
         user_lists = None
+        unseen_notifications = None
+        source_notifications = None
+        list_notifications = None
     context = {
         'add_list_form': add_list_form,
         'articles_from_top_sources': articles_from_top_sources,
@@ -384,15 +449,16 @@ def sector_details(request, slug):
         'sector': sector,
         'highlighted_articles_titles': highlighted_articles_titles,
         'user_lists': user_lists,
-        'unseen_notifications': unseen_notifications
+        'unseen_notifications': unseen_notifications,
+        'source_notifications': source_notifications,
+        'list_notifications': list_notifications,
     }
     return render(request, 'home/sector_details.html', context)
 
 
 @login_required()
 def settings(request):
-    notifications = Notification.objects.filter(user=request.user)
-    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
+    unseen_notifications, source_notifications, list_notifications = notifications_get(request.user)
     if request.method == "POST":
         if 'changeProfileForm' in request.POST:
             email_and_name_change_form = EmailAndUsernameChangeForm(
@@ -438,6 +504,7 @@ def settings(request):
     social_links = SocialLink.objects.filter(profile=request.user.profile)
     privacy_settings_form = PrivacySettingsForm(
         instance=request.user.profile.privacysettings)
+    notifications = Notification.objects.filter(user=request.user)
     context = {
         'change_password_form': change_password_form,
         'email_and_name_change_form': email_and_name_change_form,
@@ -445,32 +512,45 @@ def settings(request):
         'social_links': social_links,
         'websites': websites,
         'privacy_settings_form': privacy_settings_form,
-        'unseen_notifications': unseen_notifications
+        'unseen_notifications': unseen_notifications,
+        'source_notifications': source_notifications,
+        'list_notifications': list_notifications,
+        'notifications': notifications
     }
     return render(request, 'home/settings.html', context)
 
 
 def main(request):
     cookie_settings_form = CookieSettingsForm()
-    notifications_subscribtions = Notification.objects.filter(user=request.user)
-    notifications = NotificationMessage.objects.filter(notification__in=notifications_subscribtions, user_has_seen=False)
-    unseen_notifications = notifications.count()
-    context = {'cookie_settings_form': cookie_settings_form, 'unseen_notifications': unseen_notifications, 'notifications': notifications}
+    if request.user.is_authenticated:
+        unseen_notifications, source_notifications, list_notifications = notifications_get(request.user)
+    else:
+        unseen_notifications = None
+        source_notifications = None
+        list_notifications = None
+    context = {
+        'cookie_settings_form': cookie_settings_form, 
+        'unseen_notifications': unseen_notifications, 
+        'source_notifications': source_notifications,
+        'list_notifications': list_notifications,
+    }
     return render(request, 'home/main.html', context)
 
 
 def search_results(request, search_term):
-    notifications = Notification.objects.filter(user=request.user)
-    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications, user_has_seen=False).count()
     if 'createListForm' in request.POST:
         add_list_form = AddListForm(request.POST, request.FILES)
         if add_list_form.is_valid():
             new_list = add_list_form.save(commit=False)
-            new_list.creator = request.user
-            new_list.save()
-            list_id = new_list.list_id
-            messages.success(request, f'List has been created!')
-            return redirect('home:list-details', list_id=list_id)
+            if List.objects.filter(name=new_list.name, creator=request.user).exists():
+                messages.error(request, 'You already have crated a list with this name!')
+            else:
+                new_list.creator = request.user
+                new_list.save()
+                profile_slug = new_list.creator.profile.slug
+                list_slug = new_list.slug
+                messages.success(request, 'List has been created!')
+                return redirect('home:list-details', profile_slug=profile_slug, list_slug=list_slug)
     filtered_lists = List.objects.filter_lists(search_term)
     filtered_lists, _ = paginator_create(request, filtered_lists, 10,
                                          'filtered_lists')
@@ -483,9 +563,13 @@ def search_results(request, search_term):
         highlighted_articles_titles = HighlightedArticle.objects.get_highlighted_articles_title(
             request.user)
         user_lists = List.objects.get_created_lists(request.user)
+        unseen_notifications, source_notifications, list_notifications = notifications_get(request.user)
     else:
         highlighted_articles_titles = None
         user_lists = None
+        unseen_notifications = None
+        source_notifications = None
+        list_notifications = None
     context = {
         'add_list_form': add_list_form,
         'filtered_articles': filtered_articles,
@@ -494,6 +578,11 @@ def search_results(request, search_term):
         'search_term': search_term,
         'highlighted_articles_titles': highlighted_articles_titles,
         'user_lists': user_lists, 
-        'unseen_notifications': unseen_notifications
+        'unseen_notifications': unseen_notifications,
+        'source_notifications': source_notifications,
+        'list_notifications': list_notifications,
     }
     return render(request, 'home/search_results.html', context)
+
+
+

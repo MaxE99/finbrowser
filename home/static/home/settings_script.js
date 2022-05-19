@@ -102,6 +102,7 @@ document
       } else {
         const context = await res.json();
         showMessage(context, "Success");
+        window.location.reload();
       }
     } catch (e) {
       showMessage("Error: Network error detected!", "Error");
@@ -122,6 +123,7 @@ document
       } else {
         const context = await res.json();
         showMessage(context, "Success");
+        window.location.reload();
       }
     } catch (e) {
       showMessage("Error: Network error detected!", "Error");
@@ -178,6 +180,7 @@ addSocialLinkButton.addEventListener("click", async () => {
     } else {
       const context = await res.json();
       showMessage(context, "Success");
+      window.location.reload();
     }
   } catch (e) {
     showMessage("Error: Network error detected!", "Error");
@@ -248,3 +251,28 @@ document.querySelectorAll(".saveSocialLinkChanges").forEach((socialLink) => {
     }
   });
 });
+
+document
+  .querySelectorAll(".iconContainer .fa-trash")
+  .forEach((deleteButton) => {
+    deleteButton.addEventListener("click", async () => {
+      try {
+        const notifications_id = deleteButton.id.replace(
+          "notification_id_",
+          ""
+        );
+        const res = await fetch(
+          `http://127.0.0.1:8000/api/notifications/${notifications_id}/`,
+          get_fetch_settings("DELETE")
+        );
+        if (!res.ok) {
+          showMessage("Error: Notification couldn't be deleted!", "Error");
+        } else {
+          deleteButton.parentElement.parentElement.remove();
+        }
+      } catch (e) {
+        console.log(e);
+        showMessage("Error: Network error detected!", "Error");
+      }
+    });
+  });

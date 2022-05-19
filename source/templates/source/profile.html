@@ -20,7 +20,7 @@
   </div>
   <div class="rightInnerContainer">
     <div class="upperInnerContainer">
-      <h3 id="source_id_{{ source.source_id }}">{{ source.name }}</h3>
+      <h3 class="sourceName" id="source_id_{{ source.source_id }}">{{ source.name }}</h3>
       <div class="sourceContainer">
         <div class="iconContainer">
           <img class="sourcePic" src="{{ website_logo }}" alt="website_logo" />
@@ -34,12 +34,43 @@
         {% else %}
         <i class="fas fa-bell"></i>
         {% endif %}
+        <button class="addToListButton"><i class="fas fa-list"></i></button>
+        <div class="addSourceToListForm">
+          <i class="fas fa-times"></i>
+          <h3>Add to lists</h3>
+          {% if user_lists %}
+          <div class="listSelectionContainer">
+            {% for list in user_lists %}
+            <div class="listContainer">
+              <label for="id_list_{{ list.list_id }}">
+                {% if source in list.sources.all %}
+                <input id="id_list_{{ list.list_id }}" class="sourceInList" type="checkbox" name="lists"
+                  value="{{ list.list_id }}" checked="True"> {{ list }}
+                {% else %}
+                <input id="id_list_{{ list.list_id }}" class="sourceNotInList" type="checkbox" name="lists"
+                  value="{{ list.list_id }}">
+                {{ list }}
+                {% endif %}
+              </label>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="buttonsContainer">
+            <button class="saveButton">Save</button>
+            <button class="createNewListButton">Create</button>
+          </div>
+          {% else %}
+          <div class="listContainer">You haven't created any lists!</div>
+          <button class="createNewListButton createFirstList">Create First List</button>
+          {% endif %}
+        </div>
         {% if subscribed %}
         <button class="subscribeButton subscribed">Subscribed</button>
         {% else %}
         <button class="subscribeButton unsubscribed">Subscribe</button>
         {% endif %}
         {% else %}
+        <a href="{% url 'account_login' %}" class="addToListButton registrationLink"><i class="fas fa-list"></i></a>
         <a href="{% url 'account_login' %}" class="subscribeButton unsubscribed registrationLink">Subscribe</a>
         {% endif %}
       </div>

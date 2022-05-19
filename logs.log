@@ -888,3 +888,969 @@ django.core.exceptions.ValidationError: ['â€œYYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]â
 2022-05-17 13:32:22,180 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
 2022-05-17 13:32:22,183 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[92269ec5-d438-4a25-b10d-52f020d85caa] received
 2022-05-17 13:32:23,535 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[92269ec5-d438-4a25-b10d-52f020d85caa] succeeded in 1.351578262001567s: None
+2022-05-17 13:47:22,189 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 13:47:22,192 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[69931ba6-f111-45e7-80f1-dcbd68a31260] received
+2022-05-17 13:47:24,060 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[69931ba6-f111-45e7-80f1-dcbd68a31260] succeeded in 1.8669047830007912s: None
+2022-05-17 16:35:23,258 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-17 16:35:23,805 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-17 16:35:23,807 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-17 16:35:23,812 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-17 16:35:24,821 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-17 16:35:24,836 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-17 16:35:24,836 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-17 16:35:38,768 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-17 16:35:44,538 - celery.beat - INFO - beat: Starting...
+2022-05-17 16:35:44,610 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 16:35:44,617 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9da69afd-a69d-4763-acfc-5e28f97f305e] received
+2022-05-17 16:35:50,774 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9da69afd-a69d-4763-acfc-5e28f97f305e] succeeded in 6.15609538499848s: None
+2022-05-17 16:50:44,616 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 16:50:44,619 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[66faba79-a634-4ead-93fd-9d4f1608e69c] received
+2022-05-17 16:50:45,648 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[66faba79-a634-4ead-93fd-9d4f1608e69c] succeeded in 1.0282381200013333s: None
+2022-05-17 17:04:51,972 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-17 17:04:52,496 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-17 17:04:52,499 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-17 17:04:52,505 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-17 17:04:53,512 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-17 17:04:53,523 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-17 17:04:53,523 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-17 17:04:58,806 - celery.beat - INFO - beat: Starting...
+2022-05-17 17:05:00,320 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-17 17:05:44,627 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 17:05:44,642 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d0904bca-f1ab-4f00-ad58-b77536b7e977] received
+2022-05-17 17:05:45,686 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d0904bca-f1ab-4f00-ad58-b77536b7e977] succeeded in 1.0418075699999463s: None
+2022-05-17 17:20:44,629 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 17:20:44,634 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3ad4ba18-e378-4c97-bf0b-203548b6060b] received
+2022-05-17 17:20:45,801 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3ad4ba18-e378-4c97-bf0b-203548b6060b] succeeded in 1.1655622859980213s: None
+2022-05-17 17:35:44,631 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 17:35:44,633 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[4bb93d39-611b-4859-b0bd-8a67d6178941] received
+2022-05-17 17:35:45,485 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[4bb93d39-611b-4859-b0bd-8a67d6178941] succeeded in 0.8505766739981482s: None
+2022-05-17 17:50:44,635 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 17:50:44,637 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5a524bd2-c183-43ee-af0f-d1d638c5c598] received
+2022-05-17 17:50:45,662 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5a524bd2-c183-43ee-af0f-d1d638c5c598] succeeded in 1.0229675939990557s: None
+2022-05-17 18:05:51,720 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-17 18:05:52,286 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-17 18:05:52,289 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-17 18:05:52,294 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-17 18:05:53,307 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-17 18:05:53,322 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-17 18:05:53,322 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-17 18:05:58,995 - celery.beat - INFO - beat: Starting...
+2022-05-17 18:05:59,062 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 18:05:59,070 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b4f56fd9-17f5-44d2-8412-47fff0573634] received
+2022-05-17 18:05:59,885 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[b4f56fd9-17f5-44d2-8412-47fff0573634] raised unexpected: IntegrityError('null value in column "date" of relation "home_notificationmessage" violates not-null constraint\nDETAIL:  Failing row contains (107, null, f, 19, 2317).\n')
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.errors.NotNullViolation: null value in column "date" of relation "home_notificationmessage" violates not-null constraint
+DETAIL:  Failing row contains (107, null, f, 19, 2317).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 60, in scrape_twitter
+    notifications_create(source, article)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/home/logic/services.py", line 47, in notifications_create
+    NotificationMessage.objects.create(notification=source_notification, article=article)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 453, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 739, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 776, in save_base
+    updated = self._save_table(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 881, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 919, in _do_insert
+    return manager._insert(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1270, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1416, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.IntegrityError: null value in column "date" of relation "home_notificationmessage" violates not-null constraint
+DETAIL:  Failing row contains (107, null, f, 19, 2317).
+
+2022-05-17 18:06:00,466 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-17 18:20:59,069 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 18:20:59,071 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a49ebf63-2040-4db2-a514-3b416970ad41] received
+2022-05-17 18:20:59,829 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[a49ebf63-2040-4db2-a514-3b416970ad41] raised unexpected: IntegrityError('null value in column "date" of relation "home_notificationmessage" violates not-null constraint\nDETAIL:  Failing row contains (108, null, f, 19, 2318).\n')
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.errors.NotNullViolation: null value in column "date" of relation "home_notificationmessage" violates not-null constraint
+DETAIL:  Failing row contains (108, null, f, 19, 2318).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 60, in scrape_twitter
+    notifications_create(source, article)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/home/logic/services.py", line 47, in notifications_create
+    NotificationMessage.objects.create(notification=source_notification, article=article)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 453, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 739, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 776, in save_base
+    updated = self._save_table(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 881, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 919, in _do_insert
+    return manager._insert(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1270, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1416, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.IntegrityError: null value in column "date" of relation "home_notificationmessage" violates not-null constraint
+DETAIL:  Failing row contains (108, null, f, 19, 2318).
+
+2022-05-17 20:19:32,232 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-17 20:19:32,750 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-17 20:19:32,754 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-17 20:19:32,760 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-17 20:19:33,771 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-17 20:19:33,786 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-17 20:19:33,787 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-17 20:19:49,451 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-17 20:19:53,280 - celery.beat - INFO - beat: Starting...
+2022-05-17 20:19:53,347 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 20:19:53,356 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ae0573cc-b590-4fc4-b5a3-9548a9d21da6] received
+2022-05-17 20:19:54,838 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[ae0573cc-b590-4fc4-b5a3-9548a9d21da6] raised unexpected: IntegrityError('null value in column "date" of relation "home_notificationmessage" violates not-null constraint\nDETAIL:  Failing row contains (109, null, f, 20, 2320).\n')
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.errors.NotNullViolation: null value in column "date" of relation "home_notificationmessage" violates not-null constraint
+DETAIL:  Failing row contains (109, null, f, 20, 2320).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 60, in scrape_twitter
+    notifications_create(source, article)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/home/logic/services.py", line 47, in notifications_create
+    NotificationMessage.objects.create(notification=source_notification, article=article)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 453, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 739, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 776, in save_base
+    updated = self._save_table(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 881, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 919, in _do_insert
+    return manager._insert(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1270, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1416, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.IntegrityError: null value in column "date" of relation "home_notificationmessage" violates not-null constraint
+DETAIL:  Failing row contains (109, null, f, 20, 2320).
+
+2022-05-17 20:35:58,009 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-17 20:35:58,521 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-17 20:35:58,525 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-17 20:35:58,532 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-17 20:35:59,543 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-17 20:35:59,558 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-17 20:35:59,558 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-17 20:36:07,311 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-17 20:36:12,043 - celery.beat - INFO - beat: Starting...
+2022-05-17 20:36:12,109 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 20:36:12,116 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8733b9e6-4e17-47e3-aef2-080f3ce6a40c] received
+2022-05-17 20:36:12,897 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[8733b9e6-4e17-47e3-aef2-080f3ce6a40c] raised unexpected: IntegrityError('null value in column "date" of relation "home_notificationmessage" violates not-null constraint\nDETAIL:  Failing row contains (110, null, f, 20, 2325).\n')
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.errors.NotNullViolation: null value in column "date" of relation "home_notificationmessage" violates not-null constraint
+DETAIL:  Failing row contains (110, null, f, 20, 2325).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 60, in scrape_twitter
+    notifications_create(source, article, pub_date)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/home/logic/services.py", line 47, in notifications_create
+    NotificationMessage.objects.create(notification=source_notification, article=article)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 453, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 739, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 776, in save_base
+    updated = self._save_table(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 881, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/base.py", line 919, in _do_insert
+    return manager._insert(
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1270, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1416, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.IntegrityError: null value in column "date" of relation "home_notificationmessage" violates not-null constraint
+DETAIL:  Failing row contains (110, null, f, 20, 2325).
+
+2022-05-17 20:42:58,420 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-17 20:42:58,938 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-17 20:42:58,944 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-17 20:42:58,949 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-17 20:42:59,959 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-17 20:42:59,972 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-17 20:42:59,972 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-17 20:43:05,021 - celery.beat - INFO - beat: Starting...
+2022-05-17 20:43:06,739 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-17 20:51:12,111 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 20:51:12,125 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[461d92b1-ac83-42ab-9f3f-75a3e358f8db] received
+2022-05-17 20:51:18,528 - celery.redirected - WARNING - 2022-05-17 18:06:08+00:00
+2022-05-17 20:51:18,547 - celery.redirected - WARNING - 2022-05-17 17:53:51+00:00
+2022-05-17 20:51:18,611 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[461d92b1-ac83-42ab-9f3f-75a3e358f8db] succeeded in 6.484946562995901s: None
+2022-05-17 21:06:12,117 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 21:06:12,119 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8430c560-68d3-41ca-bd05-5f96e98a0f63] received
+2022-05-17 21:06:13,209 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8430c560-68d3-41ca-bd05-5f96e98a0f63] succeeded in 1.0880261880010949s: None
+2022-05-17 21:21:12,125 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 21:21:12,127 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[913c67aa-c3be-43dc-a183-5b142874479a] received
+2022-05-17 21:21:13,105 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[913c67aa-c3be-43dc-a183-5b142874479a] succeeded in 0.9765800169989234s: None
+2022-05-17 21:36:12,132 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 21:36:12,135 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7b994df5-0428-4318-88ce-d219f0c2933b] received
+2022-05-17 21:36:13,533 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7b994df5-0428-4318-88ce-d219f0c2933b] succeeded in 1.397149760996399s: None
+2022-05-17 21:51:12,141 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 21:51:12,144 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[96651389-1034-43a7-8675-2fbcd956fa2f] received
+2022-05-17 21:51:12,997 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[96651389-1034-43a7-8675-2fbcd956fa2f] succeeded in 0.8520542379992548s: None
+2022-05-17 22:06:12,151 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-17 22:06:12,154 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b91f3465-8cc5-462f-96c3-af25f817ced6] received
+2022-05-17 22:06:13,156 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b91f3465-8cc5-462f-96c3-af25f817ced6] succeeded in 1.0005229800008237s: None
+2022-05-18 06:36:59,856 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-18 06:37:00,366 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-18 06:37:00,370 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-18 06:37:00,374 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-18 06:37:01,384 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-18 06:37:01,406 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-18 06:37:01,406 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-18 06:37:14,291 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-18 06:37:54,654 - celery.beat - INFO - beat: Starting...
+2022-05-18 06:37:54,724 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 06:37:54,737 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ebf2ec92-9705-4510-9f68-a0b67848651f] received
+2022-05-18 06:37:55,834 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[ebf2ec92-9705-4510-9f68-a0b67848651f] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 06:52:54,724 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 06:52:54,726 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[43fb22dc-2b56-4b78-b1e1-3411adb4d5b8] received
+2022-05-18 06:52:55,532 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[43fb22dc-2b56-4b78-b1e1-3411adb4d5b8] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 07:07:54,733 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 07:07:54,736 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[bf7178ad-e6a6-4737-971d-e4e430846397] received
+2022-05-18 07:07:55,642 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[bf7178ad-e6a6-4737-971d-e4e430846397] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 07:22:54,747 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 07:22:54,749 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f1d7d45c-cf4e-4166-92e5-a215fa855120] received
+2022-05-18 07:22:55,566 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[f1d7d45c-cf4e-4166-92e5-a215fa855120] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 07:37:54,750 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 07:37:54,751 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[53b70408-7574-4545-8da2-6172809b68aa] received
+2022-05-18 07:37:55,708 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[53b70408-7574-4545-8da2-6172809b68aa] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 07:52:54,758 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 07:52:54,760 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8f678947-3f00-41b0-bb85-e57a76ffad0c] received
+2022-05-18 07:52:55,843 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[8f678947-3f00-41b0-bb85-e57a76ffad0c] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 08:07:54,761 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 08:07:54,763 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a595db1f-732b-4116-83dd-6c07f80b2fda] received
+2022-05-18 08:07:56,001 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[a595db1f-732b-4116-83dd-6c07f80b2fda] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 08:22:54,770 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 08:22:54,772 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9c116b1f-9d9c-4503-8d79-2e5c1ed63239] received
+2022-05-18 08:22:56,015 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[9c116b1f-9d9c-4503-8d79-2e5c1ed63239] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 08:37:54,775 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 08:37:54,777 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5a860e14-cd60-4109-a57a-cdb60a4607b5] received
+2022-05-18 08:37:55,711 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[5a860e14-cd60-4109-a57a-cdb60a4607b5] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 08:52:54,784 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 08:52:54,786 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e7154151-aada-4aed-9c1c-7bd10c69b9f5] received
+2022-05-18 08:52:55,788 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[e7154151-aada-4aed-9c1c-7bd10c69b9f5] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 09:07:54,792 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 09:07:54,794 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6525337a-28cc-46a0-9d02-de57f384b6c6] received
+2022-05-18 09:07:55,943 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[6525337a-28cc-46a0-9d02-de57f384b6c6] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 09:22:54,801 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 09:22:54,803 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9e58f911-ce12-4dc7-80a3-4ea7f26b2b79] received
+2022-05-18 09:22:55,791 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[9e58f911-ce12-4dc7-80a3-4ea7f26b2b79] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 09:37:54,809 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 09:37:54,812 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[505f2b36-158e-4ae9-84f8-a28262180381] received
+2022-05-18 09:37:55,782 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[505f2b36-158e-4ae9-84f8-a28262180381] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 09:52:54,811 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 09:52:54,813 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2016f83d-a149-4e0c-b712-ffc1d1e3a454] received
+2022-05-18 09:52:55,830 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[2016f83d-a149-4e0c-b712-ffc1d1e3a454] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 10:07:54,811 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 10:07:54,813 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c44564b9-371c-46c4-b560-e81c1c5c3158] received
+2022-05-18 10:07:55,877 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[c44564b9-371c-46c4-b560-e81c1c5c3158] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 10:22:54,820 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 10:22:54,824 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[84e270de-ae8b-408f-96ca-6a76495e3406] received
+2022-05-18 10:22:55,856 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[84e270de-ae8b-408f-96ca-6a76495e3406] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 10:37:54,828 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 10:37:54,830 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1f0e4011-4948-42fe-8e89-5b2055daadbf] received
+2022-05-18 10:37:55,845 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[1f0e4011-4948-42fe-8e89-5b2055daadbf] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 10:52:54,839 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 10:52:54,842 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f6082b3a-66cd-4134-9e41-d8bdedeb0804] received
+2022-05-18 10:52:56,037 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[f6082b3a-66cd-4134-9e41-d8bdedeb0804] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 11:07:54,848 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 11:07:54,851 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e767b9f5-e158-485d-8164-4ec5e3acd394] received
+2022-05-18 11:07:55,836 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[e767b9f5-e158-485d-8164-4ec5e3acd394] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 11:22:54,856 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 11:22:54,860 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f580b7f2-9a00-4081-b85d-8f0d1c452305] received
+2022-05-18 11:22:55,798 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[f580b7f2-9a00-4081-b85d-8f0d1c452305] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 11:37:54,866 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 11:37:54,868 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e6016a48-d562-45ba-abbd-78af2188b73f] received
+2022-05-18 11:37:55,830 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[e6016a48-d562-45ba-abbd-78af2188b73f] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 11:52:54,868 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 11:52:54,870 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5233d62e-5322-4602-919a-a2132088e91c] received
+2022-05-18 11:52:55,772 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[5233d62e-5322-4602-919a-a2132088e91c] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 12:07:54,877 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 12:07:54,878 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[834a769c-5478-4aa0-a8a7-54de02d51660] received
+2022-05-18 12:07:55,822 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[834a769c-5478-4aa0-a8a7-54de02d51660] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 12:22:54,885 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 12:22:54,887 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[aade3019-9196-43ab-b8e1-24b1d72ccac8] received
+2022-05-18 12:22:55,937 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[aade3019-9196-43ab-b8e1-24b1d72ccac8] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 12:37:54,894 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 12:37:54,896 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1de6f478-e8e4-4c93-b92f-c3eeb3ba1033] received
+2022-05-18 12:37:55,868 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[1de6f478-e8e4-4c93-b92f-c3eeb3ba1033] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 12:52:54,903 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 12:52:54,907 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6a77ddc2-de3a-4540-a8db-7216dcf0b112] received
+2022-05-18 12:52:55,849 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[6a77ddc2-de3a-4540-a8db-7216dcf0b112] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 13:07:54,912 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 13:07:54,914 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[40b3feee-23f7-406a-bf47-ea08ec05aac2] received
+2022-05-18 13:07:55,982 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[40b3feee-23f7-406a-bf47-ea08ec05aac2] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 13:22:54,918 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 13:22:54,921 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1a882d3b-2ade-4024-ae4d-324ce9c7ac1d] received
+2022-05-18 13:22:55,926 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[1a882d3b-2ade-4024-ae4d-324ce9c7ac1d] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 13:37:54,922 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 13:37:54,924 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8989ee98-06c1-4ef5-86a4-17489c721745] received
+2022-05-18 13:37:55,913 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[8989ee98-06c1-4ef5-86a4-17489c721745] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 13:52:54,930 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 13:52:54,932 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[4e6cb443-0589-47bd-8325-80d64e80de00] received
+2022-05-18 13:52:55,987 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[4e6cb443-0589-47bd-8325-80d64e80de00] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-18 14:07:54,937 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-18 14:07:54,939 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8637b635-0862-4828-9e14-b6b975b96feb] received
+2022-05-18 14:07:55,818 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[8637b635-0862-4828-9e14-b6b975b96feb] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 06:42:04,533 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-19 06:42:05,041 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-19 06:42:05,047 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-19 06:42:05,053 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-19 06:42:06,065 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-19 06:42:06,082 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-19 06:42:06,083 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-19 06:42:21,804 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-19 06:42:27,011 - celery.beat - INFO - beat: Starting...
+2022-05-19 06:42:27,089 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 06:42:27,100 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[4b3e4058-90e3-4c3a-ae5f-6eccb3d99536] received
+2022-05-19 06:42:28,885 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[4b3e4058-90e3-4c3a-ae5f-6eccb3d99536] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 06:57:27,088 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 06:57:27,089 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a73e3fd1-7b0e-4650-ba28-2135a56f2b6e] received
+2022-05-19 06:57:28,043 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[a73e3fd1-7b0e-4650-ba28-2135a56f2b6e] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 07:12:27,096 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 07:12:27,099 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1d257a91-967e-4b7c-8169-48bb1adbc0f4] received
+2022-05-19 07:12:28,056 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[1d257a91-967e-4b7c-8169-48bb1adbc0f4] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 07:27:27,105 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 07:27:27,108 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b32b0a38-a0a5-47f8-b846-ab1d118dc11a] received
+2022-05-19 07:27:28,205 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[b32b0a38-a0a5-47f8-b846-ab1d118dc11a] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 07:42:27,114 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 07:42:27,116 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[cfa03abd-5c7e-4c5e-bc0c-17a1d9cb5ebe] received
+2022-05-19 07:42:28,103 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[cfa03abd-5c7e-4c5e-bc0c-17a1d9cb5ebe] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 07:57:27,122 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 07:57:27,125 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[672c8d79-d1d9-4d7c-beeb-afed89bedc9e] received
+2022-05-19 07:57:28,147 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[672c8d79-d1d9-4d7c-beeb-afed89bedc9e] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 08:12:27,124 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 08:12:27,126 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[639f15f3-d2a0-4bff-bcbd-83c70bb15d8f] received
+2022-05-19 08:12:28,188 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[639f15f3-d2a0-4bff-bcbd-83c70bb15d8f] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 08:27:27,133 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 08:27:27,136 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[286fec76-b505-4d29-8e17-8693752db07e] received
+2022-05-19 08:27:29,231 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[286fec76-b505-4d29-8e17-8693752db07e] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 08:42:27,142 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 08:42:27,143 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[912dca9a-91b7-4764-be33-5cb0b173b404] received
+2022-05-19 08:42:28,083 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[912dca9a-91b7-4764-be33-5cb0b173b404] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 08:57:27,146 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 08:57:27,148 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[99e19d36-2b6d-4827-8ac6-e8d340ecf57c] received
+2022-05-19 08:57:28,171 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[99e19d36-2b6d-4827-8ac6-e8d340ecf57c] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 09:12:27,150 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 09:12:27,151 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8c20fe78-61f7-451c-8086-cf5e33568cbe] received
+2022-05-19 09:12:28,214 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[8c20fe78-61f7-451c-8086-cf5e33568cbe] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.utcnow() - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 09:27:27,155 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 09:27:27,157 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[4b4f15de-1194-4aa4-924d-e7fa9dbc3ae6] received
+2022-05-19 09:27:28,260 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[4b4f15de-1194-4aa4-924d-e7fa9dbc3ae6] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    print(type(datetime.now))
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 09:42:27,163 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 09:42:27,166 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5d68c51f-8069-4fe0-b7f7-dd0ec43d3de2] received
+2022-05-19 09:42:28,204 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[5d68c51f-8069-4fe0-b7f7-dd0ec43d3de2] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.now(timezone.utc) - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 09:57:27,172 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 09:57:27,175 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7ffdfba9-24cd-4343-9941-b75b3aee0ab8] received
+2022-05-19 09:57:28,348 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[7ffdfba9-24cd-4343-9941-b75b3aee0ab8] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.now(timezone.utc) - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 10:11:50,673 - django_celery_beat.schedulers - INFO - DatabaseScheduler: Schedule changed.
+2022-05-19 10:11:50,723 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 10:11:50,725 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d2c1a012-db08-44bd-a1f1-f36042b600b2] received
+2022-05-19 10:11:51,755 - celery.app.trace - ERROR - Task scrapper.tasks.scrape_twitter[d2c1a012-db08-44bd-a1f1-f36042b600b2] raised unexpected: TypeError("can't subtract offset-naive and offset-aware datetimes")
+Traceback (most recent call last):
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 451, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/app/trace.py", line 734, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/scrapper/tasks.py", line 67, in scrape_twitter
+    if (datetime.now(timezone.utc) - notification_message.date) > timedelta(hours=24):
+TypeError: can't subtract offset-naive and offset-aware datetimes
+2022-05-19 10:11:55,755 - django_celery_beat.schedulers - INFO - DatabaseScheduler: Schedule changed.
+2022-05-19 10:12:13,565 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-19 10:12:14,082 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-19 10:12:14,086 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-19 10:12:14,091 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-19 10:12:15,102 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-19 10:12:15,115 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-19 10:12:15,115 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-19 10:12:20,408 - celery.beat - INFO - beat: Starting...
+2022-05-19 10:12:22,199 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-19 10:16:50,733 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 10:16:50,751 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[4989d4d4-ad91-4038-a151-9a83ade28b9b] received
+2022-05-19 10:16:51,647 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[4989d4d4-ad91-4038-a151-9a83ade28b9b] succeeded in 0.8944745949993376s: None
+2022-05-19 10:22:23,375 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-19 10:22:23,897 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-19 10:22:23,900 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-19 10:22:23,903 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-19 10:22:24,914 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-19 10:22:24,937 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-19 10:22:24,937 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-19 10:22:32,273 - celery.beat - INFO - beat: Starting...
+2022-05-19 10:22:32,342 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 10:22:32,350 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fd7443ec-fcf0-4707-8e1e-960b38fe3e30] received
+2022-05-19 10:22:33,448 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fd7443ec-fcf0-4707-8e1e-960b38fe3e30] succeeded in 1.0972006739993958s: None
+2022-05-19 10:22:33,895 - celery.worker.control - INFO - Events of group {task} enabled by remote.
+2022-05-19 10:27:32,349 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 10:27:32,352 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[eaf50e5a-8f14-4a40-b3bb-b35f45e0e225] received
+2022-05-19 10:27:32,764 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[eaf50e5a-8f14-4a40-b3bb-b35f45e0e225] succeeded in 0.4101717550001922s: None
+2022-05-19 10:32:32,357 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 10:32:32,359 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ec72401b-0e31-485b-bce4-fa4e6bf98f88] received
+2022-05-19 10:32:32,822 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ec72401b-0e31-485b-bce4-fa4e6bf98f88] succeeded in 0.4615866989988717s: None
+2022-05-19 10:37:32,369 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 10:37:32,371 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[111ed8db-9496-425c-abf3-10d17286f7bb] received
+2022-05-19 10:37:32,722 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[111ed8db-9496-425c-abf3-10d17286f7bb] succeeded in 0.34929178099991987s: None
+2022-05-19 10:42:32,375 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 10:42:32,377 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c3693873-21f6-4ce6-8617-46a98c098bf8] received
+2022-05-19 10:42:32,860 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c3693873-21f6-4ce6-8617-46a98c098bf8] succeeded in 0.48164794399963284s: None
+2022-05-19 10:47:32,386 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 10:47:32,389 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[08824d01-b9c4-483a-a42b-8a4d4df09229] received
+2022-05-19 10:47:32,821 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[08824d01-b9c4-483a-a42b-8a4d4df09229] succeeded in 0.43049878500096384s: None
+2022-05-19 10:52:32,395 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 10:52:32,398 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[25309756-9a21-4fea-a9a9-2bebdfb6606d] received
+2022-05-19 10:52:32,746 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[25309756-9a21-4fea-a9a9-2bebdfb6606d] succeeded in 0.34643885500190663s: None
+2022-05-19 10:57:32,405 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 10:57:32,408 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7a3486f1-b1e1-4f2b-bad6-3e0875601bb0] received
+2022-05-19 10:57:32,887 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7a3486f1-b1e1-4f2b-bad6-3e0875601bb0] succeeded in 0.4777644470013911s: None
+2022-05-19 11:02:32,412 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 11:02:32,413 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a926472e-6878-4306-9e93-4567ccc27105] received
+2022-05-19 11:02:32,822 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a926472e-6878-4306-9e93-4567ccc27105] succeeded in 0.4081360210002458s: None
+2022-05-19 11:07:32,418 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 11:07:32,421 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0b215689-8d3b-4407-9611-d1c97509a0d1] received
+2022-05-19 11:07:32,836 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0b215689-8d3b-4407-9611-d1c97509a0d1] succeeded in 0.413604639001278s: None
+2022-05-19 11:12:32,425 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 11:12:32,427 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[43433073-6836-4a3b-83f7-0ddf49a69cfd] received
+2022-05-19 11:12:32,873 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[43433073-6836-4a3b-83f7-0ddf49a69cfd] succeeded in 0.44435993599836365s: None
+2022-05-19 11:17:32,432 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 11:17:32,434 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8b94a4dd-8e85-47c2-a9bd-bf6b52533b6d] received
+2022-05-19 11:17:32,831 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8b94a4dd-8e85-47c2-a9bd-bf6b52533b6d] succeeded in 0.39544836999994004s: None
+2022-05-19 11:22:32,443 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 11:22:32,445 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[69f6f0ef-2b20-4f55-8fac-8b2abd61e39a] received
+2022-05-19 11:22:32,860 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[69f6f0ef-2b20-4f55-8fac-8b2abd61e39a] succeeded in 0.4130063450029411s: None
+2022-05-19 11:27:32,453 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 11:27:32,455 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[03f42a0f-af80-4f74-bf1f-015ca353277a] received
+2022-05-19 11:27:32,891 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[03f42a0f-af80-4f74-bf1f-015ca353277a] succeeded in 0.4343491699983133s: None
+2022-05-19 11:32:32,464 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 11:32:32,466 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[13019020-587c-4ebe-be9d-2a8af6a993b6] received
+2022-05-19 11:32:32,841 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[13019020-587c-4ebe-be9d-2a8af6a993b6] succeeded in 0.37361244200292276s: None
+2022-05-19 11:37:32,474 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 11:37:32,477 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0bcd53bb-b95e-4d41-81c3-29072510bcfc] received
+2022-05-19 11:37:32,962 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0bcd53bb-b95e-4d41-81c3-29072510bcfc] succeeded in 0.4829934859990317s: None
+2022-05-19 11:42:32,485 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 11:42:32,490 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[60ec132b-6e69-4188-9a54-ca97c98bc4a6] received
+2022-05-19 11:42:32,895 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[60ec132b-6e69-4188-9a54-ca97c98bc4a6] succeeded in 0.40345216100104153s: None
+2022-05-19 11:47:32,492 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 11:47:32,494 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[edbd0428-acc7-45f9-82e2-63500d5c36a8] received
+2022-05-19 11:47:32,962 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[edbd0428-acc7-45f9-82e2-63500d5c36a8] succeeded in 0.46629632999975s: None
+2022-05-19 11:52:32,497 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 11:52:32,499 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6fc26af9-3831-471b-9d06-6f856018a20f] received
+2022-05-19 11:52:32,871 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6fc26af9-3831-471b-9d06-6f856018a20f] succeeded in 0.3713765450011124s: None
+2022-05-19 11:57:32,502 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 11:57:32,505 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[18c8ac4b-5dd0-4062-84b5-a0e4d585d837] received
+2022-05-19 11:57:32,841 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[18c8ac4b-5dd0-4062-84b5-a0e4d585d837] succeeded in 0.3352656589995604s: None
+2022-05-19 12:02:32,505 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 12:02:32,507 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3fe5fe02-94d6-402c-a304-7fd79a49141a] received
+2022-05-19 12:02:32,934 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3fe5fe02-94d6-402c-a304-7fd79a49141a] succeeded in 0.4256230070022866s: None
+2022-05-19 12:07:32,512 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 12:07:32,515 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[13c53cf0-5236-4a89-a900-a41196ec653a] received
+2022-05-19 12:07:32,852 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[13c53cf0-5236-4a89-a900-a41196ec653a] succeeded in 0.3348443139984738s: None
+2022-05-19 12:12:32,523 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 12:12:32,525 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6c324536-bf0d-4078-9d24-433f0c695779] received
+2022-05-19 12:12:32,894 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6c324536-bf0d-4078-9d24-433f0c695779] succeeded in 0.36703133799892385s: None
+2022-05-19 12:17:32,534 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 12:17:32,537 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[89436e5f-b467-4db6-8000-0a1614adac18] received
+2022-05-19 12:17:32,915 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[89436e5f-b467-4db6-8000-0a1614adac18] succeeded in 0.3763169949997973s: None
+2022-05-19 12:22:32,544 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 12:22:32,547 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d8d15d31-afee-4a84-8ad0-89313d60fe27] received
+2022-05-19 12:22:32,969 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d8d15d31-afee-4a84-8ad0-89313d60fe27] succeeded in 0.4207596800006286s: None
+2022-05-19 12:27:32,555 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-19 12:27:32,557 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2d6fe6a4-ba4c-4be9-b933-284b25f0124c] received
+2022-05-19 12:27:32,945 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2d6fe6a4-ba4c-4be9-b933-284b25f0124c] succeeded in 0.3872592869993241s: None
