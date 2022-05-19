@@ -71,13 +71,14 @@ document
             results_list.style.display = "flex";
             results_list.innerHTML = "";
             if (context[0].length > 0) {
+              console.log(context[0]);
               results_list.innerHTML += `<div class="searchResultHeader">Lists</div>`;
               context[0].forEach((list) => {
                 let list_pic = "/static/home/media/bigger_favicon.png";
                 if (list.list_pic) {
                   list_pic = list.list_pic;
                 }
-                const listRes = `<div class="searchResult"><img src="${list_pic}"><span>${list.name}</span><a href="../../list/${list.list_id}"></a></div>`;
+                const listRes = `<div class="searchResult"><img src="${list_pic}"><span>${list.name}</span><a href="../../list/${list.creator}/${list.slug}"></a></div>`;
                 results_list.innerHTML += listRes;
               });
             }
@@ -344,7 +345,7 @@ document
 document.querySelectorAll(".createNewListButton").forEach((button) => {
   button.addEventListener("click", () => {
     if (!button.classList.contains("registrationLink")) {
-      button.parentElement.parentElement.remove();
+      button.parentElement.parentElement.style.display = "none";
       document.querySelector(".createListMenu").style.display = "flex";
     }
   });
@@ -378,16 +379,32 @@ if (document.querySelector("details")) {
 }
 
 //activate notification popup
-document.querySelector(".userSpace .fa-bell").addEventListener("click", () => {
-  const notificationPopup = document.querySelector(
-    ".userSpace .notificationContainer"
-  );
-  if (notificationPopup.style.display == "block") {
-    notificationPopup.style.display = "none";
-  } else {
-    notificationPopup.style.display = "block";
-  }
-});
+document
+  .querySelector(".userSpace .fa-bell")
+  .addEventListener("click", async () => {
+    const notificationPopup = document.querySelector(
+      ".userSpace .notificationContainer"
+    );
+    if (notificationPopup.style.display == "block") {
+      notificationPopup.style.display = "none";
+      document.querySelector(".unseenNotifications").remove();
+    } else {
+      notificationPopup.style.display = "block";
+      try {
+        const res = await fetch(
+          `http://127.0.0.1:8000/api/notifications/`,
+          get_fetch_settings("PUT")
+        );
+        if (!res.ok) {
+          showMessage("Error: Notifications couldn't be opened!", "Error");
+        } else {
+          const context = await res.json();
+        }
+      } catch (e) {
+        showMessage("Error: Network error detected!", "Error");
+      }
+    }
+  });
 
 //Notification switch
 document

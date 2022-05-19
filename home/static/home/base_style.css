@@ -282,6 +282,11 @@ header {
   padding: 5px 0px;
 }
 
+.userSpace .notificationContainer .noNotificationsAvailable {
+  text-align: center;
+  padding: 5px;
+}
+
 .userSpace .notificationContainer .notificationHeadersContainer div {
   display: flex;
   justify-content: center;

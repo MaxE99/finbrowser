@@ -203,3 +203,91 @@ if (notificationButton) {
     }
   });
 }
+
+//open add list to sources form
+document.querySelector(".addToListButton").addEventListener("click", () => {
+  document.querySelector(".addSourceToListForm").style.display = "block";
+});
+
+//close add list sources form
+document
+  .querySelector(".addSourceToListForm .fa-times")
+  .addEventListener("click", () => {
+    document.querySelector(".addSourceToListForm").style.display = "none";
+  });
+
+// add sources to lists
+document
+  .querySelectorAll(".addSourceToListForm .saveButton")
+  .forEach((saveButton) => {
+    saveButton.addEventListener("click", async () => {
+      let source_id = document
+        .querySelector(".upperInnerContainer .sourceName")
+        .id.replace("source_id_", "");
+      let lists_status = [];
+      let initial_lists_status = [];
+      let list_ids = [];
+      const input_list =
+        saveButton.parentElement.parentElement.querySelectorAll(
+          ".listContainer input"
+        );
+      for (let i = 0, j = input_list.length; i < j; i++) {
+        initial_lists_status.push(input_list[i].className);
+        list_ids.push(input_list[i].id.replace("id_list_", ""));
+      }
+      saveButton.parentElement.previousElementSibling
+        .querySelectorAll("input")
+        .forEach((input) => {
+          if (input.checked) {
+            lists_status.push("sourceInList");
+          } else {
+            lists_status.push("sourceNotInList");
+          }
+        });
+      for (let i = 0, j = lists_status.length; i < j; i++) {
+        if (lists_status[i] != initial_lists_status[i]) {
+          if (initial_lists_status[i] == "sourceNotInList") {
+            let list_id = list_ids[i];
+            try {
+              const res = await fetch(
+                `http://127.0.0.1:8000/api/lists/${list_id}/add_source/${source_id}/`,
+                get_fetch_settings("POST")
+              );
+              if (!res.ok) {
+                showMessage(
+                  "Error: Article couldn't be added to list!",
+                  "Error"
+                );
+              } else {
+                const context = await res.json();
+                showMessage(context, "Success");
+                window.location.reload();
+              }
+            } catch (e) {
+              showMessage("Error: Network error detected!", "Error");
+            }
+          } else {
+            try {
+              let list_id = list_ids[i];
+              const res = await fetch(
+                `http://127.0.0.1:8000/api/lists/${list_id}/delete_source_from_list/${source_id}/`,
+                get_fetch_settings("DELETE")
+              );
+              if (!res.ok) {
+                showMessage(
+                  "Error: Article couldn't be added to list!",
+                  "Error"
+                );
+              } else {
+                const context = await res.json();
+                showMessage(context, "Success");
+                window.location.reload();
+              }
+            } catch (e) {
+              showMessage("Error: Network error detected!", "Error");
+            }
+          }
+        }
+      }
+    });
+  });

@@ -1,6 +1,8 @@
 # Django imports
 from django.forms import ModelForm
 from django import forms
+from django.core.exceptions import ValidationError
+# Python imports
 from datetime import date
 # Local imports
 from home.models import List, Sector
@@ -12,7 +14,7 @@ class AddListForm(ModelForm):
         model = List
         fields = ['name', 'list_pic', 'is_public']
         labels = {'list_pic': 'Picture', 'is_public': 'Make playlist public'}
-
+    
 
 class ListNameChangeForm(ModelForm):
 

@@ -4,7 +4,6 @@ from django.dispatch import receiver
 from django.db.models.signals import m2m_changed
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 # Local imports
@@ -111,6 +110,7 @@ class Article(models.Model):
 class List(models.Model):
     list_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+    slug = models.SlugField()
     creator = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     subscribers = models.ManyToManyField(User,
                                          related_name='subscriber_list',
@@ -135,6 +135,7 @@ class List(models.Model):
         return ListRating.objects.get_ammount_of_ratings(self.list_id)
 
     def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
         if self._state.adding is False:
             instance = main_website_source_set(self)
             super(List, instance).save(*args, **kwargs)
@@ -142,7 +143,7 @@ class List(models.Model):
             super(List, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('home:list-details', kwargs={'list_id': self.list_id})
+        return reverse('home:list-details', kwargs={'profile_slug': self.creator.profile.slug ,'list_slug': self.slug})
 
     def __str__(self):
         return self.name
@@ -213,7 +214,7 @@ class NotificationMessage(models.Model):
     notification_message_id = models.AutoField(primary_key=True)
     notification = models.ForeignKey(Notification, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField()
     user_has_seen = models.BooleanField(default=False)
 
     def __str__(self):
