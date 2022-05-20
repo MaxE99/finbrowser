@@ -521,7 +521,6 @@ def settings(request):
 
 
 def main(request):
-    cookie_settings_form = CookieSettingsForm()
     if request.user.is_authenticated:
         unseen_notifications, source_notifications, list_notifications = notifications_get(request.user)
     else:
@@ -529,7 +528,6 @@ def main(request):
         source_notifications = None
         list_notifications = None
     context = {
-        'cookie_settings_form': cookie_settings_form, 
         'unseen_notifications': unseen_notifications, 
         'source_notifications': source_notifications,
         'list_notifications': list_notifications,

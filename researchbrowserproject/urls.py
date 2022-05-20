@@ -26,8 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls', namespace='home')),
     path('source/', include('source.urls', namespace='source')),
-    # path('registration/', include('registration.urls',
-    #                               namespace='registration')),
     path('support/', include('support.urls', namespace='support')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('sitemap.xml',
