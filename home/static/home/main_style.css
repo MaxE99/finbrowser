@@ -1,16 +1,22 @@
-.overlay {
+main {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.firstSection {
   display: flex;
   flex-direction: column;
+  background: var(--primary-color);
 }
 
 .websiteBigNameContainer {
-  margin-top: 40px;
   font-size: 100px;
   justify-content: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   user-select: none;
+  margin-top: -15px;
 }
 
 .websiteBigNameContainer div:first-child {
@@ -33,11 +39,21 @@
   font-size: 20px;
 }
 
+.websiteAboutLoggedIn {
+  margin-bottom: 30px;
+}
+
+.websiteAbout a {
+  text-decoration: none;
+  color: var(--primary-fontColor);
+}
+
 .registrationButton {
   text-decoration: none;
   font-size: 20px;
   padding: 20px 40px;
   background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
   color: white;
   margin: 20px auto;
   border-radius: 40px;
@@ -48,72 +64,92 @@
   transform: scale(1.1, 1.1);
 }
 
-/* MOVING BACKGROUND ANIMATIONMOVING BACKGROUND ANIMATIONMOVING BACKGROUND ANIMATIONMOVING BACKGROUND ANIMATIONMOVING BACKGROUND ANIMATIONMOVING BACKGROUND ANIMATION */
-
-/* Animations */
-@-webkit-keyframes bg-scrolling-reverse {
-  100% {
-    background-position: 50px 50px;
-  }
-}
-@-moz-keyframes bg-scrolling-reverse {
-  100% {
-    background-position: 50px 50px;
-  }
-}
-@-o-keyframes bg-scrolling-reverse {
-  100% {
-    background-position: 50px 50px;
-  }
-}
-@keyframes bg-scrolling-reverse {
-  100% {
-    background-position: 50px 50px;
-  }
-}
-@-webkit-keyframes bg-scrolling {
-  0% {
-    background-position: 50px 50px;
-  }
-}
-@-moz-keyframes bg-scrolling {
-  0% {
-    background-position: 50px 50px;
-  }
-}
-@-o-keyframes bg-scrolling {
-  0% {
-    background-position: 50px 50px;
-  }
-}
-@keyframes bg-scrolling {
-  0% {
-    background-position: 50px 50px;
-  }
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-right: -15px;
+  margin-left: -15px;
 }
 
-body {
-  background-color: #e5e5f7;
-  background-image: linear-gradient(#b8c6db 2px, transparent 2px),
-    linear-gradient(90deg, #b8c6db 2px, transparent 2px),
-    linear-gradient(#b8c6db 1px, transparent 1px),
-    linear-gradient(90deg, #b8c6db 1px, #e5e5f7 1px);
-  background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
-  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
-  -webkit-animation: bg-scrolling-reverse 0.92s infinite;
-  /*Safari 4+ */
-  -moz-animation: bg-scrolling-reverse 0.92s infinite;
-  /* Fx 5+ */
-  -o-animation: bg-scrolling-reverse 0.92s infinite;
-  /* Opera 12+ */
-  animation: bg-scrolling-reverse 0.92s infinite;
-  /* IE 10+ */
-  -webkit-animation-timing-function: linear;
-  -moz-animation-timing-function: linear;
-  -o-animation-timing-function: linear;
-  animation-timing-function: linear;
+.service-section .icon-box {
+  margin-bottom: 20px;
+  padding: 30px;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+  min-height: 165px;
+}
+.service-section .icon-box:hover .service-title a {
+  color: var(--primary-fontColor);
+}
+.service-section .icon-box .service-icon {
+  float: left;
+  font-size: 30px;
+  background: var(--primary-fontColor);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 50%;
+}
+.service-section .icon-box .service-title {
+  margin-left: 70px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.2;
+  margin-bottom: 5px;
+  color: var(--primary-fontColor);
+}
+.service-section .icon-box .service-title a {
+  transition: 0.3s;
+  text-decoration: none;
+}
+.service-section .icon-box .service-para {
+  margin-left: 70px;
+  line-height: 24px;
+  font-size: 15px;
+  text-align: justify;
+}
+.service-section .service-main-heading {
+  color: white;
+  padding: 0;
+  margin-bottom: 20px;
+  line-height: 1;
+  font-size: 60px;
+  font-weight: 600;
 }
 
-.overlay {
-  opacity: 0.8;
+.container {
+  max-width: 1200px;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.pb-5,
+.py-5 {
+  padding-bottom: 3rem !important;
+  background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
+}
+.pt-5,
+.py-5 {
+  padding-top: 3rem !important;
+}
+article,
+aside,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
+  display: block;
+}
+
+.col-lg-6 {
+  flex: 0 0 47.5%;
+  max-width: 47.5%;
 }

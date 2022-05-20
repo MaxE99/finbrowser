@@ -52,11 +52,18 @@
                 <h3 id="list_detail_for_{{ list.list_id }}">{{ list.name }}</h3>
                 <div class="nameChangeContainer">{{ change_list_name_form }}</div>
                 {% if list.creator == request.user %}
-                <button type="button" class="editButton"><i class="fas fa-edit"></i> Edit</button>
-                <div class="buttonContainer">
-                    <button type="button" class="deleteListButton">Delete List</button>
-                    <a href="{{ list.list_id }}" class="cancelButton">Cancel</a>
-                    <input name="changeListForm" type="submit" value="Save">
+                <div class="notificationAndSubscribtionContainer">
+                    {% if notifications_activated %}
+                    <i class="fas fa-bell notificationActivated"></i>
+                    {% else %}
+                    <i class="fas fa-bell"></i>
+                    {% endif %}
+                    <button type="button" class="editButton"><i class="fas fa-edit"></i> Edit</button>
+                    <div class="buttonContainer">
+                        <button type="button" class="deleteListButton">Delete List</button>
+                        <a href="{{ list.list_id }}" class="cancelButton">Cancel</a>
+                        <input name="changeListForm" type="submit" value="Save">
+                    </div>
                 </div>
                 {% else %}
                 <div class="notificationAndSubscribtionContainer">

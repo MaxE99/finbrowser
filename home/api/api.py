@@ -165,7 +165,7 @@ class SourceViewSet(viewsets.ModelViewSet):
 class ListViewSet(viewsets.ModelViewSet):
     queryset = List.objects.all()
     serializer_class = List_Serializer
-    http_method_names = ["post", "delete"]
+    http_method_names = ["post", "delete", "get"]
 
     def get_queryset(self):
         feed_search = self.request.GET.get("feed_search", None)
@@ -283,8 +283,11 @@ class FilteredSite(APIView):
                 break
             all_spots_previous_iteration = all_spots
         article_favicon_paths = []
+        list_urls = []
         for article in filtered_articles:
             article_favicon_paths.append(article.source.favicon_path)
+        for list in filtered_lists:
+            list_urls.append(list.get_absolute_url())
         list_serializer = List_Serializer(
             filtered_lists[0:display_spots_lists], many=True)
         sources_serializer = Source_Serializer(
@@ -293,7 +296,7 @@ class FilteredSite(APIView):
             filtered_articles[0:display_spots_articles], many=True)
         return JsonResponse([
             list_serializer.data, sources_serializer.data,
-            articles_serializer.data, article_favicon_paths
+            articles_serializer.data, article_favicon_paths, list_urls
         ],
                             safe=False)
 
