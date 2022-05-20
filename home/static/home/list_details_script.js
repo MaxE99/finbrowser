@@ -268,6 +268,44 @@ document
     }
   });
 
+//Notifications
+const notificationButton = document.querySelector(
+  ".notificationAndSubscribtionContainer .fa-bell"
+);
+if (notificationButton) {
+  notificationButton.addEventListener("click", async () => {
+    try {
+      const list_id = document
+        .querySelector(".rightFirstRowContainer h3")
+        .id.replace("list_detail_for_", "");
+      const data = { list_id: list_id };
+      const res = await fetch(`http://127.0.0.1:8000/api/notifications/`, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        mode: "same-origin",
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        showMessage("Error: Source can't be subscribed!", "Error");
+      } else {
+        const context = await res.json();
+        showMessage(context, "Success");
+        if (notificationButton.classList.contains("notificationActivated")) {
+          notificationButton.classList.remove("notificationActivated");
+        } else {
+          notificationButton.classList.add("notificationActivated");
+        }
+      }
+    } catch (e) {
+      showMessage("Error: Network error detected!", "Error");
+    }
+  });
+}
+
 // rating functions
 const one = document.getElementById("first");
 const two = document.getElementById("second");
@@ -391,55 +429,20 @@ if (document.querySelector(".avgRating span")) {
 
 // open rate list menu
 const rateListButton = document.querySelector(".rateListButton");
-rateListButton.addEventListener("click", () => {
-  if (!rateListButton.classList.contains("registrationLink")) {
-    document.querySelector(".rate-formUpperContainer").style.display = "block";
-    document.querySelector(".rating").style.opacity = "0";
-    document.querySelector(".ratingsAmmountContainer").style.opacity = "0";
-    document.querySelector(".rateListButton").style.opacity = "0";
-    document.querySelector(".rankingsHeader").style.opacity = "0";
-  }
-});
+if (rateListButton) {
+  rateListButton.addEventListener("click", () => {
+    if (!rateListButton.classList.contains("registrationLink")) {
+      document.querySelector(".rate-formUpperContainer").style.display =
+        "block";
+      document.querySelector(".rating").style.opacity = "0";
+      document.querySelector(".ratingsAmmountContainer").style.opacity = "0";
+      document.querySelector(".rateListButton").style.opacity = "0";
+      document.querySelector(".rankingsHeader").style.opacity = "0";
+    }
+  });
+}
 
 // if user already rated source = set stars to this rating
 const user_rating = document.getElementById("user-rating").innerText;
 let form = document.querySelector(".rate-form");
 handleStarSelect(user_rating, form);
-
-//Notifications
-const notificationButton = document.querySelector(
-  ".notificationAndSubscribtionContainer .fa-bell"
-);
-if (notificationButton) {
-  notificationButton.addEventListener("click", async () => {
-    try {
-      const list_id = document
-        .querySelector(".rightFirstRowContainer h3")
-        .id.replace("list_detail_for_", "");
-      const data = { list_id: list_id };
-      const res = await fetch(`http://127.0.0.1:8000/api/notifications/`, {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": getCookie("csrftoken"),
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        mode: "same-origin",
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) {
-        showMessage("Error: Source can't be subscribed!", "Error");
-      } else {
-        const context = await res.json();
-        showMessage(context, "Success");
-        if (notificationButton.classList.contains("notificationActivated")) {
-          notificationButton.classList.remove("notificationActivated");
-        } else {
-          notificationButton.classList.add("notificationActivated");
-        }
-      }
-    } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
-    }
-  });
-}

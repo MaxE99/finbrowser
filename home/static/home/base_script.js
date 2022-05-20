@@ -71,16 +71,19 @@ document
             results_list.style.display = "flex";
             results_list.innerHTML = "";
             if (context[0].length > 0) {
-              console.log(context[0]);
               results_list.innerHTML += `<div class="searchResultHeader">Lists</div>`;
-              context[0].forEach((list) => {
-                let list_pic = "/static/home/media/bigger_favicon.png";
+              for (let i = 0, j = context[0].length; i < j; i++) {
+                let list = context[0][i];
+                let list_url = context[4][i];
+                let list_pic;
                 if (list.list_pic) {
                   list_pic = list.list_pic;
+                } else {
+                  list_pic = "/static/home/media/bigger_favicon.png";
                 }
-                const listRes = `<div class="searchResult"><img src="${list_pic}"><span>${list.name}</span><a href="../../list/${list.creator}/${list.slug}"></a></div>`;
+                const listRes = `<div class="searchResult"><img src="${list_pic}"><span>${list.name}</span><a href="${list_url}"></a></div>`;
                 results_list.innerHTML += listRes;
-              });
+              }
             }
             if (context[1].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Sources</div>`;
