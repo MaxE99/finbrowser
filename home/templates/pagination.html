@@ -4,7 +4,7 @@
     {% if page.number == i %}
     <button class="currentPagination">{{ page.number }}</button>
     {% elif i > page.number|add:'-3' and i < page.number|add:'3' %} <a href="?page={{ i }}">{{ i }}</a>
-      {% endif %}
-      {% endfor %}
+    {% endif %}
+    {% endfor %}
   </span>
 </div>

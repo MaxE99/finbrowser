@@ -8,7 +8,7 @@
     <h3>Create A New List</h3>
     <i class="fas fa-times closeFormContainerButton"></i>
     <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
-        {% csrf_token %} {{ add_list_form }}
+        {% csrf_token %} {{ form }}
         <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
     </form>
 </div>
@@ -130,7 +130,17 @@
                 </div>
             </div>
             {% endfor %}
-            {% include "pagination.html" with page=articles_from_top_sources %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% for i in articles_from_top_sources.paginator.page_range %}
+                    {% if articles_from_top_sources.number == i %}
+                    <button class="currentPagination">{{ articles_from_top_sources.number }}</button>
+                    {% elif i > articles_from_top_sources.number|add:'-3' and i < articles_from_top_sources.number|add:'3' %}
+                    <a href="?articles_from_top_sources={{ i }}">{{ i }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
         </div>
         {% endif %}
     </div>
@@ -214,7 +224,17 @@
                 </div>
             </div>
             {% endfor %}
-            {% include "pagination.html" with page=articles_from_sector %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% for i in articles_from_sector.paginator.page_range %}
+                    {% if articles_from_sector.number == i %}
+                    <button class="currentPagination">{{ articles_from_sector.number }}</button>
+                    {% elif i > articles_from_sector.number|add:'-3' and i < articles_from_sector.number|add:'3' %} <a
+                        href="?articles_from_sector={{ i }}">{{ i }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
         </div>
         {% endif %}
     </div>

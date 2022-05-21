@@ -16,7 +16,7 @@
     <h3>Create A New List</h3>
     <i class="fas fa-times closeFormContainerButton"></i>
     <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
-        {% csrf_token %} {{ add_list_form }}
+        {% csrf_token %} {{ form }}
         <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
     </form>
 </div>
