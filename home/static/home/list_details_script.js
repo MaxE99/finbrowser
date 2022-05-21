@@ -254,7 +254,6 @@ document
           if (!res.ok) {
             showMessage("Error: List can't be subscribed!", "Error");
           } else {
-            console.log(res);
             const context = await res.json();
             showMessage(context, "Success");
             window.location.reload();
@@ -391,9 +390,9 @@ document.querySelectorAll(".rankingStar").forEach((star) => {
     const id = e.target.id;
     // value of the rating translated into numeric
     const rating = getNumericValue(id);
-    const url = window.location.href;
-    const index = url.lastIndexOf("/");
-    const list_id = url.substring(index + 1);
+    const list_id = document
+      .querySelector(".rightFirstRowContainer h3")
+      .id.replace("list_detail_for_", "");
     try {
       const data = { list_id: list_id, rating: rating };
       const res = await fetch(`http://127.0.0.1:8000/api/list_ratings/`, {

@@ -93,7 +93,7 @@ class ExternalSource(models.Model):
 class Article(models.Model):
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=500)
-    link = models.URLField(unique=True)
+    link = models.URLField()
     pub_date = models.DateTimeField()
     source = models.ForeignKey(Source, blank=True, null=True, on_delete=models.SET_NULL)
     external_source = models.ForeignKey(ExternalSource, blank=True,
