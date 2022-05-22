@@ -1,13 +1,28 @@
 # Django imports
-import re
 from django.shortcuts import redirect, render
 from django.contrib import messages
+from django.views.generic import TemplateView
 # Local imports
 from support.forms import SourceSuggestionForm, BugReportForm, FeatureSuggestionForm
+from home.views import NotificationMixin
 
+class FaqView(TemplateView, NotificationMixin):
+    template_name = 'support/faq.html'
 
-def faq(request):
-    return render(request, 'support/faq.html')
+class PrivacyPolicyView(TemplateView, NotificationMixin):
+    template_name = 'support/privacy_policy.html'
+
+class CookieStatementView(TemplateView, NotificationMixin):
+    template_name = 'support/cookie_statement.html'
+
+class TermsOfServiceView(TemplateView, NotificationMixin):
+    template_name = 'support/terms_of_service.html'
+
+class SitemapView(TemplateView, NotificationMixin):
+    template_name = 'support/sitemap.html'
+
+class AboutView(TemplateView, NotificationMixin):
+    template_name = 'support/about.html'
 
 
 def report_bug(request):
@@ -40,18 +55,6 @@ def suggestions(request):
     return render(request, 'support/suggestions.html', context)
 
 
-def privacy_policy(request):
-    return render(request, 'support/privacy_policy.html')
-
-
-def cookie_statement(request):
-    return render(request, 'support/cookie_statement.html')
-
-
-def terms_of_service(request):
-    return render(request, 'support/terms_of_service.html')
-
-
 def suggest_sources(request):
     if request.method == "POST":
         source_suggestion_form = SourceSuggestionForm(request.POST)
@@ -71,9 +74,3 @@ def suggest_sources(request):
     return render(request, 'support/suggest_sources.html', context)
 
 
-def sitemap(request):
-    return render(request, 'support/sitemap.html')
-
-
-def about(request):
-    return render(request, 'support/about.html')

@@ -47,7 +47,7 @@ document
             if (context[1].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Sources</div>`;
               context[1].forEach((source) => {
-                const sourceRes = `<a href="../../sourceprofile/${source.domain}" class="searchResult">${source.domain}</a>`;
+                const sourceRes = `<a href="../../sourceprofile/${source.slug}" class="searchResult">${source.slug}</a>`;
                 results_list.innerHTML += sourceRes;
               });
             }

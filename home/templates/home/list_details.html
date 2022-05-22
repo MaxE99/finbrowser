@@ -27,16 +27,14 @@
     <div class="upperContainer">
         <div class="leftInnerContainer">
             <div class="listPictureContainer">
+                {% csrf_token %}
                 {% if list.creator == request.user %}
                 {% if list.list_pic %}
                 <img src="{{ list.list_pic.url }}">
-                {% csrf_token %}
-                {{ change_list_pic_form }}
                 {% else %}
                 <img src="{% static 'home/media/bigger_favicon.png' %}">
-                {% csrf_token %}
-                {{ change_list_pic_form }}
                 {% endif %}
+                {{ change_list_pic_form }}
                 {% else %}
                 {% if list.list_pic %}
                 <img src="{{ list.list_pic.url }}">

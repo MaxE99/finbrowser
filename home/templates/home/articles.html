@@ -170,8 +170,8 @@
     </div>
     {% endfor %}
 </div>
-{% if search_articles %}
-{% include "pagination.html" with page=search_articles %}
+{% if is_paginated %}
+{% include "pagination.html" with page=page_obj %}
 {% endif %}
 
 

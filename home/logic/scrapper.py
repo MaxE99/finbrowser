@@ -88,13 +88,13 @@ def twitter_scrape_followings():
             continue
         else:
             url = f'https://twitter.com/{follow.screen_name}'
-            domain = follow.screen_name
+            slug = follow.screen_name
             name = follow.name
             external_id = follow.id
             import urllib.request
-            urllib.request.urlretrieve(follow.profile_image_url_https.replace("_normal", ""), os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{domain}.png'))
-            favicon_path = f'home/favicons/{domain}.png'
-            Source.objects.create(url=url, domain=domain, name=name, favicon_path=favicon_path, paywall='No', website='Twitter', external_id=external_id)
+            urllib.request.urlretrieve(follow.profile_image_url_https.replace("_normal", ""), os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
+            favicon_path = f'home/favicons/{slug}.png'
+            Source.objects.create(url=url, slug=slug, name=name, favicon_path=favicon_path, paywall='No', website='Twitter', external_id=external_id)
 
 
 
