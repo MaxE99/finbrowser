@@ -1,18 +1,16 @@
 from django.urls import path
-from support.views import (faq, report_bug, suggestions, privacy_policy,
-                           cookie_statement, terms_of_service, suggest_sources,
-                           about, sitemap)
+from support.views import (report_bug, suggestions,suggest_sources, FaqView, SitemapView, AboutView, TermsOfServiceView, CookieStatementView, PrivacyPolicyView)
 
 app_name = 'support'
 
 urlpatterns = [
-    path('faq/', faq, name='faq'),
+    path('faq/', FaqView.as_view(), name='faq'),
     path('report-bug/', report_bug, name='report-bug'),
     path('suggestions/', suggestions, name='suggestions'),
-    path('privacy-policy', privacy_policy, name='privacy-policy'),
-    path('cookie-statement', cookie_statement, name='cookie-statement'),
-    path('terms-of-service', terms_of_service, name='terms-of-service'),
+    path('privacy-policy', PrivacyPolicyView.as_view(), name='privacy-policy'),
+    path('cookie-statement', CookieStatementView.as_view(), name='cookie-statement'),
+    path('terms-of-service', TermsOfServiceView.as_view(), name='terms-of-service'),
     path('suggest-sources', suggest_sources, name="suggest-sources"),
-    path('about', about, name="about"),
-    path('sitemap', sitemap, name="sitemap"),
+    path('about', AboutView.as_view(), name="about"),
+    path('sitemap', SitemapView.as_view(), name="sitemap"),
 ]

@@ -39,8 +39,8 @@ class Source(models.Model):
                        ('YouTube', 'YouTube')]
     source_id = models.AutoField(primary_key=True)
     url = models.URLField(unique=True)
-    domain = models.CharField(max_length=100, blank=True)
-    name = models.CharField(max_length=100, blank=True)
+    slug = models.SlugField(unique=True)
+    name = models.CharField(max_length=100, blank=True, unique=True)
     subscribers = models.ManyToManyField(User,
                                          related_name='subscriber_source',
                                          blank=True)
@@ -59,22 +59,23 @@ class Source(models.Model):
     objects = SourceManager()
 
     def save(self, *args, **kwargs):
-        if not self.name:
-            self.name = self.domain.capitalize()
-        elif 'seekingalpha.com' not in self.url and 'twitter.com' not in self.url:
-            self.domain = self.url.replace("https://",
-                                           "").replace("www.",
-                                                       "").split('.')[0]
-            self.favicon_path = f'home/favicons/{self.domain}.png'
+        self.slug = slugify(self.name)
+        # if not self.name:
+        #     self.name = self.domain.capitalize()
+        # elif 'seekingalpha.com' not in self.url and 'twitter.com' not in self.url:
+        #     self.domain = self.url.replace("https://",
+        #                                    "").replace("www.",
+        #                                                "").split('.')[0]
+        #     self.favicon_path = f'home/favicons/{self.domain}.png'
         # Aufpassen SeekingAlpha nicht zu scrappen, bevor ich noch gebannt werde
         # website_scrapping_initiate(self.url, self.domain)
         super(Source, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('source:profile', kwargs={'domain': self.domain})
+        return reverse('source:profile', kwargs={'slug': self.slug})
 
     def __str__(self):
-        return self.domain
+        return self.slug
 
 
 class ExternalSource(models.Model):

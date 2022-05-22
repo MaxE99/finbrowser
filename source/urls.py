@@ -1,8 +1,8 @@
 # Django imports
 from django.urls import path
 # Local imports
-from source.views import profile
+from source.views import SourceDetailView
 
 app_name = 'source'
 
-urlpatterns = [path('profile/<str:domain>', profile, name='profile')]
+urlpatterns = [path('profile/<slug:slug>', SourceDetailView.as_view(), name='profile')]

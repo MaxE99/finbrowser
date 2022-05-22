@@ -48,7 +48,8 @@ function openEditMenu() {
   document.querySelector(".rightFirstRowContainer h3").style.display = "none";
   document.querySelector(".nameChangeContainer").style.display = "block";
   document.querySelector(".nameChangeContainer #id_name").value = listName;
-  document.getElementById("id_list_pic").style.display = "block";
+  document.querySelector(".listPictureContainer #id_list_pic").style.display =
+    "block";
   document.querySelector(".fa-camera").style.display = "block";
   document.querySelector(".buttonContainer").style.display = "flex";
   document.querySelector(".addSourcesButtonLi").style.display = "flex";

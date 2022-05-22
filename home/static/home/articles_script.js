@@ -24,7 +24,7 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
     "articleSearchSettings",
     JSON.stringify(articleSearchSettings)
   );
-  window.location = `../articles/${timeframe}/${sector}/${paywall}/${sources}`;
+  window.location = `http://127.0.0.1:8000/articles/${timeframe}/${sector}/${paywall}/${sources}`;
 });
 
 // Autocomplete for search
