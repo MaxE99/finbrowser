@@ -1,17 +1,12 @@
 # Django import
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
 from django.views.generic.detail import DetailView
 # Local import
-from home.models import (Notification, Source, Article, List, SourceRating,
-                         HighlightedArticle)
+from home.models import Notification, Source, Article, List, SourceRating
 from home.logic.pure_logic import paginator_create
-from home.logic.selectors import website_logo_get
-from home.forms import AddListForm
-from home.views import NotificationMixin, AddToListInfoMixin, CreateListFormMixin
+from home.views import NotificationMixin, AddArticlesToListsMixin
 
 
-class SourceDetailView(DetailView, NotificationMixin, AddToListInfoMixin, CreateListFormMixin):
+class SourceDetailView(DetailView, NotificationMixin, AddArticlesToListsMixin):
     model = Source
     context_object_name = 'source'
     template_name = 'source/profile.html'
@@ -19,29 +14,19 @@ class SourceDetailView(DetailView, NotificationMixin, AddToListInfoMixin, Create
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         source = self.get_object()
-        latest_articles = Article.objects.filter(source=source).order_by('-pub_date')
-        latest_articles, _ = paginator_create(self.request, latest_articles, 10, 'latest_articles')
-        lists = List.objects.filter(sources__source_id=source.source_id).filter(is_public=True).order_by('name')
-        lists, _ = paginator_create(self.request, lists, 10, 'lists')
-        website_logo = website_logo_get(source.website)
-        average_rating = SourceRating.objects.get_average_rating(source)
-        ammount_of_ratings = SourceRating.objects.get_ammount_of_ratings(source)
         if self.request.user.is_authenticated:
-            if self.request.user in source.subscribers.all():
-                subscribed = True
-            else:
-                subscribed = False
+            subscribed = True if self.request.user in source.subscribers.all() else False
             user_rating = SourceRating.objects.get_user_rating(self.request.user, source)
             notifications_activated = Notification.objects.filter(user=self.request.user, source=source).exists()
         else:
             subscribed = False  
-            user_rating = None
-            notifications_activated = None
-        context['latest_articles'] = latest_articles
-        context['lists'] = lists
-        context['website_logo'] = website_logo
-        context['average_rating'] = average_rating
-        context['ammount_of_ratings'] = ammount_of_ratings
+            user_rating = notifications_activated = None
+        print(source.website.favicon)
+        context['latest_articles'] = paginator_create(self.request, Article.objects.filter(source=source).order_by('-pub_date'), 10, 'latest_articles')
+        context['lists'] = paginator_create(self.request, List.objects.filter(sources__source_id=source.source_id).filter(is_public=True).order_by('name'), 10, 'lists')
+        context['website_logo'] = source.website.favicon
+        context['average_rating'] = SourceRating.objects.get_average_rating(source)
+        context['ammount_of_ratings'] = SourceRating.objects.get_ammount_of_ratings(source)
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating
         context['notifications_activated'] = notifications_activated

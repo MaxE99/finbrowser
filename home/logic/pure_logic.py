@@ -4,8 +4,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from home.logic.services import article_create
 
 
-def paginator_create(request, objects, objects_per_site, page_name='page'):
-    paginator = Paginator(objects, objects_per_site)
+def paginator_create(request, queryset, objects_per_site, page_name='page'):
+    paginator = Paginator(queryset, objects_per_site)
     page = request.GET.get(page_name)
     try:
         objects = paginator.page(page)
@@ -13,7 +13,7 @@ def paginator_create(request, objects, objects_per_site, page_name='page'):
         objects = paginator.page(1)
     except EmptyPage:
         objects = paginator.page(paginator.num_pages)
-    return objects, page
+    return objects
 
 def timeframe_check(timeframe, time_since_pub, articles, favicon, title, link,
                     pub_date):

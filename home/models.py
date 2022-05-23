@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from accounts.models import Website
 # Local imports
 from home.logic.services import main_website_source_set
 from home.managers import (ListManager, SourceManager, ArticleManager,
@@ -48,9 +49,7 @@ class Source(models.Model):
     paywall = models.CharField(max_length=10,
                                choices=PAYWALL_CHOICES,
                                default='None')
-    website = models.CharField(max_length=100,
-                               choices=WEBSITE_CHOICES,
-                               default='None')
+    website = models.ForeignKey(Website, blank=True, null=True, on_delete=models.SET_NULL)
     top_source = models.BooleanField(default=False)
     about_text = models.TextField(blank=True)
     sector = models.ManyToManyField(Sector, related_name='sectors', blank=True)

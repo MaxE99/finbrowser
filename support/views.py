@@ -1,10 +1,20 @@
 # Django imports
-from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.views.generic import TemplateView
+from django.views.generic.edit import FormView, FormMixin
+from django.urls import reverse_lazy
 # Local imports
 from support.forms import SourceSuggestionForm, BugReportForm, FeatureSuggestionForm
 from home.views import NotificationMixin
+
+class UserFeedbackMixin(FormMixin):
+
+    def form_valid(self, form):
+        new_report = form.save(commit=False)
+        new_report.reporting_user = self.request.user
+        new_report.save()
+        messages.success(self.request, f"Thank you! You're report has been send!")
+        return super().form_valid(form)
 
 class FaqView(TemplateView, NotificationMixin):
     template_name = 'support/faq.html'
@@ -24,53 +34,17 @@ class SitemapView(TemplateView, NotificationMixin):
 class AboutView(TemplateView, NotificationMixin):
     template_name = 'support/about.html'
 
+class ReportBugView(FormView, UserFeedbackMixin):
+    template_name = 'support/report_bug.html'
+    form_class = BugReportForm
+    success_url = reverse_lazy('home:main')
 
-def report_bug(request):
-    if request.method == "POST":
-        bug_report_form = BugReportForm(request.POST)
-        if bug_report_form.is_valid():
-            new_report = bug_report_form.save(commit=False)
-            new_report.reporting_user = request.user
-            new_report.save()
-            messages.success(request,
-                             f"Thank you! You're report has been send!")
-            return redirect('support:report-bug')
-    bug_report_form = BugReportForm()
-    context = {'bug_report_form': bug_report_form}
-    return render(request, 'support/report_bug.html', context)
+class FeatureSuggestionView(FormView, UserFeedbackMixin):
+    template_name = 'support/suggestions.html'
+    form_class = FeatureSuggestionForm
+    success_url = reverse_lazy('home:main')
 
-
-def suggestions(request):
-    if request.method == "POST":
-        feature_suggestion_form = FeatureSuggestionForm(request.POST)
-        if feature_suggestion_form.is_valid():
-            new_suggestion = feature_suggestion_form.save(commit=False)
-            new_suggestion.reporting_user = request.user
-            new_suggestion.save()
-            messages.success(request,
-                             f"Thank you! You're report has been send!")
-            return redirect('support:suggestions')
-    feature_suggestion_form = FeatureSuggestionForm()
-    context = {'feature_suggestion_form': feature_suggestion_form}
-    return render(request, 'support/suggestions.html', context)
-
-
-def suggest_sources(request):
-    if request.method == "POST":
-        source_suggestion_form = SourceSuggestionForm(request.POST)
-        if source_suggestion_form.is_valid():
-            new_suggestion = source_suggestion_form.save(commit=False)
-            new_suggestion.reporting_user = request.user
-            source_suggestion_form.save()
-            messages.success(request,
-                             f"Thank you! You're report has been send!")
-            return redirect('support:suggest-sources')
-        else:
-            messages.success(request,
-                             f"This source has already been suggested!")
-            return redirect('support:suggest-sources')
-    source_suggestion_form = SourceSuggestionForm()
-    context = {'source_suggestion_form': source_suggestion_form}
-    return render(request, 'support/suggest_sources.html', context)
-
-
+class SourceSuggestionView(FormView, UserFeedbackMixin):
+    template_name = 'support/suggest_sources.html'
+    form_class = SourceSuggestionForm
+    success_url = reverse_lazy('home:main')

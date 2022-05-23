@@ -8,7 +8,7 @@
 <div class="formContainer">
     <h3>Report Bug</h3>
     <form action="" enctype="multipart/form-data" method="POST" class="createBugReportForm">
-        {% csrf_token %} {{ bug_report_form }}
+        {% csrf_token %} {{ form }}
         <input name="createBugReportForm" type="submit" class="formSubmitButton" value="Save" />
     </form>
 </div>

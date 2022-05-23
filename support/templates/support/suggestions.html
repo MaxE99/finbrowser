@@ -8,7 +8,7 @@
 <div class="formContainer">
     <h3>Suggest New Feature</h3>
     <form action="" enctype="multipart/form-data" method="POST" class="createFeatureSuggestionForm">
-        {% csrf_token %} {{ feature_suggestion_form }}
+        {% csrf_token %} {{ form }}
         <input name="createFeatureSuggestionForm" type="submit" class="formSubmitButton" value="Save" />
     </form>
 </div>

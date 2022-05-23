@@ -45,8 +45,6 @@ def scrape_twitter():
         statuses = api.home_timeline(count=200, tweet_mode='extended', since_id=last_id)
     else:
         statuses = api.home_timeline(count=200, tweet_mode='extended')
-    # printing the screen names of each status
-    # logger.info(len(statuses))
     for status in statuses:
         if Article.objects.filter(external_id=status.id).exists():
             continue
