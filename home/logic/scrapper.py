@@ -1,5 +1,4 @@
 # Django imports
-from itertools import count
 from django.conf import settings
 # Python imports
 from urllib.request import Request, urlopen
@@ -10,8 +9,6 @@ import requests
 from datetime import datetime, timedelta
 import concurrent.futures
 import tweepy
-
-from accounts.models import Website
 # Local imports
 
 

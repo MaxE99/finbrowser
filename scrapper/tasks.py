@@ -9,8 +9,13 @@ from datetime import datetime, timedelta, timezone
 import logging
 from celery.signals import after_setup_logger
 import html
+from datetime import datetime, timedelta
+import time
 # Local imports
-from home.logic.services import notifications_create
+from home.logic.services import notifications_create, create_articles_from_feed
+from home.models import Source
+from accounts.models import Website
+
 
 @after_setup_logger.connect
 def setup_loggers(logger, *args, **kwargs):
@@ -67,5 +72,42 @@ def scrape_twitter():
             notification_message.delete()
 
 
+@shared_task
+def scrape_substack():
+    substack_sources = Source.objects.filter(website=get_object_or_404(Website, name="Substack"))
+    for source in substack_sources:
+        feed_url = f'{source.url}feed'
+        create_articles_from_feed(source, feed_url)
+        time.sleep(30)
 
 
+@shared_task
+def scrape_seekingalpha():
+    seekingalpha_sources = Source.objects.filter(website=get_object_or_404(Website, name="SeekingAlpha"))
+    for source in seekingalpha_sources:
+        feed_url = f'{source.url}.xml'
+        create_articles_from_feed(source, feed_url)
+        time.sleep(60)
+
+
+# @shared_task
+# def scrape_substack():
+#     substack_sources = Source.objects.filter(website=get_object_or_404(Website, name="Substack"))
+#     for source in substack_sources:
+#         feed_url = f'{source.url}feed'
+#         req = Request(feed_url, headers={'User-Agent': 'Mozilla/5.0'})
+#         website_data = urlopen(req)
+#         website_xml = website_data.read()
+#         website_data.close()
+#         root = ET.fromstring(website_xml)
+#         for item in root.findall('.//item'):
+#             try:
+#                 title, link, pub_date = article_components_get(item)
+#                 if Article.objects.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
+#                     break
+#                 else:
+#                     article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
+#                     notifications_create(source, article)
+#             except:
+#                 continue
+#         time.sleep(30)
