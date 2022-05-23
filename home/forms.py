@@ -1,7 +1,6 @@
 # Django imports
 from django.forms import ModelForm
 from django import forms
-from django.core.exceptions import ValidationError
 # Python imports
 from datetime import date
 # Local imports

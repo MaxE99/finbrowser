@@ -1,8 +1,6 @@
 # Django imports
-from django.http import Http404
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import get_user_model
 from django.views.generic.list import ListView
@@ -12,18 +10,16 @@ from django.views.generic.edit import FormMixin
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
+from django.template.defaultfilters import slugify
 # Python imports
 from datetime import timedelta, date
 # Local imports
 from accounts.models import SocialLink, Website
-from home.models import (Article, HighlightedArticle, List, Sector, Source,
-                         ListRating, ExternalSource, Notification, NotificationMessage)
-from home.forms import (AddListForm, ListPicChangeForm, ListNameChangeForm,
-                        AddExternalArticleForm)
-from home.logic.pure_logic import paginator_create, timeframe_check
+from home.models import Article, HighlightedArticle, List, Sector, Source, ListRating, ExternalSource, Notification
+from home.forms import AddListForm, ListPicChangeForm, ListNameChangeForm, AddExternalArticleForm
+from home.logic.pure_logic import paginator_create
 from home.logic.selectors import notifications_get
-from accounts.forms import (EmailAndUsernameChangeForm, PasswordChangingForm,
-                            ProfileChangeForm, PrivacySettingsForm)
+from accounts.forms import EmailAndUsernameChangeForm, PasswordChangingForm, ProfileChangeForm, PrivacySettingsForm
 
 User = get_user_model()
 
@@ -36,9 +32,7 @@ class NotificationMixin(ContextMixin):
         if self.request.user.is_authenticated:
             unseen_notifications, source_notifications, list_notifications = notifications_get(self.request.user)
         else:
-            unseen_notifications = None
-            source_notifications = None
-            list_notifications = None
+            unseen_notifications = source_notifications = list_notifications = None
         context['unseen_notifications'] = unseen_notifications
         context['source_notifications'] = source_notifications
         context['list_notifications'] = list_notifications
@@ -62,28 +56,19 @@ class CreateListFormMixin(FormMixin):
 
     def post(self, request, *args, **kwargs):
         form = AddListForm(request.POST, request.FILES)
-        if 'multi_form_page' in kwargs:
-            multi_form_page = True
-        else:
-            multi_form_page = False
+        multi_form_page = True if 'multi_form_page' in kwargs else False
         if form.is_valid():
             new_list = form.save(commit=False)
             if List.objects.filter(name=new_list.name, creator=self.request.user).exists():
                 messages.error(self.request, 'You have already created a list with this name!')
-                if multi_form_page:
-                    return "Failed"
-                else:
-                    return redirect('home:lists')
+                return "Failed" if multi_form_page else redirect('home:lists')
             else:
                 new_list.creator = self.request.user
                 new_list.save()
                 profile_slug = new_list.creator.profile.slug
                 list_slug = new_list.slug
                 messages.success(self.request, 'List has been created!')
-                if multi_form_page:
-                    return [profile_slug, list_slug]
-                else:
-                    return redirect('home:list-details', profile_slug=profile_slug, list_slug=list_slug)
+                return [profile_slug, list_slug] if multi_form_page else redirect('home:list-details', profile_slug=profile_slug, list_slug=list_slug)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -107,15 +92,10 @@ class AddExternalArticleFormMixin(FormMixin):
             title = data['title']
             link = data['link']
             pub_date = data['pub_date']
-            external_source = ExternalSource.objects.create(
-                user=request.user, website_name=website_name)
+            external_source = ExternalSource.objects.create(user=request.user, website_name=website_name).sector.add(sector)
             external_source.sector.add(sector)
-            article = Article.objects.create(title=title,
-                                             link=link,
-                                             pub_date=pub_date,
-                                             external_source=external_source)
-            HighlightedArticle.objects.create(user=request.user,
-                                              article=article)
+            article = Article.objects.create(title=title, link=link, pub_date=pub_date, external_source=external_source)
+            HighlightedArticle.objects.create(user=request.user, article=article)
             messages.success(request, 'Article has been added!')
 
     def get_context_data(self, **kwargs):
@@ -171,13 +151,9 @@ class SectorDetailView(DetailView, NotificationMixin, AddArticlesToListsMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         sector = self.get_object()
-        articles_from_sector = Article.objects.get_articles_from_sector(sector).order_by('-pub_date')
-        articles_from_sector, _ = paginator_create(self.request, articles_from_sector, 10, 'articles_from_sector')
         sources = sector.sectors.all().filter(top_source=True)
-        articles_from_top_sources = Article.objects.filter(source__in=sources).order_by('-pub_date')
-        articles_from_top_sources, _ = paginator_create(self.request, articles_from_top_sources, 10, 'articles_from_top_sources')
-        context['articles_from_sector'] = articles_from_sector
-        context['articles_from_top_sources'] = articles_from_top_sources
+        context['articles_from_sector'] = paginator_create(self.request, Article.objects.get_articles_from_sector(sector).order_by('-pub_date'), 10, 'articles_from_sector')
+        context['articles_from_top_sources'] = paginator_create(self.request, Article.objects.filter(source__in=sources).order_by('-pub_date'), 10, 'articles_from_top_sources')
         return context
 
 
@@ -199,15 +175,11 @@ class FeedView(TemplateView, LoginRequiredMixin, NotificationMixin, AddArticlesT
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         subscribed_sources = Source.objects.get_subscribed_sources(self.request.user)
-        subscribed_articles = Article.objects.get_articles_from_subscribed_sources(subscribed_sources)
-        subscribed_articles, _ = paginator_create(self.request, subscribed_articles, 10, 'subscribed_articles')
-        highlighted_articles = HighlightedArticle.objects.filter(user=self.request.user).order_by('-article__pub_date')
-        highlighted_articles, _ = paginator_create(self.request, highlighted_articles, 10, 'highlighted_articles')
         context['user_lists'] = List.objects.get_created_lists(self.request.user)
         context['subscribed_lists'] = List.objects.get_subscribed_lists(self.request.user)
         context['subscribed_sources'] = subscribed_sources
-        context['subscribed_articles'] = subscribed_articles
-        context['highlighted_articles'] = highlighted_articles
+        context['subscribed_articles'] = paginator_create(self.request, Article.objects.get_articles_from_subscribed_sources(subscribed_sources), 10, 'subscribed_articles')
+        context['highlighted_articles'] = paginator_create(self.request, HighlightedArticle.objects.filter(user=self.request.user).order_by('-article__pub_date'), 10, 'highlighted_articles')
         return context
 
 
@@ -217,14 +189,9 @@ class SearchResultView(TemplateView, NotificationMixin, AddArticlesToListsMixin)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         search_term = kwargs['search_term']
-        filtered_lists = List.objects.filter_lists(search_term)
-        filtered_lists, _ = paginator_create(self.request, filtered_lists, 10, 'filtered_lists')
-        filtered_sources = Source.objects.filter_sources(search_term)
-        filtered_articles = Article.objects.filter_articles(search_term)
-        filtered_articles, _ = paginator_create(self.request, filtered_articles, 10, 'filtered_articles')
-        context['filtered_lists'] = filtered_lists
-        context['filtered_sources'] = filtered_sources
-        context['filtered_articles'] = filtered_articles
+        context['filtered_lists'] = paginator_create(self.request, List.objects.filter_lists(search_term), 10, 'filtered_lists')
+        context['filtered_sources'] = Source.objects.filter_sources(search_term)
+        context['filtered_articles'] = paginator_create(self.request, Article.objects.filter_articles(search_term), 10, 'filtered_articles')
         return context
 
 
@@ -341,48 +308,45 @@ class ListDetailView(TemplateView, NotificationMixin, AddArticlesToListsMixin):
             profile_slug = self.request.path_info.rsplit('/', 2)[-2]
             list_slug = self.request.path_info.rsplit('/', 1)[-1]
             list = get_object_or_404(List, slug=list_slug)
-            change_list_name_form = ListNameChangeForm(request.POST, instance=list)
-            change_list_pic_form = ListPicChangeForm(request.POST, request.FILES, instance=list)
-            if change_list_pic_form.is_valid:
-                change_list_pic_form.save()
-            if change_list_name_form.is_valid:
-                change_list_name_form.save()
-                new_list_slug = change_list_name_form.cleaned_data['name'].lower()
-            if new_list_slug != list_slug:
-                return redirect('home:list-details', profile_slug=profile_slug , list_slug=new_list_slug)
-            else:
-                return HttpResponseRedirect(self.request.path_info)
+            if self.request.user == list.creator:
+                change_list_name_form = ListNameChangeForm(request.POST, instance=list)
+                change_list_pic_form = ListPicChangeForm(request.POST, request.FILES, instance=list)
+                new_list_slug = slugify(request.POST.get('name'))
+                if change_list_pic_form.is_valid:
+                    change_list_pic_form.save()
+                if change_list_name_form.is_valid and List.objects.filter(creator=request.user, slug=new_list_slug).exists() == False:
+                    change_list_name_form.save()
+                else:
+                    messages.error(request, "Error: You can't use this name!")
+                    return HttpResponseRedirect(self.request.path_info)
+                if new_list_slug != list_slug:
+                    return redirect('home:list-details', profile_slug=profile_slug , list_slug=new_list_slug)
+                else:
+                    return HttpResponseRedirect(self.request.path_info)
             
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         list = get_object_or_404(List, slug=self.kwargs['list_slug'])
         list_id = list.list_id
-        latest_articles = Article.objects.get_articles_from_list_sources(list)
-        latest_articles, _ = paginator_create(self.request, latest_articles, 10, 'latest_articles') 
-        highlighted_articles = List.objects.get_highlighted_articles(list_id)
-        highlighted_articles, _ = paginator_create(self.request, highlighted_articles, 10, 'highlighted_articles')
         if self.request.user.is_authenticated:
             notifications_activated = Notification.objects.filter(user=self.request.user, list=list).exists()
-            if self.request.user in list.subscribers.all():
-                subscribed = True
-            else:
-                subscribed = False
+            subscribed = True if self.request.user in list.subscribers.all() else False
             user_rating = ListRating.objects.get_user_rating(self.request.user, list_id)
         else:
-            notifications_activated = None
+            notifications_activated = user_rating = None
             subscribed = False  
-            user_rating = None
         context['list'] = list
-        context['latest_articles'] = latest_articles
-        context['highlighted_articles'] = highlighted_articles
+        context['latest_articles'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources(list), 10, 'latest_articles') 
+        context['highlighted_articles'] = paginator_create(self.request, List.objects.get_highlighted_articles(list.list_id), 10, 'highlighted_articles')
         context['ammount_of_ratings'] = ListRating.objects.get_ammount_of_ratings(list_id)
         context['average_rating'] = ListRating.objects.get_average_rating(list_id)
         context['notifications_activated'] = notifications_activated
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating
-        context['change_list_pic_form'] = ListPicChangeForm()
-        context['change_list_name_form'] = ListNameChangeForm()
+        if self.request.user == list.creator:
+            context['change_list_pic_form'] = ListPicChangeForm()
+            context['change_list_name_form'] = ListNameChangeForm()
         return context
 
 

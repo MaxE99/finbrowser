@@ -23,7 +23,7 @@
       <h3 class="sourceName" id="source_id_{{ source.source_id }}">{{ source.name }}</h3>
       <div class="sourceContainer">
         <div class="iconContainer">
-          <img class="sourcePic" src="{{ website_logo }}" alt="website_logo" />
+          <img class="sourcePic" src="{% static website_logo %}" alt="website_logo" />
         </div>
         <a class="sourceLink" href="{{ source.url }}"></a>
       </div>
