@@ -16,7 +16,7 @@ def article_components_get(item):
     title = double_escaped_string_unescape(item.find('.//title').text)
     link = item.find('.//link').text
     pub_date = item.find('.//pubDate').text[:-4]
-    pub_date = datetime.strptime(pub_date, '%a, %d %b %Y %X')
+    pub_date = datetime.strptime(pub_date.replace(" -", ""), '%a, %d %b %Y %X')
     return title, link, pub_date
 
 

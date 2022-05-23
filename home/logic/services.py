@@ -1,6 +1,9 @@
 # Python import
 from operator import itemgetter
-
+from urllib.request import Request, urlopen
+import xml.etree.cElementTree as ET
+# Local import
+from home.logic.selectors import article_components_get
 
 class Article(object):
 
@@ -47,3 +50,22 @@ def notifications_create(source, article):
             list_notifications = Notification.objects.filter(list=list)
             for list_notification in list_notifications:
                 NotificationMessage.objects.create(notification=list_notification, article=article, date=article.pub_date)
+
+
+def create_articles_from_feed(source, feed_url):
+    from home.models import Article
+    req = Request(feed_url, headers={'User-Agent': 'Mozilla/5.0'})
+    website_data = urlopen(req)
+    website_xml = website_data.read()
+    website_data.close()
+    root = ET.fromstring(website_xml)
+    for item in root.findall('.//item'):
+        try:
+            title, link, pub_date = article_components_get(item)
+            if Article.objects.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
+                break
+            else:
+                article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
+                notifications_create(source, article)
+        except:
+            continue   

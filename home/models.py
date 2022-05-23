@@ -54,6 +54,7 @@ class Source(models.Model):
     about_text = models.TextField(blank=True)
     sector = models.ManyToManyField(Sector, related_name='sectors', blank=True)
     external_id = models.CharField(unique=True, null=True, blank=True, max_length=100)
+    last_article_title = models.CharField(max_length=500, null=True, blank=True)
 
     objects = SourceManager()
 
