@@ -110,6 +110,7 @@ class SectorView(ListView, NotificationMixin):
     model = Sector
     context_object_name = 'sectors'
     template_name = 'home/sectors.html'
+    queryset = Sector.objects.all().order_by('name')
 
 
 class ListsView(ListView, NotificationMixin, CreateListFormMixin):

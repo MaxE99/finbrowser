@@ -133,7 +133,7 @@ class ListRatingViewSet(viewsets.ModelViewSet):
 class SourceViewSet(viewsets.ModelViewSet):
     queryset = Source.objects.all()
     serializer_class = Source_Serializer
-    http_method_names = ["post"]
+    http_method_names = ["post", "get"]
 
     def get_queryset(self):
         list_id = self.request.GET.get("list_id", None)

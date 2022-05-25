@@ -391,6 +391,12 @@ document
     if (notificationPopup.style.display == "block") {
       notificationPopup.style.display = "none";
       document.querySelector(".unseenNotifications").remove();
+      console.log(document.querySelectorAll(".unseenNotification"));
+      document
+        .querySelectorAll(".unseenNotification")
+        .forEach((notification) => {
+          notification.classList.remove("unseenNotification");
+        });
     } else {
       notificationPopup.style.display = "block";
       try {
