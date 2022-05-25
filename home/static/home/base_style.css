@@ -301,6 +301,10 @@ header {
   border-bottom: 1px solid;
 }
 
+.userSpace .notificationContainer .unseenNotification {
+  background: rgba(0, 85, 212, 0.1);
+}
+
 .userSpace .notificationContainer .notificationsContainer {
   display: none;
 }

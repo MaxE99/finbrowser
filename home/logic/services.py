@@ -1,4 +1,5 @@
 # Python import
+from datetime import datetime
 from operator import itemgetter
 from urllib.request import Request, urlopen
 import xml.etree.cElementTree as ET
@@ -43,13 +44,13 @@ def notifications_create(source, article):
     from home.models import Notification, NotificationMessage
     source_notifications = Notification.objects.filter(source=source)
     for source_notification in source_notifications:
-        NotificationMessage.objects.create(notification=source_notification, article=article, date=article.pub_date)
+        NotificationMessage.objects.create(notification=source_notification, article=article, date=datetime.now())
     sources_in_lists = source.lists.all()
     for list in sources_in_lists:
         if Notification.objects.filter(list=list).exists():
             list_notifications = Notification.objects.filter(list=list)
             for list_notification in list_notifications:
-                NotificationMessage.objects.create(notification=list_notification, article=article, date=article.pub_date)
+                NotificationMessage.objects.create(notification=list_notification, article=article, date=datetime.now())
 
 
 def create_articles_from_feed(source, feed_url):

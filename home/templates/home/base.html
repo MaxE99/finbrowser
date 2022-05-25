@@ -57,7 +57,8 @@
                     <div class="notificationsContainer activeNotificationContainer">
                         {% if source_notifications %}
                         {% for notification in source_notifications %}
-                        <div class="notificationMessageContainer">
+                        <div
+                            class="notificationMessageContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}">
                             <img src="{% static notification.article.source.favicon_path %}" />
                             <span>{{ notification.article.title }}</span>
                             <a href="{{ notification.article.link }}"></a>
@@ -70,7 +71,8 @@
                     <div class="notificationsContainer">
                         {% if list_notifications %}
                         {% for notification in list_notifications %}
-                        <div class="notificationMessageContainer">
+                        <div
+                            class="notificationMessageContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}">
                             <img src="{% static notification.article.source.favicon_path %}" />
                             <span>{{ notification.article.title }}</span>
                             <a href="{{ notification.article.link }}"></a>

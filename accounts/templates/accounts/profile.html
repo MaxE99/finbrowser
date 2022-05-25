@@ -37,203 +37,216 @@
             <div class="socialMediaLinkContainer">
                 {% for link in social_links %}
                 <div class="icon">
-                    <img src="{% static link.website.favicon %}" alt="">
+                    <img src="{% static link.website.logo %}" alt="">
                     <a href="{{ link.url }}"></a>
                 </div>
                 {% endfor %}
             </div>
             {% endif %}
         </div>
+        <button class="openAboutButton">Learn more about {{ profile.user.username }}</button>
     </div>
+
+    {% if profile.bio %}
     <div class="bioContainer">
-        <div class="bioHeader">About:</div>
+        <div class="browserCategory">About<i class="fas fa-times"></i></div>
         <div class="bio">{{ profile.bio|safe }}</div>
     </div>
+    {% endif %}
 
-    {% if created_lists %}
-    <div class="browserCategory">Created Lists</div>
-    <div class="carousel-container">
-        <div onClick="prev();" class="prev"></div>
-        <div class="carousel-list">
-            <ul class="slider-content">
-                {% for list in created_lists %}
-                <li>
-                    <div class="sourceContainer">
-                        <div class="iconContainer">
-                            {% if list.list_pic %}
-                            <img class="sourcePic" src="{{ list.list_pic.url }}" alt="favicon" />
-                            {% else %}
-                            <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
+    <div class="profileBioOverlay">
+
+        {% if highlighted_articles and privacy_settings.highlighted_articles_public %}
+        <div class="highlightedArticlesUpperContainer">
+            <div class="browserCategory highlightedArticlesHeader">Highlighted Articles</div>
+            <div class="articlesContainer">
+                {% for article in highlighted_articles %}
+                <div class="article" id="article{{ article.article_id }}">
+                    {% if article.article.source %}
+                    <div class="authorImageContainer">
+                        <img src="{% static article.article.source.favicon_path %}" />
+                        <a href="{{ article.article.source.get_absolute_url }}"></a>
+                    </div>
+                    <div class="articleInformationContainer">
+                        <div class="articleTitle">{{ article.article.title }}</div>
+                        <div class="articleSectorAndDateContainer">
+                            <a href="{{ article.article.source.sector.first.get_absolute_url }}">
+                                {{ article.article.source.sector.first.name }}</a>
+                            <div class="articlePubDate">{{ article.article.pub_date }}</div>
+                            {% if article.article.source.top_source %}
+                            <i class="fas fa-star articleTopSource"></i>
+                            {% endif %}
+                            {% if article.article.source.paywall == "Yes" %}
+                            <i class="fas fa-lock articleFullPaywall"></i>
+                            {% elif article.article.source.paywall == "Semi" %}
+                            <i class="fas fa-lock articleSemiPaywall"></i>
                             {% endif %}
                         </div>
-                        <a class="sourceLink" href="{{ list.get_absolute_url }}"></a>
-                        <div class="sourceNameOuterContainer">
-                            <div class="sourceNameInnerContainer">{{ list.name }}</div>
+                    </div>
+                    {% else %}
+                    <i class="fas fa-question-circle"></i>
+                    <div class="articleInformationContainer">
+                        <div class="articleTitle">{{ article.article.title }}</div>
+                        <div class="articleSectorAndDateContainer">
+                            <a href="{{ article.article.external_source.sector.all.first.get_absolute_url  }}">
+                                {{ article.article.external_source.sector.all.first }}</a>
+                            <div class="articlePubDate">{{ article.article.pub_date }}</div>
                         </div>
                     </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div onClick="next();" class="next">
-            <i class="fa fa-chevron-right" aria-hidden="true"></i>
-        </div>
-    </div>
-    {% endif %}
-
-
-    {% if subscribed_lists and privacy_settings.list_subscribtions_public %}
-    <div class="browserCategory">List Subscribtions</div>
-    <div class="carousel-container">
-        <div onClick="prev();" class="prev"></div>
-        <div class="carousel-list">
-            <ul class="slider-content">
-                {% for list in subscribed_lists %}
-                <li>
-                    <div class="sourceContainer">
-                        <div class="iconContainer">
-                            {% if list.list_pic %}
-                            <img class="sourcePic" src="{{ list.list_pic.url }}" alt="favicon" />
-                            {% else %}
-                            <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
-                            {% endif %}
-                        </div>
-                        <a class="sourceLink" href="{{ list.get_absolute_url }}"></a>
-                        <div class="sourceNameOuterContainer">
-                            <div class="sourceNameInnerContainer">{{ list.name }}</div>
-                        </div>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div onClick="next();" class="next">
-            <i class="fa fa-chevron-right" aria-hidden="true"></i>
-        </div>
-    </div>
-    {% endif %}
-
-    {% if subscribed_sources and privacy_settings.subscribed_sources_public %}
-    <div class="browserCategory">Subscribed Sources</div>
-    <div class="carousel-container">
-        <div onClick="prev();" class="prev"></div>
-        <div class="carousel-list">
-            <ul class="slider-content">
-                {% for source in subscribed_sources %}
-                <li>
-                    <div class="sourceContainer">
-                        <div class="iconContainer">
-                            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
-                        </div>
-                        <a class="sourceLink" href="{{ source.get_absolute_url }}"></a>
-                        <div class="sourceNameOuterContainer">
-                            <div class="sourceNameInnerContainer">{{ source.name }}</div>
-                        </div>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div onClick="next();" class="next">
-            <i class="fa fa-chevron-right" aria-hidden="true"></i>
-        </div>
-    </div>
-    {% endif %}
-
-    {% if highlighted_articles and privacy_settings.highlighted_articles_public %}
-    <div class="browserCategory highlightedArticlesHeader">Highlighted Articles</div>
-    <div class="articlesContainer">
-        {% for article in highlighted_articles %}
-        <div class="article" id="article{{ article.article_id }}">
-            {% if article.article.source %}
-            <div class="authorImageContainer">
-                <img src="{% static article.article.source.favicon_path %}" />
-                <a href="{{ article.article.source.get_absolute_url }}"></a>
-            </div>
-            <div class="articleInformationContainer">
-                <div class="articleTitle">{{ article.article.title }}</div>
-                <div class="articleSectorAndDateContainer">
-                    <a href="{{ article.article.source.sector.first.get_absolute_url }}">
-                        {{ article.article.source.sector.first.name }}</a>
-                    <div class="articlePubDate">{{ article.article.pub_date }}</div>
-                    {% if article.article.source.top_source %}
-                    <i class="fas fa-star articleTopSource"></i>
                     {% endif %}
-                    {% if article.article.source.paywall == "Yes" %}
-                    <i class="fas fa-lock articleFullPaywall"></i>
-                    {% elif article.article.source.paywall == "Semi" %}
-                    <i class="fas fa-lock articleSemiPaywall"></i>
-                    {% endif %}
-                </div>
-            </div>
-            {% else %}
-            <i class="fas fa-question-circle"></i>
-            <div class="articleInformationContainer">
-                <div class="articleTitle">{{ article.article.title }}</div>
-                <div class="articleSectorAndDateContainer">
-                    <a href="{{ article.article.external_source.sector.all.first.get_absolute_url  }}">
-                        {{ article.article.external_source.sector.all.first }}</a>
-                    <div class="articlePubDate">{{ article.article.pub_date }}</div>
-                </div>
-            </div>
-            {% endif %}
-            <a class="articleLink" href="{{ highlighted_article.article.link }}"></a>
-            <i class="fas fa-ellipsis-h"></i>
-            <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
-                {% if request.user.is_authenticated %}
-                <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
-                {% if article.article.title in highlighted_articles_titles %}
-                <div id="{{ article.article_id }}" class="addToHighlighted">
-                    <i class="fas fa-times"></i><span>Unhighlight article</span>
-                </div>
-                {% else %}
-                <div id="{{ article.article_id }}" class="addToHighlighted">
-                    <i class="fas fa-highlighter"></i><span>Highlight article</span>
-                </div>
-                {% endif %}
-                {% else %}
-                <a href="{% url 'account_login' %}" class="addToList registrationLink">
-                    <i class="fas fa-list"></i>Add to list</a>
-                <a href="{% url 'account_login' %}" id="{{ article.article_id }}"
-                    class="addToHighlighted registrationLink"><i class="fas fa-highlighter"></i>
-                    <span>Highlight article</span></a>
-                {% endif %}
-            </div>
-            <div class="addToListForm">
-                <i class="fas fa-times"></i>
-                <h3>Add to lists</h3>
-                {% if user_lists %}
-                <div class="listSelectionContainer">
-                    {% for list in user_lists %}
-                    <div class="listContainer">
-                        <label for="id_list_{{ list.list_id }}">
-                            {% if article.article in list.articles.all %}
-                            <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists"
-                                value="{{ list.list_id }}" checked="True"> {{ list }}
-                            {% else %}
-                            <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists"
-                                value="{{ list.list_id }}">
-                            {{ list }}
-                            {% endif %}
-                        </label>
+                    <a class="articleLink" href="{{ article.article.link }}"></a>
+                    <i class="fas fa-ellipsis-h"></i>
+                    <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+                        {% if request.user.is_authenticated %}
+                        <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
+                        {% if article.article.title in highlighted_articles_titles %}
+                        <div id="{{ article.article_id }}" class="addToHighlighted">
+                            <i class="fas fa-times"></i><span>Unhighlight article</span>
+                        </div>
+                        {% else %}
+                        <div id="{{ article.article_id }}" class="addToHighlighted">
+                            <i class="fas fa-highlighter"></i><span>Highlight article</span>
+                        </div>
+                        {% endif %}
+                        {% else %}
+                        <a href="{% url 'account_login' %}" class="addToList registrationLink">
+                            <i class="fas fa-list"></i>Add to list</a>
+                        <a href="{% url 'account_login' %}" id="{{ article.article_id }}"
+                            class="addToHighlighted registrationLink"><i class="fas fa-highlighter"></i>
+                            <span>Highlight article</span></a>
+                        {% endif %}
                     </div>
+                    <div class="addToListForm">
+                        <i class="fas fa-times"></i>
+                        <h3>Add to lists</h3>
+                        {% if user_lists %}
+                        <div class="listSelectionContainer">
+                            {% for list in user_lists %}
+                            <div class="listContainer">
+                                <label for="id_list_{{ list.list_id }}">
+                                    {% if article.article in list.articles.all %}
+                                    <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists"
+                                        value="{{ list.list_id }}" checked="True"> {{ list }}
+                                    {% else %}
+                                    <input id="id_list_{{ list.list_id }}" type="checkbox" name="lists"
+                                        value="{{ list.list_id }}">
+                                    {{ list }}
+                                    {% endif %}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="buttonsContainer">
+                            <button class="saveButton">Save</button>
+                            <button class="createNewListButton">Create</button>
+                        </div>
+                        {% else %}
+                        <div class="listContainer">You haven't created any lists!</div>
+                        <button class="createNewListButton createFirstList">Create First List</button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% include "pagination.html" with page=highlighted_articles %}
+        </div>
+        {% endif %}
+
+
+        {% if created_lists %}
+        <div class="browserCategory">Created Lists</div>
+        <div class="carousel-container">
+            <div onClick="prev();" class="prev"></div>
+            <div class="carousel-list">
+                <ul class="slider-content">
+                    {% for list in created_lists %}
+                    <li>
+                        <div class="sourceContainer">
+                            <div class="iconContainer">
+                                {% if list.list_pic %}
+                                <img class="sourcePic" src="{{ list.list_pic.url }}" alt="favicon" />
+                                {% else %}
+                                <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}"
+                                    alt="favicon" />
+                                {% endif %}
+                            </div>
+                            <a class="sourceLink" href="{{ list.get_absolute_url }}"></a>
+                            <div class="sourceNameOuterContainer">
+                                <div class="sourceNameInnerContainer">{{ list.name }}</div>
+                            </div>
+                        </div>
+                    </li>
                     {% endfor %}
-                </div>
-                <div class="buttonsContainer">
-                    <button class="saveButton">Save</button>
-                    <button class="createNewListButton">Create</button>
-                </div>
-                {% else %}
-                <div class="listContainer">You haven't created any lists!</div>
-                <button class="createNewListButton createFirstList">Create First List</button>
-                {% endif %}
+                </ul>
+            </div>
+            <div onClick="next();" class="next">
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
             </div>
         </div>
-        {% endfor %}
+        {% endif %}
+
+
+        {% if subscribed_lists and privacy_settings.list_subscribtions_public %}
+        <div class="browserCategory">List Subscribtions</div>
+        <div class="carousel-container">
+            <div onClick="prev();" class="prev"></div>
+            <div class="carousel-list">
+                <ul class="slider-content">
+                    {% for list in subscribed_lists %}
+                    <li>
+                        <div class="sourceContainer">
+                            <div class="iconContainer">
+                                {% if list.list_pic %}
+                                <img class="sourcePic" src="{{ list.list_pic.url }}" alt="favicon" />
+                                {% else %}
+                                <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}"
+                                    alt="favicon" />
+                                {% endif %}
+                            </div>
+                            <a class="sourceLink" href="{{ list.get_absolute_url }}"></a>
+                            <div class="sourceNameOuterContainer">
+                                <div class="sourceNameInnerContainer">{{ list.name }}</div>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div onClick="next();" class="next">
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if subscribed_sources and privacy_settings.subscribed_sources_public %}
+        <div class="browserCategory">Subscribed Sources</div>
+        <div class="carousel-container">
+            <div onClick="prev();" class="prev"></div>
+            <div class="carousel-list">
+                <ul class="slider-content">
+                    {% for source in subscribed_sources %}
+                    <li>
+                        <div class="sourceContainer">
+                            <div class="iconContainer">
+                                <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+                            </div>
+                            <a class="sourceLink" href="{{ source.get_absolute_url }}"></a>
+                            <div class="sourceNameOuterContainer">
+                                <div class="sourceNameInnerContainer">{{ source.name }}</div>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div onClick="next();" class="next">
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </div>
+        </div>
+        {% endif %}
+
     </div>
-    {% include "pagination.html" with page=highlighted_articles %}
-    {% endif %}
 </div>
 
-
+<script src="{% static 'accounts/profile_script.js' %}"></script>
 {% endblock content %}

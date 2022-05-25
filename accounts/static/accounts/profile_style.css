@@ -4,6 +4,7 @@
 }
 
 .bannerProfileSocialContainer {
+  position: relative;
   display: flex;
 }
 
@@ -30,7 +31,7 @@
   border-radius: 50%;
   height: 100px;
   width: 100px;
-  border: 3px solid black;
+  border: 3px solid white;
   background: white;
   margin-left: -50px;
   margin-top: -15px;
@@ -59,15 +60,15 @@
 
 .socialMediaLinkContainer {
   display: flex;
-  margin: 80px 0 0 20px;
+  margin: 85px 0 0 20px;
 }
 
 .icon {
   position: relative;
   display: flex;
   justify-content: center;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   cursor: pointer;
   color: white;
   overflow: hidden;
@@ -89,11 +90,15 @@
 }
 
 .bioContainer {
+  position: absolute;
+  display: none;
   border-radius: 10px;
-  margin-top: 20px;
   letter-spacing: 1.1px;
   text-align: justify;
   box-shadow: var(--box-shadowScheme);
+  width: 360px;
+  margin-left: 625px;
+  z-index: 50;
 }
 
 .bioHeader {
@@ -112,10 +117,12 @@
   background: white;
   border-radius: 0 0 8px 8px;
   line-height: 1.4;
+  height: 200px;
+  overflow-y: scroll;
 }
 
 .browserCategory {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .sourceContainer {
@@ -134,4 +141,41 @@
 
 .articleInformationContainer {
   max-width: 30ch !important;
+}
+
+.openAboutButton {
+  position: absolute;
+  bottom: 0;
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 8px;
+  color: white;
+  background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
+  border: none;
+  cursor: pointer;
+  margin-left: 625px;
+  width: 360px;
+}
+
+.openAboutButton:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.bioContainer .browserCategory .fa-times {
+  position: absolute;
+  display: block;
+  color: white;
+  background: red;
+  padding: 9.5px;
+  font-size: 25px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.articlesContainer {
+  max-height: 400px;
+  height: unset;
 }

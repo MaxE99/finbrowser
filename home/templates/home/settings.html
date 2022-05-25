@@ -66,7 +66,7 @@
             <label>Edit Social Links:</label>
             {% for social in social_links %}
             <div class="existingSocialContainer">
-                <img class="{{ social.website.name }}" src="{% static social.website.favicon %}"
+                <img class="{{ social.website.name }}" src="{% static social.website.logo %}"
                     id="existing_website_id_{{ social.website.id }}" alt="">
                 <input type="text" value="{{ social.url }}">
                 <button type="button" class="removeSocialLinkButton" id="social_link_id_{{ social.id }}">Remove</button>
@@ -91,8 +91,9 @@
                 <button type="button" name="changeProfileForm" class="addSocialLinkButton">Add</button>
             </div>
 
+
+            {{ profile_change_form.bio.label_tag }}
             <div class="bioContainer">
-                {{ profile_change_form.bio.label_tag }}
                 {{ profile_change_form.media }}
                 {{ profile_change_form.bio }}
             </div>

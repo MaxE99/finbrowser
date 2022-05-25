@@ -136,6 +136,7 @@ class Website(models.Model):
     name = models.CharField(max_length=100, blank=True, unique=True)
     url = models.URLField(blank=True)
     favicon = models.CharField(max_length=500, blank=True)
+    logo = models.CharField(max_length=500, blank=True)
 
     def __str__(self):
         return self.name
