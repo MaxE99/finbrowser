@@ -195,7 +195,7 @@ def spotify_get_profile_images():
         source.save()
 
 def youtube_get_profile_images():
-    api_key = "AIzaSyCJoe63T7VVTvIglkrE7OKZHfUxLMKuIuQ"
+    api_key = "AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso"
     youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
     for source in youtube_sources:
         url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={source.external_id}&key={api_key}"

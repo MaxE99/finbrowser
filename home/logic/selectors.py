@@ -85,12 +85,12 @@ def article_components_get(item):
 #             return "no logo found"
 
 
-def notifications_get(user):
-    from home.models import Notification, NotificationMessage
-    notifications_subscribtions = Notification.objects.filter(user=user)
-    unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications_subscribtions, user_has_seen=False).count()
-    source_notifications_subscribtions = Notification.objects.filter(user=user, source__isnull=False)
-    source_notifications = NotificationMessage.objects.filter(notification__in=source_notifications_subscribtions).order_by('-date')  
-    list_notifications_subscribtions = Notification.objects.filter(user=user, list__isnull=False)
-    list_notifications = NotificationMessage.objects.filter(notification__in=list_notifications_subscribtions).order_by('-date')
-    return unseen_notifications, source_notifications, list_notifications
+# def notifications_get(user):
+#     from home.models import Notification, NotificationMessage
+#     notifications_subscribtions = Notification.objects.filter(user=user)
+#     unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications_subscribtions, user_has_seen=False).count()
+#     source_notifications_subscribtions = Notification.objects.filter(user=user, source__isnull=False)
+#     source_notifications = NotificationMessage.objects.filter(notification__in=source_notifications_subscribtions).order_by('-date')  
+#     list_notifications_subscribtions = Notification.objects.filter(user=user, list__isnull=False)
+#     list_notifications = NotificationMessage.objects.filter(notification__in=list_notifications_subscribtions).order_by('-date')
+#     return unseen_notifications, source_notifications, list_notifications

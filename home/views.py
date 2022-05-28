@@ -18,7 +18,6 @@ from accounts.models import SocialLink, Website
 from home.models import Article, HighlightedArticle, List, Sector, Source, ListRating, ExternalSource, Notification
 from home.forms import AddListForm, ListPicChangeForm, ListNameChangeForm, AddExternalArticleForm
 from home.logic.pure_logic import paginator_create
-from home.logic.selectors import notifications_get
 from accounts.forms import EmailAndUsernameChangeForm, PasswordChangingForm, ProfileChangeForm, PrivacySettingsForm
 
 User = get_user_model()
@@ -26,17 +25,17 @@ User = get_user_model()
 
 # Mixins:
 
-class NotificationMixin(ContextMixin):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated:
-            unseen_notifications, source_notifications, list_notifications = notifications_get(self.request.user)
-        else:
-            unseen_notifications = source_notifications = list_notifications = None
-        context['unseen_notifications'] = unseen_notifications
-        context['source_notifications'] = source_notifications
-        context['list_notifications'] = list_notifications
-        return context
+# class NotificationMixin(ContextMixin):
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         if self.request.user.is_authenticated:
+#             unseen_notifications, source_notifications, list_notifications = notifications_get(self.request.user)
+#         else:
+#             unseen_notifications = source_notifications = list_notifications = None
+#         context['unseen_notifications'] = unseen_notifications
+#         context['source_notifications'] = source_notifications
+#         context['list_notifications'] = list_notifications
+#         return context
 
 
 class AddToListInfoMixin(ContextMixin):
@@ -106,14 +105,14 @@ class AddExternalArticleFormMixin(FormMixin):
 
 # Views:
 
-class SectorView(ListView, NotificationMixin):
+class SectorView(ListView):
     model = Sector
     context_object_name = 'sectors'
     template_name = 'home/sectors.html'
     queryset = Sector.objects.all().order_by('name')
 
 
-class ListsView(ListView, NotificationMixin, CreateListFormMixin):
+class ListsView(ListView, CreateListFormMixin):
     model = List
     context_object_name = 'lists'
     template_name = 'home/lists.html'
@@ -126,25 +125,30 @@ class ListsView(ListView, NotificationMixin, CreateListFormMixin):
         return context
 
 
-class ArticleView(ListView, NotificationMixin, AddArticlesToListsMixin):
+class ArticleView(ListView, AddArticlesToListsMixin):
     model = Article
     context_object_name = 'search_articles'
     template_name = 'home/articles.html'
-    queryset = Article.objects.filter(external_source=None).order_by('-pub_date')
+    queryset = Article.objects.filter(external_source=None).exclude(source__website=get_object_or_404(Website, name="Twitter")).order_by('-pub_date')
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        from home.logic.scrapper import spotify_get_profile_images
+        spotify_get_profile_images()
+        twitter_sources = Source.objects.filter(website=get_object_or_404(Website, name="Twitter"))
         context['results_found'] = len(Article.objects.filter(external_source=None))
         context['sectors'] = Sector.objects.all().order_by('name')
+        context['tweets'] = paginator_create(self.request, Article.objects.filter(source__in=twitter_sources).order_by('-pub_date'), 9, 'tweets')
+        context['external_articles'] = paginator_create(self.request, Article.objects.filter(external_source=True).order_by('-pub_date'), 9, 'external_articles')
         return context
 
 
-class MainView(TemplateView, NotificationMixin):
+class MainView(TemplateView):
     template_name = 'home/main.html'
 
 
-class SectorDetailView(DetailView, NotificationMixin, AddArticlesToListsMixin):
+class SectorDetailView(DetailView, AddArticlesToListsMixin):
     model = Sector
     context_object_name = 'sector'
     template_name = 'home/sector_details.html'
@@ -158,7 +162,7 @@ class SectorDetailView(DetailView, NotificationMixin, AddArticlesToListsMixin):
         return context
 
 
-class FeedView(TemplateView, LoginRequiredMixin, NotificationMixin, AddArticlesToListsMixin, AddExternalArticleFormMixin):
+class FeedView(TemplateView, LoginRequiredMixin, AddArticlesToListsMixin, AddExternalArticleFormMixin):
     template_name = 'home/feed.html'
 
     def post(self, request, *args, **kwargs):
@@ -184,7 +188,7 @@ class FeedView(TemplateView, LoginRequiredMixin, NotificationMixin, AddArticlesT
         return context
 
 
-class SearchResultView(TemplateView, NotificationMixin, AddArticlesToListsMixin):
+class SearchResultView(TemplateView, AddArticlesToListsMixin):
     template_name = 'home/search_results.html'
 
     def get_context_data(self, **kwargs):
@@ -196,7 +200,7 @@ class SearchResultView(TemplateView, NotificationMixin, AddArticlesToListsMixin)
         return context
 
 
-class ListSearchView(ListView, NotificationMixin, AddArticlesToListsMixin):
+class ListSearchView(ListView, AddArticlesToListsMixin):
     model = List
     context_object_name = 'lists'
     template_name = 'home/lists.html'
@@ -254,7 +258,7 @@ class ListSearchView(ListView, NotificationMixin, AddArticlesToListsMixin):
         return context
 
 
-class ArticleSearchView(ListView, NotificationMixin, AddArticlesToListsMixin):
+class ArticleSearchView(ListView, AddArticlesToListsMixin):
     model = Article
     context_object_name = 'search_articles'
     template_name = 'home/articles.html'
@@ -292,7 +296,7 @@ class ArticleSearchView(ListView, NotificationMixin, AddArticlesToListsMixin):
         return context
 
 
-class ListDetailView(TemplateView, NotificationMixin, AddArticlesToListsMixin):
+class ListDetailView(TemplateView, AddArticlesToListsMixin):
     model = List
     context_object_name = 'list'
     template_name = 'home/list_details.html'
@@ -351,7 +355,7 @@ class ListDetailView(TemplateView, NotificationMixin, AddArticlesToListsMixin):
         return context
 
 
-class SettingsView(TemplateView, LoginRequiredMixin, NotificationMixin):
+class SettingsView(TemplateView, LoginRequiredMixin):
     template_name = 'home/settings.html'
 
     def post(self, request, *args, **kwargs):

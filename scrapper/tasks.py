@@ -196,19 +196,26 @@ def scrape_spotify():
             
 @shared_task
 def scrape_youtube():
-    api_key = "AIzaSyCJoe63T7VVTvIglkrE7OKZHfUxLMKuIuQ"
+    api_key = "AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso"
     youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
     for source in youtube_sources:
         url = f'https://www.googleapis.com/youtube/v3/search?key={api_key}&channelId={source.external_id}&part=snippet,id&order=date&maxResults=20'
         r = requests.get(url)
         data = r.json()
-        items = data['items']
-        for item in items:
-            title = item['snippet']['title']
-            link = f"https://www.youtube.com/watch?v={item['id']['videoId']}"
-            pub_date = item['snippet']['publishedAt']
-            if Article.objects.filter(title=title, pub_date=pub_date, link=link, source=source).exists():
-                break
-            else:
-                article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
-                notifications_create(source, article)
+        try:
+            items = data['items']
+            for item in items:
+                title = item['snippet']['title']
+                link = f"https://www.youtube.com/watch?v={item['id']['videoId']}"
+                pub_date = item['snippet']['publishedAt']
+                if Article.objects.filter(title=title, pub_date=pub_date, link=link, source=source).exists():
+                    break
+                else:
+                    article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
+                    notifications_create(source, article)
+        except:
+            logger.info("Error!!!")
+            logger.info(source)
+            logger.info(url)
+            logger.info(data)
+

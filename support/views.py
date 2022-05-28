@@ -5,8 +5,6 @@ from django.views.generic.edit import FormView, FormMixin
 from django.urls import reverse_lazy
 # Local imports
 from support.forms import SourceSuggestionForm, BugReportForm, FeatureSuggestionForm
-from home.views import NotificationMixin
-
 class UserFeedbackMixin(FormMixin):
 
     def form_valid(self, form):
@@ -16,22 +14,22 @@ class UserFeedbackMixin(FormMixin):
         messages.success(self.request, f"Thank you! You're report has been send!")
         return super().form_valid(form)
 
-class FaqView(TemplateView, NotificationMixin):
+class FaqView(TemplateView):
     template_name = 'support/faq.html'
 
-class PrivacyPolicyView(TemplateView, NotificationMixin):
+class PrivacyPolicyView(TemplateView):
     template_name = 'support/privacy_policy.html'
 
-class CookieStatementView(TemplateView, NotificationMixin):
+class CookieStatementView(TemplateView):
     template_name = 'support/cookie_statement.html'
 
-class TermsOfServiceView(TemplateView, NotificationMixin):
+class TermsOfServiceView(TemplateView):
     template_name = 'support/terms_of_service.html'
 
-class SitemapView(TemplateView, NotificationMixin):
+class SitemapView(TemplateView):
     template_name = 'support/sitemap.html'
 
-class AboutView(TemplateView, NotificationMixin):
+class AboutView(TemplateView):
     template_name = 'support/about.html'
 
 class ReportBugView(FormView, UserFeedbackMixin):

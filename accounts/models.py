@@ -152,12 +152,6 @@ class PrivacySettings(models.Model):
         return f'{self.profile} - Privacy Settings'
 
 
-class CookieSettings(models.Model):
-    marketing = models.BooleanField(default=False)
-    preferences = models.BooleanField(default=False)
-    statistics = models.BooleanField(default=False)
-
-
 class SocialLink(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     website = models.ForeignKey(Website, on_delete=models.CASCADE)
@@ -165,3 +159,9 @@ class SocialLink(models.Model):
 
     def __str__(self):
         return f'{self.profile} - {self.website}'
+
+
+# class CookieSettings(models.Model):
+#     marketing = models.BooleanField(default=False)
+#     preferences = models.BooleanField(default=False)
+#     statistics = models.BooleanField(default=False)
