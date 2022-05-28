@@ -95,6 +95,7 @@
     </form>
 </div>
 
+<div class="browserCategory">Long Form Content</div>
 <div class="articlesContainer">
     {% for article in search_articles %}
     <div class="article" id="article{{ article.article_id }}">
@@ -103,7 +104,9 @@
             <a href="{{ article.source.get_absolute_url }}"></a>
         </div>
         <div class="articleInformationContainer">
-            <div class="articleTitle">{{ article.title }}</div>
+            <div class="articleTitle">{{ article.title }}
+                <span class="articleTitleTooltip">{{ article.title }}</span>
+            </div>
             <div class="articleSectorAndDateContainer">
                 <a href="{{ article.source.sector.first.get_absolute_url }}">{{ article.source.sector.first.name }}</a>
                 <div class="articlePubDate">{{ article.pub_date }}</div>
@@ -117,6 +120,7 @@
                 {% endif %}
             </div>
         </div>
+        <img class="articleWebsiteLogo" src="{% static article.source.website.logo %}" alt="">
         <a class="articleLink" href="{{ article.link }}"></a>
         <i class="fas fa-ellipsis-h"></i>
         <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
@@ -174,6 +178,127 @@
 {% include "pagination.html" with page=page_obj %}
 {% endif %}
 
+<div class="articleSpace">
+    <div class="leftSide">
+        <div class="browserCategory">Twitter</div>
+        <div class="allTweetsContainer">
+            {% for tweet in tweets %}
+            <div class="tweet-container">
+                <div class="title">
+                    <img src="{% static tweet.source.favicon_path %}" />
+                    <div class="info">
+                        <h4 class="name">{{ tweet.source }}</h4>
+                        <p class="twitter-handle">@tweetoftheday</p>
+                    </div>
+                </div>
+                <div class="tweet">
+                    <p>{{ tweet.title }}</p>
+                </div>
+                <div class="time-and-date">
+                    <p>{{ tweet.pub_date }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% for i in tweets.paginator.page_range %}
+                    {% if tweets.number == i %}
+                    <button class="currentPagination">{{ tweets.number }}</button>
+                    {% elif i > tweets.number|add:'-3' and i < tweets.number|add:'3' %} <a
+                        href="?tweets={{ i }}">{{ i }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="rightSide">
+        {% if external_articles %}
+        <div class="browserCategory subscribedSourcesArticleHeader">External Articles</div>
+        <div class="articlesContainer">
+            {% for article in external_articles %}
+            <div class="article" id="article{{ article.article_id }}">
+                {% if article.article.source %}
+                <div class="authorImageContainer">
+                    <img src="{% static article.article.source.favicon_path %}" />
+                    <a href="{{ article.article.source.get_absolute_url }}"></a>
+                </div>
+                <div class="articleInformationContainer">
+                    <div class="articleTitle">{{ article.article.title }}</div>
+                    <div class="articleSectorAndDateContainer">
+                        <a href="{{ article.article.source.sector.first.get_absolute_url }}">
+                            {{ article.article.source.sector.first.name }}</a>
+                        <div class="articlePubDate">{{ article.article.pub_date }}</div>
+                        {% if article.article.source.top_source %}
+                        <i class="fas fa-star articleTopSource"></i>
+                        {% endif %}
+                        {% if article.article.source.paywall == "Yes" %}
+                        <i class="fas fa-lock articleFullPaywall"></i>
+                        {% elif article.article.source.paywall == "Semi" %}
+                        <i class="fas fa-lock articleSemiPaywall"></i>
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
+                <i class="fas fa-question-circle"></i>
+                <div class="articleInformationContainer">
+                    <div class="articleTitle">{{ article.article.title }}</div>
+                    <div class="articleSectorAndDateContainer">
+                        <a href="{{ article.article.external_source.sector.all.first.get_absolute_url  }}">
+                            {{ article.article.external_source.sector.all.first }}</a>
+                        <div class="articlePubDate">{{ article.article.pub_date }}</div>
+                    </div>
+                </div>
+                {% endif %}
+                <a class="articleLink" href="{{ article.article.link }}"></a>
+                <i class="fas fa-ellipsis-h"></i>
+                <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+                    <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
+                    {% if article.article.title in highlighted_articles_titles %}
+                    <div id="{{ article.article.article_id }}" class="addToHighlighted"><i
+                            class="fas fa-times"></i><span>Unhighlight
+                            article</span></div>
+                    {% else %}
+                    <div id="{{ article.article.article_id }}" class="addToHighlighted"><i
+                            class="fas fa-highlighter"></i><span>Highlight
+                            article</span></div>
+                    {% endif %}
+                </div>
+                <div class="addToListForm">
+                    <i class="fas fa-times"></i>
+                    <h3>Add to lists</h3>
+                    {% if user_lists %}
+                    <div class="listSelectionContainer">
+                        {% for list in user_lists %}
+                        <div class="listContainer">
+                            <label for="id_list_{{ list.list_id }}">
+                                {% if article in list.articles.all %}
+                                <input id="id_list_{{ list.list_id }}" class="articleInList" type="checkbox"
+                                    name="lists" value="{{ list.list_id }}" checked="True"> {{ list }}
+                                {% else %}
+                                <input id="id_list_{{ list.list_id }}" class="articleNotInList" type="checkbox"
+                                    name="lists" value="{{ list.list_id }}">
+                                {{ list }}
+                                {% endif %}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="buttonsContainer">
+                        <button class="saveButton">Save</button>
+                        <button class="createNewListButton">Create</button>
+                    </div>
+                    {% else %}
+                    <div class="listContainer">You haven't created any lists!</div>
+                    <button class="createNewListButton createFirstList">Create First List</button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
 
 
 <script src="{% static 'home/articles_script.js' %}"></script>

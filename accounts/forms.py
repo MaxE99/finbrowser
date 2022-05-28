@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
 from django import forms
-from accounts.models import PrivacySettings, Profile, CookieSettings
+from accounts.models import PrivacySettings, Profile
 
 User = get_user_model()
 
@@ -166,8 +166,8 @@ class PrivacySettingsForm(forms.ModelForm):
                   'highlighted_articles_public')
 
 
-class CookieSettingsForm(forms.ModelForm):
+# class CookieSettingsForm(forms.ModelForm):
 
-    class Meta:
-        model = CookieSettings
-        fields = ('marketing', 'preferences', 'statistics')
+#     class Meta:
+#         model = CookieSettings
+#         fields = ('marketing', 'preferences', 'statistics')

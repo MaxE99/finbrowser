@@ -5,10 +5,10 @@ from django.views.generic.detail import DetailView
 from accounts.models import PrivacySettings, Profile, SocialLink
 from home.models import HighlightedArticle, Source, List
 from home.logic.pure_logic import paginator_create
-from home.views import NotificationMixin, AddArticlesToListsMixin
+from home.views import AddArticlesToListsMixin
 
 
-class ProfileView(DetailView, NotificationMixin, AddArticlesToListsMixin):
+class ProfileView(DetailView, AddArticlesToListsMixin):
     model = Profile
     context_object_name = 'profile'    
     template_name = 'accounts/profile.html'

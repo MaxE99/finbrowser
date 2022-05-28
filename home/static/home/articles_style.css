@@ -1,3 +1,7 @@
+main {
+  margin-bottom: 0;
+}
+
 .pageWrapper {
   display: flex;
   justify-content: space-between;
@@ -178,4 +182,136 @@
   margin: 10px auto;
   display: flex;
   justify-content: center;
+}
+
+.articleWebsiteLogo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 59px !important;
+  width: 59px !important;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.article .fa-ellipsis-h {
+  right: 65px;
+}
+
+.articleSpace {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin: 20px auto 0px;
+}
+
+.leftSide {
+  width: 49%;
+  background: white;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 8px;
+}
+
+.browserCategory {
+  position: relative;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 25px;
+  border-radius: 8px 8px 0 0;
+  color: white;
+  border: 5px solid white;
+  width: 100%;
+  background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
+}
+
+.allTweetsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background: #1da1f2; */
+  background: rgba(0, 85, 212, 0.3);
+  margin: 0 auto;
+  border: 5px solid white;
+  border-top: none;
+}
+
+.tweet-container {
+  background: var(--primary-color);
+  padding: 16px 32px;
+  border-radius: 24px;
+  user-select: none;
+  margin-top: 20px;
+  width: 90%;
+}
+
+.tweet-container:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.title img {
+  width: 50px;
+  border-radius: 160px;
+  border: 1px solid wheat;
+  margin-right: 16px;
+}
+
+.info h4 {
+  font-size: 17px;
+  line-height: 19px;
+}
+
+.info p {
+  font-size: 13px;
+  color: gray;
+  line-height: 19px;
+}
+
+.tweet {
+  padding: 13px 0;
+  cursor: text;
+}
+
+.tweet p {
+  font-size: 19px;
+  text-align: justify;
+}
+
+.time-and-date {
+  color: gray;
+}
+
+.articleInformationContainer {
+  z-index: 30;
+}
+
+.articleTitle {
+  cursor: pointer;
+}
+
+.articleTitle .articleTitleTooltip {
+  position: absolute;
+  display: block;
+  visibility: hidden;
+  z-index: 30;
+  background: var(--primary-fontColor);
+  color: white;
+  padding: 2px 4px;
+  font-size: 13px;
+  border: 2px solid white;
+  box-shadow: var(--box-shadowScheme);
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.articleTitle:hover .articleTitleTooltip {
+  visibility: visible;
+  opacity: 1;
 }

@@ -675,9 +675,9 @@ h2 {
   margin: 7.5px 25px;
 }
 
-.article:hover {
+/* .article:hover {
   transform: scale(1.1, 1.1);
-}
+} */
 
 .article .articleInformationContainer,
 .article .articleSectorAndDateContainer {
@@ -887,6 +887,7 @@ details ul li:hover {
 .articlesContainer {
   height: 400px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .article {

@@ -51,24 +51,13 @@ class Source(models.Model):
                                default='None')
     website = models.ForeignKey(Website, blank=True, null=True, on_delete=models.SET_NULL)
     top_source = models.BooleanField(default=False)
-    about_text = models.TextField(blank=True)
     sector = models.ManyToManyField(Sector, related_name='sectors', blank=True)
     external_id = models.CharField(unique=True, null=True, blank=True, max_length=100)
-    last_article_title = models.CharField(max_length=500, null=True, blank=True)
 
     objects = SourceManager()
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        # if not self.name:
-        #     self.name = self.domain.capitalize()
-        # elif 'seekingalpha.com' not in self.url and 'twitter.com' not in self.url:
-        #     self.domain = self.url.replace("https://",
-        #                                    "").replace("www.",
-        #                                                "").split('.')[0]
-        #     self.favicon_path = f'home/favicons/{self.domain}.png'
-        # Aufpassen SeekingAlpha nicht zu scrappen, bevor ich noch gebannt werde
-        # website_scrapping_initiate(self.url, self.domain)
         super(Source, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
