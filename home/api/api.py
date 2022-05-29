@@ -252,16 +252,17 @@ class FilteredSite(APIView):
     def get(self, request, search_term, format=None):
         filtered_lists = List.objects.filter_lists(search_term)
         filtered_sources = Source.objects.filter_sources(search_term)
-        filtered_articles = Article.objects.filter_articles(search_term)
+        # filtered_articles = Article.objects.filter_articles(search_term)
+        filtered_articles = Article.objects.filter(external_source=None).filter(title__icontains=search_term).select_related('source').order_by('-pub_date')
         # rebalance spots that are displayed
         display_spots_lists = 3
         display_spots_sources = 3
         display_spots_articles = 3
-        len_filtered_lists = len(filtered_lists)
-        len_filtered_sources = len(filtered_sources)
-        len_filtered_articles = len(filtered_articles)
+        len_filtered_lists = filtered_lists.count()
+        len_filtered_sources = filtered_sources.count()
+        len_filtered_articles = filtered_articles.count()
         if len_filtered_lists < 3:
-            display_spots_lists = len(filtered_lists)
+            display_spots_lists = filtered_lists.count()
         if len_filtered_sources < 3:
             display_spots_sources = len_filtered_sources
         if len_filtered_articles < 3:

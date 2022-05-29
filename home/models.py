@@ -51,7 +51,7 @@ class Source(models.Model):
                                default='None')
     website = models.ForeignKey(Website, blank=True, null=True, on_delete=models.SET_NULL)
     top_source = models.BooleanField(default=False)
-    sector = models.ManyToManyField(Sector, related_name='sectors', blank=True)
+    sector = models.ForeignKey(Sector, null=True, on_delete=models.SET_NULL)
     external_id = models.CharField(unique=True, null=True, blank=True, max_length=100)
 
     objects = SourceManager()

@@ -11,6 +11,9 @@ from django.dispatch import receiver
 
 
 class UserManager(BaseUserManager):
+    # overwritten get so to always load profile with user
+    def get(self, *args, **kwargs):
+        return super().select_related('profile').get(*args, **kwargs)
 
     def create_user(self, username, email, password=None):
         """

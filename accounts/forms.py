@@ -78,15 +78,13 @@ class EmailAndUsernameChangeForm(forms.ModelForm):
 
     def clean_username(self):
         username = self.cleaned_data['username']
-        if User.objects.exclude(pk=self.instance.pk).filter(
-                username=username).exists():
+        if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
             raise forms.ValidationError('Username is already in use.')
         return username
 
     def clean_email(self):
         email = self.cleaned_data['email']
-        if User.objects.exclude(pk=self.instance.pk).filter(
-                email=email).exists():
+        if User.objects.exclude(pk=self.instance.pk).filter(email=email).exists():
             raise forms.ValidationError('Email is already in use.')
         return email
 

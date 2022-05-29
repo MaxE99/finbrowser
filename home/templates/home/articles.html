@@ -108,7 +108,7 @@
                 <span class="articleTitleTooltip">{{ article.title }}</span>
             </div>
             <div class="articleSectorAndDateContainer">
-                <a href="{{ article.source.sector.first.get_absolute_url }}">{{ article.source.sector.first.name }}</a>
+                <a href="{{ article.source.sector.get_absolute_url }}">{{ article.source.sector.name }}</a>
                 <div class="articlePubDate">{{ article.pub_date }}</div>
                 {% if article.source.top_source %}
                 <i class="fas fa-star articleTopSource"></i>
@@ -226,8 +226,8 @@
                 <div class="articleInformationContainer">
                     <div class="articleTitle">{{ article.article.title }}</div>
                     <div class="articleSectorAndDateContainer">
-                        <a href="{{ article.article.source.sector.first.get_absolute_url }}">
-                            {{ article.article.source.sector.first.name }}</a>
+                        <a href="{{ article.article.source.sector.get_absolute_url }}">
+                            {{ article.article.source.sector.name }}</a>
                         <div class="articlePubDate">{{ article.article.pub_date }}</div>
                         {% if article.article.source.top_source %}
                         <i class="fas fa-star articleTopSource"></i>
@@ -244,8 +244,8 @@
                 <div class="articleInformationContainer">
                     <div class="articleTitle">{{ article.article.title }}</div>
                     <div class="articleSectorAndDateContainer">
-                        <a href="{{ article.article.external_source.sector.all.first.get_absolute_url  }}">
-                            {{ article.article.external_source.sector.all.first }}</a>
+                        <a href="{{ article.article.external_source.sector.get_absolute_url  }}">
+                            {{ article.article.external_source.sector }}</a>
                         <div class="articlePubDate">{{ article.article.pub_date }}</div>
                     </div>
                 </div>

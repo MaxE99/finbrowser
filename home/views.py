@@ -109,19 +109,19 @@ class SectorView(ListView):
     model = Sector
     context_object_name = 'sectors'
     template_name = 'home/sectors.html'
-    queryset = Sector.objects.all().order_by('name')
+    queryset = Sector.objects.prefetch_related('source_set').all().order_by('name')
 
 
 class ListsView(ListView, CreateListFormMixin):
     model = List
     context_object_name = 'lists'
     template_name = 'home/lists.html'
-    queryset = List.objects.filter(is_public=True).order_by('name')
+    queryset = List.objects.select_related('creator__profile').filter(is_public=True).order_by('name')
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['results_found'] = len(List.objects.filter(is_public=True))
+        context['results_found'] = self.queryset.count()
         return context
 
 
@@ -134,10 +134,8 @@ class ArticleView(ListView, AddArticlesToListsMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        from home.logic.scrapper import spotify_get_profile_images
-        spotify_get_profile_images()
         twitter_sources = Source.objects.filter(website=get_object_or_404(Website, name="Twitter"))
-        context['results_found'] = len(Article.objects.filter(external_source=None))
+        context['results_found'] = self.queryset.count()
         context['sectors'] = Sector.objects.all().order_by('name')
         context['tweets'] = paginator_create(self.request, Article.objects.filter(source__in=twitter_sources).order_by('-pub_date'), 9, 'tweets')
         context['external_articles'] = paginator_create(self.request, Article.objects.filter(external_source=True).order_by('-pub_date'), 9, 'external_articles')
@@ -156,9 +154,9 @@ class SectorDetailView(DetailView, AddArticlesToListsMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         sector = self.get_object()
-        sources = sector.sectors.all().filter(top_source=True)
+        sources = sector.source_set.all().filter(top_source=True)
         context['articles_from_sector'] = paginator_create(self.request, Article.objects.get_articles_from_sector(sector).order_by('-pub_date'), 10, 'articles_from_sector')
-        context['articles_from_top_sources'] = paginator_create(self.request, Article.objects.filter(source__in=sources).order_by('-pub_date'), 10, 'articles_from_top_sources')
+        context['articles_from_top_sources'] = paginator_create(self.request, Article.objects.select_related('source', 'source__sector').filter(source__in=sources).order_by('-pub_date'), 10, 'articles_from_top_sources')
         return context
 
 
@@ -184,7 +182,7 @@ class FeedView(TemplateView, LoginRequiredMixin, AddArticlesToListsMixin, AddExt
         context['subscribed_lists'] = List.objects.get_subscribed_lists(self.request.user)
         context['subscribed_sources'] = subscribed_sources
         context['subscribed_articles'] = paginator_create(self.request, Article.objects.get_articles_from_subscribed_sources(subscribed_sources), 10, 'subscribed_articles')
-        context['highlighted_articles'] = paginator_create(self.request, HighlightedArticle.objects.filter(user=self.request.user).order_by('-article__pub_date'), 10, 'highlighted_articles')
+        context['highlighted_articles'] = paginator_create(self.request, HighlightedArticle.objects.select_related('article', 'article__source', 'article__external_source', 'article__source__sector').filter(user=self.request.user).order_by('-article__pub_date'), 10, 'highlighted_articles')
         return context
 
 
@@ -387,8 +385,8 @@ class SettingsView(TemplateView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['websites'] = Website.objects.all()
-        context['social_links'] = SocialLink.objects.filter(profile=self.request.user.profile)
-        context['notifications'] = Notification.objects.filter(user=self.request.user)
+        context['social_links'] = SocialLink.objects.select_related('website').filter(profile=self.request.user.profile)
+        context['notifications'] = Notification.objects.select_related('source', 'list', 'list__creator__profile').filter(user=self.request.user)
         context['profile_change_form'] = ProfileChangeForm(bio=self.request.user.profile.bio)
         context['email_and_name_change_form'] = EmailAndUsernameChangeForm(username=self.request.user.username, email=self.request.user.email)
         context['change_password_form'] = PasswordChangingForm(self.request.user)
