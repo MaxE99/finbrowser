@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'scrapper',
-    'django_celery_beat'
+    'django_celery_beat',
+    'debug_toolbar'
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -65,6 +66,7 @@ SITE_ID = 2
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware", # for django debug toolbar
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -189,3 +191,10 @@ REST_FRAMEWORK = {
     'rest_framework.authentication.SessionAuthentication',
     )
 }
+
+# Only for django debug_toolbar
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]

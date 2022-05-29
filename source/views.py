@@ -21,8 +21,7 @@ class SourceDetailView(DetailView, AddArticlesToListsMixin):
         else:
             subscribed = False  
             user_rating = notifications_activated = None
-        print(source.website.favicon)
-        context['latest_articles'] = paginator_create(self.request, Article.objects.filter(source=source).order_by('-pub_date'), 10, 'latest_articles')
+        context['latest_articles'] = paginator_create(self.request, Article.objects.select_related('source', 'source__sector').filter(source=source).order_by('-pub_date'), 10, 'latest_articles')
         context['lists'] = paginator_create(self.request, List.objects.filter(sources__source_id=source.source_id).filter(is_public=True).order_by('name'), 10, 'lists')
         context['average_rating'] = SourceRating.objects.get_average_rating(source)
         context['ammount_of_ratings'] = SourceRating.objects.get_ammount_of_ratings(source)

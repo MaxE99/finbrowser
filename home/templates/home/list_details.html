@@ -186,8 +186,8 @@
                     <div class="articleInformationContainer">
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
-                            <a href="{{ article.source.sector.first.get_absolute_url }}">
-                                {{ article.source.sector.first.name }}</a>
+                            <a href="{{ article.source.sector.get_absolute_url }}">
+                                {{ article.source.sector.name }}</a>
                             <div class="articlePubDate">{{ article.pub_date }}</div>
                             {% if article.source.top_source %}
                             <i class="fas fa-star articleTopSource"></i>
@@ -204,8 +204,8 @@
                     <div class="articleInformationContainer">
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
-                            <a href="{% url 'home:sector-details' article.external_source.sector.all.first.slug %}">
-                                {{ article.external_source.sector.all.first }}</a>
+                            <a href="{% url 'home:sector-details' article.external_source.sector.slug %}">
+                                {{ article.external_source.sector}}</a>
                             <div class="articlePubDate">{{ article.pub_date }}</div>
                         </div>
                     </div>
@@ -290,8 +290,8 @@
                     <div class="articleInformationContainer">
                         <div class="articleTitle">{{ article.title }}</div>
                         <div class="articleSectorAndDateContainer">
-                            <a href="{{ article.source.sector.first.get_absolute_url }}">
-                                {{ article.source.sector.first.name }}</a>
+                            <a href="{{ article.source.sector.get_absolute_url }}">
+                                {{ article.source.sector.name }}</a>
                             <div class="articlePubDate">{{ article.pub_date }}</div>
                             {% if article.source.top_source %}
                             <i class="fas fa-star articleTopSource"></i>
@@ -385,8 +385,8 @@
             <div class="articleInformationContainer">
                 <div class="articleTitle">{{ article.title }}</div>
                 <div class="articleSectorAndDateContainer">
-                    <a href="{{ article.source.sector.first.get_absolute_url }}">
-                        {{ article.source.sector.first.name }}</a>
+                    <a href="{{ article.source.sector.get_absolute_url }}">
+                        {{ article.source.sector.name }}</a>
                     <div class="articlePubDate">{{ article.pub_date }}</div>
                     {% if article.source.top_source %}
                     <i class="fas fa-star articleTopSource"></i>

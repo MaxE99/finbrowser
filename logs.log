@@ -1,204 +1,236 @@
-2022-05-28 11:25:12,595 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:25:12,598 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ca5dabe6-ee83-4d11-be3e-dcc44881e21e] received
-2022-05-28 11:25:12,953 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ca5dabe6-ee83-4d11-be3e-dcc44881e21e] succeeded in 0.354090326000005s: None
-2022-05-28 11:25:19,256 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-04-04 13:00:44) while time zone support is active.
+2022-05-28 11:56:33,649 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-28 11:56:34,189 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
+2022-05-28 11:56:34,193 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
+2022-05-28 11:56:34,199 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
+2022-05-28 11:56:35,209 - celery.worker.consumer.mingle - INFO - mingle: all alone
+2022-05-28 11:56:35,225 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  warnings.warn('''Using settings.DEBUG leads to a memory
+
+2022-05-28 11:56:35,225 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
+2022-05-28 11:56:48,838 - celery.beat - INFO - beat: Starting...
+2022-05-28 11:56:48,914 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 11:56:48,922 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a5d2f656-81dc-41d2-82f1-6ebde5f8b0b3] received
+2022-05-28 11:56:49,867 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a5d2f656-81dc-41d2-82f1-6ebde5f8b0b3] succeeded in 0.9449015879981744s: None
+2022-05-28 11:57:48,919 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 11:57:48,921 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6addbe09-34ec-4726-8a79-058eba82307a] received
+2022-05-28 11:57:49,869 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6addbe09-34ec-4726-8a79-058eba82307a] succeeded in 0.9474418110003171s: None
+2022-05-28 11:58:48,930 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 11:58:48,933 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[aa073f80-5cbe-49b0-8434-ae35d5b0b1e6] received
+2022-05-28 11:58:50,036 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[aa073f80-5cbe-49b0-8434-ae35d5b0b1e6] succeeded in 1.1021179880008276s: None
+2022-05-28 11:59:48,939 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 11:59:48,941 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[869a9237-14b8-4c1e-984a-a8361a3667b6] received
+2022-05-28 11:59:50,006 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[869a9237-14b8-4c1e-984a-a8361a3667b6] succeeded in 1.0643059280009766s: None
+2022-05-28 12:00:48,952 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:00:48,954 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a4e2d6d4-dfab-4dd6-93d4-e39b4259d0b9] received
+2022-05-28 12:00:50,013 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a4e2d6d4-dfab-4dd6-93d4-e39b4259d0b9] succeeded in 1.0576512649968208s: None
+2022-05-28 12:01:48,960 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:01:48,962 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2b8287a7-ed01-4a0e-826b-f558bd36ef84] received
+2022-05-28 12:01:49,979 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2b8287a7-ed01-4a0e-826b-f558bd36ef84] succeeded in 1.0152378710008634s: None
+2022-05-28 12:02:48,970 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:02:48,972 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a52fcf0d-ae93-4753-8211-2383280c42f6] received
+2022-05-28 12:02:50,024 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a52fcf0d-ae93-4753-8211-2383280c42f6] succeeded in 1.0514712620024511s: None
+2022-05-28 12:03:48,970 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:03:48,972 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0b69c72c-4e0c-4712-87cb-7e0b255b07c9] received
+2022-05-28 12:03:50,052 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0b69c72c-4e0c-4712-87cb-7e0b255b07c9] succeeded in 1.0783176300028572s: None
+2022-05-28 12:04:48,983 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:04:48,985 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[dd4e9d14-3fdb-4374-ba48-03888d2b09ba] received
+2022-05-28 12:04:50,024 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[dd4e9d14-3fdb-4374-ba48-03888d2b09ba] succeeded in 1.037697586001741s: None
+2022-05-28 12:05:48,995 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:05:48,998 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[111a7aa1-b215-4671-846c-9edd7b694829] received
+2022-05-28 12:05:50,099 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[111a7aa1-b215-4671-846c-9edd7b694829] succeeded in 1.1002876390011807s: None
+2022-05-28 12:06:49,006 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:06:49,009 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b59f3729-c8b6-446c-aad5-3778db2e260d] received
+2022-05-28 12:06:50,069 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b59f3729-c8b6-446c-aad5-3778db2e260d] succeeded in 1.0586994990007952s: None
+2022-05-28 12:07:49,014 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:07:49,017 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c9ae341a-f654-4945-9e28-81c7498b4d0d] received
+2022-05-28 12:07:50,134 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c9ae341a-f654-4945-9e28-81c7498b4d0d] succeeded in 1.1156343190014013s: None
+2022-05-28 12:08:49,026 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:08:49,029 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5d04ad57-b6c5-49f8-9d65-8078704d2cc5] received
+2022-05-28 12:08:49,487 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
+2022-05-28 12:08:49,489 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[dbfedde4-73cb-48a2-8119-a4d8829b2ec5] received
+2022-05-28 12:08:49,510 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
+2022-05-28 12:08:49,512 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[315b1526-fcca-4db9-badd-10173fb3a4db] received
+2022-05-28 12:08:49,879 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:08:49,879 - scrapper.tasks - INFO - portfolio-matters
+2022-05-28 12:08:49,879 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCWA1nV-EYVYO_kIuCanSSkQ&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:08:49,879 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:08:50,186 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:08:50,186 - scrapper.tasks - INFO - americas-market-intelligence
+2022-05-28 12:08:50,186 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCCeroDadro2POrL7nq1t5-A&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:08:50,186 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:08:50,448 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5d04ad57-b6c5-49f8-9d65-8078704d2cc5] succeeded in 1.4182409019995248s: None
+2022-05-28 12:08:50,517 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:08:50,517 - scrapper.tasks - INFO - siliconangle-thecube
+2022-05-28 12:08:50,517 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCu3Ri8DI1RQLdVtU12uIp1Q&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:08:50,518 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:08:50,874 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:08:50,875 - scrapper.tasks - INFO - applico
+2022-05-28 12:08:50,875 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCUVFoF6YKQzP9rIL3TdMoxg&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:08:50,875 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:08:51,051 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:08:51,052 - scrapper.tasks - INFO - all-in-podcast
+2022-05-28 12:08:51,052 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCESLZhusAkFfsNsApnjF_Cg&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:08:51,052 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:08:51,341 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:08:51,341 - scrapper.tasks - INFO - intern-investing
+2022-05-28 12:08:51,341 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCO6TFPlggQpikL-CcD0JKTw&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:08:51,341 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:08:51,664 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:08:51,664 - scrapper.tasks - INFO - ark-invest
+2022-05-28 12:08:51,664 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCKUF2HhROd1xCnkZqgeKffA&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:08:51,664 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:08:51,851 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:08:51,851 - scrapper.tasks - INFO - 7investing
+2022-05-28 12:08:51,851 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCAI0YGmr9W96nZI1q3vSJHg&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:08:51,851 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:08:51,851 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[315b1526-fcca-4db9-badd-10173fb3a4db] succeeded in 2.3384612319969165s: None
+2022-05-28 12:08:54,951 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[dbfedde4-73cb-48a2-8119-a4d8829b2ec5] succeeded in 5.461015408000094s: None
+2022-05-28 12:09:49,037 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:09:49,040 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fd190ab9-78eb-4cdf-a735-7170c0fd7db7] received
+2022-05-28 12:09:50,245 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fd190ab9-78eb-4cdf-a735-7170c0fd7db7] succeeded in 1.2041801220002526s: None
+2022-05-28 12:10:49,043 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:10:49,045 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[615cf51e-1c56-43bf-ac85-d173cee0c84d] received
+2022-05-28 12:10:49,985 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[615cf51e-1c56-43bf-ac85-d173cee0c84d] succeeded in 0.9390446940014954s: None
+2022-05-28 12:11:49,051 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:11:49,054 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0f004f28-f408-4661-9d44-3bef7c4d7aa6] received
+2022-05-28 12:11:50,123 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0f004f28-f408-4661-9d44-3bef7c4d7aa6] succeeded in 1.0686726380008622s: None
+2022-05-28 12:12:49,062 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:12:49,065 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e6dcd624-47fb-41a8-96e9-569523831389] received
+2022-05-28 12:12:50,128 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e6dcd624-47fb-41a8-96e9-569523831389] succeeded in 1.0626864320001914s: None
+2022-05-28 12:13:49,073 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:13:49,075 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[371ba431-1f5c-4ef0-87e0-f1fc564ecdaa] received
+2022-05-28 12:13:50,190 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[371ba431-1f5c-4ef0-87e0-f1fc564ecdaa] succeeded in 1.1145819420016778s: None
+2022-05-28 12:14:49,080 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:14:49,082 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[aed77f6e-4f47-4c47-a919-679cec739523] received
+2022-05-28 12:14:50,066 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[aed77f6e-4f47-4c47-a919-679cec739523] succeeded in 0.9826257160020759s: None
+2022-05-28 12:15:49,090 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:15:49,093 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c07bb503-b0ae-4b56-8f4c-398d152d80fa] received
+2022-05-28 12:15:50,087 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c07bb503-b0ae-4b56-8f4c-398d152d80fa] succeeded in 0.9922920579992933s: None
+2022-05-28 12:16:49,102 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:16:49,104 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[783557bd-331e-4987-a79f-31f8230f87c2] received
+2022-05-28 12:16:49,712 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[783557bd-331e-4987-a79f-31f8230f87c2] succeeded in 0.6071194350006408s: None
+2022-05-28 12:17:49,112 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:17:49,115 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8030ceab-1eda-4e7f-ae25-2123eacae24e] received
+2022-05-28 12:17:49,619 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8030ceab-1eda-4e7f-ae25-2123eacae24e] succeeded in 0.5030283380001492s: None
+2022-05-28 12:18:49,123 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:18:49,126 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5b72a11e-e9ba-4147-9a14-d643d8ad9843] received
+2022-05-28 12:18:49,518 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5b72a11e-e9ba-4147-9a14-d643d8ad9843] succeeded in 0.39156886899945675s: None
+2022-05-28 12:19:49,136 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:19:49,139 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a2981136-dd5b-4891-a973-a2848ec2eda6] received
+2022-05-28 12:19:49,540 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a2981136-dd5b-4891-a973-a2848ec2eda6] succeeded in 0.4006239030022698s: None
+2022-05-28 12:20:49,149 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:20:49,151 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7603d728-4579-4967-967c-2dc8c7c38046] received
+2022-05-28 12:20:49,628 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7603d728-4579-4967-967c-2dc8c7c38046] succeeded in 0.47565903900249396s: None
+2022-05-28 12:21:49,160 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:21:49,162 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1002bebb-a0ff-48c9-a1f1-89725a98346a] received
+2022-05-28 12:21:49,639 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1002bebb-a0ff-48c9-a1f1-89725a98346a] succeeded in 0.4753422819994739s: None
+2022-05-28 12:22:49,173 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:22:49,176 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7e202f2a-a8cd-4f81-834e-27584c99305e] received
+2022-05-28 12:22:49,695 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7e202f2a-a8cd-4f81-834e-27584c99305e] succeeded in 0.518720668998867s: None
+2022-05-28 12:23:12,613 - celery.beat - INFO - Scheduler: Sending due task Substack Scrapping (scrapper.tasks.scrape_substack)
+2022-05-28 12:23:12,616 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_substack[dce334e8-2c29-42e9-a5a9-b9bd3b164d45] received
+2022-05-28 12:23:13,826 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-27 13:02:43) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:25:51,036 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-01 17:00:42) while time zone support is active.
+2022-05-28 12:23:44,666 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-27 12:58:57) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:26:12,600 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:26:12,602 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[87885d7d-f452-469d-b75d-d13f8b99277d] received
-2022-05-28 11:26:12,953 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[87885d7d-f452-469d-b75d-d13f8b99277d] succeeded in 0.35010781299934024s: None
-2022-05-28 11:26:21,902 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-27 14:00:43) while time zone support is active.
+2022-05-28 12:23:49,182 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:23:49,185 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c79921c2-2c6a-44d8-9f1b-dc013f23cd0f] received
+2022-05-28 12:23:49,496 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
+2022-05-28 12:23:49,498 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[25eb821c-e9bb-4b38-ad6c-d479fa5d4903] received
+2022-05-28 12:23:49,513 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
+2022-05-28 12:23:49,515 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[da2c4817-b16d-4f18-978a-9c6a792ffc92] received
+2022-05-28 12:23:49,752 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:23:49,752 - scrapper.tasks - INFO - portfolio-matters
+2022-05-28 12:23:49,752 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCWA1nV-EYVYO_kIuCanSSkQ&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:23:49,752 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:23:49,942 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:23:49,942 - scrapper.tasks - INFO - americas-market-intelligence
+2022-05-28 12:23:49,942 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCCeroDadro2POrL7nq1t5-A&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:23:49,942 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:23:50,119 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:23:50,119 - scrapper.tasks - INFO - siliconangle-thecube
+2022-05-28 12:23:50,119 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCu3Ri8DI1RQLdVtU12uIp1Q&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:23:50,119 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:23:50,123 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c79921c2-2c6a-44d8-9f1b-dc013f23cd0f] succeeded in 0.9375109419997898s: None
+2022-05-28 12:23:50,328 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:23:50,328 - scrapper.tasks - INFO - applico
+2022-05-28 12:23:50,328 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCUVFoF6YKQzP9rIL3TdMoxg&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:23:50,328 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:23:50,685 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:23:50,685 - scrapper.tasks - INFO - all-in-podcast
+2022-05-28 12:23:50,685 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCESLZhusAkFfsNsApnjF_Cg&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:23:50,685 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:23:50,873 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:23:50,874 - scrapper.tasks - INFO - intern-investing
+2022-05-28 12:23:50,874 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCO6TFPlggQpikL-CcD0JKTw&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:23:50,874 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:23:51,064 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:23:51,064 - scrapper.tasks - INFO - ark-invest
+2022-05-28 12:23:51,064 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCKUF2HhROd1xCnkZqgeKffA&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:23:51,064 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:23:51,270 - scrapper.tasks - INFO - Error!!!
+2022-05-28 12:23:51,270 - scrapper.tasks - INFO - 7investing
+2022-05-28 12:23:51,270 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso&channelId=UCAI0YGmr9W96nZI1q3vSJHg&part=snippet,id&order=date&maxResults=20
+2022-05-28 12:23:51,270 - scrapper.tasks - INFO - {'error': {'code': 403, 'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'errors': [{'message': 'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.', 'domain': 'youtube.quota', 'reason': 'quotaExceeded'}]}}
+2022-05-28 12:23:51,270 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[da2c4817-b16d-4f18-978a-9c6a792ffc92] succeeded in 1.7546306980002555s: None
+2022-05-28 12:23:53,860 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[25eb821c-e9bb-4b38-ad6c-d479fa5d4903] succeeded in 4.360982398000488s: None
+2022-05-28 12:24:16,311 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-26 12:54:23) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:26:52,899 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-18 11:25:38) while time zone support is active.
+2022-05-28 12:24:48,162 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-01-14 15:23:09) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:27:12,611 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:27:12,612 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c448c670-9bfe-4132-923f-4da4db7b6734] received
-2022-05-28 11:27:12,964 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c448c670-9bfe-4132-923f-4da4db7b6734] succeeded in 0.35109958999964874s: None
-2022-05-28 11:27:23,794 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-22 13:00:34) while time zone support is active.
+2022-05-28 12:24:49,189 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:24:49,193 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3f38197f-360c-4630-97ab-c188232e46b2] received
+2022-05-28 12:24:50,122 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3f38197f-360c-4630-97ab-c188232e46b2] succeeded in 0.9273626200010767s: None
+2022-05-28 12:25:20,925 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-04-04 13:00:44) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:28:12,623 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:28:12,625 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[efa24512-8d5a-485f-b2a0-544921a8856b] received
-2022-05-28 11:28:12,981 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[efa24512-8d5a-485f-b2a0-544921a8856b] succeeded in 0.35515620300066075s: None
-2022-05-28 11:28:25,849 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-28 17:20:03) while time zone support is active.
+2022-05-28 12:25:49,201 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:25:49,203 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[807d4304-5d21-4697-9d31-a6894acb516d] received
+2022-05-28 12:25:50,183 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[807d4304-5d21-4697-9d31-a6894acb516d] succeeded in 0.9790529419988161s: None
+2022-05-28 12:25:52,881 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-01 17:00:42) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:28:58,037 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-12 13:11:23) while time zone support is active.
+2022-05-28 12:26:23,983 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-27 14:00:43) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:29:12,635 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:29:12,638 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[cef13cc3-3ad8-4593-a73b-45f50c0eb97c] received
-2022-05-28 11:29:12,990 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[cef13cc3-3ad8-4593-a73b-45f50c0eb97c] succeeded in 0.3515793400001712s: None
-2022-05-28 11:29:29,317 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-01 19:54:35) while time zone support is active.
+2022-05-28 12:26:49,213 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:26:49,216 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ea46819b-2a43-4d40-8616-e3e710975270] received
+2022-05-28 12:26:50,257 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ea46819b-2a43-4d40-8616-e3e710975270] succeeded in 1.039874100999441s: None
+2022-05-28 12:26:55,024 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-18 11:25:38) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:30:00,974 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-27 14:25:10) while time zone support is active.
+2022-05-28 12:27:26,084 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-22 13:00:34) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:30:12,642 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:30:12,643 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[40475e55-67b2-475c-b7da-f9f2196d760d] received
-2022-05-28 11:30:12,980 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[40475e55-67b2-475c-b7da-f9f2196d760d] succeeded in 0.3362235200002033s: None
-2022-05-28 11:30:32,103 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-25 17:00:38) while time zone support is active.
+2022-05-28 12:27:49,225 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:27:49,228 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[82c7926d-b632-47ca-8e65-5490f88db19b] received
+2022-05-28 12:27:50,264 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[82c7926d-b632-47ca-8e65-5490f88db19b] succeeded in 1.0351566429999366s: None
+2022-05-28 12:28:28,012 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-28 17:20:03) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:31:03,174 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-28 11:01:33) while time zone support is active.
+2022-05-28 12:28:49,237 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:28:49,240 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3d928365-af23-461a-b81c-a32a3c196357] received
+2022-05-28 12:28:50,211 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3d928365-af23-461a-b81c-a32a3c196357] succeeded in 0.9701244919997407s: None
+2022-05-28 12:28:59,409 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-12 13:11:23) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:31:03,196 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField NotificationMessage.date received a naive datetime (2022-05-28 11:31:03.196208) while time zone support is active.
+2022-05-28 12:29:30,645 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-01 19:54:35) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:31:03,199 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-27 10:50:46) while time zone support is active.
+2022-05-28 12:29:49,250 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:29:49,252 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c375c6db-3510-4b8b-957c-a41d034f6c57] received
+2022-05-28 12:29:50,366 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c375c6db-3510-4b8b-957c-a41d034f6c57] succeeded in 1.1124462059997313s: None
+2022-05-28 12:30:02,234 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-27 14:25:10) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:31:12,653 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:31:12,656 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d2779eaa-c32a-4f43-a18d-6d3fdb212be9] received
-2022-05-28 11:31:12,994 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d2779eaa-c32a-4f43-a18d-6d3fdb212be9] succeeded in 0.33717585100021097s: None
-2022-05-28 11:31:34,803 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-03-12 18:02:20) while time zone support is active.
+2022-05-28 12:30:33,259 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-25 17:00:38) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-05-28 11:32:05,733 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-10 16:54:42) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-05-28 11:32:12,665 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:32:12,667 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6797800a-9eaf-4a38-a15b-7168995c8c7d] received
-2022-05-28 11:32:13,110 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6797800a-9eaf-4a38-a15b-7168995c8c7d] succeeded in 0.4422325670020655s: None
-2022-05-28 11:32:37,062 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-13 01:25:30) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-05-28 11:33:08,218 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-25 14:12:26) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-05-28 11:33:12,670 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:33:12,672 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2f263be9-4988-46d2-b707-d2568a626635] received
-2022-05-28 11:33:13,031 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2f263be9-4988-46d2-b707-d2568a626635] succeeded in 0.35794952099968214s: None
-2022-05-28 11:33:39,448 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-04-19 20:26:30) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-05-28 11:34:09,776 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-25 16:05:37) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-05-28 11:34:12,677 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:34:12,680 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d0d62209-7c91-4944-858d-f7884a219a37] received
-2022-05-28 11:34:13,023 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d0d62209-7c91-4944-858d-f7884a219a37] succeeded in 0.3418209230003413s: None
-2022-05-28 11:34:40,872 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-23 03:30:41) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-05-28 11:35:11,793 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2020-01-10 04:55:33) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-05-28 11:35:12,681 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:35:12,683 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b638a27a-fa2b-4e5e-b3f9-68b84784432b] received
-2022-05-28 11:35:13,020 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b638a27a-fa2b-4e5e-b3f9-68b84784432b] succeeded in 0.3359574829992198s: None
-2022-05-28 11:35:43,063 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-24 22:53:12) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-05-28 11:36:12,685 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:36:12,687 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[91950979-654d-43fb-ab45-acb76af42120] received
-2022-05-28 11:36:13,035 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[91950979-654d-43fb-ab45-acb76af42120] succeeded in 0.34746292999989237s: None
-2022-05-28 11:36:14,003 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-27 13:00:47) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-05-28 11:36:45,043 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-27 13:12:39) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-05-28 11:37:12,694 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:37:12,696 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a38f25c3-5b80-4d7c-ba65-1c068aa89f6d] received
-2022-05-28 11:37:13,033 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a38f25c3-5b80-4d7c-ba65-1c068aa89f6d] succeeded in 0.3358735820002039s: None
-2022-05-28 11:37:16,168 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-26 16:40:01) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-05-28 11:37:46,453 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-27 09:45:44) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-05-28 11:38:12,701 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:38:12,704 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3912b268-a524-4b35-8e67-6fd230f4399a] received
-2022-05-28 11:38:13,037 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3912b268-a524-4b35-8e67-6fd230f4399a] succeeded in 0.3325573850015644s: None
-2022-05-28 11:38:16,486 - celery.app.trace - INFO - Task scrapper.tasks.scrape_substack[2f800ca3-9227-40c7-9708-ae2ae2becff3] succeeded in 903.8723117899972s: None
-2022-05-28 11:38:49,450 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-05-28 11:38:49,452 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[e3701b34-0182-4e2b-ac43-4005d8d7e072] received
-2022-05-28 11:38:49,468 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-05-28 11:38:49,470 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[9a2ce702-1d59-4254-8a6a-d497d09a6833] received
-2022-05-28 11:38:49,659 - scrapper.tasks - INFO - Error!!!
-2022-05-28 11:38:49,659 - scrapper.tasks - INFO - portfolio-matters
-2022-05-28 11:38:49,659 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyCJoe63T7VVTvIglkrE7OKZHfUxLMKuIuQ&channelId=UCWA1nV-EYVYO_kIuCanSSkQ&part=snippet,id&order=date&maxResults=20
-2022-05-28 11:38:49,659 - scrapper.tasks - INFO - {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'errors': [{'message': 'API key expired. Please renew the API key.', 'domain': 'global', 'reason': 'badRequest'}], 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'youtube.googleapis.com'}}]}}
-2022-05-28 11:38:49,794 - scrapper.tasks - INFO - Error!!!
-2022-05-28 11:38:49,794 - scrapper.tasks - INFO - americas-market-intelligence
-2022-05-28 11:38:49,794 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyCJoe63T7VVTvIglkrE7OKZHfUxLMKuIuQ&channelId=UCCeroDadro2POrL7nq1t5-A&part=snippet,id&order=date&maxResults=20
-2022-05-28 11:38:49,795 - scrapper.tasks - INFO - {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'errors': [{'message': 'API key expired. Please renew the API key.', 'domain': 'global', 'reason': 'badRequest'}], 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'youtube.googleapis.com'}}]}}
-2022-05-28 11:38:49,962 - scrapper.tasks - INFO - Error!!!
-2022-05-28 11:38:49,962 - scrapper.tasks - INFO - siliconangle-thecube
-2022-05-28 11:38:49,962 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyCJoe63T7VVTvIglkrE7OKZHfUxLMKuIuQ&channelId=UCu3Ri8DI1RQLdVtU12uIp1Q&part=snippet,id&order=date&maxResults=20
-2022-05-28 11:38:49,962 - scrapper.tasks - INFO - {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'errors': [{'message': 'API key expired. Please renew the API key.', 'domain': 'global', 'reason': 'badRequest'}], 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'youtube.googleapis.com'}}]}}
-2022-05-28 11:38:50,094 - scrapper.tasks - INFO - Error!!!
-2022-05-28 11:38:50,094 - scrapper.tasks - INFO - applico
-2022-05-28 11:38:50,094 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyCJoe63T7VVTvIglkrE7OKZHfUxLMKuIuQ&channelId=UCUVFoF6YKQzP9rIL3TdMoxg&part=snippet,id&order=date&maxResults=20
-2022-05-28 11:38:50,094 - scrapper.tasks - INFO - {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'errors': [{'message': 'API key expired. Please renew the API key.', 'domain': 'global', 'reason': 'badRequest'}], 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'youtube.googleapis.com'}}]}}
-2022-05-28 11:38:50,237 - scrapper.tasks - INFO - Error!!!
-2022-05-28 11:38:50,237 - scrapper.tasks - INFO - all-in-podcast
-2022-05-28 11:38:50,237 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyCJoe63T7VVTvIglkrE7OKZHfUxLMKuIuQ&channelId=UCESLZhusAkFfsNsApnjF_Cg&part=snippet,id&order=date&maxResults=20
-2022-05-28 11:38:50,237 - scrapper.tasks - INFO - {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'errors': [{'message': 'API key expired. Please renew the API key.', 'domain': 'global', 'reason': 'badRequest'}], 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'youtube.googleapis.com'}}]}}
-2022-05-28 11:38:50,370 - scrapper.tasks - INFO - Error!!!
-2022-05-28 11:38:50,370 - scrapper.tasks - INFO - intern-investing
-2022-05-28 11:38:50,370 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyCJoe63T7VVTvIglkrE7OKZHfUxLMKuIuQ&channelId=UCO6TFPlggQpikL-CcD0JKTw&part=snippet,id&order=date&maxResults=20
-2022-05-28 11:38:50,370 - scrapper.tasks - INFO - {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'errors': [{'message': 'API key expired. Please renew the API key.', 'domain': 'global', 'reason': 'badRequest'}], 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'youtube.googleapis.com'}}]}}
-2022-05-28 11:38:50,539 - scrapper.tasks - INFO - Error!!!
-2022-05-28 11:38:50,539 - scrapper.tasks - INFO - ark-invest
-2022-05-28 11:38:50,539 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyCJoe63T7VVTvIglkrE7OKZHfUxLMKuIuQ&channelId=UCKUF2HhROd1xCnkZqgeKffA&part=snippet,id&order=date&maxResults=20
-2022-05-28 11:38:50,539 - scrapper.tasks - INFO - {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'errors': [{'message': 'API key expired. Please renew the API key.', 'domain': 'global', 'reason': 'badRequest'}], 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'youtube.googleapis.com'}}]}}
-2022-05-28 11:38:50,711 - scrapper.tasks - INFO - Error!!!
-2022-05-28 11:38:50,712 - scrapper.tasks - INFO - 7investing
-2022-05-28 11:38:50,712 - scrapper.tasks - INFO - https://www.googleapis.com/youtube/v3/search?key=AIzaSyCJoe63T7VVTvIglkrE7OKZHfUxLMKuIuQ&channelId=UCAI0YGmr9W96nZI1q3vSJHg&part=snippet,id&order=date&maxResults=20
-2022-05-28 11:38:50,712 - scrapper.tasks - INFO - {'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'errors': [{'message': 'API key expired. Please renew the API key.', 'domain': 'global', 'reason': 'badRequest'}], 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'youtube.googleapis.com'}}]}}
-2022-05-28 11:38:50,712 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[9a2ce702-1d59-4254-8a6a-d497d09a6833] succeeded in 1.2401898019998043s: None
-2022-05-28 11:38:53,776 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[e3701b34-0182-4e2b-ac43-4005d8d7e072] succeeded in 4.322636502998648s: None
-2022-05-28 11:39:12,711 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:39:12,713 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[77149efd-7619-4fff-a945-77933ef10a6b] received
-2022-05-28 11:39:13,055 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[77149efd-7619-4fff-a945-77933ef10a6b] succeeded in 0.34064132700223126s: None
-2022-05-28 11:40:12,718 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:40:12,721 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3ab5566c-ee7d-442e-87a5-7a540cced28d] received
-2022-05-28 11:40:13,062 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3ab5566c-ee7d-442e-87a5-7a540cced28d] succeeded in 0.34094268300032127s: None
-2022-05-28 11:41:12,730 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:41:12,732 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a485c42e-47f5-4dc7-9c2e-ae2fad581ad6] received
-2022-05-28 11:41:13,072 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a485c42e-47f5-4dc7-9c2e-ae2fad581ad6] succeeded in 0.33909964399936143s: None
-2022-05-28 11:42:12,742 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:42:12,744 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5ce23aed-1ee9-4d2e-9b72-f26862e6f11a] received
-2022-05-28 11:42:13,104 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5ce23aed-1ee9-4d2e-9b72-f26862e6f11a] succeeded in 0.3572260170003574s: None
-2022-05-28 11:43:12,752 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:43:12,753 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[753254cc-5b40-4c1e-a845-1e7a43ca98fb] received
-2022-05-28 11:43:13,187 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[753254cc-5b40-4c1e-a845-1e7a43ca98fb] succeeded in 0.4329884180006047s: None
-2022-05-28 11:44:12,763 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:44:12,765 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[15cd6d8d-adf1-4fe9-9668-b9803b71646b] received
-2022-05-28 11:44:13,198 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[15cd6d8d-adf1-4fe9-9668-b9803b71646b] succeeded in 0.43152196200026083s: None
-2022-05-28 11:45:12,769 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:45:12,772 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[10d2f757-7235-4c18-9e98-b61af8069ac4] received
-2022-05-28 11:45:13,210 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[10d2f757-7235-4c18-9e98-b61af8069ac4] succeeded in 0.43734427000163123s: None
-2022-05-28 11:46:12,778 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:46:12,783 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[56eb0bcf-1a08-4341-ba22-17ca8f244b7e] received
-2022-05-28 11:46:13,208 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[56eb0bcf-1a08-4341-ba22-17ca8f244b7e] succeeded in 0.42403560299862875s: None
-2022-05-28 11:47:12,790 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:47:12,793 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[455bc5f7-5b75-428b-8992-b66eaa7dc4f9] received
-2022-05-28 11:47:13,225 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[455bc5f7-5b75-428b-8992-b66eaa7dc4f9] succeeded in 0.4307709150016308s: None
-2022-05-28 11:48:12,802 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:48:12,804 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1bfeae68-8cfd-4ac4-8bad-355fea147eb7] received
-2022-05-28 11:48:13,232 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1bfeae68-8cfd-4ac4-8bad-355fea147eb7] succeeded in 0.4264139660008368s: None
-2022-05-28 11:49:12,814 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:49:12,817 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9761ce7d-54b6-4bf0-a14f-37cfedae1735] received
-2022-05-28 11:49:13,238 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9761ce7d-54b6-4bf0-a14f-37cfedae1735] succeeded in 0.42040707600244787s: None
-2022-05-28 11:50:12,827 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:50:12,829 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f6290a52-4e0b-4bf0-abe7-a014e94058bd] received
-2022-05-28 11:50:13,244 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f6290a52-4e0b-4bf0-abe7-a014e94058bd] succeeded in 0.41352325399930123s: None
-2022-05-28 11:51:12,838 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:51:12,841 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[da0ae31d-5c31-41e8-b5c5-46ff0355856d] received
-2022-05-28 11:51:13,186 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[da0ae31d-5c31-41e8-b5c5-46ff0355856d] succeeded in 0.3437400629991316s: None
-2022-05-28 11:52:12,847 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:52:12,849 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a5e841b7-b40e-44a8-905a-427caf7dd9e3] received
-2022-05-28 11:52:13,254 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a5e841b7-b40e-44a8-905a-427caf7dd9e3] succeeded in 0.4045620620017871s: None
-2022-05-28 11:53:12,857 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-05-28 11:53:12,859 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[14c8b2b5-3ed5-4e33-8d11-48ea085b7549] received
-2022-05-28 11:53:13,271 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[14c8b2b5-3ed5-4e33-8d11-48ea085b7549] succeeded in 0.4104450419981731s: None
+2022-05-28 12:30:49,257 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-05-28 12:30:49,259 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6663f14b-ac04-4c29-9e84-7f93e17847a5] received
+2022-05-28 12:30:50,196 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6663f14b-ac04-4c29-9e84-7f93e17847a5] succeeded in 0.9356057630029682s: None

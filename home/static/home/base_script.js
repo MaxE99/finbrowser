@@ -57,9 +57,10 @@ document
     } else {
       let results_list = document.getElementById("mainAutocomplete_result");
       if (search_term && search_term.replaceAll(/\s/g, "") != "") {
+        console.log(search_term);
         try {
           const res = await fetch(
-            `../../api/search_site/${search_term}`,
+            `http://127.0.0.1:8000/api/search_site/${search_term}`,
             get_fetch_settings("GET")
           );
           if (!res.ok) {
@@ -274,7 +275,6 @@ document
           "article",
           ""
         );
-      console.log(article_id);
       let lists_status = [];
       let initial_lists_status = [];
       let list_ids = [];
@@ -391,7 +391,6 @@ document
     if (notificationPopup.style.display == "block") {
       notificationPopup.style.display = "none";
       document.querySelector(".unseenNotifications").remove();
-      console.log(document.querySelectorAll(".unseenNotification"));
       document
         .querySelectorAll(".unseenNotification")
         .forEach((notification) => {

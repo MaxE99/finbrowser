@@ -9,18 +9,19 @@ from home.views import AddArticlesToListsMixin
 
 
 class ProfileView(DetailView, AddArticlesToListsMixin):
-    model = Profile
+    queryset = Profile.objects.select_related('user')
     context_object_name = 'profile'    
     template_name = 'accounts/profile.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = self.get_object()
+        # context['created_lists'] = List.objects.filter(creator=profile.user, is_public=True).order_by('name')
         context['created_lists'] = List.objects.get_created_lists(profile.user).filter(is_public=True)
         context['subscribed_sources'] = Source.objects.get_subscribed_sources(profile.user)
         context['subscribed_lists'] = List.objects.get_subscribed_lists(profile.user)
-        context['highlighted_articles'] = paginator_create(self.request, HighlightedArticle.objects.filter(user=profile.user).order_by('-article__pub_date'), 10)
-        context['social_links'] = SocialLink.objects.filter(profile=profile)
+        context['highlighted_articles'] = paginator_create(self.request, HighlightedArticle.objects.select_related('source').filter(user=profile.user).order_by('-article__pub_date'), 10)
+        context['social_links'] = SocialLink.objects.select_related('website').filter(profile=profile)
         context['privacy_settings'] = get_object_or_404(PrivacySettings, profile=profile)
         return context        
 

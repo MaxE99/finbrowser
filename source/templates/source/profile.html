@@ -75,11 +75,7 @@
         {% endif %}
       </div>
     </div>
-    {% for sector in source.sector.all %}
-    <a href="{{ sector.get_absolute_url }}" class="expertise">{{ sector.name }}</a>
-    {% empty %}
-    <div class="expertise">No specific sector</div>
-    {% endfor %}
+    <a href="{{ source.sector.get_absolute_url }}" class="expertise">{{ source.sector.name }}</a>
     <div class="ratingsWrapper">
       <div class="rankingsUpperContainer">
         <div class="rankingsHeader">Ratings</div>
@@ -135,8 +131,8 @@
         <div class="articleInformationContainer">
           <div class="articleTitle">{{ article.title }}</div>
           <div class="articleSectorAndDateContainer">
-            <a href="{{ article.source.sector.first.get_absolute_url }}">
-              {{ article.source.sector.first.name }}</a>
+            <a href="{{ article.source.sector.get_absolute_url }}">
+              {{ article.source.sector.name }}</a>
             <div class="articlePubDate">{{ article.pub_date }}</div>
             {% if article.source.top_source %}
             <i class="fas fa-star articleTopSource"></i>

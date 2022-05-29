@@ -12,16 +12,16 @@ class ListManager(models.Manager):
             list.articles.add(article)                
 
     def get_created_lists(self, user):
-        return self.filter(creator=user).order_by('name')
+        return self.select_related('creator__profile').prefetch_related('articles', 'sources').filter(creator=user).order_by('name')
 
     def get_highlighted_articles(self, list_id):
         return self.get(list_id=list_id).articles.all().order_by('-pub_date')
 
     def get_subscribed_lists(self, user):
-        return self.filter(subscribers=user).order_by('name')
+        return self.select_related('creator__profile').filter(subscribers=user).order_by('name')
 
     def filter_lists(self, search_term):
-        return self.filter(name__istartswith=search_term, is_public=True)
+        return self.select_related('creator__profile').filter(name__istartswith=search_term, is_public=True)
 
     def filter_lists_not_subscribed(self, search_term, user):
         return self.filter(name__istartswith=search_term, is_public=True).exclude(
@@ -29,12 +29,6 @@ class ListManager(models.Manager):
 
 
 class SourceManager(models.Manager):
-
-    def add_sources_to_list(self, sources, list):
-        sources = sources.split(",")
-        for source in sources:
-            source = self.get(name=source)
-            list.sources.add(source)
 
     def get_subscribed_sources(self, user):
         return self.filter(subscribers=user).order_by('name')
@@ -54,25 +48,23 @@ class SourceManager(models.Manager):
 class ArticleManager(models.Manager):
 
     def get_articles_from_subscribed_sources(self, subscribed_sources):
-        return self.filter(source__in=subscribed_sources).order_by('-pub_date')
+        return self.select_related('source', 'source__sector').filter(source__in=subscribed_sources).order_by('-pub_date')
 
     def get_articles_from_list_sources(self, list):
-        return self.filter(source__in=list.sources.all()).order_by('-pub_date')
+        return self.filter(source__in=list.sources.all()).select_related('source', 'source__sector').order_by('-pub_date')
 
     def get_articles_from_sector(self, sector):
-        return self.filter(
-            source__in=sector.sectors.all()).order_by('-pub_date')
+        return self.select_related('source', 'source__sector').filter(source__in=sector.source_set.all()).order_by('-pub_date')
 
     def filter_articles(self, search_term):
-        return self.filter(external_source=None).filter(
-            title__icontains=search_term).order_by('-pub_date')
+        return self.filter(external_source=None).filter(title__icontains=search_term).select_related('source', 'source__sector').order_by('-pub_date')
 
 
 class HighlightedArticlesManager(models.Manager):
 
     def get_highlighted_articles_title(self, user):
         highlighted_articles_titles = []
-        highlighted_articles = self.filter(user=user)
+        highlighted_articles = self.select_related('article').filter(user=user)
         for article in highlighted_articles:
             highlighted_articles_titles.append(article.article.title)
         return highlighted_articles_titles
@@ -93,7 +85,7 @@ class ListRatingManager(models.Manager):
         if sum_ratings == None:
             return "None"
         else:
-            return round(sum_ratings / len(list_ratings), 1)
+            return round(sum_ratings /list_ratings.count(), 1)
 
     def get_ammount_of_ratings(self, list_id):
         return self.filter(list_id=list_id).count()
@@ -122,7 +114,7 @@ class SourceRatingManager(models.Manager):
         if sum_ratings == None:
             return "None"
         else:
-            return round(sum_ratings / len(list_ratings), 1)
+            return round(sum_ratings / list_ratings.count(), 1)
 
     def get_ammount_of_ratings(self, source):
         return self.filter(source=source).count()
