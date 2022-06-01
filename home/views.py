@@ -129,13 +129,15 @@ class ArticleView(ListView, AddArticlesToListsMixin):
     model = Article
     context_object_name = 'search_articles'
     template_name = 'home/articles.html'
-    queryset = Article.objects.filter(external_source=None).exclude(source__website=get_object_or_404(Website, name="Twitter")).order_by('-pub_date')
     paginate_by = 10
+
+    def get_queryset(self):
+        return Article.objects.filter(external_source=None).exclude(source__website=get_object_or_404(Website, name="Twitter")).order_by('-pub_date')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         twitter_sources = Source.objects.filter(website=get_object_or_404(Website, name="Twitter"))
-        context['results_found'] = self.queryset.count()
+        context['results_found'] = self.object_list.count()
         context['sectors'] = Sector.objects.all().order_by('name')
         context['tweets'] = paginator_create(self.request, Article.objects.filter(source__in=twitter_sources).order_by('-pub_date'), 9, 'tweets')
         context['external_articles'] = paginator_create(self.request, Article.objects.filter(external_source=True).order_by('-pub_date'), 9, 'external_articles')
@@ -353,7 +355,7 @@ class ListDetailView(TemplateView, AddArticlesToListsMixin):
         return context
 
 
-class SettingsView(TemplateView, LoginRequiredMixin):
+class SettingsView(LoginRequiredMixin, TemplateView):
     template_name = 'home/settings.html'
 
     def post(self, request, *args, **kwargs):

@@ -41,7 +41,7 @@
             </div>
             <div class="userSpace">
                 <i class="fas fa-cog"><a href="{% url 'home:settings' %}"></a></i>
-                <i class="far fa-bell">
+                <i class="far fa-bell {% if request.user.is_authenticated %}notificationBell{% endif %}">
                     {% if request.user.is_authenticated == False %}
                     <a href="{% url 'account_login' %}"></a>
                     {% endif %}

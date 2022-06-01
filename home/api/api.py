@@ -4,9 +4,10 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes
 # Local imports
 from home.models import Article, HighlightedArticle, NotificationMessage, Source, List, SourceRating, ListRating, Notification
 from accounts.models import Profile, SocialLink, Website
@@ -134,6 +135,7 @@ class SourceViewSet(viewsets.ModelViewSet):
     queryset = Source.objects.all()
     serializer_class = Source_Serializer
     http_method_names = ["post", "get"]
+    authentication_classes = [SessionAuthentication]
 
     def get_queryset(self):
         list_id = self.request.GET.get("list_id", None)
@@ -166,14 +168,12 @@ class ListViewSet(viewsets.ModelViewSet):
     queryset = List.objects.all()
     serializer_class = List_Serializer
     http_method_names = ["post", "delete", "get"]
+    authentication_classes = [SessionAuthentication]
 
     def get_queryset(self):
         feed_search = self.request.GET.get("feed_search", None)
-        search = self.request.GET.get('search', None)
         if feed_search != None:
             return List.objects.filter_lists_not_subscribed(feed_search, self.request.user)[0:10]
-        elif search !=None:
-            return List.objects.filter_lists(search)[0:10]
         else:
             return List.objects.all()
 
@@ -235,7 +235,20 @@ class ListViewSet(viewsets.ModelViewSet):
         else:
             return Response("Access Denied")
 
+
+class FilteredLists(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [AllowAny]
+
+    def get(self, request, search_term, format=None):
+        filtered_lists =  List.objects.filter_lists(search_term)[0:10]
+        serializer = List_Serializer(filtered_lists, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+
 class FilteredArticles(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [AllowAny]
 
     def get(self, request, search_term, format=None):
         filtered_articles = Article.objects.filter_articles(search_term)[0:6]
@@ -248,6 +261,8 @@ class FilteredArticles(APIView):
 
 
 class FilteredSite(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [AllowAny]
 
     def get(self, request, search_term, format=None):
         filtered_lists = List.objects.filter_lists(search_term)
@@ -305,6 +320,7 @@ class FilteredSite(APIView):
 class NotificationViewSet(viewsets.ModelViewSet):
     queryset = Notification.objects.all()
     serializer_class = Notification_Serializer    
+    authentication_classes = [SessionAuthentication]
 
     def create(self, request):
         source_id = request.data.get('source_id', None)

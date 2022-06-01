@@ -162,9 +162,3 @@ class SocialLink(models.Model):
 
     def __str__(self):
         return f'{self.profile} - {self.website}'
-
-
-# class CookieSettings(models.Model):
-#     marketing = models.BooleanField(default=False)
-#     preferences = models.BooleanField(default=False)
-#     statistics = models.BooleanField(default=False)
