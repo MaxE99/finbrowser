@@ -1,12 +1,14 @@
+# Django imports
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
 from django import forms
+# Local imports
 from accounts.models import PrivacySettings, Profile
+from home.base_logger import logger
 
 User = get_user_model()
-
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
@@ -36,11 +38,14 @@ class UserCreationForm(forms.ModelForm):
 
     def save(self, commit=True):
         # Save the provided password in hashed format
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
-        return user
+        try:
+            user = super().save(commit=False)
+            user.set_password(self.cleaned_data["password1"])
+            if commit:
+                user.save()
+            return user
+        except:
+            logger.exception('User save method failed!')
 
 
 class UserChangeForm(forms.ModelForm):
@@ -58,8 +63,8 @@ class UserChangeForm(forms.ModelForm):
 class EmailAndUsernameChangeForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
-        self.username = kwargs.pop('username')
-        self.email = kwargs.pop('email')
+        self.username = kwargs.pop('username', None)
+        self.email = kwargs.pop('email', None)
         super(EmailAndUsernameChangeForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget = forms.TextInput(
             attrs={'value': self.username})
@@ -163,9 +168,3 @@ class PrivacySettingsForm(forms.ModelForm):
         fields = ('list_subscribtions_public', 'subscribed_sources_public',
                   'highlighted_articles_public')
 
-
-# class CookieSettingsForm(forms.ModelForm):
-
-#     class Meta:
-#         model = CookieSettings
-#         fields = ('marketing', 'preferences', 'statistics')

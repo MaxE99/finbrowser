@@ -57,7 +57,6 @@ document
     } else {
       let results_list = document.getElementById("mainAutocomplete_result");
       if (search_term && search_term.replaceAll(/\s/g, "") != "") {
-        console.log(search_term);
         try {
           const res = await fetch(
             `http://127.0.0.1:8000/api/search_site/${search_term}`,
@@ -383,7 +382,7 @@ if (document.querySelector("details")) {
 
 //activate notification popup
 document
-  .querySelector(".userSpace .fa-bell")
+  .querySelector(".userSpace .notificationBell")
   .addEventListener("click", async () => {
     const notificationPopup = document.querySelector(
       ".userSpace .notificationContainer"

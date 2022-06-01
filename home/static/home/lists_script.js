@@ -16,7 +16,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
   if (search_term && search_term.replaceAll(/\s/g, "") != "") {
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/lists/?search=${search_term}`,
+        `http://127.0.0.1:8000/api/search_lists/${search_term}`,
         get_fetch_settings("GET")
       );
       if (!res.ok) {
