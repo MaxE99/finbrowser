@@ -5,12 +5,12 @@ from django.views.generic.edit import FormView, FormMixin
 from django.urls import reverse_lazy
 # Local imports
 from support.forms import SourceSuggestionForm, BugReportForm, FeatureSuggestionForm
+
+
 class UserFeedbackMixin(FormMixin):
 
     def form_valid(self, form):
-        new_report = form.save(commit=False)
-        new_report.reporting_user = self.request.user
-        new_report.save()
+        form.save()
         messages.success(self.request, f"Thank you! You're report has been send!")
         return super().form_valid(form)
 

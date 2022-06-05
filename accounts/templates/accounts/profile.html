@@ -56,7 +56,7 @@
 
     <div class="profileBioOverlay">
 
-        {% if highlighted_articles and privacy_settings.highlighted_articles_public %}
+        {% if highlighted_articles %}
         <div class="highlightedArticlesUpperContainer">
             <div class="browserCategory highlightedArticlesHeader">Highlighted Articles</div>
             <div class="articlesContainer">
@@ -186,7 +186,7 @@
         {% endif %}
 
 
-        {% if subscribed_lists and privacy_settings.list_subscribtions_public %}
+        {% if subscribed_lists %}
         <div class="browserCategory">List Subscribtions</div>
         <div class="carousel-container">
             <div onClick="prev();" class="prev"></div>
@@ -218,7 +218,7 @@
         </div>
         {% endif %}
 
-        {% if subscribed_sources and privacy_settings.subscribed_sources_public %}
+        {% if subscribed_sources %}
         <div class="browserCategory">Subscribed Sources</div>
         <div class="carousel-container">
             <div onClick="prev();" class="prev"></div>

@@ -3,16 +3,29 @@ from django.test import TestCase
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 # Local imports
-from accounts.models import Website
-from home.models import Sector, Source
+from home.models import Article, Source
+from home.tests.test_model_instances import create_test_users, create_test_sources, create_test_sectors, create_test_website, create_test_articles, create_test_highlighted_articles, create_test_source_ratings
 
-class ProfileViewTest(TestCase):
+
+class SourceDetailViewTest(TestCase):
     def setUp(self):
-        website = Website.objects.create(name="Substack")
-        sector = Sector.objects.create(name="Short", slug="short")
-        Source.objects.create(url="https://doomberg.substack.com/", slug="doomberg", name="Doomberg", paywall="Yes", website=website, sector=sector)
+        create_test_users()
+        self.client.login(username="TestUser1", password="testpw99")
+        create_test_website()
+        create_test_sectors()
+        create_test_sources()
+        create_test_articles()
+        create_test_highlighted_articles()
+        create_test_source_ratings()
 
     def test_view(self):
-        response = self.client.get(reverse('source:profile', kwargs={'slug': get_object_or_404(Source, slug="doomberg").slug}))
+        response = self.client.get(reverse('source:profile', kwargs={'slug': get_object_or_404(Source, name="TestSource1").slug}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'source/profile.html')
+        self.assertEqual(response.context['ammount_of_ratings'], 4)
+        self.assertEqual(response.context['average_rating'], 2.8)
+        self.assertEqual(response.context['notifications_activated'], False)
+        self.assertEqual(response.context['subscribed'], False)
+        self.assertEqual(response.context['user_rating'], 5)
+        self.assertEqual(len(response.context['latest_articles'].object_list), 5)
+        self.assertEqual(response.context['latest_articles'].object_list[0], get_object_or_404(Article, title="TestArticle2"))
