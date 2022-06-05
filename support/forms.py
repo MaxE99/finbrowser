@@ -9,7 +9,7 @@ class SourceSuggestionForm(ModelForm):
 
     class Meta:
         model = SourceSuggestion
-        fields = ('url', 'sector')
+        fields = '__all__'
 
 
 class FeatureSuggestionForm(ModelForm):

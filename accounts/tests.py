@@ -6,6 +6,8 @@ from django.urls import reverse
 # Local imports
 from accounts.forms import UserCreationForm, EmailAndUsernameChangeForm, PasswordChangingForm, PrivacySettingsForm
 from accounts.models import PrivacySettings, Profile
+from home.models import Source, List
+from home.tests.test_model_instances import create_test_users, create_test_sources, create_test_lists, create_test_sectors, create_test_social_links, create_test_website, create_test_articles, create_test_highlighted_articles
 
 User = get_user_model()
 
@@ -134,9 +136,40 @@ class PrivacySettingsFormTest(TestCase):
 
 class ProfileViewTest(TestCase):
     def setUp(self):
-        User.objects.create(username='TestUser1', email='testuser1@mail.com', password='testpw99')
+        create_test_users()
+        self.client.login(username="TestUser1", password="testpw99")
+        create_test_lists()     
+        create_test_sectors() 
+        create_test_website()
+        create_test_sources()
+        create_test_articles()
+        create_test_social_links()
+        create_test_highlighted_articles()
+        get_object_or_404(Source, name="TestSource1").subscribers.add(get_object_or_404(User, username="TestUser1"))
+        get_object_or_404(Source, name="TestSource2").subscribers.add(get_object_or_404(User, username="TestUser1"))
+        get_object_or_404(Source, name="TestSource1").subscribers.add(get_object_or_404(User, username="TestUser2"))
+        get_object_or_404(Source, name="TestSource3").subscribers.add(get_object_or_404(User, username="TestUser3"))
+        get_object_or_404(List, name="TestList1").subscribers.add(get_object_or_404(User, username="TestUser1"))
+        get_object_or_404(List, name="TestList2").subscribers.add(get_object_or_404(User, username="TestUser1"))
+        get_object_or_404(List, name="TestList1").subscribers.add(get_object_or_404(User, username="TestUser2"))
 
     def test_view(self):
         response = self.client.get(reverse('accounts:profile', kwargs={'slug': get_object_or_404(Profile, user__username="TestUser1").slug}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'accounts/profile.html')
+        self.assertEqual(response.context['created_lists'].count(), 3)
+        self.assertEqual(response.context['subscribed_sources'].count(), 2)
+        self.assertEqual(response.context['subscribed_lists'].count(), 2)
+        self.assertEqual(response.context['social_links'].count(), 5)
+        self.assertEqual(len(response.context['highlighted_articles'].object_list), 5)
+
+    def test_privacy_settings_changes(self):
+        privacy_settings = get_object_or_404(PrivacySettings, profile=get_object_or_404(Profile, user__username="TestUser1"))
+        privacy_settings.list_subscribtions_public = False
+        privacy_settings.subscribed_sources_public = False
+        privacy_settings.highlighted_articles_public = False
+        privacy_settings.save()
+        response = self.client.get(reverse('accounts:profile', kwargs={'slug': get_object_or_404(Profile, user__username="TestUser1").slug}))
+        self.assertEqual(response.context['highlighted_articles'], None)
+        self.assertEqual(response.context['subscribed_sources'], None)
+        self.assertEqual(response.context['subscribed_lists'], None)
