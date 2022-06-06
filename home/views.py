@@ -73,7 +73,8 @@ class CreateListFormMixin(FormMixin):
                 messages.success(self.request, 'List has been created!')
                 return [profile_slug, list_slug] if multi_form_page else redirect('home:list-details', profile_slug=profile_slug, list_slug=list_slug)
         else:
-            logger.error(f'Create list not valid! - {form.errors.as_data()}')
+            messages.error(request, "Error: Only PNG and JPG files are currently supported!")
+            return "Failed" if multi_form_page else HttpResponseRedirect(self.request.path_info)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -321,12 +322,15 @@ class ListDetailView(TemplateView, AddArticlesToListsMixin):
             list_slug = self.request.path_info.rsplit('/', 1)[-1]
             list = get_object_or_404(List, slug=list_slug)
             if self.request.user == list.creator:
+                new_list_slug = slugify(request.POST.get('name'))
                 change_list_name_form = ListNameChangeForm(request.POST, instance=list)
                 change_list_pic_form = ListPicChangeForm(request.POST, request.FILES, instance=list)
-                new_list_slug = slugify(request.POST.get('name'))
-                if change_list_pic_form.is_valid:
+                if change_list_pic_form.is_valid():
                     change_list_pic_form.save()
-                if change_list_name_form.is_valid and List.objects.filter(creator=request.user, slug=new_list_slug).exists() == False:
+                else:
+                    messages.error(request, "Error: Only PNG and JPG files are currently supported!")
+                    return HttpResponseRedirect(self.request.path_info)
+                if change_list_name_form.is_valid() and List.objects.filter(creator=request.user, slug=new_list_slug).exists() == False:
                     change_list_name_form.save()
                 else:
                     messages.error(request, "Error: You can't use this name!")
@@ -376,22 +380,22 @@ class SettingsView(LoginRequiredMixin, TemplateView):
                 if email_and_name_change_form.is_valid():
                     request.user.save()
                     request.user.profile.save()
-                    return HttpResponseRedirect(self.request.path_info)
                 else:
                     messages.error(request, "Error: Username or email already exists!")
+            else:
+                messages.error(request, "Error: Only PNG and JPG files are currently supported!")
         elif "changePasswordForm" in request.POST:
             change_password_form = PasswordChangingForm(user=request.user, data=request.POST or None)
             if change_password_form.is_valid():
                 change_password_form.save()
                 update_session_auth_hash(request, change_password_form.user)
-                return HttpResponseRedirect(self.request.path_info)
         elif 'changePrivacySettingsForm' in request.POST:
             privacy_settings_form = PrivacySettingsForm(request.POST, instance=request.user.profile.privacysettings)
             if privacy_settings_form.is_valid():
                 form = privacy_settings_form.save(commit=False)
                 form.profile = request.user.profile
                 form.save()
-                return HttpResponseRedirect(self.request.path_info)
+        return HttpResponseRedirect(self.request.path_info)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

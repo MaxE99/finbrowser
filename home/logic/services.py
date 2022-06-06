@@ -21,27 +21,47 @@ def main_website_source_set(instance):
     return instance
 
 
-def notifications_create(source, article):
-    from home.models import Notification, NotificationMessage
-    if Notification.objects.filter(source=source).exists():
-        source_notifications = Notification.objects.filter(source=source)
+def notifications_create(source, article, notifications, notification_messages):
+    from home.models import NotificationMessage
+    if notifications.filter(source=source).exists():
+        source_notifications = notifications.filter(source=source)
         for source_notification in source_notifications:
-            if NotificationMessage.objects.filter(article=article, notification__user=source_notification.user).exists():
+            if notification_messages.filter(article=article, notification__user=source_notification.user).exists():
                 continue
             else:
                 NotificationMessage.objects.create(notification=source_notification, article=article, date=datetime.now())
     lists_that_include_source = source.lists.all()
     for list in lists_that_include_source:
-        if Notification.objects.filter(list=list).exists():
-            list_notifications = Notification.objects.filter(list=list)
+        if notifications.filter(list=list).exists():
+            list_notifications = notifications.filter(list=list)
             for list_notification in list_notifications:
-                if NotificationMessage.objects.filter(article=article, notification__user=list_notification.user).exists():
+                if notification_messages.filter(article=article, notification__user=list_notification.user).exists():
                     continue
                 else:
                     NotificationMessage.objects.create(notification=list_notification, article=article, date=datetime.now())
 
+# Inefficient - Too many database transactions
+# def notifications_create(source, article):
+#     from home.models import Notification, NotificationMessage
+#     if Notification.objects.filter(source=source).exists():
+#         source_notifications = Notification.objects.filter(source=source)
+#         for source_notification in source_notifications:
+#             if NotificationMessage.objects.filter(article=article, notification__user=source_notification.user).exists():
+#                 continue
+#             else:
+#                 NotificationMessage.objects.create(notification=source_notification, article=article, date=datetime.now())
+#     lists_that_include_source = source.lists.all()
+#     for list in lists_that_include_source:
+#         if Notification.objects.filter(list=list).exists():
+#             list_notifications = Notification.objects.filter(list=list)
+#             for list_notification in list_notifications:
+#                 if NotificationMessage.objects.filter(article=article, notification__user=list_notification.user).exists():
+#                     continue
+#                 else:
+#                     NotificationMessage.objects.create(notification=list_notification, article=article, date=datetime.now())
 
-def create_articles_from_feed(source, feed_url):
+
+def create_articles_from_feed(source, feed_url, articles, notifications, notification_messages):
     from home.models import Article
     req = Request(feed_url, headers={'User-Agent': 'Mozilla/5.0'})
     website_data = urlopen(req)
@@ -51,10 +71,10 @@ def create_articles_from_feed(source, feed_url):
     for item in root.findall('.//item'):
         try:
             title, link, pub_date = article_components_get(item)
-            if Article.objects.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
+            if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
                 break
             else:
                 article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
-                notifications_create(source, article)
+                notifications_create(source, article, notifications, notification_messages)
         except:
             continue   

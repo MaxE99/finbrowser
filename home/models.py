@@ -6,12 +6,14 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.template.defaultfilters import slugify
 from django.urls import reverse
-from accounts.models import Website
+# Python imports
+import os
 # Local imports
 from home.logic.services import main_website_source_set
 from home.managers import (ListManager, SourceManager, ArticleManager,
                            HighlightedArticlesManager, ListRatingManager,
                            SourceRatingManager)
+from accounts.models import Website
 
 User = get_user_model()
 
@@ -95,21 +97,22 @@ class Article(models.Model):
         return self.title
 
 
+def create_list_pic_name(self, filename):
+    path = "list_pic/"
+    format = f"{self.creator} - {filename}"
+    return os.path.join(path, format)
+
 class List(models.Model):
     list_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     slug = models.SlugField()
     creator = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    subscribers = models.ManyToManyField(User,
-                                         related_name='subscriber_list',
-                                         blank=True)
+    subscribers = models.ManyToManyField(User, related_name='subscriber_list', blank=True)
     updated_at = models.DateTimeField(auto_now=True)
-    list_pic = models.ImageField(null=True, blank=True, upload_to="list_pic")
+    list_pic = models.ImageField(null=True, blank=True, upload_to=create_list_pic_name)
     is_public = models.BooleanField(default=False)
     sources = models.ManyToManyField(Source, related_name='lists', blank=True)
-    articles = models.ManyToManyField(Article,
-                                      related_name='articles_list',
-                                      blank=True)
+    articles = models.ManyToManyField(Article, related_name='articles_list', blank=True)
     main_website_source = models.CharField(max_length=100, blank=True)
 
     objects = ListManager()
