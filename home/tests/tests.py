@@ -99,7 +99,6 @@ class FeedViewTest(TestCase):
         get_object_or_404(List, name="TestList2").subscribers.add(get_object_or_404(User, username="TestUser1"))
         get_object_or_404(List, name="TestList1").subscribers.add(get_object_or_404(User, username="TestUser2"))
 
-
     def test_feed(self):
         self.client.login(username="TestUser1", password="testpw99")
         response = self.client.get(reverse('home:feed'))

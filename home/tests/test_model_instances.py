@@ -53,12 +53,12 @@ def create_test_social_links():
     SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser2").profile, url="www.website/testuser2.com", website=get_object_or_404(Website, name="TestWebsite1"))
     SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser3").profile, url="www.website/testuser3.com", website=get_object_or_404(Website, name="TestWebsite1"))
     SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser1").profile, url="www.website/testuser4.com", website=get_object_or_404(Website, name="TestWebsite3"))
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser2").profile, url="www.website/testuser5.com", website=get_object_or_404(Website, name="TestWebsite1"))
+    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser2").profile, url="www.website/testuser5.com", website=get_object_or_404(Website, name="TestWebsite4"))
     SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser1").profile, url="www.website/testuser6.com", website=get_object_or_404(Website, name="TestWebsite1"))
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser1").profile, url="www.website/testuser7.com", website=get_object_or_404(Website, name="TestWebsite1"))
+    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser1").profile, url="www.website/testuser7.com", website=get_object_or_404(Website, name="TestWebsite5"))
     SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser2").profile, url="www.website/testuser8.com", website=get_object_or_404(Website, name="TestWebsite2"))
     SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser1").profile, url="www.website/testuser9.com", website=get_object_or_404(Website, name="TestWebsite3"))
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser3").profile, url="www.website/testuser10.com", website=get_object_or_404(Website, name="TestWebsite3"))
+    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser3").profile, url="www.website/testuser10.com", website=get_object_or_404(Website, name="TestWebsite8"))
 
 def create_test_notifications():
     Notification.objects.create(user=get_object_or_404(User, username="TestUser1"), list=get_object_or_404(List, name="TestList1"))
