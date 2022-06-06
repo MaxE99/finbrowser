@@ -8,6 +8,8 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+# Python imports
+import os
 
 
 class UserManager(BaseUserManager):
@@ -108,21 +110,24 @@ def create_profile(sender, instance, created, **kwargs):
         PrivacySettings.objects.create(profile=profile)
 
 
+def create_profile_pic_name(self, filename):
+    path = "profile_pics/"
+    format = f"{self.user} - {filename}"
+    return os.path.join(path, format)
+
+def create_profile_banner_name(self, filename):
+    path = "profile_banner/"
+    format = f"{self.user} - {filename}"
+    return os.path.join(path, format)
+
 class Profile(models.Model):
-    ACCOUNT_TYPES = [('Standard', 'Standard'), ('Premium', 'Premium'),
-                     ('Admin', 'Admin')]
+    ACCOUNT_TYPES = [('Standard', 'Standard'), ('Premium', 'Premium'), ('Admin', 'Admin')]
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
     slug = models.SlugField(unique=True)
     bio = RichTextField(blank=True, null=True)
-    profile_pic = models.ImageField(null=True,
-                                    blank=True,
-                                    upload_to="profile_pics")
-    profile_banner = models.ImageField(null=True,
-                                       blank=True,
-                                       upload_to="profile_banner")
-    account_type = models.CharField(max_length=50,
-                                    choices=ACCOUNT_TYPES,
-                                    default="Standard")
+    profile_pic = models.ImageField(null=True, blank=True, upload_to=create_profile_pic_name)
+    profile_banner = models.ImageField(null=True, blank=True, upload_to=create_profile_banner_name)
+    account_type = models.CharField(max_length=50, choices=ACCOUNT_TYPES, default="Standard")
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.user.username)
