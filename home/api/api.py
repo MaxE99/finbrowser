@@ -7,7 +7,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
-from rest_framework.decorators import action, permission_classes
+from rest_framework.decorators import action
 # Local imports
 from home.models import Article, HighlightedArticle, NotificationMessage, Source, List, SourceRating, ListRating, Notification
 from accounts.models import Profile, SocialLink, Website
@@ -163,7 +163,6 @@ class SourceViewSet(viewsets.ModelViewSet):
             return Response("Source has been subscribed!")
 
 
-
 class ListViewSet(viewsets.ModelViewSet):
     queryset = List.objects.all()
     serializer_class = List_Serializer
@@ -251,7 +250,7 @@ class FilteredArticles(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, search_term, format=None):
-        filtered_articles = Article.objects.filter_articles(search_term)[0:6]
+        filtered_articles = Article.objects.filter_articles(search_term)[0:10]
         serializer = Article_Serializer(filtered_articles, many=True)
         article_favicon_paths = []
         for article in filtered_articles:
