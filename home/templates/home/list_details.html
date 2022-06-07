@@ -119,14 +119,14 @@
                             <button type="button" class="fa fa-star ratedStar" id="fifth"></button>
                         </div>
                         {% if average_rating != "None" %}
-                        <div class="avgRating"><span>{{ average_rating }}</span> out of 5</div>
+                        <div class="avgRating"><span>{{ list.average_rating }}</span> out of 5</div>
                         {% else %}
                         <div class="avgRating">No Ratings</div>
                         {% endif %}
                     </div>
                 </div>
                 <div class="ratingsAmmountContainer">based on <span class="ratingsAmmount">
-                        {{ ammount_of_ratings }}</span> ratings</div>
+                        {{ list.ammount_of_ratings }}</span> ratings</div>
             </div>
         </div>
     </div>

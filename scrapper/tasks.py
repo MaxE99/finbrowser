@@ -3,9 +3,10 @@ from __future__ import absolute_import, unicode_literals
 from django.core.cache import cache
 from celery import shared_task
 from django.shortcuts import get_object_or_404
+from django.utils.timezone import now
 # Python imports
 import tweepy
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta
 import logging
 from celery.signals import after_setup_logger
 import html
@@ -63,7 +64,7 @@ def scrape_twitter():
         last_id = status.id
     cache.set('last_id', last_id)
     for notification_message in notification_messages:
-        if (datetime.now(timezone.utc) - notification_message.date) > timedelta(hours=24):
+        if (now() - notification_message.date) > timedelta(hours=24):
             notification_message.delete()
 
 
@@ -109,7 +110,7 @@ def scrape_spotify():
             if articles.filter(title=title, link=link, source=source).exists():
                 break
             else:
-                article = Article.objects.create(title=episode_item['name'], link=episode_item['external_urls']['spotify'], pub_date=datetime.now(), source=source)
+                article = Article.objects.create(title=episode_item['name'], link=episode_item['external_urls']['spotify'], pub_date=now(), source=source)
                 notifications_create(source, article, notifications, notification_messages)
             
 @shared_task
@@ -136,43 +137,3 @@ def scrape_youtube():
                     notifications_create(source, article, notifications, notification_messages)
         except:
             continue
-
-
-
-
-# Inefficient - Too Many Database Transactions
-# @shared_task
-# def scrape_twitter():    
-#     from home.models import Source, Article, NotificationMessage
-#     consumer_key = 'XOoUFKNcJeHoSkGxkZUSraU4x'
-#     consumer_secret = '18fAwnwdZLqYDmkWzxuQwL8GalXguNskhnYv8dMPr8ZYhRez0y'
-#     access_token = '1510667747365109763-ak8OKMTG45Q5GW2HrNlGhJL5Oyss49'
-#     access_token_secret = "8NqJl5H97t6C11PdDYjksk5rHhVLpfiGsNcAZeMbNfviP"
-#     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-#     auth.set_access_token(access_token, access_token_secret)
-#     api = tweepy.API(auth)
-#     last_id = cache.get('last_id')
-#     if last_id:
-#         statuses = api.home_timeline(count=200, tweet_mode='extended', since_id=last_id)
-#     else:
-#         statuses = api.home_timeline(count=200, tweet_mode='extended')
-#     for status in statuses:
-#         if Article.objects.filter(external_id=status.id).exists():
-#             continue
-#         else:
-#             title = html.unescape(status.full_text)
-#             link = f'https://twitter.com/{status.user.screen_name}/status/{status.id}'
-#             pub_date = status.created_at
-#             if Source.objects.filter(external_id=status.user.id).exists():
-#                 source = get_object_or_404(Source, external_id=status.user.id)
-#                 external_id = status.id
-#                 article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source, external_id=external_id)
-#                 notifications_create(source, article)
-#             else:
-#                 continue
-#         last_id = status.id
-#     cache.set('last_id', last_id)
-#     notification_messages = NotificationMessage.objects.all()
-#     for notification_message in notification_messages:
-#         if (datetime.now(timezone.utc) - notification_message.date) > timedelta(hours=24):
-#             notification_message.delete()

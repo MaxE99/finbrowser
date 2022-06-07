@@ -81,11 +81,10 @@ class AddExternalArticleFormMixin(FormMixin):
         if add_external_articles_form.is_valid():
             data = add_external_articles_form.cleaned_data
             website_name = data['website_name']
-            sector = data['sector']
             title = data['title']
             link = data['link']
             pub_date = data['pub_date']
-            external_source = ExternalSource.objects.create(user=request.user, website_name=website_name, sector=sector)
+            external_source = ExternalSource.objects.create(user=request.user, website_name=website_name)
             article = Article.objects.create(title=title, link=link, pub_date=pub_date, external_source=external_source)
             HighlightedArticle.objects.create(user=request.user, article=article)
             messages.success(request, 'Article has been added!')
@@ -128,16 +127,15 @@ class ArticleView(ListView, AddArticlesToListsMixin):
     paginate_by = 10
 
     def get_queryset(self):
-        return Article.objects.filter(external_source=None).exclude(source__website=get_object_or_404(Website, name="Twitter")).order_by('-pub_date')
+        return Article.objects.select_related('source', 'source__website', 'source__sector').filter(external_source=None).exclude(source__website=get_object_or_404(Website, name="Twitter")).order_by('-pub_date')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         twitter_sources = Source.objects.filter(website=get_object_or_404(Website, name="Twitter"))
         context['results_found'] = self.object_list.count()
         context['sectors'] = Sector.objects.all().order_by('name')
-        context['tweets'] = paginator_create(self.request, Article.objects.filter(source__in=twitter_sources).order_by('-pub_date'), 9, 'tweets')
+        context['tweets'] = paginator_create(self.request, Article.objects.select_related('source').filter(source__in=twitter_sources).order_by('-pub_date'), 9, 'tweets')
         context['external_articles'] = paginator_create(self.request, Article.objects.exclude(external_source=None).order_by('-pub_date'), 9, 'external_articles')
-        print(Article.objects.exclude(external_source=None).order_by('-pub_date').count())
         return context
 
 
@@ -173,6 +171,9 @@ class FeedView(TemplateView, LoginRequiredMixin, AddArticlesToListsMixin, AddExt
         elif 'addExternalArticlesForm' in request.POST:
             AddExternalArticleFormMixin.post(self, request)
             return redirect('home:feed')
+        else:
+            logger.error(f"Feed view problems with POST request! - {request.POST}")
+            return HttpResponseRedirect(self.request.path_info)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -289,6 +290,9 @@ class ListDetailView(TemplateView, AddArticlesToListsMixin):
             else:
                 logger.error(f'User tried to change list name of list created by another user! - {self.request.user}')
                 messages.error(self.request, 'Error: Lists of other users can not be altered!')
+        else:
+            messages.success(self.request, "Rating has been added!")
+            return HttpResponseRedirect(self.request.path_info)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -304,8 +308,6 @@ class ListDetailView(TemplateView, AddArticlesToListsMixin):
         context['list'] = list
         context['latest_articles'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources(list), 10, 'latest_articles') 
         context['highlighted_articles'] = paginator_create(self.request, List.objects.get_highlighted_articles(list.list_id), 10, 'highlighted_articles')
-        context['ammount_of_ratings'] = ListRating.objects.get_ammount_of_ratings(list_id)
-        context['average_rating'] = ListRating.objects.get_average_rating(list_id)
         context['notifications_activated'] = notifications_activated
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating

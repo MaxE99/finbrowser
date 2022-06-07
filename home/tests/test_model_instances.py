@@ -3,10 +3,10 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from django.utils.timezone import now
 # Python Import
-from datetime import datetime, timedelta
+from datetime import timedelta
 # Local Imports
-from home.models import Article, ExternalSource, HighlightedArticle, List, ListRating, Notification, Sector, Source, SourceRating
-from accounts.models import Profile, SocialLink, Website
+from home.models import Article, HighlightedArticle, List, ListRating, Notification, Sector, Source, SourceRating
+from accounts.models import SocialLink, Website
 
 User = get_user_model()
 

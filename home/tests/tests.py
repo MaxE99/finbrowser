@@ -3,8 +3,9 @@ from django.shortcuts import get_object_or_404
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from django.utils.timezone import now
 # Python Import
-from datetime import datetime, timedelta
+from datetime import timedelta
 # Local Imports
 from home.models import Article, ExternalSource, HighlightedArticle, List, Notification, Sector, Source
 from accounts.models import Profile
@@ -74,7 +75,7 @@ class AddExternalArticlesFormTests(TestCase):
         create_test_sectors()  
 
     def test_succesfullly_created_external_article(self):
-        data = {'addExternalArticlesForm': ['Save'], 'website_name': 'TestWebsite', 'sector': get_object_or_404(Sector, name="TestSector1").sector_id, 'title': 'TestArticleTitle', 'link': 'https://testwebsite.com', 'pub_date': (datetime.today() - timedelta(days=3)).strftime("%Y-%m-%d")}
+        data = {'addExternalArticlesForm': ['Save'], 'website_name': 'TestWebsite', 'sector': get_object_or_404(Sector, name="TestSector1").sector_id, 'title': 'TestArticleTitle', 'link': 'https://testwebsite.com', 'pub_date': (now() - timedelta(days=3)).strftime("%Y-%m-%d")}
         response = self.client.post(reverse('home:feed'), data)
         self.assertEqual(response.status_code, 302)
         self.assertTrue(ExternalSource.objects.filter(website_name="TestWebsite").exists())
@@ -217,8 +218,6 @@ class ListDetailViewTest(TestCase):
         response = self.client.get(reverse('home:list-details', kwargs={'profile_slug': testuser1.profile.slug, 'list_slug':list.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['notifications_activated'], Notification.objects.filter(user=testuser1, list=list).exists())
-        self.assertEqual(response.context['ammount_of_ratings'], 6)
-        self.assertEqual(response.context['average_rating'], 3.5)
         self.assertFalse(response.context['subscribed'])
         self.assertEqual(response.context['user_rating'], 3)
         self.assertEqual(response.context['list'], list)

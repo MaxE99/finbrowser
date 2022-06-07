@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'scrapper',
     'django_celery_beat',
-    'debug_toolbar'
+    'debug_toolbar',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 SOCIALACCOUNT_PROVIDERS = {

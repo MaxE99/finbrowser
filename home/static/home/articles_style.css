@@ -207,7 +207,6 @@ main {
 
 .leftSide {
   width: 49%;
-  background: white;
   box-shadow: var(--box-shadowScheme);
   border-radius: 8px;
 }
@@ -232,9 +231,10 @@ main {
   align-items: center;
   /* background: #1da1f2; */
   background: rgba(0, 85, 212, 0.3);
-  margin: 0 auto;
-  border: 5px solid white;
+  border: 3px solid white;
   border-top: none;
+  max-height: 800px;
+  overflow-y: scroll;
 }
 
 .tweet-container {
@@ -245,6 +245,7 @@ main {
   user-select: none;
   margin-top: 20px;
   width: 85%;
+  box-shadow: var(--box-shadowScheme);
 }
 
 .tweet-container a {
@@ -337,4 +338,17 @@ main {
 
 .rightSide .article .fa-ellipsis-h {
   right: 15px;
+}
+
+.rightSide .articlesContainer {
+  flex-wrap: unset;
+  height: unset;
+  background: rgba(0, 85, 212, 0.3);
+  border: 3px solid white;
+  border-top: none;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.rightSide .articlesContainer .article:first-child {
+  margin-top: 20px;
 }

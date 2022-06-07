@@ -1,10 +1,11 @@
 # Django imports
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from django.utils.timezone import now
 # Python imports
 import os
 import requests
-from datetime import datetime, timedelta
+from datetime import timedelta
 import tweepy
 import base64
 import urllib.request
@@ -14,7 +15,7 @@ from accounts.models import Website
 
 class SpotifyAPI(object):
     access_token = None
-    access_token_expires = datetime.now()
+    access_token_expires = now()
     access_token_did_expire = True
     client_id = None
     client_secret = None
@@ -50,19 +51,17 @@ class SpotifyAPI(object):
         if r.status_code not in range(200,299):
             raise Exception("Could not authenticate client.")
         data = r.json()
-        now = datetime.now()
         expires_in = data['expires_in']
-        expires = now + timedelta(seconds=expires_in)
+        expires = now() + timedelta(seconds=expires_in)
         self.access_token = data['access_token']
         self.access_token_expires = expires
-        self.access_token_did_expire = expires < now 
+        self.access_token_did_expire = expires < now() 
         return True
 
     def get_access_token(self):
         token = self.access_token
         expires = self.access_token_expires
-        now = datetime.now()
-        if expires < now:
+        if expires < now():
             self.perform_auth()
             return self.get_access_token()
         elif token == None:

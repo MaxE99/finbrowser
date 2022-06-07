@@ -4,7 +4,7 @@ from django import forms
 # Python imports
 from datetime import date
 # Local imports
-from home.models import List, Sector
+from home.models import List
 
 
 class AddListForm(ModelForm):
@@ -31,7 +31,6 @@ class ListPicChangeForm(ModelForm):
 
 class AddExternalArticleForm(forms.Form):
     website_name = forms.CharField(max_length=100, label="Website Url")
-    sector = forms.ModelChoiceField(queryset=Sector.objects.all())
     title = forms.CharField(max_length=100)
     link = forms.URLField()
     pub_date = forms.DateField(label="Publication Date",
