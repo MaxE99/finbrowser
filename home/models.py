@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from django.db.models.signals import m2m_changed
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 # Python imports
@@ -55,6 +56,8 @@ class Source(models.Model):
     top_source = models.BooleanField(default=False)
     sector = models.ForeignKey(Sector, null=True, on_delete=models.SET_NULL)
     external_id = models.CharField(unique=True, null=True, blank=True, max_length=100)
+    average_rating = models.FloatField(blank=True, null=True)
+    ammount_of_ratings = models.IntegerField(default=0, null=True)
 
     objects = SourceManager()
 
@@ -113,6 +116,8 @@ class List(models.Model):
     sources = models.ManyToManyField(Source, related_name='lists', blank=True)
     articles = models.ManyToManyField(Article, related_name='articles_list', blank=True)
     main_website_source = models.CharField(max_length=100, blank=True)
+    average_rating = models.FloatField(blank=True, null=True)
+    ammount_of_ratings = models.IntegerField(default=0, null=True)
 
     objects = ListManager()
 
@@ -158,6 +163,13 @@ class SourceRating(models.Model):
 
     objects = SourceRatingManager()
 
+    def save(self, *args, **kwargs):
+        super(SourceRating, self).save(*args, **kwargs)
+        rated_source = get_object_or_404(Source, source_id=self.source.source_id)
+        rated_source.average_rating = SourceRating.objects.get_average_rating(self.source.source_id)
+        rated_source.ammount_of_ratings = SourceRating.objects.get_ammount_of_ratings(self.source.source_id)
+        rated_source.save()
+
     def __str__(self):
         return f'{self.user} - {self.source} - {self.rating}'
 
@@ -165,13 +177,16 @@ class SourceRating(models.Model):
 class ListRating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     list = models.ForeignKey(List, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0,
-                                 validators=[
-                                     MaxValueValidator(5),
-                                     MinValueValidator(0),
-                                 ])
+    rating = models.IntegerField(default=0, validators=[MaxValueValidator(5), MinValueValidator(0),])
 
     objects = ListRatingManager()
+
+    def save(self, *args, **kwargs):
+        super(ListRating, self).save(*args, **kwargs)
+        rated_list = get_object_or_404(List, list_id=self.list.list_id)
+        rated_list.average_rating = ListRating.objects.get_average_rating(self.list.list_id)
+        rated_list.ammount_of_ratings = ListRating.objects.get_ammount_of_ratings(self.list.list_id)
+        rated_list.save()
 
     def __str__(self):
         return f'{self.user} - {self.list} - {self.rating}'
