@@ -187,9 +187,10 @@
                 <div class="title">
                     <img src="{% static tweet.source.favicon_path %}" />
                     <div class="info">
-                        <h4 class="name">{{ tweet.source }}</h4>
+                        <h4 class="name">{{ tweet.source.name }}</h4>
                         <p class="twitter-handle">@tweetoftheday</p>
                     </div>
+                    <a href="{{ tweet.source.get_absolute_url }}"></a>
                 </div>
                 <div class="tweet">
                     <p>{{ tweet.title }}</p>
@@ -197,6 +198,7 @@
                 <div class="time-and-date">
                     <p>{{ tweet.pub_date }}</p>
                 </div>
+                <a href="{{ tweet.link }}"></a>
             </div>
             {% endfor %}
             <div class="pagination">
@@ -213,53 +215,37 @@
         </div>
     </div>
     <div class="rightSide">
-        {% if external_articles %}
         <div class="browserCategory subscribedSourcesArticleHeader">External Articles</div>
         <div class="articlesContainer">
             {% for article in external_articles %}
-            <div class="article" id="article{{ article.article_id }}">
-                {% if article.article.source %}
+            <div class="article" id="article{{ article_id }}">
                 <div class="authorImageContainer">
-                    <img src="{% static article.article.source.favicon_path %}" />
-                    <a href="{{ article.article.source.get_absolute_url }}"></a>
+                    <i class="fas fa-question-circle"></i>
                 </div>
                 <div class="articleInformationContainer">
-                    <div class="articleTitle">{{ article.article.title }}</div>
+                    <div class="articleTitle">{{ article.title }}</div>
                     <div class="articleSectorAndDateContainer">
-                        <a href="{{ article.article.source.sector.get_absolute_url }}">
-                            {{ article.article.source.sector.name }}</a>
-                        <div class="articlePubDate">{{ article.article.pub_date }}</div>
-                        {% if article.article.source.top_source %}
+                        <div class="articlePubDate">{{ article.pub_date }}</div>
+                        {% if article.source.top_source %}
                         <i class="fas fa-star articleTopSource"></i>
                         {% endif %}
-                        {% if article.article.source.paywall == "Yes" %}
+                        {% if article.source.paywall == "Yes" %}
                         <i class="fas fa-lock articleFullPaywall"></i>
-                        {% elif article.article.source.paywall == "Semi" %}
+                        {% elif article.source.paywall == "Semi" %}
                         <i class="fas fa-lock articleSemiPaywall"></i>
                         {% endif %}
                     </div>
                 </div>
-                {% else %}
-                <i class="fas fa-question-circle"></i>
-                <div class="articleInformationContainer">
-                    <div class="articleTitle">{{ article.article.title }}</div>
-                    <div class="articleSectorAndDateContainer">
-                        <a href="{{ article.article.external_source.sector.get_absolute_url  }}">
-                            {{ article.article.external_source.sector }}</a>
-                        <div class="articlePubDate">{{ article.article.pub_date }}</div>
-                    </div>
-                </div>
-                {% endif %}
-                <a class="articleLink" href="{{ article.article.link }}"></a>
+                <a class="articleLink" href="{{ article.link }}"></a>
                 <i class="fas fa-ellipsis-h"></i>
-                <div class="articleOptionsContainer articleOptionsContainer{{ article.article_id }}">
+                <div class="articleOptionsContainer articleOptionsContainer{{ article_id }}">
                     <div class="addToList"><i class="fas fa-list"></i>Add to list</div>
-                    {% if article.article.title in highlighted_articles_titles %}
-                    <div id="{{ article.article.article_id }}" class="addToHighlighted"><i
+                    {% if article.title in highlighted_articles_titles %}
+                    <div id="{{ article.article_id }}" class="addToHighlighted"><i
                             class="fas fa-times"></i><span>Unhighlight
                             article</span></div>
                     {% else %}
-                    <div id="{{ article.article.article_id }}" class="addToHighlighted"><i
+                    <div id="{{ article.article_id }}" class="addToHighlighted"><i
                             class="fas fa-highlighter"></i><span>Highlight
                             article</span></div>
                     {% endif %}
@@ -296,7 +282,17 @@
             </div>
             {% endfor %}
         </div>
-        {% endif %}
+        <div class="pagination">
+            <span class="step-links">
+                {% for i in external_articles.paginator.page_range %}
+                {% if external_articles.number == i %}
+                <button class="currentPagination">{{ external_articles.number }}</button>
+                {% elif i > external_articles.number|add:'-3' and i < external_articles.number|add:'3' %} <a
+                    href="?external_articles={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
     </div>
 </div>
 

@@ -1,6 +1,7 @@
 # Django Imports
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
+from django.utils.timezone import now
 # Python Import
 from datetime import datetime, timedelta
 # Local Imports
@@ -85,16 +86,16 @@ def create_test_list_ratings():
     ListRating.objects.create(user=get_object_or_404(User, username="TestUser1"), list=get_object_or_404(List, name="TestList2"), rating=2)
 
 def create_test_articles():
-    Article.objects.create(title="TestArticle1", source=get_object_or_404(Source, name="TestSource1"), link="www.testarticle1.com", pub_date=(datetime.today() - timedelta(days=2)).strftime("%Y-%m-%d"))
-    Article.objects.create(title="TestArticle2", source=get_object_or_404(Source, name="TestSource1"), link="www.testarticle2.com", pub_date=(datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d"))
-    Article.objects.create(title="TestArticle3", source=get_object_or_404(Source, name="TestSource2"), link="www.testarticle3.com", pub_date=(datetime.today() - timedelta(days=3)).strftime("%Y-%m-%d"))
-    Article.objects.create(title="TestArticle4", source=get_object_or_404(Source, name="TestSource2"), link="www.testarticle4.com", pub_date=(datetime.today() - timedelta(days=4)).strftime("%Y-%m-%d"))
-    Article.objects.create(title="TestArticle5", source=get_object_or_404(Source, name="TestSource3"), link="www.testarticle5.com", pub_date=(datetime.today() - timedelta(days=5)).strftime("%Y-%m-%d"))
-    Article.objects.create(title="TestArticle6", source=get_object_or_404(Source, name="TestSource1"), link="www.testarticle6.com", pub_date=(datetime.today() - timedelta(days=6)).strftime("%Y-%m-%d"))
-    Article.objects.create(title="TestArticle7", source=get_object_or_404(Source, name="TestSource1"), link="www.testarticle7.com", pub_date=(datetime.today() - timedelta(days=6)).strftime("%Y-%m-%d"))
-    Article.objects.create(title="TestArticle8", source=get_object_or_404(Source, name="TestSource3"), link="www.testarticle8.com", pub_date=(datetime.today() - timedelta(days=4)).strftime("%Y-%m-%d"))
-    Article.objects.create(title="TestArticle9", source=get_object_or_404(Source, name="TestSource2"), link="www.testarticle9.com", pub_date=(datetime.today() - timedelta(days=8)).strftime("%Y-%m-%d"))
-    Article.objects.create(title="TestArticle10", source=get_object_or_404(Source, name="TestSource1"), link="www.testarticle10.com", pub_date=(datetime.today() - timedelta(days=3)).strftime("%Y-%m-%d"))
+    Article.objects.create(title="TestArticle1", source=get_object_or_404(Source, name="TestSource1"), link="www.testarticle1.com", pub_date=(now() - timedelta(days=2)).strftime("%Y-%m-%d"))
+    Article.objects.create(title="TestArticle2", source=get_object_or_404(Source, name="TestSource1"), link="www.testarticle2.com", pub_date=(now() - timedelta(days=1)).strftime("%Y-%m-%d"))
+    Article.objects.create(title="TestArticle3", source=get_object_or_404(Source, name="TestSource2"), link="www.testarticle3.com", pub_date=(now() - timedelta(days=3)).strftime("%Y-%m-%d"))
+    Article.objects.create(title="TestArticle4", source=get_object_or_404(Source, name="TestSource2"), link="www.testarticle4.com", pub_date=(now() - timedelta(days=4)).strftime("%Y-%m-%d"))
+    Article.objects.create(title="TestArticle5", source=get_object_or_404(Source, name="TestSource3"), link="www.testarticle5.com", pub_date=(now() - timedelta(days=5)).strftime("%Y-%m-%d"))
+    Article.objects.create(title="TestArticle6", source=get_object_or_404(Source, name="TestSource1"), link="www.testarticle6.com", pub_date=(now() - timedelta(days=6)).strftime("%Y-%m-%d"))
+    Article.objects.create(title="TestArticle7", source=get_object_or_404(Source, name="TestSource1"), link="www.testarticle7.com", pub_date=(now() - timedelta(days=6)).strftime("%Y-%m-%d"))
+    Article.objects.create(title="TestArticle8", source=get_object_or_404(Source, name="TestSource3"), link="www.testarticle8.com", pub_date=(now() - timedelta(days=4)).strftime("%Y-%m-%d"))
+    Article.objects.create(title="TestArticle9", source=get_object_or_404(Source, name="TestSource2"), link="www.testarticle9.com", pub_date=(now() - timedelta(days=8)).strftime("%Y-%m-%d"))
+    Article.objects.create(title="TestArticle10", source=get_object_or_404(Source, name="TestSource1"), link="www.testarticle10.com", pub_date=(now() - timedelta(days=3)).strftime("%Y-%m-%d"))
 
 def create_test_highlighted_articles():
     HighlightedArticle.objects.create(user=get_object_or_404(User, username="TestUser1"), article=get_object_or_404(Article, title="TestArticle1"))

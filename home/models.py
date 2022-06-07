@@ -73,7 +73,6 @@ class ExternalSource(models.Model):
     external_source_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     website_name = models.CharField(max_length=100, blank=True)
-    sector = models.ForeignKey(Sector, null=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

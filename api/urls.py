@@ -3,7 +3,7 @@ from django.urls import path
 from django.urls import path, include
 from rest_framework import routers
 # Local imports
-from home.api.api import (
+from api.api import (
      FilteredSite, SocialLinkViewSet, FilteredArticles, ListViewSet, NotificationViewSet,
      SourceViewSet, ProfileViewSet, SourceRatingViewSet, ListRatingViewSet, 
      HighlightedArticleViewSet, FilteredLists)
