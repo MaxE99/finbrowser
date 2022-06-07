@@ -238,12 +238,25 @@ main {
 }
 
 .tweet-container {
+  position: relative;
   background: var(--primary-color);
   padding: 16px 32px;
   border-radius: 24px;
   user-select: none;
   margin-top: 20px;
-  width: 90%;
+  width: 85%;
+}
+
+.tweet-container a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.title a {
+  z-index: 5;
 }
 
 .tweet-container:hover {
@@ -251,9 +264,11 @@ main {
 }
 
 .title {
+  position: relative;
   display: flex;
   align-items: center;
   cursor: pointer;
+  width: fit-content;
 }
 
 .title img {
@@ -314,4 +329,12 @@ main {
 .articleTitle:hover .articleTitleTooltip {
   visibility: visible;
   opacity: 1;
+}
+
+.rightSide .article {
+  width: 95%;
+}
+
+.rightSide .article .fa-ellipsis-h {
+  right: 15px;
 }

@@ -17,5 +17,5 @@ urlpatterns = [
     path('search_results/<str:search_term>', SearchResultView.as_view(), name="search-results"),
     path('list/<slug:profile_slug>/<slug:list_slug>', ListDetailView.as_view(), name="list-details"),
     path('sector/<slug:slug>', SectorDetailView.as_view(), name="sector-details"),
-    path('api/', include('home.api.urls', namespace='api')),
+    path('api/', include('api.urls', namespace='api')),
 ]

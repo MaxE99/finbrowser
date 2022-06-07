@@ -11,8 +11,8 @@ from rest_framework.decorators import action
 # Local imports
 from home.models import Article, HighlightedArticle, NotificationMessage, Source, List, SourceRating, ListRating, Notification
 from accounts.models import Profile, SocialLink, Website
-from home.api.serializers import (List_Serializer, Article_Serializer, Source_Serializer, Profile_Serializer, HighlightedArticle_Serializer, SocialLink_Serializer, SourceRating_Serializer, ListRating_Serializer, Notification_Serializer)
-from home.api.permissions import IsListCreator, IsUser
+from api.serializers import (List_Serializer, Article_Serializer, Source_Serializer, Profile_Serializer, HighlightedArticle_Serializer, SocialLink_Serializer, SourceRating_Serializer, ListRating_Serializer, Notification_Serializer)
+from api.permissions import IsListCreator, IsUser
 
 class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsUser]

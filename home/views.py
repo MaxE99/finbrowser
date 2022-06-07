@@ -17,7 +17,7 @@ from datetime import timedelta, date
 from accounts.models import SocialLink, Website
 from home.models import Article, HighlightedArticle, List, Sector, Source, ListRating, ExternalSource, Notification
 from home.forms import AddListForm, ListPicChangeForm, ListNameChangeForm, AddExternalArticleForm
-from home.logic.pure_logic import paginator_create
+from home.logic.pure_logic import paginator_create, lists_filter
 from accounts.forms import EmailAndUsernameChangeForm, PasswordChangingForm, ProfileChangeForm, PrivacySettingsForm
 from home.base_logger import logger
 
@@ -25,19 +25,6 @@ User = get_user_model()
 
 
 # Mixins:
-
-# class NotificationMixin(ContextMixin):
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         if self.request.user.is_authenticated:
-#             unseen_notifications, source_notifications, list_notifications = notifications_get(self.request.user)
-#         else:
-#             unseen_notifications = source_notifications = list_notifications = None
-#         context['unseen_notifications'] = unseen_notifications
-#         context['source_notifications'] = source_notifications
-#         context['list_notifications'] = list_notifications
-#         return context
-
 
 class AddToListInfoMixin(ContextMixin):
     def get_context_data(self, **kwargs):
@@ -149,7 +136,8 @@ class ArticleView(ListView, AddArticlesToListsMixin):
         context['results_found'] = self.object_list.count()
         context['sectors'] = Sector.objects.all().order_by('name')
         context['tweets'] = paginator_create(self.request, Article.objects.filter(source__in=twitter_sources).order_by('-pub_date'), 9, 'tweets')
-        context['external_articles'] = paginator_create(self.request, Article.objects.filter(external_source=True).order_by('-pub_date'), 9, 'external_articles')
+        context['external_articles'] = paginator_create(self.request, Article.objects.exclude(external_source=None).order_by('-pub_date'), 9, 'external_articles')
+        print(Article.objects.exclude(external_source=None).order_by('-pub_date').count())
         return context
 
 
@@ -216,53 +204,12 @@ class ListSearchView(ListView, AddArticlesToListsMixin):
     paginate_by = 10
 
     def get_queryset(self):
-        timeframe = self.kwargs['timeframe']
-        content_type = self.kwargs['content_type']
-        minimum_rating = self.kwargs['minimum_rating']
-        sources = self.kwargs['sources']
-        filter_args = {'main_website_source': sources}
-        if timeframe != 'All' and timeframe != None:
-            filter_args['updated_at__gte'] = date.today() - timedelta(
-                days=int(timeframe))
-        filter_args = dict(
-            (k, v) for k, v in filter_args.items() if v is not None and v != 'All')
-        lists = List.objects.filter(**filter_args).filter(
-            is_public=True).order_by('name')
-        ##########################################################################
-        # filter content_type
-        if content_type != 'All':
-            exclude_list = []
-            if content_type == "Articles":
-                for list in lists:
-                    if len(list.articles.all()) <= len(list.sources.all()):
-                        exclude_list.append(list)
-                        # lists.exclude(list_id=list.list_id)
-            else:
-                for list in lists:
-                    if len(list.articles.all()) >= len(list.sources.all()):
-                        exclude_list.append(list)
-                        # lists.exclude(list_id=list.list_id)
-            if len(exclude_list):
-                for list in exclude_list:
-                    lists = lists.exclude(list_id=list.list_id)
-        # filter minimum_rating
-        exclude_list = []
-        if minimum_rating != 'All' and minimum_rating is not None:
-            minimum_rating = float(minimum_rating)
-            for list in lists:
-                if list.get_average_rating != "None":
-                    if list.get_average_rating < minimum_rating:
-                        exclude_list.append(list)
-                else:
-                    exclude_list.append(list)
-        if len(exclude_list):
-            for list in exclude_list:
-                lists = lists.exclude(list_id=list.list_id)
+        lists = lists_filter(self.kwargs['timeframe'], self.kwargs['content_type'], self.kwargs['minimum_rating'], self.kwargs['sources'], List.objects.filter(is_public=True).order_by('name'))
         return lists
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['results_found'] = len(self.get_queryset())
+        context['results_found'] = self.get_queryset().count()
         return context
 
 
