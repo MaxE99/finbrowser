@@ -8,7 +8,6 @@
 {% block content %}
 
 <div class="settingSidebar">
-    <h3>Settings</h3>
     <div class="settingOption activeSettingOption" data-for-tab="0">Profile</div>
     <div class="settingOption" data-for-tab="1">Password</div>
     <div class="settingOption" data-for-tab="2">Notifications</div>
@@ -63,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <label>Edit Social Links:</label>
+            <label>Social Links:</label>
             {% for social in social_links %}
             <div class="existingSocialContainer">
                 <img class="{{ social.website.name }}" src="{% static social.website.logo %}"

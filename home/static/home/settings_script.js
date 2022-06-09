@@ -246,7 +246,6 @@ document.querySelectorAll(".saveSocialLinkChanges").forEach((socialLink) => {
         window.location.reload();
       }
     } catch (e) {
-      console.log(e);
       showMessage("Error: Network error detected!", "Error");
     }
   });
@@ -271,7 +270,6 @@ document
           deleteButton.parentElement.parentElement.remove();
         }
       } catch (e) {
-        console.log(e);
         showMessage("Error: Network error detected!", "Error");
       }
     });

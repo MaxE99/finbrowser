@@ -8,10 +8,6 @@
 
 {% block content %}
 
-
-<h2>Articles</h2>
-
-
 <div class="createListMenu formContainer">
     <h3>Create A New List</h3>
     <i class="fas fa-times closeFormContainerButton"></i>
@@ -215,7 +211,7 @@
         </div>
     </div>
     <div class="rightSide">
-        <div class="browserCategory subscribedSourcesArticleHeader">External Articles</div>
+        <div class="browserCategory subscribedSourcesArticleHeader">User Links</div>
         <div class="articlesContainer">
             {% for article in external_articles %}
             <div class="article" id="article{{ article_id }}">

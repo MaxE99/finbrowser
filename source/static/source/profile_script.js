@@ -25,7 +25,6 @@ subscribeButton.addEventListener("click", async () => {
         }
       }
     } catch (e) {
-      console.log(e);
       showMessage("Error: Network error detected!", "Error");
     }
   }
