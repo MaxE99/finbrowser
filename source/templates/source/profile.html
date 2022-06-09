@@ -223,8 +223,8 @@
           <div class="articleTitle">{{ list.name }}</div>
           <div class="articleSectorAndDateContainer">
             <a href="{{ list.creator.profile.get_absolute_url }}">{{ list.creator.username }}</a>
-            {% if list.get_average_rating != "None" %}
-            <div class="articlePubDate">{{ list.get_average_rating }}</div>
+            {% if list.average_rating != "None" %}
+            <div class="articlePubDate">{{ list.average_rating }}</div>
             {% else %}
             <div class="articlePubDate">No Ratings</div>
             {% endif %}

@@ -324,7 +324,6 @@ h2 {
 
 .bioContainer {
   overflow: hidden;
-  overflow-x: scroll;
 }
 
 .django-ckeditor-widget {
@@ -509,4 +508,8 @@ h3 {
   cursor: pointer;
   box-shadow: var(--box-shadowScheme);
   z-index: 100;
+}
+
+form label[for="id_bio"] {
+  margin-top: 10px;
 }

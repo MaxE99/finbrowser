@@ -7,30 +7,39 @@
 {% endblock %}
 
 {% block content %}
-<h2>Sectors</h2>
 
-{% if sectors %}
+
 {% for sector in sectors %}
-<div class="browserCategory">{{ sector.name }}</div>
-<div class="categoryContainer">
-    {% for source in sector.source_set.all|dictsort:"name" %}
-    <div class="sourceContainer">
-        <div class="iconContainer">
-            <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon">
-            {% if source.top_source %}
-            <i class="fas fa-star"></i>
-            {% endif %}
-        </div>
-        <a class="sourceLink" href="{{ source.get_absolute_url }}"></a>
-        <div class="sourceNameOuterContainer">
-            <div class="sourceNameInnerContainer">{{ source.name }}</div>
-        </div>
+<div class="sliderWrapper">
+    <div class="sliderHeader">
+        <div>{{ sector.name }}</div>
+        <div class="progressBar"></div>
     </div>
-    {% endfor %}
+    <div class="sliderContentContainer">
+        <button class="handle leftHandle">
+            <div class="handleSymbol">&#8249;</div>
+        </button>
+        <div class="slider">
+            {% for source in sector.source_set.all|dictsort:"name" %}
+            <div class="contentWrapper">
+                <div class="contentContainer">
+                    <div class="contentIconContainer">
+                        <img class="contentIcon" src="{% static source.favicon_path %}" alt="favicon" />
+                    </div>
+                    <a class="contentLink" href="{{ source.get_absolute_url }}"></a>
+                    <div class="contentNameContainer">
+                        <div class="contentName">{{ source.name }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="handle rightHandle">
+            <div class="handleSymbol">&#8250;</div>
+        </button>
+    </div>
 </div>
 {% endfor %}
-{% endif %}
-
 
 
 {% endblock %}

@@ -43,30 +43,33 @@ body {
 }
 
 header {
-  display: flex;
-  align-items: center;
+  position: relative;
   height: 85px;
   width: 100%;
-  max-width: 1600px;
-  margin: 0 auto;
-  background: var(--primary-color);
-  /* new */
-  position: relative;
+}
+
+.outerHeaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
   z-index: 1000;
+  height: 85px;
+  width: 100%;
+  background: var(--primary-color);
+  box-shadow: 0 5px 5px -5px #333;
+  border-bottom: 1px solid rgb(226, 230, 234);
+  margin: 0 auto;
 }
 
 .headerContainer {
-  position: fixed;
-  z-index: 99;
   display: flex;
   align-items: center;
   height: 85px;
   width: 100%;
   max-width: 1600px;
   margin: 0 auto;
-  box-shadow: 0 5px 5px -5px #333;
   background: var(--primary-color);
-  border-bottom: 1px solid rgb(226, 230, 234);
 }
 
 .logoContainer {
@@ -516,16 +519,18 @@ main {
 
 .browserCategory,
 .articlesHeader {
-  /* position: relative;
-  text-align: center;
-  padding: 10px 0;
-  font-size: 20px;
-  border: 3px solid;
-  border-radius: 40px;
-  color: white;
-  background: var(--primary-fontColor);
-  box-shadow: var(--box-shadowScheme); */
   position: relative;
+  text-align: center;
+  padding: 7.5px 0;
+  font-size: 20px;
+  border-radius: 8px;
+  color: white;
+  border: 3px solid white;
+  width: 100%;
+  background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
+}
+/* position: relative;
   text-align: center;
   padding: 10px 0;
   font-size: 20px;
@@ -533,7 +538,7 @@ main {
   color: white;
   background: var(--primary-fontColor);
   box-shadow: var(--box-shadowScheme);
-}
+} */
 
 .browserCategory a {
   position: absolute;
@@ -676,10 +681,6 @@ h2 {
   box-shadow: var(--box-shadowScheme);
 }
 
-/* .article:hover {
-  transform: scale(1.1, 1.1);
-} */
-
 .article .articleInformationContainer,
 .article .articleSectorAndDateContainer {
   font-size: 21px;
@@ -801,20 +802,22 @@ h2 {
   align-items: center;
   width: 50px;
   height: 50px;
-  font-size: 18px;
+  font-size: 20px;
   margin: 5px;
-  border: none;
   border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
-  color: black;
+  color: var(--primary-fontColor);
+  background: white;
+  border: 3px solid;
+  box-shadow: var(--box-shadowScheme);
 }
 
 .pagination button:hover,
 .currentPagination,
 .pagination a:hover,
 .currentPagination {
-  background: var(--primary-fontColor);
+  background: var(--primary-fontColor) !important;
   color: var(--primary-color) !important;
 }
 
@@ -922,7 +925,7 @@ details ul li:hover {
   color: white;
 }
 
-.articleOptionsContainer .addToList {
+.articleOptionsContainer .addToListButton {
   padding: 5px 10px;
   border-bottom: 3px solid;
 }
@@ -932,7 +935,7 @@ details ul li:hover {
   width: 13px;
 }
 
-.articleOptionsContainer .addToHighlighted,
+.articleOptionsContainer .addToHighlightedButton,
 .deleteExternalLink {
   padding: 5px 10px;
 }
@@ -1159,7 +1162,6 @@ footer {
   z-index: 999;
   padding: 20px 50px 0;
   width: 100%;
-  max-width: 1600px;
   margin: 0px auto;
   border-top: 1px solid rgb(226, 230, 234);
   box-shadow: 0 -4px 5px -5px #333;
@@ -1380,16 +1382,6 @@ footer {
   box-shadow: var(--box-shadowScheme);
 }
 
-.addXButton,
-.addSourcesButton {
-  font-size: 50px;
-  background: var(--primary-fontColor);
-  color: white;
-  opacity: 0.5;
-  cursor: pointer;
-  height: 203px;
-}
-
 /* CREATE LIST POPUP menu */ /* CREATE LIST POPUP menu */ /* CREATE LIST POPUP menu */ /* CREATE LIST POPUP menu */ /* CREATE LIST POPUP menu */
 
 .menuHeader {
@@ -1473,7 +1465,7 @@ footer {
 
 /* # New Form template */ /* # New Form template */ /* # New Form template */ /* # New Form template */ /* # New Form template */
 
-.formContainer {
+/* .formContainer {
   display: none;
   width: 400px;
   background: white;
@@ -1486,9 +1478,9 @@ footer {
   left: 575px;
   z-index: 25;
   top: 275px;
-}
+} */
 
-.formContainer h3 {
+/* .formContainer h3 {
   font-size: 22px;
   background: var(--primary-fontColor);
   width: 100%;
@@ -1498,7 +1490,7 @@ footer {
   border-radius: 8px 8px 0 0;
 }
 
-.formContainer .closeFormContainerButton {
+/* .formContainer .closeFormContainerButton {
   position: absolute;
   display: block;
   color: white;
@@ -1510,7 +1502,6 @@ footer {
   cursor: pointer;
   box-shadow: var(--box-shadowScheme);
   z-index: 100;
-}
 
 .formContainer #textInput {
   margin: 10px auto 0;
@@ -1582,11 +1573,212 @@ footer {
   margin: 10px 0 5px;
 }
 
-.formContainer form .formSubmitButton {
+/* .formContainer form .formSubmitButton {
   width: 100%;
   margin: 20px auto;
 }
 
 .formContainer form .formSubmitButton:hover {
   transform: scale(1.1, 1.1);
+} */
+
+.sliderWrapper {
+  --handle-size: 3rem;
+  --img-gap: 0.5rem;
+  margin-top: 20px;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.sliderHeader {
+  display: flex;
+  align-items: center;
+  background: var(--primary-fontColor);
+  color: white;
+  padding: 7.5px 40px;
+  font-size: 20px;
+  border: 3px solid white;
+  border-radius: 8px 8px 0 0;
+}
+
+.sliderHeader div:first-child {
+  margin: 0 auto;
+}
+
+.progressBar {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.progressItem {
+  flex: 0 0 1.5rem;
+  min-width: 1.5rem;
+  height: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.progressItem.active {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.sliderContentContainer {
+  display: flex;
+  overflow: hidden;
+  border: 3px solid white;
+  border-top: none;
+  background: rgba(0, 85, 212, 0.4);
+}
+
+.handle {
+  border: none;
+  border-radius: 1rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+  z-index: 10;
+  margin: var(--img-gap) 0;
+  width: var(--handle-size);
+  cursor: pointer;
+  font-size: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  line-height: 0;
+  transition: background-color 150ms ease-in-out;
+  background: var(--primary-fontColor);
+  opacity: 0.5;
+}
+
+.leftHandle {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.rightHandle {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.handle:hover,
+.handle:focus {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.handle:hover .text,
+.handle:focus .text {
+  transform: scale(1.2);
+}
+
+.handleSymbol {
+  transition: transform 150ms ease-in-out;
+}
+
+.slider {
+  --items-per-screen: 8;
+  --slider-index: 0;
+  display: flex;
+  flex-grow: 1;
+  margin: 0 var(--img-gap);
+  transform: translateX(calc(var(--slider-index) * -100%));
+  transition: transform 250ms ease-in-out;
+}
+
+.slider > .contentWrapper {
+  margin: var(--img-gap);
+  flex: 0 0 calc(100% / var(--items-per-screen));
+  /* Dangerous: perhabs remove those lines */
+  max-width: 180px;
+  max-height: 220px;
+  height: 220px;
+}
+
+/* @media (min-width: 1000px) {
+  .slider {
+    --items-per-screen: 3;
+  }
+}
+
+@media (max-width: 500px) {
+  .slider {
+    --items-per-screen: 2;
+  }
+} */
+
+.contentWrapper:hover {
+  transform: scale(1.05, 1.05);
+}
+
+.contentContainer {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 6px;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.contentIconContainer {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 33px);
+  margin-bottom: 33px;
+}
+
+.contentIcon {
+  width: 100%;
+  height: 100%;
+}
+
+.contentLink {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.contentNameContainer {
+  position: absolute;
+  bottom: 0;
+  background: black;
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
+  white-space: nowrap;
+  font-size: 19px;
+}
+
+.contentName {
+  max-width: 90%;
+  overflow: hidden;
+}
+
+.createListButton,
+.addListsButton,
+.addSourcesButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 150px;
+  background: var(--primary-fontColor);
+  color: white;
+  opacity: 0.5;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.categoryHeader {
+  position: relative;
+  text-align: center;
+  margin: 20px 0 10px;
+  padding: 7.5px 0;
+  font-size: 20px;
+  border-radius: 8px;
+  color: white;
+  border: 3px solid white;
+  width: 100%;
+  background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
 }

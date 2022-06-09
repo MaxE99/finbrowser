@@ -13,36 +13,32 @@
     </form>
 </div>
 
-
-
-<div class="row">
-    <div class="header">
-        <div>Sources</div>
-        <div class="progress-bar"></div>
+<div class="sliderWrapper">
+    <div class="sliderHeader">
+        <div>{{ sector }} - Sources</div>
+        <div class="progressBar"></div>
     </div>
-    <div class="container">
-        <button class="handle left-handle">
-            <div class="text">&#8249;</div>
+    <div class="sliderContentContainer">
+        <button class="handle leftHandle">
+            <div class="handleSymbol">&#8249;</div>
         </button>
         <div class="slider">
             {% for source in sector.source_set.all|dictsort:"name" %}
-            <div class="sourceWrapper">
-                <div class="sourceContainer">
-                    <div class="iconContainer">
-                        <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
+            <div class="contentWrapper">
+                <div class="contentContainer">
+                    <div class="contentIconContainer">
+                        <img class="contentIcon" src="{% static source.favicon_path %}" alt="favicon" />
                     </div>
-                    <a class="sourceLink" href="{{ source.get_absolute_url }}"></a>
-                    <div class="sourceNameOuterContainer">
-                        <div class="sourceNameInnerContainer">{{ source.name }}</div>
+                    <a class="contentLink" href="{{ source.get_absolute_url }}"></a>
+                    <div class="contentNameContainer">
+                        <div class="contentName">{{ source.name }}</div>
                     </div>
                 </div>
             </div>
-
-
             {% endfor %}
         </div>
-        <button class="handle right-handle">
-            <div class="text">&#8250;</div>
+        <button class="handle rightHandle">
+            <div class="handleSymbol">&#8250;</div>
         </button>
     </div>
 </div>

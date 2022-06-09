@@ -1,10 +1,10 @@
-const highlightedArticles = document.querySelector(
-  ".highlightedArticlesContainer"
-);
-// If there are no highlightedArticles change style of container so that flex-wrap is effective
-if (!highlightedArticles && document.querySelector(".articleSpace")) {
-  document.querySelector(".articleSpace").style.display = "block";
-}
+// const highlightedArticles = document.querySelector(
+//   ".highlightedArticlesContainer"
+// );
+// // If there are no highlightedArticles change style of container so that flex-wrap is effective
+// if (!highlightedArticles && document.querySelector(".articleSpace")) {
+//   document.querySelector(".articleSpace").style.display = "block";
+// }
 
 const subscribeButton = document.querySelector(".subscribeButton");
 
@@ -52,10 +52,12 @@ function openEditMenu() {
     "block";
   document.querySelector(".fa-camera").style.display = "block";
   document.querySelector(".buttonContainer").style.display = "flex";
-  document.querySelector(".addSourcesButtonLi").style.display = "flex";
-  document.querySelectorAll(".article .fa-ellipsis-h").forEach((ellipsis) => {
-    ellipsis.style.display = "none";
-  });
+  document.querySelector(".addSourcesButton").style.display = "flex";
+  document
+    .querySelectorAll(".highlightedArticlesContainer .article .fa-ellipsis-h")
+    .forEach((ellipsis) => {
+      ellipsis.style.display = "none";
+    });
   const deleteArticlesButton = document.querySelectorAll(".article .fa-times");
   deleteArticlesButton.forEach((closeButton) => {
     closeButton.style.display = "block";

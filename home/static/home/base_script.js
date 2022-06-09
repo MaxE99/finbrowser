@@ -171,80 +171,91 @@ function checkForOpenContainers() {
 // article ellipsis options
 let previousOptionsContainer;
 let previousEllipsis;
-document.querySelectorAll(".article .fa-ellipsis-h").forEach((ellipsis) => {
-  ellipsis.addEventListener("click", function (e) {
-    const allContainersClosed = checkForOpenContainers();
-    if (allContainersClosed) {
-      if (previousOptionsContainer && e.target !== previousEllipsis) {
-        previousOptionsContainer.style.display = "none";
+document
+  .querySelectorAll(".articleContainer .fa-ellipsis-h")
+  .forEach((ellipsis) => {
+    ellipsis.addEventListener("click", function (e) {
+      const allContainersClosed = checkForOpenContainers();
+      if (allContainersClosed) {
+        if (previousOptionsContainer && e.target !== previousEllipsis) {
+          previousOptionsContainer.style.display = "none";
+        }
+        const articleOptionsContainer = ellipsis.parentElement.querySelector(
+          ".articleOptionsContainer"
+        );
+        if (articleOptionsContainer.style.display != "flex") {
+          articleOptionsContainer.style.display = "flex";
+          document.onclick = function (e) {
+            if (e.target !== ellipsis) {
+              ellipsis.parentElement.querySelector(
+                ".articleOptionsContainer"
+              ).style.display = "none";
+            }
+          };
+        } else {
+          articleOptionsContainer.style.display = "none";
+        }
+        previousOptionsContainer = ellipsis.parentElement.querySelector(
+          ".articleOptionsContainer"
+        );
+        previousEllipsis = ellipsis;
       }
-      const articleOptionsContainer = ellipsis.nextElementSibling;
-      if (articleOptionsContainer.style.display != "flex") {
-        articleOptionsContainer.style.display = "flex";
-        document.onclick = function (e) {
-          if (
-            e.target.className !== ellipsis.nextElementSibling.classList[1] &&
-            e.target !== ellipsis
-          ) {
-            ellipsis.nextElementSibling.style.display = "none";
-          }
-        };
-      } else {
-        articleOptionsContainer.style.display = "none";
-      }
-      previousOptionsContainer = ellipsis.nextElementSibling;
-      previousEllipsis = ellipsis;
-    }
+    });
   });
-});
 
 // (un)highlight articles
-document.querySelectorAll(".addToHighlighted").forEach((highlighterButton) => {
-  highlighterButton.addEventListener("click", async () => {
-    if (!highlighterButton.classList.contains("registrationLink")) {
-      const article_id = highlighterButton.id;
-      const highlightState = highlighterButton.lastElementChild.innerText;
-      let action;
-      if (highlightState == "Highlight article") {
-        action = "highlight";
-      } else {
-        action = "unhighlight";
-      }
-      try {
-        const data = { article_id: article_id };
-        const res = await fetch(
-          `http://127.0.0.1:8000/api/highlighted_articles/`,
-          {
-            method: "POST",
-            headers: {
-              "X-CSRFToken": getCookie("csrftoken"),
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            mode: "same-origin",
-            body: JSON.stringify(data),
-          }
-        );
-        if (!res.ok) {
-          showMessage("Error: Article couldn't be filtered!", "Error");
+document
+  .querySelectorAll(".addToHighlightedButton")
+  .forEach((highlighterButton) => {
+    highlighterButton.addEventListener("click", async () => {
+      if (!highlighterButton.classList.contains("registrationLink")) {
+        console.log(highlighterButton.closest(".articleContainer").id);
+        const article_id = highlighterButton
+          .closest(".articleContainer")
+          .id.replace("article_id_", "");
+        // const article_id = highlighterButton.id;
+        const highlightState = highlighterButton.lastElementChild.innerText;
+        let action;
+        if (highlightState == "Highlight article") {
+          action = "highlight";
         } else {
-          const context = await res.json();
-          showMessage(context, "Success");
-          if (action == "highlight") {
-            highlighterButton.innerHTML = `<i class="fas fa-times"></i><span>Unhighlight article</span>`;
-          } else {
-            highlighterButton.innerHTML = `<i class="fas fa-highlighter"></i><span>Highlight article</span>`;
-          }
+          action = "unhighlight";
         }
-      } catch (e) {
-        showMessage("Error: Network error detected!", "Error");
+        try {
+          const data = { article_id: article_id };
+          const res = await fetch(
+            `http://127.0.0.1:8000/api/highlighted_articles/`,
+            {
+              method: "POST",
+              headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              mode: "same-origin",
+              body: JSON.stringify(data),
+            }
+          );
+          if (!res.ok) {
+            showMessage("Error: Article couldn't be filtered!", "Error");
+          } else {
+            const context = await res.json();
+            showMessage(context, "Success");
+            if (action == "highlight") {
+              highlighterButton.innerHTML = `<i class="fas fa-times"></i><span>Unhighlight article</span>`;
+            } else {
+              highlighterButton.innerHTML = `<i class="fas fa-highlighter"></i><span>Highlight article</span>`;
+            }
+          }
+        } catch (e) {
+          showMessage("Error: Network error detected!", "Error");
+        }
       }
-    }
+    });
   });
-});
 
 // open addtolist menu
-document.querySelectorAll(".addToList").forEach((element) => {
+document.querySelectorAll(".addToListButton").forEach((element) => {
   element.addEventListener("click", () => {
     if (!element.classList.contains("registrationLink")) {
       const allContainersClosed = checkForOpenContainers();
@@ -268,10 +279,9 @@ document
   .querySelectorAll(".addToListForm .saveButton")
   .forEach((saveButton) => {
     saveButton.addEventListener("click", async () => {
-      console.log(saveButton);
       let article_id =
         saveButton.parentElement.parentElement.parentElement.id.replace(
-          "article",
+          "article_id_",
           ""
         );
       let lists_status = [];
@@ -283,7 +293,7 @@ document
         );
       for (let i = 0, j = input_list.length; i < j; i++) {
         initial_lists_status.push(input_list[i].className);
-        list_ids.push(input_list[i].id.replace("id_list_", ""));
+        list_ids.push(input_list[i].id.replace("list_id_", ""));
       }
       saveButton.parentElement.previousElementSibling
         .querySelectorAll("input")
@@ -439,97 +449,109 @@ document
     });
   });
 
-// Carousell Container Functionality
-// const sliderContent = document.querySelector(".slider-content");
-// const contentArray = sliderContent.children;
-// var isTouched = false;
+// Carousell
 
-// var next = function () {
-//   sliderContent.classList.add("next-animation");
-//   if (isTouched) {
-//     sliderContent.style.transform = "translate3d(-200%, 0px, 0px)";
-//     sliderContent.addEventListener("transitionend", nextTouched, false);
-//   } else if (!isTouched) {
-//     sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
-//     sliderContent.addEventListener("transitionend", afterAnimation, false);
-//   }
-// };
+document.addEventListener("click", (e) => {
+  let handle;
+  if (e.target.matches(".handle")) {
+    handle = e.target;
+  } else {
+    handle = e.target.closest(".handle");
+  }
+  if (handle != null) onHandleClick(handle);
+});
 
-// var prev = function () {
-//   if (isTouched) {
-//     var content = Array.from(contentArray);
-//     var getSplice = content.splice(contentArray.length - 3);
-//     var newArr = getSplice.concat(content);
+const throttleProgressBar = throttle(() => {
+  document.querySelectorAll(".progressBar").forEach(calculateProgressBar);
+}, 250);
+window.addEventListener("resize", throttleProgressBar);
 
-//     for (let i = 0; i < content.length; i++) {
-//       content[i].classList.remove("is-active");
-//     }
+document.querySelectorAll(".progressBar").forEach(calculateProgressBar);
 
-//     for (let j = 3; j < newArr.length && j < 6; j++) {
-//       newArr[j].classList.add("is-active");
-//     }
+function calculateProgressBar(progressBar) {
+  progressBar.innerHTML = "";
+  const slider = progressBar.closest(".sliderWrapper").querySelector(".slider");
+  const itemCount = slider.children.length;
+  const itemsPerScreen = parseInt(
+    getComputedStyle(slider).getPropertyValue("--items-per-screen")
+  );
+  let sliderIndex = parseInt(
+    getComputedStyle(slider).getPropertyValue("--slider-index")
+  );
+  const progressBarItemCount = Math.ceil(itemCount / itemsPerScreen);
 
-//     for (let len = contentArray.length - 1; len >= 0; --len) {
-//       sliderContent.insertBefore(newArr[len], sliderContent.firstChild);
-//     }
+  if (sliderIndex >= progressBarItemCount) {
+    slider.style.setProperty("--slider-index", progressBarItemCount - 1);
+    sliderIndex = progressBarItemCount - 1;
+  }
 
-//     sliderContent.style.transform = "translate3d(-200%, 0px, 0px)";
+  for (let i = 0; i < progressBarItemCount; i++) {
+    const barItem = document.createElement("div");
+    barItem.classList.add("progressItem");
+    if (i === sliderIndex) {
+      barItem.classList.add("active");
+    }
+    progressBar.append(barItem);
+  }
+}
 
-//     setTimeout(function () {
-//       sliderContent.classList.add("next-animation");
-//       sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
-//       sliderContent.addEventListener("transitionend", afterAnimation, false);
-//     });
-//   }
-// };
+function onHandleClick(handle) {
+  const progressBar = handle
+    .closest(".sliderWrapper")
+    .querySelector(".progressBar");
+  const slider = handle
+    .closest(".sliderContentContainer")
+    .querySelector(".slider");
+  const sliderIndex = parseInt(
+    getComputedStyle(slider).getPropertyValue("--slider-index")
+  );
+  const progressBarItemCount = progressBar.children.length;
+  if (handle.classList.contains("leftHandle")) {
+    if (sliderIndex - 1 < 0) {
+      slider.style.setProperty("--slider-index", progressBarItemCount - 1);
+      progressBar.children[sliderIndex].classList.remove("active");
+      progressBar.children[progressBarItemCount - 1].classList.add("active");
+    } else {
+      slider.style.setProperty("--slider-index", sliderIndex - 1);
+      progressBar.children[sliderIndex].classList.remove("active");
+      progressBar.children[sliderIndex - 1].classList.add("active");
+    }
+  }
 
-// var afterAnimation = function () {
-//   sliderContent.classList.remove("next-animation");
+  if (handle.classList.contains("rightHandle")) {
+    if (sliderIndex + 1 >= progressBarItemCount) {
+      slider.style.setProperty("--slider-index", 0);
+      progressBar.children[sliderIndex].classList.remove("active");
+      progressBar.children[0].classList.add("active");
+    } else {
+      slider.style.setProperty("--slider-index", sliderIndex + 1);
+      progressBar.children[sliderIndex].classList.remove("active");
+      progressBar.children[sliderIndex + 1].classList.add("active");
+    }
+  }
+}
 
-//   if (!isTouched) {
-//     var icon = document.createElement("i");
-//     icon.classList.add("fa", "fa-chevron-left");
-//     document.querySelector(".prev").appendChild(icon);
-//     isTouched = true;
-//   }
+function throttle(cb, delay = 1000) {
+  let shouldWait = false;
+  let waitingArgs;
+  const timeoutFunc = () => {
+    if (waitingArgs == null) {
+      shouldWait = false;
+    } else {
+      cb(...waitingArgs);
+      waitingArgs = null;
+      setTimeout(timeoutFunc, delay);
+    }
+  };
 
-//   sliderContent.removeEventListener("transitionend", afterAnimation);
-// };
+  return (...args) => {
+    if (shouldWait) {
+      waitingArgs = args;
+      return;
+    }
 
-// var nextTouched = function () {
-//   var content = Array.from(contentArray);
-//   var getSplice = content.splice(0, 3);
-//   var newArr = content.concat(getSplice);
-
-//   for (let i = 0; i < content.length; i++) {
-//     content[i].classList.remove("is-active");
-//   }
-
-//   for (let i = 3; j < newArr.length && j < 6; j++) {
-//     newArr[j].classList.add("is-active");
-//   }
-
-//   for (let len = contentArray.length - 1; len >= 0; --len) {
-//     sliderContent.insertBefore(newArr[len], sliderContent.firstChild);
-//   }
-
-//   sliderContent.classList.remove("next-animation");
-//   sliderContent.style.transform = "translate3d(-100%, 0px, 0px)";
-//   sliderContent.removeEventListener("transitionend", nextTouched);
-// };
-
-// const cookieContainer = document.querySelector(".cookie-container");
-// const cookieButton = document.querySelector(".cookie-btn");
-
-// if(cookieButton){
-//   cookieButton.addEventListener("click", () => {
-//     cookieContainer.classList.remove("active");
-//     localStorage.setItem("cookieBannerDisplayed", "true");
-//   });
-// }
-
-// setTimeout(() => {
-//   if (!localStorage.getItem("cookieBannerDisplayed")) {
-//     cookieContainer.classList.add("active");
-//   }
-// }, 2000);
+    cb(...args);
+    shouldWait = true;
+    setTimeout(timeoutFunc, delay);
+  };
+}

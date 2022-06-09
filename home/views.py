@@ -111,7 +111,7 @@ class ListsView(ListView, CreateListFormMixin):
     model = List
     context_object_name = 'lists'
     template_name = 'home/lists.html'
-    queryset = List.objects.select_related('creator__profile').filter(is_public=True).order_by('name')
+    queryset = List.objects.select_related('creator__profile').prefetch_related('articles', 'sources').filter(is_public=True).order_by('name')
     paginate_by = 10
 
     def get_context_data(self, **kwargs):

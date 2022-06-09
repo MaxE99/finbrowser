@@ -392,3 +392,7 @@
   font-size: 25px;
   cursor: pointer;
 }
+
+.addSourcesButton {
+  display: none;
+}
