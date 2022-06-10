@@ -5,8 +5,6 @@ from django.db.models import Count, F
 # Python imports
 from datetime import timedelta
 
-
-
 def paginator_create(request, queryset, objects_per_site, page_name='page'):
     paginator = Paginator(queryset, objects_per_site)
     page = request.GET.get(page_name)
