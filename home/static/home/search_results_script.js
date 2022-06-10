@@ -32,7 +32,10 @@ document
             get_fetch_settings("GET")
           );
           if (!res.ok) {
-            showMessage("Error: Site couldn't be searched!", "Error");
+            showMessage(
+              "Error: Network request failed unexpectedly!!",
+              "Error"
+            );
           } else {
             const context = await res.json();
             results_list.style.display = "flex";
@@ -60,7 +63,7 @@ document
             }
           }
         } catch (e) {
-          showMessage("Error: Network error detected!", "Error");
+          showMessage("Error: Unexpected error has occurred!", "Error");
         }
         document.onclick = function (e) {
           if (e.target.id !== "autocomplete_list_results") {

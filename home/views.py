@@ -17,7 +17,7 @@ from datetime import timedelta, date
 from accounts.models import SocialLink, Website
 from home.models import Article, HighlightedArticle, List, Sector, Source, ListRating, ExternalSource, Notification
 from home.forms import AddListForm, ListPicChangeForm, ListNameChangeForm, AddExternalArticleForm
-from home.logic.pure_logic import paginator_create, lists_filter
+from home.logic.pure_logic import paginator_create, lists_filter, articles_filter
 from accounts.forms import EmailAndUsernameChangeForm, PasswordChangingForm, ProfileChangeForm, PrivacySettingsForm
 from home.base_logger import logger
 
@@ -47,10 +47,10 @@ class CreateListFormMixin(FormMixin):
         if form.is_valid():
             new_list = form.save(commit=False)
             if self.request.user.is_authenticated is False:
-                messages.error(self.request, 'Only users can create lists!')
+                messages.error(self.request, 'Only registered users can create lists!')
                 return "Failed" if multi_form_page else redirect('home:lists')
             elif List.objects.filter(name=new_list.name, creator=self.request.user).exists():
-                messages.error(self.request, 'You have already created a list with this name!')
+                messages.error(self.request, 'You have already created a list with that name!')
                 return "Failed" if multi_form_page else redirect('home:lists')
             else:
                 new_list.creator = self.request.user
@@ -60,7 +60,7 @@ class CreateListFormMixin(FormMixin):
                 messages.success(self.request, 'List has been created!')
                 return [profile_slug, list_slug] if multi_form_page else redirect('home:list-details', profile_slug=profile_slug, list_slug=list_slug)
         else:
-            messages.error(request, "Error: Only PNG and JPG files are currently supported!")
+            messages.error(request, "Currently only PNG and JPG files are supported!")
             return "Failed" if multi_form_page else HttpResponseRedirect(self.request.path_info)
 
     def get_context_data(self, **kwargs):
@@ -90,7 +90,7 @@ class AddExternalArticleFormMixin(FormMixin):
             messages.success(request, 'Article has been added!')
         else:
             logger.error(f'Add external articles form not valid! - {add_external_articles_form.errors.as_data()}')
-            messages.error(self.request, 'Error: External article could not be added!')
+            messages.error(self.request, 'Error: Article could not be added!')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -205,8 +205,7 @@ class ListSearchView(ListView, AddArticlesToListsMixin):
     paginate_by = 10
 
     def get_queryset(self):
-        lists = lists_filter(self.kwargs['timeframe'], self.kwargs['content_type'], self.kwargs['minimum_rating'], self.kwargs['sources'], List.objects.filter(is_public=True).order_by('name'))
-        return lists
+        return lists_filter(self.kwargs['timeframe'], self.kwargs['content_type'], self.kwargs['minimum_rating'], self.kwargs['primary_source'], List.objects.filter(is_public=True).order_by('name'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -221,29 +220,9 @@ class ArticleSearchView(ListView, AddArticlesToListsMixin):
     paginate_by = 10
 
     def get_queryset(self):
-        timeframe = self.kwargs['timeframe']
-        sector = self.kwargs['sector']
-        paywall = self.kwargs['paywall']
-        sources = self.kwargs['sources']
-        filter_args = {'source__paywall': paywall, 'source__website': sources}
-        if timeframe != 'All' and timeframe != None:
-            filter_args['pub_date__gte'] = date.today() - timedelta(
-                days=int(timeframe))
-        filter_args = dict(
-            (k, v) for k, v in filter_args.items() if v is not None and v != 'All')
-        search_articles = Article.objects.filter(external_source=None).filter(
-            **filter_args).order_by('-pub_date')
-        notloesung_search_articles = []
-        if sector != 'All' and sector != None:
-            # Refactoring necceseary
-            sector = Sector.objects.get(name=sector)
-            for x in search_articles:
-                all_sectors = x.source.sector.all()
-                if all_sectors.filter(name=str(sector)):
-                    notloesung_search_articles.append(x)
-        if notloesung_search_articles:
-            search_articles = notloesung_search_articles
-        return search_articles
+        sector = get_object_or_404(Sector, name=self.kwargs['sector']).sector_id if self.kwargs['sector'] != "All" else "All"
+        source = get_object_or_404(Website, name=self.kwargs['source']).id if self.kwargs['source'] != "All" else "All"
+        return articles_filter(self.kwargs['timeframe'], sector, self.kwargs['paywall'], source, Article.objects.select_related('source').filter(external_source=None))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -276,12 +255,12 @@ class ListDetailView(TemplateView, AddArticlesToListsMixin):
                 if change_list_pic_form.is_valid():
                     change_list_pic_form.save()
                 else:
-                    messages.error(request, "Error: Only PNG and JPG files are currently supported!")
+                    messages.error(request, "Error: Currently only PNG and JPG files are supported!")
                     return HttpResponseRedirect(self.request.path_info)
                 if change_list_name_form.is_valid() and List.objects.filter(creator=request.user, slug=new_list_slug).exists() == False:
                     change_list_name_form.save()
                 else:
-                    messages.error(request, "Error: You can't use this name!")
+                    messages.error(request, "Error: You've already created a list with that name!")
                     return HttpResponseRedirect(self.request.path_info)
                 if new_list_slug != list_slug:
                     return redirect('home:list-details', profile_slug=profile_slug , list_slug=new_list_slug)
@@ -289,7 +268,6 @@ class ListDetailView(TemplateView, AddArticlesToListsMixin):
                     return HttpResponseRedirect(self.request.path_info)
             else:
                 logger.error(f'User tried to change list name of list created by another user! - {self.request.user}')
-                messages.error(self.request, 'Error: Lists of other users can not be altered!')
         else:
             messages.success(self.request, "Rating has been added!")
             return HttpResponseRedirect(self.request.path_info)
@@ -329,21 +307,26 @@ class SettingsView(LoginRequiredMixin, TemplateView):
                 if email_and_name_change_form.is_valid():
                     request.user.save()
                     request.user.profile.save()
+                    messages.success(request, 'Username and Email have been updated!')
                 else:
                     messages.error(request, "Error: Username or email already exists!")
             else:
-                messages.error(request, "Error: Only PNG and JPG files are currently supported!")
+                messages.error(request, "Error: Currently only PNG and JPG files are supported!")
         elif "changePasswordForm" in request.POST:
             change_password_form = PasswordChangingForm(user=request.user, data=request.POST or None)
             if change_password_form.is_valid():
                 change_password_form.save()
                 update_session_auth_hash(request, change_password_form.user)
+                messages.success(request, 'Password has been changed!')
+            else:
+                messages.error(request, 'New password is invalid!')
         elif 'changePrivacySettingsForm' in request.POST:
             privacy_settings_form = PrivacySettingsForm(request.POST, instance=request.user.profile.privacysettings)
             if privacy_settings_form.is_valid():
                 form = privacy_settings_form.save(commit=False)
                 form.profile = request.user.profile
                 form.save()
+                messages.success(request, 'Privacy settings have been updated!')
         return HttpResponseRedirect(self.request.path_info)
 
     def get_context_data(self, **kwargs):

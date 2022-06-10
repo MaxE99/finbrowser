@@ -48,7 +48,7 @@ document
           get_fetch_settings("GET")
         );
         if (!res.ok) {
-          showMessage("Error: Site couldn't be searched!", "Error");
+          showMessage("Error: Network request failed unexpectedly!", "Error");
         } else {
           const context = await res.json();
           results_list.innerHTML = "";
@@ -99,7 +99,7 @@ document
           }
         }
       } catch (e) {
-        showMessage("Error: Network error detected!", "Error");
+        showMessage("Error: Unexpected error has occurred!", "Error");
       }
     } else {
       results_list.style.display = "none";
@@ -119,14 +119,14 @@ document
             get_fetch_settings("POST")
           );
           if (!res.ok) {
-            showMessage("Error: List can't be subscribed!", "Error");
+            showMessage("Error: Network request failed unexpectedly!", "Error");
           } else {
             const context = await res.json();
             showMessage(context, "Success");
             window.location.reload();
           }
         } catch (e) {
-          showMessage("Error: Network error detected!", "Error");
+          showMessage("Error: Unexpected error has occurred!", "Error");
         }
       }
     } else {
@@ -175,7 +175,7 @@ document
           get_fetch_settings("GET")
         );
         if (!res.ok) {
-          showMessage("Error: Site couldn't be searched!", "Error");
+          showMessage("Error: Network request failed unexpectedly!", "Error");
         } else {
           const context = await res.json();
           results_list.innerHTML = "";
@@ -234,7 +234,7 @@ document
           }
         }
       } catch (e) {
-        showMessage("Error: Network error detected!", "Error");
+        showMessage("Error: Unexpected error has occurred!", "Error");
       }
     } else {
       results_list.style.display = "none";
@@ -254,14 +254,14 @@ document
             get_fetch_settings("POST")
           );
           if (!res.ok) {
-            showMessage("Error: List can't be subscribed!", "Error");
+            showMessage("Error: Network request failed unexpectedly!", "Error");
           } else {
             const context = await res.json();
             showMessage(context, "Success");
             window.location.reload();
           }
         } catch (e) {
-          showMessage("Error: Network error detected!", "Error");
+          showMessage("Error: Unexpected error has occurred!", "Error");
         }
       }
     } else {

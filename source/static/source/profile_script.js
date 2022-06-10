@@ -12,20 +12,21 @@ subscribeButton.addEventListener("click", async () => {
         get_fetch_settings("POST")
       );
       if (!res.ok) {
-        showMessage("Error: Source can't be subscribed!", "Error");
+        showMessage("Error: Network request failed unexpectedly!", "Error");
       } else {
         const context = await res.json();
-        showMessage(context, "Success");
         if (action == "Subscribe") {
           subscribeButton.classList.replace("unsubscribed", "subscribed");
           subscribeButton.innerText = "Subscribed";
+          showMessage(context, "Success");
         } else {
           subscribeButton.classList.replace("subscribed", "unsubscribed");
           subscribeButton.innerText = "Subscribe";
+          showMessage(context, "Remove");
         }
       }
     } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
+      showMessage("Error: Unexpected error has occurred!", "Error");
     }
   }
 });
@@ -131,14 +132,14 @@ document.querySelectorAll(".rankingStar").forEach((star) => {
         body: JSON.stringify(data),
       });
       if (!res.ok) {
-        showMessage("Error: Source can't be subscribed!", "Error");
+        showMessage("Error: Network request failed unexpectedly!", "Error");
       } else {
         const context = await res.json();
         showMessage(context, "Success");
         window.location.reload();
       }
     } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
+      showMessage("Error: Unexpected error has occurred!", "Error");
     }
   });
 });
@@ -187,18 +188,19 @@ if (notificationButton) {
         body: JSON.stringify(data),
       });
       if (!res.ok) {
-        showMessage("Error: Source can't be subscribed!", "Error");
+        showMessage("Error: Network request failed unexpectedly!", "Error");
       } else {
         const context = await res.json();
-        showMessage(context, "Success");
         if (notificationButton.classList.contains("notificationActivated")) {
           notificationButton.classList.remove("notificationActivated");
+          showMessage(context, "Remove");
         } else {
           notificationButton.classList.add("notificationActivated");
+          showMessage(context, "Success");
         }
       }
     } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
+      showMessage("Error: Unexpected error has occurred!", "Error");
     }
   });
 }
@@ -254,7 +256,7 @@ document
               );
               if (!res.ok) {
                 showMessage(
-                  "Error: Article couldn't be added to list!",
+                  "Error: Network request failed unexpectedly!",
                   "Error"
                 );
               } else {
@@ -263,7 +265,7 @@ document
                 window.location.reload();
               }
             } catch (e) {
-              showMessage("Error: Network error detected!", "Error");
+              showMessage("Error: Unexpected error has occurred!", "Error");
             }
           } else {
             try {
@@ -274,7 +276,7 @@ document
               );
               if (!res.ok) {
                 showMessage(
-                  "Error: Article couldn't be added to list!",
+                  "Error: Network request failed unexpectedly!",
                   "Error"
                 );
               } else {
@@ -283,7 +285,7 @@ document
                 window.location.reload();
               }
             } catch (e) {
-              showMessage("Error: Network error detected!", "Error");
+              showMessage("Error: Unexpected error has occurred!", "Error");
             }
           }
         }

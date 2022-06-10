@@ -21,20 +21,21 @@ if (subscribeButton) {
           get_fetch_settings("POST")
         );
         if (!res.ok) {
-          showMessage("Error: List can't be subscribed!", "Error");
+          showMessage("Error: Network request failed unexpectedly!", "Error");
         } else {
           const context = await res.json();
-          showMessage(context, "Success");
           if (action == "Subscribe") {
             subscribeButton.classList.replace("unsubscribed", "subscribed");
             subscribeButton.innerText = "Subscribed";
+            showMessage(context, "Success");
           } else {
             subscribeButton.classList.replace("subscribed", "unsubscribed");
             subscribeButton.innerText = "Subscribe";
+            showMessage(context, "Remove");
           }
         }
       } catch (e) {
-        showMessage("Error: Network error detected!", "Error");
+        showMessage("Error: Unexpected error has occurred!", "Error");
       }
     }
   });
@@ -72,14 +73,14 @@ function openEditMenu() {
           get_fetch_settings("DELETE")
         );
         if (!res.ok) {
-          showMessage("Error: Article can't be deleted!", "Error");
+          showMessage("Error: Network request failed unexpectedly!", "Error");
         } else {
           const context = await res.json();
-          showMessage(context, "Success");
+          showMessage(context, "Remove");
           closeButton.parentElement.remove();
         }
       } catch (e) {
-        showMessage("Error: Network error detected!", "Error");
+        showMessage("Error: Unexpected error has occurred!", "Error");
       }
     });
   });
@@ -97,14 +98,14 @@ function openEditMenu() {
             get_fetch_settings("DELETE")
           );
           if (!res.ok) {
-            showMessage("Error: List can't be subscribed!", "Error");
+            showMessage("Error: Network request failed unexpectedly!", "Error");
           } else {
             const context = await res.json();
-            showMessage(context, "Success");
+            showMessage(context, "Remove");
             trashButton.parentElement.parentElement.remove();
           }
         } catch (e) {
-          showMessage("Error: Network error detected!", "Error");
+          showMessage("Error: Unexpected error has occurred!", "Error");
         }
       });
     }
@@ -134,14 +135,14 @@ if (document.querySelector(".deleteListButton")) {
           get_fetch_settings("DELETE")
         );
         if (!res.ok) {
-          showMessage("Error: List can't be deleted!", "Error");
+          showMessage("Error: Network request failed unexpectedly!", "Error");
         } else {
           const context = await res.json();
-          showMessage(context, "Success");
+          showMessage(context, "Remove");
           window.location.href = "/lists";
         }
       } catch (e) {
-        showMessage("Error: Network error detected!", "Error");
+        showMessage("Error: Unexpected error has occurred!", "Error");
       }
     });
 }
@@ -182,7 +183,7 @@ document
           get_fetch_settings("GET")
         );
         if (!res.ok) {
-          showMessage("Error: Site couldn't be searched!", "Error");
+          showMessage("Error: Network request failed unexpectedly!", "Error");
         } else {
           const context = await res.json();
           results_list.innerHTML = "";
@@ -232,7 +233,7 @@ document
           }
         }
       } catch (e) {
-        showMessage("Error: Network error detected!", "Error");
+        showMessage("Error: Unexpected error has occurred!", "Error");
       }
     } else {
       results_list.style.display = "none";
@@ -255,14 +256,14 @@ document
             get_fetch_settings("POST")
           );
           if (!res.ok) {
-            showMessage("Error: List can't be subscribed!", "Error");
+            showMessage("Error: Network request failed unexpectedly!", "Error");
           } else {
             const context = await res.json();
             showMessage(context, "Success");
             window.location.reload();
           }
         } catch (e) {
-          showMessage("Error: Network error detected!", "Error");
+          showMessage("Error: Unexpected error has occurred!", "Error");
         }
       }
     } else {
@@ -292,18 +293,19 @@ if (notificationButton) {
         body: JSON.stringify(data),
       });
       if (!res.ok) {
-        showMessage("Error: Source can't be subscribed!", "Error");
+        showMessage("Error: Network request failed unexpectedly!", "Error");
       } else {
         const context = await res.json();
-        showMessage(context, "Success");
         if (notificationButton.classList.contains("notificationActivated")) {
           notificationButton.classList.remove("notificationActivated");
+          showMessage(context, "Remove");
         } else {
           notificationButton.classList.add("notificationActivated");
+          showMessage(context, "Success");
         }
       }
     } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
+      showMessage("Error: Unexpected error has occurred!", "Error");
     }
   });
 }
@@ -409,14 +411,14 @@ document.querySelectorAll(".rankingStar").forEach((star) => {
         body: JSON.stringify(data),
       });
       if (!res.ok) {
-        showMessage("Error: Source can't be subscribed!", "Error");
+        showMessage("Error: Network request failed unexpectedly!", "Error");
       } else {
         const context = await res.json();
         showMessage(context, "Success");
         window.location.reload();
       }
     } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
+      showMessage("Error: Unexpected error has occurred!", "Error");
     }
   });
 });

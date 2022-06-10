@@ -5,7 +5,7 @@ if (sessionStorage.getItem("articleSearchSettings")) {
   document.getElementById("timeframe").value = articleSearchSettings[0];
   document.getElementById("sector").value = articleSearchSettings[1];
   document.getElementById("paywall").value = articleSearchSettings[2];
-  document.querySelector("summary").innerText = articleSearchSettings[3];
+  document.getElementById("source").value = articleSearchSettings[3];
   sessionStorage.removeItem("articleSearchSettings");
 }
 
@@ -18,13 +18,14 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   const sector = sectorSelect.options[sectorSelect.selectedIndex].value;
   const paywallSelect = document.getElementById("paywall");
   const paywall = paywallSelect.options[paywallSelect.selectedIndex].value;
-  const sources = document.querySelector("summary").innerText;
-  const articleSearchSettings = [timeframe, sector, paywall, sources];
+  const sourceSelect = document.getElementById("source");
+  const source = sourceSelect.options[sourceSelect.selectedIndex].value;
+  const articleSearchSettings = [timeframe, sector, paywall, source];
   sessionStorage.setItem(
     "articleSearchSettings",
     JSON.stringify(articleSearchSettings)
   );
-  window.location = `http://127.0.0.1:8000/articles/${timeframe}/${sector}/${paywall}/${sources}`;
+  window.location = `http://127.0.0.1:8000/articles/${timeframe}/${sector}/${paywall}/${source}`;
 });
 
 // Autocomplete for search
@@ -38,7 +39,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
         get_fetch_settings("GET")
       );
       if (!res.ok) {
-        showMessage("Error: List couldn't be filtered!", "Error");
+        showMessage("Error: Network request failed unexpectedly!", "Error");
       } else {
         const context = await res.json();
         results_list.style.display = "flex";
@@ -54,7 +55,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
         }
       }
     } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
+      showMessage("Error: Unexpected error has occurred!", "Error");
     }
     document.onclick = function (e) {
       if (e.target.id !== "autocomplete_list_results") {

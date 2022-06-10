@@ -40,9 +40,13 @@ function showMessage(message, type) {
   messages.classList.add("messages");
   const state = document.createElement("li");
   state.innerText = message;
-  type == "Success"
-    ? state.classList.add("success")
-    : state.classList.add("error");
+  if (type == "Success") {
+    state.classList.add("success");
+  } else if (type == "Remove") {
+    state.classList.add("remove");
+  } else {
+    state.classList.add("error");
+  }
   messages.appendChild(state);
   document.querySelector(".overlay").appendChild(messages);
 }
@@ -63,7 +67,7 @@ document
             get_fetch_settings("GET")
           );
           if (!res.ok) {
-            showMessage("Error: Site couldn't be searched!", "Error");
+            showMessage("Error: Network request failed unexpectedly!", "Error");
           } else {
             document.querySelector(".mainInputSearch").style.borderRadius =
               "8px 8px 0 0";
@@ -104,7 +108,7 @@ document
             }
           }
         } catch (e) {
-          showMessage("Error: Network error detected!", "Error");
+          showMessage("Error: Unexpected error has occurred!", "Error");
         }
         document.onclick = function (e) {
           if (e.target.id !== "autocomplete_list_results") {
@@ -146,7 +150,7 @@ if (dropdownButton) {
 function checkForOpenContainers() {
   let allContainersClosed = true;
   const addToListForms = document.querySelectorAll(".addToListForm");
-  const formContainers = document.querySelectorAll(".formContainer");
+  // const formContainers = document.querySelectorAll(".formContainer");
   for (let i = 0, j = addToListForms.length; i < j; i++) {
     if (
       addToListForms[i].style.display != "none" &&
@@ -156,15 +160,15 @@ function checkForOpenContainers() {
       return allContainersClosed;
     }
   }
-  for (let i = 0, j = formContainers.length; i < j; i++) {
-    if (
-      formContainers[i].style.display != "none" &&
-      formContainers[i].style.display
-    ) {
-      allContainersClosed = false;
-      return allContainersClosed;
-    }
-  }
+  // for (let i = 0, j = formContainers.length; i < j; i++) {
+  //   if (
+  //     formContainers[i].style.display != "none" &&
+  //     formContainers[i].style.display
+  //   ) {
+  //     allContainersClosed = false;
+  //     return allContainersClosed;
+  //   }
+  // }
   return allContainersClosed;
 }
 
@@ -237,18 +241,19 @@ document
             }
           );
           if (!res.ok) {
-            showMessage("Error: Article couldn't be filtered!", "Error");
+            showMessage("Error: Network request failed unexpectedly!", "Error");
           } else {
             const context = await res.json();
-            showMessage(context, "Success");
             if (action == "highlight") {
+              showMessage(context, "Success");
               highlighterButton.innerHTML = `<i class="fas fa-times"></i><span>Unhighlight article</span>`;
             } else {
+              showMessage(context, "Remove");
               highlighterButton.innerHTML = `<i class="fas fa-highlighter"></i><span>Highlight article</span>`;
             }
           }
         } catch (e) {
-          showMessage("Error: Network error detected!", "Error");
+          showMessage("Error: Unexpected error has occurred!", "Error");
         }
       }
     });
@@ -316,7 +321,7 @@ document
               );
               if (!res.ok) {
                 showMessage(
-                  "Error: Article couldn't be added to list!",
+                  "Error: Network request failed unexpectedly!",
                   "Error"
                 );
               } else {
@@ -325,7 +330,7 @@ document
                 window.location.reload();
               }
             } catch (e) {
-              showMessage("Error: Network error detected!", "Error");
+              showMessage("Error: Unexpected error has occurred!", "Error");
             }
           } else {
             try {
@@ -336,16 +341,16 @@ document
               );
               if (!res.ok) {
                 showMessage(
-                  "Error: Article couldn't be added to list!",
+                  "Error: Network request failed unexpectedly!",
                   "Error"
                 );
               } else {
                 const context = await res.json();
-                showMessage(context, "Success");
+                showMessage(context, "Remove");
                 window.location.reload();
               }
             } catch (e) {
-              showMessage("Error: Network error detected!", "Error");
+              showMessage("Error: Unexpected error has occurred!", "Error");
             }
           }
         }
@@ -358,37 +363,61 @@ document.querySelectorAll(".createNewListButton").forEach((button) => {
   button.addEventListener("click", () => {
     if (!button.classList.contains("registrationLink")) {
       button.parentElement.parentElement.style.display = "none";
-      document.querySelector(".createListMenu").style.display = "flex";
+      button.parentElement.parentElement.parentElement.querySelector(
+        ".formContainer"
+      ).style.display = "flex";
     }
   });
 });
 
-// close list create menu
-if (document.querySelector(".createListMenu .closeFormContainerButton")) {
-  document
-    .querySelector(".createListMenu .closeFormContainerButton")
-    .addEventListener("click", () => {
-      document.querySelector(".createListMenu").style.display = "none";
+// // close list create menu
+document
+  .querySelectorAll(".createListMenu .closeFormContainerButton")
+  .forEach((closeButton) => {
+    closeButton.addEventListener("click", () => {
+      document.querySelectorAll(".createListMenu").forEach((menu) => {
+        menu.style.display = "none";
+      });
     });
-}
-
-// select sources
-document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
-  choice.addEventListener("click", () => {
-    document.querySelector("summary").innerHTML = choice.innerHTML;
-    document.querySelector("details").removeAttribute("open");
   });
-});
 
-if (document.querySelector("details")) {
-  document.querySelector("details").addEventListener("click", () => {
-    document.onclick = function (e) {
-      if (e.target != document.querySelector("summary ul")) {
-        document.querySelector("details").removeAttribute("open");
-      }
-    };
-  });
-}
+// Old:
+// open List Create Menu
+// document.querySelectorAll(".createNewListButton").forEach((button) => {
+//   button.addEventListener("click", () => {
+//     if (!button.classList.contains("registrationLink")) {
+//       button.parentElement.parentElement.style.display = "none";
+//       document.querySelector(".createListMenu").style.display = "flex";
+//     }
+//   });
+// });
+
+// // close list create menu
+// if (document.querySelector(".createListMenu .closeFormContainerButton")) {
+//   document
+//     .querySelector(".createListMenu .closeFormContainerButton")
+//     .addEventListener("click", () => {
+//       document.querySelector(".createListMenu").style.display = "none";
+//     });
+// }
+
+// // select sources
+// document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
+//   choice.addEventListener("click", () => {
+//     document.querySelector("summary").innerHTML = choice.innerHTML;
+//     document.querySelector("details").removeAttribute("open");
+//   });
+// });
+
+// if (document.querySelector("details")) {
+//   document.querySelector("details").addEventListener("click", () => {
+//     document.onclick = function (e) {
+//       if (e.target != document.querySelector("summary ul")) {
+//         document.querySelector("details").removeAttribute("open");
+//       }
+//     };
+//   });
+// }
 
 //activate notification popup
 document
@@ -413,12 +442,10 @@ document
           get_fetch_settings("PUT")
         );
         if (!res.ok) {
-          showMessage("Error: Notifications couldn't be opened!", "Error");
-        } else {
-          const context = await res.json();
+          showMessage("Error: Network request failed unexpectedly!", "Error");
         }
       } catch (e) {
-        showMessage("Error: Network error detected!", "Error");
+        showMessage("Error: Unexpected error has occurred!", "Error");
       }
     }
   });

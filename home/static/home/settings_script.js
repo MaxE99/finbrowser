@@ -56,10 +56,10 @@ async function deleteSocialLinks(e) {
         showMessage("Error: Link couldn't be deleted!", "Error");
       } else {
         const context = await res.json();
-        showMessage(context, "Success");
+        showMessage(context, "Remove");
       }
     } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
+      showMessage("Error: Unexpected error has occurred!", "Error");
     }
   }
 }
@@ -84,7 +84,7 @@ async function deleteSocialLinks(e) {
 //       showMessage(context, "Success");
 //     }
 //   } catch (e) {
-//     showMessage("Error: Network error detected!", "Error");
+//     showMessage("Error: Unexpected error has occurred!", "Error");
 //   }
 // });
 
@@ -101,11 +101,11 @@ document
         showMessage("Error: List couldn't be filtered!", "Error");
       } else {
         const context = await res.json();
-        showMessage(context, "Success");
+        showMessage(context, "Remove");
         window.location.reload();
       }
     } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
+      showMessage("Error: Unexpected error has occurred!", "Error");
     }
   });
 
@@ -122,11 +122,11 @@ document
         showMessage("Error: List couldn't be filtered!", "Error");
       } else {
         const context = await res.json();
-        showMessage(context, "Success");
+        showMessage(context, "Remove");
         window.location.reload();
       }
     } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
+      showMessage("Error: Unexpected error has occurred!", "Error");
     }
   });
 
@@ -176,14 +176,14 @@ addSocialLinkButton.addEventListener("click", async () => {
       body: JSON.stringify(data),
     });
     if (!res.ok) {
-      showMessage("Error: List couldn't be filtered!", "Error");
+      showMessage("Error: Network request failed unexpectedly!", "Error");
     } else {
       const context = await res.json();
       showMessage(context, "Success");
       window.location.reload();
     }
   } catch (e) {
-    showMessage("Error: Network error detected!", "Error");
+    showMessage("Error: Unexpected error has occurred!", "Error");
   }
 });
 
@@ -239,14 +239,14 @@ document.querySelectorAll(".saveSocialLinkChanges").forEach((socialLink) => {
         }
       );
       if (!res.ok) {
-        showMessage("Error: Link couldn't be changed!", "Error");
+        showMessage("Error: Network request failed unexpectedly!", "Error");
       } else {
         const context = await res.json();
         showMessage(context, "Success");
         window.location.reload();
       }
     } catch (e) {
-      showMessage("Error: Network error detected!", "Error");
+      showMessage("Error: Unexpected error has occurred!", "Error");
     }
   });
 });
@@ -265,12 +265,14 @@ document
           get_fetch_settings("DELETE")
         );
         if (!res.ok) {
-          showMessage("Error: Notification couldn't be deleted!", "Error");
+          showMessage("Error: Network request failed unexpectedly!", "Error");
         } else {
           deleteButton.parentElement.parentElement.remove();
+          showMessage("Notification has been deleted!", "Remove");
         }
       } catch (e) {
-        showMessage("Error: Network error detected!", "Error");
+        console.log(e);
+        showMessage("Error: Unexpected error has occurred!", "Error");
       }
     });
   });
