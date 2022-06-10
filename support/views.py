@@ -11,7 +11,7 @@ class UserFeedbackMixin(FormMixin):
 
     def form_valid(self, form):
         form.save()
-        messages.success(self.request, f"Thank you! You're report has been send!")
+        messages.success(self.request, f"Thank you! Your report has been sent!")
         return super().form_valid(form)
 
 class FaqView(TemplateView):

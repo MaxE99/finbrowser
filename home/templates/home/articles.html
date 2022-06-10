@@ -48,19 +48,16 @@
         </select>
     </div>
     <div class="selectContainer">
-        <label class="sourceLabel" for="sources">Sources</label>
-        <details>
-            <summary>All</summary>
-            <ul>
-                <li><img src="{% static 'home/media/infinity_favicon.png' %}" alt=""><span>All</span></li>
-                <li><img src="{% static 'home/media/seekingalpha_favicon.png' %}" alt=""><span>SeekingAlpha</span></li>
-                <li><img src="{% static 'home/media/spotify_favicon.png' %}" alt=""><span>Spotify</span></li>
-                <li><img src="{% static 'home/media/substack_favicon.png' %}" alt=""><span>Substack</span></li>
-                <li><img src="{% static 'home/media/twitter_favicon.png' %}" alt=""><span>Twitter</span></li>
-                <li><img src="{% static 'home/media/youtube_favicon.png' %}" alt=""><span>YouTube</span></li>
-                <li><img src="{% static 'home/media/default_favicon.png' %}" alt=""><span>Other</span></li>
-            </ul>
-        </details>
+        <label for="source">Source</label>
+        <select id="source">
+            <option value="All" selected="selected">All</option>
+            <option value="SeekingAlpha">SeekingAlpha</option>
+            <option value="Spotify">Spotify </option>
+            <option value="Substack">Substack</option>
+            <option value="Twitter">Twitter</option>
+            <option value="YouTube">YouTube</option>
+            <option value="Other">Other</option>
+        </select>
     </div>
     <div class="selectContainer searchSelectContainer">
         <div class="searchContainer">

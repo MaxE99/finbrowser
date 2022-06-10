@@ -189,10 +189,10 @@ class ListViewSet(viewsets.ModelViewSet):
         list = self.get_object()
         if list.subscribers.filter(username=request.user.username).exists():
             list.subscribers.remove(request.user)
-            return Response("List has been unsubscribed!")
+            return Response("List subscription removed!")
         else:
             list.subscribers.add(request.user.id)
-            return Response("List has been subscribed!")
+            return Response("List subscription added!")
 
     @action(detail=True, methods=['delete'], authentication_classes=[SessionAuthentication], url_path=r'delete_source_from_list/(?P<source_id>\d+)', permission_classes=[IsAuthenticated, IsListCreator])
     def delete_source_from_list(self, request, pk, source_id):
@@ -200,7 +200,7 @@ class ListViewSet(viewsets.ModelViewSet):
         if list.creator == request.user:
             source = get_object_or_404(Source, source_id=source_id)
             list.sources.remove(source)
-            return Response("Source has been removed from list!")
+            return Response("Source has been removed from the list!")
         else:
             return Response("Access Denied")
 
@@ -210,7 +210,7 @@ class ListViewSet(viewsets.ModelViewSet):
         if list.creator == request.user:
             article = get_object_or_404(Article, article_id=article_id)
             list.articles.remove(article)
-            return Response("Article has been removed from list!")
+            return Response("Article has been removed from the list!")
         else:
             return Response("Access Denied")
 
@@ -220,7 +220,7 @@ class ListViewSet(viewsets.ModelViewSet):
         if list.creator == request.user:
             source = get_object_or_404(Source, source_id=source_id)
             list.sources.add(source)
-            return Response("Source has been added to list!")
+            return Response("Source has been added to the list!")
         else:
             return Response("Access Denied")
 
@@ -230,7 +230,7 @@ class ListViewSet(viewsets.ModelViewSet):
         if list.creator == request.user:
             article = get_object_or_404(Article, article_id=article_id)
             list.articles.add(article)
-            return Response("Article has been added to list!")
+            return Response("Article has been added to the list!")
         else:
             return Response("Access Denied")
 

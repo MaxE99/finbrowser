@@ -1,8 +1,28 @@
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 900;
+  src: local(""),
+    url("../home/fonts/lato-v23-latin/lato-v23-latin-900.woff2") format("woff2"),
+    url("../home/fonts/lato-v23-latin/lato-v23-latin-900.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Pacifico";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""),
+    url("../home/fonts/pacifico-v22-latin/pacifico-v22-latin-regular.woff2")
+      format("woff2"),
+    url("../home/fonts/pacifico-v22-latin/pacifico-v22-latin-regular.woff")
+      format("woff");
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Lato, sans-serif;
+  font-family: "Lato", sans-serif;
 }
 
 *,
@@ -506,6 +526,10 @@ main {
 
 .messages .error {
   background: red;
+}
+
+.messages .remove {
+  background: grey;
 }
 
 @keyframes cssAnimation {
@@ -1160,125 +1184,25 @@ footer {
   background: var(--primary-color);
   color: var(--secondary-fontColor);
   z-index: 999;
-  padding: 20px 50px 0;
+  padding: 20px 50px;
   width: 100%;
   margin: 0px auto;
   border-top: 1px solid rgb(226, 230, 234);
   box-shadow: 0 -4px 5px -5px #333;
 }
 
-.footerContainer {
-  display: flex;
-  width: 100%;
-  border-bottom: 2px solid rgb(226, 230, 234);
-  max-width: 900px;
-  margin: 0 auto;
-  padding-bottom: 10px;
-}
-
-.leftFooter {
-  width: 60%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.rightFooter {
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.companyInformation,
-.websiteInformation,
-.supportInformation {
-  display: flex;
-  flex-direction: column;
-  color: var(--secondary-fontColor);
-  flex: 0 0 33%;
-}
-
-.companyInformation h2,
-.websiteInformation h2,
-.supportInformation h2 {
-  font-size: 20px;
-  color: var(--primary-fontColor);
-  margin-bottom: 20px;
-}
-
-.companyInformation ul,
-.websiteInformation ul,
-.supportInformation ul {
-  list-style: none;
-}
-
-.companyInformation li,
-.websiteInformation li,
-.supportInformation li {
-  margin-bottom: 15px;
-}
-
-.companyInformation a,
-.websiteInformation a,
-.supportInformation a {
-  color: var(--secondary-fontColor);
-  text-decoration: none;
-}
-
-.rightFooter img {
-  /* height: 50px;
-  width: 80px;
-  margin: 0 auto; */
-  height: 150px;
-  margin-right: auto;
-  margin-top: -20px;
-}
-
-.rightFooter p {
-  margin: 10px auto;
-}
-
-.emailInputContainer {
-  display: flex;
-  font-size: 16px;
-  width: 100%;
-}
-
-.emailInputContainer input {
-  padding: 5px 10px;
-  outline: none;
-  width: 70%;
-}
-
-.emailInputContainer div:last-child {
-  padding: 10px 15px;
-  background: var(--primary-fontColor);
-  cursor: pointer;
-  color: white;
-  width: 30%;
+footer ul {
   display: flex;
   justify-content: center;
-}
-
-.lowerFooter {
-  display: flex;
-  justify-content: space-between;
-  padding: 15px 0px;
-  font-size: 13px;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.lowerFooter ul {
-  display: flex;
-  justify-content: space-between;
   list-style: none;
-  width: 80%;
-  max-width: 410px;
 }
 
-.lowerFooter ul a {
+footer ul li {
+  margin-right: 20px;
+  font-size: 18px;
+}
+
+footer ul a {
   text-decoration: none;
   color: var(--secondary-fontColor);
 }
@@ -1685,7 +1609,6 @@ footer {
 .slider > .contentWrapper {
   margin: var(--img-gap);
   flex: 0 0 calc(100% / var(--items-per-screen));
-  /* Dangerous: perhabs remove those lines */
   max-width: 180px;
   max-height: 220px;
   height: 220px;

@@ -41,3 +41,11 @@ def lists_filter(timeframe, content_type, minimum_rating, primary_source, lists)
     if primary_source != "All":
         lists = lists.filter(main_website_source = primary_source)
     return lists
+
+
+def articles_filter(timeframe, sector, paywall, source, articles):
+    filter_args = {'source__sector': sector, 'source__paywall': paywall, 'source__website': source}
+    if timeframe != 'All' and timeframe != None:
+        filter_args['pub_date__gte'] = now()-timedelta(days=int(timeframe))
+    filter_args = dict((k, v) for k, v in filter_args.items() if v is not None and v != 'All')
+    return articles.filter(**filter_args).order_by('-pub_date')

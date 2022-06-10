@@ -446,3 +446,12 @@
 .addExternalLinkButton i {
   margin-right: 8px;
 }
+
+/* ####################################################*/
+.articleCreateListMenu {
+  position: absolute;
+  width: 250px;
+  height: 220px;
+  right: -110px;
+  top: 0;
+}
