@@ -1,827 +1,619 @@
-2022-06-09 16:24:16,128 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
-2022-06-09 16:24:16,679 - celery.worker.consumer.connection - INFO - Connected to amqp://guest:**@127.0.0.1:5672//
-2022-06-09 16:24:16,684 - celery.worker.consumer.mingle - INFO - mingle: searching for neighbors
-2022-06-09 16:24:16,693 - kombu.connection - WARNING - No hostname was supplied. Reverting to default 'localhost'
-2022-06-09 16:24:17,704 - celery.worker.consumer.mingle - INFO - mingle: all alone
-2022-06-09 16:24:17,718 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/celery/fixups/django.py:203: UserWarning: Using settings.DEBUG leads to a memory
-            leak, never use this setting in production environments!
-  warnings.warn('''Using settings.DEBUG leads to a memory
+2022-06-11 06:41:00,271 - celery.beat - INFO - beat: Starting...
+2022-06-11 06:41:00,355 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:41:00,366 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[4949c3cd-28f4-4908-a611-7c7272ff1149] received
+2022-06-11 06:41:00,388 - celery.beat - INFO - Scheduler: Sending due task Substack Scrapping (scrapper.tasks.scrape_substack)
+2022-06-11 06:41:00,390 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_substack[212410f3-71d1-4a8c-b807-d2a35eafa8e0] received
+2022-06-11 06:41:00,398 - celery.beat - INFO - Scheduler: Sending due task SeekingAlpha Scraping (scrapper.tasks.scrape_seekingalpha)
+2022-06-11 06:41:00,400 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_seekingalpha[b4b00504-4482-465d-b823-f5608bdb8121] received
+2022-06-11 06:41:00,409 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
+2022-06-11 06:41:00,410 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[231adc4d-470c-4057-80fd-42d148e50302] received
+2022-06-11 06:41:00,419 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
+2022-06-11 06:41:00,421 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[6620e399-f36d-4087-b61a-4540d1414831] received
+2022-06-11 06:41:01,176 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 15:23:19) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:41:01,195 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-08 08:35:00) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:41:01,397 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 18:15:09) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:41:03,200 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[4949c3cd-28f4-4908-a611-7c7272ff1149] succeeded in 2.833439885999951s: None
+2022-06-11 06:41:03,319 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[6620e399-f36d-4087-b61a-4540d1414831] succeeded in 2.8973417760000757s: None
+2022-06-11 06:41:05,107 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[231adc4d-470c-4057-80fd-42d148e50302] succeeded in 4.6959520109999175s: None
+2022-06-11 06:41:32,602 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 14:50:04) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:41:32,641 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-03 13:03:59) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:42:00,364 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:42:00,367 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8e0f3463-644b-4217-9460-f6db06511745] received
+2022-06-11 06:42:01,318 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8e0f3463-644b-4217-9460-f6db06511745] succeeded in 0.9502702040001623s: None
+2022-06-11 06:42:01,618 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 16:57:14) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:42:01,647 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 11:29:22) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:42:01,674 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 10:30:00) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:42:03,534 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-04-04 13:00:44) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:42:34,883 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-01 17:00:42) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:43:00,376 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:43:00,379 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7e82e7de-7b64-4936-83ee-2620e179e791] received
+2022-06-11 06:43:01,346 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7e82e7de-7b64-4936-83ee-2620e179e791] succeeded in 0.9659156380000695s: None
+2022-06-11 06:43:02,355 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-03 18:04:32) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:43:05,998 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 14:05:12) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:43:06,031 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 14:00:20) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:43:06,063 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 13:29:06) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:43:36,570 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 14:00:56) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:44:00,387 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:44:00,390 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7d61277d-dfb3-4a1e-b9aa-52a2af3deb06] received
+2022-06-11 06:44:01,260 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7d61277d-dfb3-4a1e-b9aa-52a2af3deb06] succeeded in 0.8691767570001048s: None
+2022-06-11 06:44:02,417 - celery.app.trace - INFO - Task scrapper.tasks.scrape_seekingalpha[b4b00504-4482-465d-b823-f5608bdb8121] succeeded in 182.01577752100002s: None
+2022-06-11 06:44:07,515 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-11 03:30:29) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:44:07,521 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 10:54:17) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:44:07,525 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-08 15:26:11) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:44:38,501 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-03-12 18:02:20) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:45:00,396 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:45:00,399 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[741284cf-062c-4740-9230-3f61fd4b3439] received
+2022-06-11 06:45:01,248 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[741284cf-062c-4740-9230-3f61fd4b3439] succeeded in 0.8481439780000528s: None
+2022-06-11 06:45:09,329 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-10 16:54:42) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:45:40,491 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-13 01:25:30) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:46:00,408 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:46:00,411 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[39798901-f893-48ed-852c-cd372ffaee1e] received
+2022-06-11 06:46:01,287 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[39798901-f893-48ed-852c-cd372ffaee1e] succeeded in 0.8753554140000688s: None
+2022-06-11 06:46:11,581 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 13:58:19) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:46:11,593 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-03 20:27:04) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:24:17,718 - celery.apps.worker - INFO - celery@ebirdmax-HVY-WXX9 ready.
-2022-06-09 16:24:20,590 - celery.beat - INFO - beat: Starting...
-2022-06-09 16:24:20,668 - celery.beat - INFO - Scheduler: Sending due task SeekingAlpha Scraping (scrapper.tasks.scrape_seekingalpha)
-2022-06-09 16:24:20,676 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_seekingalpha[350ba379-b65a-4ecb-b9b7-3c38b9608f39] received
-2022-06-09 16:24:20,697 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-06-09 16:24:20,700 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[acca98dc-b345-4b1b-a0f2-308dffb86b2a] received
-2022-06-09 16:24:20,710 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-06-09 16:24:20,711 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[3a621ea3-340c-4fb5-86c1-b939beadd7e9] received
-2022-06-09 16:24:20,721 - celery.beat - INFO - Scheduler: Sending due task Substack Scrapping (scrapper.tasks.scrape_substack)
-2022-06-09 16:24:20,722 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_substack[792ba72e-5c30-416c-8efe-8e9d6c21a028] received
-2022-06-09 16:24:20,732 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:24:20,734 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9d7cafd9-5d42-4e3f-b021-30d75d41848e] received
-2022-06-09 16:24:21,061 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-08 08:35:00) while time zone support is active.
+2022-06-11 06:46:42,714 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-04-19 20:26:30) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:24:22,397 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-02 16:27:17) while time zone support is active.
+2022-06-11 06:47:00,418 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:47:00,421 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8de184d6-bf00-4f6c-9a93-dd60bc428714] received
+2022-06-11 06:47:02,272 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8de184d6-bf00-4f6c-9a93-dd60bc428714] succeeded in 1.8507762640001602s: None
+2022-06-11 06:47:13,376 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-25 16:05:37) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:24:22,494 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[3a621ea3-340c-4fb5-86c1-b939beadd7e9] succeeded in 1.7821401139954105s: None
-2022-06-09 16:24:23,775 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9d7cafd9-5d42-4e3f-b021-30d75d41848e] succeeded in 3.0396406650033896s: None
-2022-06-09 16:24:24,947 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[acca98dc-b345-4b1b-a0f2-308dffb86b2a] succeeded in 4.246066656000039s: None
-2022-06-09 16:24:53,260 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-03 13:03:59) while time zone support is active.
+2022-06-11 06:47:44,431 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-23 03:30:41) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:25:20,740 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:25:20,743 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[71830813-997d-4e45-b771-c067b68543e6] received
-2022-06-09 16:25:21,455 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 10:30:00) while time zone support is active.
+2022-06-11 06:48:00,420 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:48:00,422 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f93595c2-feaa-4644-b604-a1c3102b6963] received
+2022-06-11 06:48:01,266 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f93595c2-feaa-4644-b604-a1c3102b6963] succeeded in 0.8429395220000515s: None
+2022-06-11 06:48:14,979 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2020-01-10 04:55:33) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:25:21,474 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-06 08:30:36) while time zone support is active.
+2022-06-11 06:48:46,284 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-04 00:28:50) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:25:21,667 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[71830813-997d-4e45-b771-c067b68543e6] succeeded in 0.9228038719957112s: None
-2022-06-09 16:25:24,447 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-04-04 13:00:44) while time zone support is active.
+2022-06-11 06:49:00,430 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:49:00,432 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[435a391e-250b-444a-9d51-9c3b7e10e21a] received
+2022-06-11 06:49:01,346 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[435a391e-250b-444a-9d51-9c3b7e10e21a] succeeded in 0.9129278479999812s: None
+2022-06-11 06:49:17,290 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 13:00:55) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:25:55,879 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-01 17:00:42) while time zone support is active.
+2022-06-11 06:49:17,318 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-03 13:01:01) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:26:20,753 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:26:20,757 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[162f606f-8200-4505-9591-92428fef01f2] received
-2022-06-09 16:26:21,631 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[162f606f-8200-4505-9591-92428fef01f2] succeeded in 0.8730352950005908s: None
-2022-06-09 16:26:21,972 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-03 18:04:32) while time zone support is active.
+2022-06-11 06:49:48,499 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-02 10:51:35) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:26:27,533 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 13:29:06) while time zone support is active.
+2022-06-11 06:50:00,441 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:50:00,443 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f6af0a19-3ade-4572-afbc-b2863bfdc7fe] received
+2022-06-11 06:50:01,473 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f6af0a19-3ade-4572-afbc-b2863bfdc7fe] succeeded in 1.0288158749999639s: None
+2022-06-11 06:50:19,951 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-01-14 15:23:09) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:26:27,564 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-08 13:24:39) while time zone support is active.
+2022-06-11 06:50:50,994 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-05 13:00:21) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:26:58,053 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 14:00:56) while time zone support is active.
+2022-06-11 06:51:00,449 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:51:00,452 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ed5c5e63-8503-4aae-9c35-137aa6b1137d] received
+2022-06-11 06:51:01,331 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ed5c5e63-8503-4aae-9c35-137aa6b1137d] succeeded in 0.8773464369996873s: None
+2022-06-11 06:51:21,992 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 17:45:16) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:26:58,071 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-26 12:54:23) while time zone support is active.
+2022-06-11 06:51:21,999 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 14:30:21) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:27:20,861 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:27:20,863 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[26842f11-6d39-465a-ad84-583a76da4d9d] received
-2022-06-09 16:27:21,851 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[26842f11-6d39-465a-ad84-583a76da4d9d] succeeded in 0.9869192729966016s: None
-2022-06-09 16:27:22,036 - celery.app.trace - INFO - Task scrapper.tasks.scrape_seekingalpha[350ba379-b65a-4ecb-b9b7-3c38b9608f39] succeeded in 181.35855420200096s: None
-2022-06-09 16:27:29,142 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-08 15:26:11) while time zone support is active.
+2022-06-11 06:51:53,069 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-28 17:20:03) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:27:59,921 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-03-12 18:02:20) while time zone support is active.
+2022-06-11 06:52:00,458 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:52:00,460 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[14b5af83-9577-4091-ad15-6e3ff824cb4c] received
+2022-06-11 06:52:01,579 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[14b5af83-9577-4091-ad15-6e3ff824cb4c] succeeded in 1.118635076999908s: None
+2022-06-11 06:52:24,745 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-31 12:57:15) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:28:20,873 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:28:20,877 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3631b4da-1229-4aea-97ff-12bd68f48610] received
-2022-06-09 16:28:21,952 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3631b4da-1229-4aea-97ff-12bd68f48610] succeeded in 1.0747159039965481s: None
-2022-06-09 16:28:30,735 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-10 16:54:42) while time zone support is active.
+2022-06-11 06:52:55,994 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-01 19:54:35) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:29:02,201 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-13 01:25:30) while time zone support is active.
+2022-06-11 06:53:00,470 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:53:00,473 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7530aae6-d855-46c2-a3b4-505c475bbb74] received
+2022-06-11 06:53:27,296 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-07 14:06:00) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:29:20,885 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:29:20,887 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8a97e14c-d877-466e-a0c9-9287abedbc7e] received
-2022-06-09 16:29:21,319 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8a97e14c-d877-466e-a0c9-9287abedbc7e] succeeded in 0.4314429310034029s: None
-2022-06-09 16:29:33,295 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-03 20:27:04) while time zone support is active.
+2022-06-11 06:53:28,117 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7530aae6-d855-46c2-a3b4-505c475bbb74] succeeded in 27.642988581999816s: None
+2022-06-11 06:53:58,236 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 17:00:26) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:30:04,480 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-04-19 20:26:30) while time zone support is active.
+2022-06-11 06:54:00,482 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:54:00,484 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2e892308-4c64-40c2-ab8e-be584f5bc261] received
+2022-06-11 06:54:01,895 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2e892308-4c64-40c2-ab8e-be584f5bc261] succeeded in 1.4091427920002388s: None
+2022-06-11 06:54:29,324 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 17:30:01) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:30:20,912 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:30:20,914 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fdd088e5-6368-467e-b992-60a2c99e6bd6] received
-2022-06-09 16:30:21,445 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fdd088e5-6368-467e-b992-60a2c99e6bd6] succeeded in 0.5297126229997957s: None
-2022-06-09 16:30:36,103 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-25 16:05:37) while time zone support is active.
+2022-06-11 06:54:29,334 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-06 12:02:48) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:55:00,264 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 02:22:11) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:55:00,284 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-08 07:38:26) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:55:00,489 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:55:00,492 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[36866d1b-d24b-4831-b56f-78c94d226ef7] received
+2022-06-11 06:55:01,898 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[36866d1b-d24b-4831-b56f-78c94d226ef7] succeeded in 1.4049736000001758s: None
+2022-06-11 06:55:30,482 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 09:36:04) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 06:56:00,417 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
+2022-06-11 06:56:00,420 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[62b67028-1e70-4884-b88b-f4063be8197d] received
+2022-06-11 06:56:00,432 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
+2022-06-11 06:56:00,433 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[826adfca-ab16-418a-9e84-d46694d1cc70] received
+2022-06-11 06:56:00,491 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:56:00,493 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ba7f6925-f011-4036-bd90-f1eab4335893] received
+2022-06-11 06:56:00,514 - celery.app.trace - INFO - Task scrapper.tasks.scrape_substack[212410f3-71d1-4a8c-b807-d2a35eafa8e0] succeeded in 900.1235678169999s: None
+2022-06-11 06:56:02,363 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ba7f6925-f011-4036-bd90-f1eab4335893] succeeded in 1.8695231649999187s: None
+2022-06-11 06:56:03,498 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[826adfca-ab16-418a-9e84-d46694d1cc70] succeeded in 3.0633613850000074s: None
+2022-06-11 06:56:05,071 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[62b67028-1e70-4884-b88b-f4063be8197d] succeeded in 4.649519263000002s: None
+2022-06-11 06:57:00,503 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:57:00,506 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5c9084d4-dbce-4241-8609-97ca058e0960] received
+2022-06-11 06:57:01,471 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5c9084d4-dbce-4241-8609-97ca058e0960] succeeded in 0.9644702519999555s: None
+2022-06-11 06:58:00,516 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:58:00,518 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3bd3e9cf-6b06-4747-b206-95989e7cd6af] received
+2022-06-11 06:58:01,424 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3bd3e9cf-6b06-4747-b206-95989e7cd6af] succeeded in 0.9057603439996456s: None
+2022-06-11 06:59:00,527 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 06:59:00,529 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[57516388-fd57-4296-b314-ae4a31fb387a] received
+2022-06-11 06:59:01,604 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[57516388-fd57-4296-b314-ae4a31fb387a] succeeded in 1.0738286490000064s: None
+2022-06-11 07:00:00,537 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:00:00,540 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3c28e9bc-cc64-4f12-8315-fe1a127258eb] received
+2022-06-11 07:00:01,424 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3c28e9bc-cc64-4f12-8315-fe1a127258eb] succeeded in 0.8828362019999076s: None
+2022-06-11 07:01:00,549 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:01:00,552 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f9729e2e-5160-45ce-acd0-ab1f56a0d31b] received
+2022-06-11 07:01:02,073 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f9729e2e-5160-45ce-acd0-ab1f56a0d31b] succeeded in 1.5195755569998255s: None
+2022-06-11 07:02:00,560 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:02:00,562 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c7f79761-c102-437f-b0bd-6e58dbc7b6f9] received
+2022-06-11 07:02:01,605 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c7f79761-c102-437f-b0bd-6e58dbc7b6f9] succeeded in 1.0418221439999797s: None
+2022-06-11 07:03:00,572 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:03:00,574 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[99266a4e-a975-46d6-ab96-eb1231bd8923] received
+2022-06-11 07:03:01,605 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[99266a4e-a975-46d6-ab96-eb1231bd8923] succeeded in 1.0300491630000579s: None
+2022-06-11 07:04:00,583 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:04:00,585 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[046c9cec-e0b7-4fb6-aae5-b028c9af77e0] received
+2022-06-11 07:04:02,087 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[046c9cec-e0b7-4fb6-aae5-b028c9af77e0] succeeded in 1.5018436880000081s: None
+2022-06-11 07:05:00,586 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:05:00,587 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[62cd77f5-8bfb-4301-a0b5-b428974cd849] received
+2022-06-11 07:05:01,636 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[62cd77f5-8bfb-4301-a0b5-b428974cd849] succeeded in 1.048534016999838s: None
+2022-06-11 07:06:00,598 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:06:00,600 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c61e34bf-59a7-49b5-9ed6-ac8e848d9b1b] received
+2022-06-11 07:06:00,981 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c61e34bf-59a7-49b5-9ed6-ac8e848d9b1b] succeeded in 0.3797683389998383s: None
+2022-06-11 07:07:00,610 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:07:00,613 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[4516ccf3-03f5-4b1e-97f4-78111068498b] received
+2022-06-11 07:07:00,967 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[4516ccf3-03f5-4b1e-97f4-78111068498b] succeeded in 0.3533388470000318s: None
+2022-06-11 07:08:00,617 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:08:00,620 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[566b5da1-3611-426f-b085-dd5e7e2d25a8] received
+2022-06-11 07:08:01,089 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[566b5da1-3611-426f-b085-dd5e7e2d25a8] succeeded in 0.46863505900000746s: None
+2022-06-11 07:09:00,628 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:09:00,631 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1e1b7670-0a02-418b-8215-b9749e80e013] received
+2022-06-11 07:09:01,005 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1e1b7670-0a02-418b-8215-b9749e80e013] succeeded in 0.3727474899997105s: None
+2022-06-11 07:10:00,639 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:10:00,642 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3cbd898d-419c-4f0d-b5ec-c5288d9f857b] received
+2022-06-11 07:10:01,030 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3cbd898d-419c-4f0d-b5ec-c5288d9f857b] succeeded in 0.3867727950000699s: None
+2022-06-11 07:11:00,430 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
+2022-06-11 07:11:00,432 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[4d01474e-188d-47c2-9190-d53987105c02] received
+2022-06-11 07:11:00,448 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
+2022-06-11 07:11:00,452 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[95bfe365-32e9-4807-aa16-042b08aef24b] received
+2022-06-11 07:11:00,641 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:11:00,644 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fa462ba4-402b-475c-8c3e-0825b644dc86] received
+2022-06-11 07:11:01,583 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fa462ba4-402b-475c-8c3e-0825b644dc86] succeeded in 0.9380444769999485s: None
+2022-06-11 07:11:03,860 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[95bfe365-32e9-4807-aa16-042b08aef24b] succeeded in 3.407419036999727s: None
+2022-06-11 07:11:05,232 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[4d01474e-188d-47c2-9190-d53987105c02] succeeded in 4.798959994000143s: None
+2022-06-11 07:12:00,652 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:12:00,655 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3a5414a8-8e3e-4474-a788-8cefcf36a502] received
+2022-06-11 07:12:01,147 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3a5414a8-8e3e-4474-a788-8cefcf36a502] succeeded in 0.49093182399974467s: None
+2022-06-11 07:13:00,661 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:13:00,663 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[996b80ff-dfc3-4167-90f0-4d7c611404f7] received
+2022-06-11 07:13:00,939 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[996b80ff-dfc3-4167-90f0-4d7c611404f7] succeeded in 0.2758154880002621s: None
+2022-06-11 07:14:00,670 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:14:00,672 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[11739902-178e-4708-94b2-0f8d6a4a671f] received
+2022-06-11 07:14:01,029 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[11739902-178e-4708-94b2-0f8d6a4a671f] succeeded in 0.35621692799986704s: None
+2022-06-11 07:15:00,682 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:15:00,686 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e896af11-a926-4a20-9c4b-500cef9d08e9] received
+2022-06-11 07:15:01,041 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e896af11-a926-4a20-9c4b-500cef9d08e9] succeeded in 0.3531736949998958s: None
+2022-06-11 07:16:00,693 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:16:00,695 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f89ad33b-3a73-49d9-83fa-9aa8e8adf8ec] received
+2022-06-11 07:16:01,047 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f89ad33b-3a73-49d9-83fa-9aa8e8adf8ec] succeeded in 0.3511411619997489s: None
+2022-06-11 07:17:00,701 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:17:00,704 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[dc066f22-9283-450c-9835-b826a682c12e] received
+2022-06-11 07:17:01,064 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[dc066f22-9283-450c-9835-b826a682c12e] succeeded in 0.3595361029997548s: None
+2022-06-11 07:18:00,713 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:18:00,716 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[45cd8fe7-bedb-4147-8936-a6d606d03a08] received
+2022-06-11 07:18:01,106 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[45cd8fe7-bedb-4147-8936-a6d606d03a08] succeeded in 0.38921107200030747s: None
+2022-06-11 07:19:00,726 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:19:00,730 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b57d9170-f648-4424-9f33-b3c52dc0aff7] received
+2022-06-11 07:19:01,186 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b57d9170-f648-4424-9f33-b3c52dc0aff7] succeeded in 0.45483756499970696s: None
+2022-06-11 07:20:00,738 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:20:00,741 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a15cf969-0884-4949-880b-874efb4b35a2] received
+2022-06-11 07:20:01,181 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a15cf969-0884-4949-880b-874efb4b35a2] succeeded in 0.4391237469999396s: None
+2022-06-11 07:21:00,747 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:21:00,750 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2960e157-16a1-4063-9671-7dfe542ac839] received
+2022-06-11 07:21:01,082 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2960e157-16a1-4063-9671-7dfe542ac839] succeeded in 0.33157786799984024s: None
+2022-06-11 07:22:00,757 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:22:00,760 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[593f7fe9-8151-49b2-8297-ed8d818c3007] received
+2022-06-11 07:22:01,090 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[593f7fe9-8151-49b2-8297-ed8d818c3007] succeeded in 0.3294880829998874s: None
+2022-06-11 07:23:00,765 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:23:00,767 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6da0ac79-f4cc-4d43-baa3-441f2a43929c] received
+2022-06-11 07:23:01,106 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6da0ac79-f4cc-4d43-baa3-441f2a43929c] succeeded in 0.3376160860007076s: None
+2022-06-11 07:24:00,773 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:24:00,778 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[70613d11-5ae4-4df5-b7aa-f14bfd5718e8] received
+2022-06-11 07:24:02,140 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[70613d11-5ae4-4df5-b7aa-f14bfd5718e8] succeeded in 1.3613677640005335s: None
+2022-06-11 07:25:00,785 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:25:00,788 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9ff5583f-3905-46d3-81f8-9b683b4c0bed] received
+2022-06-11 07:25:01,222 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9ff5583f-3905-46d3-81f8-9b683b4c0bed] succeeded in 0.4330980430004274s: None
+2022-06-11 07:26:00,441 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
+2022-06-11 07:26:00,445 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[81b7444f-de64-4b81-98fb-42d6c7339d92] received
+2022-06-11 07:26:00,459 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
+2022-06-11 07:26:00,461 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[fd7dc5b1-b642-4605-b939-de13fd2508ab] received
+2022-06-11 07:26:00,792 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:26:00,793 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[71e12cf9-2ed3-488f-80f6-509774b14937] received
+2022-06-11 07:26:01,632 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[71e12cf9-2ed3-488f-80f6-509774b14937] succeeded in 0.8379310529999202s: None
+2022-06-11 07:26:03,955 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[fd7dc5b1-b642-4605-b939-de13fd2508ab] succeeded in 3.493110952999814s: None
+2022-06-11 07:26:05,003 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[81b7444f-de64-4b81-98fb-42d6c7339d92] succeeded in 4.556886482999289s: None
+2022-06-11 07:27:00,803 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:27:00,805 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2485c393-2239-4f89-b4a3-a3430f6043a5] received
+2022-06-11 07:27:01,245 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2485c393-2239-4f89-b4a3-a3430f6043a5] succeeded in 0.43852954799967847s: None
+2022-06-11 07:28:00,814 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:28:00,816 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[91d6a07c-dbfe-4aab-ab58-3cf647e36d80] received
+2022-06-11 07:28:01,252 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[91d6a07c-dbfe-4aab-ab58-3cf647e36d80] succeeded in 0.4347372489992267s: None
+2022-06-11 07:29:00,826 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:29:00,828 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[abddee03-9037-4c3b-b1a4-a3db2fac7f92] received
+2022-06-11 07:29:01,257 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[abddee03-9037-4c3b-b1a4-a3db2fac7f92] succeeded in 0.4276068770004713s: None
+2022-06-11 07:30:00,837 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:30:00,840 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1f8ba56b-429d-4bf7-8321-dff142156214] received
+2022-06-11 07:30:01,157 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1f8ba56b-429d-4bf7-8321-dff142156214] succeeded in 0.31646094799998536s: None
+2022-06-11 07:31:00,849 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:31:00,852 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[badb2aa3-06cb-4144-a246-4c9a9036c390] received
+2022-06-11 07:31:01,301 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[badb2aa3-06cb-4144-a246-4c9a9036c390] succeeded in 0.448554308999519s: None
+2022-06-11 07:32:00,861 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:32:00,863 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5655b120-5b27-450b-89a2-b15869b57b53] received
+2022-06-11 07:32:01,274 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5655b120-5b27-450b-89a2-b15869b57b53] succeeded in 0.40993690400046034s: None
+2022-06-11 07:33:00,872 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:33:00,875 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6dab1a00-6c7d-47d1-b67e-66f6bc462723] received
+2022-06-11 07:33:01,307 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6dab1a00-6c7d-47d1-b67e-66f6bc462723] succeeded in 0.43139977300052124s: None
+2022-06-11 07:34:00,885 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:34:00,887 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1e06a577-bd80-4b70-975d-66be3a4e5882] received
+2022-06-11 07:34:01,311 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1e06a577-bd80-4b70-975d-66be3a4e5882] succeeded in 0.4228409280003689s: None
+2022-06-11 07:35:00,896 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:35:00,899 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d37d432a-55bf-42ee-99df-9121a8617ed1] received
+2022-06-11 07:35:01,322 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d37d432a-55bf-42ee-99df-9121a8617ed1] succeeded in 0.4216842790001465s: None
+2022-06-11 07:36:00,911 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:36:00,913 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[bc98a5b5-f12a-43ab-b603-ef3c46b2755d] received
+2022-06-11 07:36:01,339 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[bc98a5b5-f12a-43ab-b603-ef3c46b2755d] succeeded in 0.4254386330003399s: None
+2022-06-11 07:37:00,921 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:37:00,923 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[823ce9e5-a49a-4952-9c98-0bde48ac47d9] received
+2022-06-11 07:37:01,323 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[823ce9e5-a49a-4952-9c98-0bde48ac47d9] succeeded in 0.3992765449993385s: None
+2022-06-11 07:38:00,926 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:38:00,928 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0bf6f425-6168-46cb-9fab-67f4b0450aae] received
+2022-06-11 07:38:01,340 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0bf6f425-6168-46cb-9fab-67f4b0450aae] succeeded in 0.4109863809999297s: None
+2022-06-11 07:39:00,937 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:39:00,939 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[63041bfd-b8f6-40c7-a5d9-077a2f3138d6] received
+2022-06-11 07:39:01,333 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[63041bfd-b8f6-40c7-a5d9-077a2f3138d6] succeeded in 0.3924314070000037s: None
+2022-06-11 07:40:00,950 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:40:00,952 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c0434e85-08d5-4759-bbc3-cccaf4c170c3] received
+2022-06-11 07:40:01,344 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c0434e85-08d5-4759-bbc3-cccaf4c170c3] succeeded in 0.3906991560006645s: None
+2022-06-11 07:41:00,398 - celery.beat - INFO - Scheduler: Sending due task Substack Scrapping (scrapper.tasks.scrape_substack)
+2022-06-11 07:41:00,401 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_substack[8c9ce7e1-7820-4c01-bfe1-9f87ae65f8bb] received
+2022-06-11 07:41:00,448 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
+2022-06-11 07:41:00,450 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[56d664cd-65c9-4eb8-8101-3b2666c96f22] received
+2022-06-11 07:41:00,463 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
+2022-06-11 07:41:00,465 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[dc9fffd6-a51c-49b0-8d65-f8e47c524292] received
+2022-06-11 07:41:00,641 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 18:15:09) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:41:00,957 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:41:00,959 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8e0daa23-7e7c-4cb3-a706-c638cee876f8] received
+2022-06-11 07:41:01,820 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8e0daa23-7e7c-4cb3-a706-c638cee876f8] succeeded in 0.8600257489997603s: None
+2022-06-11 07:41:03,692 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[dc9fffd6-a51c-49b0-8d65-f8e47c524292] succeeded in 3.2269784979998803s: None
+2022-06-11 07:41:05,027 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[56d664cd-65c9-4eb8-8101-3b2666c96f22] succeeded in 4.576638966000246s: None
+2022-06-11 07:41:30,944 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 14:50:04) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:42:00,965 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:42:00,968 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[091fbaac-fc60-40cb-8929-8479ab194856] received
+2022-06-11 07:42:01,961 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[091fbaac-fc60-40cb-8929-8479ab194856] succeeded in 0.9919015139994372s: None
+2022-06-11 07:42:02,133 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-04-04 13:00:44) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:31:07,251 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-23 03:30:41) while time zone support is active.
+2022-06-11 07:42:34,084 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-01 17:00:42) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:31:20,921 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:31:20,923 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[26ea5b1c-0118-4a77-b4dc-e9dde2d2dcfb] received
-2022-06-09 16:31:21,324 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[26ea5b1c-0118-4a77-b4dc-e9dde2d2dcfb] succeeded in 0.3993997659999877s: None
-2022-06-09 16:31:38,100 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2020-01-10 04:55:33) while time zone support is active.
+2022-06-11 07:43:00,977 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:43:00,980 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c1203523-7ec5-44e4-906f-f4233cf6a5aa] received
+2022-06-11 07:43:01,904 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c1203523-7ec5-44e4-906f-f4233cf6a5aa] succeeded in 0.9233466079995196s: None
+2022-06-11 07:43:05,886 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 14:05:12) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:32:09,803 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-04 00:28:50) while time zone support is active.
+2022-06-11 07:43:41,337 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 14:00:56) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:32:20,933 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:32:20,935 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[866c0c32-9582-4682-84f2-8ba3486fc6a4] received
-2022-06-09 16:32:21,224 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[866c0c32-9582-4682-84f2-8ba3486fc6a4] succeeded in 0.2882053139983327s: None
-2022-06-09 16:32:40,846 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-03 13:01:01) while time zone support is active.
+2022-06-11 07:44:00,985 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:44:00,987 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[addeafa0-c35b-410a-94b3-998a9207ed81] received
+2022-06-11 07:44:01,873 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[addeafa0-c35b-410a-94b3-998a9207ed81] succeeded in 0.8850120970000717s: None
+2022-06-11 07:44:12,366 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-11 03:30:29) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:33:15,330 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-02 10:51:35) while time zone support is active.
+2022-06-11 07:44:43,238 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-03-12 18:02:20) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:33:20,968 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:33:20,970 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[18b7fd1e-261a-4e01-91a7-ba062a3012b3] received
-2022-06-09 16:33:21,343 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[18b7fd1e-261a-4e01-91a7-ba062a3012b3] succeeded in 0.37173765099578304s: None
-2022-06-09 16:33:46,696 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-01-14 15:23:09) while time zone support is active.
+2022-06-11 07:45:00,997 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:45:00,999 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1e6e3b00-c7cf-4afc-bc5c-287e320cb7b6] received
+2022-06-11 07:45:02,092 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1e6e3b00-c7cf-4afc-bc5c-287e320cb7b6] succeeded in 1.0916741130004084s: None
+2022-06-11 07:45:15,232 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-10 16:54:42) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:34:17,798 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-05 13:00:21) while time zone support is active.
+2022-06-11 07:45:46,416 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-13 01:25:30) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:34:20,979 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:34:20,981 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[47e22fef-e4c5-40fa-ab83-273cf7e29926] received
-2022-06-09 16:34:21,347 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[47e22fef-e4c5-40fa-ab83-273cf7e29926] succeeded in 0.36551475300075253s: None
-2022-06-09 16:34:49,087 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 14:30:21) while time zone support is active.
+2022-06-11 07:46:01,007 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:46:01,009 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[adb1dafe-1134-46f8-8c32-727a001c1c12] received
+2022-06-11 07:46:02,100 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[adb1dafe-1134-46f8-8c32-727a001c1c12] succeeded in 1.089794971999254s: None
+2022-06-11 07:46:17,693 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 13:58:19) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 16:34:49,097 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-08 13:42:34) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 16:35:20,255 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-28 17:20:03) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 16:35:20,982 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:35:20,984 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3ade47fb-deff-4a29-92af-6e31c8048ffd] received
-2022-06-09 16:35:21,375 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3ade47fb-deff-4a29-92af-6e31c8048ffd] succeeded in 0.39011519699852215s: None
-2022-06-09 16:35:52,187 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-31 12:57:15) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 16:36:21,020 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:36:21,023 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7f3e86f3-80df-4b44-b9be-184b7d38f182] received
-2022-06-09 16:36:21,455 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7f3e86f3-80df-4b44-b9be-184b7d38f182] succeeded in 0.43094871200446505s: None
-2022-06-09 16:36:23,665 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-01 19:54:35) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 16:36:55,051 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-07 14:06:00) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 16:37:21,029 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:37:21,031 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c60f4a46-f9a0-48ed-b556-e90bb90d823b] received
-2022-06-09 16:37:21,388 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c60f4a46-f9a0-48ed-b556-e90bb90d823b] succeeded in 0.355873355998483s: None
-2022-06-09 16:37:26,016 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-25 17:00:38) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 16:37:57,261 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-06 12:02:48) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 16:38:21,030 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:38:21,032 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[55ec9235-5e06-4539-8424-aa4485b9d08c] received
-2022-06-09 16:38:21,363 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[55ec9235-5e06-4539-8424-aa4485b9d08c] succeeded in 0.3308517070036032s: None
-2022-06-09 16:38:28,225 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-08 07:38:26) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 16:38:58,445 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 09:36:04) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 16:39:20,708 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-06-09 16:39:20,710 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[8ef9d379-f855-4a4b-979a-45d916617d96] received
-2022-06-09 16:39:20,724 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-06-09 16:39:20,726 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[2a65fc73-51df-426f-be21-9827023d981a] received
-2022-06-09 16:39:21,094 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:39:21,096 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[db714cf6-c2b2-4948-b8b4-5371b3ef2947] received
-2022-06-09 16:39:21,887 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[db714cf6-c2b2-4948-b8b4-5371b3ef2947] succeeded in 0.7905557489939383s: None
-2022-06-09 16:39:22,636 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[2a65fc73-51df-426f-be21-9827023d981a] succeeded in 1.9093493649997981s: None
-2022-06-09 16:39:24,852 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[8ef9d379-f855-4a4b-979a-45d916617d96] succeeded in 4.14079428200057s: None
-2022-06-09 16:39:28,476 - celery.app.trace - INFO - Task scrapper.tasks.scrape_substack[792ba72e-5c30-416c-8efe-8e9d6c21a028] succeeded in 907.752809960999s: None
-2022-06-09 16:40:21,107 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:40:21,109 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3a23e9f3-201b-4091-b475-f86ce10a2ade] received
-2022-06-09 16:40:21,559 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3a23e9f3-201b-4091-b475-f86ce10a2ade] succeeded in 0.4489886610026588s: None
-2022-06-09 16:41:21,119 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:41:21,121 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e0dfcc2f-cce3-401d-b44d-bdd547ac46da] received
-2022-06-09 16:41:21,501 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e0dfcc2f-cce3-401d-b44d-bdd547ac46da] succeeded in 0.37890516300103627s: None
-2022-06-09 16:42:21,143 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:42:21,144 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a4af111f-90f8-4173-9152-77690da056dd] received
-2022-06-09 16:42:21,601 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a4af111f-90f8-4173-9152-77690da056dd] succeeded in 0.45637428700138116s: None
-2022-06-09 16:43:21,152 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:43:21,154 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7fa18772-f22b-4ecb-aad0-45fa9688ca57] received
-2022-06-09 16:43:21,572 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7fa18772-f22b-4ecb-aad0-45fa9688ca57] succeeded in 0.41761184400093043s: None
-2022-06-09 16:44:21,161 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:44:21,164 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a8d8fe13-97ea-4831-a91c-756c6d156c3d] received
-2022-06-09 16:44:21,564 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a8d8fe13-97ea-4831-a91c-756c6d156c3d] succeeded in 0.39880854199873284s: None
-2022-06-09 16:45:21,195 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:45:21,197 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[416bda8a-583c-4ebd-b3a4-ee7ad89ca2c1] received
-2022-06-09 16:45:21,752 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[416bda8a-583c-4ebd-b3a4-ee7ad89ca2c1] succeeded in 0.5537812729962752s: None
-2022-06-09 16:46:21,204 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:46:21,207 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a5b27e66-d912-46c9-bce1-14e115ab5a71] received
-2022-06-09 16:46:21,646 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a5b27e66-d912-46c9-bce1-14e115ab5a71] succeeded in 0.43805479499860667s: None
-2022-06-09 16:47:21,216 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:47:21,219 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8d6cfcd4-1a31-4a10-ace3-d7a3aa60e9ff] received
-2022-06-09 16:47:21,653 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8d6cfcd4-1a31-4a10-ace3-d7a3aa60e9ff] succeeded in 0.43357213499984937s: None
-2022-06-09 16:48:21,257 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:48:21,259 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e840eea7-d092-46db-95a5-225dbab24a8b] received
-2022-06-09 16:48:21,765 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e840eea7-d092-46db-95a5-225dbab24a8b] succeeded in 0.5051042709965259s: None
-2022-06-09 16:49:21,269 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:49:21,273 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8b84afe2-9e1c-4845-b597-4943d941db68] received
-2022-06-09 16:49:21,669 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8b84afe2-9e1c-4845-b597-4943d941db68] succeeded in 0.3950767599963001s: None
-2022-06-09 16:50:21,281 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:50:21,284 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e2b5b790-8d58-496e-acfb-54b2cbcef2b8] received
-2022-06-09 16:50:21,676 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e2b5b790-8d58-496e-acfb-54b2cbcef2b8] succeeded in 0.3911602060034056s: None
-2022-06-09 16:51:21,322 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:51:21,324 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c0c3b538-5bfe-472a-971a-f053836d03c7] received
-2022-06-09 16:51:21,674 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c0c3b538-5bfe-472a-971a-f053836d03c7] succeeded in 0.3482633000021451s: None
-2022-06-09 16:52:21,332 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:52:21,335 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5e953c4f-5e35-4ca3-b002-68c1e2957899] received
-2022-06-09 16:52:21,687 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5e953c4f-5e35-4ca3-b002-68c1e2957899] succeeded in 0.3513167739947676s: None
-2022-06-09 16:53:21,341 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:53:21,344 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b8e90276-7142-4874-9413-f25e799a36b4] received
-2022-06-09 16:53:21,733 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b8e90276-7142-4874-9413-f25e799a36b4] succeeded in 0.3881761459997506s: None
-2022-06-09 16:54:20,719 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-06-09 16:54:20,721 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[6e0dcbfa-50d3-4a77-9977-3ee9cf2f7ed6] received
-2022-06-09 16:54:20,735 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-06-09 16:54:20,737 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[a84b9d3b-15c7-4e97-99b0-5a0ab6231261] received
-2022-06-09 16:54:21,399 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:54:21,401 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3b749c19-f232-48df-99c8-aa983ff045fc] received
-2022-06-09 16:54:21,975 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[a84b9d3b-15c7-4e97-99b0-5a0ab6231261] succeeded in 1.2368045620023622s: None
-2022-06-09 16:54:22,249 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3b749c19-f232-48df-99c8-aa983ff045fc] succeeded in 0.8479760050031473s: None
-2022-06-09 16:54:25,164 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[6e0dcbfa-50d3-4a77-9977-3ee9cf2f7ed6] succeeded in 4.442199291996076s: None
-2022-06-09 16:55:21,411 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:55:21,415 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[32440a0c-5e25-4b27-9d85-c77f7ca598f8] received
-2022-06-09 16:55:21,818 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[32440a0c-5e25-4b27-9d85-c77f7ca598f8] succeeded in 0.40221489199757343s: None
-2022-06-09 16:56:21,417 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:56:21,418 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5cfd6961-6eec-4eab-8647-4eefcc0ba814] received
-2022-06-09 16:56:21,831 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5cfd6961-6eec-4eab-8647-4eefcc0ba814] succeeded in 0.4122186849999707s: None
-2022-06-09 16:57:21,457 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:57:21,459 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9a5c8bab-e847-4bb0-b0b5-4389356366c7] received
-2022-06-09 16:57:21,959 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9a5c8bab-e847-4bb0-b0b5-4389356366c7] succeeded in 0.498459405003814s: None
-2022-06-09 16:58:21,461 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:58:21,463 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3e42d902-3869-4398-a975-0881e99ae27e] received
-2022-06-09 16:58:21,817 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3e42d902-3869-4398-a975-0881e99ae27e] succeeded in 0.3532302859966876s: None
-2022-06-09 16:59:21,473 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 16:59:21,476 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1484a3ca-d7e1-4bae-ac89-fd6e9a989ab1] received
-2022-06-09 16:59:21,943 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1484a3ca-d7e1-4bae-ac89-fd6e9a989ab1] succeeded in 0.46646018200408434s: None
-2022-06-09 17:00:21,515 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:00:21,518 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[23469f69-f120-4c97-a13e-3474de9c27b7] received
-2022-06-09 17:00:22,070 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[23469f69-f120-4c97-a13e-3474de9c27b7] succeeded in 0.5514441720006289s: None
-2022-06-09 17:01:21,523 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:01:21,525 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[276af50d-439f-40f2-951c-af7f14534b5f] received
-2022-06-09 17:01:21,859 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[276af50d-439f-40f2-951c-af7f14534b5f] succeeded in 0.3329057059963816s: None
-2022-06-09 17:02:21,528 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:02:21,529 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[048a6ac4-dbec-4980-858a-da91f234a1ff] received
-2022-06-09 17:02:21,903 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[048a6ac4-dbec-4980-858a-da91f234a1ff] succeeded in 0.3729091889981646s: None
-2022-06-09 17:03:21,559 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:03:21,561 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2c915c10-5061-412e-b171-cf2ee60ae481] received
-2022-06-09 17:03:21,995 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2c915c10-5061-412e-b171-cf2ee60ae481] succeeded in 0.433647783997003s: None
-2022-06-09 17:04:21,563 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:04:21,565 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c6a6e07c-e228-4e20-a507-f136922d696e] received
-2022-06-09 17:04:21,825 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c6a6e07c-e228-4e20-a507-f136922d696e] succeeded in 0.2596365950012114s: None
-2022-06-09 17:05:21,566 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:05:21,567 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f8eef6ce-7ac9-4a19-819d-ff9180c73de6] received
-2022-06-09 17:05:23,031 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f8eef6ce-7ac9-4a19-819d-ff9180c73de6] succeeded in 1.463301171999774s: None
-2022-06-09 17:06:21,598 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:06:21,600 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d319f5c4-5159-4889-819b-e182c4aa6157] received
-2022-06-09 17:06:21,941 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d319f5c4-5159-4889-819b-e182c4aa6157] succeeded in 0.33938061200024094s: None
-2022-06-09 17:07:21,608 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:07:21,611 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[02f3ff59-5669-4237-b8a8-9cb75afaaaec] received
-2022-06-09 17:07:21,997 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[02f3ff59-5669-4237-b8a8-9cb75afaaaec] succeeded in 0.38567146599962143s: None
-2022-06-09 17:08:21,616 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:08:21,619 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[62d1e9e3-c7d1-4c93-a197-dc9d35b76e91] received
-2022-06-09 17:08:21,946 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[62d1e9e3-c7d1-4c93-a197-dc9d35b76e91] succeeded in 0.32656958200095687s: None
-2022-06-09 17:09:20,729 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-06-09 17:09:20,731 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[d76c948b-d7d9-408e-bf29-37cda5177df7] received
-2022-06-09 17:09:20,740 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-06-09 17:09:20,741 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[5403d6fa-71ba-4724-969d-2bb89c6072ad] received
-2022-06-09 17:09:21,668 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:09:21,670 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9bd7ecbb-a592-4c99-b65d-33f0fa2e62ff] received
-2022-06-09 17:09:22,150 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[5403d6fa-71ba-4724-969d-2bb89c6072ad] succeeded in 1.4086233820053167s: None
-2022-06-09 17:09:22,550 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9bd7ecbb-a592-4c99-b65d-33f0fa2e62ff] succeeded in 0.8793998609980918s: None
-2022-06-09 17:09:25,072 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[d76c948b-d7d9-408e-bf29-37cda5177df7] succeeded in 4.339561392000178s: None
-2022-06-09 17:10:21,676 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:10:21,678 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1a2e65f4-8059-492d-8a6f-659def69df17] received
-2022-06-09 17:10:22,125 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1a2e65f4-8059-492d-8a6f-659def69df17] succeeded in 0.4458844179971493s: None
-2022-06-09 17:11:21,684 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:11:21,686 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[878b4390-c910-4af6-8071-64d653068126] received
-2022-06-09 17:11:22,190 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[878b4390-c910-4af6-8071-64d653068126] succeeded in 0.5031447150031454s: None
-2022-06-09 17:12:21,716 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:12:21,718 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[89d98f0d-a3f0-4b0d-adb0-9a152bb0bd5b] received
-2022-06-09 17:12:22,183 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[89d98f0d-a3f0-4b0d-adb0-9a152bb0bd5b] succeeded in 0.46405606900225393s: None
-2022-06-09 17:13:21,724 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:13:21,725 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6dac6246-bc47-4377-a6aa-607ce7378cc2] received
-2022-06-09 17:13:22,062 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6dac6246-bc47-4377-a6aa-607ce7378cc2] succeeded in 0.3357453920034459s: None
-2022-06-09 17:14:21,732 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:14:21,734 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8b1fc704-0c6d-490d-86d2-f317bcc65aab] received
-2022-06-09 17:14:21,991 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8b1fc704-0c6d-490d-86d2-f317bcc65aab] succeeded in 0.25638992699532537s: None
-2022-06-09 17:15:21,760 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:15:21,762 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e73b5ddd-eff1-4cf2-92c8-b663628496a3] received
-2022-06-09 17:15:22,150 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e73b5ddd-eff1-4cf2-92c8-b663628496a3] succeeded in 0.38827636900532525s: None
-2022-06-09 17:16:21,768 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:16:21,770 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e0b77b72-ab68-4479-b36f-99a32ee6c4c9] received
-2022-06-09 17:16:22,158 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e0b77b72-ab68-4479-b36f-99a32ee6c4c9] succeeded in 0.386825803994725s: None
-2022-06-09 17:17:21,776 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:17:21,778 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b349523d-53f2-4aef-bef4-87da54104e25] received
-2022-06-09 17:17:23,181 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b349523d-53f2-4aef-bef4-87da54104e25] succeeded in 1.401745357994514s: None
-2022-06-09 17:18:21,812 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:18:21,814 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fb6b238e-d30f-44ec-81f3-de9a59454856] received
-2022-06-09 17:18:22,166 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fb6b238e-d30f-44ec-81f3-de9a59454856] succeeded in 0.3520496930068475s: None
-2022-06-09 17:19:21,822 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:19:21,824 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7ac1b9be-7b0a-4bf3-a394-3d42b3748faa] received
-2022-06-09 17:19:22,173 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7ac1b9be-7b0a-4bf3-a394-3d42b3748faa] succeeded in 0.3477897889970336s: None
-2022-06-09 17:20:21,828 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:20:21,830 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[76f4f3b5-d07d-47c4-87f7-9529b7ab1928] received
-2022-06-09 17:20:22,189 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[76f4f3b5-d07d-47c4-87f7-9529b7ab1928] succeeded in 0.35860222399787745s: None
-2022-06-09 17:21:21,862 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:21:21,864 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1cc9b902-1eea-4ab9-9839-2be51959aa6a] received
-2022-06-09 17:21:22,599 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1cc9b902-1eea-4ab9-9839-2be51959aa6a] succeeded in 0.7341012879987829s: None
-2022-06-09 17:22:21,871 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:22:21,872 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0cc894c8-91ff-459c-9ebc-a62aee7f38e7] received
-2022-06-09 17:22:22,312 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0cc894c8-91ff-459c-9ebc-a62aee7f38e7] succeeded in 0.438505237994832s: None
-2022-06-09 17:23:21,883 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:23:21,885 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[942f15a0-c3a3-4fbb-8b61-9ba5ba6f4526] received
-2022-06-09 17:23:22,315 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[942f15a0-c3a3-4fbb-8b61-9ba5ba6f4526] succeeded in 0.4289146310038632s: None
-2022-06-09 17:24:20,728 - celery.beat - INFO - Scheduler: Sending due task Substack Scrapping (scrapper.tasks.scrape_substack)
-2022-06-09 17:24:20,730 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_substack[d5601d12-7403-479f-9c9f-483bcb489917] received
-2022-06-09 17:24:20,746 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-06-09 17:24:20,748 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[22ca0f94-ce4e-43e0-85bf-ff4de02b1f84] received
-2022-06-09 17:24:20,758 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-06-09 17:24:20,760 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[9ff5f35e-71d4-4dea-8b28-f105fb314496] received
-2022-06-09 17:24:21,616 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-02 16:27:17) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:24:21,948 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:24:21,950 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[83568ab3-2f8e-4ec5-9699-0954ec3facf2] received
-2022-06-09 17:24:22,327 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[9ff5f35e-71d4-4dea-8b28-f105fb314496] succeeded in 1.5664724239977659s: None
-2022-06-09 17:24:22,905 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[83568ab3-2f8e-4ec5-9699-0954ec3facf2] succeeded in 0.9542440029981663s: None
-2022-06-09 17:24:25,791 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[22ca0f94-ce4e-43e0-85bf-ff4de02b1f84] succeeded in 5.043114293002873s: None
-2022-06-09 17:24:53,208 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-03 13:03:59) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:25:21,952 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:25:21,954 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[65240b96-c557-4c44-b6f4-f5caf92e194c] received
-2022-06-09 17:25:22,884 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[65240b96-c557-4c44-b6f4-f5caf92e194c] succeeded in 0.9294393780000973s: None
-2022-06-09 17:25:24,442 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-04-04 13:00:44) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:25:56,163 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-01 17:00:42) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:26:21,960 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:26:21,962 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9a9169ff-7985-4999-995e-693ed4bac47e] received
-2022-06-09 17:26:22,923 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9a9169ff-7985-4999-995e-693ed4bac47e] succeeded in 0.9595576309948228s: None
-2022-06-09 17:26:27,096 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 13:29:06) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:26:57,843 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 14:00:56) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:27:21,996 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:27:21,997 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f4aa87ed-13aa-4fba-8137-2f8a08e94ac1] received
-2022-06-09 17:27:22,387 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f4aa87ed-13aa-4fba-8137-2f8a08e94ac1] succeeded in 0.3881050039999536s: None
-2022-06-09 17:27:28,950 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-08 15:26:11) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:28:00,021 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-03-12 18:02:20) while time zone support is active.
+2022-06-11 07:46:48,908 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-04-19 20:26:30) while time zone support is active.
   warnings.warn("DateTimeField %s received a naive datetime (%s)"
 
-2022-06-09 17:28:22,004 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:28:22,006 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1f61388c-8efb-44b0-9c33-82b158cf7e51] received
-2022-06-09 17:28:22,450 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1f61388c-8efb-44b0-9c33-82b158cf7e51] succeeded in 0.44242760500492295s: None
-2022-06-09 17:28:30,926 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-10 16:54:42) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:29:02,137 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-13 01:25:30) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:29:22,012 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:29:22,014 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[90440a50-e1e6-4118-a281-a3304180db7d] received
-2022-06-09 17:29:22,411 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[90440a50-e1e6-4118-a281-a3304180db7d] succeeded in 0.39581160899979295s: None
-2022-06-09 17:29:33,399 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-03 20:27:04) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:30:05,123 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-04-19 20:26:30) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:30:22,038 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:30:22,039 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[089e4132-178b-40fa-9219-a4622e01fc64] received
-2022-06-09 17:30:23,403 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[089e4132-178b-40fa-9219-a4622e01fc64] succeeded in 1.3629800870039617s: None
-2022-06-09 17:30:36,117 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-25 16:05:37) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:31:07,322 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-23 03:30:41) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:31:22,048 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:31:22,050 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[649fe2b4-c711-42ae-9121-53f8aa2bf2ee] received
-2022-06-09 17:31:22,404 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[649fe2b4-c711-42ae-9121-53f8aa2bf2ee] succeeded in 0.35305636600241996s: None
-2022-06-09 17:31:38,229 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2020-01-10 04:55:33) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:32:09,754 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-04 00:28:50) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:32:22,057 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:32:22,059 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[89d1c1f5-1194-418c-9dd7-b855566a8266] received
-2022-06-09 17:32:22,519 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[89d1c1f5-1194-418c-9dd7-b855566a8266] succeeded in 0.45898487100203056s: None
-2022-06-09 17:32:41,488 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-03 13:01:01) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:33:12,931 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-02 10:51:35) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:33:22,084 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:33:22,086 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d4c6523d-44e8-440d-ba22-a7a66bcdfcc6] received
-2022-06-09 17:33:22,528 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d4c6523d-44e8-440d-ba22-a7a66bcdfcc6] succeeded in 0.4408826799990493s: None
-2022-06-09 17:33:44,870 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-01-14 15:23:09) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:34:16,037 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-05 13:00:21) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:34:22,091 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:34:22,093 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a11630c3-4b6f-406c-b66a-e7f5e2d52ef0] received
-2022-06-09 17:34:22,508 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a11630c3-4b6f-406c-b66a-e7f5e2d52ef0] succeeded in 0.4139254859983339s: None
-2022-06-09 17:34:46,800 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 14:30:21) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:35:18,068 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-28 17:20:03) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:35:22,100 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:35:22,102 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[63e3354d-bdf8-4a69-b1d3-e420a4f282c8] received
-2022-06-09 17:35:22,512 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[63e3354d-bdf8-4a69-b1d3-e420a4f282c8] succeeded in 0.40951497700007167s: None
-2022-06-09 17:35:51,281 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-31 12:57:15) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:36:22,120 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:36:22,121 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fdb32178-a8d7-4014-8547-83502a4c762e] received
-2022-06-09 17:36:22,461 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-01 19:54:35) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:36:22,476 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fdb32178-a8d7-4014-8547-83502a4c762e] succeeded in 0.35397982699942077s: None
-2022-06-09 17:36:54,210 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-07 14:06:00) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:37:22,129 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:37:22,131 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9b98eb05-4c82-4490-a6b9-3a8dc1deb156] received
-2022-06-09 17:37:22,497 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9b98eb05-4c82-4490-a6b9-3a8dc1deb156] succeeded in 0.3647523210020154s: None
-2022-06-09 17:37:25,298 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 17:00:26) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:37:25,309 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-25 17:00:38) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:37:56,285 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-06 12:02:48) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:38:22,131 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:38:22,133 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ef1659a0-a41e-402a-abbd-7a295ec63083] received
-2022-06-09 17:38:22,593 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ef1659a0-a41e-402a-abbd-7a295ec63083] succeeded in 0.4592744149995269s: None
-2022-06-09 17:38:28,025 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-08 07:38:26) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:38:59,148 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 09:36:04) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 17:39:20,761 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-06-09 17:39:20,763 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[cc84be03-5a1e-40ad-b044-f445639ec5fa] received
-2022-06-09 17:39:20,778 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-06-09 17:39:20,780 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[63e8855a-71c1-412e-9dbe-2730572d6fcc] received
-2022-06-09 17:39:22,189 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:39:22,190 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d33facf5-5d61-4a97-a8f3-2de88054f9c2] received
-2022-06-09 17:39:22,559 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[63e8855a-71c1-412e-9dbe-2730572d6fcc] succeeded in 1.7780203449947294s: None
-2022-06-09 17:39:22,996 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d33facf5-5d61-4a97-a8f3-2de88054f9c2] succeeded in 0.8048401979976916s: None
-2022-06-09 17:39:25,995 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[cc84be03-5a1e-40ad-b044-f445639ec5fa] succeeded in 5.231712086002517s: None
-2022-06-09 17:39:29,180 - celery.app.trace - INFO - Task scrapper.tasks.scrape_substack[d5601d12-7403-479f-9c9f-483bcb489917] succeeded in 908.4495632730032s: None
-2022-06-09 17:40:22,192 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:40:22,194 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[49cf8231-9c59-44c1-a3a5-ce0e6fd8fe73] received
-2022-06-09 17:40:23,047 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[49cf8231-9c59-44c1-a3a5-ce0e6fd8fe73] succeeded in 0.8524372669999138s: None
-2022-06-09 17:41:22,200 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:41:22,202 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8c4321e7-fe1d-4a6d-ada9-1b96289615e8] received
-2022-06-09 17:41:22,642 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8c4321e7-fe1d-4a6d-ada9-1b96289615e8] succeeded in 0.43908475000353064s: None
-2022-06-09 17:42:22,232 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:42:22,234 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6152e17d-9bce-4006-af43-461bb97f10b6] received
-2022-06-09 17:42:22,568 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6152e17d-9bce-4006-af43-461bb97f10b6] succeeded in 0.3341731920008897s: None
-2022-06-09 17:43:22,236 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:43:22,237 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[903d2a4b-e684-4c65-8601-15b086e28c18] received
-2022-06-09 17:43:22,722 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[903d2a4b-e684-4c65-8601-15b086e28c18] succeeded in 0.4836971629993059s: None
-2022-06-09 17:44:22,244 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:44:22,245 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ab328b32-8287-4b55-ac1d-2aa554900e4a] received
-2022-06-09 17:44:22,670 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ab328b32-8287-4b55-ac1d-2aa554900e4a] succeeded in 0.42394890500145266s: None
-2022-06-09 17:45:22,275 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:45:22,277 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[86969113-142a-46b0-bb12-5bc9ed79cdf3] received
-2022-06-09 17:45:22,606 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[86969113-142a-46b0-bb12-5bc9ed79cdf3] succeeded in 0.328273879000335s: None
-2022-06-09 17:46:22,282 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:46:22,284 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8eaf1ec5-1913-4148-bfdc-d50ef34a4530] received
-2022-06-09 17:46:22,679 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8eaf1ec5-1913-4148-bfdc-d50ef34a4530] succeeded in 0.3942830479936674s: None
-2022-06-09 17:47:22,293 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:47:22,295 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b9843426-5d0f-48c2-8c58-12ec8f567260] received
-2022-06-09 17:47:22,685 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b9843426-5d0f-48c2-8c58-12ec8f567260] succeeded in 0.3898185599973658s: None
-2022-06-09 17:48:22,322 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:48:22,325 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[594424c6-c5c1-4ff8-97e1-1791ca86970a] received
-2022-06-09 17:48:22,793 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[594424c6-c5c1-4ff8-97e1-1791ca86970a] succeeded in 0.46686036799655994s: None
-2022-06-09 17:49:22,333 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:49:22,335 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9037a884-dd67-450f-9b9c-021b40fcb1e2] received
-2022-06-09 17:49:22,693 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9037a884-dd67-450f-9b9c-021b40fcb1e2] succeeded in 0.35708933099522255s: None
-2022-06-09 17:50:22,340 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:50:22,342 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[21cfc260-f390-4147-b534-2e050094601b] received
-2022-06-09 17:50:22,725 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[21cfc260-f390-4147-b534-2e050094601b] succeeded in 0.3827682580013061s: None
-2022-06-09 17:51:22,370 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:51:22,372 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3e70fccf-8b56-408a-8536-f15ec34704d2] received
-2022-06-09 17:51:22,707 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3e70fccf-8b56-408a-8536-f15ec34704d2] succeeded in 0.3344100390022504s: None
-2022-06-09 17:52:22,380 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:52:22,382 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c5f5e1b6-d169-49f2-a285-1bb5c26d225d] received
-2022-06-09 17:52:22,826 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c5f5e1b6-d169-49f2-a285-1bb5c26d225d] succeeded in 0.4431742699962342s: None
-2022-06-09 17:53:22,385 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:53:22,387 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7be82208-6ec3-4868-9826-92ba99f1cb4f] received
-2022-06-09 17:53:22,858 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7be82208-6ec3-4868-9826-92ba99f1cb4f] succeeded in 0.47059105000516865s: None
-2022-06-09 17:54:20,762 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-06-09 17:54:20,764 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[4d95e6a7-6bf2-454e-b0dd-4245bf3c9eea] received
-2022-06-09 17:54:20,786 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-06-09 17:54:20,787 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[39b702ed-f321-468c-a661-02be969b061c] received
-2022-06-09 17:54:22,449 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:54:22,451 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[605a9fa4-b2da-470c-88e7-2d82cdc76d5a] received
-2022-06-09 17:54:22,561 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[39b702ed-f321-468c-a661-02be969b061c] succeeded in 1.772975325002335s: None
-2022-06-09 17:54:23,383 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[605a9fa4-b2da-470c-88e7-2d82cdc76d5a] succeeded in 0.9309595329978038s: None
-2022-06-09 17:54:25,904 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[4d95e6a7-6bf2-454e-b0dd-4245bf3c9eea] succeeded in 5.138235033999081s: None
-2022-06-09 17:55:22,460 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:55:22,462 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8f4922b8-bf63-47fd-86a9-8e8776b49171] received
-2022-06-09 17:55:22,856 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8f4922b8-bf63-47fd-86a9-8e8776b49171] succeeded in 0.3931100420013536s: None
-2022-06-09 17:56:22,465 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:56:22,466 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2135cfc7-65cc-40ed-87a2-1fabed5b31d3] received
-2022-06-09 17:56:22,868 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2135cfc7-65cc-40ed-87a2-1fabed5b31d3] succeeded in 0.40133126800355967s: None
-2022-06-09 17:57:22,500 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:57:22,501 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[14505a07-079a-456b-b2e4-d404fe09bdbd] received
-2022-06-09 17:57:22,874 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[14505a07-079a-456b-b2e4-d404fe09bdbd] succeeded in 0.37245364599948516s: None
-2022-06-09 17:58:22,508 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:58:22,511 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b637da9e-28a4-4cca-98d2-045d0fbe0b1b] received
-2022-06-09 17:58:22,857 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b637da9e-28a4-4cca-98d2-045d0fbe0b1b] succeeded in 0.3460594710049918s: None
-2022-06-09 17:59:22,515 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 17:59:22,517 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0252ff41-21fc-46a1-a83b-be03a64b03c6] received
-2022-06-09 17:59:22,877 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0252ff41-21fc-46a1-a83b-be03a64b03c6] succeeded in 0.3588479439931689s: None
-2022-06-09 18:00:22,547 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:00:22,549 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c9cf01d4-ca9a-49b9-8793-530f2ed64706] received
-2022-06-09 18:00:23,004 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c9cf01d4-ca9a-49b9-8793-530f2ed64706] succeeded in 0.4541433019985561s: None
-2022-06-09 18:01:22,557 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:01:22,560 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8e6fa5aa-97c3-4eeb-8e6e-9e0c67256265] received
-2022-06-09 18:01:23,012 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8e6fa5aa-97c3-4eeb-8e6e-9e0c67256265] succeeded in 0.4509255529992515s: None
-2022-06-09 18:02:22,565 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:02:22,567 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3f0eed71-200e-4123-8362-fba68aa513e4] received
-2022-06-09 18:02:22,993 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3f0eed71-200e-4123-8362-fba68aa513e4] succeeded in 0.42517487500299467s: None
-2022-06-09 18:03:22,590 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:03:22,592 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[089956e6-243a-4ea5-bb53-853b1729123f] received
-2022-06-09 18:03:22,921 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[089956e6-243a-4ea5-bb53-853b1729123f] succeeded in 0.32873297500191256s: None
-2022-06-09 18:04:22,596 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:04:22,599 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3aaa5d15-afa4-44c8-9c04-2db12b65b430] received
-2022-06-09 18:04:22,963 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3aaa5d15-afa4-44c8-9c04-2db12b65b430] succeeded in 0.36392925700056367s: None
-2022-06-09 18:05:22,597 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:05:22,598 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0ca89794-4b58-47b2-9878-b6f1e43e75f9] received
-2022-06-09 18:05:23,041 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0ca89794-4b58-47b2-9878-b6f1e43e75f9] succeeded in 0.44228633899911074s: None
-2022-06-09 18:06:22,627 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:06:22,629 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[4f5bcc92-705c-48f5-97e9-5de842c1c452] received
-2022-06-09 18:06:23,095 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[4f5bcc92-705c-48f5-97e9-5de842c1c452] succeeded in 0.4654286509976373s: None
-2022-06-09 18:07:22,631 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:07:22,633 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2c75c5be-b950-4fcc-842b-c6137092c0b6] received
-2022-06-09 18:07:23,093 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2c75c5be-b950-4fcc-842b-c6137092c0b6] succeeded in 0.4597961920007947s: None
-2022-06-09 18:08:22,638 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:08:22,640 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b7966f21-c335-4fef-a8de-5e6228fa1336] received
-2022-06-09 18:08:22,958 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b7966f21-c335-4fef-a8de-5e6228fa1336] succeeded in 0.31753256599768065s: None
-2022-06-09 18:09:20,770 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-06-09 18:09:20,772 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[7d930827-a3ea-43cb-83d6-8039e28aeecc] received
-2022-06-09 18:09:20,787 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-06-09 18:09:20,790 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[f895520c-b01b-41c9-ad1e-5e4e54bdc1fb] received
-2022-06-09 18:09:22,687 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:09:22,689 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[af1544b6-b59e-411d-bbdf-b886139be225] received
-2022-06-09 18:09:23,349 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[f895520c-b01b-41c9-ad1e-5e4e54bdc1fb] succeeded in 2.5588743209955283s: None
-2022-06-09 18:09:23,616 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[af1544b6-b59e-411d-bbdf-b886139be225] succeeded in 0.9260776070004795s: None
-2022-06-09 18:09:28,564 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[7d930827-a3ea-43cb-83d6-8039e28aeecc] succeeded in 7.79121830999793s: None
-2022-06-09 18:10:22,696 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:10:22,698 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9e119ba8-0a3b-4606-a98b-22291b863e97] received
-2022-06-09 18:10:23,000 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9e119ba8-0a3b-4606-a98b-22291b863e97] succeeded in 0.3008629719988676s: None
-2022-06-09 18:11:22,698 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:11:22,699 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9b7d7676-8d3c-4419-a999-28a23d027c91] received
-2022-06-09 18:11:22,975 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9b7d7676-8d3c-4419-a999-28a23d027c91] succeeded in 0.2753665340060252s: None
-2022-06-09 18:12:22,719 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:12:22,721 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[70efe2c8-ce8d-4886-bea8-ee94d98fe901] received
-2022-06-09 18:12:23,050 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[70efe2c8-ce8d-4886-bea8-ee94d98fe901] succeeded in 0.3284168719983427s: None
-2022-06-09 18:13:22,720 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:13:22,722 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3c71934e-f806-4510-9d3f-5e92914f4513] received
-2022-06-09 18:13:23,087 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3c71934e-f806-4510-9d3f-5e92914f4513] succeeded in 0.363672173996747s: None
-2022-06-09 18:14:22,728 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:14:22,731 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8e2a2982-0f9e-4677-b5b2-195253c76cd9] received
-2022-06-09 18:14:23,036 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8e2a2982-0f9e-4677-b5b2-195253c76cd9] succeeded in 0.3034443740034476s: None
-2022-06-09 18:15:22,751 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:15:22,754 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a7f524a8-7218-47b4-b5c7-b155983124ef] received
-2022-06-09 18:15:23,096 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a7f524a8-7218-47b4-b5c7-b155983124ef] succeeded in 0.34201880900218384s: None
-2022-06-09 18:16:22,758 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:16:22,761 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8566fbc7-dbd6-4f36-b732-2a8b62035216] received
-2022-06-09 18:16:23,134 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8566fbc7-dbd6-4f36-b732-2a8b62035216] succeeded in 0.3726889699973981s: None
-2022-06-09 18:17:22,769 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:17:22,771 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[855dc8f0-2d83-4cc7-bceb-4c3f6386a0f2] received
-2022-06-09 18:17:23,089 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[855dc8f0-2d83-4cc7-bceb-4c3f6386a0f2] succeeded in 0.31641286199737806s: None
-2022-06-09 18:18:22,784 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:18:22,786 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[defa9bd8-eeb3-45b3-a068-d436b43e4f19] received
-2022-06-09 18:18:23,086 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[defa9bd8-eeb3-45b3-a068-d436b43e4f19] succeeded in 0.2985337350037298s: None
-2022-06-09 18:19:22,785 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:19:22,787 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e21d463d-95b8-4e1e-896f-f6942701cfed] received
-2022-06-09 18:19:23,128 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e21d463d-95b8-4e1e-896f-f6942701cfed] succeeded in 0.3399524479973479s: None
-2022-06-09 18:20:22,796 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:20:22,798 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[105e5a79-f5b7-440d-ac65-9f4c06a746c0] received
-2022-06-09 18:20:23,129 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[105e5a79-f5b7-440d-ac65-9f4c06a746c0] succeeded in 0.3305121550001786s: None
-2022-06-09 18:21:22,819 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:21:22,821 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[136b7b55-8652-4509-b059-39c7baf91666] received
-2022-06-09 18:21:23,098 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[136b7b55-8652-4509-b059-39c7baf91666] succeeded in 0.27633728300133953s: None
-2022-06-09 18:22:22,830 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:22:22,832 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[79529118-901b-4ad2-aabf-987955439bc0] received
-2022-06-09 18:22:23,161 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[79529118-901b-4ad2-aabf-987955439bc0] succeeded in 0.3279439079997246s: None
-2022-06-09 18:23:22,837 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:23:22,838 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fc533365-2b45-4cef-bcb3-1d453bcbae75] received
-2022-06-09 18:23:23,241 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fc533365-2b45-4cef-bcb3-1d453bcbae75] succeeded in 0.4021491680032341s: None
-2022-06-09 18:24:20,738 - celery.beat - INFO - Scheduler: Sending due task Substack Scrapping (scrapper.tasks.scrape_substack)
-2022-06-09 18:24:20,740 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_substack[46f527e4-6aa0-4d9a-b624-028d20fb3508] received
-2022-06-09 18:24:20,771 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-06-09 18:24:20,773 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[55a98149-8f31-4ace-ac1f-70a0ca944127] received
-2022-06-09 18:24:20,793 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-06-09 18:24:20,795 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[2cbfe771-a889-43f2-859c-6f796eee6ffd] received
-2022-06-09 18:24:21,890 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 18:15:09) while time zone support is active.
-  warnings.warn("DateTimeField %s received a naive datetime (%s)"
-
-2022-06-09 18:24:22,494 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[2cbfe771-a889-43f2-859c-6f796eee6ffd] succeeded in 1.6977985089979484s: None
-2022-06-09 18:24:22,894 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:24:22,896 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a438d35d-6c91-45e1-a1d1-0fc30000472a] received
-2022-06-09 18:24:24,066 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a438d35d-6c91-45e1-a1d1-0fc30000472a] succeeded in 1.1696637450004346s: None
-2022-06-09 18:24:25,921 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[55a98149-8f31-4ace-ac1f-70a0ca944127] succeeded in 5.147347477999574s: None
-2022-06-09 18:25:22,904 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:25:22,907 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[94f81553-b709-4c9d-9125-03fd46c36e41] received
-2022-06-09 18:25:24,014 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[94f81553-b709-4c9d-9125-03fd46c36e41] succeeded in 1.1063139559992123s: None
-2022-06-09 18:26:22,916 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:26:22,918 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fbcd15e4-0708-4595-b227-0f345013d51e] received
-2022-06-09 18:26:24,016 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fbcd15e4-0708-4595-b227-0f345013d51e] succeeded in 1.0968647669942584s: None
-2022-06-09 18:27:22,952 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:27:22,954 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[cfed0056-94cc-49ba-8d21-9e48876b6bf6] received
-2022-06-09 18:27:23,941 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[cfed0056-94cc-49ba-8d21-9e48876b6bf6] succeeded in 0.9857259979980881s: None
-2022-06-09 18:28:22,960 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:28:22,963 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[aed07d8f-e1aa-4d22-acc5-bc36dbc9a32b] received
-2022-06-09 18:28:23,407 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[aed07d8f-e1aa-4d22-acc5-bc36dbc9a32b] succeeded in 0.4433056799971382s: None
-2022-06-09 18:29:22,970 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:29:22,972 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a2f5b81a-9dcf-4283-8a50-4908b4a02184] received
-2022-06-09 18:29:23,369 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a2f5b81a-9dcf-4283-8a50-4908b4a02184] succeeded in 0.3954207530041458s: None
-2022-06-09 18:30:23,010 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:30:23,013 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b9b30159-929c-4119-845b-cbf59e3de8e0] received
-2022-06-09 18:30:23,442 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b9b30159-929c-4119-845b-cbf59e3de8e0] succeeded in 0.4281721750012366s: None
-2022-06-09 18:31:23,022 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:31:23,024 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[592266ff-c6fa-45e5-a057-7a8cc4c9b2fd] received
-2022-06-09 18:31:23,423 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[592266ff-c6fa-45e5-a057-7a8cc4c9b2fd] succeeded in 0.3971498460014118s: None
-2022-06-09 18:32:23,029 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:32:23,031 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ab59df85-5ac8-4861-8ce9-89a565e2940f] received
-2022-06-09 18:32:23,431 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ab59df85-5ac8-4861-8ce9-89a565e2940f] succeeded in 0.3987023430017871s: None
-2022-06-09 18:33:23,063 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:33:23,065 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b77c8f18-981a-4eed-86d1-72c7b73fa5b3] received
-2022-06-09 18:33:23,452 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b77c8f18-981a-4eed-86d1-72c7b73fa5b3] succeeded in 0.38530316299875267s: None
-2022-06-09 18:34:23,066 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:34:23,068 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fbf587ca-c07b-4434-8dbc-a45c509297a1] received
-2022-06-09 18:34:23,444 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fbf587ca-c07b-4434-8dbc-a45c509297a1] succeeded in 0.3747734899952775s: None
-2022-06-09 18:35:23,073 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:35:23,076 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6f6e04ec-9545-4726-8ece-904554bbfa7b] received
-2022-06-09 18:35:23,411 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6f6e04ec-9545-4726-8ece-904554bbfa7b] succeeded in 0.3344762359993183s: None
-2022-06-09 18:36:23,111 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:36:23,114 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b829fd42-e36f-4ccb-ae78-fdc1b4c94543] received
-2022-06-09 18:36:23,564 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b829fd42-e36f-4ccb-ae78-fdc1b4c94543] succeeded in 0.44926974999543745s: None
-2022-06-09 18:37:23,123 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:37:23,125 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fcdeb1de-0b5d-4bcf-ac74-128a06005793] received
-2022-06-09 18:37:23,620 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fcdeb1de-0b5d-4bcf-ac74-128a06005793] succeeded in 0.49389230500673875s: None
-2022-06-09 18:38:23,138 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:38:23,140 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d78160e5-6e40-4e4b-8a30-a94d7b95476b] received
-2022-06-09 18:38:23,466 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d78160e5-6e40-4e4b-8a30-a94d7b95476b] succeeded in 0.3243548819955322s: None
-2022-06-09 18:39:20,780 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-06-09 18:39:20,783 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[c980b894-ca76-426c-b55a-2bf7e9e07fc1] received
-2022-06-09 18:39:20,798 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-06-09 18:39:20,800 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[4c414e33-2627-4cce-88a3-30c78038ffff] received
-2022-06-09 18:39:22,279 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[4c414e33-2627-4cce-88a3-30c78038ffff] succeeded in 1.4777870639954926s: None
-2022-06-09 18:39:23,211 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:39:23,213 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3a0c1919-64fe-4371-bf24-06145224bd39] received
-2022-06-09 18:39:24,201 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3a0c1919-64fe-4371-bf24-06145224bd39] succeeded in 0.9869375440030126s: None
-2022-06-09 18:39:25,001 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[c980b894-ca76-426c-b55a-2bf7e9e07fc1] succeeded in 4.2172977040027035s: None
-2022-06-09 18:39:34,098 - celery.app.trace - INFO - Task scrapper.tasks.scrape_substack[46f527e4-6aa0-4d9a-b624-028d20fb3508] succeeded in 913.3574530109981s: None
-2022-06-09 18:40:23,223 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:40:23,226 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[058cc029-df42-4bef-a532-700ab78bfef7] received
-2022-06-09 18:40:24,297 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[058cc029-df42-4bef-a532-700ab78bfef7] succeeded in 1.07060736999847s: None
-2022-06-09 18:41:23,234 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:41:23,236 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f118f951-3bb4-424a-97dc-b181000bdf39] received
-2022-06-09 18:41:24,322 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f118f951-3bb4-424a-97dc-b181000bdf39] succeeded in 1.084291774997837s: None
-2022-06-09 18:42:23,250 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:42:23,252 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f8cd8383-1d73-43a4-957f-be1118b805d6] received
-2022-06-09 18:42:24,089 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f8cd8383-1d73-43a4-957f-be1118b805d6] succeeded in 0.8365756869970937s: None
-2022-06-09 18:43:23,262 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:43:23,265 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[188891a6-d00b-4e10-92a2-7734c16290b5] received
-2022-06-09 18:43:24,338 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[188891a6-d00b-4e10-92a2-7734c16290b5] succeeded in 1.072662398997636s: None
-2022-06-09 18:44:23,276 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:44:23,277 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6e12c3ea-eaaf-4080-a49d-4d791d7c56fe] received
-2022-06-09 18:44:24,242 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6e12c3ea-eaaf-4080-a49d-4d791d7c56fe] succeeded in 0.9643022140007815s: None
-2022-06-09 18:45:23,309 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:45:23,311 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6223536c-6f40-4203-bbb4-7290936ff970] received
-2022-06-09 18:45:24,020 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6223536c-6f40-4203-bbb4-7290936ff970] succeeded in 0.7078651850024471s: None
-2022-06-09 18:46:23,321 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:46:23,323 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7660c5a0-a885-4510-a178-119c7173e7d7] received
-2022-06-09 18:46:23,875 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7660c5a0-a885-4510-a178-119c7173e7d7] succeeded in 0.5514751119990251s: None
-2022-06-09 18:47:23,333 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:47:23,336 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[da58ff68-8c7f-4c9f-aec8-593c89595826] received
-2022-06-09 18:47:23,752 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[da58ff68-8c7f-4c9f-aec8-593c89595826] succeeded in 0.4148491969972383s: None
-2022-06-09 18:48:23,372 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:48:23,374 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b39b3ae6-b988-44b5-81ba-30ece7450817] received
-2022-06-09 18:48:23,974 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b39b3ae6-b988-44b5-81ba-30ece7450817] succeeded in 0.5982511359979981s: None
-2022-06-09 18:49:23,379 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:49:23,382 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[cde727cf-de4c-4964-ae22-da01abe675a1] received
-2022-06-09 18:49:23,813 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[cde727cf-de4c-4964-ae22-da01abe675a1] succeeded in 0.430027547001373s: None
-2022-06-09 18:50:23,388 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:50:23,391 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ce38b64c-a3f1-4c93-953b-1453f07bfbd3] received
-2022-06-09 18:50:23,999 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ce38b64c-a3f1-4c93-953b-1453f07bfbd3] succeeded in 0.6075467579939868s: None
-2022-06-09 18:51:23,412 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:51:23,415 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9c63e631-eb26-40e3-938e-2fe865a70403] received
-2022-06-09 18:51:23,873 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9c63e631-eb26-40e3-938e-2fe865a70403] succeeded in 0.4577719340013573s: None
-2022-06-09 18:52:23,416 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:52:23,418 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[29cf97a6-8a64-4c9b-9d01-058dfd921ab9] received
-2022-06-09 18:52:23,884 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[29cf97a6-8a64-4c9b-9d01-058dfd921ab9] succeeded in 0.46481317299912916s: None
-2022-06-09 18:53:23,418 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:53:23,419 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6021e299-c1be-441e-be12-b22c3a9d368c] received
-2022-06-09 18:53:23,791 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6021e299-c1be-441e-be12-b22c3a9d368c] succeeded in 0.37122138899576385s: None
-2022-06-09 18:54:20,786 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-06-09 18:54:20,788 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[bb925f6e-80d8-455a-830a-48d3e24dd961] received
-2022-06-09 18:54:20,798 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-06-09 18:54:20,800 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[e6671a0c-631f-4700-aeaf-13ee5551e986] received
-2022-06-09 18:54:22,321 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[e6671a0c-631f-4700-aeaf-13ee5551e986] succeeded in 1.5194863869983237s: None
-2022-06-09 18:54:23,486 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:54:23,488 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[96be61b2-d81f-4b31-98fb-80a53ea5a2b3] received
-2022-06-09 18:54:24,561 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[96be61b2-d81f-4b31-98fb-80a53ea5a2b3] succeeded in 1.0720534810025129s: None
-2022-06-09 18:54:25,213 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[bb925f6e-80d8-455a-830a-48d3e24dd961] succeeded in 4.424884083993675s: None
-2022-06-09 18:55:23,499 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:55:23,501 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2a799b18-0e7a-44c0-a1af-3c52c62bfdfc] received
-2022-06-09 18:55:28,831 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2a799b18-0e7a-44c0-a1af-3c52c62bfdfc] succeeded in 5.328444965001836s: None
-2022-06-09 18:56:23,510 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:56:23,512 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7c399997-a295-4162-a499-57de3a109306] received
-2022-06-09 18:56:23,924 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7c399997-a295-4162-a499-57de3a109306] succeeded in 0.411296501995821s: None
-2022-06-09 18:57:23,543 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:57:23,545 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0872efbd-c8a0-4e9f-bc8f-85c0e6c43eb5] received
-2022-06-09 18:57:25,011 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0872efbd-c8a0-4e9f-bc8f-85c0e6c43eb5] succeeded in 1.4651505860019824s: None
-2022-06-09 18:58:23,548 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:58:23,550 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[31b7e7d1-f536-4449-a0ef-278651b1f835] received
-2022-06-09 18:58:24,001 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[31b7e7d1-f536-4449-a0ef-278651b1f835] succeeded in 0.45097216599970125s: None
-2022-06-09 18:59:23,549 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 18:59:23,551 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5b1a3629-f7df-4fd6-aa1e-ce116945f3d6] received
-2022-06-09 18:59:23,921 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5b1a3629-f7df-4fd6-aa1e-ce116945f3d6] succeeded in 0.3699310919982963s: None
-2022-06-09 19:00:23,580 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:00:23,581 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7e36d13f-7d67-433d-bb1e-e88824985dc4] received
-2022-06-09 19:00:24,068 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7e36d13f-7d67-433d-bb1e-e88824985dc4] succeeded in 0.48548020699672634s: None
-2022-06-09 19:01:23,591 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:01:23,593 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b0f9aaf8-55a4-4ad7-94d0-432f391943b5] received
-2022-06-09 19:01:24,130 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b0f9aaf8-55a4-4ad7-94d0-432f391943b5] succeeded in 0.5363180659987847s: None
-2022-06-09 19:02:23,603 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:02:23,605 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7508653d-a32d-428a-8ed6-d2f2b63f8b52] received
-2022-06-09 19:02:24,047 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7508653d-a32d-428a-8ed6-d2f2b63f8b52] succeeded in 0.44151568000233965s: None
-2022-06-09 19:03:23,628 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:03:23,631 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a0073af6-795b-49da-bc2f-609c0b16b78e] received
-2022-06-09 19:03:24,089 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a0073af6-795b-49da-bc2f-609c0b16b78e] succeeded in 0.4576073819989688s: None
-2022-06-09 19:04:23,632 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:04:23,633 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[30d96583-9730-4e36-a3ca-06936ae46950] received
-2022-06-09 19:04:24,200 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[30d96583-9730-4e36-a3ca-06936ae46950] succeeded in 0.5657909170040512s: None
-2022-06-09 19:05:23,644 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:05:23,646 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2703a0c4-6648-4ec4-afe1-07669dcff44f] received
-2022-06-09 19:05:24,081 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2703a0c4-6648-4ec4-afe1-07669dcff44f] succeeded in 0.4336494659946766s: None
-2022-06-09 19:06:23,677 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:06:23,679 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[37e05cd5-f90c-4790-9b65-141c091b0a7e] received
-2022-06-09 19:06:24,118 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[37e05cd5-f90c-4790-9b65-141c091b0a7e] succeeded in 0.43716110199602554s: None
-2022-06-09 19:07:23,685 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:07:23,687 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1ab32afd-066f-4f7b-a947-b9b580c0df82] received
-2022-06-09 19:07:24,089 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1ab32afd-066f-4f7b-a947-b9b580c0df82] succeeded in 0.4011800250009401s: None
-2022-06-09 19:08:23,691 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:08:23,693 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[fbc22a57-ae33-4a68-93c4-c426fc678075] received
-2022-06-09 19:08:24,202 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[fbc22a57-ae33-4a68-93c4-c426fc678075] succeeded in 0.5085471529964707s: None
-2022-06-09 19:09:20,795 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
-2022-06-09 19:09:20,798 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[c8d9818d-646f-4b16-ad63-4a95cc2aaf26] received
-2022-06-09 19:09:20,809 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
-2022-06-09 19:09:20,811 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[09a070b4-b718-4ec9-9268-8328f208a35e] received
-2022-06-09 19:09:22,585 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[09a070b4-b718-4ec9-9268-8328f208a35e] succeeded in 1.7728183200015337s: None
-2022-06-09 19:09:23,757 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:09:23,759 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[73c53215-fa03-4a36-80bd-38c41159bcd1] received
-2022-06-09 19:09:24,784 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[73c53215-fa03-4a36-80bd-38c41159bcd1] succeeded in 1.0247628780052764s: None
-2022-06-09 19:09:25,423 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[c8d9818d-646f-4b16-ad63-4a95cc2aaf26] succeeded in 4.624082048998389s: None
-2022-06-09 19:10:23,768 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:10:23,770 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a2c70de2-d415-4236-a947-184eac189e04] received
-2022-06-09 19:10:24,231 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a2c70de2-d415-4236-a947-184eac189e04] succeeded in 0.45733980600198265s: None
-2022-06-09 19:11:23,775 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:11:23,776 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[beb6ed9f-141a-45ca-a0a6-e1aebf0b4ab4] received
-2022-06-09 19:11:24,262 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[beb6ed9f-141a-45ca-a0a6-e1aebf0b4ab4] succeeded in 0.48497225800383603s: None
-2022-06-09 19:12:23,811 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:12:23,813 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[bb330bf7-29a6-4e97-98c2-e3be967cc722] received
-2022-06-09 19:12:24,247 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[bb330bf7-29a6-4e97-98c2-e3be967cc722] succeeded in 0.43346462000044994s: None
-2022-06-09 19:13:23,822 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:13:23,824 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e2da091f-85d4-44a9-92a5-bb8070357d34] received
-2022-06-09 19:13:24,229 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e2da091f-85d4-44a9-92a5-bb8070357d34] succeeded in 0.4037350090002292s: None
-2022-06-09 19:14:23,833 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:14:23,836 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0aad001c-7139-404b-b246-eaac3ad96b9e] received
-2022-06-09 19:14:24,261 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0aad001c-7139-404b-b246-eaac3ad96b9e] succeeded in 0.4238568110013148s: None
-2022-06-09 19:15:23,863 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:15:23,865 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3a13375e-c38b-44b9-9210-6ba80f9e715e] received
-2022-06-09 19:15:24,389 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3a13375e-c38b-44b9-9210-6ba80f9e715e] succeeded in 0.5239112100025523s: None
-2022-06-09 19:16:23,873 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:16:23,875 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8eb33504-0f9f-4577-8790-214f90081a54] received
-2022-06-09 19:16:24,451 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8eb33504-0f9f-4577-8790-214f90081a54] succeeded in 0.5757708189994446s: None
-2022-06-09 19:17:23,879 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:17:23,881 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0770ab38-3a32-4a33-a90e-02dfb5dc79b5] received
-2022-06-09 19:17:24,275 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0770ab38-3a32-4a33-a90e-02dfb5dc79b5] succeeded in 0.39334369000425795s: None
-2022-06-09 19:18:23,909 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:18:23,910 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b9d38435-9da2-4e5e-a507-3dc1823b8e65] received
-2022-06-09 19:18:24,260 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b9d38435-9da2-4e5e-a507-3dc1823b8e65] succeeded in 0.3488577459938824s: None
-2022-06-09 19:19:23,920 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:19:23,922 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[aa33c93f-968c-4be1-b04a-4e51d61400e0] received
-2022-06-09 19:19:24,387 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[aa33c93f-968c-4be1-b04a-4e51d61400e0] succeeded in 0.46401158400112763s: None
-2022-06-09 19:20:23,931 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
-2022-06-09 19:20:23,934 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e626b41f-8cef-4a61-a96f-9a30db9d8fbc] received
-2022-06-09 19:20:24,497 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e626b41f-8cef-4a61-a96f-9a30db9d8fbc] succeeded in 0.562409229001787s: None
+2022-06-11 07:47:01,020 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:47:01,024 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[da594dc5-2190-471c-9cf7-a00914c89dd3] received
+2022-06-11 07:47:02,031 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[da594dc5-2190-471c-9cf7-a00914c89dd3] succeeded in 1.0061215969999466s: None
+2022-06-11 07:47:19,864 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-25 16:05:37) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:47:51,439 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-23 03:30:41) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:48:01,033 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:48:01,035 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[1c8b15db-b359-4abc-b3be-56d61e1d7573] received
+2022-06-11 07:48:02,081 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[1c8b15db-b359-4abc-b3be-56d61e1d7573] succeeded in 1.045401041000332s: None
+2022-06-11 07:48:22,291 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2020-01-10 04:55:33) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:48:53,263 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-04 00:28:50) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:49:01,045 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:49:01,047 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f4fb2639-875d-4d94-8a90-0a8e95efa2fb] received
+2022-06-11 07:49:02,340 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f4fb2639-875d-4d94-8a90-0a8e95efa2fb] succeeded in 1.2920020320007097s: None
+2022-06-11 07:49:24,256 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 13:00:55) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:49:55,364 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-02 10:51:35) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:50:01,057 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:50:01,059 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a6624a80-5f97-4e95-85df-30ca715c3c3c] received
+2022-06-11 07:50:02,115 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a6624a80-5f97-4e95-85df-30ca715c3c3c] succeeded in 1.0545663789998798s: None
+2022-06-11 07:50:26,790 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-01-14 15:23:09) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:50:57,851 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-05 13:00:21) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:51:01,069 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:51:01,071 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[b35b7f5d-bafe-45e3-872e-397493e859c1] received
+2022-06-11 07:51:02,296 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[b35b7f5d-bafe-45e3-872e-397493e859c1] succeeded in 1.2241903260000981s: None
+2022-06-11 07:51:28,912 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 17:45:16) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:51:59,753 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-28 17:20:03) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:52:01,073 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:52:01,074 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[235f1fbc-97be-49cb-99e7-ec13f6cc83ec] received
+2022-06-11 07:52:02,091 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[235f1fbc-97be-49cb-99e7-ec13f6cc83ec] succeeded in 1.0156294979997256s: None
+2022-06-11 07:52:30,308 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-05-31 12:57:15) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:53:01,084 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:53:01,087 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8f7abdc8-4bce-46d7-be97-b6f9b493efe9] received
+2022-06-11 07:53:01,511 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-02-01 19:54:35) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:53:02,036 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8f7abdc8-4bce-46d7-be97-b6f9b493efe9] succeeded in 0.9482605000002877s: None
+2022-06-11 07:53:32,981 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-07 14:06:00) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:54:01,118 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:54:01,120 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[e964277c-e6a3-459d-8c61-44b86018565b] received
+2022-06-11 07:54:02,091 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[e964277c-e6a3-459d-8c61-44b86018565b] succeeded in 0.9702931730007549s: None
+2022-06-11 07:54:03,756 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 17:00:26) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:54:33,995 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 17:30:01) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:55:01,126 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:55:01,129 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[71f5cb2e-622d-441e-9716-a7b8dba9d4bd] received
+2022-06-11 07:55:02,167 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[71f5cb2e-622d-441e-9716-a7b8dba9d4bd] succeeded in 1.0372194060000766s: None
+2022-06-11 07:55:05,155 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-10 02:22:11) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:55:35,363 - py.warnings - WARNING - /home/ebirdmax/Documents/Programmieren/researchbrowserproject-1/venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:1416: RuntimeWarning: DateTimeField Article.pub_date received a naive datetime (2022-06-09 09:36:04) while time zone support is active.
+  warnings.warn("DateTimeField %s received a naive datetime (%s)"
+
+2022-06-11 07:56:00,458 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
+2022-06-11 07:56:00,460 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[4d690752-9e05-4e3f-b6be-0b67429f3589] received
+2022-06-11 07:56:00,476 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
+2022-06-11 07:56:00,478 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[c95f2ba9-ae0e-46ba-b519-fc68ac71ad76] received
+2022-06-11 07:56:01,127 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:56:01,128 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c006f36c-148b-4cc8-aece-21c7df6684d6] received
+2022-06-11 07:56:02,102 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c006f36c-148b-4cc8-aece-21c7df6684d6] succeeded in 0.9732902620007735s: None
+2022-06-11 07:56:03,544 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[c95f2ba9-ae0e-46ba-b519-fc68ac71ad76] succeeded in 3.0647978029992373s: None
+2022-06-11 07:56:05,150 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[4d690752-9e05-4e3f-b6be-0b67429f3589] succeeded in 4.689262373999554s: None
+2022-06-11 07:56:05,393 - celery.app.trace - INFO - Task scrapper.tasks.scrape_substack[8c9ce7e1-7820-4c01-bfe1-9f87ae65f8bb] succeeded in 904.9918040760003s: None
+2022-06-11 07:57:01,219 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:57:01,221 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8bc89554-a051-4647-8ea6-d639ffc2ed2d] received
+2022-06-11 07:57:02,142 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8bc89554-a051-4647-8ea6-d639ffc2ed2d] succeeded in 0.9196995109996351s: None
+2022-06-11 07:58:01,231 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:58:01,234 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5f6c3bb0-58e9-4dae-a206-36dc64d000f2] received
+2022-06-11 07:58:02,229 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5f6c3bb0-58e9-4dae-a206-36dc64d000f2] succeeded in 0.9942791419998684s: None
+2022-06-11 07:59:01,242 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 07:59:01,245 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[4358a0dd-af34-4eb8-9793-a7d6078556b9] received
+2022-06-11 07:59:02,189 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[4358a0dd-af34-4eb8-9793-a7d6078556b9] succeeded in 0.9433566979996613s: None
+2022-06-11 08:00:01,271 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:00:01,273 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[6ad71f64-81ec-4c06-bb9a-5d4b7d4d2cbb] received
+2022-06-11 08:00:02,339 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[6ad71f64-81ec-4c06-bb9a-5d4b7d4d2cbb] succeeded in 1.0649953290003396s: None
+2022-06-11 08:01:01,281 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:01:01,283 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9306d747-2420-469f-9787-550a090581b1] received
+2022-06-11 08:01:02,291 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9306d747-2420-469f-9787-550a090581b1] succeeded in 1.0071695930000715s: None
+2022-06-11 08:02:01,290 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:02:01,292 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[32a81cd4-6560-4e50-bd48-ad1c88c44496] received
+2022-06-11 08:02:02,228 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[32a81cd4-6560-4e50-bd48-ad1c88c44496] succeeded in 0.935019879999345s: None
+2022-06-11 08:03:01,327 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:03:01,329 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[cb393dbc-8caf-4238-970e-190e643edfc4] received
+2022-06-11 08:03:02,301 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[cb393dbc-8caf-4238-970e-190e643edfc4] succeeded in 0.970308448000651s: None
+2022-06-11 08:04:01,339 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:04:01,341 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[5119d82d-6525-44ae-b3a1-3277023e42b1] received
+2022-06-11 08:04:02,680 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[5119d82d-6525-44ae-b3a1-3277023e42b1] succeeded in 1.337616159999925s: None
+2022-06-11 08:05:01,350 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:05:01,355 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[c2839bd4-5207-4e73-81ea-06e2732a9545] received
+2022-06-11 08:05:02,417 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[c2839bd4-5207-4e73-81ea-06e2732a9545] succeeded in 1.0608227679995252s: None
+2022-06-11 08:06:01,389 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:06:01,391 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[89a34434-48ee-423a-9c86-884000e7e817] received
+2022-06-11 08:06:02,451 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[89a34434-48ee-423a-9c86-884000e7e817] succeeded in 1.0584831169999234s: None
+2022-06-11 08:07:01,401 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:07:01,404 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[eb291ec5-8ca8-4b05-a10f-67457336d421] received
+2022-06-11 08:07:02,466 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[eb291ec5-8ca8-4b05-a10f-67457336d421] succeeded in 1.0611788430005618s: None
+2022-06-11 08:08:01,414 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:08:01,416 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2f4e0ea2-6f19-406a-959c-ea1b3c52f55f] received
+2022-06-11 08:08:02,443 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2f4e0ea2-6f19-406a-959c-ea1b3c52f55f] succeeded in 1.0250596949999817s: None
+2022-06-11 08:09:01,455 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:09:01,457 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d43eba21-4fce-4538-84d9-663fc9146dd9] received
+2022-06-11 08:09:02,546 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d43eba21-4fce-4538-84d9-663fc9146dd9] succeeded in 1.0878434739997829s: None
+2022-06-11 08:10:01,467 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:10:01,470 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[bb4b5fa0-1295-418d-b964-8bd95f84801e] received
+2022-06-11 08:10:02,375 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[bb4b5fa0-1295-418d-b964-8bd95f84801e] succeeded in 0.9041875389993947s: None
+2022-06-11 08:11:00,461 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
+2022-06-11 08:11:00,463 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[ff04c92f-1ae2-442f-b049-74aa1dccaa88] received
+2022-06-11 08:11:00,477 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
+2022-06-11 08:11:00,479 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[25f5bfbe-be7a-4c98-bd79-168199501bfc] received
+2022-06-11 08:11:01,474 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:11:01,476 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[abb468ff-e737-4a99-b44f-3f2022fb85e2] received
+2022-06-11 08:11:02,374 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[abb468ff-e737-4a99-b44f-3f2022fb85e2] succeeded in 0.8973474459999125s: None
+2022-06-11 08:11:03,640 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[25f5bfbe-be7a-4c98-bd79-168199501bfc] succeeded in 3.1601149210000585s: None
+2022-06-11 08:11:05,963 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[ff04c92f-1ae2-442f-b049-74aa1dccaa88] succeeded in 5.498561382999469s: None
+2022-06-11 08:12:01,560 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:12:01,562 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ce9cee35-fe17-4172-b1ab-c5b1a77df9dd] received
+2022-06-11 08:12:02,580 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ce9cee35-fe17-4172-b1ab-c5b1a77df9dd] succeeded in 1.0174429970002166s: None
+2022-06-11 08:13:01,569 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:13:01,571 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[f268edda-c085-4209-b5d2-b9f30e525d11] received
+2022-06-11 08:13:02,477 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[f268edda-c085-4209-b5d2-b9f30e525d11] succeeded in 0.9049359709997589s: None
+2022-06-11 08:14:01,581 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:14:01,586 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[37ca1bec-405b-42fb-8afe-2deef2a4d72c] received
+2022-06-11 08:14:02,720 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[37ca1bec-405b-42fb-8afe-2deef2a4d72c] succeeded in 1.1326544450002984s: None
+2022-06-11 08:15:01,622 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:15:01,624 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[3e307de8-a1b8-485f-97c9-a7765a20d0ee] received
+2022-06-11 08:15:02,625 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[3e307de8-a1b8-485f-97c9-a7765a20d0ee] succeeded in 0.9994700789993658s: None
+2022-06-11 08:16:01,632 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:16:01,634 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8f2523b0-4a3e-4fd3-905c-91e9f74815de] received
+2022-06-11 08:16:02,654 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8f2523b0-4a3e-4fd3-905c-91e9f74815de] succeeded in 1.0183088860003409s: None
+2022-06-11 08:17:01,644 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:17:01,646 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[7dfb0b8d-961a-44a8-babd-c5c8af7ee713] received
+2022-06-11 08:17:02,625 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[7dfb0b8d-961a-44a8-babd-c5c8af7ee713] succeeded in 0.9781255130001227s: None
+2022-06-11 08:18:01,682 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:18:01,684 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[bffeaf32-cc57-4d36-b4a7-71dd6876aeb7] received
+2022-06-11 08:18:02,697 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[bffeaf32-cc57-4d36-b4a7-71dd6876aeb7] succeeded in 1.0121178609997514s: None
+2022-06-11 08:19:01,692 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:19:01,695 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[0420f68a-490f-4d5f-bdc0-0a784fadba4e] received
+2022-06-11 08:19:02,741 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[0420f68a-490f-4d5f-bdc0-0a784fadba4e] succeeded in 1.0445408570003565s: None
+2022-06-11 08:20:01,705 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:20:01,707 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[22d2120b-ed74-4742-9e02-dfd88bdaaa2a] received
+2022-06-11 08:20:02,705 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[22d2120b-ed74-4742-9e02-dfd88bdaaa2a] succeeded in 0.9969228740001199s: None
+2022-06-11 08:21:01,742 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:21:01,744 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8e60544a-6dd3-4a9f-99e2-a2e01043e5ce] received
+2022-06-11 08:21:02,699 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8e60544a-6dd3-4a9f-99e2-a2e01043e5ce] succeeded in 0.9536675740000646s: None
+2022-06-11 08:22:01,753 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:22:01,756 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[d0471df4-53c5-43df-ad7c-f35fad8efb7f] received
+2022-06-11 08:22:02,643 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[d0471df4-53c5-43df-ad7c-f35fad8efb7f] succeeded in 0.8862842990001809s: None
+2022-06-11 08:23:01,765 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:23:01,768 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[300b2aac-6435-400b-896b-a84aa2da9c90] received
+2022-06-11 08:23:02,688 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[300b2aac-6435-400b-896b-a84aa2da9c90] succeeded in 0.9195986969998557s: None
+2022-06-11 08:24:01,803 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:24:01,806 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[4615b9ca-5358-4f45-954e-60ec75d8bdc3] received
+2022-06-11 08:24:02,862 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[4615b9ca-5358-4f45-954e-60ec75d8bdc3] succeeded in 1.0556785639992086s: None
+2022-06-11 08:25:01,813 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:25:01,815 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[9e448243-cf3d-4f01-8cfb-e70ecde97e8b] received
+2022-06-11 08:25:02,853 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[9e448243-cf3d-4f01-8cfb-e70ecde97e8b] succeeded in 1.0363054469999042s: None
+2022-06-11 08:26:00,467 - celery.beat - INFO - Scheduler: Sending due task Spotify Scraping (scrapper.tasks.scrape_spotify)
+2022-06-11 08:26:00,469 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_spotify[710f642e-601f-444e-b0b7-6958cef7cb92] received
+2022-06-11 08:26:00,485 - celery.beat - INFO - Scheduler: Sending due task YouTube Scraping (scrapper.tasks.scrape_youtube)
+2022-06-11 08:26:00,487 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_youtube[e975c083-2556-413d-8fe6-6c7b352d0f01] received
+2022-06-11 08:26:01,816 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:26:01,818 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[28afabc2-3210-4e10-885f-9cfaafc2518f] received
+2022-06-11 08:26:02,871 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[28afabc2-3210-4e10-885f-9cfaafc2518f] succeeded in 1.0531741069999043s: None
+2022-06-11 08:26:03,838 - celery.app.trace - INFO - Task scrapper.tasks.scrape_youtube[e975c083-2556-413d-8fe6-6c7b352d0f01] succeeded in 3.3497445680004603s: None
+2022-06-11 08:26:04,851 - celery.app.trace - INFO - Task scrapper.tasks.scrape_spotify[710f642e-601f-444e-b0b7-6958cef7cb92] succeeded in 4.379964718000338s: None
+2022-06-11 08:27:01,906 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:27:01,909 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[af0de90b-78e9-41e0-a3d4-d9aefa85ddff] received
+2022-06-11 08:27:02,901 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[af0de90b-78e9-41e0-a3d4-d9aefa85ddff] succeeded in 0.9904932640001789s: None
+2022-06-11 08:28:01,918 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:28:01,920 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[a045e2c7-50c6-4c7c-90de-51f70ca4dca9] received
+2022-06-11 08:28:03,011 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[a045e2c7-50c6-4c7c-90de-51f70ca4dca9] succeeded in 1.0897423289998187s: None
+2022-06-11 08:29:01,925 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:29:01,927 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[555509ff-e796-4f71-8c93-6729142f89f4] received
+2022-06-11 08:29:02,873 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[555509ff-e796-4f71-8c93-6729142f89f4] succeeded in 0.9446784869996918s: None
+2022-06-11 08:30:01,944 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:30:01,947 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[ca79048b-2805-4e1d-9f6b-2f152f694bca] received
+2022-06-11 08:30:02,832 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[ca79048b-2805-4e1d-9f6b-2f152f694bca] succeeded in 0.8848016359988833s: None
+2022-06-11 08:31:01,953 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:31:01,956 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2cca3d7b-61f4-4b5f-b14c-a54ad312347a] received
+2022-06-11 08:31:02,959 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2cca3d7b-61f4-4b5f-b14c-a54ad312347a] succeeded in 1.0018624700005603s: None
+2022-06-11 08:32:01,965 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:32:01,967 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[8b98ddb4-6ca1-4005-a786-65a435e2aee5] received
+2022-06-11 08:32:02,874 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[8b98ddb4-6ca1-4005-a786-65a435e2aee5] succeeded in 0.9059629219991621s: None
+2022-06-11 08:33:02,048 - celery.beat - INFO - Scheduler: Sending due task Twitter Scrapping (scrapper.tasks.scrape_twitter)
+2022-06-11 08:33:02,051 - celery.worker.strategy - INFO - Task scrapper.tasks.scrape_twitter[2c043f4f-4c0a-4574-874f-f8af3c497dda] received
+2022-06-11 08:33:02,882 - celery.app.trace - INFO - Task scrapper.tasks.scrape_twitter[2c043f4f-4c0a-4574-874f-f8af3c497dda] succeeded in 0.8301355430012336s: None

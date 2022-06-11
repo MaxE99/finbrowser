@@ -54,28 +54,184 @@
                             <div class="activeNotificationCategory">Source Notifications</div>
                             <div>List Notifications</div>
                         </div>
-                        <div class="notificationsContainer activeNotificationContainer">
+                        <div class="notificationsContainer activeNotificationContainer smallFormContentWrapper">
                             {% if source_notifications %}
                             {% for notification in source_notifications %}
-                            <div
-                                class="notificationMessageContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}">
-                                <img src="{% static notification.article.source.favicon_path %}" />
-                                <span>{{ notification.article.title }}</span>
-                                <a href="{{ notification.article.link }}"></a>
+                            <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
+                                id="article_id_{{ notification.article.article_id }}">
+                                <div class="leftContentSide">
+                                    <img src="{% static notification.article.source.favicon_path %}" />
+                                </div>
+                                <div class="rightContentSide">
+                                    <div class="contentInfoContainer">
+                                        <div class="sourceAndWebsiteContainer">
+                                            <a
+                                                href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
+                                            <img src="{% static notification.article.source.website.logo %}" />
+                                        </div>
+                                        <i class="fas fa-ellipsis-h"></i>
+                                        <div class="articleOptionsContainer">
+                                            {% if request.user.is_authenticated %}
+                                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
+                                            {% if notification.article.title in highlighted_articles_titles %}
+                                            <div class="addToHighlightedButton"><i
+                                                    class="fas fa-times"></i><span>Unhighlight
+                                                    article</span></div>
+                                            {% else %}
+                                            <div class="addToHighlightedButton"><i
+                                                    class="fas fa-highlighter"></i><span>Highlight
+                                                    article</span></div>
+                                            {% endif %}
+                                            {% else %}
+                                            <a href="{% url 'account_login' %}"
+                                                class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
+                                                to list</a>
+                                            <a href="{% url 'account_login' %}"
+                                                class="addToHighlightedButton registrationLink"><i
+                                                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="addToListForm">
+                                            <i class="fas fa-times"></i>
+                                            <h3>Add To Lists</h3>
+                                            {% if user_lists %}
+                                            <div class="listSelectionContainer">
+                                                {% for list in user_lists %}
+                                                <div class="listContainer">
+                                                    <label for="list_id_{{ list.list_id }}">
+                                                        {% if notification.article in list.articles.all %}
+                                                        <input id="list_id_{{ list.list_id }}" class="articleInList"
+                                                            type="checkbox" name="lists" checked="True"> {{ list }}
+                                                        {% else %}
+                                                        <input id="list_id_{{ list.list_id }}" class="articleNotInList"
+                                                            type="checkbox" name="lists">
+                                                        {{ list }}
+                                                        {% endif %}
+                                                    </label>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="buttonsContainer">
+                                                <button class="saveButton">Save</button>
+                                                <button class="createNewListButton">Create</button>
+                                            </div>
+                                            {% else %}
+                                            <div class="listContainer">You haven't created any lists!</div>
+                                            <button class="createNewListButton createFirstList">Create First
+                                                List</button>
+                                            {% endif %}
+                                        </div>
+                                        <div class="createListMenu articleCreateListMenu formContainer">
+                                            <h3>Create A New List</h3>
+                                            <i class="fas fa-times closeFormContainerButton"></i>
+                                            <form action="" enctype="multipart/form-data" method="POST"
+                                                class="createListForm">
+                                                {% csrf_token %} {{ add_list_form }}
+                                                <input name="createListForm" type="submit" class="formSubmitButton"
+                                                    value="Save" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="contentBody">
+                                        <p>{{ notification.article.title }}</p>
+                                    </div>
+                                    <div class="timeContainer">
+                                        <p>{{ notification.article.pub_date }}</p>
+                                    </div>
+                                    <a class="contentLink" href="{{ notification.article.link }}"></a>
+                                </div>
                             </div>
                             {% endfor %}
                             {% else %}
                             <div class="noNotificationsAvailable">No Source Notifications Available</div>
                             {% endif %}
                         </div>
-                        <div class="notificationsContainer">
+                        <div class="notificationsContainer smallFormContentWrapper">
                             {% if list_notifications %}
                             {% for notification in list_notifications %}
-                            <div
-                                class="notificationMessageContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}">
-                                <img src="{% static notification.article.source.favicon_path %}" />
-                                <span>{{ notification.article.title }}</span>
-                                <a href="{{ notification.article.link }}"></a>
+                            <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
+                                id="article_id_{{ notification.article.article_id }}">
+                                <div class="leftContentSide">
+                                    <img src="{% static notification.article.source.favicon_path %}" />
+                                </div>
+                                <div class="rightContentSide">
+                                    <div class="contentInfoContainer">
+                                        <div class="sourceAndWebsiteContainer">
+                                            <a
+                                                href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
+                                            <img src="{% static notification.article.source.website.logo %}" />
+                                        </div>
+                                        <i class="fas fa-ellipsis-h"></i>
+                                        <div class="articleOptionsContainer">
+                                            {% if request.user.is_authenticated %}
+                                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
+                                            {% if notification.article.title in highlighted_articles_titles %}
+                                            <div class="addToHighlightedButton"><i
+                                                    class="fas fa-times"></i><span>Unhighlight
+                                                    article</span></div>
+                                            {% else %}
+                                            <div class="addToHighlightedButton"><i
+                                                    class="fas fa-highlighter"></i><span>Highlight
+                                                    article</span></div>
+                                            {% endif %}
+                                            {% else %}
+                                            <a href="{% url 'account_login' %}"
+                                                class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
+                                                to list</a>
+                                            <a href="{% url 'account_login' %}"
+                                                class="addToHighlightedButton registrationLink"><i
+                                                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="addToListForm">
+                                            <i class="fas fa-times"></i>
+                                            <h3>Add To Lists</h3>
+                                            {% if user_lists %}
+                                            <div class="listSelectionContainer">
+                                                {% for list in user_lists %}
+                                                <div class="listContainer">
+                                                    <label for="list_id_{{ list.list_id }}">
+                                                        {% if notification.article in list.articles.all %}
+                                                        <input id="list_id_{{ list.list_id }}" class="articleInList"
+                                                            type="checkbox" name="lists" checked="True"> {{ list }}
+                                                        {% else %}
+                                                        <input id="list_id_{{ list.list_id }}" class="articleNotInList"
+                                                            type="checkbox" name="lists">
+                                                        {{ list }}
+                                                        {% endif %}
+                                                    </label>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="buttonsContainer">
+                                                <button class="saveButton">Save</button>
+                                                <button class="createNewListButton">Create</button>
+                                            </div>
+                                            {% else %}
+                                            <div class="listContainer">You haven't created any lists!</div>
+                                            <button class="createNewListButton createFirstList">Create First
+                                                List</button>
+                                            {% endif %}
+                                        </div>
+                                        <div class="createListMenu articleCreateListMenu formContainer">
+                                            <h3>Create A New List</h3>
+                                            <i class="fas fa-times closeFormContainerButton"></i>
+                                            <form action="" enctype="multipart/form-data" method="POST"
+                                                class="createListForm">
+                                                {% csrf_token %} {{ add_list_form }}
+                                                <input name="createListForm" type="submit" class="formSubmitButton"
+                                                    value="Save" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="contentBody">
+                                        <p>{{ notification.article.title }}</p>
+                                    </div>
+                                    <div class="timeContainer">
+                                        <p>{{ notification.article.pub_date }}</p>
+                                    </div>
+                                    <a class="contentLink" href="{{ notification.article.link }}"></a>
+                                </div>
                             </div>
                             {% endfor %}
                             {% else %}
@@ -89,7 +245,7 @@
                             {% if user.profile.profile_pic %}
                             <img src="{{ user.profile.profile_pic.url }}" alt="user-profile-pic">
                             {% else %}
-                            <img src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
+                            <img src="{% static 'home/media/bigger_favicon.png' %}" alt="user-profile-pic">
                             {% endif %}
                             <div class="userInformation">
                                 <div class="userName">{{ user.username }}</div>

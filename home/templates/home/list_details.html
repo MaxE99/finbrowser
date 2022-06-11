@@ -72,9 +72,9 @@
                     <i class="fas fa-bell"></i>
                     {% endif %}
                     {% if subscribed %}
-                    <button class="subscribeButton subscribed">Subscribed</button>
+                    <button type="button" class="subscribeButton subscribed">Subscribed</button>
                     {% else %}
-                    <button class="subscribeButton unsubscribed">Subscribe</button>
+                    <button type="button" class="subscribeButton unsubscribed">Subscribe</button>
                     {% endif %}
                     {% else %}
                     <a href="{% url 'account_login' %}"
@@ -100,11 +100,11 @@
                     <div class="rate-formUpperContainer">
                         <h3>Rate {{ list.name }}</h3>
                         <div class="rate-form" action="" method="POST">
-                            <button type="submit" class="fa fa-star rankingStar" id="first"></button>
-                            <button type="submit" class="fa fa-star rankingStar" id="second"></button>
-                            <button type="submit" class="fa fa-star rankingStar" id="third"></button>
-                            <button type="submit" class="fa fa-star rankingStar" id="fourth"></button>
-                            <button type="submit" class="fa fa-star rankingStar" id="fifth"></button>
+                            <button type="button" class="fa fa-star rankingStar" id="first"></button>
+                            <button type="button" class="fa fa-star rankingStar" id="second"></button>
+                            <button type="button" class="fa fa-star rankingStar" id="third"></button>
+                            <button type="button" class="fa fa-star rankingStar" id="fourth"></button>
+                            <button type="button" class="fa fa-star rankingStar" id="fifth"></button>
                         </div>
                     </div>
                 </div>

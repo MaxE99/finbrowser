@@ -11,8 +11,6 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.template.defaultfilters import slugify
-# Python imports
-from datetime import timedelta, date
 # Local imports
 from accounts.models import SocialLink, Website
 from home.models import Article, HighlightedArticle, List, Sector, Source, ListRating, ExternalSource, Notification
@@ -182,7 +180,9 @@ class FeedView(TemplateView, LoginRequiredMixin, AddArticlesToListsMixin, AddExt
         context['subscribed_lists'] = List.objects.get_subscribed_lists(self.request.user)
         context['subscribed_sources'] = subscribed_sources
         context['subscribed_articles'] = paginator_create(self.request, Article.objects.get_articles_from_subscribed_sources(subscribed_sources), 10, 'subscribed_articles')
-        context['highlighted_articles'] = paginator_create(self.request, HighlightedArticle.objects.select_related('article', 'article__source', 'article__external_source', 'article__source__sector').filter(user=self.request.user).order_by('-article__pub_date'), 10, 'highlighted_articles')
+        context['highlighted_articles'] = paginator_create(self.request, HighlightedArticle.objects.select_related('article', 'article__source', 'article__external_source', 'article__source__sector').filter(user=self.request.user).exclude(article__source__website=get_object_or_404(Website, name="Twitter")).order_by('-article__pub_date'), 10, 'highlighted_articles')
+        context['highlighted_tweets'] = paginator_create(self.request, HighlightedArticle.objects.select_related('article', 'article__source', 'article__external_source', 'article__source__sector').filter(user=self.request.user, article__source__website=get_object_or_404(Website, name="Twitter")).order_by('-article__pub_date'), 10, 'highlighted_tweets')
+        context['newest_tweets'] = paginator_create(self.request, Article.objects.get_articles_from_subscribed_sources(subscribed_sources), 10, 'newest_tweets')
         return context
 
 
@@ -259,6 +259,7 @@ class ListDetailView(TemplateView, AddArticlesToListsMixin):
                     return HttpResponseRedirect(self.request.path_info)
                 if change_list_name_form.is_valid() and List.objects.filter(creator=request.user, slug=new_list_slug).exists() == False:
                     change_list_name_form.save()
+                    messages.success(request, 'List settings have been updated!')
                 else:
                     messages.error(request, "Error: You've already created a list with that name!")
                     return HttpResponseRedirect(self.request.path_info)
@@ -269,7 +270,6 @@ class ListDetailView(TemplateView, AddArticlesToListsMixin):
             else:
                 logger.error(f'User tried to change list name of list created by another user! - {self.request.user}')
         else:
-            messages.success(self.request, "Rating has been added!")
             return HttpResponseRedirect(self.request.path_info)
 
     def get_context_data(self, **kwargs):
