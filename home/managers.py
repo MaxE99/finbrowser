@@ -48,7 +48,7 @@ class SourceManager(models.Manager):
 class ArticleManager(models.Manager):
 
     def get_articles_from_subscribed_sources(self, subscribed_sources):
-        return self.select_related('source', 'source__sector').filter(source__in=subscribed_sources).order_by('-pub_date')
+        return self.select_related('source', 'source__sector', 'source__website').filter(source__in=subscribed_sources).order_by('-pub_date')
 
     def get_articles_from_list_sources(self, list):
         return self.filter(source__in=list.sources.all()).select_related('source', 'source__sector').order_by('-pub_date')

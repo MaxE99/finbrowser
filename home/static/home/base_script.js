@@ -255,15 +255,91 @@ document
     });
   });
 
+// start of decompositioning code
+function get_initial_list_statuses(element) {
+  let initial_lists_status = [];
+  let list_ids = [];
+  const input_list = element.parentElement.nextElementSibling.querySelectorAll(
+    ".listContainer input"
+  );
+  for (let i = 0, j = input_list.length; i < j; i++) {
+    initial_lists_status.push(input_list[i].checked);
+    list_ids.push(input_list[i].id.replace("list_id_", ""));
+  }
+  return [initial_lists_status, list_ids];
+}
+
+function check_new_list_status(saveButton) {
+  let lists_status = [];
+  saveButton.parentElement.previousElementSibling
+    .querySelectorAll("input")
+    .forEach((input) => {
+      lists_status.push(input.checked);
+    });
+  return lists_status;
+}
+
+async function add_article_to_list(list_id, article_id) {
+  try {
+    const res = await fetch(
+      `http://127.0.0.1:8000/api/lists/${list_id}/add_article_to_list/${article_id}/`,
+      get_fetch_settings("POST")
+    );
+    if (!res.ok) {
+      showMessage("Error: Network request failed unexpectedly!", "Error");
+    }
+  } catch (e) {
+    console.log(e);
+    showMessage("Error: Unexpected error has occurred!", "Error");
+  }
+}
+
+async function remove_article_from_list(list_id, article_id) {
+  try {
+    const res = await fetch(
+      `http://127.0.0.1:8000/api/lists/${list_id}/delete_article_from_list/${article_id}/`,
+      get_fetch_settings("DELETE")
+    );
+    if (!res.ok) {
+      showMessage("Error: Network request failed unexpectedly!", "Error");
+    }
+  } catch (e) {
+    showMessage("Error: Unexpected error has occurred!", "Error");
+  }
+}
+
 // open addtolist menu
 document.querySelectorAll(".addToListButton").forEach((element) => {
   element.addEventListener("click", () => {
     if (!element.classList.contains("registrationLink")) {
       const allContainersClosed = checkForOpenContainers();
       if (allContainersClosed) {
-        const addToListForm = element.parentElement.nextElementSibling;
+        let addToListForm = element.parentElement.nextElementSibling;
         addToListForm.style.display = "block";
       }
+      let initial_lists_statuses = get_initial_list_statuses(element);
+      let initial_lists_status = initial_lists_statuses[0];
+      let addToListForm =
+        element.parentElement.parentElement.querySelector(".addToListForm");
+      let saveButton = addToListForm.querySelector(".saveButton");
+      saveButton.addEventListener("click", () => {
+        let list_ids = initial_lists_statuses[1];
+        let article_id = saveButton
+          .closest(".articleContainer")
+          .id.replace("article_id_", "");
+        let lists_status = check_new_list_status(saveButton);
+        for (let i = 0, j = lists_status.length; i < j; i++) {
+          if (lists_status[i] != initial_lists_status[i]) {
+            if (initial_lists_status[i] == false) {
+              add_article_to_list(list_ids[i], article_id);
+            } else {
+              remove_article_from_list(list_ids[i], article_id);
+            }
+          }
+        }
+        showMessage("Lists have been updated!", "Success");
+        addToListForm.style.display = "none";
+      });
     }
   });
 });
@@ -274,88 +350,6 @@ document.querySelectorAll(".addToListForm .fa-times").forEach((element) => {
     element.parentElement.style.display = "none";
   });
 });
-
-// add article to lists
-document
-  .querySelectorAll(".addToListForm .saveButton")
-  .forEach((saveButton) => {
-    saveButton.addEventListener("click", async () => {
-      let article_id = saveButton
-        .closest(".articleContainer")
-        .id.replace("article_id_", "");
-      // let article_id =
-      //   saveButton.parentElement.parentElement.parentElement.id.replace(
-      //     "article_id_",
-      //     ""
-      //   );
-      let lists_status = [];
-      let initial_lists_status = [];
-      let list_ids = [];
-      const input_list =
-        saveButton.parentElement.parentElement.querySelectorAll(
-          ".listContainer input"
-        );
-      for (let i = 0, j = input_list.length; i < j; i++) {
-        initial_lists_status.push(input_list[i].className);
-        list_ids.push(input_list[i].id.replace("list_id_", ""));
-      }
-      saveButton.parentElement.previousElementSibling
-        .querySelectorAll("input")
-        .forEach((input) => {
-          if (input.checked) {
-            lists_status.push("articleInList");
-          } else {
-            lists_status.push("articleNotInList");
-          }
-        });
-
-      for (let i = 0, j = lists_status.length; i < j; i++) {
-        if (lists_status[i] != initial_lists_status[i]) {
-          if (initial_lists_status[i] == "articleNotInList") {
-            let list_id = list_ids[i];
-            try {
-              const res = await fetch(
-                `http://127.0.0.1:8000/api/lists/${list_id}/add_article_to_list/${article_id}/`,
-                get_fetch_settings("POST")
-              );
-              if (!res.ok) {
-                showMessage(
-                  "Error: Network request failed unexpectedly!",
-                  "Error"
-                );
-              } else {
-                const context = await res.json();
-                showMessage(context, "Success");
-                window.location.reload();
-              }
-            } catch (e) {
-              showMessage("Error: Unexpected error has occurred!", "Error");
-            }
-          } else {
-            try {
-              let list_id = list_ids[i];
-              const res = await fetch(
-                `http://127.0.0.1:8000/api/lists/${list_id}/delete_article_from_list/${article_id}/`,
-                get_fetch_settings("DELETE")
-              );
-              if (!res.ok) {
-                showMessage(
-                  "Error: Network request failed unexpectedly!",
-                  "Error"
-                );
-              } else {
-                const context = await res.json();
-                showMessage(context, "Remove");
-                window.location.reload();
-              }
-            } catch (e) {
-              showMessage("Error: Unexpected error has occurred!", "Error");
-            }
-          }
-        }
-      }
-    });
-  });
 
 // open List Create Menu
 document.querySelectorAll(".createNewListButton").forEach((button) => {
@@ -379,44 +373,6 @@ document
       });
     });
   });
-
-// Old:
-// open List Create Menu
-// document.querySelectorAll(".createNewListButton").forEach((button) => {
-//   button.addEventListener("click", () => {
-//     if (!button.classList.contains("registrationLink")) {
-//       button.parentElement.parentElement.style.display = "none";
-//       document.querySelector(".createListMenu").style.display = "flex";
-//     }
-//   });
-// });
-
-// // close list create menu
-// if (document.querySelector(".createListMenu .closeFormContainerButton")) {
-//   document
-//     .querySelector(".createListMenu .closeFormContainerButton")
-//     .addEventListener("click", () => {
-//       document.querySelector(".createListMenu").style.display = "none";
-//     });
-// }
-
-// // select sources
-// document.querySelectorAll(".selectContainer ul li").forEach((choice) => {
-//   choice.addEventListener("click", () => {
-//     document.querySelector("summary").innerHTML = choice.innerHTML;
-//     document.querySelector("details").removeAttribute("open");
-//   });
-// });
-
-// if (document.querySelector("details")) {
-//   document.querySelector("details").addEventListener("click", () => {
-//     document.onclick = function (e) {
-//       if (e.target != document.querySelector("summary ul")) {
-//         document.querySelector("details").removeAttribute("open");
-//       }
-//     };
-//   });
-// }
 
 //activate notification popup
 document
