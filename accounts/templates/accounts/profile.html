@@ -29,7 +29,7 @@
                 {% if profile.profile_pic %}
                 <img class="avatar" src="{{ profile.profile_pic.url }}" alt="user-profile-pic">
                 {% else %}
-                <img class="avatar" src="{% static 'home/media/profile-picture.png' %}" alt="user-profile-pic">
+                <img class="avatar" src="{% static 'home/media/bigger_favicon.png' %}" alt="user-profile-pic">
                 {% endif %}
                 <div class="profileUsername">{{ profile.user.username }}</div>
             </div>

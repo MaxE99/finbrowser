@@ -281,12 +281,14 @@ header {
 .userSpace .notificationContainer {
   display: none;
   position: absolute;
-  width: 327px;
+  width: 400px;
   background: white;
   margin-top: 85px;
   top: 0;
   right: 0;
   overflow-y: scroll;
+  height: calc(100vh - 85px);
+  box-shadow: var(--box-shadowScheme);
   max-height: calc(100vh - 85px);
 }
 
@@ -1601,13 +1603,13 @@ footer ul a {
   --slider-index: 0;
   display: flex;
   flex-grow: 1;
-  margin: 0 var(--img-gap);
+  /* margin: 0 var(--img-gap); */
   transform: translateX(calc(var(--slider-index) * -100%));
-  transition: transform 250ms ease-in-out;
+  transition: transform 600ms ease-in-out;
 }
 
 .slider > .contentWrapper {
-  margin: var(--img-gap);
+  /* margin: var(--img-gap); */
   flex: 0 0 calc(100% / var(--items-per-screen));
   max-width: 180px;
   max-height: 220px;
@@ -1626,7 +1628,7 @@ footer ul a {
   }
 } */
 
-.contentWrapper:hover {
+.slider .contentWrapper:hover {
   transform: scale(1.05, 1.05);
 }
 
@@ -1704,4 +1706,110 @@ footer ul a {
   width: 100%;
   background: var(--primary-fontColor);
   box-shadow: var(--box-shadowScheme);
+}
+
+/* ####################################################*/
+/* TWITTER */
+/* ####################################################*/
+.twitterWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.twitterWrapper .highlightedTweetsContainer,
+.twitterWrapper .newestTweetsContainer,
+.twitterWrapper .mostLikedTweetsContainer {
+  width: 33%;
+}
+
+.twitterWrapper .categoryHeader {
+  margin: 0;
+  border-radius: 8px 8px 0 0;
+}
+
+.twitterWrapper .smallFormContentWrapper {
+  box-shadow: var(--box-shadowScheme);
+  background: white;
+}
+
+.smallFormContentWrapper .articleContainer {
+  position: relative;
+  display: flex;
+  padding: 15px;
+  box-shadow: 0 5px 5px -5px #333;
+  border-bottom: 1px solid rgb(226, 230, 234);
+}
+
+.smallFormContentWrapper .leftContentSide img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+}
+
+.smallFormContentWrapper .rightContentSide {
+  padding-left: 10px;
+  width: 100%;
+}
+
+.smallFormContentWrapper .contentInfoContainer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.smallFormContentWrapper .sourceAndWebsiteContainer {
+  display: flex;
+}
+
+.smallFormContentWrapper .sourceAndWebsiteContainer a {
+  z-index: 30;
+  text-decoration: none;
+  color: unset;
+}
+
+.smallFormContentWrapper .sourceAndWebsiteContainer img {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  border-radius: 3px;
+}
+
+.smallFormContentWrapper .fa-ellipsis-h {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  padding: 0 5px 5px 5px;
+  z-index: 30;
+}
+
+.smallFormContentWrapper .contentBody {
+  padding: 5px 0;
+  cursor: text;
+}
+
+.smallFormContentWrapper .contentBody p {
+  font-size: 19px;
+  text-align: justify;
+  font-family: serif;
+}
+
+.smallFormContentWrapper .timeContainer {
+  color: gray;
+}
+
+.smallFormContentWrapper .contentLink {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.notificationContainer .articleOptionsContainer,
+.notificationContainer .addToListForm,
+.notificationContainer .createListMenu {
+  right: 0;
+  z-index: 35;
 }
