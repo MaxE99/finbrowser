@@ -1,0 +1,16 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'support/support_style.css' %}">
+<title>ResearchBrowser | Contact</title>
+{% endblock %}
+{% block content %}
+<div class="formContainer">
+    <h3>Contact</h3>
+    <form action="" enctype="multipart/form-data" method="POST" class="createContactForm">
+        {% csrf_token %} {{ form }}
+        <input name="createContactForm" type="submit" class="formSubmitButton" value="Save" />
+    </form>
+</div>
+<script src="{% static 'support/report_bug_script.js' %}"></script>
+{% endblock content %}

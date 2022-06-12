@@ -1,13 +1,19 @@
 // Open settings menu
-document.querySelector(".createListButton").addEventListener("click", () => {
-  document.querySelector(".createListMenu").style.display = "flex";
-});
+document
+  .querySelector(".interactionWrapper .createListButton")
+  .addEventListener("click", () => {
+    document.querySelector(
+      ".interactionWrapper .createListMenu"
+    ).style.display = "flex";
+  });
 
 // Close menus
 document
-  .querySelector(".createListMenu .closeFormContainerButton")
+  .querySelector(".interactionWrapper .closeFormContainerButton")
   .addEventListener("click", () => {
-    document.querySelector(".createListMenu").style.display = "none";
+    document.querySelector(
+      ".interactionWrapper .createListMenu"
+    ).style.display = "none";
   });
 
 //open add sources menu

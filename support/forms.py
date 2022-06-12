@@ -2,7 +2,7 @@
 from django.forms import ModelForm
 from django import forms
 # Local imports
-from support.models import SourceSuggestion, BugReport, FeatureSuggestion
+from support.models import SourceSuggestion, BugReport, FeatureSuggestion, Contact
 
 
 class SourceSuggestionForm(ModelForm):
@@ -50,3 +50,10 @@ class BugReportForm(ModelForm):
                 'style': 'resize:none;'
             }),
         }
+
+
+class ContactForm(ModelForm):
+
+    class Meta:
+        model = Contact
+        fields = '__all__'
