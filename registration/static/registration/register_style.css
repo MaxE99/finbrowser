@@ -205,7 +205,7 @@ body {
 button:hover,
 .actionButtonsContainer input:hover,
 .actionButtonsContainer a:hover {
-  transform: scale(1.1, 1.1);
+  transform: scale(1.1);
 }
 
 .googleLogo {
@@ -428,7 +428,7 @@ label {
 }
 
 button:hover {
-  transform: scale(1.1, 1.1);
+  transform: scale(1.1);
 }
 
 .googleLogo {

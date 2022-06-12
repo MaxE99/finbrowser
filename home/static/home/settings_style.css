@@ -1,6 +1,5 @@
 .overlay {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   margin-top: 20px;
 }
@@ -34,115 +33,90 @@
   width: 75%;
 }
 
-.profileSection {
-  display: flex;
-  align-items: center;
-}
-
-.bannerContainer {
-  position: relative;
-  height: 150px;
-  width: 100%;
-}
-
-.profileBanner {
-  width: 100%;
-  height: 100%;
-  border-radius: 40px 5px 5px 5px;
-}
-
-.bannerChangeContainer {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 100px;
-  height: 50px;
-}
-
-.bannerChangeInnerContainer {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.bannerChangeInnerContainer input {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.bannerChangeInnerContainer label {
+.tabsContent {
   display: none;
 }
 
-.bannerChangeInnerContainer i {
-  background: var(--primary-fontColor);
-  padding: 7.5px 15px;
-  color: white;
-  border-radius: 10px;
-  font-size: 20px;
+.tabsContentActive {
+  display: block;
 }
 
-.avatarContainer {
-  position: relative;
-  height: 125px;
-  margin-left: 50px;
-  margin-top: -35px;
-  width: 125px;
+h2 {
+  margin: 0 0 15px;
 }
 
-.avatar {
-  border-radius: 50%;
-  height: 100%;
-  width: 100%;
-  border: 3px solid black;
+.editSection {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
 }
 
-.avatarContainer label {
-  display: none;
+.usernameAndEmailContainer {
+  display: flex;
+  justify-content: space-between;
 }
 
-.avatarContainer i {
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
-  background: var(--primary-fontColor);
-  padding: 5px 10px;
-  color: white;
-  border-radius: 10px;
+.usernameContainer,
+.emailContainer {
+  display: flex;
+  flex-direction: column;
+  width: 47.5%;
 }
 
-.avatarContainer input {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  margin-top: -125px;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.innerProfileSection {
-  margin: 15px 0 0 15px;
-}
-
-.innerProfileSection div:first-child {
-  font-size: 30px;
-}
-
-.innerProfileSection div:last-child {
-  opacity: 0.8;
-}
-
-.buttonContainer {
-  margin-left: auto;
-  margin-top: 15px;
+.editSection label,
+.changePasswordForm label {
   margin-bottom: 5px;
+}
+
+#id_email,
+#id_username,
+#id_old_password,
+#id_new_password1,
+#id_new_password2,
+.existingSocialContainer input,
+.linkInput {
+  border: 1px solid rgb(226, 230, 234);
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 13px 12px 13px 12px;
+  transition: border-color 250ms ease-in-out;
+  background: white;
+  opacity: 0.6;
+  margin-bottom: 15px;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.profilePicAndBannerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profilePicContainer,
+.profileBannerContainer {
+  width: 47.5%;
+  margin-bottom: 20px;
+}
+
+.profilePicInnerContainer,
+.profileBannerInnerContainer {
+  display: flex;
+  margin-top: 5px;
+}
+
+.profilePicContainer img,
+.profileBannerContainer img,
+.existingSocialContainer img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.changeProfilePicButton,
+.changeProfileBannerButton {
+  position: relative;
+  background: white;
+  color: black;
+  margin-left: 10px;
 }
 
 .cancelButton,
@@ -173,110 +147,7 @@
 .profileBannerInnerContainer button:hover,
 .addSocialLinkButton:hover,
 .existingSocialContainer .removeSocialLinkButton:hover {
-  transform: scale(1.1, 1.1);
-}
-
-.cancelButton {
-  background: white !important;
-  margin-right: 10px;
-  color: var(--primary-fontColor) !important;
-}
-
-.editSection {
-  display: flex;
-  flex-direction: column;
-  width: 75%;
-}
-
-.editSection label,
-.changePasswordForm label {
-  margin-bottom: 5px;
-}
-
-#id_email,
-#id_username,
-#id_old_password,
-#id_new_password1,
-#id_new_password2,
-.existingSocialContainer input,
-.linkInput {
-  border: 1px solid rgb(226, 230, 234);
-  border-radius: 6px;
-  font-size: 18px;
-  padding: 13px 12px 13px 12px;
-  transition: border-color 250ms ease-in-out;
-  background: white;
-  opacity: 0.6;
-  margin-bottom: 15px;
-  box-shadow: var(--box-shadowScheme);
-}
-
-.changePasswordForm input,
-.privacySettingsChangeSubmit input {
-  width: 50%;
-}
-
-.tabsContent {
-  display: none;
-}
-
-.tabsContentActive {
-  display: block;
-}
-
-.changePasswordForm,
-.changePrivacySettingsForm {
-  display: flex;
-  flex-direction: column;
-}
-
-h2 {
-  margin: 0 0 15px;
-}
-
-.usernameAndEmailContainer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.usernameContainer,
-.emailContainer {
-  display: flex;
-  flex-direction: column;
-  width: 47.5%;
-}
-
-.profilePicAndBannerContainer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.profilePicContainer,
-.profileBannerContainer {
-  width: 47.5%;
-  margin-bottom: 20px;
-}
-
-.profilePicContainer img,
-.profileBannerContainer img,
-.existingSocialContainer img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.profilePicInnerContainer,
-.profileBannerInnerContainer {
-  display: flex;
-  margin-top: 5px;
-}
-
-.changeProfilePicButton,
-.changeProfileBannerButton {
-  position: relative;
-  background: white;
-  color: black;
-  margin-left: 10px;
+  transform: scale(1.1);
 }
 
 .changeProfilePicButton input,
@@ -298,18 +169,6 @@ h2 {
   margin-left: 10px;
 }
 
-.socialLinksWrapper {
-  display: flex;
-  align-items: center;
-}
-
-.addSocialLinksContainer {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin: 5px 0;
-}
-
 .existingSocialContainer {
   display: flex;
   align-items: center;
@@ -322,46 +181,16 @@ h2 {
   width: 100%;
 }
 
-.bioContainer {
-  overflow: hidden;
-}
-
-.django-ckeditor-widget {
-  margin-top: 5px;
-}
-
-.passwordChangeSubmit,
-.privacySettingsChangeSubmit {
-  background: var(--primary-fontColor);
-  color: white;
-  padding: 13px 12px 13px 12px;
-  border-radius: 6px;
-  font-size: 18px;
-  width: 50%;
-  cursor: pointer;
-  border: none;
-  box-shadow: var(--box-shadowScheme);
-}
-
-.addLinksContainer {
-  width: 300px;
-  background: white;
-  margin: 20px auto 400px;
+.socialLinksWrapper {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  border-radius: 8px;
 }
 
-.addLinksContainer h3 {
-  padding: 10px 0;
-  text-align: center;
-  font-size: 20px;
-  margin-bottom: 5px;
-  background: var(--primary-fontColor);
-  border-radius: 8px 8px 0 0;
-  color: white;
+.addSocialLinksContainer {
+  display: flex;
+  align-items: center;
   width: 100%;
+  margin: 5px 0;
 }
 
 .addSocialLinkButton {
@@ -425,23 +254,6 @@ details ul li:hover {
   z-index: 5;
 }
 
-.saveButton {
-  text-transform: uppercase;
-  padding: 10px 50px;
-  font-size: 18px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  color: white;
-  width: 80%;
-  background: var(--primary-fontColor);
-  margin: 15px auto;
-}
-
-.saveButton:hover {
-  transform: scale(1.1, 1.1);
-}
-
 .saveSocialLinkChanges {
   display: none;
   background: green;
@@ -458,7 +270,79 @@ details ul li:hover {
 }
 
 .saveSocialLinkChanges:hover {
-  transform: scale(1.1, 1.1);
+  transform: scale(1.1);
+}
+
+form label[for="id_bio"] {
+  margin-top: 10px;
+}
+
+.bioContainer {
+  overflow: hidden;
+}
+
+.django-ckeditor-widget {
+  margin-top: 5px;
+}
+
+.buttonContainer {
+  margin-left: auto;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.cancelButton {
+  background: white !important;
+  margin-right: 10px;
+  color: var(--primary-fontColor) !important;
+}
+
+.changePasswordForm,
+.changePrivacySettingsForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.changePasswordForm input,
+.privacySettingsChangeSubmit input {
+  width: 50%;
+}
+
+.passwordChangeSubmit,
+.privacySettingsChangeSubmit {
+  background: var(--primary-fontColor);
+  color: white;
+  padding: 13px 12px 13px 12px;
+  border-radius: 6px;
+  font-size: 18px;
+  width: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: var(--box-shadowScheme);
+}
+
+h3 {
+  font-size: 25px;
+  color: var(--primary-fontColor);
+}
+
+.notificationContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.iconContainer .fa-trash {
+  position: absolute;
+  color: white;
+  background: red;
+  padding: 10px;
+  font-size: 20px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  box-shadow: var(--box-shadowScheme);
+  z-index: 100;
 }
 
 .changePrivacySettingsForm {
@@ -484,32 +368,4 @@ details ul li:hover {
 .privacySettingsChangeSubmit {
   margin-top: 15px;
   width: 100%;
-}
-
-.notificationContainer {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-h3 {
-  font-size: 25px;
-  color: var(--primary-fontColor);
-}
-
-.iconContainer .fa-trash {
-  position: absolute;
-  color: white;
-  background: red;
-  padding: 10px;
-  font-size: 20px;
-  top: 0;
-  right: 0;
-  cursor: pointer;
-  box-shadow: var(--box-shadowScheme);
-  z-index: 100;
-}
-
-form label[for="id_bio"] {
-  margin-top: 10px;
 }

@@ -3,15 +3,6 @@
 <title>ResearchBrowser | Lists</title>
 {% endblock %} {% block content %}
 
-<div class="createListMenu formContainer">
-  <h3>Create A New List</h3>
-  <i class="fas fa-times closeFormContainerButton"></i>
-  <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
-    {% csrf_token %} {{ form }}
-    <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
-  </form>
-</div>
-
 <div class="filterBar">
   <div class="selectContainer">
     <label for="timeframe">Timeframe</label>
@@ -66,15 +57,23 @@
     <button class="searchButton">Search</button>
   </div>
 </div>
-<div class="lowerFilterBar">
+<div class="searchResultsAndListCreationContainer">
   <div class="searchResultsContainer">
-    <h4>Search Results</h4>
+    <h3>Search Results</h3>
     <div><span>{{ results_found }}</span> Lists Found</div>
   </div>
   {% if request.user.is_authenticated %}
   <button class="createListButton">
     <i class="fas fa-plus"></i>Create List
   </button>
+  <div class="createListMenu formContainer">
+    <h3>Create A New List</h3>
+    <i class="fas fa-times closeFormContainerButton"></i>
+    <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+      {% csrf_token %} {{ form }}
+      <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+    </form>
+  </div>
   {% else %}
   <a href="{% url 'account_login' %}" class="createListButton registrationLink">
     <i class="fas fa-plus"></i>Create List
@@ -82,48 +81,43 @@
   {% endif %}
 </div>
 
-<div class="listOverlay">
-
-  <div class="listHeader">
-    <div>List</div>
-    <div>Rating</div>
-    <div>Content</div>
-    <div>Creator</div>
-  </div>
-
-  {% if lists %} {% for list in lists %}
-  <div class="listResultUpperCont">
-    <div class="listCont">
-      {% if list.list_pic %}
-      <img src="{{ list.list_pic.url }}" alt="">
-      {% else %}
-      <img src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
-      {% endif %}
-      <div>{{ list.name }}</div>
-    </div>
-    <div class="ratingsCont">
-      <div>Ø {{ list.average_rating }} out of {{ list.ammount_of_ratings }} ratings</div>
-    </div>
-    <div class="numberOfSourcesAndArticleCont">
-      <span> {{ list.articles.all|length }} Articles | {{ list.sources.all|length }} Sources</span>
-    </div>
-    <div class="creatorCont">
-      {% if list.creator.profile.profile_pic %}
-      <img src="{{ list.creator.profile.profile_pic.url }}" alt="user-profile-pic">
-      {% else %}
-      <img src="{% static 'home/media/bigger_favicon.png' %}" alt="user-profile-pic">
-      {% endif %}
-      <div>{{ list.creator.username }}</div>
-    </div>
-    <a href="{{ list.get_absolute_url }}"></a>
-  </div>
-  {% endfor %}
-  {% endif %}
+<div class="listHeader">
+  <div>List</div>
+  <div>Rating</div>
+  <div>Content</div>
+  <div>Creator</div>
 </div>
+
+{% if lists %} {% for list in lists %}
+<div class="listResultUpperCont">
+  <div class="listCont">
+    {% if list.list_pic %}
+    <img src="{{ list.list_pic.url }}" alt="">
+    {% else %}
+    <img src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
+    {% endif %}
+    <div>{{ list.name }}</div>
+  </div>
+  <div class="ratingsCont">
+    <div>Ø {{ list.average_rating }} out of {{ list.ammount_of_ratings }} ratings</div>
+  </div>
+  <div class="numberOfSourcesAndArticleCont">
+    <span> {{ list.articles.all|length }} Articles | {{ list.sources.all|length }} Sources</span>
+  </div>
+  <div class="creatorCont">
+    {% if list.creator.profile.profile_pic %}
+    <img src="{{ list.creator.profile.profile_pic.url }}" alt="user-profile-pic">
+    {% else %}
+    <img src="{% static 'home/media/bigger_favicon.png' %}" alt="user-profile-pic">
+    {% endif %}
+    <div>{{ list.creator.username }}</div>
+  </div>
+  <a href="{{ list.get_absolute_url }}"></a>
+</div>
+{% endfor %}
+{% endif %}
 {% if is_paginated %}
 {% include "pagination.html" with page=page_obj %}
 {% endif %}
 <script src="{% static 'home/lists_script.js' %}"></script>
 {% endblock %}
-
-</div>

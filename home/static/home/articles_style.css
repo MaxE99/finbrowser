@@ -1,50 +1,13 @@
-main {
-  margin-bottom: 0;
-}
-
-.pageWrapper {
-  display: flex;
-  justify-content: space-between;
-}
-
-.leftSide,
-.rightSide {
-  width: 47.5%;
-}
-
-.containerHeader {
-  position: relative;
-  text-align: center;
-  padding: 10px 0;
-  font-size: 20px;
-  border: 3px solid;
-  border-radius: 40px;
-  color: white;
-  background: var(--primary-fontColor);
-  box-shadow: var(--box-shadowScheme);
-  width: 100%;
-  margin-top: 20px;
-}
-
-.articlesUpperContainer .containerHeader {
-  margin-bottom: 10px;
-}
-
-/* Everything from filter_style -- refactoring => throw out garbage */
-
 .filterBar {
   display: flex;
   margin: 20px 0 10px;
   border: 3px solid var(--primary-fontColor);
   box-shadow: var(--box-shadowScheme);
-  width: 100%;
 }
 
 .selectContainer {
   border-right: 3px solid var(--primary-fontColor);
-  position: relative;
   width: 15%;
-  z-index: 20;
 }
 
 .selectContainer:last-of-type {
@@ -57,7 +20,7 @@ main {
 }
 
 .selectContainer label {
-  margin: 3px 10px;
+  padding: 3px 10px;
   position: absolute;
   color: var(--primary-fontColor);
 }
@@ -65,7 +28,10 @@ main {
 .selectContainer select {
   width: 100%;
   height: 100%;
+  border-radius: unset;
+  outline: unset;
   padding: 20px 0px 5px 10px;
+  cursor: pointer;
   font-size: 17px;
   border: 0;
   border-right: 12px solid white;
@@ -73,95 +39,17 @@ main {
   letter-spacing: 1.1px;
 }
 
-.filterBar .searchWrapper {
-  margin: unset;
-  font-size: 17px;
-  letter-spacing: 1.1px;
-  width: 100%;
-  height: 100%;
-}
-
 .filterBar .searchContainer {
   height: 100%;
 }
 
 .filterBar input {
-  font-size: 16px;
+  font-size: 17px;
   border: 0;
   padding: 10px 40px 10px 15px;
   letter-spacing: 1.1px;
-  font-family: unset !important;
   width: 100%;
   height: 100%;
-}
-
-.selectPlaceholder {
-  display: none;
-}
-
-.createListButton,
-.searchButton {
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: var(--primary-fontColor);
-  border: none;
-  color: white;
-  padding: 10px 15px;
-  font-size: 17px;
-  letter-spacing: 1.1px;
-  height: 100%;
-  width: 100%;
-  text-decoration: none;
-}
-
-.searchButton {
-  border: 2px solid white;
-}
-
-.searchButton:hover {
-  background: rgb(26, 112, 239);
-}
-
-.createListButton {
-  background: green;
-}
-
-.createListButton:hover {
-  background: rgb(8, 173, 8);
-}
-
-.createListButton i {
-  margin-left: 10px;
-}
-
-.overlay {
-  opacity: 1;
-}
-
-.lowerFilterBar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.searchResultsContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.lowerFilterBar h4 {
-  font-size: 25px;
-}
-
-.lowerFilterBar div {
-  font-size: 14px;
-}
-
-.lowerFilterBar div span {
-  color: var(--primary-fontColor);
 }
 
 #autocomplete_list_results {
@@ -174,187 +62,57 @@ main {
   z-index: 10;
 }
 
-.searchResult {
-  padding: 5px;
-  border-bottom: 1px solid rgb(226, 230, 234);
-  text-decoration: none;
-  color: black;
+#autocomplete_list_results .searchResult span {
+  max-width: 89%;
 }
 
-.createFirstList {
-  color: white !important;
-  background: var(--primary-fontColor) !important;
-  width: 80% !important;
-  margin: 10px auto;
+.filterBar input:focus {
+  outline: 1px solid var(--primary-fontColor);
+}
+
+.filterBar .searchButton {
+  cursor: pointer;
   display: flex;
   justify-content: center;
-}
-
-.articleWebsiteLogo {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 59px !important;
-  width: 59px !important;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
-
-.article .fa-ellipsis-h {
-  right: 65px;
-}
-
-.articleSpace {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin: 20px auto 0px;
-}
-
-.leftSide {
-  width: 49%;
-  box-shadow: var(--box-shadowScheme);
-  border-radius: 8px;
-}
-
-.browserCategory {
-  position: relative;
-  text-align: center;
-  padding: 7.5px 0;
-  font-size: 20px;
-  border-radius: 8px;
-  color: white;
-  border: 3px solid white;
-  width: 100%;
   background: var(--primary-fontColor);
-  box-shadow: var(--box-shadowScheme);
-}
-
-.allTweetsContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* background: #1da1f2; */
-  background: rgba(0, 85, 212, 0.3);
-  border: 3px solid white;
-  border-top: none;
-  max-height: 800px;
-  overflow-y: scroll;
-}
-
-.tweet-container {
-  position: relative;
-  background: var(--primary-color);
-  padding: 16px 32px;
-  border-radius: 24px;
-  user-select: none;
-  margin-top: 20px;
-  width: 85%;
-  box-shadow: var(--box-shadowScheme);
-}
-
-.tweet-container a {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.title a {
-  z-index: 5;
-}
-
-.tweet-container:hover {
-  transform: scale(1.1, 1.1);
-}
-
-.title {
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  width: fit-content;
-}
-
-.title img {
-  width: 50px;
-  border-radius: 160px;
-  border: 1px solid wheat;
-  margin-right: 16px;
-}
-
-.info h4 {
-  font-size: 17px;
-  line-height: 19px;
-}
-
-.info p {
-  font-size: 13px;
-  color: gray;
-  line-height: 19px;
-}
-
-.tweet {
-  padding: 13px 0;
-  cursor: text;
-}
-
-.tweet p {
-  font-size: 19px;
-  text-align: justify;
-}
-
-.time-and-date {
-  color: gray;
-}
-
-.articleInformationContainer {
-  z-index: 30;
-}
-
-.articleTitle {
-  cursor: pointer;
-}
-
-.articleTitle .articleTitleTooltip {
-  position: absolute;
-  display: block;
-  visibility: hidden;
-  z-index: 30;
-  background: var(--primary-fontColor);
-  color: white;
-  padding: 2px 4px;
-  font-size: 13px;
   border: 2px solid white;
-  box-shadow: var(--box-shadowScheme);
-  opacity: 0;
-  transition: opacity 1s;
+  color: white;
+  padding: 10px 15px;
+  font-size: 17px;
+  letter-spacing: 1.1px;
+  height: 100%;
+  width: 100%;
 }
 
-.articleTitle:hover .articleTitleTooltip {
-  visibility: visible;
-  opacity: 1;
+.filterBar .searchButton:hover {
+  background: rgba(0, 85, 212, 0.8);
 }
 
-.rightSide .article {
-  width: 95%;
+.searchResultsWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
-.rightSide .article .fa-ellipsis-h {
-  right: 15px;
+.searchResultsWrapper h3 {
+  font-size: 25px;
 }
 
-.rightSide .articlesContainer {
-  flex-wrap: unset;
-  height: unset;
-  background: rgba(0, 85, 212, 0.3);
-  border: 3px solid white;
-  border-top: none;
-  box-shadow: var(--box-shadowScheme);
+.searchResultsWrapper .searchResultsContainer div {
+  font-size: 14px;
 }
 
-.rightSide .articlesContainer .article:first-child {
-  margin-top: 20px;
+.searchResultsWrapper .searchResultsContainer div span {
+  color: var(--primary-fontColor);
+}
+
+.categoryHeader {
+  margin: 10px 0 5px;
+}
+
+.twitterWrapper .tweetsContainer,
+.twitterWrapper .mostLikedTweetsContainer {
+  width: 49%;
 }

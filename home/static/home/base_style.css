@@ -205,6 +205,7 @@ header {
   color: white;
   text-align: center;
   padding: 5px;
+  border: 3px solid;
 }
 
 .searchResult {
@@ -408,7 +409,7 @@ header {
   background: white;
   box-shadow: var(--box-shadowScheme);
   width: 100%;
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 8px 8px;
 }
 
 .profileMenu form {
@@ -455,7 +456,7 @@ header {
 .profileMenu div form button:hover i {
   background: var(--primary-fontColor);
   color: white !important;
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 8px 8px;
 }
 
 .headerButtonContainer {
@@ -483,7 +484,7 @@ header {
 }
 
 .headerButtonContainer a:hover {
-  transform: scale(1.1, 1.1);
+  transform: scale(1.1);
 }
 
 main {
@@ -596,7 +597,7 @@ main {
 }
 
 .sourceContainer:hover {
-  transform: scale(1.1, 1.1);
+  transform: scale(1.1);
 }
 
 .iconContainer {
@@ -1051,7 +1052,7 @@ details ul li:hover {
 }
 
 .addToListForm button:hover {
-  transform: scale(1.1, 1.1);
+  transform: scale(1.1);
 }
 
 .ratingsWrapper {
@@ -1083,7 +1084,7 @@ details ul li:hover {
 }
 
 .rateListButton:hover {
-  transform: scale(1.1, 1.1);
+  transform: scale(1.1);
 }
 
 .rate-formUpperContainer {
@@ -1389,124 +1390,9 @@ footer ul a {
   background: var(--primary-fontColor);
 }
 
-/* # New Form template */ /* # New Form template */ /* # New Form template */ /* # New Form template */ /* # New Form template */
-
-/* .formContainer {
-  display: none;
-  width: 400px;
-  background: white;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 20px;
-  box-shadow: var(--box-shadowScheme);
-  margin: 20px auto;
-  position: absolute;
-  left: 575px;
-  z-index: 25;
-  top: 275px;
-} */
-
-/* .formContainer h3 {
-  font-size: 22px;
-  background: var(--primary-fontColor);
-  width: 100%;
-  color: white;
-  padding: 10px 0;
-  text-align: center;
-  border-radius: 8px 8px 0 0;
-}
-
-/* .formContainer .closeFormContainerButton {
-  position: absolute;
-  display: block;
-  color: white;
-  background: red;
-  padding: 10.8px;
-  font-size: 25px;
-  top: 0;
-  right: 0;
-  cursor: pointer;
-  box-shadow: var(--box-shadowScheme);
-  z-index: 100;
-
-.formContainer #textInput {
-  margin: 10px auto 0;
-  width: 90%;
-  font-size: 14px;
-  height: 100%;
-  padding: 10px 40px 10px 15px;
-  border: 1px solid rgb(226, 230, 234);
-  border-radius: 12px;
-}
-
-.formContainer .searchResultWrapper {
-  position: relative;
-  height: 200px;
-  width: 90%;
-  overflow-y: scroll;
-  margin: 10px 0 20px;
-}
-
-.formContainer .searchResultWrapper #searchResultsContainer,
-.formContainer .searchResultWrapper .selectionContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.formContainer .searchResultWrapper #searchResultsContainer {
-  z-index: 5;
-}
-
-.formContainer .formSubmitButton {
-  background: var(--primary-fontColor);
-  color: white;
-  padding: 8px 0;
-  width: 90%;
-  font-size: 20px;
-  margin-bottom: 20px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
-.formContainer form {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-}
-
-.formContainer form input,
-.formContainer form select {
-  width: 100%;
-  font-size: 15px;
-  padding: 7px 20px 7px 10px;
-  color: black;
-  border: 2px solid rgb(226, 230, 234);
-  border-radius: 8px;
-}
-
-.formContainer form #id_is_public {
-  width: 20px;
-  height: 20px;
-  margin-left: 155px;
-  margin-top: -24px;
-}
-
-.formContainer form label {
-  margin: 10px 0 5px;
-}
-
-/* .formContainer form .formSubmitButton {
-  width: 100%;
-  margin: 20px auto;
-}
-
-.formContainer form .formSubmitButton:hover {
-  transform: scale(1.1, 1.1);
-} */
+/* ####################################################*/
+/* Slider - Start */
+/* ####################################################*/
 
 .sliderWrapper {
   --handle-size: 3rem;
@@ -1709,7 +1595,375 @@ footer ul a {
 }
 
 /* ####################################################*/
-/* TWITTER */
+/* Slider - End */
+/* ####################################################*/
+
+/* ####################################################*/
+/* Articles - Start */
+/* ####################################################*/
+
+.articlesWrapper {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  flex-wrap: wrap;
+  height: 400px;
+}
+
+.articlesWrapper .articleContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 3px solid black;
+  border-radius: 8px;
+  box-shadow: var(--box-shadowScheme);
+  width: 49%;
+  margin: 7.5px 0px;
+  height: 65px;
+}
+
+.articlesWrapper .articleContainer:hover {
+  background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
+}
+
+.authorImageContainer {
+  position: relative;
+}
+
+.authorImageContainer,
+.articleWebsiteLogoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 59px;
+  height: 59px;
+}
+
+.imageContainerUserLink {
+  background: var(--primary-fontColor);
+}
+
+.authorImageContainer img {
+  width: 100%;
+  height: 100%;
+}
+
+.authorImageContainer a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.articleInformationContainer,
+.articleSectorAndDateContainer {
+  padding-left: 5px;
+  white-space: nowrap;
+  max-width: 80%;
+}
+
+.articleTitle {
+  font-size: 19px;
+  overflow: hidden;
+}
+
+.articleTitle:hover .articleTitleTooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.articleTitle .articleTitleTooltip {
+  position: absolute;
+  display: block;
+  visibility: hidden;
+  z-index: 1;
+  color: white;
+  padding: 2px 4px;
+  font-size: 13px;
+  border: 2px solid white;
+  box-shadow: var(--box-shadowScheme);
+  opacity: 0;
+  transition: opacity 1s;
+  background: rgba(0, 85, 212, 0.8);
+}
+
+.articleSectorAndDateContainer {
+  display: flex;
+  padding-left: unset;
+  font-size: 14px;
+}
+
+.articleSectorAndDateContainer a {
+  color: var(--primary-fontColor);
+  text-decoration: none;
+  margin-right: 3px;
+}
+
+.articlesWrapper .articleContainer .fa-ellipsis-h {
+  position: absolute;
+  top: 2px;
+  right: 65px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.articleWebsiteLogoContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.articleWebsiteLogo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.articleContainer .fa-question-circle {
+  font-size: 50px;
+  color: white;
+}
+
+.articleLink {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.articleOptionsContainer {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  right: -35px;
+  border: 3px solid;
+  border-radius: 8px;
+  background: white;
+  top: 23px;
+  z-index: 2;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.articleOptionsContainer .addToListButton {
+  padding: 5px 10px;
+  border-bottom: 3px solid;
+}
+
+.articleOptionsContainer i {
+  margin-right: 5px;
+  width: 13px;
+}
+
+.articleOptionsContainer a {
+  color: black;
+  text-decoration: none;
+}
+
+.articleOptionsContainer div:hover,
+.articleOptionsContainer a:hover {
+  background: var(--primary-fontColor);
+  color: white;
+}
+
+.articleOptionsContainer .addToHighlightedButton,
+.deleteExternalLink {
+  padding: 5px 10px;
+}
+
+/* Add to list form - start */
+
+.addToListForm {
+  display: none;
+  background: white;
+  width: 250px;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 8px;
+  position: absolute;
+  z-index: 100;
+  top: 0px;
+  right: -110px;
+}
+
+.addToListForm .fa-times {
+  position: absolute;
+  right: 0;
+  color: white;
+  background: red;
+  padding: 5px;
+  font-size: 20.5px;
+  cursor: pointer;
+}
+
+.addToListForm h3 {
+  padding: 5px 0;
+  text-align: center;
+  font-size: 17px;
+  margin-bottom: 5px;
+  background: var(--primary-fontColor);
+  border-radius: 8px 8px 0 0;
+  color: white;
+}
+
+.addToListForm .listSelectionContainer {
+  max-height: 120px;
+  overflow-y: scroll;
+}
+
+.addToListForm .listContainer {
+  margin-left: 10px;
+  padding: 2.5px 0;
+}
+
+.addToListForm label {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.addToListForm input {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.addToListForm .buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px auto;
+  width: 80%;
+}
+
+.addToListForm button {
+  padding: 4px 16px;
+  font-size: 15px;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--primary-fontColor);
+  border: 1px solid var(--primary-fontColor);
+  width: 47.5%;
+}
+
+.addToListForm button:last-child {
+  color: var(--primary-fontColor);
+  background: white;
+}
+
+.addToListForm button:hover {
+  transform: scale(1.1);
+}
+
+/* Add to list form - end */
+
+/* Create List Menu - Start */
+
+.formContainer {
+  position: relative;
+  display: none;
+  background: white;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: var(--box-shadowScheme);
+  z-index: 50;
+  min-width: 250px;
+}
+
+.articleCreateListMenu {
+  position: absolute;
+  width: 250px;
+  height: 220px;
+  right: -110px;
+  top: 0;
+}
+
+.formContainer h3 {
+  padding: 5px 0;
+  text-align: center;
+  font-size: 18px;
+  background: var(--primary-fontColor);
+  border-radius: 8px 8px 0 0;
+  color: white;
+  width: 100%;
+}
+
+.formContainer .closeFormContainerButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  background: red;
+  padding: 5px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.formContainer form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  padding: 0px 0 10px;
+}
+
+.formContainer form label {
+  margin: 6px 0 3px;
+  font-size: 16px;
+}
+
+.formContainer form input,
+.formContainer form select {
+  width: 100%;
+  font-size: 15px;
+  padding: 4px 10px;
+  color: black;
+  border: 2px solid rgb(226, 230, 234);
+  border-radius: 8px;
+}
+
+.formContainer form #id_list_pic {
+  border: none;
+  padding-left: 0;
+}
+
+.formContainer form #id_is_public {
+  width: 16px;
+  height: 16px;
+  margin-top: -19px;
+  margin-left: 155px;
+}
+
+.formContainer .formSubmitButton {
+  width: 100%;
+  padding: 4px 16px;
+  font-size: 16px;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--primary-fontColor);
+  border: 1px solid var(--primary-fontColor);
+  margin-top: 10px;
+}
+
+.formContainer .formSubmitButton:hover {
+  transform: scale(1.05, 1.05);
+}
+
+/* Create List Menu - End */
+
+/* ####################################################*/
+/* Articles - End */
+/* ####################################################*/
+
+/* ####################################################*/
+/* TWITTER - Start */
 /* ####################################################*/
 .twitterWrapper {
   display: flex;
@@ -1831,6 +2085,54 @@ footer ul a {
   width: 100%;
   height: 100%;
 }
+
+/* Twitter- Blur - Start */
+
+.blurContainer {
+  position: relative;
+}
+
+.blurContainer .blur {
+  filter: blur(5px);
+}
+
+.blurContainer .blur img {
+  width: 100%;
+  height: 100%;
+}
+
+.blurContainer .blurOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.blurContainer .comingSoon {
+  position: absolute;
+  top: 200px;
+  left: 0;
+  right: 0;
+  font-size: 25px;
+  color: white;
+  background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
+  padding: 15px;
+  border-radius: 20px;
+  margin: 0 auto;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  border: 3px solid;
+}
+
+/* Twitter- Blur - End */
+
+/* ####################################################*/
+/* TWITTER - END */
+/* ####################################################*/
 
 .notificationContainer .articleOptionsContainer,
 .notificationContainer .addToListForm,
