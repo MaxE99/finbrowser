@@ -36,7 +36,7 @@
             </div>
             {% endfor %}
             <div class="contentWrapper interactionWrapper">
-                <div class="createListButton"><i class="fas fa-plus"></i></div>
+                <div class="createListButton addButton"><i class="fas fa-plus"></i></div>
                 <div class="createListMenu formContainer">
                     <h3>Create A New List</h3>
                     <i class="fas fa-times closeFormContainerButton"></i>
@@ -81,7 +81,7 @@
             </div>
             {% endfor %}
             <div class="contentWrapper interactionWrapper">
-                <div class="addListsButton"><i class="fas fa-plus"></i></div>
+                <div class="addListsButton addButton"><i class="fas fa-plus"></i></div>
                 <div class="addListsForm formContainer">
                     <h3>Add Lists</h3>
                     <i class="fas fa-times closeFormContainerButton"></i>
@@ -124,7 +124,7 @@
             </div>
             {% endfor %}
             <div class="contentWrapper interactionWrapper">
-                <div class="contentWrapper addSourcesButton"><i class="fas fa-plus"></i></div>
+                <div class="addSourcesButton addButton"><i class="fas fa-plus"></i></div>
                 <div class="contentWrapper addSourcesForm formContainer">
                     <h3>Add Sources</h3>
                     <i class="fas fa-times closeFormContainerButton"></i>
@@ -144,10 +144,10 @@
 </div>
 
 
-{% if subscribed_articles %}
-<div class="categoryHeader">Articles Of Subscribed Sources</div>
+{% if subscribed_content %}
+<div class="categoryHeader">Content Of Subscribed Sources</div>
 <div class="articlesWrapper">
-    {% for article in subscribed_articles %}
+    {% for article in subscribed_content %}
     <div class="articleContainer" id="article_id_{{ article.article_id }}">
         <div class="authorImageContainer">
             <img src="{% static article.source.favicon_path %}" />
@@ -171,7 +171,7 @@
         <div class="articleOptionsContainer">
             {% if request.user.is_authenticated %}
             <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
-            {% if article.title in highlighted_articles_titles %}
+            {% if article.title in highlighted_content_titles %}
             <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight article</span></div>
             {% else %}
             <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight article</span></div>
@@ -224,25 +224,25 @@
 <div class="paginationAndAddExternalContainer">
     <div class="pagination">
         <span class="step-links">
-            {% for i in subscribed_articles.paginator.page_range %}
-            {% if subscribed_articles.number == i %}
-            <button class="currentPagination">{{ subscribed_articles.number }}</button>
-            {% elif i > subscribed_articles.number|add:'-3' and i < subscribed_articles.number|add:'3' %} <a
-                href="?subscribed_articles={{ i }}">{{ i }}</a>
+            {% for i in subscribed_content.paginator.page_range %}
+            {% if subscribed_content.number == i %}
+            <button class="currentPagination">{{ subscribed_content.number }}</button>
+            {% elif i > subscribed_content.number|add:'-3' and i < subscribed_content.number|add:'3' %} <a
+                href="?subscribed_content={{ i }}">{{ i }}</a>
             {% endif %}
             {% endfor %}
         </span>
     </div>
-    {% if not highlighted_articles %}
-    <button class="addExternalLinkButton"><i class="fas fa-plus"></i>Add External Articles</button>
+    {% if not highlighted_content_ex_twitter %}
+    <button class="addExternalLinkButton"><i class="fas fa-plus"></i>Add Content</button>
     {% endif %}
 </div>
 {% endif %}
 
-{% if highlighted_articles %}
-<div class="categoryHeader">Highlighted Articles</div>
+{% if highlighted_content_ex_twitter %}
+<div class="categoryHeader">Highlighted Content</div>
 <div class="articlesWrapper">
-    {% for article in highlighted_articles %}
+    {% for article in highlighted_content_ex_twitter %}
     <div class="articleContainer" id="article_id_{{ article.article.article_id }}">
         {% if article.article.source %}
         <div class="authorImageContainer">
@@ -280,7 +280,7 @@
         <div class="articleOptionsContainer">
             {% if request.user.is_authenticated %}
             <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
-            {% if article.article.title in highlighted_articles_titles %}
+            {% if article.article.title in highlighted_content_titles %}
             <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight article</span></div>
             {% else %}
             <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight article</span></div>
@@ -333,22 +333,22 @@
 <div class="paginationAndAddExternalContainer">
     <div class="pagination">
         <span class="step-links">
-            {% for i in highlighted_articles.paginator.page_range %}
-            {% if highlighted_articles.number == i %}
-            <button class="currentPagination">{{ highlighted_articles.number }}</button>
-            {% elif i > highlighted_articles.number|add:'-3' and i < highlighted_articles.number|add:'3' %} <a
-                href="?highlighted_articles={{ i }}">{{ i }}</a>
+            {% for i in highlighted_content_ex_twitter.paginator.page_range %}
+            {% if highlighted_content_ex_twitter.number == i %}
+            <button class="currentPagination">{{ highlighted_content_ex_twitter.number }}</button>
+            {% elif i > highlighted_content_ex_twitter.number|add:'-3' and i < highlighted_content_ex_twitter.number|add:'3' %}
+            <a href="?highlighted_content={{ i }}">{{ i }}</a>
             {% endif %}
             {% endfor %}
         </span>
     </div>
-    <button class="addExternalLinkButton"><i class="fas fa-plus"></i>Add External Articles</button>
+    <button class="addExternalLinkButton"><i class="fas fa-plus"></i>Add Content</button>
 </div>
 {% endif %}
 
 
 <div class="formContainer addExternalLinksContainer">
-    <h3>Add External Articles</h3>
+    <h3>Add Content</h3>
     <i class="fas fa-times closeFormContainerButton"></i>
     <form action="" enctype="multipart/form-data" method="POST" class="addExternalArticlesForm">
         {% csrf_token %} {{ add_external_articles_form }}
@@ -376,7 +376,7 @@
                         <div class="articleOptionsContainer">
                             {% if request.user.is_authenticated %}
                             <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
-                            {% if tweet.article.title in highlighted_articles_titles %}
+                            {% if tweet.article.title in highlighted_content_titles %}
                             <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight
                                     article</span></div>
                             {% else %}
@@ -475,7 +475,7 @@
                         <div class="articleOptionsContainer">
                             {% if request.user.is_authenticated %}
                             <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
-                            {% if tweet.title in highlighted_articles_titles %}
+                            {% if tweet.title in highlighted_content_titles %}
                             <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight
                                     article</span></div>
                             {% else %}
@@ -557,7 +557,7 @@
     </div>
     <div class="mostLikedTweetsContainer">
         <div class="categoryHeader">Most Liked Tweets</div>
-        <div class="upperBlurContainer">
+        <div class="blurContainer">
             <div class="smallFormContentWrapper blur">
                 <img src="{% static 'home/media/blurred_top_tweets.png'  %}">
             </div>

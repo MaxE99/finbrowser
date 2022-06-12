@@ -78,7 +78,7 @@
 }
 
 .icon:hover {
-  transform: scale(1.1, 1.1);
+  transform: scale(1.1);
 }
 
 .icon a {
@@ -159,7 +159,7 @@
 }
 
 .openAboutButton:hover {
-  transform: scale(1.1, 1.1);
+  transform: scale(1.1);
 }
 
 .bioContainer .browserCategory .fa-times {

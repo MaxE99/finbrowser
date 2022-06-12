@@ -78,6 +78,8 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
 const createListButton = document.querySelector(".createListButton");
 createListButton.addEventListener("click", () => {
   if (!createListButton.classList.contains("registrationLink")) {
-    document.querySelector(".createListMenu").style.display = "flex";
+    document.querySelector(
+      ".searchResultsAndListCreationContainer .createListMenu"
+    ).style.display = "flex";
   }
 });

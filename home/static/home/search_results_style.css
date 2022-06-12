@@ -9,12 +9,26 @@
   text-align: center;
 }
 
-.sr_mainSearchWrapper {
+.mainSearchWrapper {
   margin: 15px auto;
 }
 
-.sr_mainSearchWrapper .mainInputSearch {
+.mainSearchWrapper .mainInputSearch {
   width: 100%;
+}
+
+#autocomplete_list_results {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  background: white;
+  box-shadow: var(--box-shadowScheme);
+  z-index: 10;
+}
+
+#autocomplete_list_results .searchResult span {
+  max-width: 95%;
 }
 
 .searchCategories {
@@ -26,7 +40,8 @@
   cursor: pointer;
 }
 
-.searchCategoryTabActive {
+.searchCategoryTabActive,
+.searchCategoryTab:hover {
   text-decoration-line: underline;
   text-underline-offset: 7px;
   text-decoration-thickness: 3px;
@@ -42,17 +57,10 @@
   display: block;
 }
 
-.articlesContainer {
+.articlesWrapper {
   height: unset;
-  flex-wrap: unset;
-  align-items: unset;
 }
 
-.article {
-  width: unset;
-  margin: 7.5px 25px;
-}
-
-.article .articleTitle {
-  max-width: 41ch;
+.articlesWrapper .articleContainer {
+  width: 100%;
 }
