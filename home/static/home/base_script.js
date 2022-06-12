@@ -1,5 +1,4 @@
-// function to get cookie by name; retrieved from https://docs.djangoproject.com/en/3.1/ref/csrf/
-
+// creates crsf token
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
@@ -15,8 +14,6 @@ function getCookie(name) {
   return cookieValue;
 }
 
-// creates settings necesseary for DRF use
-
 function get_fetch_settings(inputMethod) {
   const settings = {
     method: inputMethod,
@@ -31,7 +28,6 @@ function get_fetch_settings(inputMethod) {
 }
 
 // Gives user feedback if action that includes DRF has been succesfull or not
-
 function showMessage(message, type) {
   document.querySelectorAll(".messages").forEach((message) => {
     message.innerHTML = "";
@@ -57,7 +53,7 @@ document
   .addEventListener("keyup", async function (e) {
     let search_term = document.getElementById("mainAutocomplete").value;
     if (e.key == "Enter" && search_term.replaceAll(/\s/g, "") != "") {
-      window.location.href = `../../search_results/${search_term}`;
+      window.location.href = `http://127.0.0.1:8000/search_results/${search_term}`;
     } else {
       let results_list = document.getElementById("mainAutocomplete_result");
       if (search_term && search_term.replaceAll(/\s/g, "") != "") {
@@ -130,7 +126,7 @@ document
   .addEventListener("click", () => {
     search_term = document.querySelector(".mainInputSearch").value;
     if (search_term.replaceAll(/\s/g, "") != "") {
-      window.location.href = `../../search_results/${search_term}`;
+      window.location.href = `http://127.0.0.1:8000/search_results/${search_term}`;
     }
   });
 

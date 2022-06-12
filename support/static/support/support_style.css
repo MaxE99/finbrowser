@@ -1,37 +1,63 @@
-.overlay {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .formContainer {
   display: flex;
-  top: 100px;
-  left: unset;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  margin: 20px auto;
+  background: white;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 8px;
 }
 
-.aboutContainer {
+.formContainer h3 {
+  display: flex;
+  align-items: center;
+  background: var(--primary-fontColor);
+  color: white;
+  padding: 7.5px 40px;
+  font-size: 20px;
+  border: 3px solid white;
+  border-radius: 8px 8px 0 0;
+  width: 100%;
+  justify-content: center;
+}
+
+.formContainer form {
   display: flex;
   flex-direction: column;
-  background: white;
-  border-radius: 0 0 8px 8px;
-  box-shadow: var(--box-shadowScheme);
-  width: 60%;
-  padding: 10px 15px;
-  text-align: justify;
+  width: 100%;
+  padding: 15px 40px;
 }
 
-p {
-  letter-spacing: 1.1px;
-  line-height: 1.4;
+.formContainer input,
+.formContainer textarea,
+.formContainer select {
+  width: 100%;
+  padding: 10px 20px;
+  margin: 0 0 15px;
+  font-family: serif;
+  font-size: 18px;
+  font-weight: 600;
 }
 
-.aboutHeader {
-  width: 60%;
-  margin-top: 20px;
+.formContainer label {
+  font-size: 20px;
+  margin-bottom: 5px;
 }
 
-h3 {
-  color: var(--primary-fontColor);
+.formContainer .formSubmitButton {
+  width: 100%;
+  font-size: 20px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--primary-fontColor);
+  border: 1px solid;
+  padding: 10px 40px;
+  font-family: "Lato";
+  margin: 5px 0;
+}
+
+.formContainer .formSubmitButton:hover {
+  transform: scale(1.05, 1.05);
 }
