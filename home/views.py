@@ -284,13 +284,13 @@ class ListDetailView(TemplateView, AddArticlesToListsMixin):
             notifications_activated = user_rating = None
             subscribed = False  
         context['list'] = list
-        context['latest_articles'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources(list), 10, 'latest_articles') 
-        context['highlighted_articles'] = paginator_create(self.request, List.objects.get_highlighted_articles(list.list_id), 10, 'highlighted_articles')
+        context['latest_articles'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources(list).exclude(source__website=TWITTER), 10, 'latest_articles') 
+        context['highlighted_articles'] = paginator_create(self.request, List.objects.get_highlighted_articles(list.list_id).exclude(source__website=TWITTER), 10, 'highlighted_articles')
         context['notifications_activated'] = notifications_activated
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating
-        context['highlighted_tweets'] = paginator_create(self.request, List.objects.get_highlighted_articles(list.list_id), 10, 'highlighted_tweets')
-        context['newest_tweets'] = paginator_create(self.request, List.objects.get_highlighted_articles(list.list_id), 10, 'newest_tweets')
+        context['highlighted_tweets'] = paginator_create(self.request, List.objects.get_highlighted_articles(list.list_id).filter(source__website=TWITTER), 10, 'highlighted_tweets')
+        context['newest_tweets'] = paginator_create(self.request, List.objects.get_highlighted_articles(list.list_id).filter(source__website=TWITTER), 10, 'newest_tweets')
         if self.request.user == list.creator:
             context['change_list_pic_form'] = ListPicChangeForm()
             context['change_list_name_form'] = ListNameChangeForm()

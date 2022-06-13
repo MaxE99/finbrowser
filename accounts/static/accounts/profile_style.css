@@ -1,4 +1,4 @@
-.contentSection {
+.overlay {
   width: 75%;
   margin: 20px auto 0;
 }
@@ -8,17 +8,17 @@
   display: flex;
 }
 
-.profileSocialContainer {
-  display: flex;
-  flex-direction: column;
-  width: calc(100% - 600px);
-}
-
 .profileBanner {
   width: 600px;
   height: 200px;
   border-radius: 40px 5px 5px 5px;
   box-shadow: var(--box-shadowScheme);
+}
+
+.profileSocialContainer {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 600px);
 }
 
 .avatarContainer {
@@ -59,6 +59,8 @@
 }
 
 .socialMediaLinkContainer {
+  position: absolute;
+  bottom: 0;
   display: flex;
   margin: 85px 0 0 20px;
 }
@@ -67,8 +69,8 @@
   position: relative;
   display: flex;
   justify-content: center;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   color: white;
   overflow: hidden;
@@ -89,8 +91,29 @@
   height: 100%;
 }
 
+.openAboutButton {
+  position: absolute;
+  margin-top: 10px;
+  border-radius: 50%;
+  color: white;
+  background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
+  border: 3px solid;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  font-size: 30px;
+  padding: 10px 20px;
+  display: flex;
+}
+
+.openAboutButton:hover {
+  transform: scale(1.1);
+}
+
 .bioContainer {
   position: absolute;
+  right: 60px;
   display: none;
   border-radius: 10px;
   letter-spacing: 1.1px;
@@ -101,18 +124,26 @@
   z-index: 50;
 }
 
-.bioHeader {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  background: var(--primary-fontColor);
-  color: white;
-  padding: 5px;
+.bioContainer .categoryHeader {
+  margin: unset;
+  border: none;
   border-radius: 8px 8px 0 0;
-  font-size: 20px;
 }
 
-.bio {
+.bioContainer .fa-times {
+  position: absolute;
+  display: block;
+  color: white;
+  background: red;
+  padding: 7px;
+  font-size: 25px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.bioContainer .bio {
   padding: 10px 20px;
   background: white;
   border-radius: 0 0 8px 8px;
@@ -121,61 +152,11 @@
   overflow-y: scroll;
 }
 
-.browserCategory {
-  margin-top: 10px;
+.slider {
+  --items-per-screen: 6;
 }
 
-.sourceContainer {
-  overflow: unset;
-  width: 170px;
-}
-
-.iconContainer {
-  width: 170px;
-  height: 170px;
-}
-
-.highlightedArticlesHeader {
-  margin-bottom: 10px;
-}
-
-.articleInformationContainer {
-  max-width: 30ch !important;
-}
-
-.openAboutButton {
-  position: absolute;
-  bottom: 0;
-  padding: 10px 20px;
-  font-size: 20px;
-  border-radius: 8px;
-  color: white;
-  background: var(--primary-fontColor);
-  box-shadow: var(--box-shadowScheme);
-  border: none;
-  cursor: pointer;
-  margin-left: 625px;
-  width: 360px;
-}
-
-.openAboutButton:hover {
-  transform: scale(1.1);
-}
-
-.bioContainer .browserCategory .fa-times {
-  position: absolute;
-  display: block;
-  color: white;
-  background: red;
-  padding: 9.5px;
-  font-size: 25px;
-  top: 0;
-  right: 0;
-  cursor: pointer;
-  box-shadow: var(--box-shadowScheme);
-}
-
-.articlesContainer {
-  max-height: 400px;
-  height: unset;
+.articleInformationContainer,
+.articleSectorAndDateContainer {
+  max-width: 72%;
 }

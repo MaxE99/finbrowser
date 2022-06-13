@@ -3,17 +3,6 @@
 <title>{{ list.name }} List | ResearchBrowser</title>
 {% endblock %} {% block content %}
 
-<div class="addSourcesForm">
-    <h3>Add Sources</h3>
-    <i class="fas fa-times addSourcesCloseButton"></i>
-    <input id="addSourcesInput" type="text">
-    <div class="sourceSearchResultContainer">
-        <div id="sourceSearchResults"></div>
-        <div class="selectedSourcesContainer"></div>
-    </div>
-    <button>Add</button>
-</div>
-
 <form action="" class="changeListForm" method="POST" enctype="multipart/form-data">
     <div class="upperContainer">
         <div class="leftInnerContainer">
@@ -75,13 +64,13 @@
                 {% endif %}
             </div>
             <div class="creatorContainer">
-                <span>by </span>
+                <span>Creator: </span>
                 <a href="{{ list.creator.profile.get_absolute_url }}">{{ list.creator.username }}</a>
             </div>
             <div class="ratingsWrapper">
-                {% if list.creator != request.user %}
                 <div class="rankingsUpperContainer">
                     <div class="rankingsHeader">Ratings</div>
+                    {% if list.creator != request.user %}
                     {% if request.user.is_authenticated %}
                     <button type="button" class="rateListButton">Rate List</button>
                     {% else %}
@@ -98,8 +87,8 @@
                             <button type="button" class="fa fa-star rankingStar" id="fifth"></button>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
-                {% endif %}
                 <div class="rankingsContainer">
                     <div class="rating">
                         <div class="ratedContainer">
@@ -151,7 +140,19 @@
             </div>
             {% endfor %}
             {% if list.creator == request.user %}
-            <div class="contentWrapper addSourcesButton"><i class="fas fa-plus"></i></div>
+            <div class="contentWrapper interactionWrapper">
+                <div class="addSourcesButton addButton"><i class="fas fa-plus"></i></div>
+                <div class="contentWrapper addSourcesForm formContainer">
+                    <h3>Add Sources</h3>
+                    <i class="fas fa-times closeFormContainerButton"></i>
+                    <input id="textInput" type="text">
+                    <div class="searchResultWrapper">
+                        <div id="searchResultsContainer"></div>
+                        <div class="selectionContainer"></div>
+                    </div>
+                    <button class="formSubmitButton">Add</button>
+                </div>
+            </div>
             {% endif %}
         </div>
         <button class="handle rightHandle">
@@ -261,10 +262,17 @@
 <div class="articlesWrapper">
     {% for article in highlighted_articles %}
     <div class="articleContainer" id="article_id_{{ article.article_id }}">
+        {% if article.source %}
         <div class="authorImageContainer">
             <img src="{% static article.source.favicon_path %}" />
             <a href="{{ article.source.get_absolute_url }}"></a>
         </div>
+        {% else %}
+        <div class="authorImageContainer imageContainerUserLink">
+            <i class="fas fa-question-circle"></i>
+            <a href="{{ article.source.get_absolute_url }}"></a>
+        </div>
+        {% endif %}
         <div class="articleInformationContainer">
             <div class="articleTitle">{{ article.title }}
                 <span class="articleTitleTooltip">{{ article.title }}</span>
@@ -276,10 +284,17 @@
             </div>
         </div>
         <i class="fas fa-ellipsis-h"></i>
+        {% if article.source %}
         <div class="articleWebsiteLogoContainer">
-            <img class="articleWebsiteLogo" src="{% static article.source.website.logo %}" alt="">
-            <a class="articleLink" href="{{ article.link }}"></a>
+            <img class="articleWebsiteLogo" src="{% static article.source.website.logo %}">
+            <a href="{{ article.source.get_absolute_url }}"></a>
         </div>
+        {% else %}
+        <div class="articleWebsiteLogoContainer imageContainerUserLink">
+            <i class="fas fa-question-circle"></i>
+            <a href="{{ article.source.get_absolute_url }}"></a>
+        </div>
+        {% endif %}
         <div class="articleOptionsContainer">
             {% if request.user.is_authenticated %}
             <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
@@ -355,21 +370,21 @@
         {% if highlighted_tweets %}
         <div class="smallFormContentWrapper">
             {% for tweet in highlighted_tweets %}
-            <div class="articleContainer" id="article_id_{{ tweet.article.article_id }}">
+            <div class="articleContainer" id="article_id_{{ tweet.article_id }}">
                 <div class="leftContentSide">
-                    <img src="{% static tweet.article.source.favicon_path %}" />
+                    <img src="{% static tweet.source.favicon_path %}" />
                 </div>
                 <div class="rightContentSide">
                     <div class="contentInfoContainer">
                         <div class="sourceAndWebsiteContainer">
-                            <a href="{{ tweet.article.source.get_absolute_url }}">{{ tweet.article.source.name }}</a>
+                            <a href="{{ tweet.source.get_absolute_url }}">{{ tweet.source.name }}</a>
                             <img src="{% static 'home/media/twitter_logo.png' %}">
                         </div>
                         <i class="fas fa-ellipsis-h"></i>
                         <div class="articleOptionsContainer">
                             {% if request.user.is_authenticated %}
                             <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
-                            {% if tweet.article.title in highlighted_content_titles %}
+                            {% if tweet.title in highlighted_content_titles %}
                             <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight
                                     article</span></div>
                             {% else %}
@@ -392,7 +407,7 @@
                                 {% for list in user_lists %}
                                 <div class="listContainer">
                                     <label for="list_id_{{ list.list_id }}">
-                                        {% if tweet.article in list.articles.all %}
+                                        {% if tweet in list.articles.all %}
                                         <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists"
                                             checked="True"> {{ list }}
                                         {% else %}
@@ -422,10 +437,10 @@
                         </div>
                     </div>
                     <div class="contentBody">
-                        <p>{{ tweet.article.title }}</p>
+                        <p>{{ tweet.title }}</p>
                     </div>
                     <div class="timeContainer">
-                        <p>{{ tweet.article.pub_date }}</p>
+                        <p>{{ tweet.pub_date }}</p>
                     </div>
                     <a class="contentLink" href="{{ tweet.article.link }}"></a>
                 </div>

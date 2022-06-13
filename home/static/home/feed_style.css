@@ -1,3 +1,33 @@
+.interactionWrapper {
+  position: relative;
+}
+
+.slider .interactionWrapper .formContainer:hover,
+.slider .interactionWrapper:hover {
+  transform: unset;
+}
+
+.slider .interactionWrapper .addButton:hover {
+  transform: scale(1.1);
+}
+
+.interactionWrapper .createListButton,
+.interactionWrapper .addListsButton,
+.interactionWrapper .addSourcesButton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.interactionWrapper .createListMenu,
+.interactionWrapper .addListsForm,
+.interactionWrapper .addSourcesForm {
+  position: absolute;
+  height: 100%;
+}
+
 .formContainer #textInput {
   width: 90%;
   font-size: 14px;
@@ -14,6 +44,13 @@
   overflow-y: scroll;
 }
 
+.formContainer .searchResultWrapper #searchResultsContainer {
+  z-index: 5;
+}
+
+.formContainer .searchResultWrapper #searchResultsContainer {
+  z-index: 5;
+}
 .formContainer .searchResultWrapper #searchResultsContainer,
 .formContainer .searchResultWrapper .selectionContainer {
   position: absolute;
@@ -23,8 +60,13 @@
   height: 100%;
 }
 
-.formContainer .searchResultWrapper #searchResultsContainer {
-  z-index: 5;
+.formContainer .searchResultWrapper #searchResultsContainer,
+.formContainer .searchResultWrapper .selectionContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .formContainer .searchResult {
@@ -69,36 +111,6 @@
 
 .addExternalLinksContainer .formSubmitButton {
   margin: 10px 0;
-}
-
-.interactionWrapper {
-  position: relative;
-}
-
-.slider .interactionWrapper .formContainer:hover,
-.slider .interactionWrapper:hover {
-  transform: unset;
-}
-
-.slider .interactionWrapper .addButton:hover {
-  transform: scale(1.1);
-}
-
-.interactionWrapper .createListButton,
-.interactionWrapper .addListsButton,
-.interactionWrapper .addSourcesButton {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.interactionWrapper .createListMenu,
-.interactionWrapper .addListsForm,
-.interactionWrapper .addSourcesForm {
-  position: absolute;
-  height: 100%;
 }
 
 .paginationAndAddExternalContainer {
