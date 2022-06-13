@@ -146,7 +146,6 @@ if (dropdownButton) {
 function checkForOpenContainers() {
   let allContainersClosed = true;
   const addToListForms = document.querySelectorAll(".addToListForm");
-  // const formContainers = document.querySelectorAll(".formContainer");
   for (let i = 0, j = addToListForms.length; i < j; i++) {
     if (
       addToListForms[i].style.display != "none" &&
@@ -156,15 +155,6 @@ function checkForOpenContainers() {
       return allContainersClosed;
     }
   }
-  // for (let i = 0, j = formContainers.length; i < j; i++) {
-  //   if (
-  //     formContainers[i].style.display != "none" &&
-  //     formContainers[i].style.display
-  //   ) {
-  //     allContainersClosed = false;
-  //     return allContainersClosed;
-  //   }
-  // }
   return allContainersClosed;
 }
 

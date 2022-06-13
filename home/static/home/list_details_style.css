@@ -80,7 +80,7 @@
   display: flex;
 }
 
-.fa-bell {
+.notificationAndSubscribtionContainer .fa-bell {
   border-left: unset;
 }
 
@@ -264,6 +264,19 @@
 
 .ratedContainer {
   display: flex;
+}
+
+.rankingStar,
+.ratedStar {
+  font-size: 25px;
+  background-color: inherit !important;
+  border: 0 !important;
+  color: gainsboro;
+  cursor: pointer;
+}
+
+.checked {
+  color: var(--primary-fontColor);
 }
 
 .ratingsAmmountContainer {

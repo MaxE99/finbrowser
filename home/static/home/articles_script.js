@@ -35,7 +35,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
   if (search_term && search_term.replaceAll(/\s/g, "") != "") {
     try {
       const res = await fetch(
-        `../api/search_articles/${search_term}`,
+        `http://127.0.0.1:8000/api/search_articles/${search_term}`,
         get_fetch_settings("GET")
       );
       if (!res.ok) {
@@ -57,6 +57,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
     } catch (e) {
       showMessage("Error: Unexpected error has occurred!", "Error");
     }
+    // closes list results list when user clicks somewhere else on the page
     document.onclick = function (e) {
       if (e.target.id !== "autocomplete_list_results") {
         results_list.style.display = "none";
