@@ -118,11 +118,10 @@
   </div>
 </div>
 
-{% if source.website.name == "Twitter" %}
+{% if source.website.name == "Twitter" and latest_articles %}
 <div class="twitterWrapper">
-  <div class="tweetsContainer">
+  <div class="tweetsContainer twitterHalfPageContainer">
     <div class="categoryHeader">Newest Tweets</div>
-    {% if latest_articles %}
     <div class="smallFormContentWrapper">
       {% for tweet in latest_articles %}
       <div class="articleContainer" id="article_id_{{ tweet.article_id }}">
@@ -212,13 +211,8 @@
         {% endfor %}
       </span>
     </div>
-    {% else %}
-    <div class="twitterContainerPlaceholder">
-      <div>You Aren't Subscribed To A Twitter Source!</div>
-    </div>
-    {% endif %}
   </div>
-  <div class="mostLikedTweetsContainer">
+  <div class="mostLikedTweetsContainer twitterHalfPageContainer">
     <div class="categoryHeader">Most Liked Tweets</div>
     <div class="blurContainer">
       <div class="smallFormContentWrapper blur">

@@ -21,8 +21,8 @@ class SourceDetailView(DetailView, AddArticlesToListsMixin):
         else:
             subscribed = False  
             user_rating = notifications_activated = None
-        context['latest_articles'] = paginator_create(self.request, Article.objects.select_related('source', 'source__sector').filter(source=source).order_by('-pub_date'), 10, 'latest_articles')
-        context['lists'] = paginator_create(self.request, List.objects.select_related('creator__profile', 'creator').filter(sources__source_id=source.source_id).filter(is_public=True).order_by('name'), 10, 'lists')
+        context['latest_articles'] = paginator_create(self.request, Article.objects.get_content_from_source(source), 10, 'latest_articles')
+        context['lists'] = paginator_create(self.request, List.objects.get_lists_with_source(source), 10, 'lists')
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating
         context['notifications_activated'] = notifications_activated

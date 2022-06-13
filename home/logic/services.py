@@ -3,6 +3,7 @@ from django.utils.timezone import now
 # Python import
 from urllib.request import Request, urlopen
 import xml.etree.cElementTree as ET
+import html
 # Local import
 from home.logic.selectors import article_components_get
 
@@ -52,6 +53,7 @@ def create_articles_from_feed(source, feed_url, articles, notifications, notific
     for item in root.findall('.//item'):
         try:
             title, link, pub_date = article_components_get(item)
+            title = html.unescape(title)
             if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
                 break
             else:

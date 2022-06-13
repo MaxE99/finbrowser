@@ -356,10 +356,12 @@
     </form>
 </div>
 
+
+{% if newest_tweets %}
 <div class="twitterWrapper">
+    {% if highlighted_tweets %}
     <div class="highlightedTweetsContainer">
         <div class="categoryHeader">Highlighted Tweets</div>
-        {% if highlighted_tweets %}
         <div class="smallFormContentWrapper">
             {% for tweet in highlighted_tweets %}
             <div class="articleContainer" id="article_id_{{ tweet.article.article_id }}">
@@ -450,13 +452,9 @@
                 {% endfor %}
             </span>
         </div>
-        {% else %}
-        <div class="twitterContainerPlaceholder">
-            <div>You Haven't Highlighted Any Tweets!</div>
-        </div>
-        {% endif %}
     </div>
-    <div class="newestTweetsContainer">
+    {% endif %}
+    <div class="newestTweetsContainer {% if not highlighted_tweets %}twitterHalfPageContainer{% endif %}">
         <div class="categoryHeader">Newest Tweets</div>
         {% if newest_tweets %}
         <div class="smallFormContentWrapper">
@@ -555,7 +553,7 @@
         </div>
         {% endif %}
     </div>
-    <div class="mostLikedTweetsContainer">
+    <div class="mostLikedTweetsContainer {% if not highlighted_tweets %}twitterHalfPageContainer{% endif %}">
         <div class="categoryHeader">Most Liked Tweets</div>
         <div class="blurContainer">
             <div class="smallFormContentWrapper blur">
@@ -566,6 +564,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 <script src="{% static 'home/feed_script.js' %}"></script>
 {% endblock content %}
