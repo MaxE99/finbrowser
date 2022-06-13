@@ -206,9 +206,11 @@ if (notificationButton) {
 }
 
 //open add list to sources form
-document.querySelector(".addToListButton").addEventListener("click", () => {
-  document.querySelector(".addSourceToListForm").style.display = "block";
-});
+document
+  .querySelector(".addSourceToListButton")
+  .addEventListener("click", () => {
+    document.querySelector(".addSourceToListForm").style.display = "block";
+  });
 
 //close add list sources form
 document

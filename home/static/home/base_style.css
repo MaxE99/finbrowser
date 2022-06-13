@@ -46,16 +46,6 @@
     rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
-.green {
-  background: var(--neonGreen);
-  box-shadow: var(--standardBoxShadow);
-}
-
-.red {
-  background: var(--neonRed);
-  box-shadow: var(--standardBoxShadow);
-}
-
 body {
   color: var(--secondary-fontColor);
   background-color: #b8c6db;
@@ -544,42 +534,14 @@ main {
   }
 }
 
-.browserCategory,
-.articlesHeader {
-  position: relative;
-  text-align: center;
-  padding: 7.5px 0;
-  font-size: 20px;
-  border-radius: 8px;
-  color: white;
-  border: 3px solid white;
-  width: 100%;
-  background: var(--primary-fontColor);
-  box-shadow: var(--box-shadowScheme);
-}
-/* position: relative;
-  text-align: center;
-  padding: 10px 0;
-  font-size: 20px;
-  border-radius: 8px 8px 0 0;
-  color: white;
-  background: var(--primary-fontColor);
-  box-shadow: var(--box-shadowScheme);
-} */
-
-.browserCategory a {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
+.green {
+  background: var(--neonGreen);
+  box-shadow: var(--standardBoxShadow);
 }
 
-.categoryContainer {
-  display: flex;
-  flex-wrap: wrap;
-  min-height: 105px;
-  padding: 0 20px;
+.red {
+  background: var(--neonRed);
+  box-shadow: var(--standardBoxShadow);
 }
 
 .sourceContainer {
@@ -609,35 +571,6 @@ main {
 .sourcePic {
   width: 100%;
   height: 100%;
-}
-
-.iconContainer .fa-star {
-  background: gold;
-  position: absolute;
-  color: white;
-  top: 0;
-  left: 0;
-  font-size: 20px;
-  padding: 5px;
-}
-
-.fullPaywall,
-.semiPaywall {
-  background: #d50707;
-  position: absolute;
-  left: 32px;
-  font-size: 20px;
-  padding: 5px;
-  top: 0;
-  color: white;
-}
-
-.semiPaywall {
-  background: orange;
-}
-
-.onlyIcon {
-  left: 0;
 }
 
 .sourceLink {
@@ -848,61 +781,6 @@ h2 {
   color: var(--primary-color) !important;
 }
 
-details {
-  position: relative;
-  height: 100%;
-}
-
-details[open] {
-  z-index: 1;
-}
-
-details summary {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  list-style: none;
-  padding: 10px;
-  height: 100%;
-  background: white;
-  padding: 20px 0px 5px 10px;
-  font-size: 17px;
-}
-
-details ul {
-  width: 100%;
-  z-index: 15;
-  background: white;
-  position: absolute;
-  top: 48px;
-  left: 0;
-  border: 2px solid #ccc;
-}
-
-details li {
-  border-bottom: 1px solid #ccc;
-  list-style: none;
-  padding: 10px 5px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-details img {
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-}
-
-details ul li:hover {
-  background: var(--primary-fontColor);
-  color: white;
-}
-
-.sourceLabel {
-  z-index: 5;
-}
-
 .filterBar select {
   /* for Firefox */
   -moz-appearance: none;
@@ -1053,133 +931,6 @@ details ul li:hover {
 
 .addToListForm button:hover {
   transform: scale(1.1);
-}
-
-.ratingsWrapper {
-  width: 260px;
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-  align-items: baseline;
-}
-
-.rankingsUpperContainer {
-  position: relative;
-  width: 100%;
-}
-
-.rateListButton {
-  position: absolute;
-  bottom: -2px;
-  color: white;
-  background: var(--primary-fontColor);
-  border: 3px solid;
-  padding: 4px;
-  border-radius: 8px;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-size: 12px;
-  right: 10px;
-  text-decoration: none;
-}
-
-.rateListButton:hover {
-  transform: scale(1.1);
-}
-
-.rate-formUpperContainer {
-  display: none;
-  position: absolute;
-  z-index: 10;
-}
-
-.rate-formUpperContainer h3 {
-  text-align: center;
-  margin-bottom: 5px;
-  margin-top: -25px;
-}
-
-.rate-form {
-  background: white;
-  padding: 10px 20px;
-  left: 50px;
-  border-radius: 8px;
-}
-
-.rankingsHeader {
-  text-transform: uppercase;
-  font-size: 18px;
-  text-align: center;
-}
-
-.rankingsContainer {
-  display: flex;
-  align-items: center;
-  font-size: 25px;
-  color: var(--primary-fontColor);
-}
-
-.rating {
-  display: flex;
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  align-items: center;
-  background: white;
-  padding: 10px 15px;
-  border-radius: 20px;
-  margin: 5px 0;
-  justify-content: center;
-}
-
-.avgRating {
-  font-size: 15px;
-  color: black;
-  letter-spacing: 1.1px;
-  margin-left: 10px;
-}
-
-.ratedContainer {
-  display: flex;
-}
-
-.ratingsAmmountContainer {
-  font-size: 14px;
-  margin: 0 auto;
-}
-
-.ratedStar {
-  font-size: 20px !important;
-}
-
-.ratingsAmmount {
-  color: var(--primary-fontColor);
-}
-
-.rating > input {
-  display: none;
-}
-
-.rating > label {
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  margin-top: auto;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23e3e3e3' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 76%;
-  transition: 0.3s;
-}
-
-.rating > input:checked ~ label,
-.rating > input:checked ~ label ~ label {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23fcd93a' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
-}
-
-.rating > input:not(:checked) ~ label:hover,
-.rating > input:not(:checked) ~ label:hover ~ label {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23d8b11e' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
 }
 
 footer {

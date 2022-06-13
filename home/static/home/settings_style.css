@@ -204,6 +204,11 @@ h2 {
   height: 40px;
 }
 
+details {
+  position: relative;
+  height: 100%;
+}
+
 details[open] {
   z-index: 1;
 }
@@ -223,6 +228,7 @@ details summary {
 
 details ul {
   width: 100%;
+  z-index: 15;
   background: white;
   position: absolute;
   top: 48px;
@@ -235,14 +241,14 @@ details li {
   list-style: none;
   padding: 10px 5px;
   display: flex;
-  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
 details img {
   width: 16px;
   height: 16px;
-  margin: 0 auto;
+  margin-right: 5px;
 }
 
 details ul li:hover {
