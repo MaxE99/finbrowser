@@ -96,6 +96,6 @@ document
       ".searchWrapper .mainInputSearch"
     ).value;
     if (search_term.replaceAll(/\s/g, "") != "") {
-      window.location.href = `../../search_results/${search_term}`;
+      window.location.href = `http://127.0.0.1:8000/search_results/${search_term}`;
     }
   });

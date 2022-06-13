@@ -64,30 +64,6 @@ async function deleteSocialLinks(e) {
   }
 }
 
-// // add websites to profile
-// const saveButton = document.querySelector(".editSection .saveButton");
-// saveButton.addEventListener("click", async () => {
-//   const website =
-//     saveButton.previousElementSibling.previousElementSibling.previousElementSibling.querySelector(
-//       "summary span"
-//     ).innerText;
-//   const link = saveButton.previousElementSibling.value;
-//   try {
-//     const res = await fetch(
-//       `../api/profile_add_website_link/${website}/${link}`,
-//       get_fetch_settings("POST")
-//     );
-//     if (!res.ok) {
-//       showMessage("Error: List couldn't be filtered!", "Error");
-//     } else {
-//       const context = await res.json();
-//       showMessage(context, "Success");
-//     }
-//   } catch (e) {
-//     showMessage("Error: Unexpected error has occurred!", "Error");
-//   }
-// });
-
 document
   .querySelector(".removeProfilePicButton")
   .addEventListener("click", async () => {

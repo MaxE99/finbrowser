@@ -149,9 +149,7 @@ class SectorDetailView(DetailView, AddArticlesToListsMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         sector = self.get_object()
-        sources = sector.source_set.all().filter(top_source=True)
         context['articles_from_sector'] = paginator_create(self.request, Article.objects.get_articles_from_sector(sector).exclude(source__website=TWITTER).order_by('-pub_date'), 10, 'articles_from_sector')
-        context['articles_from_top_sources'] = paginator_create(self.request, Article.objects.select_related('source', 'source__sector').filter(source__in=sources).exclude(source__website=TWITTER).order_by('-pub_date'), 10, 'articles_from_top_sources')
         context['tweets_from_sector'] = paginator_create(self.request, Article.objects.select_related('source', 'source__sector').filter(source__website=TWITTER, source__in=sector.source_set.all()).order_by('-pub_date'), 20, 'tweets_from_sector')
         return context
 

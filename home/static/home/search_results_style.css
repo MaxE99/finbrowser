@@ -7,6 +7,7 @@
   color: var(--primary-fontColor);
   font-size: 35px;
   text-align: center;
+  margin-top: 10px;
 }
 
 .mainSearchWrapper {
@@ -63,4 +64,10 @@
 
 .articlesWrapper .articleContainer {
   width: 100%;
+}
+
+.categoryContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }

@@ -67,18 +67,6 @@
     </div>
 </div>
 
-<div class="popUpMenu createListMenu">
-    <i class="fas fa-times red closeMenuButton"></i>
-    <div class="menuHeader">Create A New List</div>
-    <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
-        {% csrf_token %} {{ add_list_form }}
-        <div class="popUpButtonContainer">
-            <input name="createListForm" type="submit" class="saveButton" value="Save" />
-        </div>
-    </form>
-</div>
-
-
 {% if articles %}
 <div class="categoryHeader">Long Form Content</div>
 <div class="articlesWrapper">

@@ -1,11 +1,3 @@
-// const highlightedArticles = document.querySelector(
-//   ".highlightedArticlesContainer"
-// );
-// // If there are no highlightedArticles change style of container so that flex-wrap is effective
-// if (!highlightedArticles && document.querySelector(".articleSpace")) {
-//   document.querySelector(".articleSpace").style.display = "block";
-// }
-
 const subscribeButton = document.querySelector(".subscribeButton");
 
 if (subscribeButton) {
@@ -139,7 +131,7 @@ if (document.querySelector(".deleteListButton")) {
         } else {
           const context = await res.json();
           showMessage(context, "Remove");
-          window.location.href = "/lists";
+          window.location.href = "http://127.0.0.1:8000/lists";
         }
       } catch (e) {
         showMessage("Error: Unexpected error has occurred!", "Error");
