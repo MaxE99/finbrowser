@@ -105,7 +105,7 @@ def scrape_spotify():
         episodes = spotify.get_episodes(source.external_id)
         episode_items = episodes['items']
         for episode_item in episode_items:
-            title = episode_item['name']
+            title = html.unescape(episode_item['name'])
             link = episode_item['external_urls']['spotify']
             if articles.filter(title=title, link=link, source=source).exists():
                 break
@@ -127,7 +127,7 @@ def scrape_youtube():
         try:
             items = data['items']
             for item in items:
-                title = item['snippet']['title']
+                title = html.unescape(item['snippet']['title'])
                 link = f"https://www.youtube.com/watch?v={item['id']['videoId']}"
                 pub_date = item['snippet']['publishedAt']
                 if articles.filter(title=title, pub_date=pub_date, link=link, source=source).exists():

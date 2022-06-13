@@ -1,5 +1,4 @@
 {% extends 'home/base.html' %} {% load static %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/sector_details_style.css' %}" />
 <title>{{ sector.name }} Sector | ResearchBrowser</title>
 {% endblock %} {% block content %}
 
@@ -124,9 +123,9 @@
 </div>
 {% endif %}
 
-
+{% if tweets_from_sector %}
 <div class="twitterWrapper">
-    <div class="tweetsContainer">
+    <div class="tweetsContainer twitterHalfPageContainer">
         <div class="categoryHeader">Newest Tweets</div>
         {% if tweets_from_sector %}
         <div class="smallFormContentWrapper">
@@ -219,13 +218,9 @@
                 {% endfor %}
             </span>
         </div>
-        {% else %}
-        <div class="twitterContainerPlaceholder">
-            <div>You Aren't Subscribed To A Twitter Source!</div>
-        </div>
         {% endif %}
     </div>
-    <div class="mostLikedTweetsContainer">
+    <div class="mostLikedTweetsContainer twitterHalfPageContainer">
         <div class="categoryHeader">Most Liked Tweets</div>
         <div class="blurContainer">
             <div class="smallFormContentWrapper blur">
@@ -236,6 +231,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 
 <script src="{% static 'home/sector_details_script.js' %}"></script>

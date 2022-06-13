@@ -126,14 +126,13 @@ class ArticleView(ListView, AddArticlesToListsMixin):
     paginate_by = 10
 
     def get_queryset(self):
-        return Article.objects.select_related('source', 'source__website', 'source__sector').filter(external_source=None).exclude(source__website=TWITTER).order_by('-pub_date')
+        return Article.objects.get_content_excluding_website(TWITTER)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['results_found'] = self.object_list.count()
         context['sectors'] = Sector.objects.all().order_by('name')
-        context['tweets'] = paginator_create(self.request, Article.objects.select_related('source').filter(source__website=TWITTER).order_by('-pub_date'), 20, 'tweets')
-        context['external_articles'] = paginator_create(self.request, Article.objects.exclude(external_source=None).order_by('-pub_date'), 9, 'external_articles')
+        context['tweets'] = paginator_create(self.request, Article.objects.get_content_from_website(TWITTER), 20, 'tweets')
         return context
 
 
@@ -149,8 +148,8 @@ class SectorDetailView(DetailView, AddArticlesToListsMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         sector = self.get_object()
-        context['articles_from_sector'] = paginator_create(self.request, Article.objects.get_articles_from_sector(sector).exclude(source__website=TWITTER).order_by('-pub_date'), 10, 'articles_from_sector')
-        context['tweets_from_sector'] = paginator_create(self.request, Article.objects.select_related('source', 'source__sector').filter(source__website=TWITTER, source__in=sector.source_set.all()).order_by('-pub_date'), 20, 'tweets_from_sector')
+        context['articles_from_sector'] = paginator_create(self.request, Article.objects.get_content_from_sector_excluding_website(sector, TWITTER), 10, 'articles_from_sector')
+        context['tweets_from_sector'] = paginator_create(self.request, Article.objects.get_content_from_sector_and_website(sector, TWITTER), 20, 'tweets_from_sector')
         return context
 
 
@@ -177,10 +176,10 @@ class FeedView(TemplateView, LoginRequiredMixin, AddArticlesToListsMixin, AddExt
         subscribed_sources = Source.objects.get_subscribed_sources(self.request.user)
         context['subscribed_lists'] = List.objects.get_subscribed_lists(self.request.user)
         context['subscribed_sources'] = subscribed_sources
-        context['subscribed_content'] = paginator_create(self.request, Article.objects.get_articles_from_subscribed_sources(subscribed_sources).exclude(source__website=TWITTER), 10, 'subscribed_content')
-        context['highlighted_content_ex_twitter'] = paginator_create(self.request, HighlightedArticle.objects.select_related('article', 'article__source', 'article__external_source', 'article__source__sector').filter(user=self.request.user).exclude(article__source__website=TWITTER).order_by('-article__pub_date'), 10, 'highlighted_content')
-        context['highlighted_tweets'] = paginator_create(self.request, HighlightedArticle.objects.select_related('article', 'article__source', 'article__external_source', 'article__source__sector').filter(user=self.request.user, article__source__website=TWITTER).order_by('-article__pub_date'), 10, 'highlighted_tweets')
-        context['newest_tweets'] = paginator_create(self.request, Article.objects.get_articles_from_subscribed_sources(subscribed_sources).filter(source__website=TWITTER), 10, 'newest_tweets')
+        context['subscribed_content'] = paginator_create(self.request, Article.objects.get_subscribed_content_excluding_website(subscribed_sources, TWITTER), 10, 'subscribed_content')
+        context['highlighted_content_ex_twitter'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_articles_from_user_excluding_website(self.request.user, TWITTER), 10, 'highlighted_content')
+        context['highlighted_tweets'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_articles_from_user_and_website(self.request.user, TWITTER), 10, 'highlighted_tweets')
+        context['newest_tweets'] = paginator_create(self.request, Article.objects.get_subscribed_content_from_website(subscribed_sources, TWITTER), 10, 'newest_tweets')
         return context
 
 
@@ -255,9 +254,11 @@ class ListDetailView(TemplateView, AddArticlesToListsMixin):
                 else:
                     messages.error(request, "Error: Currently only PNG and JPG files are supported!")
                     return HttpResponseRedirect(self.request.path_info)
-                if change_list_name_form.is_valid() and List.objects.filter(creator=request.user, slug=new_list_slug).exists() == False:
-                    change_list_name_form.save()
-                    messages.success(request, 'List settings have been updated!')
+                if new_list_slug == list_slug:
+                    messages.success(request, 'List settings have been saved!')
+                elif change_list_name_form.is_valid() and new_list_slug != list_slug and List.objects.filter(creator=request.user, slug=new_list_slug).exists() == False:
+                        change_list_name_form.save()
+                        messages.success(request, 'List settings have been saved!')
                 else:
                     messages.error(request, "Error: You've already created a list with that name!")
                     return HttpResponseRedirect(self.request.path_info)
@@ -282,13 +283,13 @@ class ListDetailView(TemplateView, AddArticlesToListsMixin):
             notifications_activated = user_rating = None
             subscribed = False  
         context['list'] = list
-        context['latest_articles'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources(list).exclude(source__website=TWITTER), 10, 'latest_articles') 
-        context['highlighted_articles'] = paginator_create(self.request, List.objects.get_highlighted_articles(list.list_id).exclude(source__website=TWITTER), 10, 'highlighted_articles')
+        context['latest_articles'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources_excluding_website(list, TWITTER), 10, 'latest_articles') 
+        context['highlighted_articles'] = paginator_create(self.request, List.objects.get_highlighted_content_from_list_excluding_website(list_id, TWITTER), 10, 'highlighted_articles')
         context['notifications_activated'] = notifications_activated
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating
-        context['highlighted_tweets'] = paginator_create(self.request, List.objects.get_highlighted_articles(list.list_id).filter(source__website=TWITTER), 10, 'highlighted_tweets')
-        context['newest_tweets'] = paginator_create(self.request, List.objects.get_highlighted_articles(list.list_id).filter(source__website=TWITTER), 10, 'newest_tweets')
+        context['highlighted_tweets'] = paginator_create(self.request, List.objects.get_highlighted_content_from_list_and_website(list_id, TWITTER), 20, 'highlighted_tweets')
+        context['newest_tweets'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources_and_website(list, TWITTER), 20, 'newest_tweets')
         if self.request.user == list.creator:
             context['change_list_pic_form'] = ListPicChangeForm()
             context['change_list_name_form'] = ListNameChangeForm()

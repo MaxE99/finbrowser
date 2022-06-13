@@ -20,7 +20,7 @@ class ProfileView(DetailView, AddArticlesToListsMixin):
         context['created_lists'] = List.objects.get_created_lists(profile.user).filter(is_public=True)
         context['subscribed_sources'] = Source.objects.get_subscribed_sources(profile.user) if privacy_settings.subscribed_sources_public else None
         context['subscribed_lists'] = List.objects.get_subscribed_lists(profile.user) if privacy_settings.list_subscribtions_public else None
-        context['highlighted_articles'] = paginator_create(self.request, HighlightedArticle.objects.filter(user=profile.user).select_related('article__source', 'article__source__sector').order_by('-article__pub_date'), 10) if privacy_settings.highlighted_articles_public else None
+        context['highlighted_articles'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_articles_of_user(profile.user), 10) if privacy_settings.highlighted_articles_public else None
         context['social_links'] = SocialLink.objects.select_related('website').filter(profile=profile)
         return context        
 

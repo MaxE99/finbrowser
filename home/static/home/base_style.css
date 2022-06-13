@@ -1192,6 +1192,10 @@ h2 {
   width: 33%;
 }
 
+.twitterWrapper .twitterHalfPageContainer {
+  width: 49%;
+}
+
 .twitterWrapper .categoryHeader {
   margin: 0;
   border-radius: 8px 8px 0 0;

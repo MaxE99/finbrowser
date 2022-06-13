@@ -117,8 +117,3 @@
 .categoryHeader {
   margin: 10px 0 5px;
 }
-
-.twitterWrapper .tweetsContainer,
-.twitterWrapper .mostLikedTweetsContainer {
-  width: 49%;
-}

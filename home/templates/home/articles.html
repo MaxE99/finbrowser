@@ -157,9 +157,9 @@
 {% endif %}
 
 
-
+{% if tweets %}
 <div class="twitterWrapper">
-    <div class="tweetsContainer">
+    <div class="tweetsContainer twitterHalfPageContainer">
         <div class="categoryHeader">Newest Tweets</div>
         {% if tweets %}
         <div class="smallFormContentWrapper">
@@ -252,13 +252,9 @@
                 {% endfor %}
             </span>
         </div>
-        {% else %}
-        <div class="twitterContainerPlaceholder">
-            <div>You Aren't Subscribed To A Twitter Source!</div>
-        </div>
         {% endif %}
     </div>
-    <div class="mostLikedTweetsContainer">
+    <div class="mostLikedTweetsContainer twitterHalfPageContainer">
         <div class="categoryHeader">Most Liked Tweets</div>
         <div class="blurContainer">
             <div class="smallFormContentWrapper blur">
@@ -269,6 +265,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 
 <script src="{% static 'home/articles_script.js' %}"></script>
