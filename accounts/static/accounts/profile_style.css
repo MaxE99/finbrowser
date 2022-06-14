@@ -8,11 +8,22 @@
   display: flex;
 }
 
-.profileBanner {
+.profileBanner,
+.bannerPlaceholder {
   width: 600px;
   height: 200px;
   border-radius: 40px 5px 5px 5px;
   box-shadow: var(--box-shadowScheme);
+}
+
+.bannerPlaceholder {
+  background: var(--primary-fontColor);
+  color: white;
+  font-size: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .profileSocialContainer {
@@ -27,7 +38,8 @@
   position: relative;
 }
 
-.avatar {
+.avatar,
+.avatarContainer .logoPlaceholder {
   border-radius: 50%;
   height: 100px;
   width: 100px;
@@ -38,6 +50,15 @@
   position: absolute;
   z-index: 2;
   box-shadow: var(--box-shadowScheme);
+}
+
+.avatarContainer .logoPlaceholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80px;
+  background: var(--primary-fontColor);
+  color: white;
 }
 
 .profileUsername {

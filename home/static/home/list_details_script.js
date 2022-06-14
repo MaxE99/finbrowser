@@ -157,13 +157,19 @@ if (document.querySelector(".addSourcesForm .closeFormContainerButton")) {
 
 // add Sources Search
 let selected_sources = [];
-if (document.getElementById("addSourcesInput")) {
+if (document.querySelector(".addSourcesForm #textInput")) {
   document
-    .getElementById("addSourcesInput")
+    .querySelector(".addSourcesForm #textInput")
     .addEventListener("keyup", async function (e) {
-      let search_term = document.getElementById("addSourcesInput").value;
-      let results_list = document.getElementById("sourceSearchResults");
-      let selected_list = document.querySelector(".selectedSourcesContainer");
+      let search_term = document.querySelector(
+        ".addSourcesForm #textInput"
+      ).value;
+      let results_list = document.querySelector(
+        ".addSourcesForm #searchResultsContainer"
+      );
+      let selected_list = document.querySelector(
+        ".addSourcesForm .selectionContainer"
+      );
       const list_id = document
         .querySelector(".rightFirstRowContainer h3")
         .id.replace("list_detail_for_", "");
@@ -180,10 +186,10 @@ if (document.getElementById("addSourcesInput")) {
           } else {
             const context = await res.json();
             results_list.innerHTML = "";
+            const resultHeader = document.createElement("div");
+            resultHeader.innerText = "Results:";
+            results_list.append(resultHeader);
             if (context.length > 0) {
-              const resultHeader = document.createElement("div");
-              resultHeader.innerText = "Results:";
-              results_list.append(resultHeader);
               context.forEach((source) => {
                 if (selected_sources.includes(source.source_id) == false) {
                   const searchResult = document.createElement("div");
@@ -192,6 +198,7 @@ if (document.getElementById("addSourcesInput")) {
                   resultImage.src = `/static/${source.favicon_path}`;
                   const sourceName = document.createElement("span");
                   sourceName.innerText = source.name;
+                  sourceName.id = `source_id_${source.source_id}`;
                   searchResult.append(resultImage, sourceName);
                   results_list.appendChild(searchResult);
                   searchResult.addEventListener(
@@ -205,20 +212,27 @@ if (document.getElementById("addSourcesInput")) {
                       selected_sources.push(source.source_id);
                       const removeSourceButton = document.createElement("i");
                       removeSourceButton.classList.add("fas", "fa-trash");
-                      removeSourceButton.id =
-                        "remove_source_id_" + source.source_id;
                       removeSourceButton.addEventListener("click", () => {
                         removeSourceButton.parentElement.remove();
-                        const index = selected_sources.indexOf(
-                          removeSourceButton.id.replace("remove_source_id_", "")
-                        );
-                        selected_sources.splice(index, 1); // 2nd parameter means remove one item only
+                        selected_sources = selected_sources.filter(function (
+                          e
+                        ) {
+                          return (
+                            e.toString() !==
+                            removeSourceButton.previousElementSibling.id.replace(
+                              "source_id_",
+                              ""
+                            )
+                          );
+                        });
                       });
                       searchResult.appendChild(removeSourceButton);
                       selected_list.appendChild(searchResult);
                       results_list.style.display = "none";
                       selected_list.style.display = "block";
-                      document.getElementById("addSourcesInput").value = "";
+                      document.querySelector(
+                        ".addSourcesForm #textInput"
+                      ).value = "";
                     }
                   );
                 }
@@ -244,25 +258,21 @@ if (document.querySelector(".addSourcesForm button")) {
         .querySelector(".rightFirstRowContainer h3")
         .id.replace("list_detail_for_", "");
       if (selected_sources.length) {
-        for (let i = 0, j = selected_sources.length; i < j; i++) {
-          try {
-            const res = await fetch(
-              `http://127.0.0.1:8000/api/lists/${list_id}/add_source/${selected_sources[i]}/`,
-              get_fetch_settings("POST")
-            );
-            if (!res.ok) {
-              showMessage(
-                "Error: Network request failed unexpectedly!",
-                "Error"
-              );
-            } else {
-              const context = await res.json();
-              showMessage(context, "Success");
-              window.location.reload();
-            }
-          } catch (e) {
-            showMessage("Error: Unexpected error has occurred!", "Error");
+        selected_sources = selected_sources.join();
+        try {
+          const res = await fetch(
+            `http://127.0.0.1:8000/api/lists/${list_id}/add_sources_to_list/${selected_sources}/`,
+            get_fetch_settings("POST")
+          );
+          if (!res.ok) {
+            showMessage("Error: Network request failed unexpectedly!", "Error");
+          } else {
+            const context = await res.json();
+            showMessage(context, "Success");
+            window.location.reload();
           }
+        } catch (e) {
+          showMessage("Error: Unexpected error has occurred!", "Error");
         }
       } else {
         showMessage("You need to select sources!", "Error");
@@ -444,8 +454,3 @@ if (rateListButton) {
     }
   });
 }
-
-// if user already rated source = set stars to this rating
-const user_rating = document.getElementById("user-rating").innerText;
-let form = document.querySelector(".rate-form");
-handleStarSelect(user_rating, form);

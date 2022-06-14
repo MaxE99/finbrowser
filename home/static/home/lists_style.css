@@ -186,9 +186,20 @@
 }
 
 .listCont img,
-.creatorCont img {
+.creatorCont img,
+.creatorCont .logoPlaceholder {
   border-radius: 50%;
   height: 30px;
   width: 30px;
   margin-right: 3px;
+}
+
+.creatorCont .logoPlaceholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--primary-fontColor);
+  color: white;
+  text-transform: UPPERCASE;
+  font-size: 20px;
 }
