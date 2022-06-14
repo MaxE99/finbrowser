@@ -275,7 +275,6 @@ async function add_article_to_list(list_id, article_id) {
       showMessage("Error: Network request failed unexpectedly!", "Error");
     }
   } catch (e) {
-    console.log(e);
     showMessage("Error: Unexpected error has occurred!", "Error");
   }
 }

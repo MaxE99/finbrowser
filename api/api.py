@@ -163,8 +163,6 @@ class SourceViewSet(viewsets.ModelViewSet):
             return Response("Source has been subscribed!")
 
 
-import time
-
 class ListViewSet(viewsets.ModelViewSet):
     queryset = List.objects.all()
     serializer_class = List_Serializer

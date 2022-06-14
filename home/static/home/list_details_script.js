@@ -161,7 +161,6 @@ if (document.getElementById("addSourcesInput")) {
   document
     .getElementById("addSourcesInput")
     .addEventListener("keyup", async function (e) {
-      console.log(e);
       let search_term = document.getElementById("addSourcesInput").value;
       let results_list = document.getElementById("sourceSearchResults");
       let selected_list = document.querySelector(".selectedSourcesContainer");
