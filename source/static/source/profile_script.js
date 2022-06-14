@@ -161,11 +161,6 @@ document.querySelector(".openRateListButton").addEventListener("click", () => {
   document.querySelector(".rankingsHeader").style.opacity = "0";
 });
 
-// if user already rated source = set stars to this rating
-const user_rating = document.getElementById("user-rating").innerText;
-let form = document.querySelector(".rate-form");
-handleStarSelect(user_rating, form);
-
 //Notifications
 const notificationButton = document.querySelector(
   ".notificationAndSubscribtionContainer .fa-bell"

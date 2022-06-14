@@ -332,6 +332,7 @@
 }
 
 .interactionWrapper .addSourcesButton {
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -416,4 +417,18 @@
 
 .addSourcesForm .formSubmitButton {
   width: 90% !important;
+}
+
+.contentWrapper .sourceDeleteOption {
+  display: none;
+  position: absolute;
+  color: white;
+  background: red;
+  padding: 10px;
+  font-size: 20px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  box-shadow: var(--box-shadowScheme);
+  z-index: 25;
 }

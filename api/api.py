@@ -8,6 +8,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from rest_framework.decorators import api_view
 # Local imports
 from home.models import Article, HighlightedArticle, NotificationMessage, Source, List, SourceRating, ListRating, Notification
 from accounts.models import Profile, SocialLink, Website
@@ -214,16 +215,6 @@ class ListViewSet(viewsets.ModelViewSet):
         else:
             return Response("Access Denied")
 
-    @action(detail=True, methods=['post'], authentication_classes=[SessionAuthentication], url_path=r'add_source/(?P<source_id>\d+)', permission_classes=[IsAuthenticated, IsListCreator])
-    def add_source(self, request, pk, source_id):
-        list = self.get_object()
-        if list.creator == request.user:
-            source = get_object_or_404(Source, source_id=source_id)
-            list.sources.add(source)
-            return Response("Source has been added to the list!")
-        else:
-            return Response("Access Denied")
-
     @action(detail=True, methods=['post'], authentication_classes=[SessionAuthentication], url_path=r'add_article_to_list/(?P<article_id>\d+)', permission_classes=[IsAuthenticated])
     def add_article_to_list(self, request, pk, article_id):
         list = self.get_object()
@@ -233,6 +224,23 @@ class ListViewSet(viewsets.ModelViewSet):
             return Response("Article has been added to the list!")
         else:
             return Response("Access Denied")
+
+@api_view(["POST"])
+def add_sources_to_list(request, list_id, source_ids):
+    list = get_object_or_404(List, list_id=list_id)
+    if list.creator == request.user:
+        list.sources.add(*source_ids.split(","))
+        return Response("List has been updated!")
+    else:
+        return Response("Access Denied") 
+
+
+@api_view(["POST"])
+def subscribe_to_sources(request, source_ids):
+    for source_id in source_ids.split(","):
+        source = get_object_or_404(Source, source_id=source_id)
+        source.subscribers.add(request.user)
+    return Response("List has been updated!")
 
 
 class FilteredLists(APIView):

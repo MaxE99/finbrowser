@@ -1,3 +1,8 @@
+// deactivate autocomplete for all inputs
+document.querySelectorAll("input").forEach((input) => {
+  input.setAttribute("autocomplete", "off");
+});
+
 // creates crsf token
 function getCookie(name) {
   let cookieValue = null;

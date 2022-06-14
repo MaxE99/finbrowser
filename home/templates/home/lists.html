@@ -48,7 +48,7 @@
   </div>
   <div class="selectContainer searchSelectContainer">
     <div class="searchContainer">
-      <input id="search" placeholder="Search term" type="text" autocomplete="off" />
+      <input id="search" placeholder="Search term" type="text" />
       <i class="fas fa-search"></i>
     </div>
     <div id="autocomplete_list_results"></div>
@@ -108,7 +108,7 @@
     {% if list.creator.profile.profile_pic %}
     <img src="{{ list.creator.profile.profile_pic.url }}" alt="user-profile-pic">
     {% else %}
-    <img src="{% static 'home/media/bigger_favicon.png' %}" alt="user-profile-pic">
+    <div class="logoPlaceholder">{{ list.creator.username.0 }}</div>
     {% endif %}
     <div>{{ list.creator.username }}</div>
   </div>
