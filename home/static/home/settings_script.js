@@ -247,7 +247,6 @@ document
           showMessage("Notification has been deleted!", "Remove");
         }
       } catch (e) {
-        console.log(e);
         showMessage("Error: Unexpected error has occurred!", "Error");
       }
     });

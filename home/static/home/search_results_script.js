@@ -74,7 +74,6 @@ document
             }
           }
         } catch (e) {
-          console.log(e);
           showMessage("Error: Unexpected error has occurred!", "Error");
         }
         document.onclick = function (e) {

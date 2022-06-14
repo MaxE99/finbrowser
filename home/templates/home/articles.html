@@ -63,7 +63,7 @@
 <div class="searchResultsWrapper">
     <div class="searchResultsContainer">
         <h3>Search Results</h3>
-        <div><span>{{ results_found }}</span> Articles Found</div>
+        <div><span>{{ results_found }}</span> Results Found</div>
     </div>
 </div>
 
@@ -146,10 +146,10 @@
 </div>
 <div class="pagination">
     <span class="step-links">
-        {% for i in page_obj.paginator.page_range %}
-        {% if page_obj.number == i %}
-        <button class="currentPagination">{{ page_obj.number }}</button>
-        {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %} <a href="?page={{ i }}">{{ i }}</a>
+        {% for i in articles.paginator.page_range %}
+        {% if articles.number == i %}
+        <button class="currentPagination">{{ articles.number }}</button>
+        {% elif i > articles.number|add:'-3' and i < articles.number|add:'3' %} <a href="?articles={{ i }}">{{ i }}</a>
         {% endif %}
         {% endfor %}
     </span>

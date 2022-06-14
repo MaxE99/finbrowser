@@ -14,7 +14,6 @@ from home.tests.test_model_instances import create_test_users, create_test_sourc
 User = get_user_model()
 
 class AddListFormTests(TestCase):
-
     def setUp(self):
         create_test_users()
         create_test_lists()
@@ -39,9 +38,7 @@ class AddListFormTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(List.objects.all().count(),10)
 
-
 class ListNameChangeFormTest(TestCase):
-
     def setUp(self):
         create_test_users()
         create_test_lists()
@@ -67,7 +64,6 @@ class ListNameChangeFormTest(TestCase):
 
 
 class AddExternalArticlesFormTests(TestCase):
-
     def setUp(self):
         create_test_users()
         self.client.login(username="TestUser1", password="testpw99")
@@ -83,8 +79,23 @@ class AddExternalArticlesFormTests(TestCase):
         self.assertTrue(HighlightedArticle.objects.filter(article=get_object_or_404(Article, title="TestArticleTitle")).exists())
 
 
-class FeedViewTest(TestCase):
+class ArticleViewTest(TestCase):
+    def setUp(self):
+        create_test_sectors()
+        create_test_website()
+        create_test_sources()
+        create_test_articles()
 
+    def test_articles(self):
+        response = self.client.get(reverse('home:articles'))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'home/articles.html')
+        self.assertEqual(response.context['results_found'], 10)
+        self.assertEqual(response.context['articles'].count(), 10)
+        self.assertEqual(len(response.context['tweets'].object_list), 0)
+
+
+class FeedViewTest(TestCase):
     def setUp(self):
         create_test_users()
         create_test_lists()     
@@ -108,10 +119,10 @@ class FeedViewTest(TestCase):
         self.assertEqual(response.context['user_lists'].count(),3)
         self.assertEqual(response.context['subscribed_lists'].count(),2)
         self.assertEqual(response.context['subscribed_sources'].count(),1)
-        self.assertEqual(len(response.context['subscribed_articles'].object_list), 5)
-        self.assertEqual(len(response.context['highlighted_articles'].object_list),5)
-        self.assertEqual(response.context['subscribed_articles'].object_list[0], get_object_or_404(Article, title="TestArticle2"))
-        self.assertEqual(response.context['highlighted_articles'].object_list[0], get_object_or_404(HighlightedArticle, article=get_object_or_404(Article, title="TestArticle1"), user=get_object_or_404(User, username="TestUser1")))
+        self.assertEqual(len(response.context['subscribed_content'].object_list), 5)
+        self.assertEqual(len(response.context['highlighted_content'].object_list),5)
+        self.assertEqual(response.context['subscribed_content'].object_list[0], get_object_or_404(Article, title="TestArticle2"))
+        self.assertEqual(response.context['highlighted_content'].object_list[0], get_object_or_404(HighlightedArticle, article=get_object_or_404(Article, title="TestArticle1"), user=get_object_or_404(User, username="TestUser1")))
 
     def test_feed_without_user(self):
         response = self.client.get(reverse('home:feed'))
@@ -140,25 +151,16 @@ class ListsSearchViewTest(TestCase):
         create_test_sources()
 
     def test_lists_search_all(self):
-        response = self.client.get(reverse('home:lists-search', kwargs={'timeframe': 'All', 'content_type': 'All', 'minimum_rating': 'All', 'sources': 'All'}))
+        response = self.client.get(reverse('home:lists-search', kwargs={'timeframe': 'All', 'content_type': 'All', 'minimum_rating': 'All', 'primary_source': 'All'}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'home/lists.html')
         self.assertEqual(response.context['results_found'], 10)
 
     def test_lists_search_mixed(self):
-        response = self.client.get(reverse('home:lists-search', kwargs={'timeframe': 30, 'content_type': 'All', 'minimum_rating': 2, 'sources': 'All'}))
+        response = self.client.get(reverse('home:lists-search', kwargs={'timeframe': 30, 'content_type': 'All', 'minimum_rating': 2, 'primary_source': 'All'}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'home/lists.html')
         self.assertEqual(response.context['results_found'], 3)
-
-    # def test_lists_search_sources(self):
-    #     get_object_or_404(List, name="TestList1").sources.add(get_object_or_404(Source, name="TestSource1"))
-    #     get_object_or_404(List, name="TestList1").sources.add(get_object_or_404(Source, name="TestSource2"))
-    #     get_object_or_404(List, name="TestList1").sources.add(get_object_or_404(Source, name="TestSource4"))
-    #     response = self.client.get(reverse('home:lists-search', kwargs={'timeframe': 30, 'content_type': 'All', 'minimum_rating': 'All', 'sources': 'TestWebsite1'}))
-    #     self.assertEqual(response.status_code,200)
-    #     self.assertTemplateUsed(response,'home/lists.html')
-    #     self.assertEqual(response.context['results_found'], 1)
 
 
 class SectorViewTest(TestCase):
@@ -173,6 +175,22 @@ class SectorViewTest(TestCase):
         self.assertTemplateUsed(response,'home/sectors.html')
         self.assertEqual(Sector.objects.all().count(), 10)
         self.assertEqual(Source.objects.filter(sector = get_object_or_404(Sector, name="TestSector1")).count(), 3)
+
+
+class SectorDetailViewTest(TestCase):
+    def setUp(self):
+        create_test_sectors()
+        create_test_website()
+        create_test_sources()
+        create_test_articles()
+
+    def test_sector_details(self):
+        sector_slug = get_object_or_404(Sector, slug="testsector1").slug
+        response = self.client.get(reverse('home:sector-details', kwargs={'slug': sector_slug}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response,'home/sector_details.html')
+        self.assertEqual(len(response.context['articles_from_sector'].object_list), 5)
+        self.assertEqual(len(response.context['tweets_from_sector'].object_list), 0)
 
 
 class SettingsViewTest(TestCase):

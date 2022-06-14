@@ -20,8 +20,12 @@ from accounts.forms import EmailAndUsernameChangeForm, PasswordChangingForm, Pro
 from home.base_logger import logger
 
 User = get_user_model()
-TWITTER = get_object_or_404(Website, name="Twitter")
 
+try:
+    TWITTER = get_object_or_404(Website, name="Twitter")
+except:
+    logger.error("Twitter not found! Problem with database")
+    TWITTER = None
 
 # Mixins:
 
@@ -121,7 +125,6 @@ class ListsView(ListView, CreateListFormMixin):
 
 class ArticleView(ListView, AddArticlesToListsMixin):
     model = Article
-    context_object_name = 'articles'
     template_name = 'home/articles.html'
     paginate_by = 10
 
@@ -130,10 +133,34 @@ class ArticleView(ListView, AddArticlesToListsMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['results_found'] = self.object_list.count()
+        tweets_qs = Article.objects.get_content_from_website(TWITTER)
+        context['articles'] = paginator_create(self.request, self.get_queryset(), 10, 'articles')
         context['sectors'] = Sector.objects.all().order_by('name')
-        context['tweets'] = paginator_create(self.request, Article.objects.get_content_from_website(TWITTER), 20, 'tweets')
+        context['tweets'] = paginator_create(self.request, tweets_qs, 20, 'tweets')
+        context['results_found'] = self.object_list.count() + tweets_qs.count()
         return context
+
+
+class ArticleSearchView(ListView, AddArticlesToListsMixin):
+    model = Article
+    template_name = 'home/articles.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        sector = get_object_or_404(Sector, name=self.kwargs['sector']).sector_id if self.kwargs['sector'] != "All" else "All"
+        source = get_object_or_404(Website, name=self.kwargs['source']).id if self.kwargs['source'] != "All" else "All"
+        return articles_filter(self.kwargs['timeframe'], sector, self.kwargs['paywall'], source, Article.objects.select_related('source').filter(external_source=None))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        articles_qs = self.get_queryset().select_related('source', 'source__website', 'source__sector').filter(external_source=None).exclude(source__website=TWITTER).order_by('-pub_date')
+        tweets_qs = self.get_queryset().select_related('source').filter(source__website=TWITTER).order_by('-pub_date')
+        context['sectors'] = Sector.objects.all().order_by('name')
+        context['articles'] = paginator_create(self.request, articles_qs, 10, 'articles')
+        context['tweets'] = paginator_create(self.request, tweets_qs, 20, 'tweets')
+        context['results_found'] = articles_qs.count() + tweets_qs.count()
+        return context
+
 
 
 class MainView(TemplateView):
@@ -177,7 +204,7 @@ class FeedView(TemplateView, LoginRequiredMixin, AddArticlesToListsMixin, AddExt
         context['subscribed_lists'] = List.objects.get_subscribed_lists(self.request.user)
         context['subscribed_sources'] = subscribed_sources
         context['subscribed_content'] = paginator_create(self.request, Article.objects.get_subscribed_content_excluding_website(subscribed_sources, TWITTER), 10, 'subscribed_content')
-        context['highlighted_content_ex_twitter'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_articles_from_user_excluding_website(self.request.user, TWITTER), 10, 'highlighted_content')
+        context['highlighted_content'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_articles_from_user_excluding_website(self.request.user, TWITTER), 10, 'highlighted_content')
         context['highlighted_tweets'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_articles_from_user_and_website(self.request.user, TWITTER), 10, 'highlighted_tweets')
         context['newest_tweets'] = paginator_create(self.request, Article.objects.get_subscribed_content_from_website(subscribed_sources, TWITTER), 10, 'newest_tweets')
         return context
@@ -207,24 +234,6 @@ class ListSearchView(ListView, AddArticlesToListsMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['results_found'] = self.get_queryset().count()
-        return context
-
-
-class ArticleSearchView(ListView, AddArticlesToListsMixin):
-    model = Article
-    context_object_name = 'search_articles'
-    template_name = 'home/articles.html'
-    paginate_by = 10
-
-    def get_queryset(self):
-        sector = get_object_or_404(Sector, name=self.kwargs['sector']).sector_id if self.kwargs['sector'] != "All" else "All"
-        source = get_object_or_404(Website, name=self.kwargs['source']).id if self.kwargs['source'] != "All" else "All"
-        return articles_filter(self.kwargs['timeframe'], sector, self.kwargs['paywall'], source, Article.objects.select_related('source').filter(external_source=None))
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['results_found'] = len(self.get_queryset())
-        context['sectors'] = Sector.objects.all().order_by('name')
         return context
 
 
