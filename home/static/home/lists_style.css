@@ -1,12 +1,16 @@
 .filterBar {
   display: flex;
-  margin: 20px 0 10px;
-  border: 3px solid var(--primary-fontColor);
+  margin: 2rem 0 1rem;
+  border: 0.3rem solid var(--primary-fontColor);
   box-shadow: var(--box-shadowScheme);
 }
 
+.smallerScreenFilterBar {
+  display: none;
+}
+
 .selectContainer {
-  border-right: 3px solid var(--primary-fontColor);
+  border-right: 0.3rem solid var(--primary-fontColor);
   width: 15%;
 }
 
@@ -20,7 +24,8 @@
 }
 
 .selectContainer label {
-  padding: 3px 10px;
+  font-size: 1.6rem;
+  padding: 0.3rem 1rem;
   position: absolute;
   color: var(--primary-fontColor);
 }
@@ -30,13 +35,13 @@
   height: 100%;
   border-radius: unset;
   outline: unset;
-  padding: 20px 0px 5px 10px;
+  padding: 2rem 0 0.5rem 1rem;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 1.7rem;
   border: 0;
-  border-right: 12px solid white;
+  border-right: 1.2rem solid white;
   background: white;
-  letter-spacing: 1.1px;
+  letter-spacing: 0.11rem;
   -moz-appearance: none;
   -webkit-appearance: none;
 }
@@ -50,10 +55,10 @@
 }
 
 .filterBar input {
-  font-size: 17px;
+  font-size: 1.7rem;
   border: 0;
-  padding: 10px 40px 10px 15px;
-  letter-spacing: 1.1px;
+  padding: 1rem 4rem 1rem 1.5rem;
+  letter-spacing: 0.11rem;
   width: 100%;
   height: 100%;
 }
@@ -70,28 +75,52 @@
 
 #autocomplete_list_results .searchResult span {
   max-width: 89%;
+  font-size: 1.6rem;
 }
 
 .filterBar input:focus {
-  outline: 1px solid var(--primary-fontColor);
+  outline: 0.1rem solid var(--primary-fontColor);
 }
 
-.filterBar .searchButton {
+.filterBar .searchButton,
+.filterBar .filterButton {
   cursor: pointer;
   display: flex;
   justify-content: center;
+  align-items: center;
   background: var(--primary-fontColor);
-  border: 2px solid white;
+  border: 0.2rem solid white;
   color: white;
-  padding: 10px 15px;
-  font-size: 17px;
-  letter-spacing: 1.1px;
+  padding: 1rem 1.5rem;
+  font-size: 1.7rem;
+  letter-spacing: 0.11rem;
   height: 100%;
   width: 100%;
 }
 
-.filterBar .searchButton:hover {
+.filterBar .searchButton:hover,
+.filterBar .filterButton:hover {
   background: rgba(0, 85, 212, 0.8);
+}
+
+.filterBar .filterButton i {
+  margin-left: 0.5rem;
+}
+
+.filterBar .filterBarMenu {
+  display: none;
+  position: absolute;
+  z-index: 50;
+  top: 4.7rem;
+  left: -0.2rem;
+  width: calc(100% + 0.4rem);
+  background: white;
+  border: 2px solid var(--primary-fontColor);
+  border-top: none;
+}
+
+.filterBar .filterBarMenu .selectContainer {
+  width: 25%;
 }
 
 .searchResultsAndListCreationContainer {
@@ -99,15 +128,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
 
 .searchResultsContainer h3 {
-  font-size: 25px;
+  font-size: 2.5rem;
 }
 
 .searchResultsAndListCreationContainer .searchResultsContainer div {
-  font-size: 14px;
+  font-size: 1.4rem;
 }
 
 .searchResultsAndListCreationContainer .searchResultsContainer div span {
@@ -115,15 +144,15 @@
 }
 
 .searchResultsAndListCreationContainer .createListButton {
-  font-size: 16px;
-  border-radius: 8px;
+  font-size: 1.6rem;
+  border-radius: 0.8rem;
   cursor: pointer;
   text-decoration: none;
   color: white;
   background: var(--primary-fontColor);
   box-shadow: var(--box-shadowScheme);
-  border: 3px solid;
-  padding: 10px 15px;
+  border: 0.3rem solid;
+  padding: 1rem 1.5rem;
   opacity: 1;
 }
 
@@ -132,13 +161,13 @@
 }
 
 .searchResultsAndListCreationContainer .createListButton i {
-  margin-right: 8px;
+  margin-right: 0.8rem;
 }
 
 .searchResultsAndListCreationContainer .createListMenu {
   position: absolute;
   top: 0;
-  right: 150px;
+  right: 15rem;
 }
 
 .listResultUpperCont,
@@ -147,18 +176,19 @@
   display: flex;
   align-items: center;
   background: white;
-  border-radius: 8px;
+  border-radius: 0.8rem;
   box-shadow: var(--box-shadowScheme);
-  margin: 10px 0;
-  padding: 7.5px 10px;
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  font-size: 1.6rem;
 }
 
 .listHeader {
   background: var(--primary-fontColor);
   color: white;
-  border: 3px solid;
-  padding: 7.5px 10px;
-  font-size: 18px;
+  border: 0.3rem solid;
+  padding: 0.75rem 1rem;
+  font-size: 1.8rem;
 }
 
 .listHeader div {
@@ -179,6 +209,16 @@
   align-items: center;
 }
 
+.description {
+  display: none;
+  justify-content: center;
+  width: 20%;
+  padding: 0.5rem 0;
+  margin-right: 1rem;
+  background: var(--primary-fontColor);
+  color: white;
+}
+
 .listResultUpperCont a {
   position: absolute;
   width: 100%;
@@ -189,9 +229,9 @@
 .creatorCont img,
 .creatorCont .logoPlaceholder {
   border-radius: 50%;
-  height: 30px;
-  width: 30px;
-  margin-right: 3px;
+  height: 3rem;
+  width: 3rem;
+  margin-right: 0.5rem;
 }
 
 .creatorCont .logoPlaceholder {
@@ -201,5 +241,99 @@
   background: var(--primary-fontColor);
   color: white;
   text-transform: UPPERCASE;
-  font-size: 20px;
+  font-size: 2rem;
+}
+
+@media (max-width: 850px) {
+  .filterBar {
+    display: none;
+  }
+
+  .smallerScreenFilterBar {
+    display: flex;
+    position: relative;
+  }
+
+  .searchSelectContainer {
+    width: 70%;
+  }
+}
+
+@media (max-width: 500px) {
+  .selectContainer:first-of-type {
+    width: 10%;
+  }
+
+  .selectContainer {
+    width: 25%;
+    border-right: none;
+  }
+
+  .filterButton span {
+    display: none;
+  }
+
+  .searchSelectContainer {
+    width: 65%;
+  }
+
+  .filterBar .filterBarMenu {
+    flex-direction: column;
+  }
+
+  .filterBar .filterBarMenu .selectContainer {
+    width: 100%;
+    border-bottom: 0.1rem solid rgb(226, 230, 234);
+  }
+
+  .listHeader {
+    display: none;
+  }
+
+  .listResultUpperCont,
+  .listHeader {
+    flex-direction: column;
+  }
+
+  .listResultUpperCont {
+    padding: unset;
+  }
+
+  .listCont,
+  .ratingsCont,
+  .numberOfSourcesAndArticleCont,
+  .creatorCont {
+    font-size: 1.5rem;
+    width: 100%;
+    border-bottom: 0.1rem solid rgb(226, 230, 234);
+  }
+
+  .listCont span,
+  .ratingsCont span,
+  .numberOfSourcesAndArticleCont span,
+  .creatorCont span {
+    padding: 0.5rem 0;
+    white-space: nowrap;
+    max-width: calc(100% - 15rem);
+    overflow: hidden;
+  }
+
+  .listCont {
+    display: flex;
+    justify-content: center;
+    font-size: 1.8rem;
+    padding: 0.3rem 0;
+    background: var(--primary-fontColor);
+    color: white;
+  }
+
+  .description {
+    display: flex;
+  }
+
+  .creatorCont img,
+  .creatorCont .logoPlaceholder {
+    height: 2rem;
+    width: 2rem;
+  }
 }

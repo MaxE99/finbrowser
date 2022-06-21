@@ -2,18 +2,18 @@
   display: none;
   /* display: flex; */
   position: fixed;
-  bottom: 20px;
+  bottom: 2rem;
   left: 0;
   right: 0;
   background: var(--primary-fontColor);
   color: white;
-  padding: 15px 30px;
+  padding: 1.5rem 3rem;
   transition: 400ms;
   z-index: 1000;
   box-shadow: var(--box-shadowScheme);
   opacity: 0.9;
-  margin: 0 160px;
-  border-radius: 20px;
+  margin: 0 16rem;
+  border-radius: 2rem;
 }
 
 .cookie-container .leftCookieSide {
@@ -21,11 +21,11 @@
 }
 
 .cookie-container .leftCookieSide h3 {
-  font-size: 30px;
+  font-size: 3rem;
 }
 
 .cookie-container .leftCookieSide p {
-  margin: 10px 0;
+  margin: 1rem 0;
 }
 
 .cookie-container .leftCookieSide p a {
@@ -39,14 +39,14 @@
 }
 
 .cookie-container .leftCookieSide div label {
-  font-size: 18px;
+  font-size: 1.8rem;
 }
 
 .cookie-container .leftCookieSide div input {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  margin-left: 5px;
+  width: 2rem;
+  height: 2rem;
+  margin-right: 1rem;
+  margin-left: 0.5rem;
   accent-color: #2cce88;
 }
 
@@ -62,11 +62,11 @@
   background: #2cce88;
   border: 0;
   color: #f5f6fa;
-  padding: 12px 48px;
-  font-size: 18px;
-  border-radius: 8px;
+  padding: 1.2rem 4.8rem;
+  font-size: 1.8rem;
+  border-radius: 0.8rem;
   cursor: pointer;
-  width: 200px;
+  width: 20rem;
 }
 
 .cookie-container .rightCookieSide .cookie-btn:hover {

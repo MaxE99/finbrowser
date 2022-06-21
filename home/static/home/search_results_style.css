@@ -1,17 +1,17 @@
 .mainContent {
-  margin: 20px auto;
+  margin: 2rem auto;
   width: 50%;
 }
 
 .mainContent h2 {
   color: var(--primary-fontColor);
-  font-size: 35px;
+  font-size: 3.5rem;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 1rem;
 }
 
 .mainSearchWrapper {
-  margin: 15px auto;
+  margin: 1.5rem auto;
 }
 
 .mainSearchWrapper .mainInputSearch {
@@ -26,6 +26,7 @@
   background: white;
   box-shadow: var(--box-shadowScheme);
   z-index: 100;
+  font-size: 1.6rem;
 }
 
 #autocomplete_list_results .searchResult span {
@@ -37,21 +38,21 @@
   justify-content: space-around;
   width: 50%;
   margin: 0 auto;
-  font-size: 20px;
+  font-size: 2rem;
   cursor: pointer;
 }
 
 .searchCategoryTabActive,
 .searchCategoryTab:hover {
   text-decoration-line: underline;
-  text-underline-offset: 7px;
-  text-decoration-thickness: 3px;
+  text-underline-offset: 0.7rem;
+  text-decoration-thickness: 0.3rem;
   text-decoration-color: var(--primary-fontColor);
 }
 
 .tabsContent {
   display: none;
-  margin-top: 20px;
+  margin-top: 2rem;
 }
 
 .tabsContentActive {

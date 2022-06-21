@@ -83,3 +83,13 @@ createListButton.addEventListener("click", () => {
     ).style.display = "flex";
   }
 });
+
+//Open Filter Menu
+document.querySelector(".filterButton").addEventListener("click", () => {
+  const filterBarMenu = document.querySelector(".filterBarMenu");
+  if (filterBarMenu.style.display == "flex") {
+    filterBarMenu.style.display = "none";
+  } else {
+    filterBarMenu.style.display = "flex";
+  }
+});

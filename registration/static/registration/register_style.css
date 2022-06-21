@@ -16,7 +16,7 @@
   --secondary-color: rgb(238, 238, 238);
   --primary-fontColor: rgb(0, 85, 212);
   --secondary-fontColor: rgb(34, 45, 59);
-  --box-shadowScheme: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  --box-shadowScheme: rgba(0, 0, 0, 0.24) 0px 0.3rem 0.8rem;
 }
 
 body {
@@ -35,7 +35,7 @@ body {
   right: 0;
   margin: auto;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 0.8rem;
   display: flex;
   box-shadow: rgba(74, 79, 97, 0.25) 0px 13px 27px -5px,
     rgba(74, 79, 97, 0.3) 0px 8px 16px -8px;
@@ -46,13 +46,13 @@ body {
 
 .signupForm #info-wrapper,
 .signupForm #form-wrapper {
-  padding: 20px 35px;
+  padding: 2rem 3.5rem;
 }
 
 .signupForm #info-wrapper {
   background: linear-gradient(225deg, var(--primary-fontColor) 16%, blue 100%);
   color: #fff;
-  padding-left: 50px;
+  padding-left: 5rem;
   width: 40%;
 }
 
@@ -65,38 +65,38 @@ body {
 
 .signupForm i {
   color: #fff;
-  font-size: 30px;
+  font-size: 3rem;
   transition: color 250ms ease-in;
 }
 
 .signupForm div.input-wrapper {
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
   position: relative;
-  width: 480px;
+  width: 48rem;
 }
 
 .signupForm div.input-wrapper i {
   color: var(--input-icon-color);
   position: absolute;
   opacity: 0.85;
-  right: 13px;
+  right: 1.3rem;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .signupForm h1 {
   color: var(--primary-fontColor);
-  letter-spacing: 0px;
-  margin: 15px 0 10px;
+  letter-spacing: 0;
+  margin: 1.5rem 0 1rem;
 }
 
 .notification h2 {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 1rem;
 }
 
 .signupForm p {
-  font-size: 18px;
+  font-size: 1.8rem;
   width: 100%;
   display: flex;
   align-items: center;
@@ -112,14 +112,14 @@ body {
 .signupForm input[type="text"],
 .signupForm input[type="password"],
 .signupForm input[type="email"] {
-  border: 1px solid rgb(226, 230, 234);
-  border-radius: 6px;
-  font-size: 18px;
-  padding: 13px 12px 13px 12px;
+  border: 0.1rem solid rgb(226, 230, 234);
+  border-radius: 0.6rem;
+  font-size: 1.8rem;
+  padding: 1.3rem 1.2rem 1.3rem 1.2rem;
   transition: border-color 250ms ease-in-out;
   background: rgb(226, 230, 234);
   opacity: 0.6;
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
 }
 
 .signupForm input[type="text"]:focus,
@@ -141,41 +141,41 @@ body {
 
 .signupForm ::placeholder {
   color: var(--placeholder-text-color);
-  font-size: 17px;
+  font-size: 1.7rem;
   opacity: 1;
 }
 
 .actionButtonsContainer button,
 .actionButtonsContainer a {
-  padding: 8px 16px;
-  font-size: 18px;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.8rem;
   color: white;
-  border-radius: 8px;
+  border-radius: 0.8rem;
   cursor: pointer;
   background: var(--primary-fontColor);
-  border: 3px solid var(--primary-fontColor);
+  border: 0.3rem solid var(--primary-fontColor);
   text-decoration: none;
   width: 150px;
 }
 
 .signupForm button[type="submit"] i {
-  margin-left: 5px;
+  margin-left: 0.5rem;
 }
 
 .signupForm .brand {
   position: relative;
   background: white;
-  border-radius: 10px;
+  border-radius: 1rem;
   color: black;
   display: flex;
-  font-size: 28px;
+  font-size: 2.8rem;
   font-weight: 600;
-  margin-bottom: 50px;
+  margin-bottom: 5rem;
   justify-content: center;
   align-items: center;
-  height: 50px;
+  height: 5rem;
   opacity: 0.9;
-  width: 50px;
+  width: 5rem;
 }
 
 .ui.button.google-auth__button.disabled,
@@ -192,13 +192,13 @@ body {
 }
 
 .googleAuthButton {
-  padding: 12px 16px;
+  padding: 1.2rem 1.6rem;
   background: #fff;
-  border-radius: 25px;
-  font-size: 16px;
+  border-radius: 2.5rem;
+  font-size: 1.6rem;
   line-height: 1.5em;
   letter-spacing: 0.22px;
-  border: 1px solid;
+  border: 0.1rem solid;
   width: 100%;
   cursor: pointer;
 }
@@ -211,21 +211,21 @@ button:hover,
 
 .googleLogo {
   display: inline-block;
-  margin-right: 16px;
-  height: 24px;
-  width: 24px;
-  line-height: 24px;
+  margin-right: 1.6rem;
+  height: 2.4rem;
+  width: 2.4rem;
+  line-height: 2.4rem;
   vertical-align: top;
 }
 
 .seperator {
-  margin: 20px 0;
+  margin: 2rem 0;
 }
 
 .rememberAndPwrecovery {
   display: flex;
   justify-content: space-between;
-  font-size: 15px;
+  font-size: 1.5rem;
 }
 
 .rememberAndPwrecovery a {
@@ -236,8 +236,8 @@ button:hover,
 .container {
   display: block;
   position: relative;
-  padding-left: 10px;
-  /* margin-bottom: 20px;
+  padding-left: 1rem;
+  /* margin-bottom: 2.0rem;
   user-select: none;
   margin-right: auto; */
 }
@@ -254,8 +254,8 @@ button:hover,
   position: absolute;
   top: 0;
   left: 0;
-  height: 15px;
-  width: 15px;
+  height: 1.5rem;
+  width: 1.5rem;
   background-color: #eee;
 }
 
@@ -278,19 +278,19 @@ button:hover,
 }
 
 .container .checkmark:after {
-  left: 6px;
-  top: 2px;
-  width: 5px;
-  height: 10px;
+  left: 0.6rem;
+  top: 0.2rem;
+  width: 0.5rem;
+  height: 1rem;
   border: solid white;
-  border-width: 0 3px 3px 0;
+  border-width: 0 0.3rem 0.3rem 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 
 .createAccount {
-  margin-top: 20px;
+  margin-top: 2rem;
   margin-right: auto;
 }
 
@@ -302,16 +302,16 @@ button:hover,
 .useYourEmail {
   color: var(--primary-fontColor);
   text-align: center;
-  margin: 15px 0;
+  margin: 1.5rem 0;
 }
 
 .buttons {
   display: flex;
-  margin: 10px auto 20px;
+  margin: 1rem auto 2rem;
 }
 
 .seperator {
-  margin: 0 0 20px;
+  margin: 0 0 2rem;
   opacity: 0.8;
   letter-spacing: 1.1px;
 }
@@ -323,7 +323,7 @@ button:hover,
 
 .actionButtonsContainer {
   width: 70%;
-  margin-top: 15px;
+  margin-top: 1.5rem;
   margin-right: auto;
   display: flex;
   justify-content: space-between;
@@ -331,10 +331,10 @@ button:hover,
 
 .actionButtonsContainer a,
 .actionButtonsContainer input {
-  border: 2px solid var(--primary-fontColor);
-  padding: 15px 30px;
-  border-radius: 10px;
-  font-size: 16px;
+  border: 0.2rem solid var(--primary-fontColor);
+  padding: 1.5rem 3rem;
+  border-radius: 1rem;
+  font-size: 1.6rem;
   width: 47.5%;
   background: white;
   color: var(--primary-fontColor);
@@ -358,15 +358,15 @@ button:hover,
   position: absolute;
   opacity: 1;
   color: white;
-  font-size: 18px;
-  border-radius: 20px;
-  padding: 10px 20px;
+  font-size: 1.8rem;
+  border-radius: 2rem;
+  padding: 1rem 2rem;
   list-style: none;
   text-align: center;
   text-transform: uppercase;
   box-shadow: rgb(0 0 0 / 35%) 0px -50px 36px -28px inset;
   letter-spacing: 1.2px;
-  bottom: 25px;
+  bottom: 2.5rem;
   left: 50%;
   transform: translateX(-50%);
   -moz-animation: cssAnimation 0s ease-in 4s forwards;
@@ -403,18 +403,18 @@ label {
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin: 10px 0px;
+  margin: 1rem 0px;
 }
 
 .googleAuthButton {
   position: relative;
-  padding: 12px 16px;
+  padding: 1.2rem 1.6rem;
   background: #fff;
-  border-radius: 25px;
-  font-size: 16px;
+  border-radius: 2.5rem;
+  font-size: 1.6rem;
   line-height: 1.5em;
   letter-spacing: 0.22px;
-  border: 1px solid;
+  border: 0.1rem solid;
   width: 100%;
   cursor: pointer;
 }
@@ -434,10 +434,10 @@ button:hover {
 
 .googleLogo {
   display: inline-block;
-  margin-right: 16px;
-  height: 24px;
-  width: 24px;
-  line-height: 24px;
+  margin-right: 1.6rem;
+  height: 2.4rem;
+  width: 2.4rem;
+  line-height: 2.4rem;
   vertical-align: top;
 }
 
@@ -447,7 +447,7 @@ button:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 25px;
+  border-radius: 2.5rem;
   opacity: 0;
   cursor: pointer;
 }

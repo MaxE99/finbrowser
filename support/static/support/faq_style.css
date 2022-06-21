@@ -1,7 +1,7 @@
 .mainHeader {
-  font-size: 50px;
+  font-size: 5rem;
   text-align: center;
-  margin: 20px auto;
+  margin: 2rem auto;
   line-height: 1.5;
 }
 
@@ -11,15 +11,15 @@
 
 .faqSearchBar {
   display: flex;
-  width: 400px;
-  margin: 0px auto;
+  width: 40rem;
+  margin: 0 auto;
   box-shadow: var(--box-shadowScheme);
 }
 
 .faqSearchBar input {
-  padding: 15px 20px;
+  padding: 1.5rem 2rem;
   outline: none;
-  font-size: 20px;
+  font-size: 2rem;
   width: 80%;
 }
 
@@ -38,11 +38,11 @@
 }
 
 .faqSearchBar button:active {
-  transform: translateY(1px);
+  transform: translateY(0.1rem);
 }
 
 .faqSearchBar .fa-search {
-  font-size: 20px;
+  font-size: 2rem;
   color: white;
   display: flex;
   justify-content: center;
@@ -54,19 +54,19 @@
 .questionBar {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  margin: 2rem 0;
 }
 
 .questionBarTabActive,
 .questionBarTab:hover {
   background-color: var(--primary-fontColor);
-  border-radius: 40px;
+  border-radius: 4rem;
   color: white;
 }
 
 .questionBarTab {
-  padding: 15px 20px;
-  font-size: 20px;
+  padding: 1.5rem 2rem;
+  font-size: 2rem;
   cursor: pointer;
 }
 
@@ -74,21 +74,21 @@
   width: 33%;
   display: flex;
   flex-direction: column;
-  border-radius: 20px;
+  border-radius: 2rem;
   box-shadow: var(--box-shadowScheme);
   margin: 0 auto;
   background: white;
 }
 
 .collapsibleCategory {
-  font-size: 15px;
-  padding: 15px;
+  font-size: 1.5rem;
+  padding: 1.5rem;
   width: 100%;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 0.1rem solid #ccc;
 }
 
 .reportContent div:nth-last-child(2) {
@@ -113,5 +113,5 @@
 
 .tabsContentActive {
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }

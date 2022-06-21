@@ -1,3 +1,19 @@
+//open hamburger menu
+document
+  .querySelector(".headerContainer .fa-bars")
+  .addEventListener("click", () => {
+    const horizontalNavigation = document.querySelector(
+      ".horizontalNavigation"
+    );
+    if (horizontalNavigation.value == "ON") {
+      horizontalNavigation.style.maxHeight = "0";
+      horizontalNavigation.value = "OFF";
+    } else {
+      horizontalNavigation.style.maxHeight = "100rem";
+      horizontalNavigation.value = "ON";
+    }
+  });
+
 // deactivate autocomplete for all inputs
 document.querySelectorAll("input").forEach((input) => {
   input.setAttribute("autocomplete", "off");
@@ -71,7 +87,7 @@ document
             showMessage("Error: Network request failed unexpectedly!", "Error");
           } else {
             document.querySelector(".mainInputSearch").style.borderRadius =
-              "8px 8px 0 0";
+              "0.8rem 0.8rem 0 0";
             const context = await res.json();
             results_list.style.display = "flex";
             results_list.innerHTML = "";
@@ -115,12 +131,13 @@ document
           if (e.target.id !== "autocomplete_list_results") {
             results_list.style.display = "none";
             document.querySelector(".mainInputSearch").style.borderRadius =
-              "8px";
+              "0.8rem";
           }
         };
       } else {
         results_list.style.display = "none";
-        document.querySelector(".mainInputSearch").style.borderRadius = "8px";
+        document.querySelector(".mainInputSearch").style.borderRadius =
+          "0.8rem";
       }
     }
   });
@@ -337,18 +354,35 @@ document.querySelectorAll(".addToListButton").forEach((element) => {
 // close addtolist menu
 document.querySelectorAll(".addToListForm .fa-times").forEach((element) => {
   element.addEventListener("click", () => {
-    element.parentElement.style.display = "none";
+    element.parentElement.parentElement.style.display = "none";
   });
 });
+
+// check window width
+function check_device_width_below(check_width) {
+  const current_screen_width =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
+  if (current_screen_width < check_width) {
+    return true;
+  }
+  return false;
+}
 
 // open List Create Menu
 document.querySelectorAll(".createNewListButton").forEach((button) => {
   button.addEventListener("click", () => {
     if (!button.classList.contains("registrationLink")) {
       button.parentElement.parentElement.style.display = "none";
-      button.parentElement.parentElement.parentElement.querySelector(
-        ".formContainer"
-      ).style.display = "flex";
+      if (check_device_width_below(500)) {
+        document.querySelector(".smartphoneCreateListMenu").style.display =
+          "flex";
+      } else {
+        button.parentElement.parentElement.parentElement.querySelector(
+          ".formContainer"
+        ).style.display = "flex";
+      }
     }
   });
 });

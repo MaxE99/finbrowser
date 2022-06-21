@@ -167,6 +167,10 @@ class MainView(TemplateView):
     template_name = 'home/main.html'
 
 
+class NotificationView(TemplateView):
+    template_name = 'home/notifications.html'
+
+
 class SectorDetailView(DetailView, AddArticlesToListsMixin):
     model = Sector
     context_object_name = 'sector'

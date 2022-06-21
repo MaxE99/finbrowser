@@ -107,8 +107,8 @@
             {% endif %}
         </div>
         <div class="addToListForm">
-            <i class="fas fa-times"></i>
-            <h3>Add To Lists</h3>
+            <div class="formHeaderContainer">Add To Lists<i class="fas fa-times closeFormContainerButton"></i>
+            </div>
             {% if user_lists %}
             <div class="listSelectionContainer">
                 {% for list in user_lists %}
@@ -134,8 +134,8 @@
             {% endif %}
         </div>
         <div class="createListMenu articleCreateListMenu formContainer">
-            <h3>Create A New List</h3>
-            <i class="fas fa-times closeFormContainerButton"></i>
+            <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
+            </div>
             <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
                 {% csrf_token %} {{ add_list_form }}
                 <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
@@ -194,8 +194,9 @@
                             {% endif %}
                         </div>
                         <div class="addToListForm">
-                            <i class="fas fa-times"></i>
-                            <h3>Add To Lists</h3>
+                            <div class="formHeaderContainer">Add To Lists<i
+                                    class="fas fa-times closeFormContainerButton"></i>
+                            </div>
                             {% if user_lists %}
                             <div class="listSelectionContainer">
                                 {% for list in user_lists %}
@@ -222,8 +223,9 @@
                             {% endif %}
                         </div>
                         <div class="createListMenu articleCreateListMenu formContainer">
-                            <h3>Create A New List</h3>
-                            <i class="fas fa-times closeFormContainerButton"></i>
+                            <div class="formHeaderContainer">Create A New List<i
+                                    class="fas fa-times closeFormContainerButton"></i>
+                            </div>
                             <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
                                 {% csrf_token %} {{ add_list_form }}
                                 <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />

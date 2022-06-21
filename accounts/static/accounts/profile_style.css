@@ -1,6 +1,6 @@
 .overlay {
   width: 75%;
-  margin: 20px auto 0;
+  margin: 2rem auto 0;
 }
 
 .bannerProfileSocialContainer {
@@ -10,16 +10,16 @@
 
 .profileBanner,
 .bannerPlaceholder {
-  width: 600px;
-  height: 200px;
-  border-radius: 40px 5px 5px 5px;
+  width: 60rem;
+  height: 20rem;
+  border-radius: 4rem 0.5rem 0.5rem 0.5rem;
   box-shadow: var(--box-shadowScheme);
 }
 
 .bannerPlaceholder {
   background: var(--primary-fontColor);
   color: white;
-  font-size: 60px;
+  font-size: 6rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,7 +29,7 @@
 .profileSocialContainer {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 600px);
+  width: calc(100% - 60rem);
 }
 
 .avatarContainer {
@@ -41,12 +41,12 @@
 .avatar,
 .avatarContainer .logoPlaceholder {
   border-radius: 50%;
-  height: 100px;
-  width: 100px;
-  border: 3px solid white;
+  height: 10rem;
+  width: 10rem;
+  border: 0.3rem solid white;
   background: white;
-  margin-left: -50px;
-  margin-top: -15px;
+  margin-left: -5rem;
+  margin-top: -1.5rem;
   position: absolute;
   z-index: 2;
   box-shadow: var(--box-shadowScheme);
@@ -56,25 +56,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 80px;
+  font-size: 8rem;
   background: var(--primary-fontColor);
   color: white;
 }
 
 .profileUsername {
-  font-size: 30px;
-  padding: 5px 10px;
+  font-size: 3rem;
+  padding: 0.5rem 1rem;
   background: var(--primary-fontColor);
   width: 75%;
   text-align: center;
-  margin: 10px;
-  margin-top: 10px;
-  margin-left: 10px;
+  margin: 1rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
   box-shadow: var(--box-shadowScheme);
-  border: 3px solid;
-  border-radius: 8px;
+  border: 0.3rem solid;
+  border-radius: 0.8rem;
   color: white;
-  left: 20px;
+  left: 2rem;
   position: absolute;
   z-index: 1;
 }
@@ -83,21 +83,21 @@
   position: absolute;
   bottom: 0;
   display: flex;
-  margin: 85px 0 0 20px;
+  margin: 8.5rem 0 0 2rem;
 }
 
 .icon {
   position: relative;
   display: flex;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 4rem;
+  height: 4rem;
   cursor: pointer;
   color: white;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 0.8rem;
   box-shadow: var(--box-shadowScheme);
-  margin-left: 10px;
+  margin-left: 1rem;
 }
 
 .icon:hover {
@@ -114,17 +114,17 @@
 
 .openAboutButton {
   position: absolute;
-  margin-top: 10px;
+  margin-top: 1rem;
   border-radius: 50%;
   color: white;
   background: var(--primary-fontColor);
   box-shadow: var(--box-shadowScheme);
-  border: 3px solid;
+  border: 0.3rem solid;
   cursor: pointer;
   top: 0;
   right: 0;
-  font-size: 30px;
-  padding: 10px 20px;
+  font-size: 3rem;
+  padding: 1rem 2rem;
   display: flex;
 }
 
@@ -134,21 +134,21 @@
 
 .bioContainer {
   position: absolute;
-  right: 60px;
+  right: 6rem;
   display: none;
-  border-radius: 10px;
-  letter-spacing: 1.1px;
+  border-radius: 1rem;
+  letter-spacing: 0.11rem;
   text-align: justify;
   box-shadow: var(--box-shadowScheme);
-  width: 360px;
-  margin-left: 625px;
+  width: 36rem;
+  margin-left: 62.5rem;
   z-index: 50;
 }
 
 .bioContainer .categoryHeader {
   margin: unset;
   border: none;
-  border-radius: 8px 8px 0 0;
+  border-radius: 0.8rem 0.8rem 0 0;
 }
 
 .bioContainer .fa-times {
@@ -156,8 +156,8 @@
   display: block;
   color: white;
   background: red;
-  padding: 7px;
-  font-size: 25px;
+  padding: 0.7rem;
+  font-size: 2.5rem;
   top: 0;
   right: 0;
   cursor: pointer;
@@ -165,11 +165,11 @@
 }
 
 .bioContainer .bio {
-  padding: 10px 20px;
+  padding: 1rem 2rem;
   background: white;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 0.8rem 0.8rem;
   line-height: 1.4;
-  height: 200px;
+  height: 20rem;
   overflow-y: scroll;
 }
 
