@@ -53,12 +53,12 @@
         {% if article.article.source %}
         <div class="authorImageContainer">
             <img src="{% static article.article.source.favicon_path %}" />
-            <a href="{{ article.article.source.get_absolute_url }}"></a>
+            <a class="articleLink" href="{{ article.article.link }}"></a>
         </div>
         {% else %}
         <div class="authorImageContainer imageContainerUserLink">
             <i class="fas fa-question-circle"></i>
-            <a href="{{ article.article.source.get_absolute_url }}"></a>
+            <a class="articleLink" href="{{ article.article.link }}"></a>
         </div>
         {% endif %}
         <div class="articleInformationContainer">
@@ -75,12 +75,12 @@
         {% if article.article.source %}
         <div class="articleWebsiteLogoContainer">
             <img class="articleWebsiteLogo" src="{% static article.article.source.website.logo %}">
-            <a href="{{ article.article.source.get_absolute_url }}"></a>
+            <a class="articleLink" href="{{ article.article.link }}"></a>
         </div>
         {% else %}
         <div class="articleWebsiteLogoContainer imageContainerUserLink">
             <i class="fas fa-question-circle"></i>
-            <a href="{{ article.article.source.get_absolute_url }}"></a>
+            <a class="articleLink" href="{{ article.article.link }}"></a>
         </div>
         {% endif %}
         <div class="articleOptionsContainer">
@@ -101,8 +101,8 @@
             {% endif %}
         </div>
         <div class="addToListForm">
-            <i class="fas fa-times"></i>
-            <h3>Add To Lists</h3>
+            <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
+            </div>
             {% if user_lists %}
             <div class="listSelectionContainer">
                 {% for list in user_lists %}
@@ -129,8 +129,8 @@
             {% endif %}
         </div>
         <div class="createListMenu articleCreateListMenu formContainer">
-            <h3>Create A New List</h3>
-            <i class="fas fa-times closeFormContainerButton"></i>
+            <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
+            </div>
             <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
                 {% csrf_token %} {{ add_list_form }}
                 <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
@@ -146,7 +146,7 @@
 {% if created_lists %}
 <div class="sliderWrapper">
     <div class="sliderHeader">
-        <div>Created Lists</div>
+        <div class="sliderHeaderTitle">Created Lists</div>
         <div class="progressBar"></div>
     </div>
     <div class="sliderContentContainer">
@@ -182,7 +182,7 @@
 {% if subscribed_lists %}
 <div class="sliderWrapper">
     <div class="sliderHeader">
-        <div>Subscribed Lists</div>
+        <div class="sliderHeaderTitle">Subscribed Lists</div>
         <div class="progressBar"></div>
     </div>
     <div class="sliderContentContainer">
@@ -219,7 +219,7 @@
 {% if subscribed_sources %}
 <div class="sliderWrapper">
     <div class="sliderHeader">
-        <div>Subscribed Sources</div>
+        <div class="sliderHeaderTitle">Subscribed Sources</div>
         <div class="progressBar"></div>
     </div>
     <div class="sliderContentContainer">

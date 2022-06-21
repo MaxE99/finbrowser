@@ -29,8 +29,10 @@
                 <nav class="mainNavigation" role="navigation" aria-label="Main">
                     <div class="mainNavigationLink"><span>Feed</span><a href="{% url 'home:feed' %}"></a></div>
                     <div class="mainNavigationLink"><span>Lists</span><a href="{% url 'home:lists' %}"></a></div>
-                    <div class="mainNavigationLink"><span>Sectors</span><a href="{% url 'home:sectors' %}"></a></div>
-                    <div class="mainNavigationLink"><span>Content</span><a href="{% url 'home:articles' %}"></a></div>
+                    <div class="mainNavigationLink"><span>Sectors</span><a href="{% url 'home:sectors' %}"></a>
+                    </div>
+                    <div class="mainNavigationLink"><span>Content</span><a href="{% url 'home:articles' %}"></a>
+                    </div>
                 </nav>
                 <div class="mainSearchWrapper">
                     <div class="mainSearchContainer">
@@ -72,7 +74,8 @@
                                         <i class="fas fa-ellipsis-h"></i>
                                         <div class="articleOptionsContainer">
                                             {% if request.user.is_authenticated %}
-                                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
+                                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list
+                                            </div>
                                             {% if notification.article.title in highlighted_content_titles %}
                                             <div class="addToHighlightedButton"><i
                                                     class="fas fa-times"></i><span>Unhighlight
@@ -88,12 +91,14 @@
                                                 to list</a>
                                             <a href="{% url 'account_login' %}"
                                                 class="addToHighlightedButton registrationLink"><i
-                                                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
+                                                    class="fas fa-highlighter"></i><span>Highlight
+                                                    article</span></a>
                                             {% endif %}
                                         </div>
                                         <div class="addToListForm">
-                                            <i class="fas fa-times"></i>
-                                            <h3>Add To Lists</h3>
+                                            <div class="formHeaderContainer">Create A New List<i
+                                                    class="fas fa-times closeFormContainerButton"></i>
+                                            </div>
                                             {% if user_lists %}
                                             <div class="listSelectionContainer">
                                                 {% for list in user_lists %}
@@ -122,8 +127,9 @@
                                             {% endif %}
                                         </div>
                                         <div class="createListMenu articleCreateListMenu formContainer">
-                                            <h3>Create A New List</h3>
-                                            <i class="fas fa-times closeFormContainerButton"></i>
+                                            <div class="formHeaderContainer">Create A New List<i
+                                                    class="fas fa-times closeFormContainerButton"></i>
+                                            </div>
                                             <form action="" enctype="multipart/form-data" method="POST"
                                                 class="createListForm">
                                                 {% csrf_token %} {{ add_list_form }}
@@ -164,7 +170,8 @@
                                         <i class="fas fa-ellipsis-h"></i>
                                         <div class="articleOptionsContainer">
                                             {% if request.user.is_authenticated %}
-                                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
+                                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list
+                                            </div>
                                             {% if notification.article.title in highlighted_content_titles %}
                                             <div class="addToHighlightedButton"><i
                                                     class="fas fa-times"></i><span>Unhighlight
@@ -180,12 +187,14 @@
                                                 to list</a>
                                             <a href="{% url 'account_login' %}"
                                                 class="addToHighlightedButton registrationLink"><i
-                                                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
+                                                    class="fas fa-highlighter"></i><span>Highlight
+                                                    article</span></a>
                                             {% endif %}
                                         </div>
                                         <div class="addToListForm">
-                                            <i class="fas fa-times"></i>
-                                            <h3>Add To Lists</h3>
+                                            <div class="formHeaderContainer">Create A New List<i
+                                                    class="fas fa-times closeFormContainerButton"></i>
+                                            </div>
                                             {% if user_lists %}
                                             <div class="listSelectionContainer">
                                                 {% for list in user_lists %}
@@ -214,8 +223,9 @@
                                             {% endif %}
                                         </div>
                                         <div class="createListMenu articleCreateListMenu formContainer">
-                                            <h3>Create A New List</h3>
-                                            <i class="fas fa-times closeFormContainerButton"></i>
+                                            <div class="formHeaderContainer">Create A New List<i
+                                                    class="fas fa-times closeFormContainerButton"></i>
+                                            </div>
                                             <form action="" enctype="multipart/form-data" method="POST"
                                                 class="createListForm">
                                                 {% csrf_token %} {{ add_list_form }}
@@ -274,11 +284,45 @@
                         {% endif %}
                     </div>
                 </div>
+                <i class="fa-solid fa-bars"></i>
             </div>
         </div>
     </header>
     <main>
         <div class="overlay">
+            <nav class="horizontalNavigation" role="navigation" aria-label="Main">
+                <div class="mainNavigationLink"><span>Feed</span><a href="{% url 'home:feed' %}"></a></div>
+                <div class="mainNavigationLink"><span>Lists</span><a href="{% url 'home:lists' %}"></a></div>
+                <div class="mainNavigationLink"><span>Sectors</span><a href="{% url 'home:sectors' %}"></a>
+                </div>
+                <div class="mainNavigationLink"><span>Content</span><a href="{% url 'home:articles' %}"></a>
+                </div>
+                {% if request.user.is_authenticated %}
+                <div class="mainNavigationLink"><span>Settings</span><a href="{% url 'home:settings' %}"></a></div>
+                <div class="mainNavigationLink"><span>Notifications</span><a href="{% url 'home:notifications' %}"></a>
+                </div>
+                <form class="mainNavigationLink" method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <button type="submit">{% trans 'Logout' %}</button>
+                </form>
+                {% else %}
+                <div class="mainNavigationLink"><span>Login/Register<a href="{% url 'account_login' %}"></a></span>
+                </div>
+                {% endif %}
+            </nav>
+
+            <div class="createListMenu formContainer smartphoneCreateListMenu">
+                <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
+                </div>
+                <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+                    {% csrf_token %} {{ add_list_form }}
+                    <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+                </form>
+            </div>
+
             {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
@@ -299,7 +343,7 @@
 
 <footer>
     <ul>
-        <li><a href="#">Contact</a></li>
+        <li><a href="{% url 'support:contact' %}">Contact</a></li>
         <li><a href="{% url 'support:cookie-statement' %}">Cookie Statement</a></li>
         <li><a href="{% url 'support:privacy-policy' %}">Privacy Policy</a></li>
         <li><a href="{% url 'support:terms-of-service' %}">Terms Of Service</a></li>

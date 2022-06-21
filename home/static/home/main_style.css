@@ -15,8 +15,8 @@ main {
   flex-direction: column;
   align-items: center;
   user-select: none;
-  margin-top: -15px;
-  font-size: 100px;
+  margin-top: -1.5rem;
+  font-size: 10rem;
 }
 
 .websiteBigNameContainer div:first-child {
@@ -26,21 +26,21 @@ main {
 .websiteBigNameContainer div:last-child {
   font-family: "Pacifico", cursive;
   color: var(--primary-fontColor);
-  margin-top: -80px;
+  margin-top: -8rem;
 }
 
 .websiteAbout {
   width: 50%;
   margin: 0 auto;
   line-height: 1.5;
-  letter-spacing: 1.2px;
+  letter-spacing: 0.12rem;
   text-align: justify;
   opacity: 0.8;
-  font-size: 20px;
+  font-size: 2rem;
 }
 
 .websiteAboutLoggedIn {
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
 }
 
 .websiteAbout a {
@@ -50,13 +50,13 @@ main {
 
 .registrationButton {
   text-decoration: none;
-  font-size: 20px;
-  padding: 20px 40px;
+  font-size: 2rem;
+  padding: 2rem 4rem;
   background: var(--primary-fontColor);
   box-shadow: var(--box-shadowScheme);
   color: white;
-  margin: 20px auto;
-  border-radius: 40px;
+  margin: 2rem auto;
+  border-radius: 4rem;
   cursor: pointer;
 }
 
@@ -65,16 +65,16 @@ main {
 }
 
 .coreFeaturesWrapper {
-  padding: 3rem 0 !important;
+  padding: 4.8rem 0 !important;
   background: var(--primary-fontColor);
   box-shadow: var(--box-shadowScheme);
 }
 
 .coreFeaturesContainer {
-  max-width: 1200px;
+  max-width: 120rem;
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
   margin-right: auto;
   margin-left: auto;
 }
@@ -84,16 +84,16 @@ main {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin-right: -15px;
-  margin-left: -15px;
+  margin-right: -1.5rem;
+  margin-left: -1.5rem;
 }
 
 .coreFeaturesContainer .title {
   color: white;
   padding: 0;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
   line-height: 1;
-  font-size: 60px;
+  font-size: 6rem;
   font-weight: 600;
 }
 
@@ -103,33 +103,33 @@ main {
 }
 
 .coreFeaturesContainer .iconBox {
-  margin-bottom: 20px;
-  padding: 30px;
-  border-radius: 6px;
+  margin-bottom: 2rem;
+  padding: 3rem;
+  border-radius: 0.6rem;
   background-color: #f8f9fa;
-  min-height: 165px;
+  min-height: 16.5rem;
 }
 
 .coreFeaturesContainer .iconBox .icon {
   float: left;
-  font-size: 30px;
+  font-size: 3rem;
   background: var(--primary-fontColor);
   color: white;
-  padding: 5px 15px;
+  padding: 0.5rem 1.5rem;
   border-radius: 50%;
 }
 .coreFeaturesContainer .iconBox .rowTitle {
-  margin-left: 70px;
+  margin-left: 7rem;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 2rem;
   line-height: 1.2;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
   color: var(--primary-fontColor);
 }
 
 .coreFeaturesContainer .iconBox .rowBody {
-  margin-left: 70px;
-  line-height: 24px;
-  font-size: 15px;
+  margin-left: 7rem;
+  line-height: 2.4rem;
+  font-size: 1.5rem;
   text-align: justify;
 }

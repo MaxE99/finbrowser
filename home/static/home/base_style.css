@@ -37,6 +37,7 @@
   --primary-fontColor: rgb(0, 85, 212);
   --secondary-fontColor: rgb(34, 45, 59);
   --box-shadowScheme: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  font-size: 55%;
 }
 
 body {
@@ -47,7 +48,7 @@ body {
 
 header {
   position: relative;
-  height: 85px;
+  height: 8.5rem;
   width: 100%;
 }
 
@@ -57,20 +58,20 @@ header {
   align-items: center;
   position: fixed;
   z-index: 1000;
-  height: 85px;
+  height: 8.5rem;
   width: 100%;
   background: var(--primary-color);
   box-shadow: 0 5px 5px -5px #333;
-  border-bottom: 1px solid rgb(226, 230, 234);
+  border-bottom: 0.1rem solid rgb(226, 230, 234);
   margin: 0 auto;
 }
 
 .headerContainer {
   display: flex;
   align-items: center;
-  height: 85px;
+  height: 8.5rem;
   width: 100%;
-  max-width: 1600px;
+  max-width: 160rem;
   margin: 0 auto;
   background: var(--primary-color);
 }
@@ -80,8 +81,8 @@ header {
   flex-direction: column;
   height: 100%;
   width: 17.5%;
-  max-width: 250px;
-  border-right: 1px solid rgb(226, 230, 234);
+  max-width: 25rem;
+  border-right: 0.1rem solid rgb(226, 230, 234);
   user-select: none;
 }
 
@@ -93,14 +94,14 @@ header {
 }
 
 .logoSpace span {
-  font-size: 30px;
+  font-size: 3rem;
   font-family: "Pacifico", cursive;
-  margin-top: 3px;
+  margin-top: 0.3rem;
 }
 
 .logoSpace span:last-of-type {
   color: var(--primary-fontColor);
-  margin-top: -25px;
+  margin-top: -2.5rem;
 }
 
 .logoSpace a {
@@ -113,17 +114,17 @@ header {
   display: flex;
   justify-content: space-around;
   list-style: none;
-  margin-left: 20px;
+  margin-left: 2rem;
 }
 
 .mainNavigationLink {
   position: relative;
   display: flex;
   align-items: center;
-  font-size: 18px;
-  padding: 20px;
+  font-size: 2rem;
+  padding: 2rem;
   color: var(--secondary-fontColor);
-  border-radius: 20px 30px;
+  border-radius: 2rem 3rem;
   cursor: pointer;
 }
 
@@ -133,15 +134,13 @@ header {
   height: 100%;
   left: 0;
   top: 0;
-  border-radius: 20px 30px;
+  border-radius: 2rem 3rem;
 }
 
-.mainNavigationLink:hover {
-  background: var(--primary-fontColor);
-}
-
+.mainNavigationLink:hover,
 .mainNavigationLink:hover span {
-  color: var(--primary-color);
+  background: var(--primary-fontColor);
+  color: white;
 }
 
 .mainSearchWrapper {
@@ -153,24 +152,25 @@ header {
 .searchContainer {
   display: flex;
   align-items: center;
-  height: 42px;
+  height: 4.2rem;
 }
 
 .mainInputSearch {
-  font-size: 14px;
+  font-size: 1.4rem;
   height: 100%;
-  padding: 15px 120px 15px 15px;
-  border: 1px solid rgb(226, 230, 234);
-  border-radius: 12px;
+  width: 30rem;
+  padding: 1.5rem 3em 1.5rem 1.5rem;
+  border: 0.1rem solid rgb(226, 230, 234);
+  border-radius: 1.2rem;
 }
 
 .mainSearchContainer i,
 .searchContainer i {
-  font-size: 16px;
+  font-size: 1.6rem;
   color: var(--primary-fontColor);
   position: absolute;
   cursor: pointer;
-  right: 16px;
+  right: 1.6rem;
 }
 
 #mainAutocomplete_result {
@@ -181,22 +181,23 @@ header {
   background: white;
   box-shadow: var(--box-shadowScheme);
   z-index: 10;
+  font-size: 1.6rem;
 }
 
 .searchResultHeader {
   background: var(--primary-fontColor);
   color: white;
   text-align: center;
-  padding: 5px;
-  border: 3px solid;
+  padding: 0.5rem;
+  border: 0.3rem solid;
 }
 
 .searchResult {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 5px;
-  border-bottom: 1px solid rgb(226, 230, 234);
+  padding: 0.5rem;
+  border-bottom: 0.1rem solid rgb(226, 230, 234);
   text-decoration: none;
   color: black;
   white-space: nowrap;
@@ -205,12 +206,12 @@ header {
 }
 
 .searchResult img {
-  width: 25px;
-  height: 25px;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .searchResult span {
-  margin-left: 5px;
+  margin-left: 0.5rem;
   max-width: 28ch;
   overflow: hidden;
 }
@@ -232,14 +233,15 @@ header {
 }
 
 .fa-cog,
-.fa-bell {
+.fa-bell,
+.fa-bars {
   position: relative;
   display: flex;
   align-items: center;
-  font-size: 25px;
-  padding: 0 25px;
+  font-size: 2.5rem;
+  padding: 0 2.5rem;
   color: #4c4a4a;
-  border-left: 1px solid rgb(226, 230, 234);
+  border-left: 0.1rem solid rgb(226, 230, 234);
   cursor: pointer;
 }
 
@@ -253,47 +255,48 @@ header {
 
 .userSpace i .unseenNotifications {
   position: absolute;
-  font-size: 14px;
-  top: 20px;
-  right: 12px;
+  font-size: 1.4rem;
+  top: 2rem;
+  right: 1.2rem;
   background: var(--primary-fontColor);
   color: white;
-  padding: 3px 6px;
+  padding: 0.3rem 0.6rem;
   border-radius: 50%;
 }
 
 .userSpace .notificationContainer {
   display: none;
   position: absolute;
-  width: 400px;
+  width: 40rem;
   background: white;
-  margin-top: 85px;
+  margin-top: 8.5rem;
   top: 0;
   right: 0;
   overflow-y: scroll;
-  height: calc(100vh - 85px);
+  height: calc(100vh - 8.5rem);
   box-shadow: var(--box-shadowScheme);
-  max-height: calc(100vh - 85px);
+  max-height: calc(100vh - 8.5rem);
 }
 
 .userSpace .notificationContainer .notificationHeadersContainer {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 1px solid;
+  border-bottom: 0.1rem solid;
   color: var((var(--primary-fontColor)));
   cursor: pointer;
+  font-size: 1.6rem;
 }
 
 .userSpace .notificationContainer .activeNotificationCategory {
   color: white;
   background: var(--primary-fontColor);
-  padding: 5px 0px;
+  padding: 0.5rem 0;
 }
 
 .userSpace .notificationContainer .noNotificationsAvailable {
   text-align: center;
-  padding: 5px;
+  padding: 0.5rem;
 }
 
 .userSpace .notificationContainer .notificationHeadersContainer div {
@@ -306,8 +309,8 @@ header {
 .userSpace .notificationContainer .notificationMessageContainer {
   position: relative;
   display: flex;
-  padding: 5px 10px 5px 5px;
-  border-bottom: 1px solid;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  border-bottom: 0.1rem solid;
 }
 
 .userSpace .notificationContainer .unseenNotification {
@@ -323,9 +326,9 @@ header {
 }
 
 .userSpace .notificationContainer .notificationMessageContainer img {
-  width: 35px;
-  height: 35px;
-  margin-right: 5px;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-right: 0.5rem;
 }
 
 .userSpace .notificationContainer .notificationMessageContainer span {
@@ -345,20 +348,20 @@ header {
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  width: 255px;
-  border-left: 1px solid rgb(226, 230, 234);
+  width: 25.5rem;
+  border-left: 0.1rem solid rgb(226, 230, 234);
 }
 
 .userProfile {
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 0 25px;
+  padding: 0 2.5rem;
 }
 
 .userProfile img {
-  width: 50px;
-  height: 50px;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
@@ -370,50 +373,51 @@ header {
   font-family: "Times New Roman";
   font-weight: 900;
   text-transform: UPPERCASE;
-  font-size: 35px;
-  width: 50px;
-  height: 50px;
+  font-size: 3.5rem;
+  width: 5rem;
+  height: 5rem;
   color: white;
   background: var(--primary-fontColor);
   border-radius: 50%;
-  padding: 2.5px 15px;
+  padding: 0.25rem 1.5rem;
 }
 
 .userInformation {
-  padding: 0 8px;
+  padding: 0 0.8rem;
 }
 
 .userName {
-  max-width: 165px;
+  font-size: 1.6rem;
+  max-width: 16.5rem;
   overflow: hidden;
 }
 
 .accountType {
   text-align: center;
-  font-size: 14px;
+  font-size: 1.4rem;
   color: rgb(0, 128, 0);
 }
 
 .fa-sort-down {
   cursor: pointer;
-  font-size: 20px;
+  font-size: 2rem;
   color: #4c4a4a;
-  padding-bottom: 5px;
+  padding-bottom: 0.5rem;
 }
 
 .profileMenu {
   display: none;
   position: absolute;
-  top: 85px;
+  top: 8.5rem;
   background: white;
   box-shadow: var(--box-shadowScheme);
   width: 100%;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 0.8rem 0.8rem;
 }
 
 .profileMenu form {
   display: flex;
-  padding: 10px;
+  padding: 1rem;
 }
 
 .profileMenu button {
@@ -425,7 +429,7 @@ header {
   border: none;
   background: transparent;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 1.7rem;
 }
 
 .profileMenu a {
@@ -436,9 +440,9 @@ header {
 }
 
 .profileMenu div {
-  font-size: 16px;
+  font-size: 1.6rem;
   color: var(--secondary-fontColor);
-  padding: 10px;
+  padding: 1rem;
   display: flex;
   cursor: pointer;
   width: 100%;
@@ -448,14 +452,14 @@ header {
 
 .profileMenu div i {
   color: var(--primary-fontColor);
-  padding-right: 5px;
+  padding-right: 0.5rem;
 }
 
 .profileMenu div form button:hover,
 .profileMenu div form button:hover i {
   background: var(--primary-fontColor);
   color: white !important;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 0.8rem 0.8rem;
 }
 
 .headerButtonContainer {
@@ -466,14 +470,14 @@ header {
 }
 
 .headerButtonContainer a {
-  padding: 8px 16px;
-  font-size: 18px;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.8rem;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 0.8rem;
   cursor: pointer;
   background: var(--primary-fontColor);
-  border: 3px solid;
+  border: 0.3rem solid;
   text-decoration: none;
   box-shadow: rgb(0 0 0 / 15%) 0px 3px 3px 0px;
 }
@@ -487,13 +491,50 @@ header {
   transform: scale(1.1);
 }
 
+.headerContainer .fa-bars {
+  display: none;
+  align-items: center;
+  height: 100%;
+}
+
+.horizontalNavigation {
+  position: fixed;
+  z-index: 999;
+  width: 97.5%;
+  max-height: 0;
+  transition: max-height 1s;
+  overflow: hidden;
+  background: white;
+  box-shadow: var(--box-shadowScheme);
+  border-bottom: 0.1rem solid rgb(226, 230, 234);
+}
+
+.horizontalNavigation .mainNavigationLink {
+  border-radius: unset;
+}
+
+.horizontalNavigation form {
+  padding: 3.25rem;
+}
+
+.horizontalNavigation .mainNavigationLink button {
+  position: absolute;
+  font-size: 2rem;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  color: unset;
+  cursor: pointer;
+}
+
 main {
   display: flex;
   flex-direction: column;
   width: 85%;
-  max-width: 1600px;
-  margin: 0px auto 10px;
-  min-height: calc(100vh - 95px);
+  max-width: 160rem;
+  margin: 0 auto 1rem;
+  min-height: calc(100vh - 9.5rem);
 }
 
 footer {
@@ -501,10 +542,10 @@ footer {
   background: var(--primary-color);
   color: var(--secondary-fontColor);
   z-index: 999;
-  padding: 20px 50px;
+  padding: 2rem 5rem;
   width: 100%;
-  margin: 0px auto;
-  border-top: 1px solid rgb(226, 230, 234);
+  margin: 0 auto;
+  border-top: 0.1rem solid rgb(226, 230, 234);
   box-shadow: 0 -4px 5px -5px #333;
 }
 
@@ -515,8 +556,8 @@ footer ul {
 }
 
 footer ul li {
-  margin-right: 20px;
-  font-size: 18px;
+  margin-right: 2rem;
+  font-size: 1.8rem;
 }
 
 footer ul a {
@@ -526,7 +567,7 @@ footer ul a {
 
 .messages {
   position: fixed;
-  bottom: 15px;
+  bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
   -moz-animation: cssAnimation 0s ease-in 4s forwards;
@@ -541,14 +582,14 @@ footer ul a {
 
 .messages li {
   color: white;
-  font-size: 18px;
-  border-radius: 20px;
-  padding: 10px 20px;
+  font-size: 1.8rem;
+  border-radius: 2rem;
+  padding: 1rem 2rem;
   list-style: none;
   text-align: center;
   text-transform: uppercase;
   box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
-  letter-spacing: 1.2px;
+  letter-spacing: 0.12rem;
 }
 
 .messages .success {
@@ -586,7 +627,7 @@ h2 {
 .pagination {
   display: flex;
   justify-content: center;
-  margin: 5px 0;
+  margin: 0.5rem 0;
 }
 
 .pagination button,
@@ -594,16 +635,16 @@ h2 {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
-  font-size: 20px;
-  margin: 5px;
-  border-radius: 8px;
+  width: 5rem;
+  height: 5rem;
+  font-size: 2rem;
+  margin: 0.5rem;
+  border-radius: 0.8rem;
   cursor: pointer;
   text-decoration: none;
   color: var(--primary-fontColor);
   background: white;
-  border: 3px solid;
+  border: 0.3rem solid;
   box-shadow: var(--box-shadowScheme);
 }
 
@@ -620,36 +661,54 @@ h2 {
 /* ####################################################*/
 
 .sliderWrapper {
-  --handle-size: 3rem;
-  --img-gap: 0.5rem;
-  margin-top: 20px;
+  --handle-size: 4.8rem;
+  --img-gap: 0.8rem;
+  margin-top: 2rem;
   box-shadow: var(--box-shadowScheme);
 }
 
 .sliderHeader {
+  /* display: flex;
+  align-items: center;
+  background: var(--primary-fontColor);
+  color: white;
+  padding: 0.75rem 4rem;
+  font-size: 2rem;
+  border: 0.3rem solid white;
+  border-radius: 0.8rem 0.8rem 0 0; */
   display: flex;
   align-items: center;
   background: var(--primary-fontColor);
   color: white;
-  padding: 7.5px 40px;
-  font-size: 20px;
-  border: 3px solid white;
-  border-radius: 8px 8px 0 0;
+  font-size: 2rem;
+  border: 0.3rem solid white;
+  border-radius: 0.8rem 0.8rem 0 0;
+  position: relative;
+  padding: 1.7rem 4rem;
 }
 
 .sliderHeader div:first-child {
   margin: 0 auto;
 }
 
+.sliderHeader .sliderHeaderTitle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .progressBar {
+  /* display: flex;
+  gap: 0.4rem; */
   display: flex;
-  gap: 0.25rem;
+  gap: 0.4rem;
+  margin-left: auto;
 }
 
 .progressItem {
-  flex: 0 0 1.5rem;
-  min-width: 1.5rem;
-  height: 0.5rem;
+  flex: 0 0 2.4rem;
+  min-width: 2.4rem;
+  height: 0.8rem;
   background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -660,21 +719,21 @@ h2 {
 .sliderContentContainer {
   display: flex;
   overflow: hidden;
-  border: 3px solid white;
+  border: 0.3rem solid white;
   border-top: none;
   background: rgba(0, 85, 212, 0.4);
 }
 
 .handle {
   border: none;
-  border-radius: 1rem;
+  border-radius: 1.6rem;
   flex-grow: 0;
   flex-shrink: 0;
   z-index: 10;
   margin: var(--img-gap) 0;
   width: var(--handle-size);
   cursor: pointer;
-  font-size: 5rem;
+  font-size: 8rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -710,37 +769,24 @@ h2 {
 }
 
 .slider {
-  --items-per-screen: 8;
+  /* --items-per-screen: 8; */
+  --items-per-screen: 7;
   --slider-index: 0;
   display: flex;
   flex-grow: 1;
-  /* margin: 0 var(--img-gap); */
   transform: translateX(calc(var(--slider-index) * -100%));
   transition: transform 600ms ease-in-out;
 }
 
 .slider > .contentWrapper {
-  /* margin: var(--img-gap); */
   flex: 0 0 calc(100% / var(--items-per-screen));
-  max-width: 180px;
-  max-height: 220px;
-  height: 220px;
+  /* max-width: 18rem; */
+  /* max-height: 22rem;
+  height: 22rem; */
 }
-
-/* @media (min-width: 1000px) {
-  .slider {
-    --items-per-screen: 3;
-  }
-}
-
-@media (max-width: 500px) {
-  .slider {
-    --items-per-screen: 2;
-  }
-} */
 
 .slider .contentWrapper:hover {
-  transform: scale(1.05, 1.05);
+  transform: scale(1.05);
 }
 
 .contentContainer {
@@ -749,15 +795,15 @@ h2 {
   width: 100%;
   height: 100%;
   background: white;
-  border-radius: 6px;
+  border-radius: 0.6rem;
   box-shadow: var(--box-shadowScheme);
 }
 
 .contentIconContainer {
   position: relative;
   width: 100%;
-  height: calc(100% - 33px);
-  margin-bottom: 33px;
+  height: calc(100% - 3.3rem);
+  margin-bottom: 3.3rem;
 }
 
 .contentIcon {
@@ -781,9 +827,9 @@ h2 {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 5px 0;
+  padding: 0.5rem 0;
   white-space: nowrap;
-  font-size: 19px;
+  font-size: 1.9rem;
 }
 
 .contentName {
@@ -797,23 +843,23 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 150px;
+  font-size: 15rem;
   background: var(--primary-fontColor);
   color: white;
   opacity: 0.5;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 0.6rem;
 }
 
 .categoryHeader {
   position: relative;
   text-align: center;
-  margin: 20px 0 10px;
-  padding: 7.5px 0;
-  font-size: 20px;
-  border-radius: 8px;
+  margin: 2rem 0 1rem;
+  padding: 0.75rem 0;
+  font-size: 2rem;
+  border-radius: 0.8rem;
   color: white;
-  border: 3px solid white;
+  border: 0.3rem solid white;
   width: 100%;
   background: var(--primary-fontColor);
   box-shadow: var(--box-shadowScheme);
@@ -832,7 +878,8 @@ h2 {
   flex-direction: column;
   align-content: space-between;
   flex-wrap: wrap;
-  height: 400px;
+  height: 40rem;
+  overflow: hidden;
 }
 
 .articlesWrapper .articleContainer {
@@ -840,12 +887,12 @@ h2 {
   display: flex;
   align-items: center;
   background: white;
-  border: 3px solid black;
-  border-radius: 8px;
+  border: 0.3rem solid black;
+  border-radius: 0.8rem;
   box-shadow: var(--box-shadowScheme);
   width: 49%;
-  margin: 7.5px 0px;
-  height: 65px;
+  margin: 0.75rem 0;
+  height: 6.5rem;
 }
 
 .articlesWrapper .articleContainer:hover {
@@ -861,8 +908,8 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 59px;
-  height: 59px;
+  width: 5.9rem;
+  height: 100%;
 }
 
 .imageContainerUserLink {
@@ -872,6 +919,7 @@ h2 {
 .authorImageContainer img {
   width: 100%;
   height: 100%;
+  border-radius: 0.5rem 0 0 0.5rem;
 }
 
 .authorImageContainer a {
@@ -884,13 +932,13 @@ h2 {
 
 .articleInformationContainer,
 .articleSectorAndDateContainer {
-  padding-left: 5px;
+  padding-left: 0.5rem;
   white-space: nowrap;
-  max-width: 80%;
+  max-width: calc(100% - 15rem);
 }
 
 .articleTitle {
-  font-size: 19px;
+  font-size: 1.9rem;
   overflow: hidden;
 }
 
@@ -905,9 +953,9 @@ h2 {
   visibility: hidden;
   z-index: 1;
   color: white;
-  padding: 2px 4px;
-  font-size: 13px;
-  border: 2px solid white;
+  padding: 0.2rem 0.4rem;
+  font-size: 1.3rem;
+  border: 0.2rem solid white;
   box-shadow: var(--box-shadowScheme);
   opacity: 0;
   transition: opacity 1s;
@@ -917,21 +965,22 @@ h2 {
 .articleSectorAndDateContainer {
   display: flex;
   padding-left: unset;
-  font-size: 14px;
+  font-size: 1.4rem;
 }
 
 .articleSectorAndDateContainer a {
   color: var(--primary-fontColor);
   text-decoration: none;
-  margin-right: 3px;
+  margin-right: 0.3rem;
 }
 
 .articlesWrapper .articleContainer .fa-ellipsis-h {
   position: absolute;
-  top: 2px;
-  right: 65px;
+  top: 0.2rem;
+  right: 6.5rem;
   cursor: pointer;
-  padding: 5px;
+  padding: 0.5rem;
+  font-size: 1.6rem;
 }
 
 .articleWebsiteLogoContainer {
@@ -946,12 +995,12 @@ h2 {
   right: 0;
   width: 100%;
   height: 100%;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
+  border-top-right-radius: 0.6rem;
+  border-bottom-right-radius: 0.6rem;
 }
 
 .articleContainer .fa-question-circle {
-  font-size: 50px;
+  font-size: 5rem;
   color: white;
 }
 
@@ -967,24 +1016,25 @@ h2 {
   display: none;
   flex-direction: column;
   position: absolute;
-  right: -35px;
-  border: 3px solid;
-  border-radius: 8px;
+  /* right: -3.5rem; */
+  right: 0;
+  border: 0.3rem solid;
+  border-radius: 0.8rem;
   background: white;
-  top: 23px;
+  top: 2.3rem;
   z-index: 2;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 1.3rem;
 }
 
 .articleOptionsContainer .addToListButton {
-  padding: 5px 10px;
-  border-bottom: 3px solid;
+  padding: 0.5rem 1rem;
+  border-bottom: 0.3rem solid;
 }
 
 .articleOptionsContainer i {
-  margin-right: 5px;
-  width: 13px;
+  margin-right: 0.5rem;
+  width: 1.3rem;
 }
 
 .articleOptionsContainer a {
@@ -1000,7 +1050,7 @@ h2 {
 
 .articleOptionsContainer .addToHighlightedButton,
 .deleteExternalLink {
-  padding: 5px 10px;
+  padding: 0.5rem 1rem;
 }
 
 /* Add to list form - start */
@@ -1008,72 +1058,52 @@ h2 {
 .addToListForm {
   display: none;
   background: white;
-  width: 250px;
+  width: 25rem;
   box-shadow: var(--box-shadowScheme);
-  border-radius: 8px;
+  border-radius: 0.8rem;
   position: absolute;
   z-index: 75;
-  top: 0px;
-  right: -110px;
-}
-
-.addToListForm .fa-times {
-  position: absolute;
-  right: 0;
-  color: white;
-  background: red;
-  padding: 5px;
-  font-size: 20.5px;
-  cursor: pointer;
-}
-
-.addToListForm h3 {
-  padding: 5px 0;
-  text-align: center;
-  font-size: 17px;
-  margin-bottom: 5px;
-  background: var(--primary-fontColor);
-  border-radius: 8px 8px 0 0;
-  color: white;
+  top: -0.2rem;
+  right: -0.3rem;
 }
 
 .addToListForm .listSelectionContainer {
-  max-height: 120px;
+  max-height: 12rem;
   overflow-y: scroll;
 }
 
 .addToListForm .listContainer {
-  margin-left: 10px;
-  padding: 2.5px 0;
+  margin-left: 1rem;
+  padding: 0.25rem 0;
 }
 
 .addToListForm label {
-  font-size: 14px;
+  font-size: 1.4rem;
   cursor: pointer;
 }
 
 .addToListForm input {
-  width: 15px;
-  height: 15px;
-  margin-right: 5px;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
   cursor: pointer;
 }
 
 .addToListForm .buttonsContainer {
   display: flex;
   justify-content: space-between;
-  margin: 10px auto;
+  margin: 1rem auto;
   width: 80%;
 }
 
 .addToListForm button {
-  padding: 4px 16px;
-  font-size: 15px;
+  padding: 0.4rem 1.6rem;
+  font-size: 1.5rem;
   color: white;
-  border-radius: 4px;
+  border-radius: 0.4rem;
   cursor: pointer;
   background: var(--primary-fontColor);
-  border: 1px solid var(--primary-fontColor);
+  border: 0.1rem solid var(--primary-fontColor);
   width: 47.5%;
 }
 
@@ -1096,38 +1126,43 @@ h2 {
   background: white;
   flex-direction: column;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 0.8rem;
   box-shadow: var(--box-shadowScheme);
   z-index: 50;
-  min-width: 250px;
+  min-width: 25rem;
 }
 
 .articleCreateListMenu {
   position: absolute;
-  width: 250px;
-  height: 220px;
-  right: -110px;
-  top: 0;
+  width: 25rem;
+  /* height: 22rem; */
+  top: -0.2rem;
+  right: -0.3rem;
 }
 
-.formContainer h3 {
-  padding: 5px 0;
-  text-align: center;
-  font-size: 18px;
-  background: var(--primary-fontColor);
-  border-radius: 8px 8px 0 0;
-  color: white;
+.formContainer .formHeaderContainer,
+.addToListForm .formHeaderContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  height: 3.2rem;
   width: 100%;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  background: var(--primary-fontColor);
+  color: white;
 }
 
-.formContainer .closeFormContainerButton {
+.formContainer .formHeaderContainer .closeFormContainerButton,
+.addToListForm .formHeaderContainer .closeFormContainerButton {
   position: absolute;
   top: 0;
   right: 0;
   color: white;
   background: red;
-  padding: 5px;
-  font-size: 22px;
+  padding: 0.6rem;
   cursor: pointer;
 }
 
@@ -1135,22 +1170,22 @@ h2 {
   display: flex;
   flex-direction: column;
   width: 90%;
-  padding: 0px 0 10px;
+  height: 100%;
 }
 
 .formContainer form label {
-  margin: 6px 0 3px;
-  font-size: 16px;
+  margin: 0.75rem 0;
+  font-size: 1.7rem;
 }
 
 .formContainer form input,
 .formContainer form select {
   width: 100%;
-  font-size: 15px;
-  padding: 4px 10px;
+  font-size: 1.6rem;
+  padding: 0.4rem 1rem;
   color: black;
-  border: 2px solid rgb(226, 230, 234);
-  border-radius: 8px;
+  border: 0.2rem solid rgb(226, 230, 234);
+  border-radius: 0.8rem;
 }
 
 .formContainer form #id_list_pic {
@@ -1159,22 +1194,22 @@ h2 {
 }
 
 .formContainer form #id_is_public {
-  width: 16px;
-  height: 16px;
-  margin-top: -19px;
-  margin-left: 155px;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-top: -2.5rem;
+  margin-left: 16.4rem;
 }
 
 .formContainer .formSubmitButton {
   width: 100%;
-  padding: 4px 16px;
-  font-size: 16px;
+  padding: 0.4rem 1.6rem;
+  font-size: 1.7rem;
   color: white;
-  border-radius: 4px;
+  border-radius: 0.4rem;
   cursor: pointer;
   background: var(--primary-fontColor);
-  border: 1px solid var(--primary-fontColor);
-  margin-top: 10px;
+  border: 0.1rem solid var(--primary-fontColor);
+  margin: 0.5rem 0;
 }
 
 .formContainer .formSubmitButton:hover {
@@ -1193,7 +1228,7 @@ h2 {
 .twitterWrapper {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 2rem;
 }
 
 .twitterWrapper .highlightedTweetsContainer,
@@ -1208,7 +1243,7 @@ h2 {
 
 .twitterWrapper .categoryHeader {
   margin: 0;
-  border-radius: 8px 8px 0 0;
+  border-radius: 0.8rem 0.8rem 0 0;
 }
 
 .twitterWrapper .smallFormContentWrapper,
@@ -1219,44 +1254,44 @@ h2 {
 
 .twitterWrapper .twitterContainerPlaceholder {
   position: relative;
-  min-height: 1000px;
+  min-height: 100rem;
 }
 
 .twitterWrapper .twitterContainerPlaceholder div {
   position: absolute;
-  top: 200px;
+  top: 20rem;
   left: 0;
   right: 0;
-  font-size: 25px;
+  font-size: 2.5rem;
   color: white;
   background: var(--primary-fontColor);
   box-shadow: var(--box-shadowScheme);
-  padding: 15px;
-  border-radius: 20px;
+  padding: 1.5rem;
+  border-radius: 2rem;
   margin: 0 auto;
   max-width: 95%;
   display: flex;
   justify-content: center;
   text-align: center;
-  border: 3px solid;
+  border: 0.3rem solid;
 }
 
 .smallFormContentWrapper .articleContainer {
   position: relative;
   display: flex;
-  padding: 15px;
+  padding: 1.5rem;
   box-shadow: 0 5px 5px -5px #333;
-  border-bottom: 1px solid rgb(226, 230, 234);
+  border-bottom: 0.1rem solid rgb(226, 230, 234);
 }
 
 .smallFormContentWrapper .leftContentSide img {
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 0.8rem;
 }
 
 .smallFormContentWrapper .rightContentSide {
-  padding-left: 10px;
+  padding-left: 1rem;
   width: 100%;
 }
 
@@ -1264,6 +1299,7 @@ h2 {
   position: relative;
   display: flex;
   justify-content: space-between;
+  font-size: 1.6rem;
 }
 
 .smallFormContentWrapper .sourceAndWebsiteContainer {
@@ -1277,10 +1313,10 @@ h2 {
 }
 
 .smallFormContentWrapper .sourceAndWebsiteContainer img {
-  width: 20px;
-  height: 20px;
-  margin-left: 5px;
-  border-radius: 3px;
+  width: 2rem;
+  height: 2rem;
+  margin-left: 0.5rem;
+  border-radius: 0.3rem;
 }
 
 .smallFormContentWrapper .fa-ellipsis-h {
@@ -1288,23 +1324,24 @@ h2 {
   top: 0;
   right: 0;
   cursor: pointer;
-  padding: 0 5px 5px 5px;
+  padding: 0 0.5rem 0.5rem 0.5rem;
   z-index: 30;
 }
 
 .smallFormContentWrapper .contentBody {
-  padding: 5px 0;
+  padding: 0.5rem 0;
   cursor: text;
 }
 
 .smallFormContentWrapper .contentBody p {
-  font-size: 19px;
+  font-size: 1.9rem;
   text-align: justify;
   font-family: serif;
 }
 
 .smallFormContentWrapper .timeContainer {
   color: gray;
+  font-size: 1.4rem;
 }
 
 .smallFormContentWrapper .contentLink {
@@ -1340,21 +1377,21 @@ h2 {
 
 .blurContainer .comingSoon {
   position: absolute;
-  top: 200px;
+  top: 20rem;
   left: 0;
   right: 0;
-  font-size: 25px;
+  font-size: 2.5rem;
   color: white;
   background: var(--primary-fontColor);
   box-shadow: var(--box-shadowScheme);
-  padding: 15px;
-  border-radius: 20px;
+  padding: 1.5rem;
+  border-radius: 2rem;
   margin: 0 auto;
   width: 50%;
   display: flex;
   justify-content: center;
   text-align: center;
-  border: 3px solid;
+  border: 0.3rem solid;
 }
 
 /* Twitter- Blur - End */
@@ -1373,11 +1410,11 @@ h2 {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  width: 150px;
+  width: 15rem;
   background: white;
-  border-radius: 10px;
+  border-radius: 1rem;
   box-shadow: var(--box-shadowScheme);
-  margin: 10px;
+  margin: 1rem;
 }
 
 .sourceContainer:hover {
@@ -1386,8 +1423,8 @@ h2 {
 
 .iconContainer {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 15rem;
+  height: 15rem;
 }
 
 .sourcePic {
@@ -1408,9 +1445,9 @@ h2 {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 5px 0;
+  padding: 0.5rem 0;
   white-space: nowrap;
-  font-size: 19px;
+  font-size: 1.9rem;
 }
 
 .sourceNameInnerContainer {
@@ -1420,4 +1457,188 @@ h2 {
 
 /* ####################################################*/
 /* Small Source Container - End */
+/* ####################################################*/
+
+/* ####################################################*/
+/* Media Queries - Start */
+/* ####################################################*/
+
+@media (max-width: 1500px) {
+  main {
+    width: 87.5%;
+  }
+
+  .slider {
+    --items-per-screen: 6;
+  }
+}
+
+@media (max-width: 1250px) {
+  main {
+    width: 90%;
+  }
+
+  .logoContainer {
+    max-width: 22rem;
+  }
+
+  .mainNavigation {
+    margin-left: 0;
+  }
+
+  .slider {
+    --items-per-screen: 5;
+  }
+
+  .sliderHeader .progressBar {
+    display: none;
+  }
+}
+
+@media (max-width: 1125px) {
+  .mainNavigation {
+    display: none;
+  }
+
+  .userSpace {
+    display: none;
+  }
+
+  .mainInputSearch {
+    min-width: 50vw;
+    max-width: 60vw;
+  }
+
+  .headerContainer .fa-bars {
+    display: flex;
+  }
+
+  .horizontalNavigation .mainNavigationLink {
+    justify-content: center;
+    border-bottom: 0.1rem solid rgb(226, 230, 234);
+  }
+}
+
+@media (max-width: 1000px) {
+  main {
+    width: 92.5%;
+  }
+
+  .slider {
+    --items-per-screen: 4;
+  }
+
+  .articlesWrapper {
+    height: unset;
+  }
+
+  .articlesWrapper .articleContainer {
+    width: 100%;
+  }
+
+  .twitterWrapper {
+    flex-direction: column;
+  }
+
+  .twitterWrapper .highlightedTweetsContainer,
+  .twitterWrapper .newestTweetsContainer,
+  .twitterWrapper .mostLikedTweetsContainer,
+  .twitterWrapper .twitterHalfPageContainer {
+    width: 100%;
+  }
+}
+
+@media (max-width: 750px) {
+  main {
+    width: 95%;
+  }
+}
+
+@media (max-width: 625px) {
+  footer ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  footer ul li {
+    margin-bottom: 1rem;
+  }
+
+  footer ul li:last-child {
+    margin-bottom: unset;
+  }
+}
+
+@media (max-width: 500px) {
+  main {
+    width: 97.5%;
+  }
+
+  .outerHeaderContainer {
+    max-width: 100vw;
+  }
+
+  .slider {
+    --items-per-screen: 3;
+  }
+
+  .contentIconContainer {
+    height: calc(100% - 2.3rem);
+    margin-bottom: 2.3rem;
+  }
+
+  .contentNameContainer {
+    font-size: 1.5rem;
+    padding: 0.25rem 0;
+  }
+
+  .smartphoneCreateListMenu {
+    position: fixed;
+    width: 97.5%;
+  }
+
+  .smartphoneCreateListMenu .formHeaderContainer {
+    font-size: 2.2rem;
+    padding: 2rem 0;
+  }
+
+  .smartphoneCreateListMenu .formHeaderContainer .closeFormContainerButton {
+    padding: 0.9rem;
+  }
+
+  .smartphoneCreateListMenu form label {
+    margin: 1rem 0 0.5rem;
+    font-size: 2rem;
+  }
+
+  .smartphoneCreateListMenu form input,
+  .smartphoneCreateListMenu form select {
+    font-size: 1.8rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .smartphoneCreateListMenu form #id_is_public {
+    width: 2rem;
+    height: 2rem;
+    margin-top: -2.6rem;
+    margin-left: 19rem;
+  }
+
+  .smartphoneCreateListMenu .formSubmitButton {
+    font-size: 2rem;
+    margin: 1rem 0;
+  }
+
+  .addToListForm label {
+    font-size: 1.8rem;
+  }
+
+  .addToListForm input {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+}
+
+/* ####################################################*/
+/* Media Queries - End */
 /* ####################################################*/
