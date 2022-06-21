@@ -668,14 +668,6 @@ h2 {
 }
 
 .sliderHeader {
-  /* display: flex;
-  align-items: center;
-  background: var(--primary-fontColor);
-  color: white;
-  padding: 0.75rem 4rem;
-  font-size: 2rem;
-  border: 0.3rem solid white;
-  border-radius: 0.8rem 0.8rem 0 0; */
   display: flex;
   align-items: center;
   background: var(--primary-fontColor);
@@ -695,11 +687,10 @@ h2 {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  white-space: nowrap;
 }
 
 .progressBar {
-  /* display: flex;
-  gap: 0.4rem; */
   display: flex;
   gap: 0.4rem;
   margin-left: auto;

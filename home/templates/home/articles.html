@@ -8,46 +8,51 @@
 
 {% block content %}
 
-<div class="filterBar">
-    <div class="selectContainer">
-        <label for="timeframe">Timeframe</label>
-        <select id="timeframe">
-            <option value="All" selected="selected">All</option>
-            <option value="7">Last 7 days</option>
-            <option value="30">Last 30 days</option>
-            <option value="90">Last 90 days</option>
-            <option value="365">Last 365 days</option>
-        </select>
+<div class="filterBar smallerScreenFilterBar">
+    <div class="selectContainer filterSelectContainer">
+        <button class="filterButton"><span>Filter</span><i class="fa-solid fa-filter"></i></button>
     </div>
-    <div class="selectContainer">
-        <label for="sector">Sector</label>
-        <select id="sector">
-            <option value="All" selected="selected">All</option>
-            {% for sector in sectors %}
-            <option value="{{ sector.name }}">{{ sector.name }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div class="selectContainer">
-        <label for="paywall">Paywall</label>
-        <select id="paywall">
-            <option value="All" selected="selected">All</option>
-            <option value="Yes">Yes</option>
-            <option value="Semi">Semi</option>
-            <option value="No">No</option>
-        </select>
-    </div>
-    <div class="selectContainer">
-        <label for="source">Source</label>
-        <select id="source">
-            <option value="All" selected="selected">All</option>
-            <option value="SeekingAlpha">SeekingAlpha</option>
-            <option value="Spotify">Spotify </option>
-            <option value="Substack">Substack</option>
-            <option value="Twitter">Twitter</option>
-            <option value="YouTube">YouTube</option>
-            <option value="Other">Other</option>
-        </select>
+    <div class="filterBarMenu">
+        <div class="selectContainer">
+            <label for="timeframe">Timeframe</label>
+            <select id="timeframe">
+                <option value="All" selected="selected">All</option>
+                <option value="7">Last 7 days</option>
+                <option value="30">Last 30 days</option>
+                <option value="90">Last 90 days</option>
+                <option value="365">Last 365 days</option>
+            </select>
+        </div>
+        <div class="selectContainer">
+            <label for="sector">Sector</label>
+            <select id="sector">
+                <option value="All" selected="selected">All</option>
+                {% for sector in sectors %}
+                <option value="{{ sector.name }}">{{ sector.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="selectContainer">
+            <label for="paywall">Paywall</label>
+            <select id="paywall">
+                <option value="All" selected="selected">All</option>
+                <option value="Yes">Yes</option>
+                <option value="Semi">Semi</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div class="selectContainer">
+            <label for="source">Source</label>
+            <select id="source">
+                <option value="All" selected="selected">All</option>
+                <option value="SeekingAlpha">SeekingAlpha</option>
+                <option value="Spotify">Spotify </option>
+                <option value="Substack">Substack</option>
+                <option value="Twitter">Twitter</option>
+                <option value="YouTube">YouTube</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
     </div>
     <div class="selectContainer searchSelectContainer">
         <div class="searchContainer">
@@ -56,7 +61,7 @@
         </div>
         <div id="autocomplete_list_results"></div>
     </div>
-    <div class="selectContainer">
+    <div class="selectContainer searchButtonSelectContainer">
         <button class="searchButton">Search</button>
     </div>
 </div>
@@ -97,7 +102,8 @@
             {% if article.title in highlighted_content_titles %}
             <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight article</span></div>
             {% else %}
-            <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight article</span></div>
+            <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight article</span>
+            </div>
             {% endif %}
             {% else %}
             <a href="{% url 'account_login' %}" class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
@@ -115,7 +121,8 @@
                 <div class="listContainer">
                     <label for="list_id_{{ list.list_id }}">
                         {% if article in list.articles.all %}
-                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists" checked="True"> {{ list }}
+                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists" checked="True">
+                        {{ list }}
                         {% else %}
                         <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists">
                         {{ list }}

@@ -60,6 +60,7 @@
 .rightFirstRowContainer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 3rem;
 }
 
@@ -432,4 +433,67 @@
   cursor: pointer;
   box-shadow: var(--box-shadowScheme);
   z-index: 25;
+}
+
+@media (max-width: 1000px) {
+  .leftInnerContainer {
+    width: unset;
+  }
+
+  .listPictureContainer {
+    height: 15rem;
+    width: 15rem;
+  }
+
+  .rightInnerContainer {
+    width: 100%;
+    margin-left: 3%;
+  }
+
+  .rightInnerContainer .rightFirstRowContainer {
+    font-size: 2.5rem;
+  }
+
+  .creatorContainer {
+    margin-top: -0.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .listPictureContainer {
+    height: 10rem;
+    width: 10rem;
+  }
+
+  .rightInnerContainer {
+    position: relative;
+  }
+
+  .rightInnerContainer .rightFirstRowContainer {
+    font-size: 2rem;
+  }
+
+  .upperInnerContainer {
+    flex-direction: column;
+    align-items: unset;
+  }
+
+  .notificationAndSubscribtionContainer {
+    position: absolute;
+    top: 8.5rem;
+    left: 0;
+    width: 100%;
+  }
+
+  .notificationAndSubscribtionContainer .fa-bell {
+    padding-left: unset;
+  }
+
+  .notificationAndSubscribtionContainer .subscribeButton {
+    width: 100%;
+  }
+
+  .ratingsWrapper {
+    margin-top: 6rem;
+  }
 }

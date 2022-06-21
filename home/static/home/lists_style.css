@@ -1,11 +1,17 @@
 .filterBar {
+  position: relative;
   display: flex;
   margin: 2rem 0 1rem;
   border: 0.3rem solid var(--primary-fontColor);
   box-shadow: var(--box-shadowScheme);
 }
 
-.smallerScreenFilterBar {
+.filterBarMenu {
+  display: flex;
+  width: 60%;
+}
+
+.filterSelectContainer {
   display: none;
 }
 
@@ -14,8 +20,12 @@
   width: 15%;
 }
 
-.selectContainer:last-of-type {
+.searchButtonSelectContainer {
   border-right: unset;
+}
+
+.filterBarMenu .selectContainer {
+  width: 25%;
 }
 
 .searchSelectContainer {
@@ -101,26 +111,6 @@
 .filterBar .searchButton:hover,
 .filterBar .filterButton:hover {
   background: rgba(0, 85, 212, 0.8);
-}
-
-.filterBar .filterButton i {
-  margin-left: 0.5rem;
-}
-
-.filterBar .filterBarMenu {
-  display: none;
-  position: absolute;
-  z-index: 50;
-  top: 4.7rem;
-  left: -0.2rem;
-  width: calc(100% + 0.4rem);
-  background: white;
-  border: 2px solid var(--primary-fontColor);
-  border-top: none;
-}
-
-.filterBar .filterBarMenu .selectContainer {
-  width: 25%;
 }
 
 .searchResultsAndListCreationContainer {
@@ -251,11 +241,38 @@
 
   .smallerScreenFilterBar {
     display: flex;
-    position: relative;
+  }
+
+  .filterSelectContainer {
+    display: flex;
+  }
+
+  .filterBar .filterButton i {
+    margin-left: 0.5rem;
+  }
+
+  .filterBar .filterBarMenu {
+    display: none;
+    position: absolute;
+    z-index: 50;
+    top: 4.7rem;
+    left: -0.2rem;
+    width: calc(100% + 0.4rem);
+    background: white;
+    border: 2px solid var(--primary-fontColor);
+    border-top: none;
+  }
+
+  .filterBar .filterBarMenu .selectContainer {
+    width: 25%;
   }
 
   .searchSelectContainer {
     width: 70%;
+  }
+
+  .selectContainer:last-of-type {
+    border-right: unset;
   }
 }
 

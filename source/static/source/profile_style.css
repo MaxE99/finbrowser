@@ -34,6 +34,12 @@
 .upperInnerContainer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.sourceNameAndWebsiteContainer {
+  display: flex;
+  align-items: center;
 }
 
 .upperInnerContainer .sourceName {
@@ -278,4 +284,85 @@
 
 .sliderWrapper {
   margin-bottom: 1.5rem;
+}
+
+@media (max-width: 1000px) {
+  .leftInnerContainer {
+    width: unset;
+  }
+
+  .listPictureContainer {
+    height: 15rem;
+    width: 15rem;
+  }
+
+  .rightInnerContainer {
+    width: 100%;
+    margin-left: 3%;
+  }
+
+  .upperInnerContainer .sourceName {
+    font-size: 3rem;
+  }
+
+  .sourceContainer {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .sectorContainer {
+    margin-top: -0.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .sliderHeader .sliderHeaderTitle {
+    position: relative;
+  }
+
+  .listPictureContainer {
+    height: 10rem;
+    width: 10rem;
+  }
+
+  .rightInnerContainer {
+    position: relative;
+  }
+
+  .upperInnerContainer {
+    flex-direction: column;
+    align-items: unset;
+  }
+
+  .upperInnerContainer .sourceName {
+    font-size: 2.5rem;
+  }
+
+  .sourceContainer {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .notificationAndSubscribtionContainer {
+    position: absolute;
+    top: 6rem;
+    left: 0;
+    width: 100%;
+  }
+
+  .notificationAndSubscribtionContainer .fa-bell {
+    padding-left: unset;
+  }
+
+  .notificationAndSubscribtionContainer .subscribeButton {
+    width: 100%;
+  }
+
+  .sectorContainer {
+    margin-top: -0.3rem;
+  }
+
+  .ratingsWrapper {
+    margin-top: 6rem;
+  }
 }

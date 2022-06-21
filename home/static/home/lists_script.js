@@ -84,7 +84,7 @@ createListButton.addEventListener("click", () => {
   }
 });
 
-//Open Filter Menu
+//Toggle Filter Menu
 document.querySelector(".filterButton").addEventListener("click", () => {
   const filterBarMenu = document.querySelector(".filterBarMenu");
   if (filterBarMenu.style.display == "flex") {
