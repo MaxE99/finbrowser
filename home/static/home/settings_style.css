@@ -1,13 +1,13 @@
 .overlay {
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
 }
 
 .settingSidebar {
   display: flex;
   flex-direction: column;
   width: 15%;
+  margin-top: 2rem;
 }
 
 .settingSidebar h3 {
@@ -43,7 +43,7 @@
 
 h2 {
   font-size: 2.5rem;
-  margin: 0 0 1rem;
+  margin: 2rem 0 1rem;
 }
 
 .editSection {
@@ -329,6 +329,10 @@ form label[for="id_bio"] {
   box-shadow: var(--box-shadowScheme);
 }
 
+.notificationDeletionHeader {
+  margin-bottom: 0;
+}
+
 .notificationContainer {
   display: flex;
   flex-wrap: wrap;
@@ -372,4 +376,57 @@ form label[for="id_bio"] {
 .privacySettingsChangeSubmit {
   margin-top: 1.5rem;
   width: 100%;
+}
+
+@media (max-width: 850px) {
+  .settingSidebar {
+    width: 20%;
+  }
+
+  .settingSidebar div {
+    margin-left: 0;
+  }
+
+  .editSection {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .overlay {
+    flex-direction: column;
+  }
+
+  .settingSidebar,
+  .contentSection {
+    width: 100%;
+  }
+
+  .profilePicAndBannerContainer {
+    flex-direction: column;
+  }
+
+  .profilePicContainer,
+  .profileBannerContainer {
+    width: 100%;
+  }
+
+  #id_old_password,
+  #id_new_password1,
+  #id_new_password2,
+  .changePasswordForm input {
+    width: 100%;
+  }
+
+  .notificationDeletionHeader {
+    text-align: center;
+  }
+
+  .notificationContainer {
+    justify-content: center;
+  }
+
+  .changePrivacySettingsForm {
+    width: 100%;
+  }
 }

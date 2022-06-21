@@ -118,6 +118,11 @@ class PasswordChangingForm(PasswordChangeForm):
         model = User
         fields = ('old_password', 'new_password1', 'new_password2')
 
+    def __init__(self, *args, **kwargs):
+        super(PasswordChangingForm, self).__init__(*args, **kwargs)
+        self.fields['new_password1'].label = "New password"
+        self.fields['new_password2'].label = "Confirm new password"
+
 
 class ProfileChangeForm(forms.ModelForm):
 

@@ -11,12 +11,14 @@
   </div>
   <div class="rightInnerContainer">
     <div class="upperInnerContainer">
-      <h3 class="sourceName" id="source_id_{{ source.source_id }}">{{ source.name }}</h3>
-      <div class="sourceContainer">
-        <div class="iconContainer">
-          <img class="sourcePic" src="{% static source.website.logo %}" alt="website_logo" />
+      <div class="sourceNameAndWebsiteContainer">
+        <h3 class="sourceName" id="source_id_{{ source.source_id }}">{{ source.name }}</h3>
+        <div class="sourceContainer">
+          <div class="iconContainer">
+            <img class="sourcePic" src="{% static source.website.logo %}" alt="website_logo" />
+          </div>
+          <a class="sourceLink" href="{{ source.url }}"></a>
         </div>
-        <a class="sourceLink" href="{{ source.url }}"></a>
       </div>
       <div class="notificationAndSubscribtionContainer">
         {% if request.user.is_authenticated %}

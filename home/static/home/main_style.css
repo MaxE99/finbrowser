@@ -30,7 +30,7 @@ main {
 }
 
 .websiteAbout {
-  width: 50%;
+  width: 75%;
   margin: 0 auto;
   line-height: 1.5;
   letter-spacing: 0.12rem;
@@ -132,4 +132,34 @@ main {
   line-height: 2.4rem;
   font-size: 1.5rem;
   text-align: justify;
+}
+
+@media (max-width: 1000px) {
+  .coreFeaturesWrapper {
+    padding: 2.4rem 0 !important;
+  }
+
+  .coreFeaturesContainer .titleContainer,
+  .coreFeaturesContainer .rowWrapper {
+    flex-direction: column;
+    align-content: center;
+  }
+
+  .coreFeaturesContainer .rowContainer {
+    max-width: 75%;
+  }
+
+  .coreFeaturesContainer .iconBox {
+    min-height: 12rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .websiteAbout {
+    width: 95%;
+  }
+
+  .coreFeaturesContainer .rowContainer {
+    max-width: 95%;
+  }
 }
