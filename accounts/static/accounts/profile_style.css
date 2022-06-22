@@ -1,89 +1,63 @@
-.overlay {
-  width: 75%;
-  margin: 2rem auto 0;
-}
-
-.bannerProfileSocialContainer {
-  position: relative;
+.upperContainer {
   display: flex;
+  margin-top: 2rem;
 }
 
-.profileBanner,
-.bannerPlaceholder {
-  width: 60rem;
+.leftInnerContainer {
+  width: 30%;
+}
+
+.listPictureContainer {
+  position: relative;
+  background: white;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  margin: 0 auto;
   height: 20rem;
-  border-radius: 4rem 0.5rem 0.5rem 0.5rem;
-  box-shadow: var(--box-shadowScheme);
+  width: 20rem;
 }
 
-.bannerPlaceholder {
-  background: var(--primary-fontColor);
-  color: white;
-  font-size: 6rem;
+.logoPlaceholder {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  background: var(--primary-fontColor);
+  color: white;
+  height: 100%;
+  width: 100%;
+  font-size: 20rem;
+  text-transform: uppercase;
 }
 
-.profileSocialContainer {
+.listPictureContainer img {
+  width: 100%;
+  height: 100%;
+}
+
+.listPictureContainer label {
+  display: none;
+}
+
+.rightInnerContainer {
+  width: 70%;
+}
+
+.upperInnerContainer {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 60rem);
 }
 
-.avatarContainer {
-  width: 100%;
+.profileNameAndWebsiteContainer {
   display: flex;
-  position: relative;
-}
-
-.avatar,
-.avatarContainer .logoPlaceholder {
-  border-radius: 50%;
-  height: 10rem;
-  width: 10rem;
-  border: 0.3rem solid white;
-  background: white;
-  margin-left: -5rem;
-  margin-top: -1.5rem;
-  position: absolute;
-  z-index: 2;
-  box-shadow: var(--box-shadowScheme);
-}
-
-.avatarContainer .logoPlaceholder {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 8rem;
-  background: var(--primary-fontColor);
-  color: white;
 }
 
-.profileUsername {
-  font-size: 3rem;
-  padding: 0.5rem 1rem;
-  background: var(--primary-fontColor);
-  width: 75%;
-  text-align: center;
-  margin: 1rem;
-  margin-top: 1rem;
-  margin-left: 1rem;
-  box-shadow: var(--box-shadowScheme);
-  border: 0.3rem solid;
-  border-radius: 0.8rem;
-  color: white;
-  left: 2rem;
-  position: absolute;
-  z-index: 1;
+.upperInnerContainer .profileName {
+  font-size: 3.5rem;
 }
 
 .socialMediaLinkContainer {
-  position: absolute;
-  bottom: 0;
   display: flex;
-  margin: 8.5rem 0 0 2rem;
 }
 
 .icon {
@@ -112,37 +86,12 @@
   height: 100%;
 }
 
-.openAboutButton {
-  position: absolute;
-  margin-top: 1rem;
-  border-radius: 50%;
-  color: white;
-  background: var(--primary-fontColor);
-  box-shadow: var(--box-shadowScheme);
-  border: 0.3rem solid;
-  cursor: pointer;
-  top: 0;
-  right: 0;
-  font-size: 3rem;
-  padding: 1rem 2rem;
-  display: flex;
-}
-
-.openAboutButton:hover {
-  transform: scale(1.1);
-}
-
 .bioContainer {
-  position: absolute;
-  right: 6rem;
-  display: none;
   border-radius: 1rem;
-  letter-spacing: 0.11rem;
   text-align: justify;
   box-shadow: var(--box-shadowScheme);
-  width: 36rem;
-  margin-left: 62.5rem;
-  z-index: 50;
+  width: 100%;
+  margin-top: 1rem;
 }
 
 .bioContainer .categoryHeader {
@@ -151,33 +100,63 @@
   border-radius: 0.8rem 0.8rem 0 0;
 }
 
-.bioContainer .fa-times {
-  position: absolute;
-  display: block;
-  color: white;
-  background: red;
-  padding: 0.7rem;
-  font-size: 2.5rem;
-  top: 0;
-  right: 0;
-  cursor: pointer;
-  box-shadow: var(--box-shadowScheme);
-}
-
 .bioContainer .bio {
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   background: white;
   border-radius: 0 0 0.8rem 0.8rem;
-  line-height: 1.4;
-  height: 20rem;
+  line-height: 1.3;
+  height: 10.5rem;
   overflow-y: scroll;
+  font-size: 1.8rem;
+  letter-spacing: 0.11rem;
 }
 
-.slider {
-  --items-per-screen: 6;
+@media (max-width: 1000px) {
+  .leftInnerContainer {
+    width: 20%;
+    margin-right: 3%;
+  }
+
+  .listPictureContainer {
+    height: 15rem;
+    width: 15rem;
+  }
+
+  .logoPlaceholder {
+    font-size: 15rem;
+  }
+
+  .rightInnerContainer {
+    width: 77%;
+  }
 }
 
-.articleInformationContainer,
-.articleSectorAndDateContainer {
-  max-width: 72%;
+@media (max-width: 500px) {
+  .listPictureContainer {
+    height: 10rem;
+    width: 10rem;
+  }
+
+  .logoPlaceholder {
+    font-size: 10rem;
+  }
+
+  .profileNameAndWebsiteContainer {
+    flex-direction: column;
+    min-height: 10rem;
+  }
+
+  .upperInnerContainer .profileName {
+    font-size: 3rem;
+  }
+
+  .icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .bioContainer {
+    width: 130%;
+    margin-left: -30%;
+  }
 }

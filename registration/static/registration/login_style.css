@@ -17,6 +17,7 @@
   --primary-fontColor: rgb(0, 85, 212);
   --secondary-fontColor: rgb(34, 45, 59);
   --box-shadowScheme: rgba(0, 0, 0, 0.24) 0px 0.3rem 0.8rem;
+  font-size: 55%;
 }
 
 body {
@@ -39,9 +40,11 @@ body {
   display: flex;
   box-shadow: rgba(74, 79, 97, 0.25) 0px 13px 27px -5px,
     rgba(74, 79, 97, 0.3) 0px 8px 16px -8px;
-  height: 55rem;
   overflow: hidden;
-  width: 50%;
+  height: 55rem;
+  width: 115rem;
+  max-height: 90%;
+  max-width: 90%;
 }
 
 .loginUserForm #info-wrapper,
@@ -64,8 +67,11 @@ body {
 .loginUserForm #form-wrapper {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   text-align: center;
+  font-size: 2rem;
+  width: 60%;
 }
 
 .loginUserForm i {
@@ -97,10 +103,10 @@ body {
   margin-top: 1.5rem;
   color: var(--primary-fontColor);
   letter-spacing: 0;
+  font-size: 3rem;
 }
 
 .loginUserForm p {
-  font-size: 1.8rem;
   width: 100%;
   display: flex;
   align-items: center;
@@ -110,7 +116,7 @@ body {
   display: flex;
   justify-content: end;
   cursor: pointer;
-  margin-top: -2rem;
+  margin-top: -2.6rem;
   margin-left: auto;
   width: fit-content;
 }
@@ -124,8 +130,8 @@ body {
 .loginUserForm input[type="password"] {
   border: 0.1rem solid rgb(226, 230, 234);
   border-radius: 0.6rem;
-  font-size: 1.8rem;
-  padding: 1.3rem 1.2rem 1.3rem 1.2rem;
+  font-size: 2rem;
+  padding: 1.3rem 1.2rem;
   transition: border-color 250ms ease-in-out;
   background: rgb(226, 230, 234);
   opacity: 0.6;
@@ -166,9 +172,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
-  padding: 1.8rem 1rem;
-  width: 48rem;
+  font-size: 2rem;
+  padding: 1.3rem 1.2rem;
+  width: 100%;
   position: relative;
   margin-top: 1.5rem;
 }
@@ -243,6 +249,10 @@ button:hover {
 
 .seperator {
   margin: 2rem 0;
+}
+
+.login {
+  width: 100%;
 }
 
 .rememberAndPwrecovery {
@@ -352,6 +362,7 @@ button:hover {
   bottom: 3rem;
   left: 50%;
   transform: translateX(-50%);
+  white-space: nowrap;
   -moz-animation: cssAnimation 0s ease-in 4s forwards;
   -webkit-animation: cssAnimation 0s ease-in 4s forwards;
   -o-animation: cssAnimation 0s ease-in 4s forwards;
@@ -412,10 +423,6 @@ button:hover {
   height: 1.5rem;
 }
 
-label {
-  font-size: 1.6rem;
-}
-
 label[for="id_login"] {
   display: none;
 }
@@ -445,4 +452,29 @@ label[for="id_login"] {
 
 .sourcePic {
   width: 100%;
+}
+
+@media (max-width: 1000px) {
+  #info-wrapper {
+    display: none;
+  }
+
+  .loginUserForm #form-wrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .loginUserForm {
+    height: 60rem;
+  }
+
+  .loginUserForm .forgotPassword {
+    margin: 1.5rem auto 0;
+  }
+
+  .messages {
+    white-space: unset;
+    width: 90%;
+  }
 }

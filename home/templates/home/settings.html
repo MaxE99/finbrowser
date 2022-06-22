@@ -29,37 +29,19 @@
                     {{ email_and_name_change_form.email }}
                 </div>
             </div>
-            <div class="profilePicAndBannerContainer">
-                <div class="profilePicContainer">
-                    {{ profile_change_form.profile_pic.label_tag }}
-                    <div class="profilePicInnerContainer">
-                        {% if user.profile.profile_pic %}
-                        <img src="{{ user.profile.profile_pic.url }}" alt="">
-                        {% else %}
-                        <img src="{% static 'home/media/bigger_favicon.png' %}" alt="user-profile-pic">
-                        {% endif %}
-                        <div class="changeProfilePicButton">
-                            <span>Change</span>
-                            {{ profile_change_form.profile_pic }}
-                        </div>
-                        <button type="button" class="removeProfilePicButton">Remove</button>
+            <div class="profilePicContainer">
+                {{ profile_change_form.profile_pic.label_tag }}
+                <div class="profilePicInnerContainer">
+                    {% if user.profile.profile_pic %}
+                    <img src="{{ user.profile.profile_pic.url }}" alt="">
+                    {% else %}
+                    <img src="{% static 'home/media/bigger_favicon.png' %}" alt="user-profile-pic">
+                    {% endif %}
+                    <div class="changeProfilePicButton">
+                        <span>Change</span>
+                        {{ profile_change_form.profile_pic }}
                     </div>
-                </div>
-                <div class="profileBannerContainer">
-                    {{ profile_change_form.profile_banner.label_tag }}
-                    <div class="profileBannerInnerContainer">
-                        {% if user.profile.profile_banner %}
-                        <img class="profileBanner" src="{{ user.profile.profile_banner.url }}" alt="profile-banner">
-                        {% else %}
-                        <img class="profileBanner" src="{% static 'home/media/standard-banner.jpg' %}"
-                            alt="profile-banner">
-                        {% endif %}
-                        <div class="changeProfileBannerButton">
-                            <span>Change</span>
-                            {{ profile_change_form.profile_banner }}
-                        </div>
-                        <button type="button" class="removeProfileBannerButton">Remove</button>
-                    </div>
+                    <button type="button" class="removeProfilePicButton">Remove</button>
                 </div>
             </div>
             <label>Social Links:</label>

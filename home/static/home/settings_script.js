@@ -85,27 +85,6 @@ document
     }
   });
 
-document
-  .querySelector(".removeProfileBannerButton")
-  .addEventListener("click", async () => {
-    const user = document.querySelector(".emailContainer").id;
-    try {
-      const res = await fetch(
-        `http://127.0.0.1:8000/api/profiles/${user}/profile_banner_delete/`,
-        get_fetch_settings("DELETE")
-      );
-      if (!res.ok) {
-        showMessage("Error: List couldn't be filtered!", "Error");
-      } else {
-        const context = await res.json();
-        showMessage(context, "Remove");
-        window.location.reload();
-      }
-    } catch (e) {
-      showMessage("Error: Unexpected error has occurred!", "Error");
-    }
-  });
-
 const addSocialLinkButton = document.querySelector(".addSocialLinkButton");
 addSocialLinkButton.addEventListener("click", async () => {
   const website_link =

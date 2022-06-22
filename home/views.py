@@ -52,7 +52,7 @@ class CreateListFormMixin(FormMixin):
             if self.request.user.is_authenticated is False:
                 messages.error(self.request, 'Only registered users can create lists!')
                 return "Failed" if multi_form_page else redirect('home:lists')
-            elif List.objects.filter(name=new_list.name, creator=self.request.user).exists():
+            elif List.objects.filter(name=new_list.name, creator=self.request.user).exists() or List.objects.filter(slug=slugify(new_list.name), creator=self.request.user).exists():
                 messages.error(self.request, 'You have already created a list with that name!')
                 return "Failed" if multi_form_page else redirect('home:lists')
             else:

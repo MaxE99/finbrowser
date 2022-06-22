@@ -399,35 +399,37 @@ document
   });
 
 //activate notification popup
-document
-  .querySelector(".userSpace .notificationBell")
-  .addEventListener("click", async () => {
-    const notificationPopup = document.querySelector(
-      ".userSpace .notificationContainer"
-    );
-    if (notificationPopup.style.display == "block") {
-      notificationPopup.style.display = "none";
-      document.querySelector(".unseenNotifications").remove();
-      document
-        .querySelectorAll(".unseenNotification")
-        .forEach((notification) => {
-          notification.classList.remove("unseenNotification");
-        });
-    } else {
-      notificationPopup.style.display = "block";
-      try {
-        const res = await fetch(
-          `http://127.0.0.1:8000/api/notifications/`,
-          get_fetch_settings("PUT")
-        );
-        if (!res.ok) {
-          showMessage("Error: Network request failed unexpectedly!", "Error");
+if (document.querySelector(".userSpace .notificationBell")) {
+  document
+    .querySelector(".userSpace .notificationBell")
+    .addEventListener("click", async () => {
+      const notificationPopup = document.querySelector(
+        ".userSpace .notificationContainer"
+      );
+      if (notificationPopup.style.display == "block") {
+        notificationPopup.style.display = "none";
+        document.querySelector(".unseenNotifications").remove();
+        document
+          .querySelectorAll(".unseenNotification")
+          .forEach((notification) => {
+            notification.classList.remove("unseenNotification");
+          });
+      } else {
+        notificationPopup.style.display = "block";
+        try {
+          const res = await fetch(
+            `http://127.0.0.1:8000/api/notifications/`,
+            get_fetch_settings("PUT")
+          );
+          if (!res.ok) {
+            showMessage("Error: Network request failed unexpectedly!", "Error");
+          }
+        } catch (e) {
+          showMessage("Error: Unexpected error has occurred!", "Error");
         }
-      } catch (e) {
-        showMessage("Error: Unexpected error has occurred!", "Error");
       }
-    }
-  });
+    });
+}
 
 //Notification switch
 document

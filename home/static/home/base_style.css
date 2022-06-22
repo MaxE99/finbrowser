@@ -570,6 +570,7 @@ footer ul a {
   bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
+  white-space: nowrap;
   -moz-animation: cssAnimation 0s ease-in 4s forwards;
   -webkit-animation: cssAnimation 0s ease-in 4s forwards;
   -o-animation: cssAnimation 0s ease-in 4s forwards;
@@ -1627,6 +1628,11 @@ h2 {
   .addToListForm input {
     width: 1.8rem;
     height: 1.8rem;
+  }
+
+  .messages {
+    white-space: unset;
+    width: 90%;
   }
 }
 

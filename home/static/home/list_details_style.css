@@ -77,6 +77,10 @@
   height: 100%;
 }
 
+.rightFirstRowContainer .creatorContainerSmartphonePositioning {
+  display: none;
+}
+
 .notificationAndSubscribtionContainer {
   display: flex;
 }
@@ -465,35 +469,70 @@
     width: 10rem;
   }
 
-  .rightInnerContainer {
-    position: relative;
+  .listPictureContainer i {
+    left: 50%;
   }
 
   .rightInnerContainer .rightFirstRowContainer {
-    font-size: 2rem;
-  }
-
-  .upperInnerContainer {
+    font-size: 2.2rem;
     flex-direction: column;
     align-items: unset;
   }
 
+  .nameChangeContainer {
+    width: unset;
+  }
+
+  .nameChangeContainer input {
+    font-size: 2.3rem;
+  }
+
+  .rightFirstRowContainer .creatorContainerSmartphonePositioning {
+    display: block;
+  }
+
+  .creatorContainer {
+    display: none;
+    margin-top: unset;
+  }
+
   .notificationAndSubscribtionContainer {
-    position: absolute;
-    top: 8.5rem;
-    left: 0;
     width: 100%;
+    margin: 1rem 0;
+  }
+
+  .buttonContainer {
+    margin-left: 0;
+  }
+
+  .cancelButton,
+  .buttonContainer input,
+  .deleteListButton {
+    font-size: 1.6rem;
+    padding: 0.75rem 1.5rem;
+    margin-left: 0.5rem;
+    width: unset;
+  }
+
+  .deleteListButton {
+    margin-left: 0;
   }
 
   .notificationAndSubscribtionContainer .fa-bell {
     padding-left: unset;
   }
 
-  .notificationAndSubscribtionContainer .subscribeButton {
-    width: 100%;
+  .ratingsWrapper {
+    margin-top: unset;
   }
 
-  .ratingsWrapper {
-    margin-top: 6rem;
+  .rate-form {
+    display: flex;
+    justify-content: center;
+  }
+
+  .rankingStar,
+  .ratedStar {
+    font-size: 3.5rem;
   }
 }

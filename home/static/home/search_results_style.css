@@ -72,3 +72,28 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+@media (max-width: 1000px) {
+  .mainContent {
+    width: 100%;
+  }
+
+  .mainContent .mainSearchWrapper {
+    width: 75%;
+  }
+
+  .mainContent .mainInputSearch {
+    min-width: unset;
+    max-width: unset;
+  }
+}
+
+@media (max-width: 500px) {
+  .mainContent .mainSearchWrapper {
+    width: 100%;
+  }
+
+  .mainContent .searchCategories {
+    width: 75%;
+  }
+}

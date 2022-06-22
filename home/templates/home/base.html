@@ -325,7 +325,7 @@
 
             {% if messages %}
             <ul class="messages">
-                {% for message in messages %}
+                {% for message in messages|slice:":1" %}
                 <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
                 {% endfor %}
             </ul>
