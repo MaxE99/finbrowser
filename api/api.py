@@ -28,12 +28,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
         profile.profile_pic.delete()
         return Response("Profile picture has been deleted!")
 
-    @action(detail=True, methods=['delete'])
-    def profile_banner_delete(self, request, *args, **kwargs):
-        profile = self.get_object()
-        profile.profile_banner.delete()
-        return Response("Profile banner has been deleted!")
-
 
 class HighlightedArticleViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]

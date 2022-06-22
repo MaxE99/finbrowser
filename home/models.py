@@ -7,6 +7,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.core.validators import MaxLengthValidator
 # Python imports
 import os
 # Local imports
@@ -106,7 +107,7 @@ def create_list_pic_name(self, filename):
 
 class List(models.Model):
     list_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=30, validators=[MaxLengthValidator(30)])
     slug = models.SlugField()
     creator = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     subscribers = models.ManyToManyField(User, related_name='subscriber_list', blank=True)

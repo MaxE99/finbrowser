@@ -88,33 +88,24 @@ h2 {
   box-shadow: var(--box-shadowScheme);
 }
 
-.profilePicAndBannerContainer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.profilePicContainer,
-.profileBannerContainer {
+.profilePicContainer {
   width: 47.5%;
   margin-bottom: 2rem;
 }
 
-.profilePicInnerContainer,
-.profileBannerInnerContainer {
+.profilePicInnerContainer {
   display: flex;
   margin-top: 0.5rem;
 }
 
 .profilePicContainer img,
-.profileBannerContainer img,
 .existingSocialContainer img {
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
 }
 
-.changeProfilePicButton,
-.changeProfileBannerButton {
+.changeProfilePicButton {
   position: relative;
   background: white;
   color: black;
@@ -124,9 +115,7 @@ h2 {
 .cancelButton,
 .buttonContainer input,
 .changeProfilePicButton,
-.changeProfileBannerButton,
 .profilePicInnerContainer button,
-.profileBannerInnerContainer button,
 .addSocialLinkButton,
 .existingSocialContainer .removeSocialLinkButton {
   font-size: 1.8rem;
@@ -144,16 +133,13 @@ h2 {
 .cancelButton:hover,
 .buttonContainer input:hover,
 .changeProfilePicButton:hover,
-.changeProfileBannerButton:hover,
 .profilePicInnerContainer button:hover,
-.profileBannerInnerContainer button:hover,
 .addSocialLinkButton:hover,
 .existingSocialContainer .removeSocialLinkButton:hover {
   transform: scale(1.1);
 }
 
-.changeProfilePicButton input,
-.changeProfileBannerButton input {
+.changeProfilePicButton input {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -164,7 +150,6 @@ h2 {
 }
 
 .profilePicInnerContainer button,
-.profileBannerInnerContainer button,
 .existingSocialContainer .removeSocialLinkButton {
   background: red;
   color: white;
@@ -402,12 +387,7 @@ form label[for="id_bio"] {
     width: 100%;
   }
 
-  .profilePicAndBannerContainer {
-    flex-direction: column;
-  }
-
-  .profilePicContainer,
-  .profileBannerContainer {
+  .profilePicContainer {
     width: 100%;
   }
 

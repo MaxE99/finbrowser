@@ -17,6 +17,7 @@
   --primary-fontColor: rgb(0, 85, 212);
   --secondary-fontColor: rgb(34, 45, 59);
   --box-shadowScheme: rgba(0, 0, 0, 0.24) 0px 0.3rem 0.8rem;
+  font-size: 55%;
 }
 
 body {
@@ -39,9 +40,11 @@ body {
   display: flex;
   box-shadow: rgba(74, 79, 97, 0.25) 0px 13px 27px -5px,
     rgba(74, 79, 97, 0.3) 0px 8px 16px -8px;
-  height: 575px;
   overflow: hidden;
-  width: 50%;
+  height: 58rem;
+  width: 115rem;
+  max-height: 90%;
+  max-width: 90%;
 }
 
 .signupForm #info-wrapper,
@@ -61,6 +64,7 @@ body {
   align-items: center;
   flex-direction: column;
   width: 60%;
+  font-size: 2rem;
 }
 
 .signupForm i {
@@ -88,6 +92,7 @@ body {
   color: var(--primary-fontColor);
   letter-spacing: 0;
   margin: 1.5rem 0 1rem;
+  font-size: 3rem;
 }
 
 .notification h2 {
@@ -96,7 +101,6 @@ body {
 }
 
 .signupForm p {
-  font-size: 1.8rem;
   width: 100%;
   display: flex;
   align-items: center;
@@ -114,8 +118,8 @@ body {
 .signupForm input[type="email"] {
   border: 0.1rem solid rgb(226, 230, 234);
   border-radius: 0.6rem;
-  font-size: 1.8rem;
-  padding: 1.3rem 1.2rem 1.3rem 1.2rem;
+  font-size: 2rem;
+  padding: 1.3rem 1.2rem;
   transition: border-color 250ms ease-in-out;
   background: rgb(226, 230, 234);
   opacity: 0.6;
@@ -147,15 +151,15 @@ body {
 
 .actionButtonsContainer button,
 .actionButtonsContainer a {
-  padding: 0.8rem 1.6rem;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  padding: 1.3rem 1.2rem;
   color: white;
   border-radius: 0.8rem;
   cursor: pointer;
   background: var(--primary-fontColor);
   border: 0.3rem solid var(--primary-fontColor);
   text-decoration: none;
-  width: 150px;
+  width: 47.5%;
 }
 
 .signupForm button[type="submit"] i {
@@ -314,6 +318,7 @@ button:hover,
   margin: 0 0 2rem;
   opacity: 0.8;
   letter-spacing: 1.1px;
+  text-align: center;
 }
 
 .container a {
@@ -332,9 +337,9 @@ button:hover,
 .actionButtonsContainer a,
 .actionButtonsContainer input {
   border: 0.2rem solid var(--primary-fontColor);
-  padding: 1.5rem 3rem;
+  padding: 1.3rem 1.2rem;
   border-radius: 1rem;
-  font-size: 1.6rem;
+  font-size: 2rem;
   width: 47.5%;
   background: white;
   color: var(--primary-fontColor);
@@ -369,6 +374,7 @@ button:hover,
   bottom: 2.5rem;
   left: 50%;
   transform: translateX(-50%);
+  white-space: nowrap;
   -moz-animation: cssAnimation 0s ease-in 4s forwards;
   -webkit-animation: cssAnimation 0s ease-in 4s forwards;
   -o-animation: cssAnimation 0s ease-in 4s forwards;
@@ -474,4 +480,30 @@ input[name="terms_and_privacy"] {
 
 .sourcePic {
   width: 100%;
+}
+
+@media (max-width: 1000px) {
+  #info-wrapper {
+    display: none;
+  }
+
+  .signupForm #form-wrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .signupForm {
+    height: 64rem;
+  }
+
+  .actionButtonsContainer {
+    width: 100%;
+    margin-right: unset;
+  }
+
+  .errorlist {
+    white-space: unset;
+    width: 90%;
+  }
 }

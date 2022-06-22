@@ -20,6 +20,9 @@
           <a class="sourceLink" href="{{ source.url }}"></a>
         </div>
       </div>
+      <div class="sectorContainer sectorContainerSmartphonePositioning">Sector:
+        <a href="{{ source.sector.get_absolute_url }}">{{ source.sector.name }}</a>
+      </div>
       <div class="notificationAndSubscribtionContainer">
         {% if request.user.is_authenticated %}
         {% if notifications_activated %}

@@ -9,40 +9,40 @@
 {% block content %}
 
 
-<div class="bannerProfileSocialContainer">
-    {% if profile.profile_banner %}
-    <img class="profileBanner" src="{{ profile.profile_banner.url }}" alt="profile-banner">
-    {% else %}
-    <div class="bannerPlaceholder">{{ profile.user.username }}</div>
-    <!-- <img class="profileBanner" src="{% static 'home/media/standard-banner.jpg' %}" alt="profile-banner"> -->
-    {% endif %}
-    <div class="profileSocialContainer">
-        <div class="avatarContainer">
+
+<div class="upperContainer">
+    <div class="leftInnerContainer">
+        <div class="listPictureContainer">
             {% if profile.profile_pic %}
-            <img class="avatar" src="{{ profile.profile_pic.url }}" alt="user-profile-pic">
+            <img src="{{ profile.profile_pic.url }}" alt="user-profile-pic">
             {% else %}
             <div class="logoPlaceholder">{{ profile.user.username.0 }}</div>
             {% endif %}
-            <div class="profileUsername">{{ profile.user.username }}</div>
         </div>
-        {% if social_links %}
-        <div class="socialMediaLinkContainer">
-            {% for link in social_links %}
-            <div class="icon">
-                <img src="{% static link.website.logo %}" alt="">
-                <a href="{{ link.url }}"></a>
+    </div>
+    <div class="rightInnerContainer">
+        <div class="upperInnerContainer">
+            <div class="profileNameAndWebsiteContainer">
+                <h3 class="profileName">{{ profile.user.username }}</h3>
+                {% if social_links %}
+                <div class="socialMediaLinkContainer">
+                    {% for link in social_links %}
+                    <div class="icon">
+                        <img src="{% static link.website.logo %}" alt="">
+                        <a href="{{ link.url }}"></a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
-            {% endfor %}
+            {% if profile.bio %}
+            <div class="bioContainer">
+                <div class="categoryHeader">{{ profile.user.username }} - Bio</div>
+                <div class="bio">{{ profile.bio|safe }}</div>
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
     </div>
-    <button class="openAboutButton"><i class="fa-solid fa-info"></i></button>
-    {% if profile.bio %}
-    <div class="bioContainer">
-        <div class="categoryHeader">{{ profile.user.username }} - Bio<i class="fas fa-times"></i></div>
-        <div class="bio">{{ profile.bio|safe }}</div>
-    </div>
-    {% endif %}
 </div>
 
 {% if highlighted_articles %}
@@ -248,6 +248,4 @@
 </div>
 {% endif %}
 
-
-<script src="{% static 'accounts/profile_script.js' %}"></script>
 {% endblock content %}

@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
 from django import forms
+from django.template.defaultfilters import slugify
 # Local imports
 from accounts.models import PrivacySettings, Profile
 from home.base_logger import logger
@@ -83,7 +84,7 @@ class EmailAndUsernameChangeForm(forms.ModelForm):
 
     def clean_username(self):
         username = self.cleaned_data['username']
-        if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
+        if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists() or User.objects.exclude(pk=self.instance.pk).filter(profile__slug=slugify(username)).exists():
             raise forms.ValidationError('Username is already in use.')
         return username
 
@@ -133,10 +134,9 @@ class ProfileChangeForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('profile_pic', 'profile_banner', 'bio')
+        fields = ('profile_pic', 'bio')
         labels = {
-            'profile_pic': 'Profile Picture',
-            'profile_banner': 'Profile Banner'
+            'profile_pic': 'Profile Picture'
         }
 
 

@@ -38,6 +38,11 @@ const listName = document.querySelector(".rightFirstRowContainer h3").innerText;
 
 function openEditMenu() {
   editButton.remove();
+  if (check_device_width_below(500)) {
+    document.querySelector(
+      ".notificationAndSubscribtionContainer .fa-bell"
+    ).style.display = "none";
+  }
   document.querySelector(".rightFirstRowContainer h3").style.display = "none";
   document.querySelector(".nameChangeContainer").style.display = "block";
   document.querySelector(".nameChangeContainer #id_name").value = listName;

@@ -29,6 +29,10 @@
             <div class="rightFirstRowContainer">
                 <h3 id="list_detail_for_{{ list.list_id }}">{{ list.name }}</h3>
                 <div class="nameChangeContainer">{{ change_list_name_form }}</div>
+                <div class="creatorContainer creatorContainerSmartphonePositioning">
+                    <span>Creator: </span>
+                    <a href="{{ list.creator.profile.get_absolute_url }}">{{ list.creator.username }}</a>
+                </div>
                 {% if list.creator == request.user %}
                 <div class="notificationAndSubscribtionContainer">
                     {% if notifications_activated %}
@@ -72,10 +76,9 @@
                     <div class="rankingsHeader">Ratings</div>
                     {% if list.creator != request.user %}
                     {% if request.user.is_authenticated %}
-                    <button type="button" class="rateListButton">Rate List</button>
+                    <button type="button" class="rateListButton">Rate</button>
                     {% else %}
-                    <a href="{% url 'account_login' %}" class="rateListButton registrationLink">Rate
-                        List</a>
+                    <a href="{% url 'account_login' %}" class="rateListButton registrationLink">Rate</a>
                     {% endif %}
                     <div class="rate-formUpperContainer">
                         <h3>Rate {{ list.name }}</h3>
