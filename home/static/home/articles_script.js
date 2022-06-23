@@ -55,7 +55,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
         }
       }
     } catch (e) {
-      showMessage("Error: Unexpected error has occurred!", "Error");
+      // showMessage("Error: Unexpected error has occurred!", "Error");
     }
     // closes list results list when user clicks somewhere else on the page
     document.onclick = function (e) {

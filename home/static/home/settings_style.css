@@ -337,6 +337,12 @@ form label[for="id_bio"] {
   z-index: 100;
 }
 
+.noNotificationsActivated {
+  margin-top: 3rem;
+  font-size: 3rem;
+  text-align: center;
+}
+
 .changePrivacySettingsForm {
   width: 40%;
 }

@@ -59,7 +59,7 @@ async function deleteSocialLinks(e) {
         showMessage(context, "Remove");
       }
     } catch (e) {
-      showMessage("Error: Unexpected error has occurred!", "Error");
+      // showMessage("Error: Unexpected error has occurred!", "Error");
     }
   }
 }
@@ -81,7 +81,7 @@ document
         window.location.reload();
       }
     } catch (e) {
-      showMessage("Error: Unexpected error has occurred!", "Error");
+      // showMessage("Error: Unexpected error has occurred!", "Error");
     }
   });
 
@@ -138,7 +138,7 @@ addSocialLinkButton.addEventListener("click", async () => {
       window.location.reload();
     }
   } catch (e) {
-    showMessage("Error: Unexpected error has occurred!", "Error");
+    // showMessage("Error: Unexpected error has occurred!", "Error");
   }
 });
 
@@ -201,7 +201,7 @@ document.querySelectorAll(".saveSocialLinkChanges").forEach((socialLink) => {
         window.location.reload();
       }
     } catch (e) {
-      showMessage("Error: Unexpected error has occurred!", "Error");
+      // showMessage("Error: Unexpected error has occurred!", "Error");
     }
   });
 });
@@ -226,7 +226,7 @@ document
           showMessage("Notification has been deleted!", "Remove");
         }
       } catch (e) {
-        showMessage("Error: Unexpected error has occurred!", "Error");
+        // showMessage("Error: Unexpected error has occurred!", "Error");
       }
     });
   });

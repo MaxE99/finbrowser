@@ -74,7 +74,7 @@ document
             }
           }
         } catch (e) {
-          showMessage("Error: Unexpected error has occurred!", "Error");
+          // showMessage("Error: Unexpected error has occurred!", "Error");
         }
         document.onclick = function (e) {
           if (e.target.id !== "autocomplete_list_results") {

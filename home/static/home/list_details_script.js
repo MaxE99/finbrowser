@@ -27,7 +27,7 @@ if (subscribeButton) {
           }
         }
       } catch (e) {
-        showMessage("Error: Unexpected error has occurred!", "Error");
+        // showMessage("Error: Unexpected error has occurred!", "Error");
       }
     }
   });
@@ -77,7 +77,7 @@ function openEditMenu() {
           closeButton.parentElement.remove();
         }
       } catch (e) {
-        showMessage("Error: Unexpected error has occurred!", "Error");
+        // showMessage("Error: Unexpected error has occurred!", "Error");
       }
     });
   });
@@ -102,7 +102,7 @@ function openEditMenu() {
             trashButton.parentElement.parentElement.remove();
           }
         } catch (e) {
-          showMessage("Error: Unexpected error has occurred!", "Error");
+          // showMessage("Error: Unexpected error has occurred!", "Error");
         }
       });
     }
@@ -139,7 +139,7 @@ if (document.querySelector(".deleteListButton")) {
           window.location.href = "http://127.0.0.1:8000/lists";
         }
       } catch (e) {
-        showMessage("Error: Unexpected error has occurred!", "Error");
+        // showMessage("Error: Unexpected error has occurred!", "Error");
       }
     });
 }
@@ -245,7 +245,7 @@ if (document.querySelector(".addSourcesForm #textInput")) {
             }
           }
         } catch (e) {
-          showMessage("Error: Unexpected error has occurred!", "Error");
+          // showMessage("Error: Unexpected error has occurred!", "Error");
         }
       } else {
         results_list.style.display = "none";
@@ -277,7 +277,7 @@ if (document.querySelector(".addSourcesForm button")) {
             window.location.reload();
           }
         } catch (e) {
-          showMessage("Error: Unexpected error has occurred!", "Error");
+          // showMessage("Error: Unexpected error has occurred!", "Error");
         }
       } else {
         showMessage("You need to select sources!", "Error");
@@ -319,7 +319,7 @@ if (notificationButton) {
         }
       }
     } catch (e) {
-      showMessage("Error: Unexpected error has occurred!", "Error");
+      // showMessage("Error: Unexpected error has occurred!", "Error");
     }
   });
 }
@@ -432,7 +432,7 @@ document.querySelectorAll(".rankingStar").forEach((star) => {
         window.location.reload();
       }
     } catch (e) {
-      showMessage("Error: Unexpected error has occurred!", "Error");
+      // showMessage("Error: Unexpected error has occurred!", "Error");
     }
   });
 });

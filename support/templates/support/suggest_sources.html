@@ -5,12 +5,11 @@
 <title>ResearchBrowser | Suggest Sources</title>
 {% endblock %}
 {% block content %}
-<div class="formContainer">
+<div class="formContainer supportForm">
     <h3>Suggest New Sources</h3>
     <form action="" enctype="multipart/form-data" method="POST" class="createFeatureSuggestionForm">
         {% csrf_token %} {{ form }}
         <input name="createFeatureSuggestionForm" type="submit" class="formSubmitButton" value="Save" />
     </form>
 </div>
-
 {% endblock content %}

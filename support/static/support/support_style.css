@@ -1,8 +1,11 @@
-.formContainer {
+.supportForm {
   display: flex;
+}
+
+.formContainer {
   flex-direction: column;
   align-items: center;
-  width: 70%;
+  width: 40%;
   margin: 2rem auto;
   background: white;
   box-shadow: var(--box-shadowScheme);
@@ -60,4 +63,16 @@
 
 .formContainer .formSubmitButton:hover {
   transform: scale(1.05, 1.05);
+}
+
+@media (max-width: 1000px) {
+  .formContainer {
+    width: 75%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .formContainer {
+    width: 95%;
+  }
 }

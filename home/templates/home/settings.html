@@ -95,6 +95,7 @@
         </form>
     </div>
     <div class="tabsContent" data-tab="2">
+        {% if notifications %}
         <h2 class="notificationDeletionHeader">Sources</h2>
         <div class="notificationContainer">
             {% for notification in notifications %}
@@ -133,6 +134,9 @@
             {% endif %}
             {% endfor %}
         </div>
+        {% else %}
+        <div class="noNotificationsActivated">You have not activated any notifications!</div>
+        {% endif %}
     </div>
 
 

@@ -10,15 +10,15 @@
   margin-top: 1rem;
 }
 
-.mainSearchWrapper {
+.mainContent .mainSearchWrapper {
   margin: 1.5rem auto;
 }
 
-.mainSearchWrapper .mainInputSearch {
+.mainContent .mainInputSearch {
   width: 100%;
 }
 
-#autocomplete_list_results {
+.mainContent #autocomplete_list_results {
   position: absolute;
   display: none;
   flex-direction: column;
@@ -29,7 +29,7 @@
   font-size: 1.6rem;
 }
 
-#autocomplete_list_results .searchResult span {
+.mainContent #autocomplete_list_results .searchResult span {
   max-width: 95%;
 }
 
