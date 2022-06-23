@@ -11,6 +11,8 @@ from django.dispatch import receiver
 from django.core.validators import MaxLengthValidator
 # Python imports
 import os
+# Local imports
+from accounts.validators import validate_domain_available
 
 
 class UserManager(BaseUserManager):
@@ -55,7 +57,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    username = CICharField(max_length=30, unique=True, validators=[MaxLengthValidator(30)])
+    username = CICharField(max_length=30, unique=True, validators=[MaxLengthValidator(30), validate_domain_available])
     email = models.EmailField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)  # a admin user; non super-user

@@ -3,10 +3,10 @@ from django.views.generic.detail import DetailView
 # Local import
 from home.models import Notification, Source, Article, List, SourceRating
 from home.logic.pure_logic import paginator_create
-from home.views import AddArticlesToListsMixin
+from home.views import BaseMixin
 
 
-class SourceDetailView(DetailView, AddArticlesToListsMixin):
+class SourceDetailView(DetailView, BaseMixin):
     model = Source
     context_object_name = 'source'
     template_name = 'source/profile.html'

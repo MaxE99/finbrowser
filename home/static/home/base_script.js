@@ -125,7 +125,7 @@ document
             }
           }
         } catch (e) {
-          showMessage("Error: Unexpected error has occurred!", "Error");
+          // showMessage("Error: Unexpected error has occurred!", "Error");
         }
         document.onclick = function (e) {
           if (e.target.id !== "autocomplete_list_results") {
@@ -257,7 +257,7 @@ document
             }
           }
         } catch (e) {
-          showMessage("Error: Unexpected error has occurred!", "Error");
+          // // showMessage("Error: Unexpected error has occurred!", "Error");
         }
       }
     });
@@ -297,7 +297,7 @@ async function add_article_to_list(list_id, article_id) {
       showMessage("Error: Network request failed unexpectedly!", "Error");
     }
   } catch (e) {
-    showMessage("Error: Unexpected error has occurred!", "Error");
+    // showMessage("Error: Unexpected error has occurred!", "Error");
   }
 }
 
@@ -311,7 +311,7 @@ async function remove_article_from_list(list_id, article_id) {
       showMessage("Error: Network request failed unexpectedly!", "Error");
     }
   } catch (e) {
-    showMessage("Error: Unexpected error has occurred!", "Error");
+    // showMessage("Error: Unexpected error has occurred!", "Error");
   }
 }
 
@@ -425,7 +425,7 @@ if (document.querySelector(".userSpace .notificationBell")) {
             showMessage("Error: Network request failed unexpectedly!", "Error");
           }
         } catch (e) {
-          showMessage("Error: Unexpected error has occurred!", "Error");
+          // showMessage("Error: Unexpected error has occurred!", "Error");
         }
       }
     });

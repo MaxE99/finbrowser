@@ -119,7 +119,7 @@ document
           }
         }
       } catch (e) {
-        showMessage("Error: Unexpected error has occurred!", "Error");
+        // showMessage("Error: Unexpected error has occurred!", "Error");
       }
     } else {
       results_list.style.display = "none";
@@ -145,7 +145,7 @@ document
           window.location.reload();
         }
       } catch (e) {
-        showMessage("Error: Unexpected error has occurred!", "Error");
+        // showMessage("Error: Unexpected error has occurred!", "Error");
       }
     } else {
       showMessage("You need to select sources!", "Error");
@@ -251,7 +251,7 @@ document
           }
         }
       } catch (e) {
-        showMessage("Error: Unexpected error has occurred!", "Error");
+        // showMessage("Error: Unexpected error has occurred!", "Error");
       }
     } else {
       results_list.style.display = "none";
@@ -278,7 +278,7 @@ document
             window.location.reload();
           }
         } catch (e) {
-          showMessage("Error: Unexpected error has occurred!", "Error");
+          // showMessage("Error: Unexpected error has occurred!", "Error");
         }
       }
     } else {
@@ -287,11 +287,14 @@ document
   });
 
 // open add external link menu
-document
-  .querySelector(".addExternalLinkButton")
-  .addEventListener("click", () => {
-    document.querySelector(".addExternalLinksContainer").style.display = "flex";
-  });
+if (document.querySelector(".addExternalLinkButton")) {
+  document
+    .querySelector(".addExternalLinkButton")
+    .addEventListener("click", () => {
+      document.querySelector(".addExternalLinksContainer").style.display =
+        "flex";
+    });
+}
 
 // close external link menu
 document

@@ -158,7 +158,7 @@ header {
 .mainInputSearch {
   font-size: 1.4rem;
   height: 100%;
-  width: 30rem;
+  width: 40rem;
   padding: 1.5rem 3em 1.5rem 1.5rem;
   border: 0.1rem solid rgb(226, 230, 234);
   border-radius: 1.2rem;
@@ -212,7 +212,7 @@ header {
 
 .searchResult span {
   margin-left: 0.5rem;
-  max-width: 28ch;
+  max-width: 40ch;
   overflow: hidden;
 }
 
@@ -297,6 +297,7 @@ header {
 .userSpace .notificationContainer .noNotificationsAvailable {
   text-align: center;
   padding: 0.5rem;
+  font-size: 2rem;
 }
 
 .userSpace .notificationContainer .notificationHeadersContainer div {
@@ -761,13 +762,13 @@ h2 {
 }
 
 .slider {
-  /* --items-per-screen: 8; */
   --items-per-screen: 7;
   --slider-index: 0;
   display: flex;
   flex-grow: 1;
   transform: translateX(calc(var(--slider-index) * -100%));
   transition: transform 600ms ease-in-out;
+  height: 215px;
 }
 
 .slider > .contentWrapper {
@@ -1460,8 +1461,13 @@ h2 {
     width: 87.5%;
   }
 
+  .mainInputSearch {
+    width: 30rem;
+  }
+
   .slider {
     --items-per-screen: 6;
+    /* height: 225px; */
   }
 }
 
@@ -1509,6 +1515,10 @@ h2 {
     justify-content: center;
     border-bottom: 0.1rem solid rgb(226, 230, 234);
   }
+
+  .slider {
+    height: 205px;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -1518,6 +1528,7 @@ h2 {
 
   .slider {
     --items-per-screen: 4;
+    height: 230px;
   }
 
   .articlesWrapper {
@@ -1540,9 +1551,19 @@ h2 {
   }
 }
 
+@media (max-width: 875px) {
+  .slider {
+    height: 195px;
+  }
+}
+
 @media (max-width: 750px) {
   main {
     width: 95%;
+  }
+
+  .slider {
+    height: 175px;
   }
 }
 
@@ -1559,6 +1580,16 @@ h2 {
   footer ul li:last-child {
     margin-bottom: unset;
   }
+
+  .slider {
+    height: 150px;
+  }
+}
+
+@media (max-width: 550px) {
+  .slider {
+    height: 140px;
+  }
 }
 
 @media (max-width: 500px) {
@@ -1572,6 +1603,7 @@ h2 {
 
   .slider {
     --items-per-screen: 3;
+    height: 150px;
   }
 
   .contentIconContainer {
@@ -1633,6 +1665,24 @@ h2 {
   .messages {
     white-space: unset;
     width: 90%;
+  }
+}
+
+@media (max-width: 450px) {
+  .slider {
+    height: 140px;
+  }
+}
+
+@media (max-width: 400px) {
+  .slider {
+    height: 120px;
+  }
+}
+
+@media (max-width: 350px) {
+  .slider {
+    height: 110px;
   }
 }
 

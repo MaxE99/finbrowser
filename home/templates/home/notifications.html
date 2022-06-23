@@ -7,10 +7,12 @@
 {% endblock %}
 {% block content %}
 
+
+{% if source_notifications or list_notifications %}
 <div class="twitterWrapper">
     <div class="tweetsContainer twitterHalfPageContainer">
-        <div class="categoryHeader">Source Notifications</div>
         {% if source_notifications %}
+        <div class="categoryHeader">Source Notifications</div>
         <div class="smallFormContentWrapper">
             {% for notification in source_notifications %}
             <div class="articleContainer" id="article_id_{{ notification.article.article_id }}">
@@ -93,11 +95,11 @@
             </div>
             {% endfor %}
         </div>
-        {% endif %}
     </div>
+    {% endif %}
     <div class="mostLikedTweetsContainer twitterHalfPageContainer">
-        <div class="categoryHeader listNoficiationHeader">List Notifications</div>
         {% if list_notifications %}
+        <div class="categoryHeader listNoficiationHeader">List Notifications</div>
         <div class="smallFormContentWrapper">
             {% for notification in list_notifications %}
             <div class="articleContainer" id="article_id_{{ notification.article.article_id }}">
@@ -180,8 +182,11 @@
             </div>
             {% endfor %}
         </div>
-        {% endif %}
     </div>
+    {% endif %}
 </div>
+{% else %}
+<div class="notifcationsNotAvailable">No Notifications Available!</div>
+{% endif %}
 
 {% endblock content %}

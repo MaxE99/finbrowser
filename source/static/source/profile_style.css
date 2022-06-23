@@ -314,10 +314,6 @@
 }
 
 @media (max-width: 500px) {
-  .sliderHeader .sliderHeaderTitle {
-    position: relative;
-  }
-
   .listPictureContainer {
     height: 10rem;
     width: 10rem;
