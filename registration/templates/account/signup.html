@@ -9,8 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'registration/register_style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" type="image/png" href="{% static 'home/media/favicon.png' %}">
     <title>ResearchBrowser | Register</title>
 </head>
@@ -41,7 +39,6 @@
                 <div class="seperator">or use your email for registration</div>
                 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
                     {% csrf_token %}
-
                     {% for field in form %}
                     <p>
                         {{ field.errors }}
@@ -55,11 +52,9 @@
                         {% endif %}
                     </p>
                     {% endfor %}
-
                     {% if redirect_field_value %}
                     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                     {% endif %}
-
                     <div class="actionButtonsContainer">
                         <button type="submit">{% trans "Sign Up" %}</button>
                         <a href="{{ login_url }}" class="signInButton">Sign In</a>

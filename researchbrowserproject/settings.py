@@ -1,24 +1,30 @@
 from pathlib import Path
 import os
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# Not sure if static root and staticfiles dirs will work
+STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8m!@3$n8co9kfre4u8tlf4wc=#obhc@s@$v7s7i*r4sn0oh=x1'
-
-# Production Version
-# with open(os.path.join(BASE_DIR, 'secret_key.txt')) as f:
-#     SECRET_KEY = f.read().strip()
-
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -67,7 +73,7 @@ SITE_ID = 2
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware", # for django debug toolbar
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -102,9 +108,9 @@ WSGI_APPLICATION = 'researchbrowserproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'researchbrowserdb',
+        'NAME': env('DATABASE_NAME'),
         'USER': 'postgres',
-        'PASSWORD': 'post123gres',
+        'PASSWORD': env('DATABASE_PW'),
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -174,10 +180,9 @@ AUTHENTICATION_BACKENDS = [
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'accnameaccname5@gmail.com'
-EMAIL_HOST_PASSWORD = 'xkftgdnrzamnlvwp'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-# EMAIL_USE_SSL = False
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
@@ -198,3 +203,11 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_REFERRER_POLICY = "strict-origin"
+SECURE_HSTS_SECONDS = 60 # Wert erhöhen wenn Tests erfolgreich sind
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True

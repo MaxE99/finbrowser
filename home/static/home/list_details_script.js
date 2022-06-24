@@ -9,7 +9,7 @@ if (subscribeButton) {
           .id.replace("list_detail_for_", "");
         let action = subscribeButton.innerText;
         const res = await fetch(
-          `http://127.0.0.1:8000/api/lists/${list_id}/list_change_subscribtion_status/`,
+          `https://127.0.0.1:8000/api/lists/${list_id}/list_change_subscribtion_status/`,
           get_fetch_settings("POST")
         );
         if (!res.ok) {
@@ -66,7 +66,7 @@ function openEditMenu() {
           .id.replace("list_detail_for_", "");
         const article_id = closeButton.parentElement.id.replace("article", "");
         const res = await fetch(
-          `http://127.0.0.1:8000/api/lists/${list_id}/delete_article_from_list/${article_id}/`,
+          `https://127.0.0.1:8000/api/lists/${list_id}/delete_article_from_list/${article_id}/`,
           get_fetch_settings("DELETE")
         );
         if (!res.ok) {
@@ -91,7 +91,7 @@ function openEditMenu() {
             .id.replace("list_detail_for_", "");
           const source_id = trashButton.id.replace("source_id_", "");
           const res = await fetch(
-            `http://127.0.0.1:8000/api/lists/${list_id}/delete_source_from_list/${source_id}/`,
+            `https://127.0.0.1:8000/api/lists/${list_id}/delete_source_from_list/${source_id}/`,
             get_fetch_settings("DELETE")
           );
           if (!res.ok) {
@@ -128,7 +128,7 @@ if (document.querySelector(".deleteListButton")) {
           .querySelector(".rightFirstRowContainer h3")
           .id.replace("list_detail_for_", "");
         const res = await fetch(
-          `http://127.0.0.1:8000/api/lists/${list_id}/`,
+          `https://127.0.0.1:8000/api/lists/${list_id}/`,
           get_fetch_settings("DELETE")
         );
         if (!res.ok) {
@@ -136,7 +136,7 @@ if (document.querySelector(".deleteListButton")) {
         } else {
           const context = await res.json();
           showMessage(context, "Remove");
-          window.location.href = "http://127.0.0.1:8000/lists";
+          window.location.href = "https://127.0.0.1:8000/lists";
         }
       } catch (e) {
         // showMessage("Error: Unexpected error has occurred!", "Error");
@@ -183,7 +183,7 @@ if (document.querySelector(".addSourcesForm #textInput")) {
         selected_list.style.display = "none";
         try {
           const res = await fetch(
-            `http://127.0.0.1:8000/api/sources/?list_search=${search_term}&list_id=${list_id}`,
+            `https://127.0.0.1:8000/api/sources/?list_search=${search_term}&list_id=${list_id}`,
             get_fetch_settings("GET")
           );
           if (!res.ok) {
@@ -266,7 +266,7 @@ if (document.querySelector(".addSourcesForm button")) {
         selected_sources = selected_sources.join();
         try {
           const res = await fetch(
-            `http://127.0.0.1:8000/api/lists/${list_id}/add_sources_to_list/${selected_sources}/`,
+            `https://127.0.0.1:8000/api/lists/${list_id}/add_sources_to_list/${selected_sources}/`,
             get_fetch_settings("POST")
           );
           if (!res.ok) {
@@ -296,7 +296,7 @@ if (notificationButton) {
         .querySelector(".rightFirstRowContainer h3")
         .id.replace("list_detail_for_", "");
       const data = { list_id: list_id };
-      const res = await fetch(`http://127.0.0.1:8000/api/notifications/`, {
+      const res = await fetch(`https://127.0.0.1:8000/api/notifications/`, {
         method: "POST",
         headers: {
           "X-CSRFToken": getCookie("csrftoken"),
@@ -414,7 +414,7 @@ document.querySelectorAll(".rankingStar").forEach((star) => {
       .id.replace("list_detail_for_", "");
     try {
       const data = { list_id: list_id, rating: rating };
-      const res = await fetch(`http://127.0.0.1:8000/api/list_ratings/`, {
+      const res = await fetch(`https://127.0.0.1:8000/api/list_ratings/`, {
         method: "POST",
         headers: {
           "X-CSRFToken": getCookie("csrftoken"),
