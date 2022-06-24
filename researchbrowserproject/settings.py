@@ -26,8 +26,6 @@ AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = 'django-testbucket24061436'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.us-east-2.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-# AWS_DEFAULT_ACL = 'public-read' # bucket does currently not allow ACL. Muss mich hier mehr informieren
-
 AWS_LOCATION = 'static'
 # Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = [
@@ -48,7 +46,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'researchbrowser.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'researchbrowser.herokuapp.com', 'django-testbucket24061436.s3.us-east-2.amazonaws.com']
 # ALLOWED_HOSTS = []
 
 # Application definition
@@ -229,10 +227,14 @@ REST_FRAMEWORK = {
 #     # ...
 # ]
 
+
+# HTTPS Settings
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-SECURE_REFERRER_POLICY = "strict-origin"
-SECURE_HSTS_SECONDS = 60 # Wert erhöhen wenn Tests erfolgreich sind
 SECURE_SSL_REDIRECT = True
+SECURE_REFERRER_POLICY = "strict-origin"
+
+# HSTS Settings
+SECURE_HSTS_SECONDS = 60 # Wert erhöhen wenn Tests erfolgreich sind
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
