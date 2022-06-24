@@ -22,7 +22,7 @@ STATIC_URL = '/static/'
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'home/static/home/favicons')
+    # os.path.join(BASE_DIR, 'home/static/home/favicons')
 ]
 
 
@@ -33,9 +33,10 @@ STATICFILES_DIRS = [
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+# ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -62,7 +63,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'scrapper',
     'django_celery_beat',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'django_cleanup.apps.CleanupConfig',
 ]
 
@@ -84,7 +85,7 @@ SITE_ID = 2
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -209,11 +210,11 @@ REST_FRAMEWORK = {
 }
 
 # Only for django debug_toolbar
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    # ...
-]
+# INTERNAL_IPS = [
+#     # ...
+#     "127.0.0.1",
+#     # ...
+# ]
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
