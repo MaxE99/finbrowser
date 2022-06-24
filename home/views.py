@@ -341,7 +341,9 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
                     request.user.profile.save()
                     messages.success(request, 'Username and Email have been updated!')
                 else:
-                    messages.error(request, "Error: Username or email already exists!")
+                    print(email_and_name_change_form.errors.as_data())
+                    messages.error(request, email_and_name_change_form.errors.as_data())
+                    # messages.error(request, "Error: Username or email already exists!")
             else:
                 messages.error(request, "Error: Currently only PNG and JPG files are supported!")
         elif "changePasswordForm" in request.POST:
