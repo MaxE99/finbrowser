@@ -17,13 +17,26 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
+
+# AWS S3 Settings
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = 'django-testbucket24061436'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+AWS_DEFAULT_ACL = None
+
+AWS_LOCATION = 'static'
 # Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static'),
 #     # os.path.join(BASE_DIR, 'home/static/home/favicons')
 # ]
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 
 # Quick-start development settings - unsuitable for production
