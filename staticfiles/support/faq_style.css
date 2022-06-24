@@ -1,0 +1,117 @@
+.mainHeader {
+  font-size: 5rem;
+  text-align: center;
+  margin: 2rem auto;
+  line-height: 1.5;
+}
+
+.mainHeader span {
+  color: var(--primary-fontColor);
+}
+
+.faqSearchBar {
+  display: flex;
+  width: 40rem;
+  margin: 0 auto;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.faqSearchBar input {
+  padding: 1.5rem 2rem;
+  outline: none;
+  font-size: 2rem;
+  width: 80%;
+}
+
+.faqSearchBar button {
+  background: var(--primary-fontColor);
+  cursor: pointer;
+  color: white;
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  border: none;
+}
+
+.faqSearchBar button:hover {
+  background: rgb(10, 71, 163);
+}
+
+.faqSearchBar button:active {
+  transform: translateY(0.1rem);
+}
+
+.faqSearchBar .fa-search {
+  font-size: 2rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  right: 0;
+}
+
+.questionBar {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.questionBarTabActive,
+.questionBarTab:hover {
+  background-color: var(--primary-fontColor);
+  border-radius: 4rem;
+  color: white;
+}
+
+.questionBarTab {
+  padding: 1.5rem 2rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.reportContent {
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 2rem;
+  box-shadow: var(--box-shadowScheme);
+  margin: 0 auto;
+  background: white;
+}
+
+.collapsibleCategory {
+  font-size: 1.5rem;
+  padding: 1.5rem;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.1rem solid #ccc;
+}
+
+.reportContent div:nth-last-child(2) {
+  border: none;
+}
+
+.collapsibleCategory:hover {
+  background: rgb(226, 224, 224);
+}
+
+.collapsibleText {
+  display: flex;
+  flex-direction: column;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.1s ease-out;
+}
+
+.tabsContent {
+  display: none;
+}
+
+.tabsContentActive {
+  display: block;
+  margin-bottom: 2rem;
+}

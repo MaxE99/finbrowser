@@ -1,0 +1,509 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Lato, sans-serif;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #fff;
+  --secondary-color: rgb(238, 238, 238);
+  --primary-fontColor: rgb(0, 85, 212);
+  --secondary-fontColor: rgb(34, 45, 59);
+  --box-shadowScheme: rgba(0, 0, 0, 0.24) 0px 0.3rem 0.8rem;
+  font-size: 55%;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  color: var(--secondary-fontColor);
+  background-color: #b8c6db;
+  background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
+}
+
+.signupForm {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 0.8rem;
+  display: flex;
+  box-shadow: rgba(74, 79, 97, 0.25) 0px 13px 27px -5px,
+    rgba(74, 79, 97, 0.3) 0px 8px 16px -8px;
+  overflow: hidden;
+  height: 58rem;
+  width: 115rem;
+  max-height: 90%;
+  max-width: 90%;
+}
+
+.signupForm #info-wrapper,
+.signupForm #form-wrapper {
+  padding: 2rem 3.5rem;
+}
+
+.signupForm #info-wrapper {
+  background: linear-gradient(225deg, var(--primary-fontColor) 16%, blue 100%);
+  color: #fff;
+  padding-left: 5rem;
+  width: 40%;
+}
+
+.signupForm #form-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 60%;
+  font-size: 2rem;
+}
+
+.signupForm i {
+  color: #fff;
+  font-size: 3rem;
+  transition: color 250ms ease-in;
+}
+
+.signupForm div.input-wrapper {
+  margin-bottom: 1.5rem;
+  position: relative;
+  width: 48rem;
+}
+
+.signupForm div.input-wrapper i {
+  color: var(--input-icon-color);
+  position: absolute;
+  opacity: 0.85;
+  right: 1.3rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.signupForm h1 {
+  color: var(--primary-fontColor);
+  letter-spacing: 0;
+  margin: 1.5rem 0 1rem;
+  font-size: 3rem;
+}
+
+.notification h2 {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.signupForm p {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: justify;
+}
+
+.signupForm a {
+  color: var(--form-link-color);
+  text-decoration: none;
+  transition: color 300ms ease-in-out;
+}
+
+.signupForm input[type="text"],
+.signupForm input[type="password"],
+.signupForm input[type="email"] {
+  border: 0.1rem solid rgb(226, 230, 234);
+  border-radius: 0.6rem;
+  font-size: 2rem;
+  padding: 1.3rem 1.2rem;
+  transition: border-color 250ms ease-in-out;
+  background: rgb(226, 230, 234);
+  opacity: 0.6;
+  margin-bottom: 1.5rem;
+}
+
+.signupForm input[type="text"]:focus,
+.signupForm input[type="password"]:focus,
+.signupForm input[type="email"]:focus {
+  border-color: var(--active-input-border-color);
+  outline: none;
+}
+
+.signupForm input[type="text"]:focus + i,
+.signupForm input[type="password"]:focus + i,
+.signupForm input[type="email"]:focus + i {
+  color: var(--active-input-border-color);
+}
+
+.signupForm input {
+  width: 100%;
+}
+
+.signupForm ::placeholder {
+  color: var(--placeholder-text-color);
+  font-size: 1.7rem;
+  opacity: 1;
+}
+
+.actionButtonsContainer button,
+.actionButtonsContainer a {
+  font-size: 2rem;
+  padding: 1.3rem 1.2rem;
+  color: white;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  background: var(--primary-fontColor);
+  border: 0.3rem solid var(--primary-fontColor);
+  text-decoration: none;
+  width: 47.5%;
+}
+
+.signupForm button[type="submit"] i {
+  margin-left: 0.5rem;
+}
+
+.signupForm .brand {
+  position: relative;
+  background: white;
+  border-radius: 1rem;
+  color: black;
+  display: flex;
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin-bottom: 5rem;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  opacity: 0.9;
+  width: 5rem;
+}
+
+.ui.button.google-auth__button.disabled,
+.ui.button.google-auth__button:disabled {
+  background: #eee;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+}
+
+.googleAuthContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.googleAuthButton {
+  padding: 1.2rem 1.6rem;
+  background: #fff;
+  border-radius: 2.5rem;
+  font-size: 1.6rem;
+  line-height: 1.5em;
+  letter-spacing: 0.22px;
+  border: 0.1rem solid;
+  width: 100%;
+  cursor: pointer;
+}
+
+button:hover,
+.actionButtonsContainer input:hover,
+.actionButtonsContainer a:hover {
+  transform: scale(1.1);
+}
+
+.googleLogo {
+  display: inline-block;
+  margin-right: 1.6rem;
+  height: 2.4rem;
+  width: 2.4rem;
+  line-height: 2.4rem;
+  vertical-align: top;
+}
+
+.seperator {
+  margin: 2rem 0;
+}
+
+.rememberAndPwrecovery {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+}
+
+.rememberAndPwrecovery a {
+  color: var(--primary-fontColor);
+  cursor: pointer;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 1rem;
+  /* margin-bottom: 2.0rem;
+  user-select: none;
+  margin-right: auto; */
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.5rem;
+  width: 1.5rem;
+  background-color: #eee;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: var(--primary-fontColor);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 0.6rem;
+  top: 0.2rem;
+  width: 0.5rem;
+  height: 1rem;
+  border: solid white;
+  border-width: 0 0.3rem 0.3rem 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.createAccount {
+  margin-top: 2rem;
+  margin-right: auto;
+}
+
+.createAccount a {
+  color: var(--primary-fontColor);
+  cursor: pointer;
+}
+
+.useYourEmail {
+  color: var(--primary-fontColor);
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.buttons {
+  display: flex;
+  margin: 1rem auto 2rem;
+}
+
+.seperator {
+  margin: 0 0 2rem;
+  opacity: 0.8;
+  letter-spacing: 1.1px;
+  text-align: center;
+}
+
+.container a {
+  color: var(--primary-fontColor);
+  cursor: pointer;
+}
+
+.actionButtonsContainer {
+  width: 70%;
+  margin-top: 1.5rem;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.actionButtonsContainer a,
+.actionButtonsContainer input {
+  border: 0.2rem solid var(--primary-fontColor);
+  padding: 1.3rem 1.2rem;
+  border-radius: 1rem;
+  font-size: 2rem;
+  width: 47.5%;
+  background: white;
+  color: var(--primary-fontColor);
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.actionButtonsContainer input {
+  background: var(--primary-fontColor);
+  color: white;
+}
+
+.helptext,
+.formContainer label {
+  display: none;
+}
+
+.errorlist {
+  background: red;
+  position: absolute;
+  opacity: 1;
+  color: white;
+  font-size: 1.8rem;
+  border-radius: 2rem;
+  padding: 1rem 2rem;
+  list-style: none;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: rgb(0 0 0 / 35%) 0px -50px 36px -28px inset;
+  letter-spacing: 1.2px;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  -moz-animation: cssAnimation 0s ease-in 4s forwards;
+  -webkit-animation: cssAnimation 0s ease-in 4s forwards;
+  -o-animation: cssAnimation 0s ease-in 4s forwards;
+  animation: cssAnimation 0s ease-in 4s forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  z-index: 10;
+}
+
+@keyframes cssAnimation {
+  to {
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+}
+
+label {
+  display: none;
+}
+
+.ui.button.google-auth__button.disabled,
+.ui.button.google-auth__button:disabled {
+  background: #eee;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+}
+
+.googleAuthContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 1rem 0px;
+}
+
+.googleAuthButton {
+  position: relative;
+  padding: 1.2rem 1.6rem;
+  background: #fff;
+  border-radius: 2.5rem;
+  font-size: 1.6rem;
+  line-height: 1.5em;
+  letter-spacing: 0.22px;
+  border: 0.1rem solid;
+  width: 100%;
+  cursor: pointer;
+}
+
+.googleAuthButton a {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.googleLogo {
+  display: inline-block;
+  margin-right: 1.6rem;
+  height: 2.4rem;
+  width: 2.4rem;
+  line-height: 2.4rem;
+  vertical-align: top;
+}
+
+.googleSignButton input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 2.5rem;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.signup {
+  width: 100%;
+}
+
+input[name="terms_and_privacy"] {
+  width: unset;
+}
+
+.fa-home {
+  color: var(--primary-fontColor) !important;
+}
+
+.brand a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sourcePic {
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  #info-wrapper {
+    display: none;
+  }
+
+  .signupForm #form-wrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .signupForm {
+    height: 64rem;
+  }
+
+  .actionButtonsContainer {
+    width: 100%;
+    margin-right: unset;
+  }
+
+  .errorlist {
+    white-space: unset;
+    width: 90%;
+  }
+}
