@@ -333,7 +333,7 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
     def post(self, request, *args, **kwargs):
         if 'changeProfileForm' in request.POST:
             email_and_name_change_form = EmailAndUsernameChangeForm(request.POST, username=request.user.username, email=request.user.email, instance=request.user)
-            profile_change_form = ProfileChangeForm(request.POST, request.FILES, bio=request.user.profile.bio, instance=request.user.profile)
+            profile_change_form = ProfileChangeForm(request.POST, request.FILES, instance=request.user.profile)
             if profile_change_form.is_valid():
                 profile_change_form.save()
                 if email_and_name_change_form.is_valid():
@@ -341,9 +341,7 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
                     request.user.profile.save()
                     messages.success(request, 'Username and Email have been updated!')
                 else:
-                    print(email_and_name_change_form.errors.as_data())
-                    messages.error(request, email_and_name_change_form.errors.as_data())
-                    # messages.error(request, "Error: Username or email already exists!")
+                    messages.error(request, "Error: Username or email already exists!")
             else:
                 messages.error(request, "Error: Currently only PNG and JPG files are supported!")
         elif "changePasswordForm" in request.POST:
@@ -368,7 +366,7 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
         context['websites'] = Website.objects.all()
         context['social_links'] = SocialLink.objects.select_related('website').filter(profile=self.request.user.profile)
         context['notifications'] = Notification.objects.select_related('source', 'list', 'list__creator__profile').filter(user=self.request.user)
-        context['profile_change_form'] = ProfileChangeForm(bio=self.request.user.profile.bio)
+        context['profile_change_form'] = ProfileChangeForm()
         context['email_and_name_change_form'] = EmailAndUsernameChangeForm(username=self.request.user.username, email=self.request.user.email)
         context['change_password_form'] = PasswordChangingForm(self.request.user)
         context['privacy_settings_form'] = PrivacySettingsForm(instance=self.request.user.profile.privacysettings)

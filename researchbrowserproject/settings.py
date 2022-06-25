@@ -44,10 +44,10 @@ STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'researchbrowser.herokuapp.com', 'django-testbucket24061436.s3.us-east-2.amazonaws.com']
-# ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'researchbrowser.herokuapp.com']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -66,7 +66,6 @@ INSTALLED_APPS = [
     'accounts',
     'registration',
     'support',
-    'ckeditor',
     'django.contrib.sitemaps',
     'allauth',
     'allauth.account',
@@ -98,6 +97,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     # "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -229,12 +229,47 @@ REST_FRAMEWORK = {
 
 
 # HTTPS Settings
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
-SECURE_REFERRER_POLICY = "strict-origin"
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+# SECURE_REFERRER_POLICY = "strict-origin"
 
-# HSTS Settings
-SECURE_HSTS_SECONDS = 60 # Wert erhöhen wenn Tests erfolgreich sind
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+# # HSTS Settings
+# SECURE_HSTS_SECONDS = 60 # Wert erhöhen wenn Tests erfolgreich sind
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+
+
+CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:3030',
+# ] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
+# CORS_ALLOWED_ORIGIN_REGEXES = [
+#     'http://localhost:3030',
+# ]
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
+
+
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8000', '127.0.0.1', 'localhost', 'researchbrowser.herokuapp.com', 'django-testbucket24061436.s3.us-east-2.amazonaws.com']
+

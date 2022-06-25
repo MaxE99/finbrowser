@@ -131,15 +131,9 @@ class PasswordChangingForm(PasswordChangeForm):
 
 
 class ProfileChangeForm(forms.ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        self.bio = kwargs.pop('bio')
-        super(ProfileChangeForm, self).__init__(*args, **kwargs)
-        self.fields['bio'].initial = self.bio
-
     class Meta:
         model = Profile
-        fields = ('profile_pic', 'bio')
+        fields = ('profile_pic',)
         labels = {
             'profile_pic': 'Profile Picture'
         }

@@ -2,7 +2,7 @@
   font-family: "Lato";
   font-style: normal;
   font-weight: 900;
-  src: local(""),
+  src: local("Lato Black"), local("Lato-Black"),
     url("../home/fonts/lato-v23-latin/lato-v23-latin-900.woff2") format("woff2"),
     url("../home/fonts/lato-v23-latin/lato-v23-latin-900.woff") format("woff");
 }
