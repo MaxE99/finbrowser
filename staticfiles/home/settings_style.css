@@ -266,18 +266,6 @@ details ul li:hover {
   transform: scale(1.1);
 }
 
-form label[for="id_bio"] {
-  margin-top: 1rem;
-}
-
-.bioContainer {
-  overflow: hidden;
-}
-
-.django-ckeditor-widget {
-  margin-top: 0.5rem;
-}
-
 .buttonContainer {
   margin-left: auto;
   margin-top: 1.5rem;

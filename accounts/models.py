@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from django.contrib.postgres.fields import CICharField
 from django.contrib.auth import get_user_model
-from ckeditor.fields import RichTextField
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.db.models.signals import post_save
@@ -122,7 +121,6 @@ class Profile(models.Model):
     ACCOUNT_TYPES = [('Standard', 'Standard'), ('Premium', 'Premium'), ('Admin', 'Admin')]
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
     slug = models.SlugField(unique=True)
-    bio = RichTextField(blank=True, null=True)
     profile_pic = models.ImageField(null=True, blank=True, upload_to=create_profile_pic_name)
     account_type = models.CharField(max_length=50, choices=ACCOUNT_TYPES, default="Standard")
 
