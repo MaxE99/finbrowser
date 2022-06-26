@@ -27,15 +27,18 @@ AWS_STORAGE_BUCKET_NAME = 'django-testbucket24061436'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.us-east-2.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
 AWS_LOCATION = 'static'
+# FAVICON_FILE_DIRECTORY = BASE_DIR / "home" / "static" / "home" / "favicons"
 # Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static'),
 #     # os.path.join(BASE_DIR, 'home/static/home/favicons')
 # ]
-
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = "researchbrowserproject.storages.MediaStore"
 
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
+# MEDIA_URL = '/uploads/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -171,23 +174,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-# STATIC_URL = 'static/'
-
-# XML_FILE_DIRECTORY = BASE_DIR / "home" / "static" / "home" / "xml_files"
-
-# FAVICON_FILE_DIRECTORY = BASE_DIR / "home" / "static" / "home" / "favicons"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
-MEDIA_URL = '/uploads/'
-
 
 ACCOUNT_FORMS = {'signup': 'registration.forms.CustomSignUpForm'}
 
