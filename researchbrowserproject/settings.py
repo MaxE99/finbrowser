@@ -13,12 +13,16 @@ environ.Env.read_env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+# Extra places for collectstatic to find static files.
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+#     # os.path.join(BASE_DIR, 'home/static/home/favicons')
+# ]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATIC_URL = '/static/'
-
 
 # AWS S3 Settings
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
@@ -27,21 +31,11 @@ AWS_STORAGE_BUCKET_NAME = 'django-testbucket24061436'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.us-east-2.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
 AWS_LOCATION = 'static'
-# FAVICON_FILE_DIRECTORY = BASE_DIR / "home" / "static" / "home" / "favicons"
-# Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-#     # os.path.join(BASE_DIR, 'home/static/home/favicons')
-# ]
 STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 DEFAULT_FILE_STORAGE = "researchbrowserproject.storages.MediaStore"
-
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
-# MEDIA_URL = '/uploads/'
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+FAVICON_LOCATION = 'static/home/favicons'
+FAVICON_FILE_DIRECTORY = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, FAVICON_LOCATION)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
@@ -50,7 +44,27 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'researchbrowser.herokuapp.com', 'finbrowser.io']
+
+# # HTTPS Settings
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+SECURE_REFERRER_POLICY = "strict-origin"
+
+# HSTS Settings
+SECURE_HSTS_SECONDS = 60 # Wert erhöhen wenn Tests erfolgreich sind
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+
+# DEBUG SETTINGS
+# DEBUG = True
 # ALLOWED_HOSTS = []
+# STATIC_URL = '/static/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
+# MEDIA_URL = '/uploads/'
+# FAVICON_FILE_DIRECTORY = BASE_DIR / "home" / "static" / "home" / "favicons"
+
 
 # Application definition
 
@@ -218,14 +232,5 @@ REST_FRAMEWORK = {
 # ]
 
 
-# HTTPS Settings
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
-SECURE_REFERRER_POLICY = "strict-origin"
 
-# HSTS Settings
-SECURE_HSTS_SECONDS = 60 # Wert erhöhen wenn Tests erfolgreich sind
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
 
