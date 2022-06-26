@@ -17,6 +17,10 @@ from home.logic.services import notifications_create, create_articles_from_feed
 from home.logic.scrapper import SpotifyAPI
 from home.models import Article, Notification, Source, NotificationMessage
 from accounts.models import Website
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 @after_setup_logger.connect
 def setup_loggers(logger, *args, **kwargs):
@@ -31,10 +35,10 @@ logger = logging.getLogger(__name__)
 
 @shared_task
 def scrape_twitter():    
-    consumer_key = 'XOoUFKNcJeHoSkGxkZUSraU4x'
-    consumer_secret = '18fAwnwdZLqYDmkWzxuQwL8GalXguNskhnYv8dMPr8ZYhRez0y'
-    access_token = '1510667747365109763-ak8OKMTG45Q5GW2HrNlGhJL5Oyss49'
-    access_token_secret = "8NqJl5H97t6C11PdDYjksk5rHhVLpfiGsNcAZeMbNfviP"
+    consumer_key = env('TWITTER_CONSUMER_KEY')
+    consumer_secret = env('TWITTER_CONSUMER_SECRET')
+    access_token = env('TWITTER_ACCESS_TOKEN')
+    access_token_secret = env('TWITTER_ACCESS_TOKEN_SECRET')
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
@@ -94,8 +98,8 @@ def scrape_seekingalpha():
 
 @shared_task
 def scrape_spotify():
-    client_id = 'b0b3c71663ef4c7bb1bcac4cfb1a0a78'
-    client_secret = '7096cbb406474c42a2357500356f3663'
+    client_id = env('SPOTIFY_CLIENT_ID')
+    client_secret = env('SPOTIFY_CLIENT_SECRET')
     spotify_sources = Source.objects.filter(website=get_object_or_404(Website, name="Spotify"))
     articles = Article.objects.all()
     notifications = Notification.objects.all()
@@ -115,7 +119,7 @@ def scrape_spotify():
             
 @shared_task
 def scrape_youtube():
-    api_key = "AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso"
+    api_key = env('YOUTUBE_API_KEY')
     youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
     articles = Article.objects.all()
     notifications = Notification.objects.all()

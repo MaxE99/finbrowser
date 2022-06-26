@@ -3,6 +3,7 @@
 
 {% block head %}
 <title>ResearchBrowser | Sectors</title>
+<link rel="stylesheet" type="text/css" href="{% static 'home/sectors_style.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -13,6 +14,7 @@
     <div class="sliderHeader">
         <div class="sliderHeaderTitle">{{ sector.name }}</div>
         <div class="progressBar"></div>
+        <a href="{{ sector.get_absolute_url }}"></a>
     </div>
     <div class="sliderContentContainer">
         <button class="handle leftHandle">
