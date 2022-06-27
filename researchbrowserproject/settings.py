@@ -1,10 +1,8 @@
-from distutils.command.config import config
 import os
 import environ
 
 env = environ.Env()
 environ.Env.read_env()
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,10 +17,10 @@ if DEBUG:
     # MEDIA_URL = '/uploads/'
     # FAVICON_FILE_DIRECTORY = BASE_DIR / "home" / "static" / "home" / "favicons"
 else:
-    SECRET_KEY = config('SECRET_KEY')
+    SECRET_KEY =  os.environ.get('SECRET_KEY')
     ALLOWED_HOSTS = ['researchbrowser.herokuapp.com', 'finbrowser.io']
-    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = 'django-testbucket24061436'
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.us-east-2.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
