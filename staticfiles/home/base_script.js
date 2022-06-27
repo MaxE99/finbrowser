@@ -74,13 +74,13 @@ document
   .addEventListener("keyup", async function (e) {
     let search_term = document.getElementById("mainAutocomplete").value;
     if (e.key == "Enter" && search_term.replaceAll(/\s/g, "") != "") {
-      window.location.href = `https://127.0.0.1:8000/search_results/${search_term}`;
+      window.location.href = `https://finbrowser.io/search_results/${search_term}`;
     } else {
       let results_list = document.getElementById("mainAutocomplete_result");
       if (search_term && search_term.replaceAll(/\s/g, "") != "") {
         try {
           const res = await fetch(
-            `https://127.0.0.1:8000/api/search_site/${search_term}`,
+            `https://finbrowser.io/api/search_site/${search_term}`,
             get_fetch_settings("GET")
           );
           if (!res.ok) {
@@ -148,7 +148,7 @@ document
   .addEventListener("click", () => {
     search_term = document.querySelector(".mainInputSearch").value;
     if (search_term.replaceAll(/\s/g, "") != "") {
-      window.location.href = `https://127.0.0.1:8000/search_results/${search_term}`;
+      window.location.href = `https://finbrowser.io/search_results/${search_term}`;
     }
   });
 
@@ -232,7 +232,7 @@ document
         try {
           const data = { article_id: article_id };
           const res = await fetch(
-            `https://127.0.0.1:8000/api/highlighted_articles/`,
+            `https://finbrowser.io/api/highlighted_articles/`,
             {
               method: "POST",
               headers: {
@@ -290,7 +290,7 @@ function check_new_list_status(saveButton) {
 async function add_article_to_list(list_id, article_id) {
   try {
     const res = await fetch(
-      `https://127.0.0.1:8000/api/lists/${list_id}/add_article_to_list/${article_id}/`,
+      `https://finbrowser.io/api/lists/${list_id}/add_article_to_list/${article_id}/`,
       get_fetch_settings("POST")
     );
     if (!res.ok) {
@@ -304,7 +304,7 @@ async function add_article_to_list(list_id, article_id) {
 async function remove_article_from_list(list_id, article_id) {
   try {
     const res = await fetch(
-      `https://127.0.0.1:8000/api/lists/${list_id}/delete_article_from_list/${article_id}/`,
+      `https://finbrowser.io/api/lists/${list_id}/delete_article_from_list/${article_id}/`,
       get_fetch_settings("DELETE")
     );
     if (!res.ok) {
@@ -418,7 +418,7 @@ if (document.querySelector(".userSpace .notificationBell")) {
         notificationPopup.style.display = "block";
         try {
           const res = await fetch(
-            `https://127.0.0.1:8000/api/notifications/`,
+            `https://finbrowser.io/api/notifications/`,
             get_fetch_settings("PUT")
           );
           if (!res.ok) {
