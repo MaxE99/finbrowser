@@ -23,7 +23,7 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('featodzbqawibezdahapryyiwedjydbeadefsdxnwvtlw/', admin.site.urls),
     path('', include('home.urls', namespace='home')),
     path('source/', include('source.urls', namespace='source')),
     path('support/', include('support.urls', namespace='support')),
