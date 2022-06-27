@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'source/profile_style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'source/min_profile_style.css' %}" />
 <title>{{ source.name }} Profile | ResearchBrowser</title>
 {% endblock %} {% block content %}
 
@@ -357,5 +357,5 @@
 {% endif %}
 
 {{ user_rating|json_script:"user-rating" }}
-<script src="{% static 'source/profile_script.js' %}"></script>
+<script src="{% static 'source/min_profile_script.js' %}"></script>
 {% endblock content %}

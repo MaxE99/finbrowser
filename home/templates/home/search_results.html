@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/search_results_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style.css' %}">
 <title>{{ search_term }} - Search Results | ResearchBrowser</title>
 {% endblock %}
 {% block content %}
@@ -172,5 +172,5 @@
 
 </div>
 
-<script src="{% static 'home/search_results_script.js' %}"></script>
+<script src="{% static 'home/min_search_results_script.js' %}"></script>
 {% endblock content %}
