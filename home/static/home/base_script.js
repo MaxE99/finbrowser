@@ -74,13 +74,13 @@ document
   .addEventListener("keyup", async function (e) {
     let search_term = document.getElementById("mainAutocomplete").value;
     if (e.key == "Enter" && search_term.replaceAll(/\s/g, "") != "") {
-      window.location.href = `https://127.0.0.1:8000/search_results/${search_term}`;
+      window.location.href = `https://finbrowser.io/search_results/${search_term}`;
     } else {
       let results_list = document.getElementById("mainAutocomplete_result");
       if (search_term && search_term.replaceAll(/\s/g, "") != "") {
         try {
           const res = await fetch(
-            `https://127.0.0.1:8000/api/search_site/${search_term}`,
+            `https://finbrowser.io/api/search_site/${search_term}`,
             get_fetch_settings("GET")
           );
           if (!res.ok) {
@@ -148,7 +148,7 @@ document
   .addEventListener("click", () => {
     search_term = document.querySelector(".mainInputSearch").value;
     if (search_term.replaceAll(/\s/g, "") != "") {
-      window.location.href = `https://127.0.0.1:8000/search_results/${search_term}`;
+      window.location.href = `https://finbrowser.io/search_results/${search_term}`;
     }
   });
 
@@ -232,7 +232,7 @@ document
         try {
           const data = { article_id: article_id };
           const res = await fetch(
-            `https://127.0.0.1:8000/api/highlighted_articles/`,
+            `https://finbrowser.io/api/highlighted_articles/`,
             {
               method: "POST",
               headers: {
@@ -290,7 +290,7 @@ function check_new_list_status(saveButton) {
 async function add_article_to_list(list_id, article_id) {
   try {
     const res = await fetch(
-      `https://127.0.0.1:8000/api/lists/${list_id}/add_article_to_list/${article_id}/`,
+      `https://finbrowser.io/api/lists/${list_id}/add_article_to_list/${article_id}/`,
       get_fetch_settings("POST")
     );
     if (!res.ok) {
@@ -304,7 +304,7 @@ async function add_article_to_list(list_id, article_id) {
 async function remove_article_from_list(list_id, article_id) {
   try {
     const res = await fetch(
-      `https://127.0.0.1:8000/api/lists/${list_id}/delete_article_from_list/${article_id}/`,
+      `https://finbrowser.io/api/lists/${list_id}/delete_article_from_list/${article_id}/`,
       get_fetch_settings("DELETE")
     );
     if (!res.ok) {
@@ -328,25 +328,27 @@ document.querySelectorAll(".addToListButton").forEach((element) => {
       let initial_lists_status = initial_lists_statuses[0];
       let addToListForm =
         element.parentElement.parentElement.querySelector(".addToListForm");
-      let saveButton = addToListForm.querySelector(".saveButton");
-      saveButton.addEventListener("click", () => {
-        let list_ids = initial_lists_statuses[1];
-        let article_id = saveButton
-          .closest(".articleContainer")
-          .id.replace("article_id_", "");
-        let lists_status = check_new_list_status(saveButton);
-        for (let i = 0, j = lists_status.length; i < j; i++) {
-          if (lists_status[i] != initial_lists_status[i]) {
-            if (initial_lists_status[i] == false) {
-              add_article_to_list(list_ids[i], article_id);
-            } else {
-              remove_article_from_list(list_ids[i], article_id);
+      if (addToListForm.querySelector(".saveButton")) {
+        let saveButton = addToListForm.querySelector(".saveButton");
+        saveButton.addEventListener("click", () => {
+          let list_ids = initial_lists_statuses[1];
+          let article_id = saveButton
+            .closest(".articleContainer")
+            .id.replace("article_id_", "");
+          let lists_status = check_new_list_status(saveButton);
+          for (let i = 0, j = lists_status.length; i < j; i++) {
+            if (lists_status[i] != initial_lists_status[i]) {
+              if (initial_lists_status[i] == false) {
+                add_article_to_list(list_ids[i], article_id);
+              } else {
+                remove_article_from_list(list_ids[i], article_id);
+              }
             }
           }
-        }
-        showMessage("Lists have been updated!", "Success");
-        addToListForm.style.display = "none";
-      });
+          showMessage("Lists have been updated!", "Success");
+          addToListForm.style.display = "none";
+        });
+      }
     }
   });
 });
@@ -374,13 +376,15 @@ function check_device_width_below(check_width) {
 document.querySelectorAll(".createNewListButton").forEach((button) => {
   button.addEventListener("click", () => {
     if (!button.classList.contains("registrationLink")) {
-      button.parentElement.parentElement.style.display = "none";
+      button.parentElement.parentElement.parentElement.querySelector(
+        ".addToListForm"
+      ).style.display = "none";
       if (check_device_width_below(500)) {
         document.querySelector(".smartphoneCreateListMenu").style.display =
           "flex";
       } else {
         button.parentElement.parentElement.parentElement.querySelector(
-          ".formContainer"
+          ".createListMenu"
         ).style.display = "flex";
       }
     }
@@ -418,7 +422,7 @@ if (document.querySelector(".userSpace .notificationBell")) {
         notificationPopup.style.display = "block";
         try {
           const res = await fetch(
-            `https://127.0.0.1:8000/api/notifications/`,
+            `https://finbrowser.io/api/notifications/`,
             get_fetch_settings("PUT")
           );
           if (!res.ok) {
