@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/list_details_style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_list_details_style.css' %}" />
 <title>{{ list.name }} List | ResearchBrowser</title>
 {% endblock %} {% block content %}
 
@@ -580,5 +580,5 @@
 
 
 {{ user_rating|json_script:"user-rating" }}
-<script src="{% static 'home/list_details_script.js' %}"></script>
+<script src="{% static 'home/min_list_details_script.js' %}"></script>
 {% endblock content %}

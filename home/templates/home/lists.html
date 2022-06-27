@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/lists_style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_lists_style.css' %}" />
 <title>ResearchBrowser | Lists</title>
 {% endblock %} {% block content %}
 
@@ -128,5 +128,5 @@
 {% if is_paginated %}
 {% include "pagination.html" with page=page_obj %}
 {% endif %}
-<script src="{% static 'home/lists_script.js' %}"></script>
+<script src="{% static 'home/min_lists_script.js' %}"></script>
 {% endblock %}
