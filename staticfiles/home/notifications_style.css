@@ -1,0 +1,11 @@
+.notifcationsNotAvailable {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 3rem;
+}
+
+@media (max-width: 1125px) {
+  .twitterWrapper .listNoficiationHeader {
+    margin-top: 2rem;
+  }
+}

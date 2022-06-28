@@ -1,0 +1,538 @@
+.upperContainer {
+  display: flex;
+  margin-top: 2rem;
+}
+
+.leftInnerContainer {
+  width: 30%;
+}
+
+.listPictureContainer {
+  position: relative;
+  background: white;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  margin: 0 auto;
+  height: 20rem;
+  width: 20rem;
+}
+
+.listPictureContainer img {
+  width: 100%;
+  height: 100%;
+}
+
+.listPictureContainer label,
+.nameChangeContainer,
+.nameChangeContainer label {
+  display: none;
+}
+
+.listPictureContainer #id_list_pic {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  opacity: 0;
+  z-index: 2;
+}
+
+.listPictureContainer i {
+  display: none;
+  position: absolute;
+  bottom: 5%;
+  left: 72.5%;
+  background: var(--primary-fontColor);
+  padding: 0.8rem 1.2rem;
+  color: white;
+  border-radius: 0.8rem;
+  font-size: 1.8rem;
+}
+
+.rightInnerContainer {
+  width: 65%;
+  margin-left: 5%;
+}
+
+.rightFirstRowContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 3rem;
+}
+
+.nameChangeContainer {
+  width: 45rem;
+}
+
+.nameChangeContainer input {
+  font-size: 3.5rem;
+  outline: none;
+  border: none;
+  background: none;
+  width: 100%;
+  height: 100%;
+}
+
+.rightFirstRowContainer .creatorContainerSmartphonePositioning {
+  display: none;
+}
+
+.notificationAndSubscribtionContainer {
+  display: flex;
+}
+
+.notificationAndSubscribtionContainer .fa-bell {
+  border-left: unset;
+}
+
+.notificationAndSubscribtionContainer .notificationActivated {
+  color: var(--primary-fontColor);
+}
+
+.subscribeButton,
+.editButton {
+  padding: 0.8rem 1.6rem;
+  font-size: 1.8rem;
+  color: white;
+  border: 0.3rem solid;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.subscribeButton:hover,
+.editButton:hover {
+  transform: scale(1.1);
+}
+
+.editButton {
+  background: var(--primary-fontColor);
+}
+
+.editButton i {
+  margin-right: 0.3rem;
+}
+
+.subscribed {
+  background: var(--primary-fontColor);
+}
+
+.subscribed:hover {
+  color: red;
+}
+
+.unsubscribed {
+  background: white;
+  color: var(--primary-fontColor);
+}
+
+.unsubscribed:hover {
+  color: green;
+}
+
+.buttonContainer {
+  display: none;
+  margin-left: auto;
+}
+
+.cancelButton,
+.buttonContainer input,
+.deleteListButton {
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadowScheme);
+  color: white;
+  background: var(--primary-fontColor);
+  width: 10rem;
+  text-decoration: none;
+  margin-left: 1rem;
+}
+
+.cancelButton:hover,
+.buttonContainer input:hover,
+.deleteListButton:hover {
+  transform: scale(1.1);
+}
+
+.cancelButton {
+  background: white !important;
+  color: var(--primary-fontColor) !important;
+}
+
+.deleteListButton {
+  background: red;
+  width: unset;
+}
+
+.creatorContainer {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.creatorContainer a {
+  color: var(--primary-fontColor);
+  margin-left: 0.3rem;
+  text-decoration: none;
+}
+
+.ratingsWrapper {
+  width: 26rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  align-items: baseline;
+}
+
+.rankingsUpperContainer {
+  position: relative;
+  width: 100%;
+}
+
+.rateListButton {
+  position: absolute;
+  bottom: -0.2rem;
+  color: white;
+  background: var(--primary-fontColor);
+  border: 0.3rem solid;
+  padding: 0.4rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  right: 1rem;
+  text-decoration: none;
+}
+
+.rateListButton:hover {
+  transform: scale(1.1);
+}
+
+.rate-formUpperContainer {
+  display: none;
+  position: absolute;
+  z-index: 10;
+}
+
+.rate-formUpperContainer h3 {
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  margin-top: -2.5rem;
+}
+
+.rate-form {
+  background: white;
+  padding: 1rem 2rem;
+  left: 5rem;
+  border-radius: 0.8rem;
+}
+
+.rankingsHeader {
+  text-transform: uppercase;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.rankingsContainer {
+  display: flex;
+  align-items: center;
+  font-size: 2.5rem;
+  color: var(--primary-fontColor);
+}
+
+.rating {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  align-items: center;
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 2rem;
+  margin: 0.5rem 0;
+  justify-content: center;
+}
+
+.avgRating {
+  font-size: 1.5rem;
+  color: black;
+  letter-spacing: 0.11rem;
+  margin-left: 1rem;
+}
+
+.ratedContainer {
+  display: flex;
+}
+
+.rankingStar,
+.ratedStar {
+  font-size: 2.5rem;
+  background-color: inherit !important;
+  border: 0 !important;
+  color: gainsboro;
+  cursor: pointer;
+}
+
+.checked {
+  color: var(--primary-fontColor);
+}
+
+.ratingsAmmountContainer {
+  font-size: 1.4rem;
+  margin: 0 auto;
+}
+
+.ratedStar {
+  font-size: 2rem !important;
+}
+
+.ratingsAmmount {
+  color: var(--primary-fontColor);
+}
+
+.rating > input {
+  display: none;
+}
+
+.rating > label {
+  cursor: pointer;
+  width: 4rem;
+  height: 4rem;
+  margin-top: auto;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23e3e3e3' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 76%;
+  transition: 0.3s;
+}
+
+.rating > input:checked ~ label,
+.rating > input:checked ~ label ~ label {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23fcd93a' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
+}
+
+.rating > input:not(:checked) ~ label:hover,
+.rating > input:not(:checked) ~ label:hover ~ label {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23d8b11e' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
+}
+
+.interactionWrapper {
+  position: relative;
+}
+
+.slider .interactionWrapper .formContainer:hover,
+.slider .interactionWrapper:hover {
+  transform: unset;
+}
+
+.slider .interactionWrapper .addButton:hover {
+  transform: scale(1.1);
+}
+
+.interactionWrapper .addSourcesButton {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.interactionWrapper .addSourcesForm {
+  position: absolute;
+  height: 100%;
+}
+
+.formContainer #textInput {
+  width: 90%;
+  font-size: 1.4rem;
+  padding: 0.3rem 1rem;
+  border: 0.2rem solid rgb(226, 230, 234);
+  border-radius: 0.8rem;
+  margin: 0.5rem 0;
+}
+
+.formContainer .searchResultWrapper {
+  position: relative;
+  height: 11rem;
+  width: 90%;
+  overflow-y: scroll;
+}
+
+.formContainer .searchResultWrapper #searchResultsContainer {
+  z-index: 5;
+}
+
+.formContainer .searchResultWrapper #searchResultsContainer {
+  z-index: 5;
+}
+.formContainer .searchResultWrapper #searchResultsContainer,
+.formContainer .searchResultWrapper .selectionContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.formContainer .searchResultWrapper #searchResultsContainer,
+.formContainer .searchResultWrapper .selectionContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.formContainer .searchResult {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 0.1rem solid rgb(226, 230, 234);
+  text-decoration: none;
+  color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.formContainer .searchResult i {
+  margin-left: auto;
+  margin-right: 2rem;
+  color: white;
+  background: red;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 0.3rem;
+}
+
+.formContainer .searchResult img {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.addSourcesForm .formSubmitButton {
+  width: 90% !important;
+}
+
+.contentWrapper .sourceDeleteOption {
+  display: none;
+  position: absolute;
+  color: white;
+  background: red;
+  padding: 1rem;
+  font-size: 2rem;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  box-shadow: var(--box-shadowScheme);
+  z-index: 25;
+}
+
+@media (max-width: 1000px) {
+  .leftInnerContainer {
+    width: unset;
+  }
+
+  .listPictureContainer {
+    height: 15rem;
+    width: 15rem;
+  }
+
+  .rightInnerContainer {
+    width: 100%;
+    margin-left: 3%;
+  }
+
+  .rightInnerContainer .rightFirstRowContainer {
+    font-size: 2.5rem;
+  }
+
+  .creatorContainer {
+    margin-top: -0.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .listPictureContainer {
+    height: 10rem;
+    width: 10rem;
+  }
+
+  .listPictureContainer i {
+    left: 50%;
+  }
+
+  .rightInnerContainer .rightFirstRowContainer {
+    font-size: 2.2rem;
+    flex-direction: column;
+    align-items: unset;
+  }
+
+  .nameChangeContainer {
+    width: unset;
+  }
+
+  .nameChangeContainer input {
+    font-size: 2.3rem;
+  }
+
+  .rightFirstRowContainer .creatorContainerSmartphonePositioning {
+    display: block;
+  }
+
+  .creatorContainer {
+    display: none;
+    margin-top: unset;
+  }
+
+  .notificationAndSubscribtionContainer {
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  .buttonContainer {
+    margin-left: 0;
+  }
+
+  .cancelButton,
+  .buttonContainer input,
+  .deleteListButton {
+    font-size: 1.6rem;
+    padding: 0.75rem 1.5rem;
+    margin-left: 0.5rem;
+    width: unset;
+  }
+
+  .deleteListButton {
+    margin-left: 0;
+  }
+
+  .notificationAndSubscribtionContainer .fa-bell {
+    padding-left: unset;
+  }
+
+  .ratingsWrapper {
+    margin-top: unset;
+  }
+
+  .rate-form {
+    display: flex;
+    justify-content: center;
+  }
+
+  .rankingStar,
+  .ratedStar {
+    font-size: 3.5rem;
+  }
+}
