@@ -19,14 +19,10 @@ main {
   font-size: 10rem;
 }
 
-.websiteBigNameContainer div:first-child {
-  font-family: "Pacifico", cursive;
-}
-
-.websiteBigNameContainer div:last-child {
-  font-family: "Pacifico", cursive;
-  color: var(--primary-fontColor);
-  margin-top: -8rem;
+.websiteBigNameContainer img {
+  height: 17rem;
+  margin: 3rem auto;
+  max-width: 95%;
 }
 
 .websiteAbout {

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'home/fontawesome/css/all.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style.css' %}">
-    <link rel="icon" type="image/png" href="{% static 'home/media/favicon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'home/media/favicon.ico' %}">
     {% block head %}
     {% endblock %}
 </head>
@@ -21,8 +21,7 @@
             <div class="headerContainer">
                 <div class="logoContainer">
                     <div class="logoSpace">
-                        <span>Research</span>
-                        <span>Browser</span>
+                        <img src="{% static 'home/media/finbrowser-logo.png' %}" alt="finbrowser-logo">
                         <a href="{% url 'home:main' %}"></a>
                     </div>
                 </div>
