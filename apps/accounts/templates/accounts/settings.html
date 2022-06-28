@@ -1,0 +1,151 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style.css' %}">
+<title>ResearchBrowser | Settings</title>
+{% endblock %}
+{% block content %}
+
+<div class="settingSidebar">
+    <div class="settingOption activeSettingOption" data-for-tab="0">Profile</div>
+    <div class="settingOption" data-for-tab="1">Password</div>
+    <div class="settingOption" data-for-tab="2">Notifications</div>
+    <div class="settingOption" data-for-tab="3">Privacy</div>
+</div>
+<div class="contentSection">
+
+    <div class="tabsContent tabsContentActive" data-tab="0">
+        <form action="" class="editSection changeProfileForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>Account</h2>
+            <div class="usernameAndEmailContainer">
+                <div class="usernameContainer">
+                    {{ email_and_name_change_form.username.label_tag }}
+                    {{ email_and_name_change_form.username }}
+                </div>
+                <div class="emailContainer" id="{{ user.profile.id }}">
+                    {{ email_and_name_change_form.email.label_tag }}
+                    {{ email_and_name_change_form.email }}
+                </div>
+            </div>
+            <div class="profilePicContainer">
+                {{ profile_change_form.profile_pic.label_tag }}
+                <div class="profilePicInnerContainer">
+                    {% if user.profile.profile_pic %}
+                    <img src="{{ user.profile.profile_pic.url }}" alt="">
+                    {% else %}
+                    <img src="{% static 'home/media/bigger_favicon.png' %}" alt="user-profile-pic">
+                    {% endif %}
+                    <div class="changeProfilePicButton">
+                        <span>Change</span>
+                        {{ profile_change_form.profile_pic }}
+                    </div>
+                    <button type="button" class="removeProfilePicButton">Remove</button>
+                </div>
+            </div>
+            <label>Social Links:</label>
+            {% for social in social_links %}
+            <div class="existingSocialContainer">
+                <img class="{{ social.website.name }}" src="{% static social.website.logo %}"
+                    id="existing_website_id_{{ social.website.id }}" alt="">
+                <input type="text" value="{{ social.url }}">
+                <button type="button" class="removeSocialLinkButton" id="social_link_id_{{ social.id }}">Remove</button>
+                <button type="button" class="saveSocialLinkChanges">Save</button>
+            </div>
+            {% endfor %}
+            <div class="socialLinksWrapper">
+                <div class="addSocialLinksContainer">
+                    <div class="selectContainer">
+                        <details>
+                            <summary><i class="fa fa-caret-down"></i></summary>
+                            <ul>
+                                {% for website in websites %}
+                                <li><img class="{{ website.name }}" src="{% static website.favicon %}" alt=""
+                                        id="website_id_{{ website.id }}"></li>
+                                {% endfor %}
+                            </ul>
+                        </details>
+                    </div>
+                    <input placeholder="Enter website url" class="linkInput" type="text">
+                </div>
+                <button type="button" name="changeProfileForm" class="addSocialLinkButton">Add</button>
+            </div>
+            <div class="buttonContainer">
+                <button type="submit" href="{% url 'accounts:settings' %}" class="cancelButton">Cancel</button>
+                <input class="saveButton" name="changeProfileForm" type="submit" value="Save">
+            </div>
+        </form>
+
+    </div>
+    <div class="tabsContent" data-tab="1">
+        <h2>Change Password</h2>
+        <form action="" class="changePasswordForm" method="POST">
+            {% csrf_token %}
+            {{ change_password_form }}
+            <input name="changePasswordForm" type="submit" class="passwordChangeSubmit" value="Save" />
+        </form>
+    </div>
+    <div class="tabsContent" data-tab="2">
+        {% if notifications %}
+        <h2 class="notificationDeletionHeader">Sources</h2>
+        <div class="notificationContainer">
+            {% for notification in notifications %}
+            {% if notification.source %}
+            <div class="sourceContainer">
+                <div class="iconContainer">
+                    <i class="fas fa-trash" id="notification_id_{{ notification.notification_id }}"></i>
+                    <img class="sourcePic" src="{% static notification.source.favicon_path %}" alt="favicon">
+                </div>
+                <a class="sourceLink" href="{{ notification.source.get_absolute_url }}"></a>
+                <div class="sourceNameOuterContainer">
+                    <div class="sourceNameInnerContainer">{{ notification.source.name }}</div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <h2 class="notificationDeletionHeader">Lists</h2>
+        <div class="notificationContainer">
+            {% for notification in notifications %}
+            {% if notification.list %}
+            <div class="sourceContainer">
+                <div class="iconContainer">
+                    <i class="fas fa-trash" id="notification_id_{{ notification.notification_id }}"></i>
+                    {% if notification.list.list_pic %}
+                    <img class="sourcePic" src="{{ notification.list.list_pic.url }}" alt="favicon" />
+                    {% else %}
+                    <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
+                    {% endif %}
+                </div>
+                <a class="sourceLink" href="{{ notification.list.get_absolute_url }}"></a>
+                <div class="sourceNameOuterContainer">
+                    <div class="sourceNameInnerContainer">{{ notification.list.name }}</div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="noNotificationsActivated">You have not activated any notifications!</div>
+        {% endif %}
+    </div>
+
+
+    <div class="tabsContent" data-tab="3">
+        <h2>Change Privacy Settings</h2>
+        <form action="" class="changePrivacySettingsForm" method="POST">
+            {% csrf_token %}
+            {% for field in privacy_settings_form %}
+            <div class="privacySettingsContainer">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <input id="{{ field.id_for_label }}" type="checkbox" name="{{ field.name }}" {% if field.value %}
+                    checked {% endif %}>
+            </div>
+            {% endfor %}
+            <input name="changePrivacySettingsForm" type="submit" class="privacySettingsChangeSubmit" value="Save" />
+        </form>
+
+    </div>
+    <script src="{% static 'accounts/min_settings_script.js' %}"></script>
+    {% endblock content %}

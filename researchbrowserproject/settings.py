@@ -1,14 +1,14 @@
+# Python Imports
 import os
 import environ
 
 env = environ.Env()
 environ.Env.read_env()
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-DEBUG = False
+DEBUG = True
 if DEBUG:
     ALLOWED_HOSTS = []
     STATIC_URL = '/static/'
@@ -57,22 +57,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'home',
     'django_filters',
     'rest_framework',
-    'source',
-    'accounts',
-    'registration',
-    'support',
     'django.contrib.sitemaps',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'scrapper',
     'django_celery_beat',
     # 'debug_toolbar',
     'django_cleanup.apps.CleanupConfig',
+    'apps.accounts',
+    'apps.home',
+    'apps.registration',
+    'apps.source',
+    'apps.support',
+    'apps.sector',
+    'apps.list',
+    'apps.article'
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -128,7 +130,7 @@ WSGI_APPLICATION = 'researchbrowserproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'researchbrowserdb',
+        'NAME': 'testdb',
         'USER': 'postgres',
         'PASSWORD': 'post123gres',
         'HOST': 'localhost',
@@ -175,7 +177,7 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ACCOUNT_FORMS = {'signup': 'registration.forms.CustomSignUpForm'}
+ACCOUNT_FORMS = {'signup': 'apps.registration.forms.CustomSignUpForm'}
 
 LOGIN_URL = '/registration/login/'
 
