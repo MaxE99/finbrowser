@@ -1,0 +1,69 @@
+{% load static %}
+{% load i18n %}
+{% load account socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'home/fontawesome/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'registration/min_register_style.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'home/media/favicon.png' %}">
+    <title>ResearchBrowser | Register</title>
+</head>
+
+<body>
+    <main>
+        <div class="signupForm">
+            <div id="info-wrapper">
+                <span class="brand">
+                    <i class="fa fa-home"></i>
+                    <a href="{% url 'home:main' %}"></a>
+                </span>
+                <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
+            </div>
+            <div id="form-wrapper">
+
+                <h1>Create Account</h1>
+                <div class="googleAuthContainer">
+                    <button class="googleAuthButton">
+                        <img class="googleLogo" src="{% static 'home/media/google_icon.png' %}" />
+                        Sign in with Google
+                        <form class="googleSignButton" action="{% provider_login_url 'google' %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit">
+                        </form>
+                    </button>
+                </div>
+                <div class="seperator">or use your email for registration</div>
+                <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <p>
+                        {{ field.errors }}
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.name == "terms_and_privacy" %}
+                        <label class="container">I agree to the <a href="{% url 'support:terms-of-service' %}">Terms</a>
+                            and
+                            <a href="{% url 'support:privacy-policy' %}">Privacy Policy</a>.
+                        </label>
+                        {% endif %}
+                    </p>
+                    {% endfor %}
+                    {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <div class="actionButtonsContainer">
+                        <button type="submit">{% trans "Sign Up" %}</button>
+                        <a href="{{ login_url }}" class="signInButton">Sign In</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
