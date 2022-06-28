@@ -1,0 +1,132 @@
+{% extends 'home/base.html' %} {% load static %} {% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_lists_style.css' %}" />
+<title>ResearchBrowser | Lists</title>
+{% endblock %} {% block content %}
+
+<div class="filterBar smallerScreenFilterBar">
+  <div class="selectContainer filterSelectContainer">
+    <button class="filterButton"><span>Filter</span><i class="fa-solid fa-filter"></i></button>
+  </div>
+  <div class="filterBarMenu">
+    <div class="selectContainer">
+      <label for="timeframe">Timeframe</label>
+      <select id="timeframe">
+        <option value="All" selected="selected">All</option>
+        <option value="7">Last 7 days</option>
+        <option value="30">Last 30 days</option>
+        <option value="90">Last 90 days</option>
+        <option value="365">Last 365 days</option>
+      </select>
+    </div>
+    <div class="selectContainer">
+      <label for="content">Content</label>
+      <select id="content">
+        <option value="All" selected="selected">All</option>
+        <option value="Articles">Articles</option>
+        <option value="Sources">Sources</option>
+      </select>
+    </div>
+    <div class="selectContainer">
+      <label for="minimum_rating">Minimum Rating</label>
+      <select id="minimum_rating">
+        <option value="All" selected="selected">All</option>
+        <option value="4.5">4.5 Stars</option>
+        <option value="4">4.0 Stars </option>
+        <option value="3.5">3.5 Stars</option>
+        <option value="3">3.0 Stars</option>
+        <option value="2.5">2.5 Stars</option>
+        <option value="2">2.0 Stars</option>
+      </select>
+    </div>
+    <div class="selectContainer">
+      <label for="primary_source">Primary Source</label>
+      <select id="primary_source">
+        <option value="All" selected="selected">All</option>
+        <option value="SeekingAlpha">SeekingAlpha</option>
+        <option value="Spotify">Spotify </option>
+        <option value="Substack">Substack</option>
+        <option value="Twitter">Twitter</option>
+        <option value="YouTube">YouTube</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+  </div>
+  <div class="selectContainer searchSelectContainer">
+    <div class="searchContainer">
+      <input id="search" placeholder="Search term" type="text" />
+      <i class="fas fa-search"></i>
+    </div>
+    <div id="autocomplete_list_results"></div>
+  </div>
+  <div class="selectContainer searchButtonSelectContainer">
+    <button class="searchButton">Search</button>
+  </div>
+</div>
+
+<div class="searchResultsAndListCreationContainer">
+  <div class="searchResultsContainer">
+    <h3>Search Results</h3>
+    <div><span>{{ results_found }}</span> Lists Found</div>
+  </div>
+  {% if request.user.is_authenticated %}
+  <button class="createListButton">
+    <i class="fas fa-plus"></i>Create List
+  </button>
+  <div class="createListMenu formContainer">
+    <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
+    </div>
+    <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+      {% csrf_token %} {{ form }}
+      <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+    </form>
+  </div>
+  {% else %}
+  <a href="{% url 'account_login' %}" class="createListButton registrationLink">
+    <i class="fas fa-plus"></i>Create List
+  </a>
+  {% endif %}
+</div>
+
+<div class="listHeader">
+  <div>List</div>
+  <div>Rating</div>
+  <div>Content</div>
+  <div>Creator</div>
+</div>
+
+{% if lists %} {% for list in lists %}
+<div class="listResultUpperCont">
+  <div class="listCont">
+    {% if list.list_pic %}
+    <img src="{{ list.list_pic.url }}" alt="">
+    {% else %}
+    <img src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
+    {% endif %}
+    <div>{{ list.name }}</div>
+  </div>
+  <div class="ratingsCont">
+    <div class="description">Ratings</div>
+    <span>Ø {{ list.average_rating }} out of {{ list.ammount_of_ratings }} ratings</span>
+  </div>
+  <div class="numberOfSourcesAndArticleCont">
+    <div class="description">Content</div>
+    <span> {{ list.articles.all|length }} Articles | {{ list.sources.all|length }} Sources</span>
+  </div>
+  <div class="creatorCont">
+    <div class="description">Creator</div>
+    {% if list.creator.profile.profile_pic %}
+    <img src="{{ list.creator.profile.profile_pic.url }}" alt="user-profile-pic">
+    {% else %}
+    <div class="logoPlaceholder">{{ list.creator.username.0 }}</div>
+    {% endif %}
+    <span>{{ list.creator.username }}</span>
+  </div>
+  <a href="{{ list.get_absolute_url }}"></a>
+</div>
+{% endfor %}
+{% endif %}
+{% if is_paginated %}
+{% include "pagination.html" with page=page_obj %}
+{% endif %}
+<script src="{% static 'home/min_lists_script.js' %}"></script>
+{% endblock %}

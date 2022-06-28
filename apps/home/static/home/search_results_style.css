@@ -1,0 +1,99 @@
+.mainContent {
+  margin: 2rem auto;
+  width: 50%;
+}
+
+.mainContent h2 {
+  color: var(--primary-fontColor);
+  font-size: 3.5rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.mainContent .mainSearchWrapper {
+  margin: 1.5rem auto;
+}
+
+.mainContent .mainInputSearch {
+  width: 100%;
+}
+
+.mainContent #autocomplete_list_results {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  background: white;
+  box-shadow: var(--box-shadowScheme);
+  z-index: 100;
+  font-size: 1.6rem;
+}
+
+.mainContent #autocomplete_list_results .searchResult span {
+  max-width: 95%;
+}
+
+.searchCategories {
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+  margin: 0 auto;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.searchCategoryTabActive,
+.searchCategoryTab:hover {
+  text-decoration-line: underline;
+  text-underline-offset: 0.7rem;
+  text-decoration-thickness: 0.3rem;
+  text-decoration-color: var(--primary-fontColor);
+}
+
+.tabsContent {
+  display: none;
+  margin-top: 2rem;
+}
+
+.tabsContentActive {
+  display: block;
+}
+
+.articlesWrapper {
+  height: unset;
+}
+
+.articlesWrapper .articleContainer {
+  width: 100%;
+}
+
+.categoryContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (max-width: 1000px) {
+  .mainContent {
+    width: 100%;
+  }
+
+  .mainContent .mainSearchWrapper {
+    width: 75%;
+  }
+
+  .mainContent .mainInputSearch {
+    min-width: unset;
+    max-width: unset;
+  }
+}
+
+@media (max-width: 500px) {
+  .mainContent .mainSearchWrapper {
+    width: 100%;
+  }
+
+  .mainContent .searchCategories {
+    width: 75%;
+  }
+}
