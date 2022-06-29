@@ -23,10 +23,10 @@ except:
     TWITTER = None
 
 
-class ListsView(ListView, BaseMixin):
+class ListView(ListView, BaseMixin):
     model = List
     context_object_name = 'lists'
-    template_name = 'home/lists.html'
+    template_name = 'list/lists.html'
     queryset = List.objects.select_related('creator__profile').prefetch_related('articles', 'sources').filter(is_public=True).order_by('name')
     paginate_by = 10
 
@@ -38,7 +38,7 @@ class ListsView(ListView, BaseMixin):
 class ListSearchView(ListView, BaseMixin):
     model = List
     context_object_name = 'lists'
-    template_name = 'home/lists.html'
+    template_name = 'list/lists.html'
     paginate_by = 10
 
     def get_queryset(self):
@@ -53,7 +53,7 @@ class ListSearchView(ListView, BaseMixin):
 class ListDetailView(TemplateView, BaseMixin):
     model = List
     context_object_name = 'list'
-    template_name = 'home/list_details.html'
+    template_name = 'list/list_details.html'
 
     def post(self, request, *args, **kwargs):
         if 'createListForm' in request.POST:
@@ -62,7 +62,7 @@ class ListDetailView(TemplateView, BaseMixin):
                 return redirect('home:feed')
             else:
                 profile_slug, list_slug = post_res
-                return redirect('list:lists-details', profile_slug=profile_slug, list_slug=list_slug)
+                return redirect('list:list_details', profile_slug=profile_slug, list_slug=list_slug)
         elif 'changeListForm' in request.POST:
             profile_slug = self.request.path_info.rsplit('/', 2)[-2]
             list_slug = self.request.path_info.rsplit('/', 1)[-1]
@@ -85,7 +85,7 @@ class ListDetailView(TemplateView, BaseMixin):
                     messages.error(request, "Error: You've already created a list with that name!")
                     return HttpResponseRedirect(self.request.path_info)
                 if new_list_slug != list_slug:
-                    return redirect('list:lists-details', profile_slug=profile_slug , list_slug=new_list_slug)
+                    return redirect('list:list-details', profile_slug=profile_slug , list_slug=new_list_slug)
                 else:
                     return HttpResponseRedirect(self.request.path_info)
             else:

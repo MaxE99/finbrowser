@@ -37,7 +37,7 @@ class ArticleViewTest(TestCase):
     def test_articles(self):
         response = self.client.get(reverse('article:articles'))
         self.assertEqual(response.status_code,200)
-        self.assertTemplateUsed(response,'home/articles.html')
+        self.assertTemplateUsed(response,'article/articles.html')
         self.assertEqual(response.context['results_found'], 10)
         self.assertEqual(response.context['articles'].count(), 10)
         self.assertEqual(len(response.context['tweets'].object_list), 0)

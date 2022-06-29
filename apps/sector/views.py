@@ -19,13 +19,13 @@ except:
 class SectorView(ListView, BaseMixin):
     model = Sector
     context_object_name = 'sectors'
-    template_name = 'home/sectors.html'
+    template_name = 'sector/sectors.html'
     queryset = Sector.objects.prefetch_related('source_set').all().order_by('name')
 
 class SectorDetailView(DetailView, BaseMixin):
     model = Sector
     context_object_name = 'sector'
-    template_name = 'home/sector_details.html'
+    template_name = 'sector/sector_details.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

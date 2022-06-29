@@ -65,7 +65,7 @@ class CreateListFormMixin(FormMixin):
                 profile_slug = new_list.creator.profile.slug
                 list_slug = new_list.slug
                 messages.success(self.request, 'List has been created!')
-                return [profile_slug, list_slug] if multi_form_page else redirect('list:lists-details', profile_slug=profile_slug, list_slug=list_slug)
+                return [profile_slug, list_slug] if multi_form_page else redirect('list:list-details', profile_slug=profile_slug, list_slug=list_slug)
         else:
             messages.error(request, "Currently only PNG and JPG files are supported!")
             return "Failed" if multi_form_page else HttpResponseRedirect(self.request.path_info)

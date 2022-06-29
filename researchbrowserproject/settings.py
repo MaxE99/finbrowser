@@ -15,7 +15,17 @@ if DEBUG:
     SECRET_KEY = env('SECRET_KEY')
     # MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
     # MEDIA_URL = '/uploads/'
-    # FAVICON_FILE_DIRECTORY = BASE_DIR / "home" / "static" / "home" / "favicons"
+    FAVICON_FILE_DIRECTORY =  os.path.join(BASE_DIR, 'apps/home/static/home/favicons')
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'testdb',
+            'USER': 'postgres',
+            'PASSWORD': 'post123gres',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 else:
     SECRET_KEY =  os.environ.get('SECRET_KEY')
     ALLOWED_HOSTS = ['researchbrowser.herokuapp.com', 'finbrowser.io']
@@ -39,6 +49,16 @@ else:
     SECURE_HSTS_SECONDS = 60 # Wert erhöhen wenn Tests erfolgreich sind
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ.get('DATABASE_NAME'),
+            'USER': os.environ.get('DATABASE_USER'),
+            'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+            'HOST': os.environ.get('DATABASE_HOST'),
+            'PORT': '5432',
+        }
+    }
 
 
 # Extra places for collectstatic to find static files.
@@ -60,10 +80,6 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'django.contrib.sitemaps',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
     'django_celery_beat',
     # 'debug_toolbar',
     'django_cleanup.apps.CleanupConfig',
@@ -74,7 +90,12 @@ INSTALLED_APPS = [
     'apps.support',
     'apps.sector',
     'apps.list',
-    'apps.article'
+    'apps.article',
+    'apps.scrapper',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -124,19 +145,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'researchbrowserproject.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'testdb',
-        'USER': 'postgres',
-        'PASSWORD': 'post123gres',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

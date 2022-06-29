@@ -24,7 +24,7 @@ def main_website_source_set(instance):
 
 
 def notifications_create(source, article, notifications, notification_messages):
-    from home.models import NotificationMessage
+    from apps.home.models import NotificationMessage
     if notifications.filter(source=source).exists():
         source_notifications = notifications.filter(source=source)
         for source_notification in source_notifications:
@@ -44,7 +44,7 @@ def notifications_create(source, article, notifications, notification_messages):
 
 
 def create_articles_from_feed(source, feed_url, articles, notifications, notification_messages):
-    from home.models import Article
+    from apps.article.models import Article
     req = Request(feed_url, headers={'User-Agent': 'Mozilla/5.0'})
     website_data = urlopen(req)
     website_xml = website_data.read()

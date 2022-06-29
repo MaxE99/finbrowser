@@ -208,7 +208,8 @@ document
                 if (list.list_pic) {
                   resultImage.src = list.list_pic;
                 } else {
-                  resultImage.src = "/static/home/media/bigger_favicon.png";
+                  resultImage.src =
+                    "/static/home/media/finbrowser-bigger-logo.png";
                 }
                 const listName = document.createElement("span");
                 listName.innerText = list.name;
