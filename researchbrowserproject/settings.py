@@ -60,6 +60,7 @@ else:
         }
     }
     broker_url = os.environ.get('REDIS_URL')
+    CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 # Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = [
