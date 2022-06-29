@@ -59,7 +59,7 @@ else:
             'PORT': '5432',
         }
     }
-    CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+    # CELERY_BROKER_URL = os.environ.get('REDIS_URL')
 
 # Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = [
