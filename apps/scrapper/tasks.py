@@ -17,6 +17,7 @@ import environ
 import base64
 import urllib.request
 import os
+import boto3
 # Local imports
 from apps.logic.services import notifications_create, create_articles_from_feed
 from apps.article.models import Article
@@ -119,10 +120,10 @@ class SpotifyAPI(object):
 
 @shared_task
 def scrape_twitter():    
-    consumer_key = env('TWITTER_CONSUMER_KEY')
-    consumer_secret = env('TWITTER_CONSUMER_SECRET')
-    access_token = env('TWITTER_ACCESS_TOKEN')
-    access_token_secret = env('TWITTER_ACCESS_TOKEN_SECRET')
+    consumer_key = os.environ.get('TWITTER_CONSUMER_KEY')
+    consumer_secret = os.environ.get('TWITTER_CONSUMER_SECRET')
+    access_token = os.environ.get('TWITTER_ACCESS_TOKEN')
+    access_token_secret = os.environ.get('TWITTER_ACCESS_TOKEN_SECRET')
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
@@ -182,8 +183,8 @@ def scrape_seekingalpha():
 
 @shared_task
 def scrape_spotify():
-    client_id = env('SPOTIFY_CLIENT_ID')
-    client_secret = env('SPOTIFY_CLIENT_SECRET')
+    client_id = os.environ.get('SPOTIFY_CLIENT_ID')
+    client_secret = os.environ.get('SPOTIFY_CLIENT_SECRET')
     spotify_sources = Source.objects.filter(website=get_object_or_404(Website, name="Spotify"))
     articles = Article.objects.all()
     notifications = Notification.objects.all()
@@ -203,7 +204,7 @@ def scrape_spotify():
             
 @shared_task
 def scrape_youtube():
-    api_key = env('YOUTUBE_API_KEY')
+    api_key = os.environ.get('YOUTUBE_API_KEY')
     youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
     articles = Article.objects.all()
     notifications = Notification.objects.all()
@@ -228,8 +229,8 @@ def scrape_youtube():
 
 @shared_task
 def spotify_get_profile_images():
-    client_id = env('SPOTIFY_CLIENT_ID')
-    client_secret = env('SPOTIFY_CLIENT_SECRET')
+    client_id = os.environ.get('SPOTIFY_CLIENT_ID')
+    client_secret = os.environ.get('SPOTIFY_CLIENT_SECRET')
     spotify_sources = Source.objects.filter(website=get_object_or_404(Website, name="Spotify"))
     for source in spotify_sources:
         spotify = SpotifyAPI(client_id, client_secret)
@@ -244,10 +245,10 @@ def spotify_get_profile_images():
 def twitter_scrape_followings():
     from apps.source.models import Source
     # assign the values accordingly
-    consumer_key = env('TWITTER_CONSUMER_KEY')
-    consumer_secret = env('TWITTER_CONSUMER_SECRET')
-    access_token = env('TWITTER_ACCESS_TOKEN')
-    access_token_secret = env('TWITTER_ACCESS_TOKEN_SECRET')
+    consumer_key = os.environ.get('TWITTER_CONSUMER_KEY')
+    consumer_secret = os.environ.get('TWITTER_CONSUMER_SECRET')
+    access_token = os.environ.get('TWITTER_ACCESS_TOKEN')
+    access_token_secret = os.environ.get('TWITTER_ACCESS_TOKEN_SECRET')
     # authorization of consumer key and consumer secret
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     # set access to user's access key and access secret 
@@ -264,14 +265,16 @@ def twitter_scrape_followings():
             slug = follow.screen_name
             name = follow.name
             external_id = follow.id
-            urllib.request.urlretrieve(follow.profile_image_url_https.replace("_normal", ""), os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
+            s3 = boto3.client('s3')
+            with open(follow.profile_image_url_https.replace("_normal", ""), "rb") as f:
+                s3.upload_fileobj(f, "django-testbucket24061436", os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
+            # urllib.request.urlretrieve(follow.profile_image_url_https.replace("_normal", ""), os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
             favicon_path = f'home/favicons/{slug}.png'
             Source.objects.create(url=url, slug=slug, name=name, favicon_path=favicon_path, paywall='No', website=get_object_or_404(Website, name="Twitter"), external_id=external_id)
 
-
 @shared_task
 def youtube_get_profile_images():
-    api_key = env('YOUTUBE_API_KEY')
+    api_key = os.environ.get('YOUTUBE_API_KEY')
     youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
     for source in youtube_sources:
         url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={source.external_id}&key={api_key}"
