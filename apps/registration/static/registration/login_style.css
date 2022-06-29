@@ -51,26 +51,13 @@ body {
     rgba(74, 79, 97, 0.3) 0px 8px 16px -8px;
   overflow: hidden;
   height: 55rem;
-  width: 115rem;
+  width: 75rem;
   max-height: 90%;
   max-width: 90%;
 }
 
-.loginUserForm #info-wrapper,
 .loginUserForm #form-wrapper {
   padding: 2rem 3.5rem;
-}
-
-.loginUserForm #info-wrapper {
-  background: linear-gradient(225deg, var(--primary-fontColor) 16%, blue 100%);
-  color: #fff;
-  padding-left: 5rem;
-  width: 40%;
-}
-
-.loginUserForm #info-wrapper p {
-  color: var(--info-text-color);
-  font-size: 1.8rem;
 }
 
 .loginUserForm #form-wrapper {
@@ -80,7 +67,7 @@ body {
   flex-direction: column;
   text-align: center;
   font-size: 2rem;
-  width: 60%;
+  width: 100%;
 }
 
 .loginUserForm i {
@@ -461,16 +448,6 @@ label[for="id_login"] {
 
 .sourcePic {
   width: 100%;
-}
-
-@media (max-width: 1000px) {
-  #info-wrapper {
-    display: none;
-  }
-
-  .loginUserForm #form-wrapper {
-    width: 100%;
-  }
 }
 
 @media (max-width: 500px) {

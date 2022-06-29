@@ -43,7 +43,7 @@ class Source(models.Model):
         super(Source, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('source:profile', kwargs={'slug': self.slug})
+        return reverse('source:source_profile', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.slug

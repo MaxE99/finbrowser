@@ -51,28 +51,20 @@ body {
     rgba(74, 79, 97, 0.3) 0px 8px 16px -8px;
   overflow: hidden;
   height: 58rem;
-  width: 115rem;
+  width: 75rem;
   max-height: 90%;
   max-width: 90%;
 }
 
-.signupForm #info-wrapper,
 .signupForm #form-wrapper {
   padding: 2rem 3.5rem;
-}
-
-.signupForm #info-wrapper {
-  background: linear-gradient(225deg, var(--primary-fontColor) 16%, blue 100%);
-  color: #fff;
-  padding-left: 5rem;
-  width: 40%;
 }
 
 .signupForm #form-wrapper {
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 60%;
+  width: 100%;
   font-size: 2rem;
 }
 
@@ -489,16 +481,6 @@ input[name="terms_and_privacy"] {
 
 .sourcePic {
   width: 100%;
-}
-
-@media (max-width: 1000px) {
-  #info-wrapper {
-    display: none;
-  }
-
-  .signupForm #form-wrapper {
-    width: 100%;
-  }
 }
 
 @media (max-width: 500px) {

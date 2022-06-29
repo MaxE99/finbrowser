@@ -57,7 +57,7 @@ class SourceDetailViewTest(TestCase):
         create_test_source_ratings()
 
     def test_view(self):
-        response = self.client.get(reverse('source:profile', kwargs={'slug': get_object_or_404(Source, name="TestSource1").slug}))
+        response = self.client.get(reverse('source:source_profile', kwargs={'slug': get_object_or_404(Source, name="TestSource1").slug}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'source/profile.html')
         self.assertEqual(response.context['notifications_activated'], False)

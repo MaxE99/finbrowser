@@ -12,7 +12,7 @@ from apps.home.models import Notification
 class SourceDetailView(DetailView, BaseMixin):
     model = Source
     context_object_name = 'source'
-    template_name = 'source/profile.html'
+    template_name = 'source/source_profile.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

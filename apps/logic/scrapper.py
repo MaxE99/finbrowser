@@ -9,9 +9,13 @@ from datetime import timedelta
 import tweepy
 import base64
 import urllib.request
+import environ
 # Local imports
 from apps.home.models import Source
 from apps.accounts.models import Website
+
+env = environ.Env()
+environ.Env.read_env()
 
 class SpotifyAPI(object):
     access_token = None
@@ -93,8 +97,8 @@ class SpotifyAPI(object):
 
 
 def spotify_get_profile_images():
-    client_id = 'b0b3c71663ef4c7bb1bcac4cfb1a0a78'
-    client_secret = '7096cbb406474c42a2357500356f3663'
+    client_id = env('SPOTIFY_CLIENT_ID')
+    client_secret = env('SPOTIFY_CLIENT_SECRET')
     spotify_sources = Source.objects.filter(website=get_object_or_404(Website, name="Spotify"))
     for source in spotify_sources:
         spotify = SpotifyAPI(client_id, client_secret)
@@ -106,12 +110,12 @@ def spotify_get_profile_images():
 
 
 def twitter_scrape_followings():
-    from home.models import Source
+    from apps.source.models import Source
     # assign the values accordingly
-    consumer_key = 'XOoUFKNcJeHoSkGxkZUSraU4x'
-    consumer_secret = '18fAwnwdZLqYDmkWzxuQwL8GalXguNskhnYv8dMPr8ZYhRez0y'
-    access_token = '1510667747365109763-ak8OKMTG45Q5GW2HrNlGhJL5Oyss49'
-    access_token_secret = "8NqJl5H97t6C11PdDYjksk5rHhVLpfiGsNcAZeMbNfviP"
+    consumer_key = env('TWITTER_CONSUMER_KEY')
+    consumer_secret = env('TWITTER_CONSUMER_SECRET')
+    access_token = env('TWITTER_ACCESS_TOKEN')
+    access_token_secret = env('TWITTER_ACCESS_TOKEN_SECRET')
     # authorization of consumer key and consumer secret
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     # set access to user's access key and access secret 
@@ -130,11 +134,11 @@ def twitter_scrape_followings():
             external_id = follow.id
             urllib.request.urlretrieve(follow.profile_image_url_https.replace("_normal", ""), os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
             favicon_path = f'home/favicons/{slug}.png'
-            Source.objects.create(url=url, slug=slug, name=name, favicon_path=favicon_path, paywall='No', website='Twitter', external_id=external_id)
+            Source.objects.create(url=url, slug=slug, name=name, favicon_path=favicon_path, paywall='No', website=get_object_or_404(Website, name="Twitter"), external_id=external_id)
 
 
 def youtube_get_profile_images():
-    api_key = "AIzaSyAAz_6R_6g64KbC8xQscbeiArA0OOX2uso"
+    api_key = env('YOUTUBE_API_KEY')
     youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
     for source in youtube_sources:
         url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={source.external_id}&key={api_key}"

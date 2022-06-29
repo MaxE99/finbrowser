@@ -26,7 +26,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
         results_list.style.display = "flex";
         results_list.innerHTML = "";
         context.forEach((list) => {
-          let list_pic = "/static/home/media/bigger_favicon.png";
+          let list_pic = "/static/home/media/finbrowser-bigger-logo.png";
           if (list.list_pic) {
             list_pic = list.list_pic;
           }

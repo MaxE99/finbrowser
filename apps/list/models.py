@@ -59,7 +59,7 @@ class List(models.Model):
             super(List, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('list:lists-details', kwargs={'profile_slug': self.creator.profile.slug ,'list_slug': self.slug})
+        return reverse('list:list-details', kwargs={'profile_slug': self.creator.profile.slug ,'list_slug': self.slug})
 
     def __str__(self):
         return self.name

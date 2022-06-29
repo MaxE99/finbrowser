@@ -13,7 +13,7 @@ from apps.home.models import Notification
 
 User = get_user_model()
 
-class ListsViewTest(TestCase):
+class ListViewTest(TestCase):
     def setUp(self):
         create_test_users()
         create_test_lists()
@@ -21,7 +21,7 @@ class ListsViewTest(TestCase):
     def test_lists(self):
         response = self.client.get(reverse('list:lists'))
         self.assertEqual(response.status_code,200)
-        self.assertTemplateUsed(response,'home/lists.html')
+        self.assertTemplateUsed(response,'list/lists.html')
         self.assertEqual(response.context['results_found'], 10)
 
 
@@ -37,13 +37,13 @@ class ListsSearchViewTest(TestCase):
     def test_lists_search_all(self):
         response = self.client.get(reverse('list:lists-search', kwargs={'timeframe': 'All', 'content_type': 'All', 'minimum_rating': 'All', 'primary_source': 'All'}))
         self.assertEqual(response.status_code,200)
-        self.assertTemplateUsed(response,'home/lists.html')
+        self.assertTemplateUsed(response,'list/lists.html')
         self.assertEqual(response.context['results_found'], 10)
 
     def test_lists_search_mixed(self):
         response = self.client.get(reverse('list:lists-search', kwargs={'timeframe': 30, 'content_type': 'All', 'minimum_rating': 2, 'primary_source': 'All'}))
         self.assertEqual(response.status_code,200)
-        self.assertTemplateUsed(response,'home/lists.html')
+        self.assertTemplateUsed(response,'list/lists.html')
         self.assertEqual(response.context['results_found'], 3)
 
 
@@ -82,7 +82,7 @@ class ListNameChangeFormTest(TestCase):
         data = {'changeListForm': ['Save'], 'name': 'NewTestListName'}
         list = get_object_or_404(List, name="TestList1")
         testuser1 = get_object_or_404(Profile, user__username="TestUser1")
-        response = self.client.post(reverse('list:lists-details', kwargs={'profile_slug': testuser1.slug, 'list_slug':list.slug}), data)
+        response = self.client.post(reverse('list:list-details', kwargs={'profile_slug': testuser1.slug, 'list_slug':list.slug}), data)
         self.assertEqual(response.status_code, 302)
         self.assertTrue(List.objects.filter(name="NewTestListName").exists())
 
@@ -91,7 +91,7 @@ class ListNameChangeFormTest(TestCase):
         data = {'changeListForm': ['Save'], 'name': 'TestList3'}
         list = get_object_or_404(List, name="TestList1")
         testuser1 = get_object_or_404(Profile, user__username="TestUser1")
-        response = self.client.post(reverse('list:lists-details', kwargs={'profile_slug': testuser1.slug, 'list_slug':list.slug}), data)
+        response = self.client.post(reverse('list:list-details', kwargs={'profile_slug': testuser1.slug, 'list_slug':list.slug}), data)
         self.assertEqual(response.status_code, 302)
         self.assertTrue(List.objects.filter(name="TestList1").exists())
         self.assertEqual(List.objects.filter(name="TestList3").count(), 1)
@@ -115,7 +115,7 @@ class ListDetailViewTest(TestCase):
         list.sources.add(get_object_or_404(Source, name="TestSource1").source_id)
         list.sources.add(get_object_or_404(Source, name="TestSource2").source_id)
         testuser1 = get_object_or_404(User, username="TestUser1")
-        response = self.client.get(reverse('list:lists-details', kwargs={'profile_slug': testuser1.profile.slug, 'list_slug':list.slug}))
+        response = self.client.get(reverse('list:list-details', kwargs={'profile_slug': testuser1.profile.slug, 'list_slug':list.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['notifications_activated'], Notification.objects.filter(user=testuser1, list=list).exists())
         self.assertFalse(response.context['subscribed'])
@@ -130,7 +130,7 @@ class ListDetailViewTest(TestCase):
         testuser1 = get_object_or_404(User, username="TestUser1")
         Notification.objects.create(user=testuser1, list=list)
         list.subscribers.add(testuser1.id)
-        response = self.client.get(reverse('list:lists-details', kwargs={'profile_slug': testuser1.profile.slug, 'list_slug':list.slug}))
+        response = self.client.get(reverse('list:list-details', kwargs={'profile_slug': testuser1.profile.slug, 'list_slug':list.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['notifications_activated'], Notification.objects.filter(user=testuser1, list=list).exists())
         self.assertTrue(response.context['subscribed'])

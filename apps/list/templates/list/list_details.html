@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_list_details_style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style.css' %}" />
 <title>{{ list.name }} List | ResearchBrowser</title>
 {% endblock %} {% block content %}
 
@@ -12,14 +12,14 @@
                 {% if list.list_pic %}
                 <img src="{{ list.list_pic.url }}">
                 {% else %}
-                <img src="{% static 'home/media/bigger_favicon.png' %}">
+                <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}">
                 {% endif %}
                 {{ change_list_pic_form }}
                 {% else %}
                 {% if list.list_pic %}
                 <img src="{{ list.list_pic.url }}">
                 {% else %}
-                <img src="{% static 'home/media/bigger_favicon.png' %}">
+                <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}">
                 {% endif %}
                 {% endif %}
                 <i class="fas fa-camera"></i>
@@ -580,5 +580,5 @@
 
 
 {{ user_rating|json_script:"user-rating" }}
-<script src="{% static 'home/min_list_details_script.js' %}"></script>
+<script src="{% static 'list/min_list_details_script.js' %}"></script>
 {% endblock content %}

@@ -35,7 +35,7 @@
                     {% if user.profile.profile_pic %}
                     <img src="{{ user.profile.profile_pic.url }}" alt="">
                     {% else %}
-                    <img src="{% static 'home/media/bigger_favicon.png' %}" alt="user-profile-pic">
+                    <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="user-profile-pic">
                     {% endif %}
                     <div class="changeProfilePicButton">
                         <span>Change</span>
@@ -115,7 +115,7 @@
                     {% if notification.list.list_pic %}
                     <img class="sourcePic" src="{{ notification.list.list_pic.url }}" alt="favicon" />
                     {% else %}
-                    <img class="sourcePic" src="{% static 'home/media/bigger_favicon.png' %}" alt="favicon" />
+                    <img class="sourcePic" src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="favicon" />
                     {% endif %}
                 </div>
                 <a class="sourceLink" href="{{ notification.list.get_absolute_url }}"></a>

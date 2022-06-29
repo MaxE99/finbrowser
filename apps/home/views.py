@@ -43,7 +43,7 @@ class FeedView(TemplateView, LoginRequiredMixin, BaseMixin, AddExternalArticleFo
                 return redirect('home:feed')
             else:
                 profile_slug, list_slug = post_res
-                return redirect('list:lists-details', profile_slug=profile_slug, list_slug=list_slug)
+                return redirect('list:list-details', profile_slug=profile_slug, list_slug=list_slug)
         elif 'addExternalArticlesForm' in request.POST:
             AddExternalArticleFormMixin.post(self, request)
             return redirect('home:feed')
