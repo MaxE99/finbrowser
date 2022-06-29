@@ -7,5 +7,6 @@ import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'researchbrowserproject.settings')
 app = Celery('researchbrowserproject')
+app.conf.update(BROKER_URL=os.environ['REDIS_URL'])
 app.config_from_object(settings , namespace='CELERY')
 app.autodiscover_tasks()
