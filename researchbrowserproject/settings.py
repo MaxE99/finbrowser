@@ -26,6 +26,7 @@ if DEBUG:
             'PORT': '5432',
         }
     }
+    CELERY_BROKER_URL = os.environ.get('redis://:p73516d72fa7bdce625cb9b9d91a90ce519d5c43623c9e2aa74ac8a8665a3ba60@ec2-52-48-13-217.eu-west-1.compute.amazonaws.com:17539')
 else:
     SECRET_KEY =  os.environ.get('SECRET_KEY')
     ALLOWED_HOSTS = ['researchbrowser.herokuapp.com', '.finbrowser.io']
@@ -59,7 +60,7 @@ else:
             'PORT': '5432',
         }
     }
-    # CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+    CELERY_BROKER_URL = os.environ.get('REDIS_URL')
 
 # Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = [
