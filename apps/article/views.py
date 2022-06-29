@@ -19,7 +19,7 @@ except:
 
 class ArticleView(ListView, BaseMixin):
     model = Article
-    template_name = 'home/articles.html'
+    template_name = 'article/articles.html'
     paginate_by = 10
 
     def get_queryset(self):
@@ -37,7 +37,7 @@ class ArticleView(ListView, BaseMixin):
 
 class ArticleSearchView(ListView, BaseMixin):
     model = Article
-    template_name = 'home/articles.html'
+    template_name = 'article/articles.html'
     paginate_by = 10
 
     def get_queryset(self):

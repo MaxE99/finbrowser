@@ -20,9 +20,8 @@ main {
 }
 
 .websiteBigNameContainer img {
-  height: 17rem;
   margin: 3rem auto;
-  max-width: 95%;
+  max-width: 75%;
 }
 
 .websiteAbout {
