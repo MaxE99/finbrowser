@@ -265,11 +265,9 @@ def twitter_scrape_followings():
             slug = follow.screen_name
             name = follow.name
             external_id = follow.id
-            with urllib.request.urlopen(follow.profile_image_url_https.replace("_normal", "")) as url:
-                profile_image_file = url.read()
+            urllib.request.urlretrieve(follow.profile_image_url_https.replace("_normal", ""), 'temp_file.png')
             s3 = boto3.client('s3')
-            with open(profile_image_file, "rb") as f:
-                s3.upload_fileobj(f, "django-testbucket24061436", os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
+            s3.upload_file('temp_file.png', 'django-testbucket24061436', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
             # urllib.request.urlretrieve(follow.profile_image_url_https.replace("_normal", ""), os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
             favicon_path = f'home/favicons/{slug}.png'
             Source.objects.create(url=url, slug=slug, name=name, favicon_path=favicon_path, paywall='No', website=get_object_or_404(Website, name="Twitter"), external_id=external_id)
