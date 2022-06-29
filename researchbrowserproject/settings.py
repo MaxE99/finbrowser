@@ -4,7 +4,7 @@ import environ
 
 env = environ.Env()
 environ.Env.read_env()
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -59,15 +59,13 @@ else:
             'PORT': '5432',
         }
     }
-
+    CELERY_BROKER_URL = os.environ.get('REDIS_URL')
 
 # Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static'),
 #     # os.path.join(BASE_DIR, 'home/static/home/favicons')
 # ]
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -145,10 +143,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'researchbrowserproject.wsgi.application'
 
-
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
@@ -168,9 +162,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -178,10 +169,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
