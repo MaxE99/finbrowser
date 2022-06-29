@@ -265,8 +265,9 @@ def twitter_scrape_followings():
             slug = follow.screen_name
             name = follow.name
             external_id = follow.id
+            profile_image_file = urllib.urlopen(follow.profile_image_url_https.replace("_normal", ""))
             s3 = boto3.client('s3')
-            with open(follow.profile_image_url_https.replace("_normal", ""), "rb") as f:
+            with open(profile_image_file, "rb") as f:
                 s3.upload_fileobj(f, "django-testbucket24061436", os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
             # urllib.request.urlretrieve(follow.profile_image_url_https.replace("_normal", ""), os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
             favicon_path = f'home/favicons/{slug}.png'
