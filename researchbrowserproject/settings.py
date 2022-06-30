@@ -31,7 +31,7 @@ else:
     ALLOWED_HOSTS = ['researchbrowser.herokuapp.com', '.finbrowser.io']
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = 'django-testbucket24061436'
+    AWS_STORAGE_BUCKET_NAME = 'finbrowser'
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.us-east-2.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     AWS_LOCATION = 'static'
@@ -39,7 +39,6 @@ else:
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     DEFAULT_FILE_STORAGE = "researchbrowserproject.storages.MediaStore"
     FAVICON_FILE_DIRECTORY = 'static/home/favicons'
-    # FAVICON_FILE_DIRECTORY = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, FAVICON_LOCATION)
     # HTTPS Settings
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True

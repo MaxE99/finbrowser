@@ -60,7 +60,7 @@ document
       selected_list.style.display = "none";
       try {
         const res = await fetch(
-          `https://finbrowser.io/api/sources/?feed_search=${search_term}`,
+          `https://www.finbrowser.io/api/sources/?feed_search=${search_term}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {
@@ -134,7 +134,7 @@ document
     if (selected_sources.length) {
       try {
         const res = await fetch(
-          `https://finbrowser.io/api/sources/subscribe_to_sources/${selected_sources}/`,
+          `https://www.finbrowser.io/api/sources/subscribe_to_sources/${selected_sources}/`,
           get_fetch_settings("POST")
         );
         if (!res.ok) {
@@ -188,7 +188,7 @@ document
       selected_list.style.display = "none";
       try {
         const res = await fetch(
-          `https://finbrowser.io/api/lists/?feed_search=${search_term}`,
+          `https://www.finbrowser.io/api/lists/?feed_search=${search_term}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {
@@ -268,7 +268,7 @@ document
       for (let i = 0, j = selected_lists.length; i < j; i++) {
         try {
           const res = await fetch(
-            `https://finbrowser.io/api/lists/${selected_lists[i]}/list_change_subscribtion_status/`,
+            `https://www.finbrowser.io/api/lists/${selected_lists[i]}/list_change_subscribtion_status/`,
             get_fetch_settings("POST")
           );
           if (!res.ok) {
