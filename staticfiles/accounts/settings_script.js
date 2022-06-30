@@ -49,7 +49,7 @@ async function deleteSocialLinks(e) {
     const social_link_id = e.target.id.replace("social_link_id_", "");
     try {
       const res = await fetch(
-        `https://finbrowser.io/api/social_links/${social_link_id}/`,
+        `https://www.finbrowser.io/api/social_links/${social_link_id}/`,
         get_fetch_settings("DELETE")
       );
       if (!res.ok) {
@@ -70,7 +70,7 @@ document
     const user = document.querySelector(".emailContainer").id;
     try {
       const res = await fetch(
-        `https://finbrowser.io/api/profiles/${user}/profile_pic_delete/`,
+        `https://www.finbrowser.io/api/profiles/${user}/profile_pic_delete/`,
         get_fetch_settings("DELETE")
       );
       if (!res.ok) {
@@ -120,7 +120,7 @@ addSocialLinkButton.addEventListener("click", async () => {
   document.querySelector(".linkInput").value = "";
   try {
     const data = { website: websiteID, url: website_link };
-    const res = await fetch(`https://finbrowser.io/api/social_links/`, {
+    const res = await fetch(`https://www.finbrowser.io/api/social_links/`, {
       method: "POST",
       headers: {
         "X-CSRFToken": getCookie("csrftoken"),
@@ -181,7 +181,7 @@ document.querySelectorAll(".saveSocialLinkChanges").forEach((socialLink) => {
     try {
       const data = { website: websiteID, url: website_link };
       const res = await fetch(
-        `https://finbrowser.io/api/social_links/${social_link_id}/`,
+        `https://www.finbrowser.io/api/social_links/${social_link_id}/`,
         {
           method: "PUT",
           headers: {

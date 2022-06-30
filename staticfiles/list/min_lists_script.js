@@ -12,7 +12,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
   if (a && "" != a.replaceAll(/\s/g, "")) {
     try {
       let c = await fetch(
-        `https://finbrowser.io/api/search_lists/${a}`,
+        `https://www.finbrowser.io/api/search_lists/${a}`,
         get_fetch_settings("GET")
       );
       if (c.ok) {
@@ -46,7 +46,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
         h = g.options[g.selectedIndex].value,
         i = [b, d, f, h];
       sessionStorage.setItem("listSearchSettings", JSON.stringify(i)),
-        (window.location = `https://finbrowser.io/lists/${b}/${d}/${f}/${h}/`);
+        (window.location = `https://www.finbrowser.io/lists/${b}/${d}/${f}/${h}/`);
     });
 const createListButton = document.querySelector(".createListButton");
 createListButton.addEventListener("click", () => {

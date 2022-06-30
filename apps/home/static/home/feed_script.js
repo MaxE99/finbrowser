@@ -1,6 +1,6 @@
 // Open create list menu in slider
 document
-  .querySelector(".interactionWrapper .createListButton")
+  .querySelector(".sliderWrapper .interactionWrapper .createListButton")
   .addEventListener("click", () => {
     if (check_device_width_below(500)) {
       document.querySelector(".smartphoneCreateListMenu").style.display =
@@ -28,16 +28,22 @@ if (document.querySelector(".addSourcesButton")) {
       document.querySelector(".smartphoneAddSourcesForm").style.display =
         "flex";
     } else {
-      document.querySelector(".addSourcesForm").style.display = "flex";
+      document.querySelector(
+        ".interactionWrapper .addSourcesForm"
+      ).style.display = "flex";
     }
   });
 }
 
 //close add sources menu
 document
-  .querySelector(".addSourcesForm .closeFormContainerButton")
-  .addEventListener("click", () => {
-    document.querySelector(".addSourcesForm").style.display = "none";
+  .querySelectorAll(".addSourcesForm .closeFormContainerButton")
+  .forEach((element) => {
+    element.addEventListener("click", () => {
+      element.parentElement.parentElement.parentElement.querySelector(
+        ".addSourcesForm"
+      ).style.display = "none";
+    });
   });
 
 // add Sources Search
@@ -60,7 +66,7 @@ document
       selected_list.style.display = "none";
       try {
         const res = await fetch(
-          `https://finbrowser.io/api/sources/?feed_search=${search_term}`,
+          `https://www.finbrowser.io/api/sources/?feed_search=${search_term}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {
@@ -134,7 +140,7 @@ document
     if (selected_sources.length) {
       try {
         const res = await fetch(
-          `https://finbrowser.io/api/sources/subscribe_to_sources/${selected_sources}/`,
+          `https://www.finbrowser.io/api/sources/subscribe_to_sources/${selected_sources}/`,
           get_fetch_settings("POST")
         );
         if (!res.ok) {
@@ -160,16 +166,22 @@ if (document.querySelector(".addListsButton")) {
     if (check_device_width_below(500)) {
       document.querySelector(".smartphoneAddListsForm").style.display = "flex";
     } else {
-      document.querySelector(".addListsForm").style.display = "flex";
+      document.querySelector(
+        ".interactionWrapper .addListsForm"
+      ).style.display = "flex";
     }
   });
 }
 
 //close add lists menu
 document
-  .querySelector(".addListsForm .closeFormContainerButton")
-  .addEventListener("click", () => {
-    document.querySelector(".addListsForm").style.display = "none";
+  .querySelectorAll(".addListsForm .closeFormContainerButton")
+  .forEach((element) => {
+    element.addEventListener("click", () => {
+      element.parentElement.parentElement.parentElement.querySelector(
+        ".addListsForm"
+      ).style.display = "none";
+    });
   });
 
 let selected_lists = [];
@@ -188,7 +200,7 @@ document
       selected_list.style.display = "none";
       try {
         const res = await fetch(
-          `https://finbrowser.io/api/lists/?feed_search=${search_term}`,
+          `https://www.finbrowser.io/api/lists/?feed_search=${search_term}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {
@@ -268,7 +280,7 @@ document
       for (let i = 0, j = selected_lists.length; i < j; i++) {
         try {
           const res = await fetch(
-            `https://finbrowser.io/api/lists/${selected_lists[i]}/list_change_subscribtion_status/`,
+            `https://www.finbrowser.io/api/lists/${selected_lists[i]}/list_change_subscribtion_status/`,
             get_fetch_settings("POST")
           );
           if (!res.ok) {

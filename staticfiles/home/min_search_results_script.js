@@ -14,7 +14,7 @@ categoryTabs.forEach((a) => {
     .addEventListener("keyup", async function (i) {
       let c = document.querySelector(".searchWrapper #mainAutocomplete").value;
       if ("Enter" == i.key && "" != c.replaceAll(/\s/g, ""))
-        window.location.href = `https://finbrowser.io/search_results/${c}`;
+        window.location.href = `https://www.finbrowser.io/search_results/${c}`;
       else {
         let b = document.querySelector(
           ".searchWrapper #autocomplete_list_results"
@@ -22,7 +22,7 @@ categoryTabs.forEach((a) => {
         if (c && "" != c.replaceAll(/\s/g, "")) {
           try {
             let g = await fetch(
-              `https://finbrowser.io/api/search_site/${c}`,
+              `https://www.finbrowser.io/api/search_site/${c}`,
               get_fetch_settings("GET")
             );
             if (g.ok) {
@@ -83,5 +83,5 @@ categoryTabs.forEach((a) => {
         (search_term = document.querySelector(
           ".searchWrapper .mainInputSearch"
         ).value).replaceAll(/\s/g, "") &&
-        (window.location.href = `https://finbrowser.io/search_results/${search_term}`);
+        (window.location.href = `https://www.finbrowser.io/search_results/${search_term}`);
     });
