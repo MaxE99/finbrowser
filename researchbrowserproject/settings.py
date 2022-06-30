@@ -38,8 +38,8 @@ else:
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     DEFAULT_FILE_STORAGE = "researchbrowserproject.storages.MediaStore"
-    FAVICON_LOCATION = 'static/home/favicons'
-    FAVICON_FILE_DIRECTORY = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, FAVICON_LOCATION)
+    FAVICON_FILE_DIRECTORY = 'static/home/favicons'
+    # FAVICON_FILE_DIRECTORY = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, FAVICON_LOCATION)
     # HTTPS Settings
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
