@@ -56,13 +56,13 @@ document
     .addEventListener("keyup", async function (i) {
       let c = document.getElementById("mainAutocomplete").value;
       if ("Enter" == i.key && "" != c.replaceAll(/\s/g, ""))
-        window.location.href = `https://finbrowser.io/search_results/${c}`;
+        window.location.href = `https://www.finbrowser.io/search_results/${c}`;
       else {
         let b = document.getElementById("mainAutocomplete_result");
         if (c && "" != c.replaceAll(/\s/g, "")) {
           try {
             let g = await fetch(
-              `https://finbrowser.io/api/search_site/${c}`,
+              `https://www.finbrowser.io/api/search_site/${c}`,
               get_fetch_settings("GET")
             );
             if (g.ok) {
@@ -132,7 +132,7 @@ document
           /\s/g,
           ""
         ) &&
-        (window.location.href = `https://finbrowser.io/search_results/${search_term}`);
+        (window.location.href = `https://www.finbrowser.io/search_results/${search_term}`);
     });
 const dropdownButton = document.querySelector(".fa-sort-down");
 function checkForOpenContainers() {
@@ -177,7 +177,7 @@ function check_new_list_status(a) {
 async function add_article_to_list(a, b) {
   try {
     let c = await fetch(
-      `https://finbrowser.io/api/lists/${a}/add_article_to_list/${b}/`,
+      `https://www.finbrowser.io/api/lists/${a}/add_article_to_list/${b}/`,
       get_fetch_settings("POST")
     );
     c.ok || showMessage("Error: Network request failed unexpectedly!", "Error");
@@ -186,7 +186,7 @@ async function add_article_to_list(a, b) {
 async function remove_article_from_list(a, b) {
   try {
     let c = await fetch(
-      `https://finbrowser.io/api/lists/${a}/delete_article_from_list/${b}/`,
+      `https://www.finbrowser.io/api/lists/${a}/delete_article_from_list/${b}/`,
       get_fetch_settings("DELETE")
     );
     c.ok || showMessage("Error: Network request failed unexpectedly!", "Error");
@@ -232,16 +232,19 @@ document.querySelectorAll(".fa-ellipsis-h").forEach((a) => {
         b = "Highlight article" == f ? "highlight" : "unhighlight";
         try {
           let g = { article_id: e },
-            c = await fetch("https://finbrowser.io/api/highlighted_articles/", {
-              method: "POST",
-              headers: {
-                "X-CSRFToken": getCookie("csrftoken"),
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              mode: "same-origin",
-              body: JSON.stringify(g),
-            });
+            c = await fetch(
+              "https://www.finbrowser.io/api/highlighted_articles/",
+              {
+                method: "POST",
+                headers: {
+                  "X-CSRFToken": getCookie("csrftoken"),
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                mode: "same-origin",
+                body: JSON.stringify(g),
+              }
+            );
           if (c.ok) {
             let d = await c.json();
             "highlight" == b
@@ -326,7 +329,7 @@ document.querySelectorAll(".fa-ellipsis-h").forEach((a) => {
           a.style.display = "block";
           try {
             let b = await fetch(
-              "https://finbrowser.io/api/notifications/",
+              "https://www.finbrowser.io/api/notifications/",
               get_fetch_settings("PUT")
             );
             b.ok ||
