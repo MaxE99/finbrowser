@@ -28,6 +28,8 @@ from apps.source.models import Source
 env = environ.Env()
 environ.Env.read_env()
 
+s3 = boto3.client('s3')
+
 @after_setup_logger.connect
 def setup_loggers(logger, *args, **kwargs):
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -235,7 +237,8 @@ def spotify_get_profile_images():
     for source in spotify_sources:
         spotify = SpotifyAPI(client_id, client_secret)
         podcaster = spotify.get_podcaster(source.external_id)
-        urllib.request.urlretrieve(podcaster['images'][0]['url'], os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.png'))
+        urllib.request.urlretrieve(podcaster['images'][0]['url'], 'temp_file.png')
+        s3.upload_file('temp_file.png', 'django-testbucket24061436', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.png'))
         favicon_path = f'home/favicons/{source.slug}.png'
         source.favicon_path = favicon_path
         source.save()
@@ -266,9 +269,7 @@ def twitter_scrape_followings():
             name = follow.name
             external_id = follow.id
             urllib.request.urlretrieve(follow.profile_image_url_https.replace("_normal", ""), 'temp_file.png')
-            s3 = boto3.client('s3')
             s3.upload_file('temp_file.png', 'django-testbucket24061436', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
-            # urllib.request.urlretrieve(follow.profile_image_url_https.replace("_normal", ""), os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
             favicon_path = f'home/favicons/{slug}.png'
             Source.objects.create(url=url, slug=slug, name=name, favicon_path=favicon_path, paywall='No', website=get_object_or_404(Website, name="Twitter"), external_id=external_id)
 
@@ -280,8 +281,8 @@ def youtube_get_profile_images():
         url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={source.external_id}&key={api_key}"
         r = requests.get(url)
         data = r.json()
-        favicon = data['items'][0]['snippet']['thumbnails']['medium']['url']
-        urllib.request.urlretrieve(favicon, os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.png'))
+        urllib.request.urlretrieve(data['items'][0]['snippet']['thumbnails']['medium']['url'], 'temp_file.png')
+        s3.upload_file('temp_file.png', 'django-testbucket24061436', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.png'))
         favicon_path = f'home/favicons/{source.slug}.png'
         source.favicon_path = favicon_path
         source.save()
