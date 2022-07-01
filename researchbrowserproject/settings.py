@@ -8,7 +8,7 @@ environ.Env.read_env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-DEBUG = False
+DEBUG = True
 if DEBUG:
     ALLOWED_HOSTS = []
     STATIC_URL = '/static/'
@@ -61,6 +61,18 @@ else:
     broker_url = os.environ.get('REDIS_URL')
     CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
+
+
+# CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ALLOWED_ORIGINS = [
+#     "https://www.finbrowser.io",
+#     "https://finbrowser.io",
+#     "http://127.0.0.1:8000",
+# ]
+
+
+
 # Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static'),
@@ -81,6 +93,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     # 'debug_toolbar',
     'django_cleanup.apps.CleanupConfig',
+    "corsheaders",
     'apps.accounts',
     'apps.home',
     'apps.registration',
@@ -115,6 +128,7 @@ SITE_ID = 2
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     # "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
