@@ -5,18 +5,26 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 # Local imports
-from researchbrowserproject.sitemaps import SourceSitemap, ListSitemap, SectorSitemap, ProfileSitemap, ContentSitemaps, HomePageSitemap, RegistrationSitemaps, SupportSitemaps
+# from researchbrowserproject.sitemaps import SourceSitemap, ListSitemap, SectorSitemap, ProfileSitemap, ContentSitemaps, HomePageSitemap, RegistrationSitemaps, SupportSitemaps
+
+# sitemaps = {
+#     'sources': SourceSitemap,
+#     'lists': ListSitemap,
+#     'sectors': SectorSitemap,
+#     'profile': ProfileSitemap,
+#     'content': ContentSitemaps,
+#     'home': HomePageSitemap,
+#     'registration': RegistrationSitemaps,
+#     'support': SupportSitemaps
+# }
+
+
+from researchbrowserproject.sitemaps import SupportSitemaps
 
 sitemaps = {
-    'sources': SourceSitemap,
-    'lists': ListSitemap,
-    'sectors': SectorSitemap,
-    'profile': ProfileSitemap,
-    'content': ContentSitemaps,
-    'home': HomePageSitemap,
-    'registration': RegistrationSitemaps,
     'support': SupportSitemaps
 }
+
 
 urlpatterns = [
     path('', include('apps.home.urls', namespace='home')),
@@ -27,6 +35,7 @@ urlpatterns = [
     path('', include('apps.list.urls', namespace='list')),
     path('', include('apps.sector.urls', namespace='sector')),
     path('registration/', include('allauth.urls')),
+    path('api/', include('apps.api.urls', namespace='api')),
     path('featodzbqawibezdahapryyiwedjydbeadefsdxnwvtlw/', admin.site.urls),
     path('sitemap.xml',
          sitemap, {'sitemaps': sitemaps},
