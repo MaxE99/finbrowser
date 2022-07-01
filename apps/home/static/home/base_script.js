@@ -43,7 +43,6 @@ function get_fetch_settings(inputMethod) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    // mode: "no-cors",
     mode: "same-origin",
   };
   return settings;
@@ -81,7 +80,7 @@ document
       if (search_term && search_term.replaceAll(/\s/g, "") != "") {
         try {
           const res = await fetch(
-            `http://127.0.0.1:8000/api/search_site/${search_term}`,
+            `https://www.finbrowser.io/api/search_site/${search_term}`,
             get_fetch_settings("GET")
           );
           if (!res.ok) {
@@ -110,7 +109,7 @@ document
             if (context[1].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Sources</div>`;
               context[1].forEach((source) => {
-                const sourceRes = `<div class="searchResult"><img src="/static/${source.favicon_path}"><span>${source.name}</span><a href="../../source/profile/${source.slug}"></a></div>`;
+                const sourceRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}"><span>${source.name}</span><a href="../../source/${source.slug}"></a></div>`;
                 results_list.innerHTML += sourceRes;
               });
             }
@@ -120,7 +119,7 @@ document
                 let xfavicon = context[3][i];
                 let xtitle = context[2][i].title;
                 let xlink = context[2][i].link;
-                const articleRes = `<div class="searchResult"><img src="/static/${xfavicon}"><span>${xtitle}</span><a href="${xlink}"></a></div>`;
+                const articleRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${xfavicon}"><span>${xtitle}</span><a href="${xlink}"></a></div>`;
                 results_list.innerHTML += articleRes;
               }
             }
