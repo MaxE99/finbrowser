@@ -216,7 +216,7 @@ document
           ""
         );
         const res = await fetch(
-          `http://127.0.0.1:8000/api/notifications/${notifications_id}/`,
+          `https://www.finbrowser.io/api/notifications/${notifications_id}/`,
           get_fetch_settings("DELETE")
         );
         if (!res.ok) {

@@ -25,7 +25,7 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
     "articleSearchSettings",
     JSON.stringify(articleSearchSettings)
   );
-  window.location = `https://www.finbrowser.io/articles/${timeframe}/${sector}/${paywall}/${source}`;
+  window.location = `https://www.finbrowser.io/content/${timeframe}/${sector}/${paywall}/${source}`;
 });
 
 // Autocomplete for search
@@ -49,7 +49,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
             let favicon = context[1][i];
             let title = context[0][i].title;
             let link = context[0][i].link;
-            const articleRes = `<div class="searchResult"><img src="/static/${favicon}"><span>${title}</span><a href="${link}"></a></div>`;
+            const articleRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${favicon}"><span>${title}</span><a href="${link}"></a></div>`;
             results_list.innerHTML += articleRes;
           }
         }
