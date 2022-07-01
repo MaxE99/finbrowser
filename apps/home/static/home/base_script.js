@@ -43,8 +43,8 @@ function get_fetch_settings(inputMethod) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    mode: "no-cors",
-    // mode: "same-origin",
+    // mode: "no-cors",
+    mode: "same-origin",
   };
   return settings;
 }
@@ -81,7 +81,7 @@ document
       if (search_term && search_term.replaceAll(/\s/g, "") != "") {
         try {
           const res = await fetch(
-            `https://www.finbrowser.io/api/search_site/${search_term}`,
+            `http://127.0.0.1:8000/api/search_site/${search_term}`,
             get_fetch_settings("GET")
           );
           if (!res.ok) {
