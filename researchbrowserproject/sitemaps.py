@@ -15,89 +15,89 @@ class SupportSitemaps(Sitemap):
 
     def items(self):
         return [
-            'support:faq', 'support:report-bug', 'support:suggestions',
+            'support:report-bug', 'support:suggestions',
             'support:privacy-policy', 'support:cookie-statement',
             'support:terms-of-service', 'support:suggest-sources',
-            'support:about', 'support:sitemap'
+            'support:contact'
         ]
 
     def location(self, item):
         return reverse(item)
 
 
-class ProfileSitemap(Sitemap):
+# class ProfileSitemap(Sitemap):
 
-    changefreq = "daily"
-    priority = 0.5
-    protocol = 'https'
+#     changefreq = "daily"
+#     priority = 0.5
+#     protocol = 'https'
 
-    def items(self):
-        return Profile.objects.all()
-
-
-class RegistrationSitemaps(Sitemap):
-    changefreq = "monthly"
-    priority = 0.4
-    protocol = 'https'
-
-    def items(self):
-        return ['account_login', 'account_signup']
-
-    def location(self, item):
-        return reverse(item)
+#     def items(self):
+#         return Profile.objects.all()
 
 
-class SourceSitemap(Sitemap):
+# class RegistrationSitemaps(Sitemap):
+#     changefreq = "monthly"
+#     priority = 0.4
+#     protocol = 'https'
 
-    changefreq = "hourly"
-    priority = 1.0
-    protocol = 'https'
+#     def items(self):
+#         return ['account_login', 'account_signup']
 
-    def items(self):
-        return Source.objects.all()
-
-
-class ListSitemap(Sitemap):
-
-    changefreq = "hourly"
-    priority = 0.9
-    protocol = 'https'
-
-    def items(self):
-        return List.objects.filter(is_public=True)
+#     def location(self, item):
+#         return reverse(item)
 
 
-class SectorSitemap(Sitemap):
+# class SourceSitemap(Sitemap):
 
-    changefreq = "hourly"
-    priority = 0.8
-    protocol = 'https'
+#     changefreq = "hourly"
+#     priority = 1.0
+#     protocol = 'https'
 
-    def items(self):
-        return Sector.objects.all()
-
-
-class ContentSitemaps(Sitemap):
-
-    changefreq = "hourly"
-    priority = 1.0
-    protocol = 'https'
-
-    def items(self):
-        return ['list:lists', 'sector:sectors', 'article:articles']
-
-    def location(self, item):
-        return reverse(item)
+#     def items(self):
+#         return Source.objects.all()
 
 
-class HomePageSitemap(Sitemap):
+# class ListSitemap(Sitemap):
 
-    changefreq = "weekly"
-    priority = 1.0
-    protocol = 'https'
+#     changefreq = "hourly"
+#     priority = 0.9
+#     protocol = 'https'
 
-    def items(self):
-        return ['home:main']
+#     def items(self):
+#         return List.objects.filter(is_public=True)
 
-    def location(self, item):
-        return reverse(item)
+
+# class SectorSitemap(Sitemap):
+
+#     changefreq = "hourly"
+#     priority = 0.8
+#     protocol = 'https'
+
+#     def items(self):
+#         return Sector.objects.all()
+
+
+# class ContentSitemaps(Sitemap):
+
+#     changefreq = "hourly"
+#     priority = 1.0
+#     protocol = 'https'
+
+#     def items(self):
+#         return ['list:lists', 'sector:sectors', 'article:articles']
+
+#     def location(self, item):
+#         return reverse(item)
+
+
+# class HomePageSitemap(Sitemap):
+
+#     changefreq = "weekly"
+#     priority = 1.0
+#     protocol = 'https'
+
+#     def items(self):
+#         return ['home:main']
+
+#     def location(self, item):
+#         return reverse(item)

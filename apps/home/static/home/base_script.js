@@ -43,7 +43,8 @@ function get_fetch_settings(inputMethod) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    mode: "same-origin",
+    mode: "no-cors",
+    // mode: "same-origin",
   };
   return settings;
 }
