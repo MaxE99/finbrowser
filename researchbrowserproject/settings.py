@@ -24,6 +24,8 @@ if DEBUG:
             'PORT': '5432',
         }
     }
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
+    MEDIA_URL = '/uploads/'
 else:
     SECRET_KEY =  os.environ.get('SECRET_KEY')
     ALLOWED_HOSTS = ['researchbrowser.herokuapp.com', '.finbrowser.io']

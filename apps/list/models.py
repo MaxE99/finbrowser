@@ -8,14 +8,18 @@ from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.core.validators import MaxLengthValidator
+from django.core.files.uploadedfile import InMemoryUploadedFile
 # Python imports
 import os
+from io import BytesIO
+import sys
+from PIL import Image
 # Local imports
 from apps.logic.services import main_website_source_set
 from apps.list.managers import ListManager, ListRatingManager
 from apps.source.models import Source
 from apps.article.models import Article
-
+# New Imports
 
 User = get_user_model()
 
@@ -50,13 +54,23 @@ class List(models.Model):
     def get_ammount_of_ratings(self):
         return ListRating.objects.get_ammount_of_ratings(self.list_id)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__original_list_pic = self.list_pic
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        if self._state.adding is False:
+        if self.__original_list_pic != self.list_pic:
+            im = Image.open(self.list_pic)
+            output = BytesIO()
+            im = im.resize((175, 175))
+            im.save(output, format='JPEG', quality=99)
+            output.seek(0)
+            self.list_pic = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.list_pic.name.split('.')[0], 'image/jpeg', sys.getsizeof(output), None)
+        elif self._state.adding is False:
             instance = main_website_source_set(self)
             super(List, instance).save(*args, **kwargs)
-        else:
-            super(List, self).save(*args, **kwargs)
+        super(List, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('list:list-details', kwargs={'profile_slug': self.creator.profile.slug ,'list_slug': self.slug})

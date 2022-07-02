@@ -7,7 +7,6 @@ import html
 # Local import
 from apps.logic.selectors import article_components_get
 
-
 def main_website_source_set(instance):
     """If more than 50% of sources come from one website field main_website_source is set to this website"""
     websites = {'Other': 0, 'SeekingAlpha':0, 'Spotify':0, 'Substack':0, 'Twitter':0, 'YouTube':0}
