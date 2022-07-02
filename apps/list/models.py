@@ -22,7 +22,7 @@ User = get_user_model()
 
 def create_list_pic_name(self, filename):
     path = "list_pic/"
-    format = f"{self.creator} - {filename}"
+    format = f"{self.creator.username} - {filename}"
     return os.path.join(path, format)
 
 class List(models.Model):
