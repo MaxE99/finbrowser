@@ -64,9 +64,9 @@ class List(models.Model):
             im = Image.open(self.list_pic)
             output = BytesIO()
             im = im.resize((175, 175))
-            im.save(output, format='JPEG', quality=99)
+            im.save(output, format='WEBP', quality=99)
             output.seek(0)
-            self.list_pic = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.list_pic.name.split('.')[0], 'image/jpeg', sys.getsizeof(output), None)
+            self.list_pic = InMemoryUploadedFile(output, 'ImageField', "%s.webp" % self.list_pic.name.split('.')[0], 'image/webp', sys.getsizeof(output), None)
         elif self._state.adding is False:
             instance = main_website_source_set(self)
             super(List, instance).save(*args, **kwargs)
