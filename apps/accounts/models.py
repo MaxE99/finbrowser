@@ -114,7 +114,7 @@ def create_profile(sender, instance, created, **kwargs):
 
 def create_profile_pic_name(self, filename):
     path = "profile_pics/"
-    format = f"{self.user} - {filename}"
+    format = f"{self.user.username} - {filename}"
     return os.path.join(path, format)
 
 class Profile(models.Model):
