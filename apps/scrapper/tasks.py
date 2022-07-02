@@ -154,10 +154,6 @@ def scrape_twitter():
                 continue
         last_id = status.id
     cache.set('last_id', last_id)
-    for notification_message in notification_messages:
-        if (now() - notification_message.date) > timedelta(hours=24):
-            notification_message.delete()
-
 
 @shared_task
 def scrape_substack():
@@ -288,3 +284,9 @@ def youtube_get_profile_images():
         source.save()
 
 
+@shared_task
+def old_notifications_delete():
+    notification_messages = NotificationMessage.objects.all()
+    for notification_message in notification_messages:
+        if (now() - notification_message.date) > timedelta(hours=24):
+            notification_message.delete()
