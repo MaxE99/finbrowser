@@ -8,8 +8,12 @@ from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.validators import MaxLengthValidator
+from django.core.files.uploadedfile import InMemoryUploadedFile
 # Python imports
 import os
+from io import BytesIO
+import sys
+from PIL import Image
 # Local imports
 from apps.accounts.validators import validate_domain_available
 
@@ -125,8 +129,19 @@ class Profile(models.Model):
     profile_pic = models.ImageField(null=True, blank=True, upload_to=create_profile_pic_name)
     account_type = models.CharField(max_length=50, choices=ACCOUNT_TYPES, default="Standard")
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__original_profile_pic = self.profile_pic
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.user.username)
+        if self.__original_profile_pic != self.profile_pic:
+            im = Image.open(self.profile_pic)
+            output = BytesIO()
+            im = im.resize((175, 175))
+            im.save(output, format='JPEG', quality=99)
+            output.seek(0)
+            self.profile_pic = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.profile_pic.name.split('.')[0], 'image/jpeg', sys.getsizeof(output), None)
         super(Profile, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
