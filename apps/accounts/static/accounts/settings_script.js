@@ -64,17 +64,20 @@ async function deleteSocialLinks(e) {
   }
 }
 
+//delete profile pic
 document
   .querySelector(".removeProfilePicButton")
   .addEventListener("click", async () => {
-    const user = document.querySelector(".emailContainer").id;
+    const user = document
+      .querySelector(".emailContainer")
+      .id.replace("user_profile_id_", "");
     try {
       const res = await fetch(
         `https://www.finbrowser.io/api/profiles/${user}/profile_pic_delete/`,
         get_fetch_settings("DELETE")
       );
       if (!res.ok) {
-        showMessage("Error: List couldn't be filtered!", "Error");
+        showMessage("Error: Profile picture could not be deleted!", "Error");
       } else {
         const context = await res.json();
         showMessage(context, "Remove");

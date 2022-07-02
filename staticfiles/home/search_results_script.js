@@ -58,7 +58,7 @@ document
             if (context[1].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Sources</div>`;
               context[1].forEach((source) => {
-                const sourceRes = `<div class="searchResult"><img src="/static/${source.favicon_path}"><span>${source.name}</span><a href="../../source/profile/${source.slug}"></a></div>`;
+                const sourceRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}"><span>${source.name}</span><a href="../../source/${source.slug}"></a></div>`;
                 results_list.innerHTML += sourceRes;
               });
             }
@@ -68,7 +68,7 @@ document
                 let xfavicon = context[3][i];
                 let xtitle = context[2][i].title;
                 let xlink = context[2][i].link;
-                const articleRes = `<div class="searchResult"><img src="/static/${xfavicon}"><span>${xtitle}</span><a href="${xlink}"></a></div>`;
+                const articleRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${xfavicon}"><span>${xtitle}</span><a href="${xlink}"></a></div>`;
                 results_list.innerHTML += articleRes;
               }
             }

@@ -1,6 +1,6 @@
 // Open create list menu in slider
 document
-  .querySelector(".interactionWrapper .createListButton")
+  .querySelector(".sliderWrapper .interactionWrapper .createListButton")
   .addEventListener("click", () => {
     if (check_device_width_below(500)) {
       document.querySelector(".smartphoneCreateListMenu").style.display =
@@ -28,33 +28,35 @@ if (document.querySelector(".addSourcesButton")) {
       document.querySelector(".smartphoneAddSourcesForm").style.display =
         "flex";
     } else {
-      document.querySelector(".addSourcesForm").style.display = "flex";
+      document.querySelector(
+        ".interactionWrapper .addSourcesForm"
+      ).style.display = "flex";
     }
   });
 }
 
 //close add sources menu
 document
-  .querySelector(".addSourcesForm .closeFormContainerButton")
-  .addEventListener("click", () => {
-    document.querySelector(".addSourcesForm").style.display = "none";
+  .querySelectorAll(".addSourcesForm .closeFormContainerButton")
+  .forEach((element) => {
+    element.addEventListener("click", () => {
+      element.parentElement.parentElement.parentElement.querySelector(
+        ".addSourcesForm"
+      ).style.display = "none";
+    });
   });
 
 // add Sources Search
 let selected_sources = [];
-document
-  .querySelector(".addSourcesForm #textInput")
-  .addEventListener("keyup", async function (e) {
-    let search_term = document.querySelector(
-      ".addSourcesForm #textInput"
-    ).value;
-    let results_list = document.querySelector(
+document.querySelectorAll(".addSourcesForm #textInput").forEach((element) => {
+  element.addEventListener("keyup", async function (e) {
+    let search_term = element.value;
+    let results_list = element.parentElement.querySelector(
       ".addSourcesForm #searchResultsContainer"
     );
-    let selected_list = document.querySelector(
+    let selected_list = element.parentElement.querySelector(
       ".addSourcesForm .selectionContainer"
     );
-    // die art an list_id heranzukommen unterscheidet sich überall von daher muss ich das anpassen, wenn ich refactore und alles zusammenlege
     if (search_term && search_term.replaceAll(/\s/g, "") != "") {
       results_list.style.display = "block";
       selected_list.style.display = "none";
@@ -77,7 +79,7 @@ document
                 const searchResult = document.createElement("div");
                 searchResult.classList.add("searchResult");
                 const resultImage = document.createElement("img");
-                resultImage.src = `/static/${source.favicon_path}`;
+                resultImage.src = `https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}`;
                 const sourceName = document.createElement("span");
                 sourceName.innerText = source.name;
                 sourceName.id = `source_id_${source.source_id}`;
@@ -110,8 +112,7 @@ document
                     selected_list.appendChild(searchResult);
                     results_list.style.display = "none";
                     selected_list.style.display = "block";
-                    document.querySelector(".addSourcesForm #textInput").value =
-                      "";
+                    element.value = "";
                   }
                 );
               }
@@ -126,30 +127,33 @@ document
       selected_list.style.display = "block";
     }
   });
+});
 
 // add/confirm sources to user
 document
-  .querySelector(".addSourcesForm .formSubmitButton")
-  .addEventListener("click", async () => {
-    if (selected_sources.length) {
-      try {
-        const res = await fetch(
-          `https://www.finbrowser.io/api/sources/subscribe_to_sources/${selected_sources}/`,
-          get_fetch_settings("POST")
-        );
-        if (!res.ok) {
-          showMessage("Error: Network request failed unexpectedly!", "Error");
-        } else {
-          const context = await res.json();
-          showMessage(context, "Success");
-          window.location.reload();
+  .querySelectorAll(".addSourcesForm .formSubmitButton")
+  .forEach((element) => {
+    element.addEventListener("click", async () => {
+      if (selected_sources.length) {
+        try {
+          const res = await fetch(
+            `https://www.finbrowser.io/api/sources/subscribe_to_sources/${selected_sources}/`,
+            get_fetch_settings("POST")
+          );
+          if (!res.ok) {
+            showMessage("Error: Network request failed unexpectedly!", "Error");
+          } else {
+            const context = await res.json();
+            showMessage(context, "Success");
+            window.location.reload();
+          }
+        } catch (e) {
+          // showMessage("Error: Unexpected error has occurred!", "Error");
         }
-      } catch (e) {
-        // showMessage("Error: Unexpected error has occurred!", "Error");
+      } else {
+        showMessage("You need to select sources!", "Error");
       }
-    } else {
-      showMessage("You need to select sources!", "Error");
-    }
+    });
   });
 
 // add list Search
@@ -160,27 +164,33 @@ if (document.querySelector(".addListsButton")) {
     if (check_device_width_below(500)) {
       document.querySelector(".smartphoneAddListsForm").style.display = "flex";
     } else {
-      document.querySelector(".addListsForm").style.display = "flex";
+      document.querySelector(
+        ".interactionWrapper .addListsForm"
+      ).style.display = "flex";
     }
   });
 }
 
 //close add lists menu
 document
-  .querySelector(".addListsForm .closeFormContainerButton")
-  .addEventListener("click", () => {
-    document.querySelector(".addListsForm").style.display = "none";
+  .querySelectorAll(".addListsForm .closeFormContainerButton")
+  .forEach((element) => {
+    element.addEventListener("click", () => {
+      element.parentElement.parentElement.parentElement.querySelector(
+        ".addListsForm"
+      ).style.display = "none";
+    });
   });
 
+// add lists
 let selected_lists = [];
-document
-  .querySelector(".addListsForm #textInput")
-  .addEventListener("keyup", async function (e) {
-    let search_term = document.querySelector(".addListsForm #textInput").value;
-    let results_list = document.querySelector(
+document.querySelectorAll(".addListsForm #textInput").forEach((element) => {
+  element.addEventListener("keyup", async function (e) {
+    let search_term = element.value;
+    let results_list = element.parentElement.querySelector(
       ".addListsForm #searchResultsContainer"
     );
-    let selected_list = document.querySelector(
+    let selected_list = element.parentElement.querySelector(
       ".addListsForm .selectionContainer"
     );
     if (search_term && search_term.replaceAll(/\s/g, "") != "") {
@@ -243,8 +253,7 @@ document
                     selected_list.appendChild(searchResult);
                     results_list.style.display = "none";
                     selected_list.style.display = "block";
-                    document.querySelector(".addListsForm #textInput").value =
-                      "";
+                    element.value = "";
                   }
                 );
               }
@@ -259,11 +268,11 @@ document
       selected_list.style.display = "block";
     }
   });
+});
 
 // add/confirm lists
-document
-  .querySelector(".addListsForm button")
-  .addEventListener("click", async () => {
+document.querySelectorAll(".addListsForm button").forEach((element) => {
+  element.addEventListener("click", async () => {
     if (selected_lists.length) {
       for (let i = 0, j = selected_lists.length; i < j; i++) {
         try {
@@ -286,6 +295,7 @@ document
       showMessage("You need to select lists!", "Error");
     }
   });
+});
 
 // open add external link menu
 if (document.querySelector(".addExternalLinkButton")) {
