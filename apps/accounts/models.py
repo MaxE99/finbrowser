@@ -139,9 +139,9 @@ class Profile(models.Model):
             im = Image.open(self.profile_pic)
             output = BytesIO()
             im = im.resize((175, 175))
-            im.save(output, format='JPEG', quality=99)
+            im.save(output, format='WEBP', quality=99)
             output.seek(0)
-            self.profile_pic = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.profile_pic.name.split('.')[0], 'image/jpeg', sys.getsizeof(output), None)
+            self.profile_pic = InMemoryUploadedFile(output, 'ImageField', "%s.webp" % self.profile_pic.name.split('.')[0], 'image/webp', sys.getsizeof(output), None)
         super(Profile, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
