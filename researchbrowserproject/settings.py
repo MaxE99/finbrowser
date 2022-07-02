@@ -13,8 +13,6 @@ if DEBUG:
     ALLOWED_HOSTS = []
     STATIC_URL = '/static/'
     SECRET_KEY = env('SECRET_KEY')
-    # MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
-    # MEDIA_URL = '/uploads/'
     FAVICON_FILE_DIRECTORY =  os.path.join(BASE_DIR, 'apps/home/static/home/favicons')
     DATABASES = {
         'default': {
