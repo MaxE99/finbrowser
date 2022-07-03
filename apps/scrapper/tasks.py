@@ -283,10 +283,12 @@ def youtube_get_profile_images():
         source.favicon_path = favicon_path
         source.save()
 
-
 @shared_task
 def old_notifications_delete():
     notification_messages = NotificationMessage.objects.all()
     for notification_message in notification_messages:
         if (now() - notification_message.date) > timedelta(hours=24):
             notification_message.delete()
+        else:
+            break
+            
