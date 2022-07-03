@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 # Local imports
-from researchbrowserproject.sitemaps import ProfileSitemap, HomePageSitemap, SectorSitemap, RegistrationSitemaps, SupportSitemaps, SourceSitemap, ListSitemap, ContentSitemaps
+from researchbrowserproject.sitemaps import ProfileSitemap, HomePageSitemap, SectorSitemap, RegistrationSitemaps, SourceSitemap, ListSitemap, ContentSitemaps
 
 sitemaps = {
     'sources': SourceSitemap,
@@ -15,7 +15,6 @@ sitemaps = {
     'content': ContentSitemaps,
     'home': HomePageSitemap,
     'registration': RegistrationSitemaps,
-    'support': SupportSitemaps
 }
 
 

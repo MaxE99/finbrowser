@@ -3,7 +3,11 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'home/min_main_style.css' %}">
-<title>ResearchBrowser | Research Sources For Investors</title>
+<title>FinBrowser | Research Sources For Investors</title>
+<meta name="description" content="Good investment decisions are only possible with well-founded analysis. Unfortunately,
+Wall Street has long had a monopoly on great research. However, that has changed in the last decade and now the
+open web has become home to many experts freely sharing their investing knowledge with the world. With
+FinBrowser, you can find and manage these sources.">
 {% endblock %}
 {% block content %}
 <div class="firstSection">
@@ -27,8 +31,8 @@
         analysis. Unfortunately,
         Wall Street has long had a monopoly on great research. However, that has changed in the last decade and now the
         open web has become home to many experts freely sharing their investing knowledge with the world. With
-        ResearchBrowser, you can find and manage these sources.</div>
-    <a href="{% url 'account_signup' %}" class="registrationButton">Join ResearchBrowser</a>
+        FinBrowser, you can find and manage these sources.</div>
+    <a href="{% url 'account_signup' %}" class="registrationButton">Join FinBrowser</a>
     {% endif %}
 </div>
 <section class="coreFeaturesWrapper">
