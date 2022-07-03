@@ -61,13 +61,6 @@ else:
     broker_url = os.environ.get('REDIS_URL')
     CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
-
-# Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-#     # os.path.join(BASE_DIR, 'home/static/home/favicons')
-# ]
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

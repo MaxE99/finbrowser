@@ -3,7 +3,8 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'accounts/min_profile_style.css' %}">
-<title>{{ profile.user.username }} Userprofile | ResearchBrowser</title>
+<title>{{ profile.user.username }} Userprofile | FinBrowser</title>
+<meta name="description" content="FinBrowser profile of {{ profile.user.username }}.">
 {% endblock %}
 
 {% block content %}

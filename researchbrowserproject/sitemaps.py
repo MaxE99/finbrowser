@@ -7,23 +7,6 @@ from apps.source.models import Source
 from apps.sector.models import Sector
 from apps.list.models import List
 
-class SupportSitemaps(Sitemap):
-
-    changefreq = "monthly"
-    priority = 0.2
-    protocol = 'https'
-
-    def items(self):
-        return [
-            'support:report-bug', 'support:suggestions',
-            'support:privacy-policy', 'support:cookie-statement',
-            'support:terms-of-service', 'support:suggest-sources',
-            'support:contact'
-        ]
-
-    def location(self, item):
-        return reverse(item)
-
 
 class ProfileSitemap(Sitemap):
 
