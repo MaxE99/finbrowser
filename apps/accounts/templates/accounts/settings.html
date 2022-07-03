@@ -3,7 +3,7 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style.css' %}">
-<title>ResearchBrowser | Settings</title>
+<title>FinBrowser | Settings</title>
 {% endblock %}
 {% block content %}
 
@@ -48,9 +48,10 @@
             {% for social in social_links %}
             <div class="existingSocialContainer">
                 <img class="{{ social.website.name }}" src="{% static social.website.logo %}"
-                    id="existing_website_id_{{ social.website.id }}" alt="">
+                    id="existing_website_id_{{ social.website.website_id }}" alt="">
                 <input type="text" value="{{ social.url }}">
-                <button type="button" class="removeSocialLinkButton" id="social_link_id_{{ social.id }}">Remove</button>
+                <button type="button" class="removeSocialLinkButton"
+                    id="social_link_id_{{ social.social_link_id }}">Remove</button>
                 <button type="button" class="saveSocialLinkChanges">Save</button>
             </div>
             {% endfor %}
@@ -62,7 +63,7 @@
                             <ul>
                                 {% for website in websites %}
                                 <li><img class="{{ website.name }}" src="{% static website.favicon %}" alt=""
-                                        id="website_id_{{ website.id }}"></li>
+                                        id="website_id_{{ website.website_id }}"></li>
                                 {% endfor %}
                             </ul>
                         </details>

@@ -1,6 +1,7 @@
 {% extends 'home/base.html' %} {% load static %} {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style.css' %}" />
-<title>{{ list.name }} List | ResearchBrowser</title>
+<title>{{ list.name }} List | FinBrowser</title>
+<meta name="description" content="FinBrowser list created by {{ list.creator.username }}">
 {% endblock %} {% block content %}
 
 <form action="" class="changeListForm" method="POST" enctype="multipart/form-data">
