@@ -8,7 +8,6 @@ from django.http import HttpResponseRedirect
 from apps.logic.pure_logic import paginator_create
 from apps.base_logger import logger
 from apps.mixins import BaseMixin, AddExternalArticleFormMixin, CreateListFormMixin
-from apps.list.models import List
 from apps.accounts.models import Website
 from apps.source.models import Source
 from apps.list.models import List 

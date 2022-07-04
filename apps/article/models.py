@@ -33,3 +33,39 @@ class HighlightedArticle(models.Model):
 
     def __str__(self):
         return f'{self.user} - {self.article}'
+
+
+class ArticleOfTheWeek(models.Model):
+    arotw_id = models.AutoField(primary_key=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return f'Article of the week - {self.article}'
+
+class AudioOfTheWeek(models.Model):
+    auotw_id = models.AutoField(primary_key=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return f'Audio of the week - {self.article}'
+
+class TrendingTopicArticle(models.Model):
+    tta_id = models.AutoField(primary_key=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)  
+
+    def __str__(self):
+        return f'Trending Topic - {self.article}'    
+
+class EnergyCrisisTweet(models.Model):
+    ect_id = models.AutoField(primary_key=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return f'Energy Crisis Tweet - {self.article}'
+
+class MacroTweets(models.Model):
+    mt_id = models.AutoField(primary_key=True)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return f'Macro Tweet - {self.article}'
