@@ -22,27 +22,36 @@ def main_website_source_set(instance):
     return instance
 
 
-def notifications_create(source, article, notifications, notification_messages):
-    from apps.home.models import NotificationMessage
-    if notifications.filter(source=source).exists():
-        source_notifications = notifications.filter(source=source)
-        for source_notification in source_notifications:
-            if notification_messages.filter(article=article, notification__user=source_notification.user).exists():
-                continue
-            else:
-                NotificationMessage.objects.create(notification=source_notification, article=article, date=now())
-    lists_that_include_source = source.lists.all()
-    for list in lists_that_include_source:
-        if notifications.filter(list=list).exists():
-            list_notifications = notifications.filter(list=list)
-            for list_notification in list_notifications:
-                if notification_messages.filter(article=article, notification__user=list_notification.user).exists():
-                    continue
-                else:
-                    NotificationMessage.objects.create(notification=list_notification, article=article, date=now())
+def notifications_create(articles):
+    from apps.home.models import Notification, NotificationMessage
+    notifications = Notification.objects.all()
+    notification_messages = NotificationMessage.objects.all().select_related("notification__user")
+    notifications_creation_list = []
+    for article in articles:
+        if notifications.filter(source=article.source).exists():
+            source_notifications = notifications.filter(source=article.source)
+            for source_notification in source_notifications:
+                if notification_messages.filter(article=article, notification__user=source_notification.user).exists() == False:
+                    notifications_creation_list.append({"notification": source_notification, 'article': article, 'date': now()})
+        lists_that_include_source = article.source.lists.all()
+        for list in lists_that_include_source:
+            if notifications.filter(list=list).exists():
+                list_notifications = notifications.filter(list=list)
+                for list_notification in list_notifications:
+                    if notification_messages.filter(article=article, notification__user=list_notification.user).exists() == False:
+                        notifications_creation_list.append({"notification": source_notification, 'article': article, 'date': now()})
+    new_notification_messages = [
+        NotificationMessage(
+            notification=new_notification['notification'],
+            article=new_notification['article'],
+            date=new_notification['date'],
+        )
+        for new_notification in notifications_creation_list
+    ]
+    NotificationMessage.objects.bulk_create(new_notification_messages)
 
 
-def create_articles_from_feed(source, feed_url, articles, notifications, notification_messages):
+def create_articles_from_feed(source, feed_url, articles):
     from apps.article.models import Article
     req = Request(feed_url, headers={'User-Agent': 'Mozilla/5.0'})
     website_data = urlopen(req)
@@ -56,7 +65,7 @@ def create_articles_from_feed(source, feed_url, articles, notifications, notific
             if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
                 break
             else:
-                article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
-                notifications_create(source, article, notifications, notification_messages)
+                articles = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
+                notifications_create(articles)
         except:
             continue   
