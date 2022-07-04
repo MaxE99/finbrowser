@@ -42,7 +42,7 @@ class ArticleSearchView(ListView, BaseMixin):
 
     def get_queryset(self):
         sector = get_object_or_404(Sector, name=self.kwargs['sector']).sector_id if self.kwargs['sector'] != "All" else "All"
-        source = get_object_or_404(Website, name=self.kwargs['source']).id if self.kwargs['source'] != "All" else "All"
+        source = get_object_or_404(Website, name=self.kwargs['source']).website_id if self.kwargs['source'] != "All" else "All"
         return articles_filter(self.kwargs['timeframe'], sector, self.kwargs['paywall'], source, Article.objects.select_related('source').filter(external_source=None))
 
     def get_context_data(self, **kwargs):
