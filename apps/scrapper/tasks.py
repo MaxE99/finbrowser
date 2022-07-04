@@ -134,36 +134,41 @@ def scrape_twitter():
         statuses = api.home_timeline(count=200, tweet_mode='extended', since_id=last_id)
     else:
         statuses = api.home_timeline(count=200, tweet_mode='extended')
-    articles = Article.objects.all()
-    sources = Source.objects.all()
-    notifications = Notification.objects.all()
-    notification_messages = NotificationMessage.objects.all().select_related("notification__user")
+    existing_tweets = Article.objects.filter(external_id__isnull=False).values_list('external_id', flat=True)
+    sources = Source.objects.all() 
+    tweet_creation_list = []
     for status in statuses:
-        if articles.filter(external_id=status.id).exists():
-            continue
-        else:
+        tweet_external_id = status.id
+        if str(tweet_external_id) not in existing_tweets:
             title = html.unescape(status.full_text)
-            link = f'https://twitter.com/{status.user.screen_name}/status/{status.id}'
+            link = f'https://twitter.com/{status.user.screen_name}/status/{tweet_external_id}'
             pub_date = status.created_at
-            if sources.filter(external_id=status.user.id).exists():
-                source = sources.get(external_id=status.user.id)
-                external_id = status.id
-                article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source, external_id=external_id)
-                notifications_create(source, article, notifications, notification_messages)
-            else:
-                continue
-        last_id = status.id
+            twitter_user_id = status.user.id
+            if sources.filter(external_id=twitter_user_id).exists():
+                tweet_creation_list.append({'source': twitter_user_id, 'title': title, 'link': link, 'pub_date': pub_date, 'external_id': tweet_external_id})
+        last_id = tweet_external_id
     cache.set('last_id', last_id)
+    new_articles = [
+        Article(
+            title=new_tweet['title'],
+            link=new_tweet['link'],
+            pub_date=new_tweet['pub_date'],
+            source=sources.get(external_id=new_tweet['source']),
+            external_id=new_tweet['external_id']
+        )
+        for new_tweet in tweet_creation_list
+    ]
+    articles = Article.objects.bulk_create(new_articles)
+    notifications_create(articles)
+    
 
 @shared_task
 def scrape_substack():
     substack_sources = Source.objects.filter(website=get_object_or_404(Website, name="Substack"))
     articles = Article.objects.all()
-    notifications = Notification.objects.all()
-    notification_messages = NotificationMessage.objects.all().select_related("notification__user")
     for source in substack_sources:
         feed_url = f'{source.url}feed'
-        create_articles_from_feed(source, feed_url, articles, notifications, notification_messages)
+        create_articles_from_feed(source, feed_url, articles)
         time.sleep(30)
 
 
@@ -171,11 +176,9 @@ def scrape_substack():
 def scrape_seekingalpha():
     seekingalpha_sources = Source.objects.filter(website=get_object_or_404(Website, name="SeekingAlpha"))
     articles = Article.objects.all()
-    notifications = Notification.objects.all()
-    notification_messages = NotificationMessage.objects.all().select_related("notification__user")
     for source in seekingalpha_sources:
         feed_url = f'{source.url}.xml'
-        create_articles_from_feed(source, feed_url, articles, notifications, notification_messages)
+        create_articles_from_feed(source, feed_url, articles)
         time.sleep(60)
 
 
@@ -185,8 +188,7 @@ def scrape_spotify():
     client_secret = os.environ.get('SPOTIFY_CLIENT_SECRET')
     spotify_sources = Source.objects.filter(website=get_object_or_404(Website, name="Spotify"))
     articles = Article.objects.all()
-    notifications = Notification.objects.all()
-    notification_messages = NotificationMessage.objects.all().select_related("notification__user")
+    spotify_creation_list = []
     for source in spotify_sources:
         spotify = SpotifyAPI(client_id, client_secret)
         episodes = spotify.get_episodes(source.external_id)
@@ -197,16 +199,26 @@ def scrape_spotify():
             if articles.filter(title=title, link=link, source=source).exists():
                 break
             else:
-                article = Article.objects.create(title=episode_item['name'], link=episode_item['external_urls']['spotify'], pub_date=now(), source=source)
-                notifications_create(source, article, notifications, notification_messages)
-            
+                spotify_creation_list.append({'title': title, 'link': link, 'pub_date': now(), 'source': source})
+    new_articles = [
+        Article(
+            title=new_article['title'],
+            link=new_article['link'],
+            pub_date=new_article['pub_date'],
+            source=new_article['source']
+        )
+        for new_article in spotify_creation_list
+    ]
+    articles = Article.objects.bulk_create(new_articles)
+    notifications_create(articles)
+
+
 @shared_task
 def scrape_youtube():
     api_key = os.environ.get('YOUTUBE_API_KEY')
     youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
     articles = Article.objects.all()
-    notifications = Notification.objects.all()
-    notification_messages = NotificationMessage.objects.all().select_related("notification__user")
+    youtube_creation_list = []
     for source in youtube_sources:
         url = f'https://www.googleapis.com/youtube/v3/search?key={api_key}&channelId={source.external_id}&part=snippet,id&order=date&maxResults=20'
         r = requests.get(url)
@@ -220,10 +232,21 @@ def scrape_youtube():
                 if articles.filter(title=title, pub_date=pub_date, link=link, source=source).exists():
                     break
                 else:
-                    article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
-                    notifications_create(source, article, notifications, notification_messages)
+                    youtube_creation_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
         except:
             continue
+    new_articles = [
+        Article(
+            title=new_article['title'],
+            link=new_article['link'],
+            pub_date=new_article['pub_date'],
+            source=new_article['source']
+        )
+        for new_article in youtube_creation_list
+    ]
+    articles = Article.objects.bulk_create(new_articles)
+    notifications_create(articles)
+    
 
 @shared_task
 def spotify_get_profile_images():
