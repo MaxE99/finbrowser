@@ -237,7 +237,7 @@
   cursor: pointer;
 }
 
-.checked {
+.ratedContainer .checked {
   color: var(--primary-fontColor);
 }
 
