@@ -24,10 +24,6 @@ except:
 
 # Mixins:
 
-class MainView(TemplateView, BaseMixin):
-    template_name = 'home/main.html'
-
-
 class NotificationView(TemplateView, BaseMixin):
     template_name = 'home/notifications.html'
 

@@ -5,7 +5,7 @@ from django.db.models import Sum
 class SourceManager(models.Manager):
 
     def get_subscribed_sources(self, user):
-        return self.filter(subscribers=user).order_by('name')
+        return self.filter(subscribers=user).order_by('name').only('favicon_path', 'slug', 'name')
 
     def filter_sources(self, search_term):
         return self.filter(name__istartswith=search_term).order_by('name')

@@ -43,7 +43,7 @@ class HighlightedArticlesManager(models.Manager):
         return highlighted_articles_titles
 
     def get_highlighted_articles_of_user(self, user):
-        return self.filter(user=user).select_related('article__source', 'article__source__sector', 'article__source__website').order_by('-article__pub_date')
+        return self.filter(user=user).select_related('article__source', 'article__source__sector', 'article__source__website').order_by('-article__pub_date').only('article__article_id', 'article__source__source_id', 'article__link', 'article__title', 'article__source__sector', 'article__source__website', 'article__source__favicon_path', 'article__pub_date')
 
     def get_highlighted_articles_from_user_and_website(self, user, website):
         return self.select_related('article', 'article__source', 'article__external_source', 'article__source__sector', 'article__source__website').filter(user=user, article__source__website=website).order_by('-article__pub_date')

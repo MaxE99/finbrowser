@@ -3,13 +3,495 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'home/min_main_style.css' %}">
-<title>FinBrowser | Discover</title>
+<title>FinBrowser</title>
 <meta name="description" content="Good investment decisions are only possible with well-founded analysis. Unfortunately,
 Wall Street has long had a monopoly on great research. However, that has changed in the last decade and now the
 open web has become home to many experts freely sharing their investing knowledge with the world. With
 FinBrowser, you can find and manage these sources.">
 {% endblock %}
 {% block content %}
+
+{% if articles_of_the_week %}
+<div class="categoryHeader">Articles Of The Week</div>
+<div class="articlesWrapper">
+    {% for article in articles_of_the_week %}
+    <div class="articleContainer" id="article_id_{{ article.article_id }}">
+        <div class="authorImageContainer">
+            <img src="{% static article.source.favicon_path %}" />
+            <a href="{{ article.source.get_absolute_url }}"></a>
+        </div>
+        <div class="articleInformationContainer">
+            <div class="articleTitle">{{ article.title }}
+                <span class="articleTitleTooltip">{{ article.title }}</span>
+            </div>
+            <div class="articleSectorAndDateContainer">
+                <a href="{{ article.source.sector.get_absolute_url }}">
+                    {{ article.source.sector }}</a>
+                <div class="articlePubDate">{{ article.pub_date }}</div>
+            </div>
+        </div>
+        <i class="fas fa-ellipsis-h"></i>
+        <div class="articleWebsiteLogoContainer">
+            <img class="articleWebsiteLogo" src="{% static article.source.website.logo %}" alt="">
+            <a class="articleLink" href="{{ article.link }}"></a>
+        </div>
+        <div class="articleOptionsContainer">
+            {% if request.user.is_authenticated %}
+            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
+            {% if article.title in highlighted_content_titles %}
+            <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight article</span></div>
+            {% else %}
+            <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight article</span></div>
+            {% endif %}
+            {% else %}
+            <a href="{% url 'account_login' %}" class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
+                to list</a>
+            <a href="{% url 'account_login' %}" class="addToHighlightedButton registrationLink"><i
+                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
+            {% endif %}
+        </div>
+        <div class="addToListForm">
+            <div class="formHeaderContainer">Add To Lists<i class="fas fa-times closeFormContainerButton"></i>
+            </div>
+            {% if user_lists %}
+            <div class="listSelectionContainer">
+                {% for list in user_lists %}
+                <div class="listContainer">
+                    <label for="list_id_{{ list.list_id }}">
+                        {% if article in list.articles.all %}
+                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists" checked="True"> {{ list }}
+                        {% else %}
+                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists">
+                        {{ list }}
+                        {% endif %}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="buttonsContainer">
+                <button class="saveButton">Save</button>
+                <button class="createNewListButton">Create</button>
+            </div>
+            {% else %}
+            <div class="listContainer">You haven't created any lists!</div>
+            <button class="createNewListButton createFirstList">Create First List</button>
+            {% endif %}
+        </div>
+        <div class="createListMenu articleCreateListMenu formContainer">
+            <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
+            </div>
+            <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+                {% csrf_token %} {{ add_list_form }}
+                <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+{% if energy_crisis_tweets %}
+<div class="twitterWrapper">
+    <div class="tweetsContainer twitterHalfPageContainer">
+        <div class="categoryHeader">Energy Crisis</div>
+        {% if energy_crisis_tweets %}
+        <div class="smallFormContentWrapper">
+            {% for tweet in energy_crisis_tweets %}
+            <div class="articleContainer" id="article_id_{{ tweet.article_id }}">
+                <div class="leftContentSide">
+                    <img src="{% static tweet.source.favicon_path %}" />
+                </div>
+                <div class="rightContentSide">
+                    <div class="contentInfoContainer">
+                        <div class="sourceAndWebsiteContainer">
+                            <a href="{{ tweet.source.get_absolute_url }}">{{ tweet.source.name }}</a>
+                            <img src="{% static 'home/media/twitter_logo.png' %}">
+                        </div>
+                        <i class="fas fa-ellipsis-h"></i>
+                        <div class="articleOptionsContainer">
+                            {% if request.user.is_authenticated %}
+                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
+                            {% if tweet.title in highlighted_content_titles %}
+                            <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight
+                                    article</span></div>
+                            {% else %}
+                            <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight
+                                    article</span></div>
+                            {% endif %}
+                            {% else %}
+                            <a href="{% url 'account_login' %}" class="addToListButton registrationLink"><i
+                                    class="fas fa-list"></i>Add
+                                to list</a>
+                            <a href="{% url 'account_login' %}" class="addToHighlightedButton registrationLink"><i
+                                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
+                            {% endif %}
+                        </div>
+                        <div class="addToListForm">
+                            <div class="formHeaderContainer">Add To Lists<i
+                                    class="fas fa-times closeFormContainerButton"></i>
+                            </div>
+                            {% if user_lists %}
+                            <div class="listSelectionContainer">
+                                {% for list in user_lists %}
+                                <div class="listContainer">
+                                    <label for="list_id_{{ list.list_id }}">
+                                        {% if tweet in list.articles.all %}
+                                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists"
+                                            checked="True"> {{ list }}
+                                        {% else %}
+                                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists">
+                                        {{ list }}
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="buttonsContainer">
+                                <button class="saveButton">Save</button>
+                                <button class="createNewListButton">Create</button>
+                            </div>
+                            {% else %}
+                            <div class="listContainer">You haven't created any lists!</div>
+                            <button class="createNewListButton createFirstList">Create
+                                First
+                                List</button>
+                            {% endif %}
+                        </div>
+                        <div class="createListMenu articleCreateListMenu formContainer">
+                            <div class="formHeaderContainer">Create A New List<i
+                                    class="fas fa-times closeFormContainerButton"></i>
+                            </div>
+                            <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+                                {% csrf_token %} {{ add_list_form }}
+                                <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+                            </form>
+                        </div>
+                    </div>
+                    <div class="contentBody">
+                        <p>{{ tweet.title }}</p>
+                    </div>
+                    <div class="timeContainer">
+                        <p>{{ tweet.pub_date }}</p>
+                    </div>
+                    <a class="contentLink" href="{{ tweet.link }}"></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="mostLikedTweetsContainer twitterHalfPageContainer">
+        <div class="categoryHeader">Most Liked Tweets</div>
+        {% if macro_tweets %}
+        <div class="smallFormContentWrapper">
+            {% for tweet in macro_tweets %}
+            <div class="articleContainer" id="article_id_{{ tweet.article_id }}">
+                <div class="leftContentSide">
+                    <img src="{% static tweet.source.favicon_path %}" />
+                </div>
+                <div class="rightContentSide">
+                    <div class="contentInfoContainer">
+                        <div class="sourceAndWebsiteContainer">
+                            <a href="{{ tweet.source.get_absolute_url }}">{{ tweet.source.name }}</a>
+                            <img src="{% static 'home/media/twitter_logo.png' %}">
+                        </div>
+                        <i class="fas fa-ellipsis-h"></i>
+                        <div class="articleOptionsContainer">
+                            {% if request.user.is_authenticated %}
+                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
+                            {% if tweet.title in highlighted_content_titles %}
+                            <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight
+                                    article</span></div>
+                            {% else %}
+                            <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight
+                                    article</span></div>
+                            {% endif %}
+                            {% else %}
+                            <a href="{% url 'account_login' %}" class="addToListButton registrationLink"><i
+                                    class="fas fa-list"></i>Add
+                                to list</a>
+                            <a href="{% url 'account_login' %}" class="addToHighlightedButton registrationLink"><i
+                                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
+                            {% endif %}
+                        </div>
+                        <div class="addToListForm">
+                            <div class="formHeaderContainer">Add To Lists<i
+                                    class="fas fa-times closeFormContainerButton"></i>
+                            </div>
+                            {% if user_lists %}
+                            <div class="listSelectionContainer">
+                                {% for list in user_lists %}
+                                <div class="listContainer">
+                                    <label for="list_id_{{ list.list_id }}">
+                                        {% if tweet in list.articles.all %}
+                                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists"
+                                            checked="True"> {{ list }}
+                                        {% else %}
+                                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists">
+                                        {{ list }}
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="buttonsContainer">
+                                <button class="saveButton">Save</button>
+                                <button class="createNewListButton">Create</button>
+                            </div>
+                            {% else %}
+                            <div class="listContainer">You haven't created any lists!</div>
+                            <button class="createNewListButton createFirstList">Create
+                                First
+                                List</button>
+                            {% endif %}
+                        </div>
+                        <div class="createListMenu articleCreateListMenu formContainer">
+                            <div class="formHeaderContainer">Create A New List<i
+                                    class="fas fa-times closeFormContainerButton"></i>
+                            </div>
+                            <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+                                {% csrf_token %} {{ add_list_form }}
+                                <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+                            </form>
+                        </div>
+                    </div>
+                    <div class="contentBody">
+                        <p>{{ tweet.title }}</p>
+                    </div>
+                    <div class="timeContainer">
+                        <p>{{ tweet.pub_date }}</p>
+                    </div>
+                    <a class="contentLink" href="{{ tweet.link }}"></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+
+{% if trending_topic_articles %}
+<div class="categoryHeader">Trending Topics</div>
+<div class="articlesWrapper">
+    {% for article in trending_topic_articles %}
+    <div class="articleContainer" id="article_id_{{ article.article_id }}">
+        <div class="authorImageContainer">
+            <img src="{% static article.source.favicon_path %}" />
+            <a href="{{ article.source.get_absolute_url }}"></a>
+        </div>
+        <div class="articleInformationContainer">
+            <div class="articleTitle">{{ article.title }}
+                <span class="articleTitleTooltip">{{ article.title }}</span>
+            </div>
+            <div class="articleSectorAndDateContainer">
+                <a href="{{ article.source.sector.get_absolute_url }}">
+                    {{ article.source.sector }}</a>
+                <div class="articlePubDate">{{ article.pub_date }}</div>
+            </div>
+        </div>
+        <i class="fas fa-ellipsis-h"></i>
+        <div class="articleWebsiteLogoContainer">
+            <img class="articleWebsiteLogo" src="{% static article.source.website.logo %}" alt="">
+            <a class="articleLink" href="{{ article.link }}"></a>
+        </div>
+        <div class="articleOptionsContainer">
+            {% if request.user.is_authenticated %}
+            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
+            {% if article.title in highlighted_content_titles %}
+            <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight article</span></div>
+            {% else %}
+            <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight article</span></div>
+            {% endif %}
+            {% else %}
+            <a href="{% url 'account_login' %}" class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
+                to list</a>
+            <a href="{% url 'account_login' %}" class="addToHighlightedButton registrationLink"><i
+                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
+            {% endif %}
+        </div>
+        <div class="addToListForm">
+            <div class="formHeaderContainer">Add To Lists<i class="fas fa-times closeFormContainerButton"></i>
+            </div>
+            {% if user_lists %}
+            <div class="listSelectionContainer">
+                {% for list in user_lists %}
+                <div class="listContainer">
+                    <label for="list_id_{{ list.list_id }}">
+                        {% if article in list.articles.all %}
+                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists" checked="True"> {{ list }}
+                        {% else %}
+                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists">
+                        {{ list }}
+                        {% endif %}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="buttonsContainer">
+                <button class="saveButton">Save</button>
+                <button class="createNewListButton">Create</button>
+            </div>
+            {% else %}
+            <div class="listContainer">You haven't created any lists!</div>
+            <button class="createNewListButton createFirstList">Create First List</button>
+            {% endif %}
+        </div>
+        <div class="createListMenu articleCreateListMenu formContainer">
+            <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
+            </div>
+            <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+                {% csrf_token %} {{ add_list_form }}
+                <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+<div class="sliderWrapper">
+    <div class="sliderHeader">
+        <div class="sliderHeaderTitle">Highest Rated Sources</div>
+        <div class="progressBar"></div>
+    </div>
+    <div class="sliderContentContainer">
+        <button class="handle leftHandle">
+            <div class="handleSymbol">&#8249;</div>
+        </button>
+        <div class="slider">
+            {% for source in highest_rated_sources %}
+            <div class="contentWrapper">
+                <div class="contentContainer">
+                    <div class="contentIconContainer">
+                        <img class="contentIcon" src="{% static source.favicon_path %}" alt="favicon" />
+                    </div>
+                    <a class="contentLink" href="{{ source.get_absolute_url }}"></a>
+                    <div class="contentNameContainer">
+                        <div class="contentName">{{ source.name }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="handle rightHandle">
+            <div class="handleSymbol">&#8250;</div>
+        </button>
+    </div>
+</div>
+
+
+{% if audio_of_the_week %}
+<div class="categoryHeader">Audio Of The Week</div>
+<div class="articlesWrapper">
+    {% for article in audio_of_the_week %}
+    <div class="articleContainer" id="article_id_{{ article.article_id }}">
+        <div class="authorImageContainer">
+            <img src="{% static article.source.favicon_path %}" />
+            <a href="{{ article.source.get_absolute_url }}"></a>
+        </div>
+        <div class="articleInformationContainer">
+            <div class="articleTitle">{{ article.title }}
+                <span class="articleTitleTooltip">{{ article.title }}</span>
+            </div>
+            <div class="articleSectorAndDateContainer">
+                <a href="{{ article.source.sector.get_absolute_url }}">
+                    {{ article.source.sector }}</a>
+                <div class="articlePubDate">{{ article.pub_date }}</div>
+            </div>
+        </div>
+        <i class="fas fa-ellipsis-h"></i>
+        <div class="articleWebsiteLogoContainer">
+            <img class="articleWebsiteLogo" src="{% static article.source.website.logo %}" alt="">
+            <a class="articleLink" href="{{ article.link }}"></a>
+        </div>
+        <div class="articleOptionsContainer">
+            {% if request.user.is_authenticated %}
+            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
+            {% if article.title in highlighted_content_titles %}
+            <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight article</span></div>
+            {% else %}
+            <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight article</span></div>
+            {% endif %}
+            {% else %}
+            <a href="{% url 'account_login' %}" class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
+                to list</a>
+            <a href="{% url 'account_login' %}" class="addToHighlightedButton registrationLink"><i
+                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
+            {% endif %}
+        </div>
+        <div class="addToListForm">
+            <div class="formHeaderContainer">Add To Lists<i class="fas fa-times closeFormContainerButton"></i>
+            </div>
+            {% if user_lists %}
+            <div class="listSelectionContainer">
+                {% for list in user_lists %}
+                <div class="listContainer">
+                    <label for="list_id_{{ list.list_id }}">
+                        {% if article in list.articles.all %}
+                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists" checked="True"> {{ list }}
+                        {% else %}
+                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists">
+                        {{ list }}
+                        {% endif %}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="buttonsContainer">
+                <button class="saveButton">Save</button>
+                <button class="createNewListButton">Create</button>
+            </div>
+            {% else %}
+            <div class="listContainer">You haven't created any lists!</div>
+            <button class="createNewListButton createFirstList">Create First List</button>
+            {% endif %}
+        </div>
+        <div class="createListMenu articleCreateListMenu formContainer">
+            <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
+            </div>
+            <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+                {% csrf_token %} {{ add_list_form }}
+                <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="sliderWrapper">
+    <div class="sliderHeader">
+        <div class="sliderHeaderTitle">New Sources</div>
+        <div class="progressBar"></div>
+    </div>
+    <div class="sliderContentContainer">
+        <button class="handle leftHandle">
+            <div class="handleSymbol">&#8249;</div>
+        </button>
+        <div class="slider">
+            {% for source in newest_sources %}
+            <div class="contentWrapper">
+                <div class="contentContainer">
+                    <div class="contentIconContainer">
+                        <img class="contentIcon" src="{% static source.favicon_path %}" alt="favicon" />
+                    </div>
+                    <a class="contentLink" href="{{ source.get_absolute_url }}"></a>
+                    <div class="contentNameContainer">
+                        <div class="contentName">{{ source.name }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="handle rightHandle">
+            <div class="handleSymbol">&#8250;</div>
+        </button>
+    </div>
+</div>
 
 
 

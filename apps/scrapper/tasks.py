@@ -308,10 +308,5 @@ def youtube_get_profile_images():
 
 @shared_task
 def old_notifications_delete():
-    notification_messages = NotificationMessage.objects.all()
-    for notification_message in notification_messages:
-        if (now() - notification_message.date) > timedelta(hours=24):
-            notification_message.delete()
-        else:
-            break
+    NotificationMessage.objects.filter(date__lte=now()-timedelta(hours=24)).delete()
             

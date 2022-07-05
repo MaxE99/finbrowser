@@ -6,7 +6,7 @@ from apps.source.models import Source
 from apps.article.models import ArticleOfTheWeek, AudioOfTheWeek, EnergyCrisisTweet, MacroTweets, TrendingTopicArticle
 
 
-class FeedView(TemplateView, BaseMixin):
+class MainView(TemplateView, BaseMixin):
     template_name = 'main/main.html'
 
     def get_context_data(self, **kwargs):
