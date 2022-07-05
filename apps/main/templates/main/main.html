@@ -17,23 +17,23 @@ FinBrowser, you can find and manage these sources.">
     {% for article in articles_of_the_week %}
     <div class="articleContainer" id="article_id_{{ article.article_id }}">
         <div class="authorImageContainer">
-            <img src="{% static article.source.favicon_path %}" />
-            <a href="{{ article.source.get_absolute_url }}"></a>
+            <img src="{% static article.article.source.favicon_path %}" />
+            <a href="{{ article.article.source.get_absolute_url }}"></a>
         </div>
         <div class="articleInformationContainer">
-            <div class="articleTitle">{{ article.title }}
-                <span class="articleTitleTooltip">{{ article.title }}</span>
+            <div class="articleTitle">{{ article.article.title }}
+                <span class="articleTitleTooltip">{{ article.article.title }}</span>
             </div>
             <div class="articleSectorAndDateContainer">
-                <a href="{{ article.source.sector.get_absolute_url }}">
-                    {{ article.source.sector }}</a>
-                <div class="articlePubDate">{{ article.pub_date }}</div>
+                <a href="{{ article.article.source.sector.get_absolute_url }}">
+                    {{ article.article.source.sector }}</a>
+                <div class="articlePubDate">{{ article.article.pub_date }}</div>
             </div>
         </div>
         <i class="fas fa-ellipsis-h"></i>
         <div class="articleWebsiteLogoContainer">
-            <img class="articleWebsiteLogo" src="{% static article.source.website.logo %}" alt="">
-            <a class="articleLink" href="{{ article.link }}"></a>
+            <img class="articleWebsiteLogo" src="{% static article.article.source.website.logo %}" alt="">
+            <a class="articleLink" href="{{ article.article.link }}"></a>
         </div>
         <div class="articleOptionsContainer">
             {% if request.user.is_authenticated %}
@@ -98,14 +98,14 @@ FinBrowser, you can find and manage these sources.">
         {% if energy_crisis_tweets %}
         <div class="smallFormContentWrapper">
             {% for tweet in energy_crisis_tweets %}
-            <div class="articleContainer" id="article_id_{{ tweet.article_id }}">
+            <div class="articleContainer" id="article_id_{{ tweet.article.article_id }}">
                 <div class="leftContentSide">
-                    <img src="{% static tweet.source.favicon_path %}" />
+                    <img src="{% static tweet.article.source.favicon_path %}" />
                 </div>
                 <div class="rightContentSide">
                     <div class="contentInfoContainer">
                         <div class="sourceAndWebsiteContainer">
-                            <a href="{{ tweet.source.get_absolute_url }}">{{ tweet.source.name }}</a>
+                            <a href="{{ tweet.source.get_absolute_url }}">{{ tweet.article.source.name }}</a>
                             <img src="{% static 'home/media/twitter_logo.png' %}">
                         </div>
                         <i class="fas fa-ellipsis-h"></i>
@@ -169,12 +169,12 @@ FinBrowser, you can find and manage these sources.">
                         </div>
                     </div>
                     <div class="contentBody">
-                        <p>{{ tweet.title }}</p>
+                        <p>{{ tweet.article.title }}</p>
                     </div>
                     <div class="timeContainer">
-                        <p>{{ tweet.pub_date }}</p>
+                        <p>{{ tweet.article.pub_date }}</p>
                     </div>
-                    <a class="contentLink" href="{{ tweet.link }}"></a>
+                    <a class="contentLink" href="{{ tweet.article.link }}"></a>
                 </div>
             </div>
             {% endfor %}
@@ -186,14 +186,14 @@ FinBrowser, you can find and manage these sources.">
         {% if macro_tweets %}
         <div class="smallFormContentWrapper">
             {% for tweet in macro_tweets %}
-            <div class="articleContainer" id="article_id_{{ tweet.article_id }}">
+            <div class="articleContainer" id="article_id_{{ tweet.article.article_id }}">
                 <div class="leftContentSide">
-                    <img src="{% static tweet.source.favicon_path %}" />
+                    <img src="{% static tweet.article.source.favicon_path %}" />
                 </div>
                 <div class="rightContentSide">
                     <div class="contentInfoContainer">
                         <div class="sourceAndWebsiteContainer">
-                            <a href="{{ tweet.source.get_absolute_url }}">{{ tweet.source.name }}</a>
+                            <a href="{{ tweet.article.source.get_absolute_url }}">{{ tweet.article.source.name }}</a>
                             <img src="{% static 'home/media/twitter_logo.png' %}">
                         </div>
                         <i class="fas fa-ellipsis-h"></i>
@@ -257,12 +257,12 @@ FinBrowser, you can find and manage these sources.">
                         </div>
                     </div>
                     <div class="contentBody">
-                        <p>{{ tweet.title }}</p>
+                        <p>{{ tweet.article.title }}</p>
                     </div>
                     <div class="timeContainer">
-                        <p>{{ tweet.pub_date }}</p>
+                        <p>{{ tweet.article.pub_date }}</p>
                     </div>
-                    <a class="contentLink" href="{{ tweet.link }}"></a>
+                    <a class="contentLink" href="{{ tweet.article.link }}"></a>
                 </div>
             </div>
             {% endfor %}
@@ -277,25 +277,25 @@ FinBrowser, you can find and manage these sources.">
 <div class="categoryHeader">Trending Topics</div>
 <div class="articlesWrapper">
     {% for article in trending_topic_articles %}
-    <div class="articleContainer" id="article_id_{{ article.article_id }}">
+    <div class="articleContainer" id="article_id_{{ article.article.article_id }}">
         <div class="authorImageContainer">
-            <img src="{% static article.source.favicon_path %}" />
-            <a href="{{ article.source.get_absolute_url }}"></a>
+            <img src="{% static article.article.source.favicon_path %}" />
+            <a href="{{ article.article.source.get_absolute_url }}"></a>
         </div>
         <div class="articleInformationContainer">
-            <div class="articleTitle">{{ article.title }}
-                <span class="articleTitleTooltip">{{ article.title }}</span>
+            <div class="articleTitle">{{ article.article.title }}
+                <span class="articleTitleTooltip">{{ article.article.title }}</span>
             </div>
             <div class="articleSectorAndDateContainer">
-                <a href="{{ article.source.sector.get_absolute_url }}">
-                    {{ article.source.sector }}</a>
-                <div class="articlePubDate">{{ article.pub_date }}</div>
+                <a href="{{ article.article.source.sector.get_absolute_url }}">
+                    {{ article.article.source.sector }}</a>
+                <div class="articlePubDate">{{ article.article.pub_date }}</div>
             </div>
         </div>
         <i class="fas fa-ellipsis-h"></i>
         <div class="articleWebsiteLogoContainer">
-            <img class="articleWebsiteLogo" src="{% static article.source.website.logo %}" alt="">
-            <a class="articleLink" href="{{ article.link }}"></a>
+            <img class="articleWebsiteLogo" src="{% static article.article.source.website.logo %}" alt="">
+            <a class="articleLink" href="{{ article.article.link }}"></a>
         </div>
         <div class="articleOptionsContainer">
             {% if request.user.is_authenticated %}
@@ -388,25 +388,25 @@ FinBrowser, you can find and manage these sources.">
 <div class="categoryHeader">Audio Of The Week</div>
 <div class="articlesWrapper">
     {% for article in audio_of_the_week %}
-    <div class="articleContainer" id="article_id_{{ article.article_id }}">
+    <div class="articleContainer" id="article_id_{{ article.article.article_id }}">
         <div class="authorImageContainer">
-            <img src="{% static article.source.favicon_path %}" />
-            <a href="{{ article.source.get_absolute_url }}"></a>
+            <img src="{% static article.article.source.favicon_path %}" />
+            <a href="{{ article.article.source.get_absolute_url }}"></a>
         </div>
         <div class="articleInformationContainer">
-            <div class="articleTitle">{{ article.title }}
-                <span class="articleTitleTooltip">{{ article.title }}</span>
+            <div class="articleTitle">{{ article.article.title }}
+                <span class="articleTitleTooltip">{{ article.article.title }}</span>
             </div>
             <div class="articleSectorAndDateContainer">
-                <a href="{{ article.source.sector.get_absolute_url }}">
-                    {{ article.source.sector }}</a>
-                <div class="articlePubDate">{{ article.pub_date }}</div>
+                <a href="{{ article.article.source.sector.get_absolute_url }}">
+                    {{ article.article.source.sector }}</a>
+                <div class="articlePubDate">{{ article.article.pub_date }}</div>
             </div>
         </div>
         <i class="fas fa-ellipsis-h"></i>
         <div class="articleWebsiteLogoContainer">
-            <img class="articleWebsiteLogo" src="{% static article.source.website.logo %}" alt="">
-            <a class="articleLink" href="{{ article.link }}"></a>
+            <img class="articleWebsiteLogo" src="{% static article.article.source.website.logo %}" alt="">
+            <a class="articleLink" href="{{ article.article.link }}"></a>
         </div>
         <div class="articleOptionsContainer">
             {% if request.user.is_authenticated %}
