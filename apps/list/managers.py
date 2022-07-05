@@ -12,26 +12,25 @@ class ListManager(models.Manager):
             list.articles.add(article)                
 
     def get_created_lists(self, user):
-        return self.select_related('creator__profile').prefetch_related('articles', 'sources').filter(creator=user).order_by('name')
+        return self.filter(creator=user).select_related('creator__profile').prefetch_related('articles', 'sources').order_by('name')
 
     def get_highlighted_content_from_list_excluding_website(self, list_id, website):
-        return self.get(list_id=list_id).articles.all().select_related('source', 'source__website', 'source__sector').exclude(source__website=website).order_by('-pub_date')
+        return self.get(list_id=list_id).articles.all().exclude(source__website=website).select_related('source', 'source__website', 'source__sector').order_by('-pub_date')
 
     def get_highlighted_content_from_list_and_website(self, list_id, website):
-        return self.get(list_id=list_id).articles.all().select_related('source', 'source__sector').filter(source__website=website).order_by('-pub_date')
+        return self.get(list_id=list_id).articles.all().filter(source__website=website).select_related('source', 'source__sector').order_by('-pub_date')
 
     def get_subscribed_lists(self, user):
-        return self.select_related('creator__profile').filter(subscribers=user).order_by('name')
+        return self.filter(subscribers=user).select_related('creator__profile').order_by('name').only('list_pic', 'slug', 'name', 'creator__profile')
 
     def filter_lists(self, search_term):
-        return self.select_related('creator__profile').filter(name__istartswith=search_term, is_public=True)
+        return self.filter(name__istartswith=search_term, is_public=True).select_related('creator__profile')
 
     def filter_lists_not_subscribed(self, search_term, user):
-        return self.filter(name__istartswith=search_term, is_public=True).exclude(
-            creator=user).exclude(subscribers=user).order_by('name')
+        return self.filter(name__istartswith=search_term, is_public=True).exclude(creator=user, subscribers=user).order_by('name')
 
     def get_lists_with_source(self, source):
-        return self.select_related('creator__profile', 'creator').filter(sources__source_id=source.source_id).filter(is_public=True).order_by('name')
+        return self.filter(sources__source_id=source.source_id, is_public=True).select_related('creator__profile', 'creator').order_by('name')
 
 
 class ListRatingManager(models.Manager):

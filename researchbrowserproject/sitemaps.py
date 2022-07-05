@@ -80,7 +80,7 @@ class HomePageSitemap(Sitemap):
     protocol = 'https'
 
     def items(self):
-        return ['home:main']
+        return ['main:main']
 
     def location(self, item):
         return reverse(item)
