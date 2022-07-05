@@ -15,7 +15,7 @@ class MainView(TemplateView, BaseMixin):
         context['energy_crisis_tweets'] = EnergyCrisisTweet.objects.all().select_related('article__source', 'article__source__sector', 'article__source__website').order_by('-article__pub_date')
         context['macro_tweets'] = MacroTweets.objects.all().select_related('article__source', 'article__source__sector', 'article__source__website').order_by('-article__pub_date')
         context['trending_topic_articles'] = TrendingTopicArticle.objects.all().select_related('article__source', 'article__source__sector', 'article__source__website').order_by('-article__pub_date')
-        context['highest_rated_sources'] = Source.objects.filter(average_rating__gte=4, ammount_of_ratings__gte=1).order_by('average_rating')[:10]
+        context['highest_rated_sources'] = Source.objects.filter(average_rating__gte=4, ammount_of_ratings__gte=2).order_by('average_rating')[:10]
         context['audio_of_the_week'] = AudioOfTheWeek.objects.all().select_related('article__source', 'article__source__sector', 'article__source__website').order_by('-article__pub_date')
-        context['newest_sources'] = Source.objects.all()[:10]
+        context['newest_sources'] = Source.objects.all().order_by('source_id')[:10]
         return context
