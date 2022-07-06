@@ -1,9 +1,15 @@
 # Django import
 from django.utils.timezone import now
+from django.conf import settings
 # Python import
 from urllib.request import Request, urlopen
 import xml.etree.cElementTree as ET
 import html
+from io import BytesIO
+from PIL import Image
+import urllib.request
+import os
+import boto3
 # Local import
 from apps.logic.selectors import article_components_get
 
@@ -69,3 +75,17 @@ def create_articles_from_feed(source, feed_url, articles):
                 notifications_create(articles)
         except:
             continue   
+
+
+s3 = boto3.client('s3')
+
+def source_profile_img_create(source, file_url):
+        urllib.request.urlretrieve(file_url, 'temp_file.png')
+        im = Image.open('temp_file.png')
+        output = BytesIO()
+        im = im.resize((175, 175))
+        im.save(output, format='WEBP', quality=99)
+        output.seek(0)
+        s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.webp'))
+        source.favicon_path = f'home/favicons/{source.slug}.webp'
+        source.save()
