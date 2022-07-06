@@ -15,11 +15,10 @@ import time
 import requests
 import environ
 import base64
-import urllib.request
 import os
 import boto3
 # Local imports
-from apps.logic.services import notifications_create, create_articles_from_feed
+from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create
 from apps.article.models import Article
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
@@ -248,13 +247,37 @@ def scrape_youtube():
     notifications_create(articles)
     
 
+@shared_task
+def twitter_scrape_followings():
+    consumer_key = os.environ.get('TWITTER_CONSUMER_KEY')
+    consumer_secret = os.environ.get('TWITTER_CONSUMER_SECRET')
+    access_token = os.environ.get('TWITTER_ACCESS_TOKEN')
+    access_token_secret = os.environ.get('TWITTER_ACCESS_TOKEN_SECRET')
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+    followings = api.get_friends(count=100)
+    for follow in followings:
+        if Source.objects.filter(external_id=follow.id).exists():
+            continue
+        else:
+            url = f'https://twitter.com/{follow.screen_name}'
+            slug = follow.screen_name
+            name = follow.name
+            external_id = follow.id
+            source = Source.objects.create(url=url, slug=slug, name=name, favicon_path=f'home/favicons/{slug}.png', paywall='No', website=get_object_or_404(Website, name="Twitter"), external_id=external_id)
+            source_profile_img_create(source, follow.profile_image_url_https.replace("_normal", ""))
 
-from django.core.files.uploadedfile import InMemoryUploadedFile
-# Python imports
-import os
-from io import BytesIO
-import sys
-from PIL import Image
+
+@shared_task
+def youtube_get_profile_images():
+    api_key = os.environ.get('YOUTUBE_API_KEY')
+    youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
+    for source in youtube_sources:
+        url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={source.external_id}&key={api_key}"
+        r = requests.get(url)
+        data = r.json()
+        source_profile_img_create(source, data['items'][0]['snippet']['thumbnails']['medium']['url'])
 
 
 @shared_task
@@ -265,61 +288,17 @@ def spotify_get_profile_images():
     for source in spotify_sources:
         spotify = SpotifyAPI(client_id, client_secret)
         podcaster = spotify.get_podcaster(source.external_id)
-        urllib.request.urlretrieve(podcaster['images'][0]['url'], 'temp_file.png')
-        im = Image.open('temp_file.png')
-        output = BytesIO()
-        im = im.resize((175, 175))
-        im.save(output, format='WEBP', quality=99)
-        output.seek(0)
-        s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.webp'))
-        source.favicon_path = f'home/favicons/{source.slug}.webp'
-        source.save()
+        source_profile_img_create(source, podcaster['images'][0]['url'])
 
-
-@shared_task
-def twitter_scrape_followings():
-    from apps.source.models import Source
-    # assign the values accordingly
-    consumer_key = os.environ.get('TWITTER_CONSUMER_KEY')
-    consumer_secret = os.environ.get('TWITTER_CONSUMER_SECRET')
-    access_token = os.environ.get('TWITTER_ACCESS_TOKEN')
-    access_token_secret = os.environ.get('TWITTER_ACCESS_TOKEN_SECRET')
-    # authorization of consumer key and consumer secret
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    # set access to user's access key and access secret 
-    auth.set_access_token(access_token, access_token_secret)
-    # calling the api 
-    api = tweepy.API(auth)
-    # fetching the statuses
-    followings = api.get_friends(count=100)
-    for follow in followings:
-        if Source.objects.filter(external_id=follow.id).exists():
-            continue
-        else:
-            url = f'https://twitter.com/{follow.screen_name}'
-            slug = follow.screen_name
-            name = follow.name
-            external_id = follow.id
-            urllib.request.urlretrieve(follow.profile_image_url_https.replace("_normal", ""), 'temp_file.png')
-            s3.upload_file('temp_file.png', 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{slug}.png'))
-            favicon_path = f'home/favicons/{slug}.png'
-            Source.objects.create(url=url, slug=slug, name=name, favicon_path=favicon_path, paywall='No', website=get_object_or_404(Website, name="Twitter"), external_id=external_id)
-
-@shared_task
-def youtube_get_profile_images():
-    api_key = os.environ.get('YOUTUBE_API_KEY')
-    youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
-    for source in youtube_sources:
-        url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={source.external_id}&key={api_key}"
-        r = requests.get(url)
-        data = r.json()
-        urllib.request.urlretrieve(data['items'][0]['snippet']['thumbnails']['medium']['url'], 'temp_file.png')
-        s3.upload_file('temp_file.png', 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.png'))
-        favicon_path = f'home/favicons/{source.slug}.png'
-        source.favicon_path = favicon_path
-        source.save()
 
 @shared_task
 def old_notifications_delete():
     NotificationMessage.objects.filter(date__lte=now()-timedelta(hours=24)).delete()
             
+
+@shared_task
+def source_profile_imgs_change_to_webp():
+    sources = Source.objects.all()
+    for source in sources:
+        if 'png' in source.favicon_path:
+            source_profile_img_create(source, os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.png'))
