@@ -291,11 +291,13 @@ def spotify_get_profile_images():
 @shared_task
 def old_notifications_delete():
     NotificationMessage.objects.filter(date__lte=now()-timedelta(hours=24)).delete()
-            
+
+
+logger.info("Exists")       
 
 @shared_task
 def source_profile_imgs_change_to_webp():
     sources = Source.objects.all()
     for source in sources:
         if 'png' in str(source.favicon_path):
-            source_profile_img_create(source, os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.png'))
+            source_profile_img_create(source, os.path.join(settings.STATIC_URL, f'{source.slug}.png'))
