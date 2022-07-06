@@ -59,22 +59,25 @@ def notifications_create(articles):
 
 def create_articles_from_feed(source, feed_url, articles):
     from apps.article.models import Article
-    req = Request(feed_url, headers={'User-Agent': 'Mozilla/5.0'})
-    website_data = urlopen(req)
-    website_xml = website_data.read()
-    website_data.close()
-    root = ET.fromstring(website_xml)
-    for item in root.findall('.//item'):
-        try:
-            title, link, pub_date = article_components_get(item)
-            title = html.unescape(title)
-            if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
-                break
-            else:
-                articles = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
-                notifications_create(articles)
-        except:
-            continue   
+    try:
+        req = Request(feed_url, headers={'User-Agent': 'Mozilla/5.0'})
+        website_data = urlopen(req)
+        website_xml = website_data.read()
+        website_data.close()
+        items = ET.fromstring(website_xml).findall('.//item')
+        for item in items:
+            try:
+                title, link, pub_date = article_components_get(item)
+                title = html.unescape(title)
+                if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
+                    break
+                else:
+                    articles = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
+                    notifications_create(articles)
+            except:
+                continue   
+    except:
+        pass
 
 
 s3 = boto3.client('s3')
