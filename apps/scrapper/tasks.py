@@ -308,7 +308,7 @@ def source_profile_imgs_change_to_webp():
     for source in sources:
         if 'png' in str(source.favicon_path):
             im = BytesIO()
-            s3.download_fileobj('finbrowser', f"https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/{source.slug}.png", im)
+            s3.download_fileobj('finbrowser', f"https://finbrowser.s3.us-east-2.amazonaws.com/static/{source.favicon_path}", im)
             output = BytesIO()
             im = im.resize((175, 175))
             im.save(output, format='WEBP', quality=99)
