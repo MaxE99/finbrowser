@@ -271,7 +271,7 @@ def spotify_get_profile_images():
         im = im.resize((175, 175))
         im.save(output, format='WEBP', quality=99)
         output.seek(0)
-        s3.upload_file(output, 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.webp'))
+        s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.webp'))
         source.favicon_path = f'home/favicons/{source.slug}.webp'
         source.save()
 
