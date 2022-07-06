@@ -13,7 +13,6 @@ from celery.signals import after_setup_logger
 import html
 import time
 import requests
-import environ
 import base64
 import os
 import boto3
@@ -24,8 +23,6 @@ from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
 from apps.source.models import Source
 
-env = environ.Env()
-environ.Env.read_env()
 
 s3 = boto3.client('s3')
 
@@ -300,5 +297,5 @@ def old_notifications_delete():
 def source_profile_imgs_change_to_webp():
     sources = Source.objects.all()
     for source in sources:
-        if 'png' in source.favicon_path:
+        if 'png' in str(source.favicon_path):
             source_profile_img_create(source, os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.png'))

@@ -61,7 +61,7 @@ class SocialLinkViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
         website = request.data['website']
-        website = get_object_or_404(Website, id=website)
+        website = get_object_or_404(Website, website_id=website)
         url = request.data['url']
         profile = request.user.profile
         SocialLink.objects.create(website=website, url=url, profile=profile)
@@ -71,7 +71,7 @@ class SocialLinkViewSet(viewsets.ModelViewSet):
         social_link = self.get_object()
         if social_link.profile.user == request.user:
             website = request.data['website']
-            website = get_object_or_404(Website, id=website)
+            website = get_object_or_404(Website, website_id=website)
             url = request.data['url']
             social_link.url = url
             social_link.save()

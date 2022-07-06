@@ -8,7 +8,7 @@ environ.Env.read_env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-DEBUG = False
+DEBUG = True
 if DEBUG:
     ALLOWED_HOSTS = []
     STATIC_URL = '/static/'
