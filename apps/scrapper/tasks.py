@@ -16,6 +16,7 @@ import requests
 import base64
 import os
 import boto3
+from io import BytesIO
 # Local imports
 from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create
 from apps.article.models import Article
@@ -182,7 +183,7 @@ def scrape_other_websites():
     other_sources = Source.objects.filter(website=get_object_or_404(Website, name="Other"))
     articles = Article.objects.all()
     for source in other_sources:
-        feed_url = f'{source.url}.xml'
+        feed_url = f'{source.url}feed'
         create_articles_from_feed(source, feed_url, articles)
 
 
@@ -301,11 +302,17 @@ def old_notifications_delete():
     NotificationMessage.objects.filter(date__lte=now()-timedelta(hours=24)).delete()
 
 
-logger.info("Exists")       
-
 @shared_task
 def source_profile_imgs_change_to_webp():
     sources = Source.objects.all()
     for source in sources:
         if 'png' in str(source.favicon_path):
-            source_profile_img_create(source, f"https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/{source.slug}.png")
+            s3.download_fileobj('finbrowser', f"https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/{source.slug}.png", im)
+            output = BytesIO()
+            im = im.resize((175, 175))
+            im.save(output, format='WEBP', quality=99)
+            output.seek(0)
+            s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.webp'))
+            source.favicon_path = f'home/favicons/{source.slug}.webp'
+            source.save()
+            time.sleep(30)
