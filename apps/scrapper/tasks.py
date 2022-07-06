@@ -21,7 +21,7 @@ import boto3
 # Local imports
 from apps.logic.services import notifications_create, create_articles_from_feed
 from apps.article.models import Article
-from apps.home.models import Notification, NotificationMessage
+from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
 from apps.source.models import Source
 
@@ -248,6 +248,15 @@ def scrape_youtube():
     notifications_create(articles)
     
 
+
+from django.core.files.uploadedfile import InMemoryUploadedFile
+# Python imports
+import os
+from io import BytesIO
+import sys
+from PIL import Image
+
+
 @shared_task
 def spotify_get_profile_images():
     client_id = os.environ.get('SPOTIFY_CLIENT_ID')
@@ -257,9 +266,13 @@ def spotify_get_profile_images():
         spotify = SpotifyAPI(client_id, client_secret)
         podcaster = spotify.get_podcaster(source.external_id)
         urllib.request.urlretrieve(podcaster['images'][0]['url'], 'temp_file.png')
-        s3.upload_file('temp_file.png', 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.png'))
-        favicon_path = f'home/favicons/{source.slug}.png'
-        source.favicon_path = favicon_path
+        im = Image.open('temp_file.png')
+        output = BytesIO()
+        im = im.resize((175, 175))
+        im.save(output, format='WEBP', quality=99)
+        output.seek(0)
+        s3.upload_file(output, 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.webp'))
+        source.favicon_path = f'home/favicons/{source.slug}.webp'
         source.save()
 
 
