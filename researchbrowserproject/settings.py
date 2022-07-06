@@ -45,7 +45,7 @@ else:
     SECURE_SSL_REDIRECT = True
     SECURE_REFERRER_POLICY = "strict-origin"
     # HSTS Settings
-    SECURE_HSTS_SECONDS = 60 # Wert erhöhen wenn Tests erfolgreich sind
+    SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     DATABASES = {
