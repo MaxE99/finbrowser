@@ -75,6 +75,9 @@
             <div class="contentBody">
                 <p>{{ tweet.title }}</p>
             </div>
+            {% if tweet.tweet_type.image_path %}
+            <img class="tweetImage" src="{% static tweet.tweet_type.image_path %}">
+            {% endif %}
             <div class="timeContainer">
                 <p>{{ tweet.pub_date }}</p>
             </div>

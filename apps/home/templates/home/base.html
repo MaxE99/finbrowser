@@ -140,6 +140,10 @@
                                     <div class="contentBody">
                                         <p>{{ notification.article.title }}</p>
                                     </div>
+                                    {% if notification.article.tweet_type.image_path %}
+                                    <img class="tweetImage"
+                                        src="{% static notification.article.tweet_type.image_path %}">
+                                    {% endif %}
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
                                     </div>
@@ -236,6 +240,10 @@
                                     <div class="contentBody">
                                         <p>{{ notification.article.title }}</p>
                                     </div>
+                                    {% if notification.article.tweet_type.image_path %}
+                                    <img class="tweetImage"
+                                        src="{% static notification.article.tweet_type.image_path %}">
+                                    {% endif %}
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
                                     </div>
