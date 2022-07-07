@@ -170,7 +170,7 @@
 
 
 {% if subscribed_content %}
-{% create_article_container "Content Of Subscribed Sources" subscribed_content %}
+{% create_article_container "Content Of Subscribed Sources" subscribed_content request %}
 <div class="paginationAndAddExternalContainer">
     <div class="pagination">
         <span class="step-links">
@@ -190,7 +190,7 @@
 {% endif %}
 
 {% if highlighted_content %}
-{% create_fk_article_container "Highlighted Content" highlighted_content %}
+{% create_fk_article_container "Highlighted Content" highlighted_content request %}
 <div class="paginationAndAddExternalContainer">
     <div class="pagination">
         <span class="step-links">
@@ -222,7 +222,7 @@
 <div class="twitterWrapper">
     {% if highlighted_tweets %}
     <div class="highlightedTweetsContainer">
-        {% create_fk_tweets_container "Highlighted Tweets" highlighted_tweets %}
+        {% create_fk_tweets_container "Highlighted Tweets" highlighted_tweets request %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in highlighted_tweets.paginator.page_range %}
@@ -237,7 +237,7 @@
     </div>
     {% endif %}
     <div class="newestTweetsContainer {% if not highlighted_tweets %}twitterHalfPageContainer{% endif %}">
-        {% create_tweets_container "Newest Tweets" newest_tweets %}
+        {% create_tweets_container "Newest Tweets" newest_tweets request %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in newest_tweets.paginator.page_range %}
