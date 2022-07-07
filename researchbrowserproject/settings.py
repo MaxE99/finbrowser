@@ -8,6 +8,8 @@ environ.Env.read_env()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+FAVICON_FILE_DIRECTORY = 'static/home/favicons'
+TWEET_IMG_FILE_DIRECTORY = 'static/home/tweet_imgs'
 DEBUG = False
 if DEBUG:
     ALLOWED_HOSTS = []
@@ -38,7 +40,6 @@ else:
     STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     DEFAULT_FILE_STORAGE = "researchbrowserproject.storages.MediaStore"
-    FAVICON_FILE_DIRECTORY = 'static/home/favicons'
     # HTTPS Settings
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True

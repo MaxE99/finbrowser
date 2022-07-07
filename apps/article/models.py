@@ -7,6 +7,13 @@ from apps.source.models import Source, ExternalSource
 
 User = get_user_model()
 
+class TweetType(models.Model):
+    TYPE_CHOICES = [('Image', 'Image'), ('Link', 'Link'), ('Retweet', 'Retweet'), ('Basic', 'Basic')]
+    tweet_type_id = models.AutoField(primary_key=True)
+    type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='None')
+    image_path = models.CharField(max_length=500, blank=True, null=True)
+    link = models.CharField(max_length=500, blank=True, null=True)
+
 class Article(models.Model):
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=500)
@@ -17,6 +24,7 @@ class Article(models.Model):
                                         null=True,
                                         on_delete=models.SET_NULL)
     external_id = models.CharField(unique=True, null=True, blank=True, max_length=100)
+    tweet_type = models.ForeignKey(TweetType, blank=True, null=True, on_delete=models.SET_NULL)
 
     objects = ArticleManager()
 

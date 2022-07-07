@@ -18,12 +18,11 @@ import os
 import boto3
 from io import BytesIO
 # Local imports
-from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create
-from apps.article.models import Article
+from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload
+from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
 from apps.source.models import Source
-
 
 s3 = boto3.client('s3')
 
@@ -128,21 +127,33 @@ def scrape_twitter():
     api = tweepy.API(auth)
     last_id = cache.get('last_id')
     if last_id:
-        statuses = api.home_timeline(count=200, tweet_mode='extended', since_id=last_id)
+        statuses = api.home_timeline(count=200, tweet_mode='extended', since_id=last_id, include_entities=True) 
     else:
-        statuses = api.home_timeline(count=200, tweet_mode='extended')
+        statuses = api.home_timeline(count=200, tweet_mode='extended', include_entities=True) 
     existing_tweets = Article.objects.filter(external_id__isnull=False).values_list('external_id', flat=True)
     sources = Source.objects.all() 
     tweet_creation_list = []
     for status in statuses:
         tweet_external_id = status.id
         if str(tweet_external_id) not in existing_tweets:
-            title = html.unescape(status.full_text)
-            link = f'https://twitter.com/{status.user.screen_name}/status/{tweet_external_id}'
-            pub_date = status.created_at
             twitter_user_id = status.user.id
             if sources.filter(external_id=twitter_user_id).exists():
-                tweet_creation_list.append({'source': twitter_user_id, 'title': title, 'link': link, 'pub_date': pub_date, 'external_id': tweet_external_id})
+                title = html.unescape(status.full_text)
+                link = f'https://twitter.com/{status.user.screen_name}/status/{tweet_external_id}'
+                pub_date = status.created_at
+                tweet_type = TweetType.objects.create(type = "Basic")
+                if 'media' in status.entities:
+                    if 'media_url_https' in status.entities['media'][0]:
+                        tweet_type.type = "Image"
+                        tweet_type = tweet_img_upload(tweet_type, status.entities['media'][0]['media_url_https'])
+                if len(status.entities['urls']) > 0:
+                    if 'expanded_url' in status.entities['urls'][0]:
+                        tweet_type.type = "Link"
+                        tweet_type.link = status.entities['urls'][0]['expanded_url']
+                if title.startswith("rt @"):
+                    tweet_type.type = "Retweet"
+                tweet_type.save()
+                tweet_creation_list.append({'source': twitter_user_id, 'title': title, 'link': link, 'pub_date': pub_date, 'external_id': tweet_external_id, 'tweet_type': tweet_type})
         last_id = tweet_external_id
     cache.set('last_id', last_id)
     new_articles = [
@@ -151,13 +162,14 @@ def scrape_twitter():
             link=new_tweet['link'],
             pub_date=new_tweet['pub_date'],
             source=sources.get(external_id=new_tweet['source']),
-            external_id=new_tweet['external_id']
+            external_id=new_tweet['external_id'],
+            tweet_type=new_tweet['tweet_type']
         )
         for new_tweet in tweet_creation_list
     ]
     articles = Article.objects.bulk_create(new_articles)
     notifications_create(articles)
-    
+
 
 @shared_task
 def scrape_substack():
@@ -302,18 +314,18 @@ def old_notifications_delete():
     NotificationMessage.objects.filter(date__lte=now()-timedelta(hours=24)).delete()
 
 
-@shared_task
-def source_profile_imgs_change_to_webp():
-    sources = Source.objects.all()
-    for source in sources:
-        if 'png' in str(source.favicon_path):
-            im = BytesIO()
-            s3.download_fileobj('finbrowser', f"https://finbrowser.s3.us-east-2.amazonaws.com/static/{source.favicon_path}", im)
-            output = BytesIO()
-            im = im.resize((175, 175))
-            im.save(output, format='WEBP', quality=99)
-            output.seek(0)
-            s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.webp'))
-            source.favicon_path = f'home/favicons/{source.slug}.webp'
-            source.save()
-            time.sleep(30)
+# @shared_task
+# def source_profile_imgs_change_to_webp():
+#     sources = Source.objects.all()
+#     for source in sources:
+#         if 'png' in str(source.favicon_path):
+#             im = BytesIO()
+#             s3.download_fileobj('finbrowser', f"https://finbrowser.s3.us-east-2.amazonaws.com/static/{source.favicon_path}", im)
+#             output = BytesIO()
+#             im = im.resize((175, 175))
+#             im.save(output, format='WEBP', quality=99)
+#             output.seek(0)
+#             s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.webp'))
+#             source.favicon_path = f'home/favicons/{source.slug}.webp'
+#             source.save()
+#             time.sleep(30)
