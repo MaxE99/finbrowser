@@ -39,7 +39,7 @@
 </div>
 
 {% if highlighted_articles %}
-{% create_fk_article_container "Highlighted Content" highlighted_articles %}
+{% create_fk_article_container "Highlighted Content" highlighted_articles request %}
 {% include "pagination.html" with page=highlighted_articles %}
 {% endif %}
 

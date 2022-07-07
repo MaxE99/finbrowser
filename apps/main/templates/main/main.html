@@ -11,22 +11,22 @@ FinBrowser, you can find and manage these sources.">
 {% endblock %}
 {% block content %}
 
-{% create_fk_article_container "Article Of The Week" articles_of_the_week %}
+{% create_fk_article_container "Article Of The Week" articles_of_the_week request %}
 
 <div class="twitterWrapper">
     <div class="tweetsContainer twitterHalfPageContainer">
-        {% create_fk_tweets_container "Energy Crisis Tweets" energy_crisis_tweets %}
+        {% create_fk_tweets_container "Energy Crisis Tweets" energy_crisis_tweets request %}
     </div>
     <div class="mostLikedTweetsContainer twitterHalfPageContainer">
-        {% create_fk_tweets_container "Macro Tweets" macro_tweets %}
+        {% create_fk_tweets_container "Macro Tweets" macro_tweets request %}
     </div>
 </div>
 
-{% create_fk_article_container "Trending Topics" trending_topic_articles %}
+{% create_fk_article_container "Trending Topics" trending_topic_articles request %}
 
 {% create_source_container "Highest Rated Sources" highest_rated_sources %}
 
-{% create_fk_article_container "Audio Of The Week" audio_of_the_week %}
+{% create_fk_article_container "Audio Of The Week" audio_of_the_week request %}
 
 {% create_source_container "New Sources" newest_sources %}
 
