@@ -1,6 +1,6 @@
 {% extends 'home/base.html' %}
 {% load static %}
-
+{% load tags %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'home/min_feed_style.css' %}">
 <title>FinBrowser | Feed</title>
@@ -170,82 +170,7 @@
 
 
 {% if subscribed_content %}
-<div class="categoryHeader">Content Of Subscribed Sources</div>
-<div class="articlesWrapper">
-    {% for article in subscribed_content %}
-    <div class="articleContainer" id="article_id_{{ article.article_id }}">
-        <div class="authorImageContainer">
-            <img src="{% static article.source.favicon_path %}" />
-            <a href="{{ article.source.get_absolute_url }}"></a>
-        </div>
-        <div class="articleInformationContainer">
-            <div class="articleTitle">{{ article.title }}
-                <span class="articleTitleTooltip">{{ article.title }}</span>
-            </div>
-            <div class="articleSectorAndDateContainer">
-                <a href="{{ article.source.sector.get_absolute_url }}">
-                    {{ article.source.sector }}</a>
-                <div class="articlePubDate">{{ article.pub_date }}</div>
-            </div>
-        </div>
-        <i class="fas fa-ellipsis-h"></i>
-        <div class="articleWebsiteLogoContainer">
-            <img class="articleWebsiteLogo" src="{% static article.source.website.logo %}" alt="">
-            <a class="articleLink" href="{{ article.link }}"></a>
-        </div>
-        <div class="articleOptionsContainer">
-            {% if request.user.is_authenticated %}
-            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
-            {% if article.title in highlighted_content_titles %}
-            <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight article</span></div>
-            {% else %}
-            <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight article</span></div>
-            {% endif %}
-            {% else %}
-            <a href="{% url 'account_login' %}" class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
-                to list</a>
-            <a href="{% url 'account_login' %}" class="addToHighlightedButton registrationLink"><i
-                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
-            {% endif %}
-        </div>
-        <div class="addToListForm">
-            <div class="formHeaderContainer">Add To Lists<i class="fas fa-times closeFormContainerButton"></i>
-            </div>
-            {% if user_lists %}
-            <div class="listSelectionContainer">
-                {% for list in user_lists %}
-                <div class="listContainer">
-                    <label for="list_id_{{ list.list_id }}">
-                        {% if article in list.articles.all %}
-                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists" checked="True"> {{ list }}
-                        {% else %}
-                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists">
-                        {{ list }}
-                        {% endif %}
-                    </label>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="buttonsContainer">
-                <button class="saveButton">Save</button>
-                <button class="createNewListButton">Create</button>
-            </div>
-            {% else %}
-            <div class="listContainer">You haven't created any lists!</div>
-            <button class="createNewListButton createFirstList">Create First List</button>
-            {% endif %}
-        </div>
-        <div class="createListMenu articleCreateListMenu formContainer">
-            <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
-            </div>
-            <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
-                {% csrf_token %} {{ add_list_form }}
-                <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
-            </form>
-        </div>
-    </div>
-    {% endfor %}
-</div>
+{% create_article_container "Content Of Subscribed Sources" subscribed_content %}
 <div class="paginationAndAddExternalContainer">
     <div class="pagination">
         <span class="step-links">
@@ -265,96 +190,7 @@
 {% endif %}
 
 {% if highlighted_content %}
-<div class="categoryHeader">Highlighted Content</div>
-<div class="articlesWrapper">
-    {% for article in highlighted_content %}
-    <div class="articleContainer" id="article_id_{{ article.article.article_id }}">
-        {% if article.article.source %}
-        <div class="authorImageContainer">
-            <img src="{% static article.article.source.favicon_path %}" />
-            <a class="articleLink" href="{{ article.article.link }}"></a>
-        </div>
-        {% else %}
-        <div class="authorImageContainer imageContainerUserLink">
-            <i class="fas fa-question-circle"></i>
-            <a class="articleLink" href="{{ article.article.link }}"></a>
-        </div>
-        {% endif %}
-        <div class="articleInformationContainer">
-            <div class="articleTitle">{{ article.article.title }}
-                <span class="articleTitleTooltip">{{ article.article.title }}</span>
-            </div>
-            <div class="articleSectorAndDateContainer">
-                <a href="{{ article.article.source.sector.get_absolute_url }}">
-                    {{ article.article.source.sector }}</a>
-                <div class="articlePubDate">{{ article.article.pub_date }}</div>
-            </div>
-        </div>
-        <i class="fas fa-ellipsis-h"></i>
-        {% if article.article.source %}
-        <div class="articleWebsiteLogoContainer">
-            <img class="articleWebsiteLogo" src="{% static article.article.source.website.logo %}">
-            <a class="articleLink" href="{{ article.article.link }}"></a>
-        </div>
-        {% else %}
-        <div class="articleWebsiteLogoContainer imageContainerUserLink">
-            <i class="fas fa-question-circle"></i>
-            <a class="articleLink" href="{{ article.article.link }}"></a>
-        </div>
-        {% endif %}
-        <div class="articleOptionsContainer">
-            {% if request.user.is_authenticated %}
-            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
-            {% if article.article.title in highlighted_content_titles %}
-            <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight article</span></div>
-            {% else %}
-            <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight article</span></div>
-            {% endif %}
-            {% else %}
-            <a href="{% url 'account_login' %}" class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
-                to list</a>
-            <a href="{% url 'account_login' %}" class="addToHighlightedButton registrationLink"><i
-                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
-            {% endif %}
-        </div>
-        <div class="addToListForm">
-            <div class="formHeaderContainer">Add To Lists<i class="fas fa-times closeFormContainerButton"></i>
-            </div>
-            {% if user_lists %}
-            <div class="listSelectionContainer">
-                {% for list in user_lists %}
-                <div class="listContainer">
-                    <label for="list_id_{{ list.list_id }}">
-                        {% if article.article in list.articles.all %}
-                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists" checked="True"> {{ list }}
-                        {% else %}
-                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists">
-                        {{ list }}
-                        {% endif %}
-                    </label>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="buttonsContainer">
-                <button class="saveButton">Save</button>
-                <button class="createNewListButton">Create</button>
-            </div>
-            {% else %}
-            <div class="listContainer">You haven't created any lists!</div>
-            <button class="createNewListButton createFirstList">Create First List</button>
-            {% endif %}
-        </div>
-        <div class="createListMenu articleCreateListMenu formContainer">
-            <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
-            </div>
-            <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
-                {% csrf_token %} {{ add_list_form }}
-                <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
-            </form>
-        </div>
-    </div>
-    {% endfor %}
-</div>
+{% create_fk_article_container "Highlighted Content" highlighted_content %}
 <div class="paginationAndAddExternalContainer">
     <div class="pagination">
         <span class="step-links">
@@ -371,8 +207,6 @@
 </div>
 {% endif %}
 
-
-
 <div class="addExternalLinksFormWrapper">
     <div class="formContainer addExternalLinksContainer">
         <div class="formHeaderContainer">Add Content<i class="fas fa-times closeFormContainerButton"></i>
@@ -384,93 +218,11 @@
     </div>
 </div>
 
-
 {% if newest_tweets %}
 <div class="twitterWrapper">
     {% if highlighted_tweets %}
     <div class="highlightedTweetsContainer">
-        <div class="categoryHeader">Highlighted Tweets</div>
-        <div class="smallFormContentWrapper">
-            {% for tweet in highlighted_tweets %}
-            <div class="articleContainer" id="article_id_{{ tweet.article.article_id }}">
-                <div class="leftContentSide">
-                    <img src="{% static tweet.article.source.favicon_path %}" />
-                </div>
-                <div class="rightContentSide">
-                    <div class="contentInfoContainer">
-                        <div class="sourceAndWebsiteContainer">
-                            <a href="{{ tweet.article.source.get_absolute_url }}">{{ tweet.article.source.name }}</a>
-                            <img src="{% static 'home/media/twitter_logo.png' %}">
-                        </div>
-                        <i class="fas fa-ellipsis-h"></i>
-                        <div class="articleOptionsContainer">
-                            {% if request.user.is_authenticated %}
-                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
-                            {% if tweet.article.title in highlighted_content_titles %}
-                            <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight
-                                    article</span></div>
-                            {% else %}
-                            <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight
-                                    article</span></div>
-                            {% endif %}
-                            {% else %}
-                            <a href="{% url 'account_login' %}" class="addToListButton registrationLink"><i
-                                    class="fas fa-list"></i>Add
-                                to list</a>
-                            <a href="{% url 'account_login' %}" class="addToHighlightedButton registrationLink"><i
-                                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
-                            {% endif %}
-                        </div>
-                        <div class="addToListForm">
-                            <div class="formHeaderContainer">Add To Lists<i
-                                    class="fas fa-times closeFormContainerButton"></i>
-                            </div>
-                            {% if user_lists %}
-                            <div class="listSelectionContainer">
-                                {% for list in user_lists %}
-                                <div class="listContainer">
-                                    <label for="list_id_{{ list.list_id }}">
-                                        {% if tweet.article in list.articles.all %}
-                                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists"
-                                            checked="True"> {{ list }}
-                                        {% else %}
-                                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists">
-                                        {{ list }}
-                                        {% endif %}
-                                    </label>
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <div class="buttonsContainer">
-                                <button class="saveButton">Save</button>
-                                <button class="createNewListButton">Create</button>
-                            </div>
-                            {% else %}
-                            <div class="listContainer">You haven't created any lists!</div>
-                            <button class="createNewListButton createFirstList">Create First List</button>
-                            {% endif %}
-                        </div>
-                        <div class="createListMenu articleCreateListMenu formContainer">
-                            <div class="formHeaderContainer">Create A New List<i
-                                    class="fas fa-times closeFormContainerButton"></i>
-                            </div>
-                            <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
-                                {% csrf_token %} {{ add_list_form }}
-                                <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
-                            </form>
-                        </div>
-                    </div>
-                    <div class="contentBody">
-                        <p>{{ tweet.article.title }}</p>
-                    </div>
-                    <div class="timeContainer">
-                        <p>{{ tweet.article.pub_date }}</p>
-                    </div>
-                    <a class="contentLink" href="{{ tweet.article.link }}"></a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+        {% create_fk_tweets_container "Highlighted Tweets" highlighted_tweets %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in highlighted_tweets.paginator.page_range %}
@@ -485,89 +237,7 @@
     </div>
     {% endif %}
     <div class="newestTweetsContainer {% if not highlighted_tweets %}twitterHalfPageContainer{% endif %}">
-        <div class="categoryHeader">Newest Tweets</div>
-        {% if newest_tweets %}
-        <div class="smallFormContentWrapper">
-            {% for tweet in newest_tweets %}
-            <div class="articleContainer" id="article_id_{{ tweet.article_id }}">
-                <div class="leftContentSide">
-                    <img src="{% static tweet.source.favicon_path %}" />
-                </div>
-                <div class="rightContentSide">
-                    <div class="contentInfoContainer">
-                        <div class="sourceAndWebsiteContainer">
-                            <a href="{{ tweet.source.get_absolute_url }}">{{ tweet.source.name }}</a>
-                            <img src="{% static 'home/media/twitter_logo.png' %}">
-                        </div>
-                        <i class="fas fa-ellipsis-h"></i>
-                        <div class="articleOptionsContainer">
-                            {% if request.user.is_authenticated %}
-                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
-                            {% if tweet.title in highlighted_content_titles %}
-                            <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight
-                                    article</span></div>
-                            {% else %}
-                            <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight
-                                    article</span></div>
-                            {% endif %}
-                            {% else %}
-                            <a href="{% url 'account_login' %}" class="addToListButton registrationLink"><i
-                                    class="fas fa-list"></i>Add
-                                to list</a>
-                            <a href="{% url 'account_login' %}" class="addToHighlightedButton registrationLink"><i
-                                    class="fas fa-highlighter"></i><span>Highlight article</span></a>
-                            {% endif %}
-                        </div>
-                        <div class="addToListForm">
-                            <div class="formHeaderContainer">Add To Lists<i
-                                    class="fas fa-times closeFormContainerButton"></i>
-                            </div>
-                            {% if user_lists %}
-                            <div class="listSelectionContainer">
-                                {% for list in user_lists %}
-                                <div class="listContainer">
-                                    <label for="list_id_{{ list.list_id }}">
-                                        {% if tweet in list.articles.all %}
-                                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists"
-                                            checked="True"> {{ list }}
-                                        {% else %}
-                                        <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists">
-                                        {{ list }}
-                                        {% endif %}
-                                    </label>
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <div class="buttonsContainer">
-                                <button class="saveButton">Save</button>
-                                <button class="createNewListButton">Create</button>
-                            </div>
-                            {% else %}
-                            <div class="listContainer">You haven't created any lists!</div>
-                            <button class="createNewListButton createFirstList">Create First List</button>
-                            {% endif %}
-                        </div>
-                        <div class="createListMenu articleCreateListMenu formContainer">
-                            <div class="formHeaderContainer">Create A New List<i
-                                    class="fas fa-times closeFormContainerButton"></i>
-                            </div>
-                            <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
-                                {% csrf_token %} {{ add_list_form }}
-                                <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
-                            </form>
-                        </div>
-                    </div>
-                    <div class="contentBody">
-                        <p>{{ tweet.title }}</p>
-                    </div>
-                    <div class="timeContainer">
-                        <p>{{ tweet.pub_date }}</p>
-                    </div>
-                    <a class="contentLink" href="{{ tweet.link }}"></a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+        {% create_tweets_container "Newest Tweets" newest_tweets %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in newest_tweets.paginator.page_range %}
@@ -579,11 +249,6 @@
                 {% endfor %}
             </span>
         </div>
-        {% else %}
-        <div class="twitterContainerPlaceholder">
-            <div>You Aren't Subscribed To A Twitter Source!</div>
-        </div>
-        {% endif %}
     </div>
     <div class="mostLikedTweetsContainer {% if not highlighted_tweets %}twitterHalfPageContainer{% endif %}">
         <div class="categoryHeader">Most Liked Tweets</div>
