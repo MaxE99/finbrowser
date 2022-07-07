@@ -98,7 +98,7 @@ def tweet_img_upload(tweet_type, file_url):
         urllib.request.urlretrieve(file_url, 'temp_file.png')
         im = Image.open('temp_file.png')
         output = BytesIO()
-        im = im.resize((500, 250))
+        # im = im.resize((500, 250))
         im.save(output, format='WEBP', quality=99)
         output.seek(0)
         s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.TWEET_IMG_FILE_DIRECTORY, f'tweet_img_{tweet_type.tweet_type_id}.webp'))
