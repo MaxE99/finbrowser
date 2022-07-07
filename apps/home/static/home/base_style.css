@@ -1338,6 +1338,13 @@ h2 {
   font-weight: 400;
 }
 
+.smallFormContentWrapper .tweetImage {
+  max-width: 100%;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 2rem;
+  margin: 0 0 0.5rem;
+}
+
 .smallFormContentWrapper .timeContainer {
   color: gray;
   font-size: 1.4rem;
