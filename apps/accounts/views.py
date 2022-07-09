@@ -73,7 +73,7 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
         context = super().get_context_data(**kwargs)
         context['websites'] = Website.objects.all()
         context['social_links'] = SocialLink.objects.select_related('website').filter(profile=self.request.user.profile)
-        context['notifications'] = Notification.objects.select_related('source', 'list', 'list__creator__profile').filter(user=self.request.user)
+        context['notifications'] = Notification.objects.filter(user=self.request.user).select_related('source', 'list', 'list__creator__profile').only('source', 'notification_id', 'source__favicon_path', 'source__slug', 'source__name', 'list', 'list__list_pic', 'list__slug', 'list__creator__profile__slug', 'list__name', 'user__profile__profile_id', 'user__profile__profile_pic')
         context['profile_change_form'] = ProfileChangeForm()
         context['email_and_name_change_form'] = EmailAndUsernameChangeForm(username=self.request.user.username, email=self.request.user.email)
         context['change_password_form'] = PasswordChangingForm(self.request.user)

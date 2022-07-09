@@ -27,7 +27,7 @@ class ListView(ListView, BaseMixin):
     model = List
     context_object_name = 'lists'
     template_name = 'list/lists.html'
-    queryset = List.objects.select_related('creator__profile').prefetch_related('articles', 'sources').filter(is_public=True).order_by('name')
+    queryset = List.objects.filter(is_public=True).select_related('creator__profile').prefetch_related('articles', 'sources').order_by('name').only('list_pic', 'name', 'average_rating', 'ammount_of_ratings', 'articles', 'creator__profile__profile_pic', 'creator__username', 'slug', 'creator__profile__slug')
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
