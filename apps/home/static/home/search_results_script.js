@@ -20,7 +20,7 @@ document
       ".searchWrapper #mainAutocomplete"
     ).value;
     if (e.key == "Enter" && search_term.replaceAll(/\s/g, "") != "") {
-      window.location.href = `https://www.finbrowser.io/search_results/${search_term}`;
+      window.location.href = `../../search_results/${search_term}`;
     } else {
       let results_list = document.querySelector(
         ".searchWrapper #autocomplete_list_results"
@@ -28,7 +28,7 @@ document
       if (search_term && search_term.replaceAll(/\s/g, "") != "") {
         try {
           const res = await fetch(
-            `https://www.finbrowser.io/api/search_site/${search_term}`,
+            `../../api/search_site/${search_term}`,
             get_fetch_settings("GET")
           );
           if (!res.ok) {
@@ -95,6 +95,6 @@ document
       ".searchWrapper .mainInputSearch"
     ).value;
     if (search_term.replaceAll(/\s/g, "") != "") {
-      window.location.href = `https://www.finbrowser.io/search_results/${search_term}`;
+      window.location.href = `../../search_results/${search_term}`;
     }
   });
