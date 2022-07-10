@@ -1,6 +1,6 @@
 {% extends 'home/base.html' %}
 {% load static %}
-
+{% load cache %}
 {% block head %}
 <title>FinBrowser | Sectors</title>
 <link rel="stylesheet" type="text/css" href="{% static 'sector/min_sectors_style.css' %}">
@@ -9,7 +9,7 @@
 
 {% block content %}
 
-
+{% cache 86400 sectors %}
 {% for sector in sectors %}
 <div class="sliderWrapper">
     <div class="sliderHeader">
@@ -42,6 +42,6 @@
     </div>
 </div>
 {% endfor %}
-
+{% endcache %}
 
 {% endblock %}
