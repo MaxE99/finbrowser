@@ -7,17 +7,6 @@
     url("../home/fonts/lato-v23-latin/lato-v23-latin-900.woff") format("woff");
 }
 
-@font-face {
-  font-family: "Pacifico";
-  font-style: normal;
-  font-weight: 400;
-  src: local(""),
-    url("../home/fonts/pacifico-v22-latin/pacifico-v22-latin-regular.woff2")
-      format("woff2"),
-    url("../home/fonts/pacifico-v22-latin/pacifico-v22-latin-regular.woff")
-      format("woff");
-}
-
 * {
   margin: 0;
   padding: 0;
