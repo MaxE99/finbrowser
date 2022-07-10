@@ -313,11 +313,3 @@ def spotify_get_profile_images():
 def old_notifications_delete():
     NotificationMessage.objects.filter(date__lte=now()-timedelta(hours=24)).delete()
 
-
-@shared_task
-def change_favicon_path():
-    for source in Source.objects.all():
-        if source.favicon_path.endswith(".png"):
-            source.favicon_path = source.favicon_path.replace("png", "webp")
-            print(source.favicon_path)
-            source.save()
