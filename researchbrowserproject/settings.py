@@ -10,7 +10,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 FAVICON_FILE_DIRECTORY = 'static/home/favicons'
 TWEET_IMG_FILE_DIRECTORY = 'static/home/tweet_imgs'
-DEBUG = False
+DEBUG = True
 if DEBUG:
     ALLOWED_HOSTS = []
     STATIC_URL = '/static/'

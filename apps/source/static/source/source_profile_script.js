@@ -8,7 +8,7 @@ subscribeButton.addEventListener("click", async () => {
         .id.replace("source_id_", "");
       const action = subscribeButton.innerText;
       const res = await fetch(
-        `https://www.finbrowser.io/api/sources/${source_id}/source_change_subscribtion_status/`,
+        `../../api/sources/${source_id}/source_change_subscribtion_status/`,
         get_fetch_settings("POST")
       );
       if (!res.ok) {
@@ -121,7 +121,7 @@ document.querySelectorAll(".rankingStar").forEach((star) => {
       .id.replace("source_id_", "");
     try {
       const data = { source_id: source_id, rating: rating };
-      const res = await fetch(`https://www.finbrowser.io/api/source_ratings/`, {
+      const res = await fetch(`../../api/source_ratings/`, {
         method: "POST",
         headers: {
           "X-CSRFToken": getCookie("csrftoken"),
@@ -172,7 +172,7 @@ if (notificationButton) {
         .querySelector(".upperInnerContainer h3")
         .id.replace("source_id_", "");
       const data = { source_id: source_id };
-      const res = await fetch(`https://www.finbrowser.io/api/notifications/`, {
+      const res = await fetch(`../../api/notifications/`, {
         method: "POST",
         headers: {
           "X-CSRFToken": getCookie("csrftoken"),
@@ -248,7 +248,7 @@ document
             let list_id = list_ids[i];
             try {
               const res = await fetch(
-                `https://www.finbrowser.io/api/lists/${list_id}/add_source/${source_id}/`,
+                `../../api/lists/${list_id}/add_source/${source_id}/`,
                 get_fetch_settings("POST")
               );
               if (!res.ok) {
@@ -268,7 +268,7 @@ document
             try {
               let list_id = list_ids[i];
               const res = await fetch(
-                `https://www.finbrowser.io/api/lists/${list_id}/delete_source_from_list/${source_id}/`,
+                `../../api/lists/${list_id}/delete_source_from_list/${source_id}/`,
                 get_fetch_settings("DELETE")
               );
               if (!res.ok) {

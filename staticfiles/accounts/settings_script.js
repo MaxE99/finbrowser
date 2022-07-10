@@ -49,7 +49,7 @@ async function deleteSocialLinks(e) {
     const social_link_id = e.target.id.replace("social_link_id_", "");
     try {
       const res = await fetch(
-        `https://www.finbrowser.io/api/social_links/${social_link_id}/`,
+        `../../api/social_links/${social_link_id}/`,
         get_fetch_settings("DELETE")
       );
       if (!res.ok) {
@@ -73,7 +73,7 @@ document
       .id.replace("user_profile_id_", "");
     try {
       const res = await fetch(
-        `https://www.finbrowser.io/api/profiles/${user}/profile_pic_delete/`,
+        `../../api/profiles/${user}/profile_pic_delete/`,
         get_fetch_settings("DELETE")
       );
       if (!res.ok) {
@@ -123,7 +123,7 @@ addSocialLinkButton.addEventListener("click", async () => {
   document.querySelector(".linkInput").value = "";
   try {
     const data = { website: websiteID, url: website_link };
-    const res = await fetch(`https://www.finbrowser.io/api/social_links/`, {
+    const res = await fetch(`../../api/social_links/`, {
       method: "POST",
       headers: {
         "X-CSRFToken": getCookie("csrftoken"),
@@ -183,19 +183,16 @@ document.querySelectorAll(".saveSocialLinkChanges").forEach((socialLink) => {
     const website_link = socialLink.parentElement.querySelector("input").value;
     try {
       const data = { website: websiteID, url: website_link };
-      const res = await fetch(
-        `https://www.finbrowser.io/api/social_links/${social_link_id}/`,
-        {
-          method: "PUT",
-          headers: {
-            "X-CSRFToken": getCookie("csrftoken"),
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          mode: "same-origin",
-          body: JSON.stringify(data),
-        }
-      );
+      const res = await fetch(`../../api/social_links/${social_link_id}/`, {
+        method: "PUT",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        mode: "same-origin",
+        body: JSON.stringify(data),
+      });
       if (!res.ok) {
         showMessage("Error: Network request failed unexpectedly!", "Error");
       } else {
@@ -219,7 +216,7 @@ document
           ""
         );
         const res = await fetch(
-          `https://www.finbrowser.io/api/notifications/${notifications_id}/`,
+          `../../api/notifications/${notifications_id}/`,
           get_fetch_settings("DELETE")
         );
         if (!res.ok) {

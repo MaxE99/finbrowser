@@ -62,7 +62,7 @@ document.querySelectorAll(".addSourcesForm #textInput").forEach((element) => {
       selected_list.style.display = "none";
       try {
         const res = await fetch(
-          `https://www.finbrowser.io/api/sources/?feed_search=${search_term}`,
+          `../../api/sources/?feed_search=${search_term}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {
@@ -137,7 +137,7 @@ document
       if (selected_sources.length) {
         try {
           const res = await fetch(
-            `https://www.finbrowser.io/api/sources/subscribe_to_sources/${selected_sources}/`,
+            `../../api/sources/subscribe_to_sources/${selected_sources}/`,
             get_fetch_settings("POST")
           );
           if (!res.ok) {
@@ -198,7 +198,7 @@ document.querySelectorAll(".addListsForm #textInput").forEach((element) => {
       selected_list.style.display = "none";
       try {
         const res = await fetch(
-          `https://www.finbrowser.io/api/lists/?feed_search=${search_term}`,
+          `../../api/lists/?feed_search=${search_term}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {
@@ -277,7 +277,7 @@ document.querySelectorAll(".addListsForm button").forEach((element) => {
       for (let i = 0, j = selected_lists.length; i < j; i++) {
         try {
           const res = await fetch(
-            `https://www.finbrowser.io/api/lists/${selected_lists[i]}/list_change_subscribtion_status/`,
+            `../../api/lists/${selected_lists[i]}/list_change_subscribtion_status/`,
             get_fetch_settings("POST")
           );
           if (!res.ok) {
