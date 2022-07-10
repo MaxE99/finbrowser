@@ -314,18 +314,10 @@ def old_notifications_delete():
     NotificationMessage.objects.filter(date__lte=now()-timedelta(hours=24)).delete()
 
 
-# @shared_task
-# def source_profile_imgs_change_to_webp():
-#     sources = Source.objects.all()
-#     for source in sources:
-#         if 'png' in str(source.favicon_path):
-#             im = BytesIO()
-#             s3.download_fileobj('finbrowser', f"https://finbrowser.s3.us-east-2.amazonaws.com/static/{source.favicon_path}", im)
-#             output = BytesIO()
-#             im = im.resize((175, 175))
-#             im.save(output, format='WEBP', quality=99)
-#             output.seek(0)
-#             s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{source.slug}.webp'))
-#             source.favicon_path = f'home/favicons/{source.slug}.webp'
-#             source.save()
-#             time.sleep(30)
+@shared_task
+def change_favicon_path():
+    for source in Source.objects.all():
+        if source.favicon_path.endswith(".png"):
+            source.favicon_path = source.favicon_path.replace("png", "webp")
+            print(source.favicon_path)
+            source.save()
