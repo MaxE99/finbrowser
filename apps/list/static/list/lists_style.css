@@ -186,7 +186,8 @@
 }
 
 .listResultUpperCont:hover {
-  transform: scale(1.1);
+  background: var(--primary-fontColor);
+  color: white;
 }
 
 .listCont,

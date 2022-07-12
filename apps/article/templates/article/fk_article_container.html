@@ -4,10 +4,17 @@
 <div class="articlesWrapper">
     {% for article in qs %}
     <div class="articleContainer" id="article_id_{{ article.article.article_id }}">
+        {% if article.article.source %}
         <div class="authorImageContainer">
             <img src="{% static article.article.source.favicon_path %}" />
             <a href="{{ article.article.source.get_absolute_url }}"></a>
         </div>
+        {% else %}
+        <div class="authorImageContainer imageContainerUserLink">
+            <i class="fas fa-question-circle"></i>
+            <a class="articleLink" href="{{ article.article.link }}"></a>
+        </div>
+        {% endif %}
         <div class="articleInformationContainer">
             <div class="articleTitle">{{ article.article.title }}
                 <span class="articleTitleTooltip">{{ article.article.title }}</span>
@@ -19,10 +26,17 @@
             </div>
         </div>
         <i class="fas fa-ellipsis-h"></i>
+        {% if article.article.source %}
         <div class="articleWebsiteLogoContainer">
             <img class="articleWebsiteLogo" src="{% static article.article.source.website.logo %}" alt="">
             <a class="articleLink" href="{{ article.article.link }}"></a>
         </div>
+        {% else %}
+        <div class="articleWebsiteLogoContainer imageContainerUserLink">
+            <i class="fas fa-question-circle"></i>
+            <a class="articleLink" href="{{ article.article.link }}"></a>
+        </div>
+        {% endif %}
         <div class="articleOptionsContainer">
             {% if request.user.is_authenticated %}
             <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>

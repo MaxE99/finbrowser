@@ -1,6 +1,9 @@
 # Django imports
 from django.db import models
 from django.db.models import Sum
+from django.shortcuts import get_object_or_404
+
+from apps.accounts.models import Profile
 
 
 class ListManager(models.Manager):
@@ -27,7 +30,7 @@ class ListManager(models.Manager):
         return self.filter(name__istartswith=search_term, is_public=True).select_related('creator__profile')
 
     def filter_lists_not_subscribed(self, search_term, user):
-        return self.filter(name__istartswith=search_term, is_public=True).exclude(creator=user, subscribers=user).order_by('name')
+        return self.filter(name__istartswith=search_term, is_public=True).exclude(creator=user).exclude(subscribers=user).order_by('name')
 
     def get_lists_with_source(self, source):
         return self.filter(sources__source_id=source.source_id, is_public=True).select_related('creator__profile', 'creator').order_by('name')

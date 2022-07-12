@@ -25,14 +25,16 @@ document.getElementById("search").addEventListener("keyup", async () => {
         const context = await res.json();
         results_list.style.display = "flex";
         results_list.innerHTML = "";
-        context.forEach((list) => {
-          let list_pic = "/static/home/media/finbrowser-bigger-logo.png";
-          if (list.list_pic) {
-            list_pic = list.list_pic;
+        if (context[0].length > 0) {
+          for (let i = 0, j = context[0].length; i < j; i++) {
+            let list_pic = "/static/home/media/finbrowser-bigger-logo.png";
+            if (context[0][i].list_pic) {
+              list_pic = context[0][i].list_pic;
+            }
+            const result = `<div class="searchResult"><img src="${list_pic}"><span>${context[0][i].name}</span><a href="../..${context[1][i]}"></a></div>`;
+            results_list.innerHTML += result;
           }
-          const result = `<div class="searchResult"><img src="${list_pic}"><span>${list.name}</span><a href="../../list/${list.list_id}"></a></div>`;
-          results_list.innerHTML += result;
-        });
+        }
       }
     } catch (e) {
       // showMessage("Error: Unexpected error has occurred!", "Error");

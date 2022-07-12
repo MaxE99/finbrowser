@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_lists_style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_lists_style_v2.css' %}" />
 <title>FinBrowser | Lists</title>
 <meta name="description"
   content="User-generated lists of stock market related sources and content from accross the open web.">
@@ -130,5 +130,5 @@
 {% if is_paginated %}
 {% include "pagination.html" with page=page_obj %}
 {% endif %}
-<script src="{% static 'list/min_lists_script_v2.js' %}"></script>
+<script src="{% static 'list/min_lists_script_v3.js' %}"></script>
 {% endblock %}
