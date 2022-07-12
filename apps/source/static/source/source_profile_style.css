@@ -107,6 +107,7 @@
   border-radius: 0.8rem;
   cursor: pointer;
   text-decoration: none;
+  margin-right: 0.5rem;
 }
 
 .subscribeButton:hover {

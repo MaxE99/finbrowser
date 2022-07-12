@@ -51,7 +51,7 @@ function get_fetch_settings(inputMethod) {
 // Gives user feedback if action that includes DRF has been succesfull or not
 function showMessage(message, type) {
   document.querySelectorAll(".messages").forEach((message) => {
-    message.innerHTML = "";
+    message.remove();
   });
   const messages = document.createElement("ul");
   messages.classList.add("messages");
