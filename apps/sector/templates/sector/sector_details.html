@@ -35,7 +35,7 @@
 
 
 {% if articles_from_sector %}
-{% create_article_container "Content From Sector" articles_from_sector request %}
+{% create_article_container "Content From Sector" articles_from_sector request user_lists csrf_token add_list_form highlighted_content_titles %}
 <div class="pagination">
     <span class="step-links">
         {% for i in articles_from_sector.paginator.page_range %}
@@ -52,7 +52,7 @@
 {% if tweets_from_sector %}
 <div class="twitterWrapper">
     <div class="tweetsContainer twitterHalfPageContainer">
-        {% create_tweets_container "Newest Tweets" tweets_from_sector request %}
+        {% create_tweets_container "Newest Tweets" tweets_from_sector request user_lists csrf_token add_list_form highlighted_content_titles %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in tweets_from_sector.paginator.page_range %}

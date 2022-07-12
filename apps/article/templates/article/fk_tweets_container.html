@@ -17,7 +17,7 @@
                 <div class="articleOptionsContainer">
                     {% if request.user.is_authenticated %}
                     <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
-                    {% if tweet.title in highlighted_content_titles %}
+                    {% if tweet.article.title in highlighted_content_titles %}
                     <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight
                             article</span></div>
                     {% else %}

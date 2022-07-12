@@ -522,6 +522,7 @@ main {
   max-width: 160rem;
   margin: 0 auto 1rem;
   min-height: calc(100vh - 9.5rem);
+  overflow: hidden;
 }
 
 footer {
@@ -858,7 +859,6 @@ h2 {
   align-content: space-between;
   flex-wrap: wrap;
   height: 40rem;
-  overflow: hidden;
 }
 
 .articlesWrapper .articleContainer {

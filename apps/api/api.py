@@ -43,11 +43,16 @@ class HighlightedArticleViewSet(viewsets.ModelViewSet):
     def create(self, request):
         article_id = request.data['article_id']
         article = get_object_or_404(Article, article_id=article_id)
+        print(article)
         if HighlightedArticle.objects.filter(user=request.user, article=article).exists():
+            print("EXISTS")
+            print("------------------------------------------------------------")
             highlighted_article = HighlightedArticle.objects.get(user=request.user, article=article)
             highlighted_article.delete()
             return Response("Article has been unhighlighted!")
         else:
+            print("DOES NOT EXIST")
+            print("------------------------------------------------------------")
             HighlightedArticle.objects.create(user=request.user, article=article)
             return Response("Article has been highlighted!")
 

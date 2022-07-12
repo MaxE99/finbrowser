@@ -39,5 +39,5 @@ class ArticleViewTest(TestCase):
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'article/articles.html')
         self.assertEqual(response.context['results_found'], 10)
-        self.assertEqual(response.context['articles'].count(), 10)
+        self.assertEqual(len(response.context['articles']), 10)
         self.assertEqual(len(response.context['tweets'].object_list), 0)
