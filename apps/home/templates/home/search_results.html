@@ -1,8 +1,8 @@
 {% extends 'home/base.html' %}
 {% load static %}
-
+{% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v2.css' %}">
 <title>{{ search_term }} - Search Results | FinBrowser</title>
 {% endblock %}
 {% block content %}
@@ -116,60 +116,15 @@
         </div>
     </div>
     <div class="tabsContent" data-tab="1">
-        <div class="articlesWrapper">
-            {% if filtered_lists %} {% for list in filtered_lists %}
-            <div class="articleContainer" id="article_id_{{ article.article_id }}">
-                <div class="authorImageContainer">
-                    {% if list.list_pic %}
-                    <img src="{{ list.list_pic.url }}" alt="favicon" />
-                    {% else %}
-                    <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="favicon" />
-                    {% endif %}
-                    <a href="{{ list.get_absolute_url }}"></a>
-                </div>
-                <div class="articleInformationContainer">
-                    <div class="articleTitle">{{ list.name }}
-                    </div>
-                    <div class="articleSectorAndDateContainer">
-                        <a href="{{ list.creator.profile.get_absolute_url }}">
-                            {{ list.creator.username }}</a>
-                        <div class="articlePubDate">4.4</div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %} {% endif %}
-        </div>
         {% if filtered_lists %}
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in filtered_lists.paginator.page_range %}
-                {% if filtered_lists.number == i %}
-                <button class="currentPagination">{{ filtered_lists.number }}</button>
-                {% elif i > filtered_lists.number|add:'-3' and i < filtered_lists.number|add:'3' %} <a
-                    href="?filtered_lists={{ i }}">{{ i }}</a>
-                {% endif %}
-                {% endfor %}
-            </span>
-        </div>
+        {% create_source_container "Lists - Search Results" filtered_lists %}
         {% endif %}
-
     </div>
     <div class="tabsContent" data-tab="2">
-        <div class="categoryContainer">
-            {% for source in filtered_sources %}
-            <div class="sourceContainer">
-                <div class="iconContainer">
-                    <img class="sourcePic" src="{% static source.favicon_path %}" alt="favicon" />
-                </div>
-                <a class="sourceLink" href="{{ source.get_absolute_url }}"></a>
-                <div class="sourceNameOuterContainer">
-                    <div class="sourceNameInnerContainer">{{ source.name }}</div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+        {% if filtered_sources %}
+        {% create_source_container "Sources - Search Results" filtered_sources %}
+        {% endif %}
     </div>
-
 </div>
 
 <script src="{% static 'home/min_search_results_script_v2.js' %}"></script>

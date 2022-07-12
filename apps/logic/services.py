@@ -108,7 +108,6 @@ def tweet_img_upload(tweet_type, file_url):
 # def change_format_of_pngs_and_upload_them_as_wepbs_from_dev():
 #     images = glob.glob("test_imgs/*.png")
 #     for image in images:
-#         print(image)
 #         if image.endswith(".png"):
 #             with open(image, 'rb') as file:
 #                 im = Image.open(file)

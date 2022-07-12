@@ -83,6 +83,7 @@
 
 .notificationAndSubscribtionContainer {
   display: flex;
+  margin-right: 0.5rem;
 }
 
 .notificationAndSubscribtionContainer .fa-bell {
