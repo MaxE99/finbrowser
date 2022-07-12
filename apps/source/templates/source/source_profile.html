@@ -126,7 +126,7 @@
 {% if source.website.name == "Twitter" and latest_articles %}
 <div class="twitterWrapper">
   <div class="tweetsContainer twitterHalfPageContainer">
-    {% create_tweets_container "Newest Tweets" latest_articles request %}
+    {% create_tweets_container "Newest Tweets" latest_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
     <div class="pagination">
       <span class="step-links">
         {% for i in latest_articles.paginator.page_range %}
@@ -152,7 +152,7 @@
 </div>
 {% else %}
 {% if latest_articles %}
-{% create_article_container "Latest Content" latest_articles request %}
+{% create_article_container "Latest Content" latest_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
 <div class="pagination">
   <span class="step-links">
     {% for i in latest_articles.paginator.page_range %}
