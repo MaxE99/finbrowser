@@ -1,10 +1,12 @@
 # Django imports
+from curses.ascii import US
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect
 from django.template.defaultfilters import slugify
+from django.contrib.auth import get_user_model
 # Local imports
 from apps.logic.pure_logic import paginator_create
 from apps.mixins import BaseMixin, CreateListFormMixin
@@ -12,9 +14,11 @@ from apps.list.forms import ListNameChangeForm, ListPicChangeForm
 from apps.list.models import List, ListRating
 from apps.home.models import Notification
 from apps.article.models import Article
-from apps.accounts.models import Website
+from apps.accounts.models import Website, Profile
 from apps.base_logger import logger
 from apps.logic.pure_logic import lists_filter
+
+User = get_user_model()
 
 try:
     TWITTER = get_object_or_404(Website, name="Twitter")
@@ -95,7 +99,7 @@ class ListDetailView(TemplateView, BaseMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        list = get_object_or_404(List, slug=self.kwargs['list_slug'])
+        list = get_object_or_404(List, slug=self.kwargs['list_slug'], creator=get_object_or_404(User,profile=get_object_or_404(Profile, slug=self.kwargs['profile_slug'])))
         list_id = list.list_id
         if self.request.user.is_authenticated:
             notifications_activated = Notification.objects.filter(user=self.request.user, list=list).exists()

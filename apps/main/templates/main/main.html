@@ -1,9 +1,7 @@
 {% extends 'home/base.html' %}
 {% load static %}
-{% load cache %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_main_style.css' %}">
 <title>FinBrowser</title>
 <meta name="description" content="Good investment decisions are only possible with well-founded analysis. Unfortunately,
 Wall Street has long had a monopoly on great research. However, that has changed in the last decade and now the
@@ -12,27 +10,23 @@ FinBrowser, you can find and manage these sources.">
 {% endblock %}
 {% block content %}
 
-{% cache 3600 main %}
-
-{% create_fk_article_container "Article Of The Week" articles_of_the_week request %}
+{% create_fk_article_container "Article Of The Week" articles_of_the_week request user_lists csrf_token add_list_form highlighted_content_titles %}
 
 <div class="twitterWrapper">
     <div class="tweetsContainer twitterHalfPageContainer">
-        {% create_fk_tweets_container "Energy Crisis Tweets" energy_crisis_tweets request %}
+        {% create_fk_tweets_container "Energy Crisis Tweets" energy_crisis_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
     </div>
     <div class="mostLikedTweetsContainer twitterHalfPageContainer">
-        {% create_fk_tweets_container "Macro Tweets" macro_tweets request %}
+        {% create_fk_tweets_container "Macro Tweets" macro_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
     </div>
 </div>
 
-{% create_fk_article_container "Trending Topics" trending_topic_articles request %}
+{% create_fk_article_container "Trending Topics" trending_topic_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
 
 {% create_source_container "Highest Rated Sources" highest_rated_sources %}
 
-{% create_fk_article_container "Audio Of The Week" audio_of_the_week request %}
+{% create_fk_article_container "Audio Of The Week" audio_of_the_week request user_lists csrf_token add_list_form highlighted_content_titles %}
 
 {% create_source_container "New Sources" newest_sources %}
-
-{% endcache %}
 
 {% endblock content %}

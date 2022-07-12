@@ -6,7 +6,8 @@ from django.urls import reverse
 # Local imports
 from apps.accounts.forms import UserCreationForm, EmailAndUsernameChangeForm, PasswordChangingForm, PrivacySettingsForm
 from apps.accounts.models import PrivacySettings, Profile
-from apps.home.models import Source, List
+from apps.source.models import Source
+from apps.list.models import List
 from apps.tests.test_model_instances import create_test_users, create_test_sources, create_test_lists, create_test_sectors, create_test_social_links, create_test_website, create_test_articles, create_test_highlighted_articles, create_test_notifications
 
 User = get_user_model()

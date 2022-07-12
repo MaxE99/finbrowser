@@ -3,7 +3,7 @@
 {% load tags %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'article/min_articles_style.css' %}">
-<title>FinBrowser | Articles</title>
+<title>FinBrowser | Content</title>
 <meta name="description" content="The best stock market-related content from across the open web.">
 {% endblock %}
 
@@ -74,7 +74,7 @@
 </div>
 
 {% if articles %}
-{% create_article_container "Long Form Content" articles request %}
+{% create_article_container "Long Form Content" articles request user_lists csrf_token add_list_form highlighted_content_titles %}
 <div class="pagination">
     <span class="step-links">
         {% for i in articles.paginator.page_range %}
@@ -91,7 +91,7 @@
 {% if tweets %}
 <div class="twitterWrapper">
     <div class="tweetsContainer twitterHalfPageContainer">
-        {% create_tweets_container "Newest Tweets" tweets request %}
+        {% create_tweets_container "Newest Tweets" tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in tweets.paginator.page_range %}
