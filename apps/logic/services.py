@@ -45,7 +45,7 @@ def notifications_create(articles):
                 list_notifications = notifications.filter(list=list)
                 for list_notification in list_notifications:
                     if notification_messages.filter(article=article, notification__user=list_notification.user).exists() == False:
-                        notifications_creation_list.append({"notification": source_notification, 'article': article, 'date': now()})
+                        notifications_creation_list.append({"notification": list_notification, 'article': article, 'date': now()})
     new_notification_messages = [
         NotificationMessage(
             notification=new_notification['notification'],

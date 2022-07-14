@@ -464,6 +464,23 @@
   }
 }
 
+@media (min-width: 500px) and (max-width: 1000px) {
+  .notificationAndSubscribtionContainer .buttonContainer {
+    position: absolute;
+    top: 10.5rem;
+    right: 4rem;
+    flex-direction: column;
+  }
+
+  .buttonContainer input,
+  .cancelButton,
+  .deleteListButton {
+    width: 14rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+}
+
 @media (max-width: 500px) {
   .listPictureContainer {
     height: 10rem;
@@ -536,4 +553,8 @@
   .ratedStar {
     font-size: 3.5rem;
   }
+
+  .addSourcesButton {
+    font-size: 10rem;
+}
 }
