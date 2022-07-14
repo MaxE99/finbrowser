@@ -22,11 +22,9 @@ def login(next_page=False):
 
 def add_to_list(selector, driver):
     selector.find_element(By.CSS_SELECTOR, '.fa-ellipsis-h').click()
-    sleep(1)
     selector.find_element(By.CSS_SELECTOR, '.addToListButton').click()
     sleep(1)
     selector.find_elements(By.CSS_SELECTOR, '.addToListForm .listSelectionContainer .listContainer label input')[0].click()
-    sleep(1)
     selector.find_element(By.CSS_SELECTOR, '.addToListForm .saveButton').click()   
     sleep(1)
     assert "LISTS HAVE BEEN UPDATED!" in driver.find_element(By.CSS_SELECTOR, ".messages .success").get_attribute('innerText')
@@ -36,7 +34,7 @@ def highlight_article(selector, driver):
     sleep(1)
     selector.find_element(By.CSS_SELECTOR, '.addToHighlightedButton').click()
     sleep(1)
-    assert "ARTICLE HAS BEEN HIGHLIGHTED!" in driver.find_element(By.CSS_SELECTOR, ".messages .success").get_attribute('innerText')  or "ARTICLE HAS BEEN UNHIGHLIGHTED!" in driver.find_element(By.CSS_SELECTOR, ".messages .success").get_attribute('innerText')
+    assert "ARTICLE HAS BEEN HIGHLIGHTED!" in driver.find_element(By.CSS_SELECTOR, ".messages li").get_attribute('innerText')  or "ARTICLE HAS BEEN UNHIGHLIGHTED!" in driver.find_element(By.CSS_SELECTOR, ".messages li").get_attribute('innerText')
 
 def create_list(selector, driver):
     selector.find_element(By.CSS_SELECTOR, '.fa-ellipsis-h').click()
@@ -109,6 +107,30 @@ def test_open_source_profile_with_slider(next_page):
     sleep(1)
     assert "Profile | FinBrowser" in driver.title  
 
+def test_highlighting_articles_is_working(next_page):
+    driver = login(next_page)
+    selector = driver.find_elements(By.CSS_SELECTOR, '.articlesWrapper .articleContainer')[5]
+    initial_highlighted_status = selector.find_element(By.CSS_SELECTOR, '.addToHighlightedButton').get_attribute("innerText")
+    highlight_article(selector, driver)
+    driver.refresh()
+    sleep(1)
+    selector = driver.find_elements(By.CSS_SELECTOR, '.articlesWrapper .articleContainer')[5]
+    selector.find_element(By.CSS_SELECTOR, '.fa-ellipsis-h').click()
+    sleep(1)
+    assert initial_highlighted_status != selector.find_element(By.CSS_SELECTOR, '.addToHighlightedButton').get_attribute("innerText")
+
+def test_highlighting_tweets_is_working(next_page):
+    driver = login(next_page)
+    selector = driver.find_elements(By.CSS_SELECTOR, '.twitterWrapper .smallFormContentWrapper .articleContainer')[5]
+    initial_highlighted_status = selector.find_element(By.CSS_SELECTOR, '.addToHighlightedButton').get_attribute("innerText")
+    highlight_article(selector, driver)
+    driver.refresh()
+    sleep(1)
+    selector = driver.find_elements(By.CSS_SELECTOR, '.twitterWrapper .smallFormContentWrapper .articleContainer')[5]
+    selector.find_element(By.CSS_SELECTOR, '.fa-ellipsis-h').click()
+    sleep(1)
+    assert initial_highlighted_status != selector.find_element(By.CSS_SELECTOR, '.addToHighlightedButton').get_attribute("innerText")
+
 def test_standard_use_cases(next_page=False):
     test_open_sector(next_page)
     test_add_to_list_with_article_container(next_page)
@@ -119,6 +141,8 @@ def test_standard_use_cases(next_page=False):
     test_create_list_with_tweet_container(next_page)
     test_open_source_profile_with_article_container(next_page)
     test_open_source_profile_with_tweet_container(next_page)
+    test_highlighting_articles_is_working(next_page)
+    test_highlighting_tweets_is_working(next_page)
 
 ########################################################################################################################################################
 
@@ -154,6 +178,53 @@ class NavigationTest(LiveServerTestCase):
         driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .fa-search').click()
         sleep(1)
         assert 'Test123' in driver.title
+        driver.find_elements(By.CSS_SELECTOR, 'footer li a')[0].click()
+        sleep(1)
+        assert "FinBrowser | Contact" in driver.title
+        driver.find_elements(By.CSS_SELECTOR, 'footer li a')[1].click()
+        sleep(1)
+        assert "FinBrowser | Cookie Statement" in driver.title
+        driver.find_elements(By.CSS_SELECTOR, 'footer li a')[2].click()
+        sleep(1)
+        assert "FinBrowser | Privacy Policy" in driver.title
+        driver.find_elements(By.CSS_SELECTOR, 'footer li a')[3].click()
+        sleep(1)
+        assert "FinBrowser | Terms Of Service" in driver.title
+
+
+class NotificationTest(LiveServerTestCase):
+
+    def test_open_source_from_source_notifications(self):
+        driver = login()
+        driver.find_element(By.CSS_SELECTOR, '.userSpace .notificationBell').click()
+        sleep(1)
+        driver.find_elements(By.CSS_SELECTOR, '.activeNotificationContainer .articleContainer .sourceAndWebsiteContainer a')[0].click()
+        assert "Profile | FinBrowser" in driver.title
+
+    def test_standard_use_cases(self):
+        driver = login()
+        driver.find_element(By.CSS_SELECTOR, '.userSpace .notificationBell').click()
+        content_container = driver.find_elements(By.CSS_SELECTOR, '.activeNotificationContainer .articleContainer')[0]
+        highlight_article(content_container,driver)
+        add_to_list(content_container,driver)
+        create_list(content_container,driver)
+
+
+class MainSearchTest(LiveServerTestCase):
+
+    def test_open_list(self):
+        driver = login()
+        driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch').send_keys('f')
+        sleep(2)
+        driver.find_elements(By.CSS_SELECTOR, '#mainAutocomplete_result .searchResult a')[0].click()
+        assert 'List | FinBrowser' in driver.title
+
+    def test_open_source(self):
+        driver = login()
+        driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch').send_keys('f')
+        sleep(2)
+        driver.find_elements(By.CSS_SELECTOR, '#mainAutocomplete_result .searchResult a')[4].click()
+        assert 'Profile | FinBrowser' in driver.title
 
 
 class MainTest(LiveServerTestCase):
@@ -161,7 +232,6 @@ class MainTest(LiveServerTestCase):
     def test_main_standard_use_cases(self):
         test_standard_use_cases()
         test_open_source_profile_with_slider(False)
-
 
 class FeedTest(LiveServerTestCase):
     
@@ -198,6 +268,7 @@ class FeedTest(LiveServerTestCase):
         slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .interactionWrapper .addListsButton').click()
         slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addListsForm #textInput').send_keys("Test")
         sleep(1)
+        list_name = slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addListsForm #searchResultsContainer .searchResult span')[0].get_attribute("innerText")
         slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addListsForm #searchResultsContainer .searchResult')[0].click()
         slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addListsForm #textInput').send_keys("Test")
         sleep(1)
@@ -208,6 +279,15 @@ class FeedTest(LiveServerTestCase):
         slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addListsForm .selectionContainer .searchResult .fa-trash')[2].click()
         slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addListsForm .formSubmitButton').click()
         sleep(1)
+        driver.refresh()
+        slider_wrapper = driver.find_elements(By.CSS_SELECTOR, '.sliderWrapper')[1]
+        while slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .interactionWrapper').is_displayed() == False:
+            slider_wrapper.find_element(By.CSS_SELECTOR, '.rightHandle').click()
+            sleep(1)
+        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .interactionWrapper .addListsButton').click()
+        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addListsForm #textInput').send_keys("Test")
+        sleep(1)
+        assert list_name != slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addListsForm #searchResultsContainer .searchResult span')[0].get_attribute("innerText")
 
     def test_subscribed_lists_open_list(self):
         driver = login("http://127.0.0.1:8000/feed/")
@@ -222,9 +302,10 @@ class FeedTest(LiveServerTestCase):
         while slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .interactionWrapper').is_displayed() == False:
             slider_wrapper.find_element(By.CSS_SELECTOR, '.rightHandle').click()
             sleep(1)
-        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .interactionWrapper .addSourcesButton ').click()
+        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .interactionWrapper .addSourcesButton').click()
         slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addSourcesForm #textInput').send_keys("Test")
         sleep(1)
+        source_name = slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addSourcesForm #searchResultsContainer .searchResult span')[0].get_attribute("innerText")
         slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addSourcesForm #searchResultsContainer .searchResult')[0].click()
         slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addSourcesForm #textInput').send_keys("Test")
         sleep(1)
@@ -234,7 +315,16 @@ class FeedTest(LiveServerTestCase):
         slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addSourcesForm #searchResultsContainer .searchResult')[0].click()
         slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addSourcesForm .selectionContainer .searchResult .fa-trash')[2].click()
         slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addSourcesForm .formSubmitButton').click()
-        sleep(1)        
+        sleep(1)   
+        driver.refresh()
+        slider_wrapper = driver.find_elements(By.CSS_SELECTOR, '.sliderWrapper')[2]
+        while slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .interactionWrapper').is_displayed() == False:
+            slider_wrapper.find_element(By.CSS_SELECTOR, '.rightHandle').click()
+            sleep(1)
+        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .interactionWrapper .addSourcesButton').click()
+        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addSourcesForm #textInput').send_keys("Test")
+        sleep(1)
+        assert source_name != slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addSourcesForm #searchResultsContainer .searchResult span')[0].get_attribute("innerText")     
 
     def test_subscribed_sources_open_source(self):
         driver = login("http://127.0.0.1:8000/feed/")
@@ -294,10 +384,41 @@ class ListTest(LiveServerTestCase):
         sleep(1)
         assert str(driver.current_url) == "http://127.0.0.1:8000/lists/365/Sources/2/Twitter/"
 
-    # def test_list_search(self):
-    #     driver = login("http://127.0.0.1:8000/lists/")
-    #     driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("test")
-    #     driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')[4].click()
+    def test_double_list_filtering(self):
+        driver = login("http://127.0.0.1:8000/lists/")
+        driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #timeframe').click()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #timeframe option')[-1].click()
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #content').click()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #content option')[-1].click()
+        sleep(1)
+        action = webdriver.ActionChains(driver)
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #minimum_rating')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #minimum_rating option')[-1].click()
+        sleep(1)
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #primary_source')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #primary_source option')[4].click()
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '.searchButton').click()
+        sleep(1)
+        assert str(driver.current_url) == "http://127.0.0.1:8000/lists/365/Sources/2/Twitter/"
+        driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #timeframe').click()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #timeframe option')[3].click()
+        sleep(1)
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #primary_source')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #primary_source option')[3].click()
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '.searchButton').click()
+        sleep(1)
+        assert str(driver.current_url) == "http://127.0.0.1:8000/lists/90/Sources/2/Substack/"
+
+    def test_list_search(self):
+        driver = login("http://127.0.0.1:8000/lists/")
+        driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("test")
+        sleep(1)
+        driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')[4].click()
+        sleep(1)
+        assert "List | FinBrowser" in driver.title
 
     def test_create_list(self):
         driver = login("http://127.0.0.1:8000/lists/")
@@ -363,12 +484,39 @@ class ContentTest(LiveServerTestCase):
         sleep(1)
         assert str(driver.current_url) == "http://127.0.0.1:8000/content/365/Defense/No/Twitter/"
 
-    # def test_content_search(self):
-    #     driver = login("http://127.0.0.1:8000/content/")
-    #     driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("test")
-    #     driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')[4].click()
-    #     sleep(1)
-    #     assert "Profile | FinBrowser" in driver.title
+    def test_double_content_filtering(self):
+        driver = login("http://127.0.0.1:8000/content/")
+        driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #timeframe').click()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #timeframe option')[-1].click()
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #sector').click()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #sector option')[1].click()
+        sleep(1)
+        action = webdriver.ActionChains(driver)
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #paywall')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #paywall option')[-1].click()
+        sleep(1)
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #source')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #source option')[4].click()
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '.searchButton').click()
+        sleep(1)
+        assert str(driver.current_url) == "http://127.0.0.1:8000/content/365/Defense/No/Twitter/"
+        driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #timeframe').click()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #timeframe option')[3].click()
+        sleep(1)
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #source')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #source option')[3].click()
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '.searchButton').click()
+        sleep(1)
+        assert str(driver.current_url) == "http://127.0.0.1:8000/content/90/Defense/No/Substack/"
+
+    def test_content_search(self):
+        driver = login("http://127.0.0.1:8000/content/")
+        driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("test")
+        sleep(1)
+        assert len(driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')) == 10
 
     def test_articles_pagination(self):
         driver = login("http://127.0.0.1:8000/content/")
@@ -383,14 +531,67 @@ class ContentTest(LiveServerTestCase):
         assert str(driver.current_url).endswith('=2')
 
 
-# class SearchResultTest(LiveServerTestCase):
-#     pass
-# 1. Open Source in Article
-# 2. Open Sector
-# 3. Search mit anklicken
-# 4. Pagination
-# 5. Open Source in Tab
-# 6. Open List in Tab
+class SearchResultTest(LiveServerTestCase):
+    
+    def test_standard_use_cases(self):
+        test_open_sector("http://127.0.0.1:8000/search_results/f")
+        test_add_to_list_with_article_container("http://127.0.0.1:8000/search_results/f")
+        test_highlight_article_with_article_container("http://127.0.0.1:8000/search_results/f")
+        test_create_list_with_article_container("http://127.0.0.1:8000/search_results/f")
+        test_open_source_profile_with_article_container("http://127.0.0.1:8000/search_results/f")
+        test_highlighting_articles_is_working("http://127.0.0.1:8000/search_results/f")
+
+    def test_pagination(self):
+        driver = login("http://127.0.0.1:8000/search_results/f")
+        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[0]
+        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
+        assert str(driver.current_url).endswith('=2')
+
+    def test_open_list_from_list_tab(self):
+        driver = login("http://127.0.0.1:8000/search_results/f")
+        driver.find_elements(By.CSS_SELECTOR, '.searchCategories .searchCategoryTab')[1].click()
+        slider = driver.find_elements(By.CSS_SELECTOR, '.slider')[0]
+        slider.find_elements(By.CSS_SELECTOR, '.contentContainer')[0].click()
+        sleep(1)
+        assert "List | FinBrowser" in driver.title
+
+    def test_open_source_from_source_tab(self):
+        driver = login("http://127.0.0.1:8000/search_results/f")
+        driver.find_elements(By.CSS_SELECTOR, '.searchCategories .searchCategoryTab')[2].click()
+        slider = driver.find_elements(By.CSS_SELECTOR, '.slider')[1]
+        slider.find_elements(By.CSS_SELECTOR, '.contentContainer')[0].click()
+        sleep(1)
+        assert "Profile | FinBrowser" in driver.title
+
+    def test_open_list_from_search(self):
+        driver = login("http://127.0.0.1:8000/search_results/f")
+        search_bar = driver.find_elements(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch')[1]
+        search_bar.clear()
+        search_bar.send_keys('f')
+        sleep(2)
+        driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')[0].click()
+        sleep(1)
+        assert 'List | FinBrowser' in driver.title
+
+    def test_open_source_from_search(self):
+        driver = login("http://127.0.0.1:8000/search_results/f")
+        search_bar = driver.find_elements(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch')[1]
+        search_bar.clear()
+        search_bar.send_keys('f')
+        sleep(2)
+        driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')[4].click()
+        sleep(1)
+        assert 'Profile | FinBrowser' in driver.title
+
+    def test_search_button(self):
+        driver = login("http://127.0.0.1:8000/search_results/f")
+        search_bar = driver.find_elements(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch')[1]
+        search_bar.clear()
+        search_bar.send_keys('this is a test')  
+        driver.find_elements(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .fa-search')[1].click()
+        sleep(1)
+        assert 'this is a test' in driver.title      
+
 
 class SettingsTest(LiveServerTestCase):
     
@@ -612,7 +813,7 @@ class UserProfileTest(LiveServerTestCase):
         test_open_source_profile_with_article_container("http://127.0.0.1:8000/profile/ebirdmax99")
 
 
-class ListTest(LiveServerTestCase):
+class ListDetailTest(LiveServerTestCase):
 
     def test_standard_use_cases(self):
         test_standard_use_cases("http://127.0.0.1:8000/list/ebirdmax99/test0207-2")
@@ -667,3 +868,48 @@ class ListTest(LiveServerTestCase):
         driver.find_element(By.CSS_SELECTOR, ".notificationAndSubscribtionContainer .subscribeButton").click()  
         sleep(1)
         assert "LIST SUBSCRIPTION ADDED!" in driver.find_element(By.CSS_SELECTOR, ".messages li").get_attribute('innerText') or "LIST SUBSCRIPTION REMOVED!" in driver.find_element(By.CSS_SELECTOR, ".messages li").get_attribute('innerText') 
+
+    def test_remove_source(self):
+        driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-2")
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, ".editButton").click() 
+        source_container = driver.find_elements(By.CSS_SELECTOR, ".slider .contentContainer")[0]
+        initital_first_source_name = source_container.find_element(By.CSS_SELECTOR, ".contentName").get_attribute('innerText')
+        source_container.find_element(By.CSS_SELECTOR, ".sourceDeleteOption").click()
+        sleep(1)
+        driver.refresh()
+        sleep(1)
+        assert initital_first_source_name != driver.find_elements(By.CSS_SELECTOR, ".slider .contentContainer")[0].find_element(By.CSS_SELECTOR, ".contentName").get_attribute('innerText')
+
+    def test_add_source(self):
+        driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-2")
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, ".editButton").click() 
+        slider_wrapper = driver.find_element(By.CSS_SELECTOR, '.sliderWrapper')
+        while slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .interactionWrapper').is_displayed() == False:
+            slider_wrapper.find_element(By.CSS_SELECTOR, '.leftHandle').click()
+            sleep(1)
+        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .interactionWrapper .addSourcesButton').click()
+        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addSourcesForm #textInput').send_keys("Test")
+        sleep(1)
+        source_name = slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addSourcesForm #searchResultsContainer .searchResult span')[0].get_attribute("innerText")
+        slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addSourcesForm #searchResultsContainer .searchResult')[0].click()
+        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addSourcesForm #textInput').send_keys("Test")
+        sleep(1)
+        slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addSourcesForm #searchResultsContainer .searchResult')[0].click()
+        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addSourcesForm #textInput').send_keys("Test")
+        sleep(1)
+        slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addSourcesForm #searchResultsContainer .searchResult')[0].click()
+        slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addSourcesForm .selectionContainer .searchResult .fa-trash')[2].click()
+        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addSourcesForm .formSubmitButton').click()
+        sleep(1)        
+        driver.refresh()
+        driver.find_element(By.CSS_SELECTOR, ".editButton").click() 
+        slider_wrapper = driver.find_element(By.CSS_SELECTOR, '.sliderWrapper')
+        while slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .interactionWrapper').is_displayed() == False:
+            slider_wrapper.find_element(By.CSS_SELECTOR, '.leftHandle').click()
+            sleep(1)
+        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .interactionWrapper .addSourcesButton').click()
+        slider_wrapper.find_element(By.CSS_SELECTOR, '.slider .addSourcesForm #textInput').send_keys("Test")
+        sleep(1)
+        assert source_name != slider_wrapper.find_elements(By.CSS_SELECTOR, '.slider .addSourcesForm #searchResultsContainer .searchResult span')[0].get_attribute("innerText")
