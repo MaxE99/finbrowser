@@ -73,7 +73,7 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
     "listSearchSettings",
     JSON.stringify(listSearchSettings)
   );
-  window.location = `../../lists/${timeframe}/${contentType}/${minimum_rating}/${primary_source}/`;
+  window.location = `../../../../../../lists/${timeframe}/${contentType}/${minimum_rating}/${primary_source}/`;
 });
 
 //open create List Menu

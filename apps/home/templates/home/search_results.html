@@ -117,7 +117,40 @@
     </div>
     <div class="tabsContent" data-tab="1">
         {% if filtered_lists %}
-        {% create_source_container "Lists - Search Results" filtered_lists %}
+        <div class="sliderWrapper">
+            <div class="sliderHeader">
+                <div class="sliderHeaderTitle">Search Results</div>
+                <div class="progressBar"></div>
+            </div>
+            <div class="sliderContentContainer">
+                <button class="handle leftHandle">
+                    <div class="handleSymbol">&#8249;</div>
+                </button>
+                <div class="slider">
+                    {% for list in filtered_lists %}
+                    <div class="contentWrapper">
+                        <div class="contentContainer">
+                            <div class="contentIconContainer">
+                                {% if list.list_pic %}
+                                <img class="contentIcon" src="{{ list.list_pic.url }}" alt="favicon" />
+                                {% else %}
+                                <img class="contentIcon" src="{% static 'home/media/finbrowser-bigger-logo.png' %}"
+                                    alt="favicon" />
+                                {% endif %}
+                            </div>
+                            <a class="contentLink" href="{{ list.get_absolute_url }}"></a>
+                            <div class="contentNameContainer">
+                                <div class="contentName">{{ list.name }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="handle rightHandle">
+                    <div class="handleSymbol">&#8250;</div>
+                </button>
+            </div>
+        </div>
         {% endif %}
     </div>
     <div class="tabsContent" data-tab="2">

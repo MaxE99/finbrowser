@@ -21,7 +21,7 @@ router.register('highlighted_articles', HighlightedArticleViewSet)
 router.register('notifications', NotificationViewSet)
 
 urlpatterns = [
-    path('lists/<int:list_id>/add_source/<str:source_ids>/', add_sources_to_list),
+    path('lists/<int:list_id>/add_sources/<str:source_ids>/', add_sources_to_list),
     path('sources/subscribe_to_sources/<str:source_ids>/', subscribe_to_sources),
     path('search_site/<str:search_term>', FilteredSite.as_view()),
     path('search_articles/<str:search_term>', FilteredArticles.as_view()),

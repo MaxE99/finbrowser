@@ -4,7 +4,6 @@ from django.core.cache import cache
 from celery import shared_task
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
-from django.conf import settings
 # Python imports
 import tweepy
 from datetime import timedelta
@@ -16,7 +15,6 @@ import requests
 import base64
 import os
 import boto3
-from io import BytesIO
 # Local imports
 from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload
 from apps.article.models import Article, TweetType
