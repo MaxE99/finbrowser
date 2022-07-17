@@ -3,21 +3,27 @@
 <div class="categoryHeader">{{ title }}</div>
 <div class="smallFormContentWrapper">
     {% for tweet in qs %}
-    <div class="articleContainer" id="article_id_{{ tweet.article_id }}">
+    <div class="articleContainer" id="article_id_{{ tweet.article.article_id }}">
         <div class="leftContentSide">
-            <img src="{% static tweet.source.favicon_path %}" />
+            <div class="profileImageContainer">
+                <img src="{% static tweet.article.source.favicon_path %}" />
+                <a class="sourceProfile" href="{{ tweet.article.source.get_absolute_url }}"></a>
+            </div>
         </div>
         <div class="rightContentSide">
             <div class="contentInfoContainer">
                 <div class="sourceAndWebsiteContainer">
-                    <a href="{{ tweet.source.get_absolute_url }}">{{ tweet.source.name }}</a>
-                    <img src="{% static 'home/media/twitter_logo.png' %}">
+                    <a class="sourceProfile" href="{{ tweet.article.source.get_absolute_url }}">{{ tweet.article.source.name }}</a>
+                    <div class="sourceWebsiteProfileContainer">
+                        <img src="{% static tweet.article.source.website.logo %}" />
+                        <a href="{{ tweet.article.source.url }}"></a>
+                    </div>
                 </div>
                 <i class="fas fa-ellipsis-h"></i>
                 <div class="articleOptionsContainer">
                     {% if request.user.is_authenticated %}
                     <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
-                    {% if tweet.title in highlighted_content_titles %}
+                    {% if tweet.article.title in highlighted_content_titles %}
                     <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight
                             article</span></div>
                     {% else %}
@@ -73,15 +79,15 @@
                 </div>
             </div>
             <div class="contentBody">
-                <p>{{ tweet.title }}</p>
+                <p>{{ tweet.article.title }}</p>
             </div>
-            {% if tweet.tweet_type.image_path %}
-            <img class="tweetImage" src="{% static tweet.tweet_type.image_path %}">
+            {% if tweet.article.tweet_type.image_path %}
+            <img class="tweetImage" src="{% static tweet.article.tweet_type.image_path %}">
             {% endif %}
             <div class="timeContainer">
-                <p>{{ tweet.pub_date }}</p>
+                <p>{{ tweet.article.pub_date }}</p>
             </div>
-            <a class="contentLink" href="{{ tweet.link }}"></a>
+            <a class="contentLink" href="{{ tweet.article.link }}"></a>
         </div>
     </div>
     {% endfor %}

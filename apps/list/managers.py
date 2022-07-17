@@ -17,11 +17,8 @@ class ListManager(models.Manager):
     def get_created_lists(self, user):
         return self.filter(creator=user).select_related('creator__profile').prefetch_related('articles', 'sources').order_by('name')
 
-    def get_highlighted_content_from_list_excluding_website(self, list_id, website):
-        return self.get(list_id=list_id).articles.all().exclude(source__website=website).select_related('source', 'source__website', 'source__sector').order_by('-pub_date')
-
-    def get_highlighted_content_from_list_and_website(self, list_id, website):
-        return self.get(list_id=list_id).articles.all().filter(source__website=website).select_related('source', 'source__sector').order_by('-pub_date')
+    def get_highlighted_content(self, list_id):
+        return self.get(list_id=list_id).articles.all().select_related('source', 'source__website', 'source__sector', 'tweet_type').order_by('-pub_date')
 
     def get_subscribed_lists(self, user):
         return self.filter(subscribers=user).select_related('creator__profile').order_by('name').only('list_pic', 'slug', 'name', 'creator__profile')

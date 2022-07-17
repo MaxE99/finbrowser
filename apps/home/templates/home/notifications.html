@@ -9,22 +9,27 @@
 
 
 {% if source_notifications or list_notifications %}
-<div class="twitterWrapper">
-    <div class="tweetsContainer twitterHalfPageContainer">
+<div class="contentColumnWrapper">
+    <div class="contentColumnContainer halfPageContainer">
         {% if source_notifications %}
         <div class="categoryHeader">Source Notifications</div>
         <div class="smallFormContentWrapper">
             {% for notification in source_notifications %}
             <div class="articleContainer" id="article_id_{{ notification.article.article_id }}">
                 <div class="leftContentSide">
-                    <img src="{% static notification.article.source.favicon_path %}" />
+                    <div class="profileImageContainer">
+                        <img src="{% static notification.article.source.favicon_path %}" />
+                        <a class="sourceProfile" href="{{ notification.article.source.get_absolute_url }}"></a>
+                    </div>
                 </div>
                 <div class="rightContentSide">
                     <div class="contentInfoContainer">
                         <div class="sourceAndWebsiteContainer">
-                            <a
-                                href="{{ notification.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
-                            <img src="{% static 'home/media/twitter_logo.png' %}">
+                            <a class="sourceProfile" href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
+                            <div class="sourceWebsiteProfileContainer">
+                                <img src="{% static notification.article.source.website.logo %}" />
+                                <a href="{{ notification.article.source.url }}"></a>
+                            </div>
                         </div>
                         <i class="fas fa-ellipsis-h"></i>
                         <div class="articleOptionsContainer">
@@ -100,21 +105,26 @@
         </div>
     </div>
     {% endif %}
-    <div class="mostLikedTweetsContainer twitterHalfPageContainer">
+    <div class="contentColumnContainer halfPageContainer">
         {% if list_notifications %}
         <div class="categoryHeader listNoficiationHeader">List Notifications</div>
         <div class="smallFormContentWrapper">
             {% for notification in list_notifications %}
             <div class="articleContainer" id="article_id_{{ notification.article.article_id }}">
                 <div class="leftContentSide">
-                    <img src="{% static notification.article.source.favicon_path %}" />
+                    <div class="profileImageContainer">
+                        <img src="{% static notification.article.source.favicon_path %}" />
+                        <a class="sourceProfile" href="{{ notification.article.source.get_absolute_url }}"></a>
+                    </div>
                 </div>
                 <div class="rightContentSide">
                     <div class="contentInfoContainer">
                         <div class="sourceAndWebsiteContainer">
-                            <a
-                                href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
-                            <img src="{% static 'home/media/twitter_logo.png' %}">
+                            <a class="sourceProfile" href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
+                            <div class="sourceWebsiteProfileContainer">
+                                <img src="{% static notification.article.source.website.logo %}" />
+                                <a href="{{ notification.article.source.url }}"></a>
+                            </div>
                         </div>
                         <i class="fas fa-ellipsis-h"></i>
                         <div class="articleOptionsContainer">

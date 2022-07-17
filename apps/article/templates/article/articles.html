@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'article/min_articles_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'article/min_articles_style_v2.css' %}">
 <title>FinBrowser | Content</title>
 <meta name="description" content="The best stock market-related content from across the open web.">
 {% endblock %}
@@ -73,25 +73,27 @@
     </div>
 </div>
 
-{% if articles %}
-{% create_article_container "Long Form Content" articles request user_lists csrf_token add_list_form highlighted_content_titles %}
-<div class="pagination">
-    <span class="step-links">
-        {% for i in articles.paginator.page_range %}
-        {% if articles.number == i %}
-        <button class="currentPagination">{{ articles.number }}</button>
-        {% elif i > articles.number|add:'-3' and i < articles.number|add:'3' %} <a href="?articles={{ i }}">{{ i }}</a>
-        {% endif %}
-        {% endfor %}
-    </span>
-</div>
-{% endif %}
 
-
-{% if tweets %}
-<div class="twitterWrapper">
-    <div class="tweetsContainer twitterHalfPageContainer">
-        {% create_tweets_container "Newest Tweets" tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+<div class="contentColumnWrapper">
+    {% if articles %}
+    <div class="contentColumnContainer halfPageContainer">
+        {% create_content_container "Long-Form Content" articles request user_lists csrf_token add_list_form highlighted_content_titles %}
+        <div class="pagination">
+            <span class="step-links">
+                {% for i in articles.paginator.page_range %}
+                {% if articles.number == i %}
+                <button class="currentPagination">{{ articles.number }}</button>
+                {% elif i > articles.number|add:'-3' and i < articles.number|add:'3' %} <a
+                    href="?articles={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+    {% endif %}
+    {% if tweets %}
+    <div class="contentColumnContainer halfPageContainer">
+        {% create_content_container "Tweets" tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in tweets.paginator.page_range %}
@@ -104,19 +106,8 @@
             </span>
         </div>
     </div>
-    <div class="mostLikedTweetsContainer twitterHalfPageContainer">
-        <div class="categoryHeader">Most Liked Tweets</div>
-        <div class="blurContainer">
-            <div class="smallFormContentWrapper blur">
-                <img src="{% static 'home/media/blurred_top_tweets.png'  %}">
-            </div>
-            <div class="blurOverlay"></div>
-            <div class="comingSoon">Coming Soon</div>
-        </div>
-    </div>
+    {% endif %}
 </div>
-{% endif %}
-
 
 <script src="{% static 'article/min_articles_script_v3.js' %}"></script>
 {% endblock content %}

@@ -51,9 +51,8 @@ class FeedView(TemplateView, LoginRequiredMixin, BaseMixin, AddExternalArticleFo
         subscribed_sources = Source.objects.get_subscribed_sources(self.request.user)
         context['subscribed_lists'] = List.objects.get_subscribed_lists(self.request.user)
         context['subscribed_sources'] = subscribed_sources
-        context['subscribed_content'] = paginator_create(self.request, Article.objects.get_subscribed_content_excluding_website(subscribed_sources, TWITTER), 10, 'subscribed_content')
-        context['highlighted_content'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_articles_from_user_excluding_website(self.request.user, TWITTER), 10, 'highlighted_content')
-        context['highlighted_tweets'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_articles_from_user_and_website(self.request.user, TWITTER), 10, 'highlighted_tweets')
+        context['subscribed_content'] = paginator_create(self.request, Article.objects.get_subscribed_content_excluding_website(subscribed_sources, TWITTER), 20, 'subscribed_content')
+        context['highlighted_content'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_content_of_user(self.request.user), 10, 'highlighted_content')
         context['newest_tweets'] = paginator_create(self.request, Article.objects.get_subscribed_content_from_website(subscribed_sources, TWITTER), 10, 'newest_tweets')
         return context
 
@@ -66,7 +65,9 @@ class SearchResultView(TemplateView, BaseMixin):
         search_term = kwargs['search_term']
         context['filtered_lists'] = paginator_create(self.request, List.objects.filter_lists(search_term), 10, 'filtered_lists')
         context['filtered_sources'] = Source.objects.filter_sources(search_term)
-        context['filtered_articles'] = paginator_create(self.request, Article.objects.filter_articles(search_term), 10, 'filtered_articles')
+        filtered_content = Article.objects.filter_articles(search_term)
+        context['filtered_articles'] = paginator_create(self.request, filtered_content.exclude(source__website=TWITTER), 10, 'filtered_articles')
+        context['filtered_tweets'] = paginator_create(self.request, filtered_content.filter(source__website=TWITTER), 10, 'filtered_articles')
         return context
 
 

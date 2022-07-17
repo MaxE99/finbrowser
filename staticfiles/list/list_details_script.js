@@ -266,7 +266,7 @@ if (document.querySelector(".addSourcesForm button")) {
         selected_sources = selected_sources.join();
         try {
           const res = await fetch(
-            `../../api/lists/${list_id}/add_sources_to_list/${selected_sources}/`,
+            `../../api/lists/${list_id}/add_sources/${selected_sources}/`,
             get_fetch_settings("POST")
           );
           if (!res.ok) {

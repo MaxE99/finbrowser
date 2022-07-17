@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v3.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v4.css' %}" />
 <title>{{ list.name }} List | FinBrowser</title>
 <meta name="description" content="FinBrowser list created by {{ list.creator.username }}">
 {% endblock %} {% block content %}
@@ -165,58 +165,45 @@
     </div>
 </div>
 
-
-{% if latest_articles %}
-{% create_article_container "Latest Content" latest_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
-<div class="pagination">
-    <span class="step-links">
-        {% for i in latest_articles.paginator.page_range %}
-        {% if latest_articles.number == i %}
-        <button class="currentPagination">{{ latest_articles.number }}</button>
-        {% elif i > latest_articles.number|add:'-3' and i < latest_articles.number|add:'3' %} <a
-            href="?latest_articles={{ i }}">{{ i }}</a>
-        {% endif %}
-        {% endfor %}
-    </span>
-</div>
-{% endif %}
-
-
-{% if highlighted_articles %}
-{% create_article_container "Highlighted Content" highlighted_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
-<div class="pagination">
-    <span class="step-links">
-        {% for i in highlighted_articles.paginator.page_range %}
-        {% if highlighted_articles.number == i %}
-        <button class="currentPagination">{{ highlighted_articles.number }}</button>
-        {% elif i > highlighted_articles.number|add:'-3' and i < highlighted_articles.number|add:'3' %} <a
-            href="?highlighted_articles={{ i }}">{{ i }}</a>
-        {% endif %}
-        {% endfor %}
-    </span>
-</div>
-{% endif %}
-
-{% if newest_tweets %}
-<div class="twitterWrapper">
-    {% if highlighted_tweets %}
-    <div class="highlightedTweetsContainer">
-        {% create_tweets_container "Highlighted Tweets" newest_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+{% if latest_articles or highlighted_content or newest_tweets %}
+<div class="contentColumnWrapper">
+    {% if latest_articles %}
+    <div
+        class="contentColumnContainer {% if not highlighted_content or not newest_tweets %}halfPageContainer{% endif %}">
+        {% create_content_container "Long-Form Content" latest_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
         <div class="pagination">
             <span class="step-links">
-                {% for i in highlighted_tweets.paginator.page_range %}
-                {% if highlighted_tweets.number == i %}
-                <button class="currentPagination">{{ highlighted_tweets.number }}</button>
-                {% elif i > highlighted_tweets.number|add:'-3' and i < highlighted_tweets.number|add:'3' %} <a
-                    href="?highlighted_tweets={{ i }}">{{ i }}</a>
+                {% for i in latest_articles.paginator.page_range %}
+                {% if latest_articles.number == i %}
+                <button class="currentPagination">{{ latest_articles.number }}</button>
+                {% elif i > latest_articles.number|add:'-3' and i < latest_articles.number|add:'3' %} <a
+                    href="?latest_articles={{ i }}">{{ i }}</a>
                 {% endif %}
                 {% endfor %}
             </span>
         </div>
     </div>
     {% endif %}
-    <div class="newestTweetsContainer {% if not highlighted_tweets %}twitterHalfPageContainer{% endif %}">
-        {% create_tweets_container "Highlighted Tweets" newest_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+    {% if highlighted_content %}
+    <div class="contentColumnContainer {% if not latest_articles or not newest_tweets %}halfPageContainer{% endif %}">
+        {% create_content_container "Highlighted Content" highlighted_content request user_lists csrf_token add_list_form highlighted_content_titles %}
+        <div class="pagination">
+            <span class="step-links">
+                {% for i in highlighted_content.paginator.page_range %}
+                {% if highlighted_content.number == i %}
+                <button class="currentPagination">{{ highlighted_content.number }}</button>
+                {% elif i > highlighted_content.number|add:'-3' and i < highlighted_content.number|add:'3' %} <a
+                    href="?highlighted_content={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+    {% endif %}
+    {% if newest_tweets %}
+    <div
+        class="contentColumnContainer {% if not latest_articles or not highlighted_content %}halfPageContainer{% endif %}">
+        {% create_content_container "Tweets" newest_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in newest_tweets.paginator.page_range %}
@@ -229,16 +216,7 @@
             </span>
         </div>
     </div>
-    <div class="mostLikedTweetsContainer {% if not highlighted_tweets %}twitterHalfPageContainer{% endif %}">
-        <div class="categoryHeader">Most Liked Tweets</div>
-        <div class="blurContainer">
-            <div class="smallFormContentWrapper blur">
-                <img src="{% static 'home/media/blurred_top_tweets.png'  %}">
-            </div>
-            <div class="blurOverlay"></div>
-            <div class="comingSoon">Coming Soon</div>
-        </div>
-    </div>
+    {% endif %}
 </div>
 {% endif %}
 
