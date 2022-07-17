@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_feed_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_feed_style_v2.css' %}">
 <title>FinBrowser | Feed</title>
 {% endblock %}
 
@@ -168,76 +168,46 @@
     </div>
 </div>
 
-
-{% if subscribed_content %}
-{% create_article_container "Content Of Subscribed Sources" subscribed_content request user_lists csrf_token add_list_form highlighted_content_titles %}
-<div class="paginationAndAddExternalContainer">
-    <div class="pagination">
-        <span class="step-links">
-            {% for i in subscribed_content.paginator.page_range %}
-            {% if subscribed_content.number == i %}
-            <button class="currentPagination">{{ subscribed_content.number }}</button>
-            {% elif i > subscribed_content.number|add:'-3' and i < subscribed_content.number|add:'3' %} <a
-                href="?subscribed_content={{ i }}">{{ i }}</a>
-            {% endif %}
-            {% endfor %}
-        </span>
-    </div>
-    {% if not highlighted_content %}
-    <button class="addExternalLinkButton"><i class="fas fa-plus"></i>Add Content</button>
-    {% endif %}
-</div>
-{% endif %}
-
-{% if highlighted_content %}
-{% create_fk_article_container "Highlighted Content" highlighted_content request user_lists csrf_token add_list_form highlighted_content_titles %}
-<div class="paginationAndAddExternalContainer">
-    <div class="pagination">
-        <span class="step-links">
-            {% for i in highlighted_content.paginator.page_range %}
-            {% if highlighted_content.number == i %}
-            <button class="currentPagination">{{ highlighted_content.number }}</button>
-            {% elif i > highlighted_content.number|add:'-3' and i < highlighted_content.number|add:'3' %}
-            <a href="?highlighted_content={{ i }}">{{ i }}</a>
-            {% endif %}
-            {% endfor %}
-        </span>
-    </div>
-    <button class="addExternalLinkButton"><i class="fas fa-plus"></i>Add Content</button>
-</div>
-{% endif %}
-
-<div class="addExternalLinksFormWrapper">
-    <div class="formContainer addExternalLinksContainer">
-        <div class="formHeaderContainer">Add Content<i class="fas fa-times closeFormContainerButton"></i>
-        </div>
-        <form action="" enctype="multipart/form-data" method="POST" class="addExternalArticlesForm">
-            {% csrf_token %} {{ add_external_articles_form }}
-            <input name="addExternalArticlesForm" type="submit" class="formSubmitButton" value="Save" />
-        </form>
-    </div>
-</div>
-
-{% if newest_tweets %}
-<div class="twitterWrapper">
-    {% if highlighted_tweets %}
-    <div class="highlightedTweetsContainer">
-        {% create_fk_tweets_container "Highlighted Tweets" highlighted_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+{% if subscribed_content or highlighted_content or newest_tweets %}
+<div class="contentColumnWrapper">
+    {% if subscribed_content %}
+    <div
+        class="contentColumnContainer {% if not highlighted_content or not newest_tweets %}halfPageContainer{% endif %}">
+        {% create_content_container "Long-Form Content" subscribed_content request user_lists csrf_token add_list_form highlighted_content_titles %}
         <div class="pagination">
             <span class="step-links">
-                {% for i in highlighted_tweets.paginator.page_range %}
-                {% if highlighted_tweets.number == i %}
-                <button class="currentPagination">{{ highlighted_tweets.number }}</button>
-                {% elif i > highlighted_tweets.number|add:'-3' and i < highlighted_tweets.number|add:'3' %} <a
-                    href="?highlighted_tweets={{ i }}">{{ i }}</a>
+                {% for i in subscribed_content.paginator.page_range %}
+                {% if subscribed_content.number == i %}
+                <button class="currentPagination">{{ subscribed_content.number }}</button>
+                {% elif i > subscribed_content.number|add:'-3' and i < subscribed_content.number|add:'3' %} <a
+                    href="?subscribed_content={{ i }}">{{ i }}</a>
                 {% endif %}
                 {% endfor %}
             </span>
         </div>
     </div>
     {% endif %}
-    <div class="newestTweetsContainer {% if not highlighted_tweets %}twitterHalfPageContainer{% endif %}">
-        {% create_tweets_container "Newest Tweets" newest_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+    {% if highlighted_content %}
+    <div
+        class="contentColumnContainer {% if not subscribed_content or not newest_tweets %}halfPageContainer{% endif %}">
+        {% create_fk_content_container "Highlighted Content" highlighted_content request user_lists csrf_token add_list_form highlighted_content_titles %}
+        <div class="pagination">
+            <span class="step-links">
+                {% for i in highlighted_content.paginator.page_range %}
+                {% if highlighted_content.number == i %}
+                <button class="currentPagination">{{ highlighted_content.number }}</button>
+                {% elif i > highlighted_content.number|add:'-3' and i < highlighted_content.number|add:'3' %} <a
+                    href="?highlighted_content={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+    {% endif %}
+    {% if newest_tweets %}
+    <div
+        class="contentColumnContainer {% if not highlighted_content or not subscribed_content %}halfPageContainer{% endif %}">
+        {% create_content_container "Tweets" newest_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in newest_tweets.paginator.page_range %}
@@ -250,16 +220,7 @@
             </span>
         </div>
     </div>
-    <div class="mostLikedTweetsContainer {% if not highlighted_tweets %}twitterHalfPageContainer{% endif %}">
-        <div class="categoryHeader">Most Liked Tweets</div>
-        <div class="blurContainer">
-            <div class="smallFormContentWrapper blur">
-                <img src="{% static 'home/media/blurred_top_tweets.png'  %}">
-            </div>
-            <div class="blurOverlay"></div>
-            <div class="comingSoon">Coming Soon</div>
-        </div>
-    </div>
+    {% endif %}
 </div>
 {% endif %}
 

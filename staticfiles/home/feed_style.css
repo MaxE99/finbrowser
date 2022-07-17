@@ -175,7 +175,7 @@
     transform: translateX(-50%);
   }
 
-  .twitterWrapper {
+  .contentColumnWrapper {
     margin-top: unset;
   }
 }

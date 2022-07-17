@@ -10,23 +10,82 @@ FinBrowser, you can find and manage these sources.">
 {% endblock %}
 {% block content %}
 
-{% create_fk_article_container "Article Of The Week" articles_of_the_week request user_lists csrf_token add_list_form highlighted_content_titles %}
-
-<div class="twitterWrapper">
-    <div class="tweetsContainer twitterHalfPageContainer">
-        {% create_fk_tweets_container "Energy Crisis Tweets" energy_crisis_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+<div class="contentColumnWrapper">
+    <div class="contentColumnContainer">
+        {% create_fk_content_container "Recommended Articles" articles_of_the_week request user_lists csrf_token add_list_form highlighted_content_titles %}
+        <div class="pagination">
+            <span class="step-links">
+                {% for i in articles_of_the_week.paginator.page_range %}
+                {% if articles_of_the_week.number == i %}
+                <button class="currentPagination">{{ articles_of_the_week.number }}</button>
+                {% elif i > articles_of_the_week.number|add:'-3' and i < articles_of_the_week.number|add:'3' %} <a
+                    href="?articles_of_the_week={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
     </div>
-    <div class="mostLikedTweetsContainer twitterHalfPageContainer">
-        {% create_fk_tweets_container "Macro Tweets" macro_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+    <div class="contentColumnContainer">
+        {% create_fk_content_container "Recommended Podcasts and Videos" audio_of_the_week request user_lists csrf_token add_list_form highlighted_content_titles %}
+        <div class="pagination">
+            <span class="step-links">
+                {% for i in audio_of_the_week.paginator.page_range %}
+                {% if audio_of_the_week.number == i %}
+                <button class="currentPagination">{{ audio_of_the_week.number }}</button>
+                {% elif i > audio_of_the_week.number|add:'-3' and i < audio_of_the_week.number|add:'3' %} <a
+                    href="?audio_of_the_week={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+    <div class="contentColumnContainer">
+        {% create_fk_content_container "Trending Topics" trending_topic_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
+        <div class="pagination">
+            <span class="step-links">
+                {% for i in trending_topic_articles.paginator.page_range %}
+                {% if trending_topic_articles.number == i %}
+                <button class="currentPagination">{{ trending_topic_articles.number }}</button>
+                {% elif i > trending_topic_articles.number|add:'-3' and i < trending_topic_articles.number|add:'3' %} <a
+                    href="?trending_topic_articles={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
     </div>
 </div>
 
-{% create_fk_article_container "Trending Topics" trending_topic_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
-
 {% create_source_container "Highest Rated Sources" highest_rated_sources %}
 
-{% create_fk_article_container "Audio Of The Week" audio_of_the_week request user_lists csrf_token add_list_form highlighted_content_titles %}
-
-{% create_source_container "New Sources" newest_sources %}
+<div class="contentColumnWrapper">
+    <div class="contentColumnContainer halfPageContainer">
+        {% create_fk_content_container "Energy Crisis Tweets" energy_crisis_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+        <div class="pagination">
+            <span class="step-links">
+                {% for i in energy_crisis_tweets.paginator.page_range %}
+                {% if energy_crisis_tweets.number == i %}
+                <button class="currentPagination">{{ energy_crisis_tweets.number }}</button>
+                {% elif i > energy_crisis_tweets.number|add:'-3' and i < energy_crisis_tweets.number|add:'3' %} <a
+                    href="?energy_crisis_tweets={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+    <div class="contentColumnContainer halfPageContainer">
+        {% create_fk_content_container "Macro Tweets" macro_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+        <div class="pagination">
+            <span class="step-links">
+                {% for i in macro_tweets.paginator.page_range %}
+                {% if macro_tweets.number == i %}
+                <button class="currentPagination">{{ macro_tweets.number }}</button>
+                {% elif i > macro_tweets.number|add:'-3' and i < macro_tweets.number|add:'3' %} <a
+                    href="?macro_tweets={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}

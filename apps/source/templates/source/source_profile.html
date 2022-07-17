@@ -123,10 +123,11 @@
   </div>
 </div>
 
-{% if source.website.name == "Twitter" and latest_articles %}
-<div class="twitterWrapper">
-  <div class="tweetsContainer twitterHalfPageContainer">
-    {% create_tweets_container "Newest Tweets" latest_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
+
+{% if latest_articles %}
+<div class="contentColumnWrapper">
+  <div class="contentColumnContainer halfPageContainer">
+    {% create_content_container "Latest Content" latest_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
     <div class="pagination">
       <span class="step-links">
         {% for i in latest_articles.paginator.page_range %}
@@ -139,32 +140,7 @@
       </span>
     </div>
   </div>
-  <div class="mostLikedTweetsContainer twitterHalfPageContainer">
-    <div class="categoryHeader">Most Liked Tweets</div>
-    <div class="blurContainer">
-      <div class="smallFormContentWrapper blur">
-        <img src="{% static 'home/media/blurred_top_tweets.png'  %}">
-      </div>
-      <div class="blurOverlay"></div>
-      <div class="comingSoon">Coming Soon</div>
-    </div>
-  </div>
 </div>
-{% else %}
-{% if latest_articles %}
-{% create_article_container "Latest Content" latest_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
-<div class="pagination">
-  <span class="step-links">
-    {% for i in latest_articles.paginator.page_range %}
-    {% if latest_articles.number == i %}
-    <button class="currentPagination">{{ latest_articles.number }}</button>
-    {% elif i > latest_articles.number|add:'-3' and i < latest_articles.number|add:'3' %} <a
-      href="?latest_articles={{ i }}">{{ i }}</a>
-    {% endif %}
-    {% endfor %}
-  </span>
-</div>
-{% endif %}
 {% endif %}
 
 

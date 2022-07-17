@@ -352,18 +352,23 @@
   height: 100%;
 }
 
+.formContainer{
+  width: 100%;
+}
+
 .formContainer #textInput {
-  width: 90%;
-  font-size: 1.4rem;
-  padding: 0.3rem 1rem;
-  border: 0.2rem solid rgb(226, 230, 234);
+  font-size: 1.6rem;
+  padding: 0.4rem 1rem;
+  color: #000;
+  border: 0.2rem solid #e2e6ea;
   border-radius: 0.8rem;
-  margin: 0.5rem 0;
+  width: 90%;
+  margin: 1rem 0;
 }
 
 .formContainer .searchResultWrapper {
   position: relative;
-  height: 11rem;
+  height: 100%;
   width: 90%;
   overflow-y: scroll;
 }
@@ -375,14 +380,6 @@
 .formContainer .searchResultWrapper #searchResultsContainer {
   z-index: 5;
 }
-.formContainer .searchResultWrapper #searchResultsContainer,
-.formContainer .searchResultWrapper .selectionContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
 
 .formContainer .searchResultWrapper #searchResultsContainer,
 .formContainer .searchResultWrapper .selectionContainer {
@@ -391,6 +388,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  font-size: 1.6rem;
 }
 
 .formContainer .searchResult {
@@ -461,6 +459,23 @@
 
   .creatorContainer {
     margin-top: -0.5rem;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 1000px) {
+  .notificationAndSubscribtionContainer .buttonContainer {
+    position: absolute;
+    top: 10.5rem;
+    right: 4rem;
+    flex-direction: column;
+  }
+
+  .buttonContainer input,
+  .cancelButton,
+  .deleteListButton {
+    width: 14rem;
+    text-align: center;
+    margin-bottom: 1rem;
   }
 }
 
@@ -536,4 +551,8 @@
   .ratedStar {
     font-size: 3.5rem;
   }
+
+  .addSourcesButton {
+    font-size: 10rem;
+}
 }

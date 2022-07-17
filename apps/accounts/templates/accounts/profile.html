@@ -38,11 +38,6 @@
     </div>
 </div>
 
-{% if highlighted_articles %}
-{% create_fk_article_container "Highlighted Content" highlighted_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
-{% include "pagination.html" with page=highlighted_articles %}
-{% endif %}
-
 {% if created_lists %}
 {% create_list_slider_container "Created Lists" created_lists %}
 {% endif %}
@@ -53,6 +48,15 @@
 
 {% if subscribed_sources %}
 {% create_source_container "Subscribed Sources" subscribed_sources %}
+{% endif %}
+
+{% if highlighted_content %}
+<div class="contentColumnWrapper">
+    <div class="contentColumnContainer halfPageContainer">
+        {% create_fk_content_container "Highlighted Content" highlighted_content request user_lists csrf_token add_list_form highlighted_content_titles %}
+    </div>
+</div>
+{% include "pagination.html" with page=highlighted_content %}
 {% endif %}
 
 {% endblock content %}

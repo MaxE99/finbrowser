@@ -6,10 +6,13 @@ from selenium.webdriver.common.by import By
 from time import sleep
 from random import randrange
 
-def login(next_page=False):
+def login(next_page=False, smartphone=False):
     driver = webdriver.Chrome()
     driver.get("http://127.0.0.1:8000/registration/login/")
-    driver.set_window_size(1920, 1080)
+    if smartphone:
+        driver.set_window_size(375, 667)
+    else:
+        driver.set_window_size(1920, 1080)
     driver.find_element(By.CSS_SELECTOR, '#id_login').send_keys('me-99@live.de')
     driver.find_element(By.CSS_SELECTOR, '#id_password').send_keys('testpw99')
     driver.find_element(By.CSS_SELECTOR, '#id_remember').click()
@@ -22,6 +25,7 @@ def login(next_page=False):
 
 def add_to_list(selector, driver):
     selector.find_element(By.CSS_SELECTOR, '.fa-ellipsis-h').click()
+    sleep(3)
     selector.find_element(By.CSS_SELECTOR, '.addToListButton').click()
     sleep(1)
     selector.find_elements(By.CSS_SELECTOR, '.addToListForm .listSelectionContainer .listContainer label input')[0].click()
@@ -29,7 +33,7 @@ def add_to_list(selector, driver):
     sleep(1)
     assert "LISTS HAVE BEEN UPDATED!" in driver.find_element(By.CSS_SELECTOR, ".messages .success").get_attribute('innerText')
 
-def highlight_article(selector, driver):
+def highlight_content(selector, driver):
     selector.find_element(By.CSS_SELECTOR, '.fa-ellipsis-h').click()
     sleep(1)
     selector.find_element(By.CSS_SELECTOR, '.addToHighlightedButton').click()
@@ -53,102 +57,99 @@ def create_list(selector, driver):
 
 ################################################################################################################################
 
-def test_open_sector(next_page):
-    driver = login(next_page)
-    driver.find_elements(By.CSS_SELECTOR, '.articlesWrapper .articleContainer .articleSectorAndDateContainer a')[5].click()
-    sleep(1)
-    assert "Sector | FinBrowser" in driver.title   
-
-def test_add_to_list_with_article_container(next_page):
-    driver = login(next_page)
-    selector = driver.find_elements(By.CSS_SELECTOR, '.articlesWrapper .articleContainer')[5]
-    add_to_list(selector, driver)  
-
-def test_highlight_article_with_article_container(next_page):
-    driver = login(next_page)
-    selector = driver.find_elements(By.CSS_SELECTOR, '.articlesWrapper .articleContainer')[5]
-    highlight_article(selector, driver)
-
-def test_create_list_with_article_container(next_page):
-    driver = login(next_page) 
-    selector = driver.find_elements(By.CSS_SELECTOR, '.articlesWrapper .articleContainer')[5]   
-    create_list(selector, driver)
-
-def test_add_to_list_with_tweet_container(next_page):
-    driver = login(next_page)   
-    selector = driver.find_elements(By.CSS_SELECTOR, '.twitterWrapper .smallFormContentWrapper .articleContainer')[5]
+def test_add_to_list(next_page=False, smartphone=False):
+    driver = login(next_page, smartphone)   
+    selector = driver.find_elements(By.CSS_SELECTOR, '.contentColumnWrapper .smallFormContentWrapper .articleContainer')[5]
     add_to_list(selector, driver)    
 
-def test_highlight_article_with_tweet_container(next_page):
-    driver = login(next_page)
-    selector = driver.find_elements(By.CSS_SELECTOR, '.twitterWrapper .smallFormContentWrapper .articleContainer')[5]
-    highlight_article(selector, driver)
+def test_highlight_content(next_page=False, smartphone=False):
+    driver = login(next_page, smartphone)
+    selector = driver.find_elements(By.CSS_SELECTOR, '.contentColumnWrapper .smallFormContentWrapper .articleContainer')[5]
+    highlight_content(selector, driver)
 
-def test_create_list_with_tweet_container(next_page):
-    driver = login(next_page) 
-    selector = driver.find_elements(By.CSS_SELECTOR, '.twitterWrapper .smallFormContentWrapper .articleContainer')[5] 
-    create_list(selector, driver)
+def test_create_list(next_page=False, smartphone=False):
+    driver = login(next_page, smartphone) 
+    selector = driver.find_elements(By.CSS_SELECTOR, '.contentColumnWrapper .smallFormContentWrapper .articleContainer')[5] 
+    create_list(selector, driver)      
 
-def test_open_source_profile_with_article_container(next_page):
-    driver = login(next_page)
-    driver.find_elements(By.CSS_SELECTOR, '.articlesWrapper .articleContainer .authorImageContainer a')[5].click()
-    sleep(1)
-    assert "Profile | FinBrowser" in driver.title        
-
-def test_open_source_profile_with_tweet_container(next_page):
-    driver = login(next_page)
-    driver.find_elements(By.CSS_SELECTOR, '.twitterWrapper .smallFormContentWrapper .articleContainer .rightContentSide .contentInfoContainer .sourceAndWebsiteContainer a')[5].click()
+def test_open_source_profile(next_page=False, smartphone=False):
+    driver = login(next_page, smartphone)
+    driver.find_elements(By.CSS_SELECTOR, '.contentColumnWrapper .smallFormContentWrapper .articleContainer .rightContentSide .contentInfoContainer .sourceAndWebsiteContainer .sourceProfile')[5].click()
     sleep(1)
     assert "Profile | FinBrowser" in driver.title     
 
-def test_open_source_profile_with_slider(next_page): 
-    driver = login(next_page)
+def test_open_source_profile_with_slider(next_page=False, smartphone=False): 
+    driver = login(next_page, smartphone)
     driver.find_elements(By.CSS_SELECTOR, '.sliderWrapper .slider .contentWrapper .contentContainer .contentLink')[0].click()
     sleep(1)
     assert "Profile | FinBrowser" in driver.title  
 
-def test_highlighting_articles_is_working(next_page):
-    driver = login(next_page)
-    selector = driver.find_elements(By.CSS_SELECTOR, '.articlesWrapper .articleContainer')[5]
+def test_highlighting_content_is_working(next_page=False, smartphone=False):
+    driver = login(next_page, smartphone)
+    selector = driver.find_elements(By.CSS_SELECTOR, '.contentColumnWrapper .smallFormContentWrapper .articleContainer')[5]
     initial_highlighted_status = selector.find_element(By.CSS_SELECTOR, '.addToHighlightedButton').get_attribute("innerText")
-    highlight_article(selector, driver)
+    highlight_content(selector, driver)
     driver.refresh()
     sleep(1)
-    selector = driver.find_elements(By.CSS_SELECTOR, '.articlesWrapper .articleContainer')[5]
+    selector = driver.find_elements(By.CSS_SELECTOR, '.contentColumnWrapper .smallFormContentWrapper .articleContainer')[5]
     selector.find_element(By.CSS_SELECTOR, '.fa-ellipsis-h').click()
     sleep(1)
     assert initial_highlighted_status != selector.find_element(By.CSS_SELECTOR, '.addToHighlightedButton').get_attribute("innerText")
 
-def test_highlighting_tweets_is_working(next_page):
-    driver = login(next_page)
-    selector = driver.find_elements(By.CSS_SELECTOR, '.twitterWrapper .smallFormContentWrapper .articleContainer')[5]
-    initial_highlighted_status = selector.find_element(By.CSS_SELECTOR, '.addToHighlightedButton').get_attribute("innerText")
-    highlight_article(selector, driver)
-    driver.refresh()
-    sleep(1)
-    selector = driver.find_elements(By.CSS_SELECTOR, '.twitterWrapper .smallFormContentWrapper .articleContainer')[5]
-    selector.find_element(By.CSS_SELECTOR, '.fa-ellipsis-h').click()
-    sleep(1)
-    assert initial_highlighted_status != selector.find_element(By.CSS_SELECTOR, '.addToHighlightedButton').get_attribute("innerText")
-
-def test_standard_use_cases(next_page=False):
-    test_open_sector(next_page)
-    test_add_to_list_with_article_container(next_page)
-    test_highlight_article_with_article_container(next_page)
-    test_create_list_with_article_container(next_page)
-    test_add_to_list_with_tweet_container(next_page)
-    test_highlight_article_with_tweet_container(next_page)
-    test_create_list_with_tweet_container(next_page)
-    test_open_source_profile_with_article_container(next_page)
-    test_open_source_profile_with_tweet_container(next_page)
-    test_highlighting_articles_is_working(next_page)
-    test_highlighting_tweets_is_working(next_page)
+def test_standard_use_cases(next_page=False, smartphone=False):
+    test_add_to_list(next_page, smartphone)
+    test_highlight_content(next_page, smartphone)
+    test_create_list(next_page, smartphone)
+    test_open_source_profile(next_page, smartphone)
+    test_highlighting_content_is_working(next_page, smartphone)
 
 ########################################################################################################################################################
 
 
 class NavigationTest(LiveServerTestCase):
-    
+
+    def test_navigation(self):
+        driver = login()
+        driver.find_elements(By.CSS_SELECTOR, '.mainNavigationLink a')[0].click()
+        sleep(5)
+        assert "FinBrowser | Feed" in driver.title
+        driver.back()
+        driver.find_element(By.CSS_SELECTOR, '.userSpace .fa-cog a').click()
+        sleep(1)
+        assert "FinBrowser | Settings" in driver.title
+
+    def test_navigation_with_smartphone(self):
+        driver = login("http://127.0.0.1:8000/", True)
+        driver.find_element(By.CSS_SELECTOR, '.headerContainer .fa-bars').click()
+        sleep(1)
+        driver.find_elements(By.CSS_SELECTOR, '.horizontalNavigation .mainNavigationLink')[0].click()
+        sleep(1)
+        assert "FinBrowser | Feed" in driver.title
+        driver.back()
+        driver.find_elements(By.CSS_SELECTOR, '.horizontalNavigation .mainNavigationLink')[1].click()
+        sleep(1)
+        assert "FinBrowser | Lists" in driver.title
+        driver.back()
+        driver.find_elements(By.CSS_SELECTOR, '.horizontalNavigation .mainNavigationLink')[2].click()
+        sleep(1)
+        assert "FinBrowser | Sectors" in driver.title
+        driver.back()
+        driver.find_elements(By.CSS_SELECTOR, '.horizontalNavigation .mainNavigationLink')[3].click()
+        sleep(1)
+        assert "FinBrowser | Content" in driver.title
+        driver.back()
+        driver.find_elements(By.CSS_SELECTOR, '.horizontalNavigation .mainNavigationLink')[4].click()
+        sleep(1)
+        assert "FinBrowser | Settings" in driver.title
+        driver.back()
+        driver.find_elements(By.CSS_SELECTOR, '.horizontalNavigation .mainNavigationLink')[5].click()
+        sleep(1)
+        assert "FinBrowser | Notifications" in driver.title
+        driver.back()
+        driver.find_elements(By.CSS_SELECTOR, '.horizontalNavigation .mainNavigationLink')[6].click()
+        sleep(1)
+        assert "FinBrowser" == driver.title
+
     def test_navigation_anon_user(self):
         driver = webdriver.Chrome()
         driver.get("http://127.0.0.1:8000/")
@@ -159,25 +160,14 @@ class NavigationTest(LiveServerTestCase):
         sleep(1)
         assert "Login" in driver.title
         driver.back()
-        sleep(1)
-        driver.find_elements(By.CSS_SELECTOR, '.mainNavigationLink a')[1].click()
-        sleep(1)
-        assert "Lists" in driver.title
-        driver.find_elements(By.CSS_SELECTOR, '.mainNavigationLink a')[2].click()
-        sleep(1)
-        assert "Sectors" in driver.title
-        driver.find_elements(By.CSS_SELECTOR, '.mainNavigationLink a')[3].click()
-        sleep(1)
-        assert "Content" in driver.title
         driver.find_element(By.CSS_SELECTOR, '.userSpace .fa-cog a').click()
         sleep(1)
         assert "Login" in driver.title
         driver.back()
+        driver.find_element(By.CSS_SELECTOR, '.userSpace .fa-bell').click()
         sleep(1)
-        driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch').send_keys('Test123')
-        driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .fa-search').click()
-        sleep(1)
-        assert 'Test123' in driver.title
+        assert "Login" in driver.title
+        driver.back()
         driver.find_elements(By.CSS_SELECTOR, 'footer li a')[0].click()
         sleep(1)
         assert "FinBrowser | Contact" in driver.title
@@ -201,14 +191,49 @@ class NotificationTest(LiveServerTestCase):
         driver.find_elements(By.CSS_SELECTOR, '.activeNotificationContainer .articleContainer .sourceAndWebsiteContainer a')[0].click()
         assert "Profile | FinBrowser" in driver.title
 
-    def test_standard_use_cases(self):
+    def test_standard_use_cases_for_source_notifications(self):
         driver = login()
         driver.find_element(By.CSS_SELECTOR, '.userSpace .notificationBell').click()
         content_container = driver.find_elements(By.CSS_SELECTOR, '.activeNotificationContainer .articleContainer')[0]
-        highlight_article(content_container,driver)
+        highlight_content(content_container,driver)
         add_to_list(content_container,driver)
         create_list(content_container,driver)
+        test_highlighting_content_is_working()
 
+    def test_open_source_from_list_notifications(self):
+        driver = login()
+        driver.find_element(By.CSS_SELECTOR, '.userSpace .notificationBell').click()
+        sleep(1)
+        driver.find_elements(By.CSS_SELECTOR, '.notificationContainer .notificationHeadersContainer div')[-1].click()
+        driver.find_elements(By.CSS_SELECTOR, '.activeNotificationContainer .articleContainer .sourceAndWebsiteContainer a')[0].click()
+        assert "Profile | FinBrowser" in driver.title
+
+    def test_standard_use_cases_for_list_notifications(self):
+        driver = login()
+        driver.find_element(By.CSS_SELECTOR, '.userSpace .notificationBell').click()
+        sleep(1)
+        driver.find_elements(By.CSS_SELECTOR, '.notificationContainer .notificationHeadersContainer div')[-1].click()
+        content_container = driver.find_elements(By.CSS_SELECTOR, '.activeNotificationContainer .articleContainer')[0]
+        highlight_content(content_container,driver)
+        add_to_list(content_container,driver)
+        create_list(content_container,driver)
+        test_highlighting_content_is_working()
+
+    def test_use_cases_with_smartphone(self):
+        driver = login("http://127.0.0.1:8000/", True)
+        driver.find_element(By.CSS_SELECTOR, '.headerContainer .fa-bars').click()
+        sleep(1)
+        driver.find_elements(By.CSS_SELECTOR, '.horizontalNavigation .mainNavigationLink')[5].click()
+        sleep(1)
+        tweet_container = driver.find_elements(By.CSS_SELECTOR, '.contentColumnWrapper .smallFormContentWrapper')[1]
+        tweet_container.find_elements(By.CSS_SELECTOR, '.smallFormContentWrapper .articleContainer .sourceAndWebsiteContainer a')[0].click()
+        assert "Profile | FinBrowser" in driver.title
+        driver.back()
+        content_container = tweet_container.find_elements(By.CSS_SELECTOR, '.articleContainer')[0]
+        highlight_content(content_container,driver)
+        add_to_list(content_container,driver)
+        create_list(content_container,driver)
+        test_highlighting_content_is_working()
 
 class MainSearchTest(LiveServerTestCase):
 
@@ -226,17 +251,40 @@ class MainSearchTest(LiveServerTestCase):
         driver.find_elements(By.CSS_SELECTOR, '#mainAutocomplete_result .searchResult a')[4].click()
         assert 'Profile | FinBrowser' in driver.title
 
+    def test_click_search_button(self):
+        driver = login()
+        driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch').send_keys('Test123')
+        driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .fa-search').click()
+        sleep(1)
+        assert 'Test123' in driver.title
+
+    def test_search_with_smartphone(self):
+        driver = login("http://127.0.0.1:8000/", True)
+        driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch').send_keys('f')
+        sleep(2)
+        driver.find_elements(By.CSS_SELECTOR, '#mainAutocomplete_result .searchResult a')[0].click()
+        assert 'List | FinBrowser' in driver.title
+        driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch').send_keys('f')
+        sleep(2)
+        driver.find_elements(By.CSS_SELECTOR, '#mainAutocomplete_result .searchResult a')[4].click()
+        assert 'Profile | FinBrowser' in driver.title
+        driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch').send_keys('Test123')
+        driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .fa-search').click()
+        sleep(1)
+        assert 'Test123' in driver.title
 
 class MainTest(LiveServerTestCase):
     
     def test_main_standard_use_cases(self):
         test_standard_use_cases()
-        test_open_source_profile_with_slider(False)
+        test_open_source_profile_with_slider()
+        test_standard_use_cases("http://127.0.0.1:8000/", True)
 
 class FeedTest(LiveServerTestCase):
     
     def test_main_standard_use_cases(self):
         test_standard_use_cases("http://127.0.0.1:8000/feed/")
+        test_standard_use_cases("http://127.0.0.1:8000/feed/", True)
 
     def test_create_list(self):
         driver = login("http://127.0.0.1:8000/feed/")
@@ -351,16 +399,16 @@ class FeedTest(LiveServerTestCase):
         pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
         assert str(driver.current_url).endswith('=2')
 
-    def test_add_external_articles(self):
-        driver = login("http://127.0.0.1:8000/feed/")
-        driver.find_element(By.CSS_SELECTOR, '.addExternalLinkButton').click()
-        driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer #id_website_name').send_keys("www.test.com")
-        driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer #id_title').send_keys("TestTitle")
-        driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer #id_link').send_keys("https://www.finbrowser.io/")
-        driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer #id_pub_date').send_keys("04/04/2021")
-        driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer .formSubmitButton').click()
-        sleep(1)
-        assert "ARTICLE HAS BEEN ADDED!" in driver.find_element(By.CSS_SELECTOR, ".messages .success").get_attribute('innerText')
+    # def test_add_external_articles(self):
+    #     driver = login("http://127.0.0.1:8000/feed/")
+    #     driver.find_element(By.CSS_SELECTOR, '.addExternalLinkButton').click()
+    #     driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer #id_website_name').send_keys("www.test.com")
+    #     driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer #id_title').send_keys("TestTitle")
+    #     driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer #id_link').send_keys("https://www.finbrowser.io/")
+    #     driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer #id_pub_date').send_keys("04/04/2021")
+    #     driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer .formSubmitButton').click()
+    #     sleep(1)
+    #     assert "ARTICLE HAS BEEN ADDED!" in driver.find_element(By.CSS_SELECTOR, ".messages .success").get_attribute('innerText')
     
 
 class ListTest(LiveServerTestCase):
@@ -464,6 +512,7 @@ class ContentTest(LiveServerTestCase):
 
     def test_content_standard_use_cases(self):
         test_standard_use_cases("http://127.0.0.1:8000/content/")
+        test_standard_use_cases("http://127.0.0.1:8000/content/", True)
 
     def test_content_filtering(self):
         driver = login("http://127.0.0.1:8000/content/")
@@ -534,12 +583,7 @@ class ContentTest(LiveServerTestCase):
 class SearchResultTest(LiveServerTestCase):
     
     def test_standard_use_cases(self):
-        test_open_sector("http://127.0.0.1:8000/search_results/f")
-        test_add_to_list_with_article_container("http://127.0.0.1:8000/search_results/f")
-        test_highlight_article_with_article_container("http://127.0.0.1:8000/search_results/f")
-        test_create_list_with_article_container("http://127.0.0.1:8000/search_results/f")
-        test_open_source_profile_with_article_container("http://127.0.0.1:8000/search_results/f")
-        test_highlighting_articles_is_working("http://127.0.0.1:8000/search_results/f")
+        test_standard_use_cases("http://127.0.0.1:8000/search_results/f")
 
     def test_pagination(self):
         driver = login("http://127.0.0.1:8000/search_results/f")
@@ -760,23 +804,20 @@ class SourceProfileTest(LiveServerTestCase):
         assert "List | FinBrowser" in driver.title      
 
     def test_standard_use_cases_tweet_container(self):
-        test_add_to_list_with_tweet_container("http://127.0.0.1:8000/source/walter-bloomberg")
-        test_highlight_article_with_tweet_container("http://127.0.0.1:8000/source/walter-bloomberg")
-        test_create_list_with_tweet_container("http://127.0.0.1:8000/source/walter-bloomberg")
-        test_open_source_profile_with_tweet_container("http://127.0.0.1:8000/source/walter-bloomberg")
+        test_add_to_list("http://127.0.0.1:8000/source/walter-bloomberg")
+        test_highlight_content("http://127.0.0.1:8000/source/walter-bloomberg")
+        test_create_list("http://127.0.0.1:8000/source/walter-bloomberg")
+        test_open_source_profile("http://127.0.0.1:8000/source/walter-bloomberg")
+        test_add_to_list("http://127.0.0.1:8000/source/walter-bloomberg", True)
+        test_highlight_content("http://127.0.0.1:8000/source/walter-bloomberg", True)
+        test_create_list("http://127.0.0.1:8000/source/walter-bloomberg", True)
+        test_open_source_profile("http://127.0.0.1:8000/source/walter-bloomberg", True)
 
     def test_tweets_pagination(self):
         driver = login("http://127.0.0.1:8000/source/walter-bloomberg")
         pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[0]
         pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
         assert str(driver.current_url).endswith('=2')
-
-    def test_standard_use_cases_article_container(self):
-        test_open_sector("http://127.0.0.1:8000/source/joe-albano")
-        test_add_to_list_with_article_container("http://127.0.0.1:8000/source/joe-albano")
-        test_highlight_article_with_article_container("http://127.0.0.1:8000/source/joe-albano")
-        test_create_list_with_article_container("http://127.0.0.1:8000/source/joe-albano")
-        test_open_source_profile_with_article_container("http://127.0.0.1:8000/source/joe-albano")
 
     def test_articles_pagination(self):
         driver = login("http://127.0.0.1:8000/source/joe-albano")
@@ -789,6 +830,7 @@ class SectorTest(LiveServerTestCase):
 
     def test_standard_use_cases(self):
         test_standard_use_cases("http://127.0.0.1:8000/sector/defense")
+        test_standard_use_cases("http://127.0.0.1:8000/sector/defense", True)
     
     def test_articles_pagination(self):
         driver = login("http://127.0.0.1:8000/sector/defense")
@@ -806,17 +848,21 @@ class SectorTest(LiveServerTestCase):
 class UserProfileTest(LiveServerTestCase):
     
     def test_highlighed_articles_container(self):
-        test_open_sector("http://127.0.0.1:8000/profile/ebirdmax99")
-        test_add_to_list_with_article_container("http://127.0.0.1:8000/profile/ebirdmax99")
-        test_highlight_article_with_article_container("http://127.0.0.1:8000/profile/ebirdmax99")
-        test_create_list_with_article_container("http://127.0.0.1:8000/profile/ebirdmax99")
-        test_open_source_profile_with_article_container("http://127.0.0.1:8000/profile/ebirdmax99")
+        test_add_to_list("http://127.0.0.1:8000/profile/ebirdmax99")
+        test_highlight_content("http://127.0.0.1:8000/profile/ebirdmax99")
+        test_create_list("http://127.0.0.1:8000/profile/ebirdmax99")
+        test_open_source_profile("http://127.0.0.1:8000/profile/ebirdmax99")
+        test_add_to_list("http://127.0.0.1:8000/profile/ebirdmax99", True)
+        test_highlight_content("http://127.0.0.1:8000/profile/ebirdmax99", True)
+        test_create_list("http://127.0.0.1:8000/profile/ebirdmax99", True)
+        test_open_source_profile("http://127.0.0.1:8000/profile/ebirdmax99", True)
 
 
 class ListDetailTest(LiveServerTestCase):
 
     def test_standard_use_cases(self):
         test_standard_use_cases("http://127.0.0.1:8000/list/ebirdmax99/test0207-2")
+        test_standard_use_cases("http://127.0.0.1:8000/list/ebirdmax99/test0207-2", True)
 
     def test_change_notification_status(self):
         driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-2")
@@ -834,9 +880,6 @@ class ListDetailTest(LiveServerTestCase):
         pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
         assert str(driver.current_url).endswith('=2')
         pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[2]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[3]
         pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
         assert str(driver.current_url).endswith('=2')
 

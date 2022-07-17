@@ -23,7 +23,52 @@
         <div class="searchCategoryTab" data-for-tab="2">Sources</div>
     </div>
     <div class="tabsContent tabsContentActive" data-tab="0">
-        <div class="articlesWrapper">
+
+
+
+
+        <div class="contentColumnWrapper">
+            {% if filtered_articles %}
+            <div class="contentColumnContainer halfPageContainer">
+                {% create_content_container "Long-Form Content" filtered_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
+                <div class="pagination">
+                    <span class="step-links">
+                        {% for i in filtered_articles.paginator.page_range %}
+                        {% if filtered_articles.number == i %}
+                        <button class="currentPagination">{{ filtered_articles.number }}</button>
+                        {% elif i > filtered_articles.number|add:'-3' and i < filtered_articles.number|add:'3' %} <a
+                            href="?filtered_articles={{ i }}">{{ i }}</a>
+                        {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+            </div>
+            {% endif %}
+            {% if filtered_tweets %}
+            <div class="contentColumnContainer halfPageContainer">
+                {% create_content_container "Tweets" filtered_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+                <div class="pagination">
+                    <span class="step-links">
+                        {% for i in filtered_tweets.paginator.page_range %}
+                        {% if filtered_tweets.number == i %}
+                        <button class="currentPagination">{{ filtered_tweets.number }}</button>
+                        {% elif i > filtered_tweets.number|add:'-3' and i < filtered_tweets.number|add:'3' %} <a
+                            href="?filtered_tweets={{ i }}">{{ i }}</a>
+                        {% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+
+
+
+
+
+
+        <!-- <div class="articlesWrapper">
             {% for article in filtered_articles %}
             <div class="articleContainer" id="article_id_{{ article.article_id }}">
                 <div class="authorImageContainer">
@@ -113,7 +158,11 @@
                 {% endif %}
                 {% endfor %}
             </span>
-        </div>
+        </div> -->
+
+
+
+
     </div>
     <div class="tabsContent" data-tab="1">
         {% if filtered_lists %}

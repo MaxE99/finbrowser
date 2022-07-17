@@ -5,7 +5,7 @@
 }
 
 @media (max-width: 1125px) {
-  .twitterWrapper .listNoficiationHeader {
+  .contentColumnWrapper .listNoficiationHeader {
     margin-top: 2rem;
   }
 }
