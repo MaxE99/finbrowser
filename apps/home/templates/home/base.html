@@ -14,7 +14,7 @@
         type="font/woff2" crossorigin="anonymous">
     <link rel="preload" as="font" href="{% static 'home/fonts/lato-v23-latin/lato-v23-latin-900.woff' %}"
         type="font/woff" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v3.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v4.css' %}">
     {% block head %}
     {% endblock %}
 </head>
@@ -65,14 +65,21 @@
                             <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
                                 id="article_id_{{ notification.article.article_id }}">
                                 <div class="leftContentSide">
-                                    <img src="{% static notification.article.source.favicon_path %}" />
+                                    <div class="profileImageContainer">
+                                        <img src="{% static notification.article.source.favicon_path %}" />
+                                        <a class="sourceProfile"
+                                            href="{{ notification.article.source.get_absolute_url }}"></a>
+                                    </div>
                                 </div>
                                 <div class="rightContentSide">
                                     <div class="contentInfoContainer">
                                         <div class="sourceAndWebsiteContainer">
-                                            <a
+                                            <a class="sourceProfile"
                                                 href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
-                                            <img src="{% static notification.article.source.website.logo %}" />
+                                            <div class="sourceWebsiteProfileContainer">
+                                                <img src="{% static notification.article.source.website.logo %}" />
+                                                <a href="{{ notification.article.source.url }}"></a>
+                                            </div>
                                         </div>
                                         <i class="fas fa-ellipsis-h"></i>
                                         <div class="articleOptionsContainer">
@@ -165,14 +172,21 @@
                             <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
                                 id="article_id_{{ notification.article.article_id }}">
                                 <div class="leftContentSide">
-                                    <img src="{% static notification.article.source.favicon_path %}" />
+                                    <div class="profileImageContainer">
+                                        <img src="{% static notification.article.source.favicon_path %}" />
+                                        <a class="sourceProfile"
+                                            href="{{ notification.article.source.get_absolute_url }}"></a>
+                                    </div>
                                 </div>
                                 <div class="rightContentSide">
                                     <div class="contentInfoContainer">
                                         <div class="sourceAndWebsiteContainer">
-                                            <a
+                                            <a class="sourceProfile"
                                                 href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
-                                            <img src="{% static notification.article.source.website.logo %}" />
+                                            <div class="sourceWebsiteProfileContainer">
+                                                <img src="{% static notification.article.source.website.logo %}" />
+                                                <a href="{{ notification.article.source.url }}"></a>
+                                            </div>
                                         </div>
                                         <i class="fas fa-ellipsis-h"></i>
                                         <div class="articleOptionsContainer">

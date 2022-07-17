@@ -34,25 +34,26 @@
 </div>
 
 
-{% if articles_from_sector %}
-{% create_article_container "Content From Sector" articles_from_sector request user_lists csrf_token add_list_form highlighted_content_titles %}
-<div class="pagination">
-    <span class="step-links">
-        {% for i in articles_from_sector.paginator.page_range %}
-        {% if articles_from_sector.number == i %}
-        <button class="currentPagination">{{ articles_from_sector.number }}</button>
-        {% elif i > articles_from_sector.number|add:'-3' and i < articles_from_sector.number|add:'3' %} <a
-            href="?articles_from_sector={{ i }}">{{ i }}</a>
-        {% endif %}
-        {% endfor %}
-    </span>
-</div>
-{% endif %}
-
-{% if tweets_from_sector %}
-<div class="twitterWrapper">
-    <div class="tweetsContainer twitterHalfPageContainer">
-        {% create_tweets_container "Newest Tweets" tweets_from_sector request user_lists csrf_token add_list_form highlighted_content_titles %}
+<div class="contentColumnWrapper">
+    {% if articles_from_sector %}
+    <div class="contentColumnContainer halfPageContainer">
+        {% create_content_container "Long-Form Content" articles_from_sector request user_lists csrf_token add_list_form highlighted_content_titles %}
+        <div class="pagination">
+            <span class="step-links">
+                {% for i in articles_from_sector.paginator.page_range %}
+                {% if articles_from_sector.number == i %}
+                <button class="currentPagination">{{ articles_from_sector.number }}</button>
+                {% elif i > articles_from_sector.number|add:'-3' and i < articles_from_sector.number|add:'3' %} <a
+                    href="?articles_from_sector={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+    {% endif %}
+    {% if tweets_from_sector %}
+    <div class="contentColumnContainer halfPageContainer">
+        {% create_content_container "Tweets" tweets_from_sector request user_lists csrf_token add_list_form highlighted_content_titles %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in tweets_from_sector.paginator.page_range %}
@@ -65,17 +66,8 @@
             </span>
         </div>
     </div>
-    <div class="mostLikedTweetsContainer twitterHalfPageContainer">
-        <div class="categoryHeader">Most Liked Tweets</div>
-        <div class="blurContainer">
-            <div class="smallFormContentWrapper blur">
-                <img src="{% static 'home/media/blurred_top_tweets.png'  %}">
-            </div>
-            <div class="blurOverlay"></div>
-            <div class="comingSoon">Coming Soon</div>
-        </div>
-    </div>
+    {% endif %}
 </div>
-{% endif %}
+
 
 {% endblock content %}

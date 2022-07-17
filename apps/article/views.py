@@ -17,39 +17,21 @@ except:
     TWITTER = None
 
 
-# class ArticleView(ListView, BaseMixin):
-#     model = Article
-#     template_name = 'article/articles.html'
-#     paginate_by = 10
-
-#     def get_queryset(self):
-#         return Article.objects.get_content_excluding_website(TWITTER)
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         tweets_qs = Article.objects.get_content_from_website(TWITTER)
-#         context['articles'] = paginator_create(self.request, self.get_queryset(), 10, 'articles')
-#         context['sectors'] = Sector.objects.all().order_by('name')
-#         context['tweets'] = paginator_create(self.request, tweets_qs, 20, 'tweets')
-#         context['results_found'] = self.object_list.count() + tweets_qs.count()
-#         return context
-
-
 class ArticleView(ListView, BaseMixin):
     model = Article
     template_name = 'article/articles.html'
     paginate_by = 10
 
     def get_queryset(self):
-        return Article.objects.all().select_related('source', 'source__website', 'source__sector', 'tweet_type').order_by('-pub_date').only('article_id', 'source__favicon_path', 'source__slug', 'source__name', 'title', 'tweet_type__image_path', 'pub_date', 'link', 'source__source_id', 'source__website_id', 'source__sector__slug', 'source__sector', 'source__website__logo', 'source__sector__sector_id', 'source__sector__name')
+        return Article.objects.all().select_related('source', 'source__website', 'source__sector', 'tweet_type').order_by('-pub_date').only('article_id', 'source__favicon_path', 'source__slug', 'source__name', 'title', 'tweet_type__image_path', 'pub_date', 'link', 'source__source_id', 'source__website_id', 'source__sector__slug', 'source__sector', 'source__website__logo', 'source__sector__sector_id', 'source__sector__name', 'source__url')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tweets_qs = self.get_queryset().filter(source__website=TWITTER)
         articles = self.get_queryset().exclude(source__website=TWITTER)
-        context['articles'] = paginator_create(self.request, articles , 10, 'articles')
+        context['articles'] = paginator_create(self.request, articles , 20, 'articles')
         context['sectors'] = Sector.objects.all().order_by('name')
-        context['tweets'] = paginator_create(self.request, tweets_qs, 20, 'tweets')
+        context['tweets'] = paginator_create(self.request, tweets_qs, 10, 'tweets')
         context['results_found'] = self.get_queryset().count()
         return context
 

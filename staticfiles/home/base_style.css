@@ -1212,39 +1212,39 @@ h2 {
 /* ####################################################*/
 /* TWITTER - Start */
 /* ####################################################*/
-.twitterWrapper {
+.contentColumnWrapper {
   display: flex;
   justify-content: space-between;
   margin-top: 2rem;
 }
 
-.twitterWrapper .highlightedTweetsContainer,
-.twitterWrapper .newestTweetsContainer,
-.twitterWrapper .mostLikedTweetsContainer {
+.contentColumnWrapper .highlightedcontentColumnWrapper,
+.contentColumnWrapper .newestcontentColumnWrapper,
+.contentColumnWrapper .mostLikedcontentColumnWrapper {
   width: 33%;
 }
 
-.twitterWrapper .twitterHalfPageContainer {
+.contentColumnWrapper .halfPageContainer {
   width: 49%;
 }
 
-.twitterWrapper .categoryHeader {
+.contentColumnWrapper .categoryHeader {
   margin: 0;
   border-radius: 0.8rem 0.8rem 0 0;
 }
 
-.twitterWrapper .smallFormContentWrapper,
-.twitterWrapper .twitterContainerPlaceholder {
+.contentColumnWrapper .smallFormContentWrapper,
+.contentColumnWrapper .twitterContainerPlaceholder {
   box-shadow: var(--box-shadowScheme);
   background: white;
 }
 
-.twitterWrapper .twitterContainerPlaceholder {
+.contentColumnWrapper .twitterContainerPlaceholder {
   position: relative;
   min-height: 100rem;
 }
 
-.twitterWrapper .twitterContainerPlaceholder div {
+.contentColumnWrapper .twitterContainerPlaceholder div {
   position: absolute;
   top: 20rem;
   left: 0;
@@ -1294,7 +1294,7 @@ h2 {
 }
 
 .smallFormContentWrapper .sourceAndWebsiteContainer a {
-  z-index: 30;
+  z-index: 3;
   text-decoration: none;
   color: unset;
 }
@@ -1312,7 +1312,7 @@ h2 {
   right: 0;
   cursor: pointer;
   padding: 0 0.5rem 0.5rem 0.5rem;
-  z-index: 30;
+  z-index: 3;
 }
 
 .smallFormContentWrapper .contentBody {
@@ -1542,14 +1542,14 @@ h2 {
     width: 100%;
   }
 
-  .twitterWrapper {
+  .contentColumnWrapper {
     flex-direction: column;
   }
 
-  .twitterWrapper .highlightedTweetsContainer,
-  .twitterWrapper .newestTweetsContainer,
-  .twitterWrapper .mostLikedTweetsContainer,
-  .twitterWrapper .twitterHalfPageContainer {
+  .contentColumnWrapper .highlightedcontentColumnWrapper,
+  .contentColumnWrapper .newestcontentColumnWrapper,
+  .contentColumnWrapper .mostLikedcontentColumnWrapper,
+  .contentColumnWrapper .halfPageContainer {
     width: 100%;
   }
 }

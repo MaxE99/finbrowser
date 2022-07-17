@@ -61,14 +61,6 @@
 .formContainer .searchResultWrapper #searchResultsContainer {
   z-index: 5;
 }
-.formContainer .searchResultWrapper #searchResultsContainer,
-.formContainer .searchResultWrapper .selectionContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
 
 .formContainer .searchResultWrapper #searchResultsContainer,
 .formContainer .searchResultWrapper .selectionContainer {
@@ -173,10 +165,6 @@
   .addExternalLinksContainer {
     left: 50%;
     transform: translateX(-50%);
-  }
-
-  .twitterWrapper {
-    margin-top: unset;
   }
 }
 
