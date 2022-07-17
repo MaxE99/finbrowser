@@ -16,7 +16,7 @@ import base64
 import os
 import boto3
 # Local imports
-from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload
+from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload, single_notification_create
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website

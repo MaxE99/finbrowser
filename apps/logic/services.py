@@ -57,10 +57,28 @@ def notifications_create(articles):
     NotificationMessage.objects.bulk_create(new_notification_messages)
 
 
+def single_notification_create(article):
+    from apps.home.models import Notification, NotificationMessage
+    notifications = Notification.objects.all()
+    notification_messages = NotificationMessage.objects.all().select_related("notification__user")
+    if notifications.filter(source=article.source).exists():
+        source_notifications = notifications.filter(source=article.source)
+        for source_notification in source_notifications:
+            if notification_messages.filter(article=article, notification__user=source_notification.user).exists() == False:
+                NotificationMessage.objects.create(notification=source_notification, article=article, date=now())
+    lists_that_include_source = article.source.lists.all()
+    for list in lists_that_include_source:
+        if notifications.filter(list=list).exists():
+            list_notifications = notifications.filter(list=list)
+            for list_notification in list_notifications:
+                if notification_messages.filter(article=article, notification__user=list_notification.user).exists() == False:
+                    NotificationMessage.objects.create(notification=list_notification, article=article, date=now())
+
+
 def create_articles_from_feed(source, feed_url, articles):
     from apps.article.models import Article
     try:
-        req = Request(feed_url, headers={'User-Agent': 'Mozilla/5.0'})
+        req = Request(feed_url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0"})
         website_data = urlopen(req)
         website_xml = website_data.read()
         website_data.close()
@@ -73,7 +91,7 @@ def create_articles_from_feed(source, feed_url, articles):
                     break
                 else:
                     created_article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
-                    notifications_create(created_article)
+                    single_notification_create(created_article)
             except:
                 continue   
     except:
