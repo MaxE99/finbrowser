@@ -912,6 +912,7 @@ h2 {
 .smallFormContentWrapper .sourceAndWebsiteContainer {
   display: flex;
   align-items: center;
+  margin-right: 3rem;
 }
 
 .smallFormContentWrapper .sourceAndWebsiteContainer .sourceProfile {
@@ -928,7 +929,6 @@ h2 {
   width: 2rem;
   height: 2rem;
   margin-left: 1rem;
-  border-radius: 0.3rem;
   min-width: 20px;
   min-height: 20px;
 }
