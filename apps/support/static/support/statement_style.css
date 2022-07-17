@@ -25,3 +25,21 @@ p {
   text-align: justify;
   font-size: 1.6rem;
 }
+
+.overlay a:link,
+.overlay a:visited,
+.overlay a:hover {
+  color: blue;
+}
+
+@media (max-width: 1000px) {
+  .overlay {
+    width: 90%;
+  }
+}
+
+@media (max-width: 500px) {
+  .overlay {
+    width: 90%;
+  }
+}
