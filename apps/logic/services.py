@@ -72,8 +72,8 @@ def create_articles_from_feed(source, feed_url, articles):
                 if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
                     break
                 else:
-                    articles = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
-                    notifications_create(articles)
+                    created_article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
+                    notifications_create(created_article)
             except:
                 continue   
     except:

@@ -188,6 +188,7 @@ def scrape_seekingalpha():
         create_articles_from_feed(source, feed_url, articles)
         time.sleep(60)
 
+
 @shared_task
 def scrape_other_websites():
     other_sources = Source.objects.filter(website=get_object_or_404(Website, name="Other"))
