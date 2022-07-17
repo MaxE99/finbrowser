@@ -219,7 +219,7 @@ document.querySelectorAll(".addListsForm #textInput").forEach((element) => {
                   resultImage.src = list.list_pic;
                 } else {
                   resultImage.src =
-                    "/static/home/media/finbrowser-bigger-logo.png";
+                    "https://finbrowser.s3.us-east-2.amazonaws.com/static/home/media/finbrowser-bigger-logo.png";
                 }
                 const listName = document.createElement("span");
                 listName.innerText = list.name;
