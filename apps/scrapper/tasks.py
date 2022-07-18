@@ -16,11 +16,12 @@ import base64
 import os
 import boto3
 # Local imports
-from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload, single_notification_create
+from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
 from apps.source.models import Source
+from apps.scrapper.web_crawler import crawl_thegeneralist, crawl_ben_evans, crawl_meritechcapital, crawl_stockmarketnerd
 
 s3 = boto3.client('s3')
 
@@ -196,6 +197,15 @@ def scrape_other_websites():
     for source in other_sources:
         feed_url = f'{source.url}feed'
         create_articles_from_feed(source, feed_url, articles)
+
+
+@shared_task
+def crawl_websites():
+    articles = Article.objects.all()
+    crawl_thegeneralist(articles)
+    crawl_ben_evans(articles)
+    crawl_meritechcapital(articles)
+    crawl_stockmarketnerd(articles)
 
 
 @shared_task
