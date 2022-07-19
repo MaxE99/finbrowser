@@ -342,7 +342,7 @@ def old_notifications_delete():
 @shared_task
 def youtube_delete_innacurate_articles():
     api_key = os.environ.get('YOUTUBE_API_KEY')
-    youtube_sources = Source.objects.filter(name="All-In Podcast")
+    youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
     youtube_videos = []
     for source in youtube_sources:
         saved_articles_from_source = Article.objects.filter(source=source)
