@@ -69,5 +69,8 @@
     {% endif %}
 </div>
 
+{% if news_sources %}
+{% create_source_container "News Sources" news_sources %}
+{% endif %}
 
 {% endblock content %}
