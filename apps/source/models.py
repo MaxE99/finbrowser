@@ -35,6 +35,7 @@ class Source(models.Model):
     external_id = models.CharField(unique=True, null=True, blank=True, max_length=100)
     average_rating = models.FloatField(blank=True, null=True)
     ammount_of_ratings = models.IntegerField(default=0, null=True)
+    news = models.BooleanField(default=False)
 
     objects = SourceManager()
 
