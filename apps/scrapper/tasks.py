@@ -248,47 +248,33 @@ def scrape_youtube():
     for source in youtube_sources:
         channel_data = requests.get(f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails").json()
         upload_id = channel_data['items'][0]['contentDetails']['relatedPlaylists']['uploads']
-        url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=1000"
+        url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=50"
         r = requests.get(url)
-        item_list = []
-        next_item = True
-        iterations = 0
-        while next_item and iterations<20:
-            data = r.json()
+        data = r.json()
+        try:
             items = data['items']
-            item_list.append(items)
-            if "nextPageToken" in data.keys():
-                nextPageToken = data["nextPageToken"]
-                iterations += 1
-                url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=1000&pageToken={nextPageToken}"
-                r = requests.get(url)
-            else:
-                next_item = False
-                break
-        for items in item_list:
-            try:
-                for item in items:
-                    title = html.unescape(item['snippet']['title'])
-                    link = f"https://www.youtube.com/watch?v={item['snippet']['resourceId']['videoId']}"
-                    pub_date = item['snippet']['publishedAt']
-                    if articles.filter(title=title, pub_date=pub_date, link=link, source=source).exists():
-                        break
-                    else:
-                        youtube_creation_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
-            except:
-                continue
-        new_articles = [
-            Article(
-                title=new_article['title'],
-                link=new_article['link'],
-                pub_date=new_article['pub_date'],
-                source=new_article['source']
-            )
-            for new_article in youtube_creation_list
-        ]
-        articles = Article.objects.bulk_create(new_articles)
-        notifications_create(articles)
-    
+            for item in items:
+                title = html.unescape(item['snippet']['title'])
+                link = f"https://www.youtube.com/watch?v={item['snippet']['resourceId']['videoId']}"
+                pub_date = item['snippet']['publishedAt']
+                if articles.filter(title=title, pub_date=pub_date, link=link, source=source).exists():
+                    break
+                else:
+                    youtube_creation_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
+        except:
+            continue
+    new_articles = [
+        Article(
+            title=new_article['title'],
+            link=new_article['link'],
+            pub_date=new_article['pub_date'],
+            source=new_article['source']
+        )
+        for new_article in youtube_creation_list
+    ]
+    articles = Article.objects.bulk_create(new_articles)
+    notifications_create(articles)
+
 
 @shared_task
 def twitter_scrape_followings():
