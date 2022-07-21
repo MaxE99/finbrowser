@@ -14,6 +14,7 @@
         </button>
         <div class="slider">
             {% for source in sector.source_set.all|dictsort:"name" %}
+            {% if source.news == False %}
             <div class="contentWrapper">
                 <div class="contentContainer">
                     <div class="contentIconContainer">
@@ -25,6 +26,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
         <button class="handle rightHandle">
