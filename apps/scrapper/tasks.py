@@ -317,7 +317,10 @@ def spotify_get_profile_images():
     for source in spotify_sources:
         spotify = SpotifyAPI(client_id, client_secret)
         podcaster = spotify.get_podcaster(source.external_id)
-        source_profile_img_create(source, podcaster['images'][0]['url'])
+        if "images" in podcaster.keys():
+            source_profile_img_create(source, podcaster['images'][0]['url'])
+        else:
+            continue
 
 
 @shared_task
