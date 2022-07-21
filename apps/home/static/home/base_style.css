@@ -1403,6 +1403,7 @@ h2 {
 
   .contentIconContainer {
     height: unset;
+    margin-bottom: unset;
   }
 
   .smartphoneCreateListMenu {
