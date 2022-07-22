@@ -1,11 +1,10 @@
 # Django imports
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.views.generic.list import ListView
-from django.http import HttpResponseRedirect
 # Local imports
 from apps.logic.pure_logic import paginator_create, articles_filter
 from apps.base_logger import logger
-from apps.mixins import BaseMixin, CreateListFormMixin
+from apps.mixins import BaseMixin
 from apps.accounts.models import Website
 from apps.article.models import Article
 from apps.sector.models import Sector
