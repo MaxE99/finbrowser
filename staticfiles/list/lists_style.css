@@ -144,6 +144,7 @@
   border: 0.3rem solid;
   padding: 1rem 1.5rem;
   opacity: 1;
+  margin-right: 0.5rem;
 }
 
 .searchResultsAndListCreationContainer .createListButton:hover {

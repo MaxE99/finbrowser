@@ -162,7 +162,7 @@ class ProfileViewTest(TestCase):
         self.assertEqual(response.context['subscribed_sources'].count(), 2)
         self.assertEqual(response.context['subscribed_lists'].count(), 2)
         self.assertEqual(response.context['social_links'].count(), 5)
-        self.assertEqual(len(response.context['highlighted_articles'].object_list), 5)
+        self.assertEqual(len(response.context['highlighted_content'].object_list), 5)
 
     def test_privacy_settings_changes(self):
         privacy_settings = get_object_or_404(PrivacySettings, profile=get_object_or_404(Profile, user__username="TestUser1"))
@@ -171,7 +171,7 @@ class ProfileViewTest(TestCase):
         privacy_settings.highlighted_articles_public = False
         privacy_settings.save()
         response = self.client.get(reverse('accounts:profile', kwargs={'slug': get_object_or_404(Profile, user__username="TestUser1").slug}))
-        self.assertEqual(response.context['highlighted_articles'], None)
+        self.assertEqual(response.context['highlighted_content'], None)
         self.assertEqual(response.context['subscribed_sources'], None)
         self.assertEqual(response.context['subscribed_lists'], None)
 

@@ -10,13 +10,13 @@ class ArticleManager(models.Manager):
         return self.filter(source__in=list.sources.all()).select_related('source', 'source__sector', 'source__website').exclude(source__website=website).order_by('-pub_date')
 
     def filter_articles(self, search_term):
-        return self.filter(external_source=None).filter(title__icontains=search_term).select_related('source', 'source__sector', 'tweet_type', 'source__website').order_by('-pub_date')
+        return self.filter(title__icontains=search_term).select_related('source', 'source__sector', 'tweet_type', 'source__website').order_by('-pub_date')
 
     def get_content_from_source(self, source):
         return self.select_related('source', 'source__sector', 'source__website', 'tweet_type').filter(source=source).order_by('-pub_date')
 
     def get_content_excluding_website(self, website):
-        return self.filter(external_source=None).exclude(source__website=website).select_related('source', 'source__website', 'source__sector').order_by('-pub_date').only('article_id', 'source__favicon_path' ,'source__slug', 'title', 'source__sector__slug', 'source__sector', 'pub_date', 'source__website__logo', 'link', 'source__sector__sector_id', 'source__sector__name')
+        return self.exclude(source__website=website).select_related('source', 'source__website', 'source__sector').order_by('-pub_date').only('article_id', 'source__favicon_path' ,'source__slug', 'title', 'source__sector__slug', 'source__sector', 'pub_date', 'source__website__logo', 'link', 'source__sector__sector_id', 'source__sector__name')
     
     def get_content_from_website(self, website):
         return self.filter(source__website=website).select_related('source', 'tweet_type').order_by('-pub_date').only('article_id', 'source__favicon_path', 'source__slug', 'source__name', 'title', 'tweet_type__image_path', 'pub_date', 'link', 'source__source_id', 'source__website_id')

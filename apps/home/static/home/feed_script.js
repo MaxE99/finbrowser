@@ -296,20 +296,3 @@ document.querySelectorAll(".addListsForm button").forEach((element) => {
     }
   });
 });
-
-// open add external link menu
-if (document.querySelector(".addExternalLinkButton")) {
-  document
-    .querySelector(".addExternalLinkButton")
-    .addEventListener("click", () => {
-      document.querySelector(".addExternalLinksContainer").style.display =
-        "flex";
-    });
-}
-
-// close external link menu
-document
-  .querySelector(".addExternalLinksContainer .closeFormContainerButton")
-  .addEventListener("click", () => {
-    document.querySelector(".addExternalLinksContainer").style.display = "none";
-  });

@@ -7,12 +7,9 @@ from django.http import HttpResponseRedirect
 from django.template.defaultfilters import slugify
 # Local imports
 from apps.list.forms import AddListForm
-from apps.article.forms import AddExternalArticleForm
-from apps.article.models import Article, HighlightedArticle
+from apps.article.models import HighlightedArticle
 from apps.list.models import List
 from apps.home.models import Notification, NotificationMessage
-from apps.source.models import ExternalSource
-from apps.base_logger import logger
 
 
 class AddToListInfoMixin(ContextMixin):
@@ -78,28 +75,3 @@ class CreateListFormMixin(FormMixin):
 
 class BaseMixin(AddToListInfoMixin, CreateListFormMixin, NotificationMixin):
     """All 3 Mixins are required for notifications to work on every site"""
-
-
-class AddExternalArticleFormMixin(FormMixin):
-    form_class = AddExternalArticleForm
-
-    def post(self, request, *args, **kwargs):
-        add_external_articles_form = AddExternalArticleForm(request.POST)
-        if add_external_articles_form.is_valid():
-            data = add_external_articles_form.cleaned_data
-            website_name = data['website_name']
-            title = data['title']
-            link = data['link']
-            pub_date = data['pub_date']
-            external_source = ExternalSource.objects.create(user=request.user, website_name=website_name)
-            article = Article.objects.create(title=title, link=link, pub_date=pub_date, external_source=external_source)
-            HighlightedArticle.objects.create(user=request.user, article=article)
-            messages.success(request, 'Article has been added!')
-        else:
-            logger.error(f'Add external articles form not valid! - {add_external_articles_form.errors.as_data()}')
-            messages.error(self.request, 'Error: Article could not be added!')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['add_external_articles_form'] = AddExternalArticleForm()
-        return context

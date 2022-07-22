@@ -9,7 +9,6 @@ from datetime import timedelta
 from apps.tests.test_model_instances import create_test_users, create_test_sources, create_test_lists, create_test_sectors, create_test_website, create_test_articles
 from apps.article.models import Article, HighlightedArticle
 from apps.sector.models import Sector
-from apps.source.models import ExternalSource
 
 class AddExternalArticlesFormTests(TestCase):
     def setUp(self):
@@ -17,15 +16,7 @@ class AddExternalArticlesFormTests(TestCase):
         self.client.login(username="TestUser1", password="testpw99")
         create_test_lists()     
         create_test_sectors()  
-
-    def test_succesfullly_created_external_article(self):
-        data = {'addExternalArticlesForm': ['Save'], 'website_name': 'TestWebsite', 'sector': get_object_or_404(Sector, name="TestSector1").sector_id, 'title': 'TestArticleTitle', 'link': 'https://testwebsite.com', 'pub_date': (now() - timedelta(days=3)).strftime("%Y-%m-%d")}
-        response = self.client.post(reverse('home:feed'), data)
-        self.assertEqual(response.status_code, 302)
-        self.assertTrue(ExternalSource.objects.filter(website_name="TestWebsite").exists())
-        self.assertTrue(Article.objects.filter(title="TestArticleTitle").exists())
-        self.assertTrue(HighlightedArticle.objects.filter(article=get_object_or_404(Article, title="TestArticleTitle")).exists())
-
+        
 
 class ArticleViewTest(TestCase):
     def setUp(self):

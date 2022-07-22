@@ -1,10 +1,11 @@
 # Django imports
-from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic.list import ListView
+from django.http import HttpResponseRedirect
 # Local imports
 from apps.logic.pure_logic import paginator_create, articles_filter
 from apps.base_logger import logger
-from apps.mixins import BaseMixin
+from apps.mixins import BaseMixin, CreateListFormMixin
 from apps.accounts.models import Website
 from apps.article.models import Article
 from apps.sector.models import Sector
@@ -44,7 +45,7 @@ class ArticleSearchView(ListView, BaseMixin):
     def get_queryset(self):
         sector = get_object_or_404(Sector, name=self.kwargs['sector']).sector_id if self.kwargs['sector'] != "All" else "All"
         source = get_object_or_404(Website, name=self.kwargs['source']).website_id if self.kwargs['source'] != "All" else "All"
-        return articles_filter(self.kwargs['timeframe'], sector, self.kwargs['paywall'], source, Article.objects.select_related('source').filter(external_source=None))
+        return articles_filter(self.kwargs['timeframe'], sector, self.kwargs['paywall'], source, Article.objects.select_related('source'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

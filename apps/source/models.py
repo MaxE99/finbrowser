@@ -48,16 +48,7 @@ class Source(models.Model):
 
     def __str__(self):
         return self.slug
-
-
-class ExternalSource(models.Model):
-    external_source_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-    website_name = models.CharField(max_length=100, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.user} - {self.website_name}'
+        
 
 class SourceRating(models.Model):
     source_rating_id = models.AutoField(primary_key=True)
