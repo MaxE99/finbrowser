@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 # Local imports
 from apps.article.managers import ArticleManager, HighlightedArticlesManager
-from apps.source.models import Source, ExternalSource
+from apps.source.models import Source
 
 User = get_user_model()
 
@@ -20,9 +20,6 @@ class Article(models.Model):
     link = models.URLField()
     pub_date = models.DateTimeField()
     source = models.ForeignKey(Source, blank=True, null=True, on_delete=models.SET_NULL)
-    external_source = models.ForeignKey(ExternalSource, blank=True,
-                                        null=True,
-                                        on_delete=models.SET_NULL)
     external_id = models.CharField(unique=True, null=True, blank=True, max_length=100)
     tweet_type = models.ForeignKey(TweetType, blank=True, null=True, on_delete=models.SET_NULL)
 

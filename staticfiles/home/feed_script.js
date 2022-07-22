@@ -219,7 +219,7 @@ document.querySelectorAll(".addListsForm #textInput").forEach((element) => {
                   resultImage.src = list.list_pic;
                 } else {
                   resultImage.src =
-                    "/static/home/media/finbrowser-bigger-logo.png";
+                    "https://finbrowser.s3.us-east-2.amazonaws.com/static/home/media/finbrowser-bigger-logo.png";
                 }
                 const listName = document.createElement("span");
                 listName.innerText = list.name;
@@ -296,20 +296,3 @@ document.querySelectorAll(".addListsForm button").forEach((element) => {
     }
   });
 });
-
-// open add external link menu
-if (document.querySelector(".addExternalLinkButton")) {
-  document
-    .querySelector(".addExternalLinkButton")
-    .addEventListener("click", () => {
-      document.querySelector(".addExternalLinksContainer").style.display =
-        "flex";
-    });
-}
-
-// close external link menu
-document
-  .querySelector(".addExternalLinksContainer .closeFormContainerButton")
-  .addEventListener("click", () => {
-    document.querySelector(".addExternalLinksContainer").style.display = "none";
-  });
