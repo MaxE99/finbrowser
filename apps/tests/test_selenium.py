@@ -55,6 +55,12 @@ def create_list(selector, driver):
     sleep(1)
     assert "TestList1107-123456" in driver.title or "YOU HAVE ALREADY CREATED A LIST WITH THAT NAME!" in driver.find_element(By.CSS_SELECTOR, ".messages .error").get_attribute('innerText')
 
+def test_pagination(starturl, order, endurl):
+    driver = login(starturl)
+    pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[order]
+    pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
+    assert str(driver.current_url).endswith(endurl)   
+
 ################################################################################################################################
 
 def test_add_to_list(next_page=False, smartphone=False):
@@ -280,6 +286,14 @@ class MainTest(LiveServerTestCase):
         test_open_source_profile_with_slider()
         test_standard_use_cases("http://127.0.0.1:8000/", True)
 
+    def test_paginations(self):
+        test_pagination("http://127.0.0.1:8000/", 0, '?articles_of_the_week=2')
+        test_pagination("http://127.0.0.1:8000/", 1, '?audio_of_the_week=2')
+        test_pagination("http://127.0.0.1:8000/", 2, '?trending_topic_articles=2')
+        test_pagination("http://127.0.0.1:8000/", 3, '?energy_crisis_tweets=2')
+        test_pagination("http://127.0.0.1:8000/", 4, '?macro_tweets=2')
+
+
 class FeedTest(LiveServerTestCase):
     
     def test_main_standard_use_cases(self):
@@ -381,24 +395,11 @@ class FeedTest(LiveServerTestCase):
         sleep(1)
         assert "Profile | FinBrowser" in driver.title      
 
-    def test_pagination_article_container(self):
-        driver = login("http://127.0.0.1:8000/feed/")
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[0]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
+    def test_paginations(self):
+        test_pagination("http://127.0.0.1:8000/feed/", 0, '?subscribed_content=2')
+        test_pagination("http://127.0.0.1:8000/feed/", 1, '?highlighted_content=2')
+        test_pagination("http://127.0.0.1:8000/feed/", 2, '?newest_tweets=2')
 
-    def test_pagination_highlighted_article_container(self):
-        driver = login("http://127.0.0.1:8000/feed/")
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[1]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
-
-    def test_pagination_tweet_container(self):
-        driver = login("http://127.0.0.1:8000/feed/")
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[2]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
-    
 
 class ListTest(LiveServerTestCase):
 
@@ -475,11 +476,8 @@ class ListTest(LiveServerTestCase):
         sleep(1)
         assert "List | FinBrowser" in driver.title
 
-    def test_list_pagination(self):
-        driver = login("http://127.0.0.1:8000/lists/")
-        pagination = driver.find_element(By.CSS_SELECTOR, '.pagination .step-links')
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
+    def test_paginations(self):
+        test_pagination("http://127.0.0.1:8000/lists/", 0, '?page=2')
 
     
 class SectorTest(LiveServerTestCase):
@@ -556,17 +554,9 @@ class ContentTest(LiveServerTestCase):
         sleep(1)
         assert len(driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')) == 10
 
-    def test_articles_pagination(self):
-        driver = login("http://127.0.0.1:8000/content/")
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[0]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
-
-    def test_tweets_pagination(self):
-        driver = login("http://127.0.0.1:8000/content/")
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[1]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
+    def test_paginations(self):
+        test_pagination("http://127.0.0.1:8000/content/", 0, '?articles=2')
+        test_pagination("http://127.0.0.1:8000/content/", 1, '?tweets=2')
 
 
 class SearchResultTest(LiveServerTestCase):
@@ -625,6 +615,9 @@ class SearchResultTest(LiveServerTestCase):
         sleep(1)
         assert 'this is a test' in driver.title      
 
+    def test_paginations(self):
+        test_pagination("http://127.0.0.1:8000/search_results/f", 0, '?filtered_articles=2')
+        test_pagination("http://127.0.0.1:8000/search_results/f", 1, '?filtered_tweets=2')
 
 class SettingsTest(LiveServerTestCase):
     
@@ -802,17 +795,9 @@ class SourceProfileTest(LiveServerTestCase):
         test_create_list("http://127.0.0.1:8000/source/walter-bloomberg", True)
         test_open_source_profile("http://127.0.0.1:8000/source/walter-bloomberg", True)
 
-    def test_tweets_pagination(self):
-        driver = login("http://127.0.0.1:8000/source/walter-bloomberg")
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[0]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
-
-    def test_articles_pagination(self):
-        driver = login("http://127.0.0.1:8000/source/joe-albano")
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[0]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
+    def test_paginations(self):
+        test_pagination("http://127.0.0.1:8000/source/walter-bloomberg", 0, '?latest_articles=2')
+        test_pagination("http://127.0.0.1:8000/source/joe-albano", 0, '?latest_articles=2')
 
 
 class SectorTest(LiveServerTestCase):
@@ -820,18 +805,10 @@ class SectorTest(LiveServerTestCase):
     def test_standard_use_cases(self):
         test_standard_use_cases("http://127.0.0.1:8000/sector/defense")
         test_standard_use_cases("http://127.0.0.1:8000/sector/defense", True)
-    
-    def test_articles_pagination(self):
-        driver = login("http://127.0.0.1:8000/sector/defense")
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[0]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
 
-    def test_tweets_pagination(self):
-        driver = login("http://127.0.0.1:8000/sector/defense")
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[1]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
+    def test_paginations(self):
+        test_pagination("http://127.0.0.1:8000/sector/defense", 0, '?articles_from_sector=2')
+        test_pagination("http://127.0.0.1:8000/sector/defense", 1, '?tweets_from_sector=2')
 
 
 class UserProfileTest(LiveServerTestCase):
@@ -845,6 +822,9 @@ class UserProfileTest(LiveServerTestCase):
         test_highlight_content("http://127.0.0.1:8000/profile/ebirdmax99", True)
         test_create_list("http://127.0.0.1:8000/profile/ebirdmax99", True)
         test_open_source_profile("http://127.0.0.1:8000/profile/ebirdmax99", True)
+
+    def test_paginations(self):
+        test_pagination("http://127.0.0.1:8000/profile/ebirdmax99", 0, '?page=2')
 
 
 class ListDetailTest(LiveServerTestCase):
@@ -861,16 +841,9 @@ class ListDetailTest(LiveServerTestCase):
         assert "NOTIFICATION HAS BEEN ADDED!" in driver.find_element(By.CSS_SELECTOR, ".messages li").get_attribute('innerText') or "NOTIFICATION HAS BEEN REMOVED!" in driver.find_element(By.CSS_SELECTOR, ".messages li").get_attribute('innerText')
 
     def test_paginations(self):
-        driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-2")
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[0]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[1]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[2]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
+        test_pagination("http://127.0.0.1:8000/list/ebirdmax99/test0207-2", 0, '?latest_articles=2')
+        test_pagination("http://127.0.0.1:8000/list/ebirdmax99/test0207-2", 1, '?highlighted_content=2')
+        test_pagination("http://127.0.0.1:8000/list/ebirdmax99/test0207-2", 2, '?newest_tweets=2')
 
     def test_change_list_name(self):
         driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-2")
