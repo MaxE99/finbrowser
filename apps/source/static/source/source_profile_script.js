@@ -248,7 +248,7 @@ document
             let list_id = list_ids[i];
             try {
               const res = await fetch(
-                `../../api/lists/${list_id}/add_source/${source_id}/`,
+                `../../api/lists/${list_id}/add_sources/${source_id}/`,
                 get_fetch_settings("POST")
               );
               if (!res.ok) {
