@@ -16,7 +16,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
   if (search_term && search_term.replaceAll(/\s/g, "") != "") {
     try {
       const res = await fetch(
-        `../../api/search_lists/${search_term}`,
+        `../../../../../../api/search_lists/${search_term}`,
         get_fetch_settings("GET")
       );
       if (!res.ok) {
@@ -27,7 +27,7 @@ document.getElementById("search").addEventListener("keyup", async () => {
         results_list.innerHTML = "";
         if (context[0].length > 0) {
           for (let i = 0, j = context[0].length; i < j; i++) {
-            let list_pic = "/static/home/media/finbrowser-bigger-logo.png";
+            let list_pic = "https://finbrowser.s3.us-east-2.amazonaws.com/static/home/media/finbrowser-bigger-logo.png";
             if (context[0][i].list_pic) {
               list_pic = context[0][i].list_pic;
             }

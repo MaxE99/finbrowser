@@ -259,6 +259,11 @@ def scrape_youtube():
                 pub_date = item['snippet']['publishedAt']
                 if articles.filter(title=title, pub_date=pub_date, link=link, source=source).exists():
                     break
+                elif articles.filter(title=title, source=source).count() == 1:
+                    article = articles.get(title=title, source=source)
+                    article.pub_date = pub_date
+                    article.link = link
+                    article.save()
                 else:
                     youtube_creation_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
         except:
@@ -366,3 +371,16 @@ def youtube_delete_innacurate_articles():
         for article in saved_articles_from_source:
             if not any(d['title'] == article.title for d in youtube_videos) or not any(d['link'] == article.link for d in youtube_videos or not any(d['pub_date'] == article.pub_date for d in youtube_videos)):
                 article.delete()
+
+
+@shared_task
+def youtube_clean_up_double_articles():
+    youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
+    print(len(youtube_sources))
+    for source in youtube_sources:
+        articles_from_source = Article.objects.filter(source=source)
+        for article in articles_from_source:
+            double_article = articles_from_source.filter(title=article.title, link=article.link)
+            if double_article.count() > 1:
+                print(double_article.last())
+                double_article.last().delete()

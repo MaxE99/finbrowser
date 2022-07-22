@@ -247,7 +247,7 @@ class ListViewSetTest(APITestCase):
         list = get_object_or_404(List, name="TestList1")
         source = get_object_or_404(Source, name="TestSource1")
         self.assertFalse(list.sources.filter(source_id=source.source_id).exists())
-        self.client.post(f"/api/lists/{list.list_id}/add_source/{source.source_id}/")
+        self.client.post(f"/api/lists/{list.list_id}/add_sources/{source.source_id}/")
         self.assertTrue(list.sources.filter(source_id=source.source_id).exists())
 
     def test_try_to_add_source_to_other_users_list(self):
@@ -309,7 +309,7 @@ class FilteredListsTest(APITestCase):
         list.is_public = False
         list.save()
         response = self.client.get(f"/api/search_lists/TestList")
-        self.assertEqual(len(response.json()), 9)
+        self.assertEqual(len(response.json()[0]), 9)
 
 
 class FilteredArticlesTest(APITestCase):

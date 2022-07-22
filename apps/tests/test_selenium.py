@@ -398,17 +398,6 @@ class FeedTest(LiveServerTestCase):
         pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[2]
         pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
         assert str(driver.current_url).endswith('=2')
-
-    # def test_add_external_articles(self):
-    #     driver = login("http://127.0.0.1:8000/feed/")
-    #     driver.find_element(By.CSS_SELECTOR, '.addExternalLinkButton').click()
-    #     driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer #id_website_name').send_keys("www.test.com")
-    #     driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer #id_title').send_keys("TestTitle")
-    #     driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer #id_link').send_keys("https://www.finbrowser.io/")
-    #     driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer #id_pub_date').send_keys("04/04/2021")
-    #     driver.find_element(By.CSS_SELECTOR, '.addExternalLinksContainer .formSubmitButton').click()
-    #     sleep(1)
-    #     assert "ARTICLE HAS BEEN ADDED!" in driver.find_element(By.CSS_SELECTOR, ".messages .success").get_attribute('innerText')
     
 
 class ListTest(LiveServerTestCase):

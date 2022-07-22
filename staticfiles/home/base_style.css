@@ -566,7 +566,7 @@ footer ul a {
   animation-fill-mode: forwards;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  z-index: 10;
+  z-index: 1000;
 }
 
 .messages li {
@@ -616,7 +616,7 @@ h2 {
 .pagination {
   display: flex;
   justify-content: center;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 0;
 }
 
 .pagination button,
@@ -652,7 +652,7 @@ h2 {
 .sliderWrapper {
   --handle-size: 4.8rem;
   --img-gap: 0.8rem;
-  margin-top: 2rem;
+  margin: 2rem 0 0;
   box-shadow: var(--box-shadowScheme);
 }
 
@@ -663,7 +663,7 @@ h2 {
   color: white;
   font-size: 2rem;
   border: 0.3rem solid white;
-  border-radius: 0.8rem 0.8rem 0 0;
+  border-radius: 0;
   position: relative;
   padding: 1.7rem 4rem;
 }
@@ -760,9 +760,6 @@ h2 {
 
 .slider > .contentWrapper {
   flex: 0 0 calc(100% / var(--items-per-screen));
-  /* max-width: 18rem; */
-  /* max-height: 22rem;
-  height: 22rem; */
 }
 
 .slider .contentWrapper:hover {
@@ -782,8 +779,6 @@ h2 {
 .contentIconContainer {
   position: relative;
   width: 100%;
-  height: calc(100% - 3.3rem);
-  margin-bottom: 3.3rem;
 }
 
 .contentIcon {
@@ -831,13 +826,32 @@ h2 {
   border-radius: 0.6rem;
 }
 
-.categoryHeader {
+/* ####################################################*/
+/* Slider - End */
+/* ####################################################*/
+
+/* ####################################################*/
+/* TWITTER - Start */
+/* ####################################################*/
+.contentColumnWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.contentColumnWrapper .contentColumnContainer {
+  width: 33%;
+  margin-top: 2rem;
+}
+
+.contentColumnWrapper .halfPageContainer {
+  width: 50%;
+}
+
+.contentColumnWrapper .categoryHeader {
   position: relative;
   text-align: center;
-  margin: 2rem 0 1rem;
   padding: 0.75rem 0;
   font-size: 2rem;
-  border-radius: 0.8rem;
   color: white;
   border: 0.3rem solid white;
   width: 100%;
@@ -845,150 +859,85 @@ h2 {
   box-shadow: var(--box-shadowScheme);
 }
 
-/* ####################################################*/
-/* Slider - End */
-/* ####################################################*/
-
-/* ####################################################*/
-/* Articles - Start */
-/* ####################################################*/
-
-.articlesWrapper {
-  display: flex;
-  flex-direction: column;
-  align-content: space-between;
-  flex-wrap: wrap;
-  height: 40rem;
-}
-
-.articlesWrapper .articleContainer {
-  position: relative;
-  display: flex;
-  align-items: center;
+.contentColumnWrapper .smallFormContentWrapper,
+.contentColumnWrapper .twitterContainerPlaceholder {
+  box-shadow: var(--box-shadowScheme);
   background: white;
-  border: 0.3rem solid black;
-  border-radius: 0.8rem;
-  box-shadow: var(--box-shadowScheme);
-  width: 49%;
-  margin: 0.75rem 0;
-  height: 6.5rem;
 }
 
-.articlesWrapper .articleContainer:hover {
-  background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
-}
-
-.authorImageContainer {
+.smallFormContentWrapper .articleContainer {
   position: relative;
+  display: flex;
+  padding: 1.5rem;
+  box-shadow: 0 5px 5px -5px #333;
+  border-bottom: 0.1rem solid rgb(226, 230, 234);
 }
 
-.authorImageContainer,
-.articleWebsiteLogoContainer {
+.smallFormContentWrapper .leftContentSide .profileImageContainer {
+  position: relative;
+  z-index: 3;
+  width: 6rem;
+  height: 6rem;
+}
+
+.smallFormContentWrapper .leftContentSide .profileImageContainer img,
+.smallFormContentWrapper .leftContentSide .profileImageContainer a,
+.smallFormContentWrapper .sourceAndWebsiteContainer .sourceWebsiteProfileContainer img,
+.smallFormContentWrapper .sourceAndWebsiteContainer .sourceWebsiteProfileContainer a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.smallFormContentWrapper .leftContentSide .profileImageContainer img {
+  border-radius: 0.8rem;
+}
+
+.smallFormContentWrapper .rightContentSide {
+  padding-left: 1rem;
+  width: 100%;
+}
+
+.smallFormContentWrapper .contentInfoContainer {
+  position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  font-size: 2rem;
+}
+
+.smallFormContentWrapper .sourceAndWebsiteContainer {
+  display: flex;
   align-items: center;
-  width: 5.9rem;
-  height: 100%;
+  margin-right: 3rem;
 }
 
-.imageContainerUserLink {
-  background: var(--primary-fontColor);
-}
-
-.authorImageContainer img {
-  width: 100%;
-  height: 100%;
-  border-radius: 0.5rem 0 0 0.5rem;
-}
-
-.authorImageContainer a {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.articleInformationContainer,
-.articleSectorAndDateContainer {
-  padding-left: 0.5rem;
-  white-space: nowrap;
-  max-width: calc(100% - 15rem);
-}
-
-.articleTitle {
-  font-size: 1.9rem;
-  overflow: hidden;
-}
-
-.articleTitle:hover .articleTitleTooltip {
-  visibility: visible;
-  opacity: 1;
-}
-
-.articleTitle .articleTitleTooltip {
-  position: absolute;
-  display: block;
-  visibility: hidden;
-  z-index: 1;
-  color: white;
-  padding: 0.2rem 0.4rem;
-  font-size: 1.3rem;
-  border: 0.2rem solid white;
-  box-shadow: var(--box-shadowScheme);
-  opacity: 0;
-  transition: opacity 1s;
-  background: rgba(0, 85, 212, 0.8);
-}
-
-.articleSectorAndDateContainer {
-  display: flex;
-  padding-left: unset;
-  font-size: 1.4rem;
-}
-
-.articleSectorAndDateContainer a {
-  color: var(--primary-fontColor);
+.smallFormContentWrapper .sourceAndWebsiteContainer .sourceProfile {
+  z-index: 3;
   text-decoration: none;
-  margin-right: 0.3rem;
+  color: unset;
 }
 
-.articlesWrapper .articleContainer .fa-ellipsis-h {
+.smallFormContentWrapper
+  .sourceAndWebsiteContainer
+  .sourceWebsiteProfileContainer {
+  position: relative;
+  z-index: 3;
+  width: 2rem;
+  height: 2rem;
+  margin-left: 1rem;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.smallFormContentWrapper .fa-ellipsis-h {
   position: absolute;
-  top: 0.2rem;
-  right: 6.5rem;
+  top: 0;
+  right: 0;
   cursor: pointer;
-  padding: 0.5rem;
-  font-size: 1.6rem;
-}
-
-.articleWebsiteLogoContainer {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.articleWebsiteLogo {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  border-top-right-radius: 0.6rem;
-  border-bottom-right-radius: 0.6rem;
-}
-
-.articleContainer .fa-question-circle {
-  font-size: 5rem;
-  color: white;
-}
-
-.articleLink {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  z-index: 3;
 }
 
 .articleOptionsContainer {
@@ -1203,118 +1152,6 @@ h2 {
   transform: scale(1.05, 1.05);
 }
 
-/* Create List Menu - End */
-
-/* ####################################################*/
-/* Articles - End */
-/* ####################################################*/
-
-/* ####################################################*/
-/* TWITTER - Start */
-/* ####################################################*/
-.contentColumnWrapper {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
-}
-
-.contentColumnWrapper .highlightedcontentColumnWrapper,
-.contentColumnWrapper .newestcontentColumnWrapper,
-.contentColumnWrapper .mostLikedcontentColumnWrapper {
-  width: 33%;
-}
-
-.contentColumnWrapper .halfPageContainer {
-  width: 49%;
-}
-
-.contentColumnWrapper .categoryHeader {
-  margin: 0;
-  border-radius: 0.8rem 0.8rem 0 0;
-}
-
-.contentColumnWrapper .smallFormContentWrapper,
-.contentColumnWrapper .twitterContainerPlaceholder {
-  box-shadow: var(--box-shadowScheme);
-  background: white;
-}
-
-.contentColumnWrapper .twitterContainerPlaceholder {
-  position: relative;
-  min-height: 100rem;
-}
-
-.contentColumnWrapper .twitterContainerPlaceholder div {
-  position: absolute;
-  top: 20rem;
-  left: 0;
-  right: 0;
-  font-size: 2.5rem;
-  color: white;
-  background: var(--primary-fontColor);
-  box-shadow: var(--box-shadowScheme);
-  padding: 1.5rem;
-  border-radius: 2rem;
-  margin: 0 auto;
-  max-width: 95%;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  border: 0.3rem solid;
-}
-
-.smallFormContentWrapper .articleContainer {
-  position: relative;
-  display: flex;
-  padding: 1.5rem;
-  box-shadow: 0 5px 5px -5px #333;
-  border-bottom: 0.1rem solid rgb(226, 230, 234);
-}
-
-.smallFormContentWrapper .leftContentSide img {
-  width: 6rem;
-  height: 6rem;
-  border-radius: 0.8rem;
-}
-
-.smallFormContentWrapper .rightContentSide {
-  padding-left: 1rem;
-  width: 100%;
-}
-
-.smallFormContentWrapper .contentInfoContainer {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.6rem;
-}
-
-.smallFormContentWrapper .sourceAndWebsiteContainer {
-  display: flex;
-}
-
-.smallFormContentWrapper .sourceAndWebsiteContainer a {
-  z-index: 3;
-  text-decoration: none;
-  color: unset;
-}
-
-.smallFormContentWrapper .sourceAndWebsiteContainer img {
-  width: 2rem;
-  height: 2rem;
-  margin-left: 0.5rem;
-  border-radius: 0.3rem;
-}
-
-.smallFormContentWrapper .fa-ellipsis-h {
-  position: absolute;
-  top: 0;
-  right: 0;
-  cursor: pointer;
-  padding: 0 0.5rem 0.5rem 0.5rem;
-  z-index: 3;
-}
-
 .smallFormContentWrapper .contentBody {
   padding: 0.5rem 0;
   cursor: text;
@@ -1346,50 +1183,6 @@ h2 {
   width: 100%;
   height: 100%;
 }
-
-/* Twitter- Blur - Start */
-
-.blurContainer {
-  position: relative;
-}
-
-.blurContainer .blur {
-  filter: blur(5px);
-}
-
-.blurContainer .blur img {
-  width: 100%;
-  height: 100%;
-}
-
-.blurContainer .blurOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.blurContainer .comingSoon {
-  position: absolute;
-  top: 20rem;
-  left: 0;
-  right: 0;
-  font-size: 2.5rem;
-  color: white;
-  background: var(--primary-fontColor);
-  box-shadow: var(--box-shadowScheme);
-  padding: 1.5rem;
-  border-radius: 2rem;
-  margin: 0 auto;
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  border: 0.3rem solid;
-}
-
-/* Twitter- Blur - End */
 
 /* ####################################################*/
 /* TWITTER - END */
@@ -1469,7 +1262,6 @@ h2 {
 
   .slider {
     --items-per-screen: 6;
-    /* height: 225px; */
   }
 }
 
@@ -1479,7 +1271,6 @@ h2 {
   }
 
   .logoContainer {
-    /* max-width: 22rem; */
     width: 22.5%;
   }
 
@@ -1546,10 +1337,7 @@ h2 {
     flex-direction: column;
   }
 
-  .contentColumnWrapper .highlightedcontentColumnWrapper,
-  .contentColumnWrapper .newestcontentColumnWrapper,
-  .contentColumnWrapper .mostLikedcontentColumnWrapper,
-  .contentColumnWrapper .halfPageContainer {
+  .contentColumnWrapper .contentColumnContainer {
     width: 100%;
   }
 }
@@ -1583,16 +1371,6 @@ h2 {
   footer ul li:last-child {
     margin-bottom: unset;
   }
-
-  .slider {
-    height: 150px;
-  }
-}
-
-@media (max-width: 550px) {
-  .slider {
-    height: 140px;
-  }
 }
 
 @media (max-width: 500px) {
@@ -1617,18 +1395,8 @@ h2 {
   }
 
   .slider {
-    --items-per-screen: 3;
-    height: 150px;
-  }
-
-  .contentIconContainer {
-    height: calc(100% - 2.3rem);
-    margin-bottom: 2.3rem;
-  }
-
-  .contentNameContainer {
-    font-size: 1.5rem;
-    padding: 0.25rem 0;
+    --items-per-screen: 1;
+    min-height: 300px;
   }
 
   .smartphoneCreateListMenu {
@@ -1680,24 +1448,6 @@ h2 {
   .messages {
     white-space: unset;
     width: 90%;
-  }
-}
-
-@media (max-width: 450px) {
-  .slider {
-    height: 140px;
-  }
-}
-
-@media (max-width: 400px) {
-  .slider {
-    height: 120px;
-  }
-}
-
-@media (max-width: 350px) {
-  .slider {
-    height: 110px;
   }
 }
 
