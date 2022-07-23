@@ -140,6 +140,7 @@ class SourceViewSet(viewsets.ModelViewSet):
         list_id = self.request.GET.get("list_id", None)
         list_search = self.request.GET.get('list_search', None)
         feed_search = self.request.GET.get('feed_search', None)
+        sectors_search = self.request.GET.get('sectors_search', None)
         if list_search != None:
             list = get_object_or_404(List, list_id=list_id)
             if list.creator == self.request.user:   
@@ -148,6 +149,8 @@ class SourceViewSet(viewsets.ModelViewSet):
                 return None
         elif feed_search != None:   
             return Source.objects.filter_sources_not_subscribed(feed_search, self.request.user)[0:10]
+        elif sectors_search != None:   
+            return Source.objects.filter(name__istartswith=sectors_search).order_by('name')
         else:
             return Source.objects.all()
 

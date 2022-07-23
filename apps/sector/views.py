@@ -10,6 +10,7 @@ from apps.article.models import Article
 from apps.sector.models import Sector
 from apps.accounts.models import Website
 from apps.source.models import Source
+from apps.logic.pure_logic import sources_filter
 
 try:
     TWITTER = get_object_or_404(Website, name="Twitter")
@@ -22,6 +23,28 @@ class SectorView(ListView, BaseMixin):
     context_object_name = 'sectors'
     template_name = 'sector/sectors.html'
     queryset = Sector.objects.prefetch_related('source_set').all().order_by('name')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        sources = Source.objects.all()
+        context['results_found'] = sources.count()
+        context['filtered_sources'] = sources.values_list('name', flat=True)
+        return context
+
+
+class SectorSearchView(ListView, BaseMixin):
+    model = Sector
+    context_object_name = 'sectors'
+    template_name = 'sector/sectors.html'
+    queryset = Sector.objects.prefetch_related('source_set').all().order_by('name')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        filtered_sources = sources_filter(self.kwargs['paywall'], self.kwargs['type'], self.kwargs['minimum_rating'], self.kwargs['website'], Source.objects.all().order_by('name'))
+        context['results_found'] = filtered_sources.count()
+        context['filtered_sources'] = filtered_sources.values_list('name', flat=True)
+        return context
+
 
 class SectorDetailView(DetailView, BaseMixin):
     model = Sector
