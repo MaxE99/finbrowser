@@ -1,3 +1,142 @@
+.filterBar {
+  position: relative;
+  display: flex;
+  margin: 2rem 0 1rem;
+  border: 0.3rem solid var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
+}
+
+.filterBarMenu {
+  display: flex;
+  width: 60%;
+}
+
+.filterSelectContainer {
+  display: none;
+}
+
+.selectContainer {
+  border-right: 0.3rem solid var(--primary-fontColor);
+  width: 15%;
+}
+
+.searchButtonSelectContainer {
+  border-right: unset;
+}
+
+.filterBarMenu .selectContainer {
+  width: 25%;
+}
+
+.searchSelectContainer {
+  width: 25%;
+  position: relative;
+}
+
+.selectContainer label {
+  font-size: 1.6rem;
+  padding: 0.3rem 1rem;
+  position: absolute;
+  color: var(--primary-fontColor);
+}
+
+.selectContainer select {
+  width: 100%;
+  height: 100%;
+  border-radius: unset;
+  outline: unset;
+  padding: 2rem 0 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1.7rem;
+  border: 0;
+  border-right: 1.2rem solid white;
+  background: white;
+  letter-spacing: 0.11rem;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+.selectContainer select::-ms-expand {
+  display: none;
+}
+
+.filterBar .searchContainer {
+  height: 100%;
+}
+
+.filterBar input {
+  font-size: 1.7rem;
+  border: 0;
+  padding: 1rem 4rem 1rem 1.5rem;
+  letter-spacing: 0.11rem;
+  width: 100%;
+  height: 100%;
+}
+
+#autocomplete_list_results {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  background: white;
+  box-shadow: var(--box-shadowScheme);
+  z-index: 10;
+}
+
+#autocomplete_list_results .searchResult span {
+  max-width: 89%;
+  font-size: 1.6rem;
+}
+
+.filterBar input:focus {
+  outline: 0.1rem solid var(--primary-fontColor);
+}
+
+.filterBar .searchButton,
+.filterBar .filterButton {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--primary-fontColor);
+  border: 0.2rem solid white;
+  color: white;
+  padding: 1rem 1.5rem;
+  font-size: 1.7rem;
+  letter-spacing: 0.11rem;
+  height: 100%;
+  width: 100%;
+}
+
+.filterBar .searchButton:hover,
+.filterBar .filterButton:hover {
+  background: rgba(0, 85, 212, 0.8);
+}
+
+.searchResultsWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.searchResultsWrapper .searchResultsContainer h3 {
+  font-size: 2.5rem;
+}
+
+.searchResultsWrapper .searchResultsContainer div {
+  font-size: 1.4rem;
+}
+
+.searchResultsWrapper .searchResultsContainer div span {
+  color: var(--primary-fontColor);
+}
+
+.sliderWrapper{
+  margin-top: 0;
+}
+
 .sliderHeader {
   position: relative;
 }
@@ -8,4 +147,74 @@
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+@media (max-width: 850px) {
+  .filterBar {
+    display: none;
+  }
+
+  .smallerScreenFilterBar {
+    display: flex;
+  }
+
+  .filterSelectContainer {
+    display: flex;
+  }
+
+  .filterBar .filterButton i {
+    margin-left: 0.5rem;
+  }
+
+  .filterBar .filterBarMenu {
+    display: none;
+    position: absolute;
+    z-index: 50;
+    top: 4.7rem;
+    left: -0.2rem;
+    width: calc(100% + 0.4rem);
+    background: white;
+    border: 2px solid var(--primary-fontColor);
+    border-top: none;
+  }
+
+  .filterBar .filterBarMenu .selectContainer {
+    width: 25%;
+  }
+
+  .searchSelectContainer {
+    width: 70%;
+  }
+
+  .selectContainer:last-of-type {
+    border-right: unset;
+  }
+}
+
+@media (max-width: 500px) {
+  .selectContainer:first-of-type {
+    width: 10%;
+  }
+
+  .selectContainer {
+    width: 25%;
+    border-right: none;
+  }
+
+  .filterButton span {
+    display: none;
+  }
+
+  .searchSelectContainer {
+    width: 65%;
+  }
+
+  .filterBar .filterBarMenu {
+    flex-direction: column;
+  }
+
+  .filterBar .filterBarMenu .selectContainer {
+    width: 100%;
+    border-bottom: 0.1rem solid rgb(226, 230, 234);
+  }
 }
