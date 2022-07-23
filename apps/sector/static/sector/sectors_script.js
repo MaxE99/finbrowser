@@ -2,48 +2,30 @@ if (sessionStorage.getItem("listSearchSettings")) {
   const listSearchSettings = JSON.parse(
     sessionStorage.getItem("listSearchSettings")
   );
-  document.getElementById("timeframe").value = listSearchSettings[0];
-  document.getElementById("content").value = listSearchSettings[1];
+  document.getElementById("paywall").value = listSearchSettings[0];
+  document.getElementById("type").value = listSearchSettings[1];
   document.getElementById("minimum_rating").value = listSearchSettings[2];
-  document.getElementById("primary_source").value = listSearchSettings[3];
+  document.getElementById("website").value = listSearchSettings[3];
   sessionStorage.removeItem("listSearchSettings");
 }
 
 //Filter functionality
 document.querySelector(".searchButton").addEventListener("click", async () => {
-  const timeframeSelect = document.getElementById("timeframe");
-  const timeframe =
-    timeframeSelect.options[timeframeSelect.selectedIndex].value;
-  const contentTypeSelect = document.getElementById("content");
-  const contentType =
-    contentTypeSelect.options[contentTypeSelect.selectedIndex].value;
+  const paywallSelect = document.getElementById("paywall");
+  const paywall = paywallSelect.options[paywallSelect.selectedIndex].value;
+  const typeSelect = document.getElementById("type");
+  const type = typeSelect.options[typeSelect.selectedIndex].value;
   const minimumRatingSelect = document.getElementById("minimum_rating");
   const minimum_rating =
     minimumRatingSelect.options[minimumRatingSelect.selectedIndex].value;
-  const primarySourceSelect = document.getElementById("primary_source");
-  const primary_source =
-    primarySourceSelect.options[primarySourceSelect.selectedIndex].value;
-  const listSearchSettings = [
-    timeframe,
-    contentType,
-    minimum_rating,
-    primary_source,
-  ];
+  const websiteSelect = document.getElementById("website");
+  const website = websiteSelect.options[websiteSelect.selectedIndex].value;
+  const listSearchSettings = [paywall, type, minimum_rating, website];
   sessionStorage.setItem(
     "listSearchSettings",
     JSON.stringify(listSearchSettings)
   );
-  window.location = `../../../../../../lists/${timeframe}/${contentType}/${minimum_rating}/${primary_source}/`;
-});
-
-//open create List Menu
-const createListButton = document.querySelector(".createListButton");
-createListButton.addEventListener("click", () => {
-  if (!createListButton.classList.contains("registrationLink")) {
-    document.querySelector(
-      ".searchResultsAndListCreationContainer .createListMenu"
-    ).style.display = "flex";
-  }
+  window.location = `../../../../../../sectors/${paywall}/${type}/${minimum_rating}/${website}/`;
 });
 
 //Toggle Filter Menu
@@ -56,7 +38,7 @@ document.querySelector(".filterButton").addEventListener("click", () => {
   }
 });
 
-// list search with autocomplete
+// source search with autocomplete
 document.getElementById("search").addEventListener("keyup", async function (e) {
   let search_term = document.getElementById("search").value;
   if (e.key == "Enter" && search_term.replaceAll(/\s/g, "") != "") {
@@ -66,7 +48,7 @@ document.getElementById("search").addEventListener("keyup", async function (e) {
     if (search_term && search_term.replaceAll(/\s/g, "") != "") {
       try {
         const res = await fetch(
-          `../../../../../../api/search_lists/${search_term}`,
+          `../../../../../../api/sources/?sectors_search=${search_term}`,
           get_fetch_settings("GET")
         );
         if (!res.ok) {
@@ -75,19 +57,15 @@ document.getElementById("search").addEventListener("keyup", async function (e) {
           const context = await res.json();
           results_list.style.display = "flex";
           results_list.innerHTML = "";
-          if (context[0].length > 0) {
-            for (let i = 0, j = context[0].length; i < j; i++) {
-              let list_pic =
-                "https://finbrowser.s3.us-east-2.amazonaws.com/static/home/media/finbrowser-bigger-logo.png";
-              if (context[0][i].list_pic) {
-                list_pic = context[0][i].list_pic;
-              }
-              const result = `<div class="searchResult"><img src="${list_pic}"><span>${context[0][i].name}</span><a href="../..${context[1][i]}"></a></div>`;
+          if (context.length > 0) {
+            context.forEach((source) => {
+              const result = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}"><span>${source.name}</span><a href="../../source/${source.slug}"></a></div>`;
               results_list.innerHTML += result;
-            }
+            });
           }
         }
       } catch (e) {
+        console.log(e);
         // showMessage("Error: Unexpected error has occurred!", "Error");
       }
       document.onclick = function (e) {

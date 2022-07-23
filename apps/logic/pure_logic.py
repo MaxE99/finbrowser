@@ -2,6 +2,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.timezone import now
 from django.db.models import Count, F
+from django.shortcuts import get_object_or_404
 # Python imports
 from datetime import timedelta
 
@@ -47,3 +48,18 @@ def articles_filter(timeframe, sector, paywall, source, articles):
         filter_args['pub_date__gte'] = now()-timedelta(days=int(timeframe))
     filter_args = dict((k, v) for k, v in filter_args.items() if v is not None and v != 'All')
     return articles.filter(**filter_args).order_by('-pub_date')
+
+
+def sources_filter(paywall, type, minimum_rating, website, sources):
+    from apps.accounts.models import Website
+    filter_args = {'paywall': paywall}
+    if type != 'All' and type != None and type == "Analysis":
+        filter_args['news'] = False
+    elif type != 'All' and type != None and type == "News":
+        filter_args['news'] = True
+    if minimum_rating != 'All' and type != None:
+        filter_args['average_rating__gte'] = float(minimum_rating)
+    if website != 'All' and type != None:
+        filter_args['website'] = get_object_or_404(Website, name=website)
+    filter_args = dict((k, v) for k, v in filter_args.items() if v is not None and v != 'All')
+    return sources.filter(**filter_args)

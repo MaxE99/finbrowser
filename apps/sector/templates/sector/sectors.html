@@ -3,13 +3,78 @@
 {% load cache %}
 {% block head %}
 <title>FinBrowser | Sectors</title>
-<link rel="stylesheet" type="text/css" href="{% static 'sector/min_sectors_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'sector/min_sectors_style_v2.css' %}">
 <meta name="description" content="Discover the latest content on a specific topic.">
 {% endblock %}
 
 {% block content %}
 
-{% cache 86400 sectors %}
+<div class="filterBar smallerScreenFilterBar">
+    <div class="selectContainer filterSelectContainer">
+        <button class="filterButton"><span>Filter</span><i class="fa-solid fa-filter"></i></button>
+    </div>
+    <div class="filterBarMenu">
+        <div class="selectContainer">
+            <label for="paywall">Paywall</label>
+            <select id="paywall">
+                <option value="All" selected="selected">All</option>
+                <option value="Yes">Yes</option>
+                <option value="Semi">Semi</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div class="selectContainer">
+            <label for="type">Type</label>
+            <select id="type">
+                <option value="All" selected="selected">All</option>
+                <option value="Analysis">Analysis</option>
+                <option value="News">News</option>
+            </select>
+        </div>
+        <div class="selectContainer">
+            <label for="minimum_rating">Minimum Rating</label>
+            <select id="minimum_rating">
+                <option value="All" selected="selected">All</option>
+                <option value="4.5">4.5 Stars</option>
+                <option value="4">4.0 Stars </option>
+                <option value="3.5">3.5 Stars</option>
+                <option value="3">3.0 Stars</option>
+                <option value="2.5">2.5 Stars</option>
+                <option value="2">2.0 Stars</option>
+            </select>
+        </div>
+        <div class="selectContainer">
+            <label for="website">Website</label>
+            <select id="website">
+                <option value="All" selected="selected">All</option>
+                <option value="SeekingAlpha">SeekingAlpha</option>
+                <option value="Spotify">Spotify </option>
+                <option value="Substack">Substack</option>
+                <option value="Twitter">Twitter</option>
+                <option value="YouTube">YouTube</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+    </div>
+    <div class="selectContainer searchSelectContainer">
+        <div class="searchContainer">
+            <input id="search" placeholder="Search term" type="text" />
+            <i class="fas fa-search"></i>
+        </div>
+        <div id="autocomplete_list_results"></div>
+    </div>
+    <div class="selectContainer searchButtonSelectContainer">
+        <button class="searchButton">Search</button>
+    </div>
+</div>
+
+<div class="searchResultsWrapper">
+    <div class="searchResultsContainer">
+        <h3>Search Results</h3>
+        <div><span>{{ results_found }}</span> Sources Found</div>
+    </div>
+</div>
+
 {% for sector in sectors %}
 <div class="sliderWrapper">
     <div class="sliderHeader">
@@ -23,6 +88,7 @@
         </button>
         <div class="slider">
             {% for source in sector.source_set.all|dictsort:"name" %}
+            {% if source.name in filtered_sources %}
             <div class="contentWrapper">
                 <div class="contentContainer">
                     <div class="contentIconContainer">
@@ -34,6 +100,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
         <button class="handle rightHandle">
@@ -42,6 +109,5 @@
     </div>
 </div>
 {% endfor %}
-{% endcache %}
-
+<script src="{% static 'sector/min_sectors_script.js' %}"></script>
 {% endblock %}
