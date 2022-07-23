@@ -217,15 +217,18 @@ def scrape_spotify():
     spotify_creation_list = []
     for source in spotify_sources:
         spotify = SpotifyAPI(client_id, client_secret)
-        episodes = spotify.get_episodes(source.external_id)
-        episode_items = episodes['items']
-        for episode_item in episode_items:
-            title = html.unescape(episode_item['name'])
-            link = episode_item['external_urls']['spotify']
-            if articles.filter(title=title, link=link, source=source).exists():
-                break
-            else:
-                spotify_creation_list.append({'title': title, 'link': link, 'pub_date': now(), 'source': source})
+        try:
+            episodes = spotify.get_episodes(source.external_id)
+            episode_items = episodes['items']
+            for episode_item in episode_items:
+                title = html.unescape(episode_item['name'])
+                link = episode_item['external_urls']['spotify']
+                if articles.filter(title=title, link=link, source=source).exists():
+                    break
+                else:
+                    spotify_creation_list.append({'title': title, 'link': link, 'pub_date': now(), 'source': source})
+        except:
+            continue
     new_articles = [
         Article(
             title=new_article['title'],

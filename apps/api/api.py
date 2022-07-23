@@ -150,7 +150,7 @@ class SourceViewSet(viewsets.ModelViewSet):
         elif feed_search != None:   
             return Source.objects.filter_sources_not_subscribed(feed_search, self.request.user)[0:10]
         elif sectors_search != None:   
-            return Source.objects.filter(name__istartswith=sectors_search).order_by('name')
+            return Source.objects.filter(name__istartswith=sectors_search)[0:10]
         else:
             return Source.objects.all()
 
