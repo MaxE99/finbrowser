@@ -82,7 +82,7 @@ document.getElementById("search").addEventListener("keyup", async function (e) {
               if (context[0][i].list_pic) {
                 list_pic = context[0][i].list_pic;
               }
-              const result = `<div class="searchResult"><img src="${list_pic}"><span>${context[0][i].name}</span><a href="../..${context[1][i]}"></a></div>`;
+              const result = `<div class="searchResult"><img src="${list_pic}"><span>${context[0][i].name}</span><a href="../../../../../..${context[1][i]}"></a></div>`;
               results_list.innerHTML += result;
             }
           }

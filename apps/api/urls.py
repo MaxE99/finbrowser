@@ -6,7 +6,7 @@ from rest_framework import routers
 from apps.api.api import (
      FilteredSite, SocialLinkViewSet, FilteredArticles, ListViewSet, NotificationViewSet,
      SourceViewSet, ProfileViewSet, SourceRatingViewSet, ListRatingViewSet, 
-     HighlightedArticleViewSet, FilteredLists, add_sources_to_list, subscribe_to_sources)
+     HighlightedArticleViewSet, FilteredLists, FilteredSources, add_sources_to_list, subscribe_to_sources)
 
 app_name = 'api'
 
@@ -26,5 +26,6 @@ urlpatterns = [
     path('search_site/<str:search_term>', FilteredSite.as_view()),
     path('search_articles/<str:search_term>', FilteredArticles.as_view()),
     path('search_lists/<str:search_term>', FilteredLists.as_view()),
+    path('search_sources/<str:search_term>', FilteredSources.as_view()),
     path('', include(router.urls)),
 ]

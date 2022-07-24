@@ -271,12 +271,22 @@ class FilteredArticles(APIView):
                             safe=False)
 
 
+class FilteredSources(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [AllowAny]
+
+    def get(self, request, search_term, format=None):
+        filtered_sources = Source.objects.filter(name__istartswith=search_term)[0:10]
+        serializer = Source_Serializer(filtered_sources, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+
 class FilteredSite(APIView):
     authentication_classes = [SessionAuthentication]
     permission_classes = [AllowAny]
 
     def get(self, request, search_term, format=None):
-        filtered_lists = List.objects.filter_lists(search_term)
+        filtered_lists = List.objects.filter_lists(search_term).select_related('creator__profile')
         filtered_sources = Source.objects.filter_sources(search_term)
         # filtered_articles = Article.objects.filter_articles(search_term)
         filtered_articles = Article.objects.filter(title__icontains=search_term).select_related('source').order_by('-pub_date')
