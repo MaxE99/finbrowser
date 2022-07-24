@@ -46,7 +46,7 @@ class ListSearchView(ListView, BaseMixin):
     paginate_by = 10
 
     def get_queryset(self):
-        return lists_filter(self.kwargs['timeframe'], self.kwargs['content_type'], self.kwargs['minimum_rating'], self.kwargs['primary_source'], List.objects.filter(is_public=True).order_by('name'))
+        return lists_filter(self.kwargs['timeframe'], self.kwargs['content_type'], self.kwargs['minimum_rating'], self.kwargs['primary_source'], List.objects.filter(is_public=True).select_related('creator__profile').prefetch_related('articles', 'sources').order_by('name'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

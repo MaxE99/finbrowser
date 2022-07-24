@@ -779,6 +779,8 @@ h2 {
 .contentIconContainer {
   position: relative;
   width: 100%;
+  height: calc(100% - 3.3rem);
+  margin-bottom: 3.3rem;
 }
 
 .contentIcon {
