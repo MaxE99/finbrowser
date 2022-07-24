@@ -449,6 +449,16 @@ class ListTest(LiveServerTestCase):
         driver.find_element(By.CSS_SELECTOR, '.searchButton').click()
         sleep(1)
         assert str(driver.current_url) == "http://127.0.0.1:8000/lists/90/Sources/2/Substack/"
+        driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("test")
+        sleep(2)
+        driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')[4].click()
+        sleep(1)
+        assert "List | FinBrowser" in driver.title  
+        driver.back()
+        driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch').send_keys('fav')
+        sleep(2)
+        driver.find_elements(By.CSS_SELECTOR, '#mainAutocomplete_result .searchResult a')[0].click()
+        assert "List | FinBrowser" in driver.title  
 
     def test_list_search(self):
         driver = login("http://127.0.0.1:8000/lists/")
@@ -494,6 +504,62 @@ class SectorTest(LiveServerTestCase):
         sleep(1)
         assert "Profile | FinBrowser" in driver.title
 
+    def test_content_search(self):
+        driver = login("http://127.0.0.1:8000/sectors/")
+        driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("a")
+        sleep(1)
+        driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')[4].click()
+        sleep(1)
+        assert "Profile | FinBrowser" in driver.title
+
+    def test_content_filtering(self):
+        driver = login("http://127.0.0.1:8000/sectors/")
+        action = webdriver.ActionChains(driver)
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #paywall')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #paywall option')[-1].click()
+        driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #type').click()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #type option')[1].click()
+        sleep(1)
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #minimum_rating')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #minimum_rating option')[-1].click()
+        sleep(1)
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #website')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #website option')[4].click()
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '.searchButton').click()
+        sleep(1)
+        assert str(driver.current_url) == "http://127.0.0.1:8000/sectors/No/Analysis/2/Twitter/"
+
+    def test_double_content_filtering(self):
+        driver = login("http://127.0.0.1:8000/sectors/")
+        action = webdriver.ActionChains(driver)
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #paywall')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #paywall option')[-1].click()
+        driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #type').click()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #type option')[1].click()
+        sleep(1)
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #minimum_rating')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #minimum_rating option')[-1].click()
+        sleep(1)
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #website')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #website option')[4].click()
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '.searchButton').click()
+        sleep(1)
+        assert str(driver.current_url) == "http://127.0.0.1:8000/sectors/No/Analysis/2/Twitter/"
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #paywall')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #paywall option')[1].click()
+        action.move_to_element(driver.find_element(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #minimum_rating')).click().perform()
+        driver.find_elements(By.CSS_SELECTOR, '.filterBarMenu .selectContainer #minimum_rating option')[-3].click()
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '.searchButton').click()
+        sleep(1)
+        assert str(driver.current_url) == "http://127.0.0.1:8000/sectors/Yes/Analysis/3/Twitter/"
+        driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("a")
+        sleep(1)
+        driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')[4].click()
+        sleep(1)
+        assert "Profile | FinBrowser" in driver.title
 
 class ContentTest(LiveServerTestCase):
 
@@ -547,6 +613,16 @@ class ContentTest(LiveServerTestCase):
         driver.find_element(By.CSS_SELECTOR, '.searchButton').click()
         sleep(1)
         assert str(driver.current_url) == "http://127.0.0.1:8000/content/90/Defense/No/Substack/"
+        driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("test")
+        sleep(2)
+        assert len(driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')) == 10      
+        # driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch').send_keys('test')
+        # sleep(2)
+        # driver.find_elements(By.CSS_SELECTOR, '#mainAutocomplete_result .searchResult a')[4].click()
+        # assert "Profile | FinBrowser" in driver.title  
+        # driver.back()
+        test_standard_use_cases("http://127.0.0.1:8000/content/90/Defense/No/Substack/")
+        test_standard_use_cases("http://127.0.0.1:8000/content/90/Defense/No/Substack/", True)
 
     def test_content_search(self):
         driver = login("http://127.0.0.1:8000/content/")
@@ -628,6 +704,11 @@ class SettingsTest(LiveServerTestCase):
         driver.find_element(By.CSS_SELECTOR, '#id_username').send_keys("Ebirdmax99Test")
         driver.find_element(By.CSS_SELECTOR, '.editSection .saveButton').click()
         assert "Ebirdmax99Test" == driver.find_element(By.CSS_SELECTOR, "#id_username").get_attribute('value')
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '#id_username').clear()
+        driver.find_element(By.CSS_SELECTOR, '#id_username').send_keys("Ebirdmax99")
+        driver.find_element(By.CSS_SELECTOR, '.editSection .saveButton').click()
+        assert "Ebirdmax99" == driver.find_element(By.CSS_SELECTOR, "#id_username").get_attribute('value')
 
     def test_change_email(self):
         driver = login("http://127.0.0.1:8000/profile/settings")
@@ -636,16 +717,22 @@ class SettingsTest(LiveServerTestCase):
         driver.find_element(By.CSS_SELECTOR, '#id_email').send_keys("me-99@livetest.de")
         driver.find_element(By.CSS_SELECTOR, '.editSection .saveButton').click()
         assert "me-99@livetest.de" == driver.find_element(By.CSS_SELECTOR, "#id_email").get_attribute('value')
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '#id_email').clear()
+        driver.find_element(By.CSS_SELECTOR, '#id_email').send_keys("me-99@live.de")
+        driver.find_element(By.CSS_SELECTOR, '.editSection .saveButton').click()
+        assert "me-99@live.de" == driver.find_element(By.CSS_SELECTOR, "#id_email").get_attribute('value')
 
     def test_change_username_and_email(self):
         driver = webdriver.Chrome()
-        driver.get("http://127.0.0.1:8000/registration/login/")
-        driver.set_window_size(1920, 1080)
-        driver.find_element(By.CSS_SELECTOR, '#id_login').send_keys('me-99@livetest.de')
-        driver.find_element(By.CSS_SELECTOR, '#id_password').send_keys('testpw99')
-        driver.find_element(By.CSS_SELECTOR, '#id_remember').click()
-        driver.find_element(By.CSS_SELECTOR, '.primaryAction').click()
-        driver.get("http://127.0.0.1:8000/profile/settings")
+        driver = login("http://127.0.0.1:8000/profile/settings")
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '#id_username').clear()
+        driver.find_element(By.CSS_SELECTOR, '#id_username').send_keys("EbirdmaxTest99")
+        driver.find_element(By.CSS_SELECTOR, '#id_email').clear()
+        driver.find_element(By.CSS_SELECTOR, '#id_email').send_keys("me-99@livetest.de")
+        driver.find_element(By.CSS_SELECTOR, '.editSection .saveButton').click()
+        assert "EbirdmaxTest99" == driver.find_element(By.CSS_SELECTOR, "#id_username").get_attribute('value') and "me-99@livetest.de" == driver.find_element(By.CSS_SELECTOR, "#id_email").get_attribute('value')
         sleep(1)
         driver.find_element(By.CSS_SELECTOR, '#id_username').clear()
         driver.find_element(By.CSS_SELECTOR, '#id_username').send_keys("Ebirdmax99")
@@ -654,10 +741,11 @@ class SettingsTest(LiveServerTestCase):
         driver.find_element(By.CSS_SELECTOR, '.editSection .saveButton').click()
         assert "Ebirdmax99" == driver.find_element(By.CSS_SELECTOR, "#id_username").get_attribute('value') and "me-99@live.de" == driver.find_element(By.CSS_SELECTOR, "#id_email").get_attribute('value')
 
-    def test_add_social_link(self):
+    def test_add_social_link(self): # strangly this test sometimes doesn't work when selecting Spotify or Other as website or when it called as part of the overall settings test
         driver = login("http://127.0.0.1:8000/profile/settings")
         sleep(1)
-        driver.find_element(By.CSS_SELECTOR, '.addSocialLinksContainer summary').click()        
+        driver.find_element(By.CSS_SELECTOR, '.addSocialLinksContainer summary').click()   
+        sleep(1)     
         driver.find_elements(By.CSS_SELECTOR, '.addSocialLinksContainer .selectContainer ul li')[0].click() 
         driver.find_element(By.CSS_SELECTOR, '.addSocialLinksContainer input').send_keys("https://www.testlink.com")  
         sleep(1) 
@@ -800,7 +888,7 @@ class SourceProfileTest(LiveServerTestCase):
         test_pagination("http://127.0.0.1:8000/source/joe-albano", 0, '?latest_articles=2')
 
 
-class SectorTest(LiveServerTestCase):
+class SectorDetailTest(LiveServerTestCase):
 
     def test_standard_use_cases(self):
         test_standard_use_cases("http://127.0.0.1:8000/sector/defense")

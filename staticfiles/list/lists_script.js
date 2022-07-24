@@ -9,46 +9,6 @@ if (sessionStorage.getItem("listSearchSettings")) {
   sessionStorage.removeItem("listSearchSettings");
 }
 
-// Autocomplete for search
-document.getElementById("search").addEventListener("keyup", async () => {
-  let search_term = document.getElementById("search").value;
-  let results_list = document.getElementById("autocomplete_list_results");
-  if (search_term && search_term.replaceAll(/\s/g, "") != "") {
-    try {
-      const res = await fetch(
-        `../../../../../../api/search_lists/${search_term}`,
-        get_fetch_settings("GET")
-      );
-      if (!res.ok) {
-        showMessage("Error: Network request failed unexpectedly!!", "Error");
-      } else {
-        const context = await res.json();
-        results_list.style.display = "flex";
-        results_list.innerHTML = "";
-        if (context[0].length > 0) {
-          for (let i = 0, j = context[0].length; i < j; i++) {
-            let list_pic = "https://finbrowser.s3.us-east-2.amazonaws.com/static/home/media/finbrowser-bigger-logo.png";
-            if (context[0][i].list_pic) {
-              list_pic = context[0][i].list_pic;
-            }
-            const result = `<div class="searchResult"><img src="${list_pic}"><span>${context[0][i].name}</span><a href="../..${context[1][i]}"></a></div>`;
-            results_list.innerHTML += result;
-          }
-        }
-      }
-    } catch (e) {
-      // showMessage("Error: Unexpected error has occurred!", "Error");
-    }
-    document.onclick = function (e) {
-      if (e.target.id !== "autocomplete_list_results") {
-        results_list.style.display = "none";
-      }
-    };
-  } else {
-    results_list.style.display = "none";
-  }
-});
-
 //Filter functionality
 document.querySelector(".searchButton").addEventListener("click", async () => {
   const timeframeSelect = document.getElementById("timeframe");
@@ -95,3 +55,59 @@ document.querySelector(".filterButton").addEventListener("click", () => {
     filterBarMenu.style.display = "flex";
   }
 });
+
+// list search with autocomplete
+document.getElementById("search").addEventListener("keyup", async function (e) {
+  let search_term = document.getElementById("search").value;
+  if (e.key == "Enter" && search_term.replaceAll(/\s/g, "") != "") {
+    window.location.href = `../../../../../../search_results/${search_term}`;
+  } else {
+    let results_list = document.getElementById("autocomplete_list_results");
+    if (search_term && search_term.replaceAll(/\s/g, "") != "") {
+      try {
+        const res = await fetch(
+          `../../../../../../api/search_lists/${search_term}`,
+          get_fetch_settings("GET")
+        );
+        if (!res.ok) {
+          showMessage("Error: Network request failed unexpectedly!!", "Error");
+        } else {
+          const context = await res.json();
+          results_list.style.display = "flex";
+          results_list.innerHTML = "";
+          if (context[0].length > 0) {
+            for (let i = 0, j = context[0].length; i < j; i++) {
+              let list_pic =
+                "https://finbrowser.s3.us-east-2.amazonaws.com/static/home/media/finbrowser-bigger-logo.png";
+              if (context[0][i].list_pic) {
+                list_pic = context[0][i].list_pic;
+              }
+              const result = `<div class="searchResult"><img src="${list_pic}"><span>${context[0][i].name}</span><a href="../../../../../..${context[1][i]}"></a></div>`;
+              results_list.innerHTML += result;
+            }
+          }
+        }
+      } catch (e) {
+        // showMessage("Error: Unexpected error has occurred!", "Error");
+      }
+      document.onclick = function (e) {
+        if (e.target.id !== "autocomplete_list_results") {
+          results_list.style.display = "none";
+        }
+      };
+    } else {
+      results_list.style.display = "none";
+    }
+  }
+});
+
+//get search results
+document
+  .querySelector(".searchSelectContainer i")
+  .addEventListener("click", () => {
+    console.log("clicked");
+    search_term = document.getElementById("search").value;
+    if (search_term.replaceAll(/\s/g, "") != "") {
+      window.location.href = `../../../../../../search_results/${search_term}`;
+    }
+  });

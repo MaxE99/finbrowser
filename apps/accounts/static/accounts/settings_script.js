@@ -92,56 +92,61 @@ const addSocialLinkButton = document.querySelector(".addSocialLinkButton");
 addSocialLinkButton.addEventListener("click", async () => {
   const website_link =
     addSocialLinkButton.parentElement.querySelector("input").value;
-  const website_img =
-    addSocialLinkButton.parentElement.querySelector("summary img").src;
-  const websiteID = addSocialLinkButton.parentElement
-    .querySelector("summary img")
-    .id.replace("website_id_", "");
-  const existingSocialContainer = document.createElement("div");
-  existingSocialContainer.classList.add(
-    "existingSocialContainer",
-    "newlyAdded"
-  );
-  const social_img = document.createElement("img");
-  social_img.src = website_img;
-  const social_input = document.createElement("input");
-  social_input.type = "text";
-  social_input.value = website_link;
-  const delete_button = document.createElement("button");
-  delete_button.type = "button";
-  delete_button.classList.add("removeSocialLinkButton");
-  delete_button.innerText = "Remove";
-  delete_button.addEventListener("click", deleteSocialLinks);
-  existingSocialContainer.append(social_img, social_input, delete_button);
-  addSocialLinkButton.parentElement.parentElement.insertBefore(
-    existingSocialContainer,
-    addSocialLinkButton.parentElement
-  );
-  document.querySelector(
-    ".selectContainer summary"
-  ).innerHTML = `<i class="fa fa-caret-down"></i>`;
-  document.querySelector(".linkInput").value = "";
-  try {
-    const data = { website: websiteID, url: website_link };
-    const res = await fetch(`../../api/social_links/`, {
-      method: "POST",
-      headers: {
-        "X-CSRFToken": getCookie("csrftoken"),
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      mode: "same-origin",
-      body: JSON.stringify(data),
-    });
-    if (!res.ok) {
-      showMessage("Error: Network request failed unexpectedly!", "Error");
-    } else {
-      const context = await res.json();
-      showMessage(context, "Success");
-      window.location.reload();
+  if (
+    addSocialLinkButton.parentElement.querySelector("summary img") != null &&
+    website_link != ""
+  ) {
+    const website_img =
+      addSocialLinkButton.parentElement.querySelector("summary img").src;
+    const websiteID = addSocialLinkButton.parentElement
+      .querySelector("summary img")
+      .id.replace("website_id_", "");
+    const existingSocialContainer = document.createElement("div");
+    existingSocialContainer.classList.add(
+      "existingSocialContainer",
+      "newlyAdded"
+    );
+    const social_img = document.createElement("img");
+    social_img.src = website_img;
+    const social_input = document.createElement("input");
+    social_input.type = "text";
+    social_input.value = website_link;
+    const delete_button = document.createElement("button");
+    delete_button.type = "button";
+    delete_button.classList.add("removeSocialLinkButton");
+    delete_button.innerText = "Remove";
+    delete_button.addEventListener("click", deleteSocialLinks);
+    existingSocialContainer.append(social_img, social_input, delete_button);
+    addSocialLinkButton.parentElement.parentElement.insertBefore(
+      existingSocialContainer,
+      addSocialLinkButton.parentElement
+    );
+    document.querySelector(
+      ".selectContainer summary"
+    ).innerHTML = `<i class="fa fa-caret-down"></i>`;
+    document.querySelector(".linkInput").value = "";
+    try {
+      const data = { website: websiteID, url: website_link };
+      const res = await fetch(`../../api/social_links/`, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"),
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        mode: "same-origin",
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        showMessage("Error: Network request failed unexpectedly!", "Error");
+      } else {
+        const context = await res.json();
+        showMessage(context, "Success");
+        window.location.reload();
+      }
+    } catch (e) {
+      // showMessage("Error: Unexpected error has occurred!", "Error");
     }
-  } catch (e) {
-    // showMessage("Error: Unexpected error has occurred!", "Error");
   }
 });
 

@@ -28,46 +28,6 @@ document.querySelector(".searchButton").addEventListener("click", async () => {
   window.location = `../../../../../../content/${timeframe}/${sector}/${paywall}/${source}`;
 });
 
-// Autocomplete for search
-document.getElementById("search").addEventListener("keyup", async () => {
-  let search_term = document.getElementById("search").value;
-  let results_list = document.getElementById("autocomplete_list_results");
-  if (search_term && search_term.replaceAll(/\s/g, "") != "") {
-    try {
-      const res = await fetch(
-        `../../../../../../api/search_articles/${search_term}`,
-        get_fetch_settings("GET")
-      );
-      if (!res.ok) {
-        showMessage("Error: Network request failed unexpectedly!", "Error");
-      } else {
-        const context = await res.json();
-        results_list.style.display = "flex";
-        results_list.innerHTML = "";
-        if (context[0].length > 0) {
-          for (let i = 0, j = context[0].length; i < j; i++) {
-            let favicon = context[1][i];
-            let title = context[0][i].title;
-            let link = context[0][i].link;
-            const articleRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${favicon}"><span>${title}</span><a href="${link}"></a></div>`;
-            results_list.innerHTML += articleRes;
-          }
-        }
-      }
-    } catch (e) {
-      // showMessage("Error: Unexpected error has occurred!", "Error");
-    }
-    // closes list results list when user clicks somewhere else on the page
-    document.onclick = function (e) {
-      if (e.target.id !== "autocomplete_list_results") {
-        results_list.style.display = "none";
-      }
-    };
-  } else {
-    results_list.style.display = "none";
-  }
-});
-
 //Toggle Filter Menu
 document.querySelector(".filterButton").addEventListener("click", () => {
   const filterBarMenu = document.querySelector(".filterBarMenu");
@@ -77,3 +37,57 @@ document.querySelector(".filterButton").addEventListener("click", () => {
     filterBarMenu.style.display = "flex";
   }
 });
+
+// article search with autocomplete
+document.getElementById("search").addEventListener("keyup", async function (e) {
+  let search_term = document.getElementById("search").value;
+  if (e.key == "Enter" && search_term.replaceAll(/\s/g, "") != "") {
+    window.location.href = `../../../../../../search_results/${search_term}`;
+  } else {
+    let results_list = document.getElementById("autocomplete_list_results");
+    if (search_term && search_term.replaceAll(/\s/g, "") != "") {
+      try {
+        const res = await fetch(
+          `../../../../../../api/search_articles/${search_term}`,
+          get_fetch_settings("GET")
+        );
+        if (!res.ok) {
+          showMessage("Error: Network request failed unexpectedly!", "Error");
+        } else {
+          const context = await res.json();
+          results_list.style.display = "flex";
+          results_list.innerHTML = "";
+          if (context[0].length > 0) {
+            for (let i = 0, j = context[0].length; i < j; i++) {
+              let favicon = context[1][i];
+              let title = context[0][i].title;
+              let link = context[0][i].link;
+              const articleRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${favicon}"><span>${title}</span><a href="${link}"></a></div>`;
+              results_list.innerHTML += articleRes;
+            }
+          }
+        }
+      } catch (e) {
+        // showMessage("Error: Unexpected error has occurred!", "Error");
+      }
+      document.onclick = function (e) {
+        if (e.target.id !== "autocomplete_list_results") {
+          results_list.style.display = "none";
+        }
+      };
+    } else {
+      results_list.style.display = "none";
+    }
+  }
+});
+
+//get search results
+document
+  .querySelector(".searchSelectContainer i")
+  .addEventListener("click", () => {
+    console.log("clicked");
+    search_term = document.getElementById("search").value;
+    if (search_term.replaceAll(/\s/g, "") != "") {
+      window.location.href = `../../../../../../search_results/${search_term}`;
+    }
+  });
