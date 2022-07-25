@@ -379,11 +379,9 @@ def youtube_delete_innacurate_articles():
 @shared_task
 def youtube_clean_up_double_articles():
     youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
-    print(len(youtube_sources))
     for source in youtube_sources:
         articles_from_source = Article.objects.filter(source=source)
         for article in articles_from_source:
             double_article = articles_from_source.filter(title=article.title, link=article.link)
             if double_article.count() > 1:
-                print(double_article.last())
                 double_article.last().delete()

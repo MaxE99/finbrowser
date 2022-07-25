@@ -1,8 +1,9 @@
 # Django import
+from django.shortcuts import get_object_or_404
 from django.views.generic.detail import DetailView
 # Local import
 from apps.logic.pure_logic import paginator_create
-from apps.home.views import BaseMixin
+from apps.home.views import TWITTER, BaseMixin
 from apps.source.models import Source, SourceRating
 from apps.list.models import List
 from apps.article.models import Article
@@ -24,7 +25,13 @@ class SourceDetailView(DetailView, BaseMixin):
         else:
             subscribed = False  
             user_rating = notifications_activated = None
-        context['latest_articles'] = paginator_create(self.request, Article.objects.get_content_from_source(source), 10, 'latest_articles')
+        latest_content = Article.objects.get_content_from_source(source)
+        if source.website == TWITTER:
+            links_and_retweets = latest_content.filter(tweet_type__type="Retweet") | latest_content.filter(tweet_type__type="Link")
+            context['links_and_retweets'] = paginator_create(self.request, links_and_retweets, 10, 'links_and_retweets')
+            images = latest_content.filter(tweet_type__type="Image")
+            context['images'] = paginator_create(self.request, images, 10, 'images')
+        context['latest_articles'] = paginator_create(self.request, latest_content, 10, 'latest_articles')
         context['lists'] = paginator_create(self.request, List.objects.get_lists_with_source(source), 10, 'lists')
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating

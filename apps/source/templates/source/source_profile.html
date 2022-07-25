@@ -125,6 +125,61 @@
 
 
 {% if latest_articles %}
+{% if links_and_retweets or images %}
+<div class="contentColumnWrapper">
+  {% if latest_articles %}
+  <div
+      class="contentColumnContainer {% if not links_and_retweets or not images %}halfPageContainer{% endif %}">
+      {% create_content_container "Latest Tweets" latest_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
+      <div class="pagination">
+          <span class="step-links">
+              {% for i in latest_articles.paginator.page_range %}
+              {% if latest_articles.number == i %}
+              <button class="currentPagination">{{ latest_articles.number }}</button>
+              {% elif i > latest_articles.number|add:'-3' and i < latest_articles.number|add:'3' %} <a
+                  href="?latest_articles={{ i }}">{{ i }}</a>
+              {% endif %}
+              {% endfor %}
+          </span>
+      </div>
+  </div>
+  {% endif %}
+  {% if links_and_retweets %}
+  <div
+      class="contentColumnContainer {% if not latest_articles or not images %}halfPageContainer{% endif %}">
+      {% create_content_container "Links & Retweets" links_and_retweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+      <div class="pagination">
+          <span class="step-links">
+              {% for i in links_and_retweets.paginator.page_range %}
+              {% if links_and_retweets.number == i %}
+              <button class="currentPagination">{{ links_and_retweets.number }}</button>
+              {% elif i > links_and_retweets.number|add:'-3' and i < links_and_retweets.number|add:'3' %} <a
+                  href="?links_and_retweets={{ i }}">{{ i }}</a>
+              {% endif %}
+              {% endfor %}
+          </span>
+      </div>
+  </div>
+  {% endif %}
+  {% if images %}
+  <div
+      class="contentColumnContainer {% if not latest_articles or not links_and_retweets %}halfPageContainer{% endif %}">
+      {% create_content_container "Graphics & Images" images request user_lists csrf_token add_list_form highlighted_content_titles %}
+      <div class="pagination">
+          <span class="step-links">
+              {% for i in images.paginator.page_range %}
+              {% if images.number == i %}
+              <button class="currentPagination">{{ images.number }}</button>
+              {% elif i > images.number|add:'-3' and i < images.number|add:'3' %} <a
+                  href="?images={{ i }}">{{ i }}</a>
+              {% endif %}
+              {% endfor %}
+          </span>
+      </div>
+  </div>
+  {% endif %}
+</div>
+{% else %}
 <div class="contentColumnWrapper">
   <div class="contentColumnContainer halfPageContainer">
     {% create_content_container "Latest Content" latest_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
@@ -142,7 +197,7 @@
   </div>
 </div>
 {% endif %}
-
+{% endif %}
 
 {% if lists %}
 {% create_list_slider_container "Lists" lists %}

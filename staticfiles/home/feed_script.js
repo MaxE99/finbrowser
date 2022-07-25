@@ -2,14 +2,9 @@
 document
   .querySelector(".sliderWrapper .interactionWrapper .createListButton")
   .addEventListener("click", () => {
-    if (check_device_width_below(500)) {
-      document.querySelector(".smartphoneCreateListMenu").style.display =
-        "flex";
-    } else {
       document.querySelector(
         ".interactionWrapper .createListMenu"
       ).style.display = "flex";
-    }
   });
 
 // Close menus
@@ -24,14 +19,9 @@ document
 //open add sources menu
 if (document.querySelector(".addSourcesButton")) {
   document.querySelector(".addSourcesButton").addEventListener("click", () => {
-    if (check_device_width_below(500)) {
-      document.querySelector(".smartphoneAddSourcesForm").style.display =
-        "flex";
-    } else {
       document.querySelector(
         ".interactionWrapper .addSourcesForm"
       ).style.display = "flex";
-    }
   });
 }
 
@@ -161,13 +151,9 @@ document
 //open add lists menu
 if (document.querySelector(".addListsButton")) {
   document.querySelector(".addListsButton").addEventListener("click", () => {
-    if (check_device_width_below(500)) {
-      document.querySelector(".smartphoneAddListsForm").style.display = "flex";
-    } else {
       document.querySelector(
         ".interactionWrapper .addListsForm"
       ).style.display = "flex";
-    }
   });
 }
 
