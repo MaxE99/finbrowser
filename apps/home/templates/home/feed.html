@@ -2,33 +2,11 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_feed_style_v2.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_feed_style_v3.css' %}">
 <title>FinBrowser | Feed</title>
 {% endblock %}
 
 {% block content %}
-
-<div class="addListsForm formContainer smartphoneAddListsForm">
-    <div class="formHeaderContainer">Add Lists<i class="fas fa-times closeFormContainerButton"></i>
-    </div>
-    <input id="textInput" type="text">
-    <div class="searchResultWrapper">
-        <div id="searchResultsContainer"></div>
-        <div class="selectionContainer"></div>
-    </div>
-    <button class="formSubmitButton">Add</button>
-</div>
-
-<div class="addSourcesForm formContainer smartphoneAddSourcesForm">
-    <div class="formHeaderContainer">Add Sources<i class="fas fa-times closeFormContainerButton"></i>
-    </div>
-    <input id="textInput" type="text">
-    <div class="searchResultWrapper">
-        <div id="searchResultsContainer"></div>
-        <div class="selectionContainer"></div>
-    </div>
-    <button class="formSubmitButton">Add</button>
-</div>
 
 <div class="sliderWrapper">
     <div class="sliderHeader">
@@ -224,5 +202,5 @@
 </div>
 {% endif %}
 
-<script src="{% static 'home/min_feed_script_v4.js' %}"></script>
+<script src="{% static 'home/min_feed_script_v5.js' %}"></script>
 {% endblock content %}

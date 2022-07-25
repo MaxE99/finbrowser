@@ -65,7 +65,6 @@ document.getElementById("search").addEventListener("keyup", async function (e) {
           }
         }
       } catch (e) {
-        console.log(e);
         // showMessage("Error: Unexpected error has occurred!", "Error");
       }
       document.onclick = function (e) {
@@ -83,7 +82,6 @@ document.getElementById("search").addEventListener("keyup", async function (e) {
 document
   .querySelector(".searchSelectContainer i")
   .addEventListener("click", () => {
-    console.log("clicked");
     search_term = document.getElementById("search").value;
     if (search_term.replaceAll(/\s/g, "") != "") {
       window.location.href = `../../../../../../search_results/${search_term}`;

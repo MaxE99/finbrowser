@@ -61,14 +61,6 @@
 .formContainer .searchResultWrapper #searchResultsContainer {
   z-index: 5;
 }
-.formContainer .searchResultWrapper #searchResultsContainer,
-.formContainer .searchResultWrapper .selectionContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
 
 .formContainer .searchResultWrapper #searchResultsContainer,
 .formContainer .searchResultWrapper .selectionContainer {
@@ -114,115 +106,57 @@
   width: 90% !important;
 }
 
-.addExternalLinksFormWrapper {
-  position: relative;
-}
-
-.addExternalLinksContainer {
-  position: absolute;
-  right: 0;
-  width: 25rem;
-}
-
-.addExternalLinksContainer .formSubmitButton {
-  margin: 1rem 0;
-}
-
-.paginationAndAddExternalContainer {
-  position: relative;
-}
-
-.addExternalLinkButton {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  height: 5rem;
-  font-size: 1.6rem;
-  border: none;
-  border-radius: 0.8rem;
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
-  background: var(--primary-fontColor);
-  padding: 1rem 1.5rem;
-  transform: translateY(-50%);
-  border: 0.3rem solid;
-}
-
-.addExternalLinkButton:hover {
-  transform: translateY(-50%) scale(1.1);
-}
-
-.addExternalLinkButton i {
-  margin-right: 0.8rem;
-}
-
-@media (max-width: 1000px) {
-  .paginationAndAddExternalContainer {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .addExternalLinkButton {
-    position: relative;
-    height: unset;
-    width: fit-content;
-    margin: 3rem auto 0;
-  }
-
-  .addExternalLinksContainer {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .contentColumnWrapper {
-    margin-top: unset;
-  }
-}
-
 @media (max-width: 500px) {
   .addButton {
     font-size: 10rem;
   }
 
-  .smartphoneAddListsForm,
-  .smartphoneAddSourcesForm {
-    position: fixed;
-    width: 97.5%;
+  .interactionWrapper .formContainer .formHeaderContainer {
+    height: 4.8rem;
+    font-size: 2.5rem;
   }
 
-  .smartphoneAddListsForm .formHeaderContainer,
-  .smartphoneAddSourcesForm .formHeaderContainer {
-    font-size: 2.2rem;
-    padding: 2rem 0;
+  .interactionWrapper
+    .formContainer
+    .formHeaderContainer
+    .closeFormContainerButton {
+    padding: 0.95rem;
+    height: 100%;
   }
 
-  .smartphoneAddListsForm .formHeaderContainer .closeFormContainerButton,
-  .smartphoneAddSourcesForm .formHeaderContainer .closeFormContainerButton {
-    padding: 0.9rem;
+  .interactionWrapper .formContainer {
+    width: 100%;
   }
 
-  .smartphoneAddListsForm form label,
-  .smartphoneAddSourcesForm form label {
-    margin: 1rem 0 0.5rem;
-    font-size: 2rem;
-  }
-
-  .smartphoneAddListsForm form input,
-  .smartphoneAddListsForm form select,
-  .smartphoneAddSourcesForm form input,
-  .smartphoneAddSourcesForm form select {
-    font-size: 1.8rem;
-    padding: 0.5rem 1rem;
-  }
-
-  .formContainer .searchResultWrapper {
-    height: 20rem;
-  }
-
-  .smartphoneAddListsForm .formSubmitButton,
-  .smartphoneAddSourcesForm .formSubmitButton {
-    font-size: 2rem;
+  .interactionWrapper .formContainer form label {
+    font-size: 2.4rem;
     margin: 1rem 0;
+  }
+
+  .interactionWrapper .formContainer form input,
+  .interactionWrapper .formContainer form select,
+  .interactionWrapper .formContainer #textInput {
+    padding: 0.5rem 1.5rem;
+    font-size: 2.2rem;
+  }
+
+  .interactionWrapper .formContainer form #id_is_public {
+    width: 2rem;
+    height: 2rem;
+    margin-top: -3.2rem;
+    margin-left: 23rem;
+  }
+
+  .interactionWrapper .formContainer .formSubmitButton {
+    padding: 0.6rem 2.4rem;
+    font-size: 2.2rem;
+  }
+
+  .interactionWrapper .formContainer #searchResultsContainer {
+    font-size: 2rem;
+  }
+
+  .interactionWrapper .formContainer #searchResultsContainer .searchResult {
+    font-size: 2rem;
   }
 }
