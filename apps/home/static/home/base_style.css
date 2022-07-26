@@ -1004,18 +1004,19 @@ h2 {
 
 .addToListForm .listContainer {
   margin-left: 1rem;
-  padding: 0.25rem 0;
-  font-size: 1.6rem;
+  padding: 0.3rem 0;
+  font-size: 1.7rem;
 }
 
 .addToListForm label {
-  font-size: 1.4rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .addToListForm input {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.6rem;
+  height: 1.6rem;
   margin-right: 0.5rem;
   cursor: pointer;
 }
@@ -1394,6 +1395,11 @@ h2 {
 
   .headerContainer .fa-bars {
     padding: 0 1.5rem;
+  }
+
+  .sliderHeader {
+    font-size: 2.1rem;
+    padding: 2.2rem 5rem;
   }
 
   .slider {
