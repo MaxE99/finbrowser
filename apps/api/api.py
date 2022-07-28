@@ -288,7 +288,7 @@ class FilteredSite(APIView):
     def get(self, request, search_term, format=None):
         filtered_lists = List.objects.filter_lists(search_term).select_related('creator__profile')
         filtered_sources = Source.objects.filter_sources(search_term)
-        filtered_articles = Article.objects.filter(title__icontains=search_term).select_related('source').order_by('-pub_date')
+        filtered_articles = Article.objects.filter(title__search=search_term).select_related('source').order_by('-pub_date')
         # rebalance spots that are displayed
         len_filtered_lists = filtered_lists.count()
         len_filtered_sources = filtered_sources.count()
