@@ -288,32 +288,24 @@ class FilteredSite(APIView):
     def get(self, request, search_term, format=None):
         filtered_lists = List.objects.filter_lists(search_term).select_related('creator__profile')
         filtered_sources = Source.objects.filter_sources(search_term)
-        # filtered_articles = Article.objects.filter_articles(search_term)
         filtered_articles = Article.objects.filter(title__icontains=search_term).select_related('source').order_by('-pub_date')
         # rebalance spots that are displayed
-        display_spots_lists = 3
-        display_spots_sources = 3
-        display_spots_articles = 3
         len_filtered_lists = filtered_lists.count()
         len_filtered_sources = filtered_sources.count()
         len_filtered_articles = filtered_articles.count()
-        if len_filtered_lists < 3:
-            display_spots_lists = filtered_lists.count()
-        if len_filtered_sources < 3:
-            display_spots_sources = len_filtered_sources
-        if len_filtered_articles < 3:
-            display_spots_articles = len_filtered_articles
+        display_spots_lists = 3 if len_filtered_lists > 3 else len_filtered_lists
+        display_spots_sources = 3 if len_filtered_sources > 3 else len_filtered_sources
+        display_spots_articles = 3 if len_filtered_articles > 3 else len_filtered_articles
         all_spots = display_spots_lists + display_spots_sources + display_spots_articles
-        iteration = 1 + 3
         all_spots_previous_iteration = 0
         while all_spots < 9:
-            if len_filtered_lists > iteration:
+            if len_filtered_lists > 3:
                 display_spots_lists += 1
                 all_spots += 1
-            if len_filtered_sources > iteration:
+            if len_filtered_sources > 3:
                 display_spots_sources += 1
                 all_spots += 1
-            if len_filtered_articles > iteration:
+            if len_filtered_articles > 3:
                 display_spots_articles += 1
                 all_spots += 1
             if all_spots_previous_iteration == all_spots:
@@ -321,9 +313,9 @@ class FilteredSite(APIView):
             all_spots_previous_iteration = all_spots
         article_favicon_paths = []
         list_urls = []
-        for article in filtered_articles:
-            article_favicon_paths.append(article.source.favicon_path)
-        for list in filtered_lists:
+        for article in filtered_articles[0:display_spots_articles]:
+            article_favicon_paths.append(article.source.favicon_path) 
+        for list in filtered_lists[0:display_spots_lists]:
             list_urls.append(list.get_absolute_url())
         list_serializer = List_Serializer(
             filtered_lists[0:display_spots_lists], many=True)
