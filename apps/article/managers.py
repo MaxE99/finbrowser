@@ -10,7 +10,7 @@ class ArticleManager(models.Manager):
         return self.filter(source__in=list.sources.all()).select_related('source', 'source__sector', 'source__website').exclude(source__website=website).order_by('-pub_date')
 
     def filter_articles(self, search_term):
-        return self.filter(title__search=search_term).select_related('source', 'source__sector', 'tweet_type', 'source__website').order_by('-pub_date')
+        return self.filter(title__icontains=search_term).select_related('source', 'source__sector', 'tweet_type', 'source__website').order_by('-pub_date')
 
     def get_content_from_source(self, source):
         return self.select_related('source', 'source__sector', 'source__website', 'tweet_type').filter(source=source).order_by('-pub_date')
