@@ -7,10 +7,10 @@
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNS80QXCXR"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){window.dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'GA_MEASUREMENT_ID');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
     </script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +21,7 @@
         type="font/woff2" crossorigin="anonymous">
     <link rel="preload" as="font" href="{% static 'home/fonts/lato-v23-latin/lato-v23-latin-900.woff' %}"
         type="font/woff" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v9.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v10.css' %}">
     {% block head %}
     {% endblock %}
 </head>
@@ -365,7 +365,7 @@
 
             {% block content %}
             {% endblock %}
-            <script src="{% static 'home/min_base_script_v6.js' %}"></script>
+            <script src="{% static 'home/min_base_script_v7.js' %}"></script>
         </div>
 
     </main>

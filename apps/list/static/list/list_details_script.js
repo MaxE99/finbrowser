@@ -33,6 +33,23 @@ if (subscribeButton) {
   });
 }
 
+
+//check if createListMenu at 7nth spot
+function check_interaction_wrapper_at_last_spot(sliderWrapper, closeMenu) {
+  spot = sliderWrapper.querySelectorAll(".contentWrapper").length;
+  items_per_screen = getComputedStyle(
+    sliderWrapper.querySelector(".slider")
+  ).getPropertyValue("--items-per-screen");
+  if (spot % items_per_screen == 0) {
+    if (closeMenu) {
+      sliderWrapper.querySelector(".slider").style.zIndex = "";
+    } else {
+      sliderWrapper.querySelector(".slider").style.zIndex = "1000";
+    }
+  }
+}
+
+
 const editButton = document.querySelector(".editButton");
 const listName = document.querySelector(".rightFirstRowContainer h3").innerText;
 
@@ -148,6 +165,10 @@ if (document.querySelector(".deleteListButton")) {
 if (document.querySelector(".addSourcesButton")) {
   document.querySelector(".addSourcesButton").addEventListener("click", () => {
     document.querySelector(".addSourcesForm").style.display = "flex";
+    check_interaction_wrapper_at_last_spot(
+      document.querySelector(".sliderWrapper"),
+      false
+    );
   });
 }
 
@@ -157,6 +178,10 @@ if (document.querySelector(".addSourcesForm .closeFormContainerButton")) {
     .querySelector(".addSourcesForm .closeFormContainerButton")
     .addEventListener("click", () => {
       document.querySelector(".addSourcesForm").style.display = "none";
+      check_interaction_wrapper_at_last_spot(
+        document.querySelector(".sliderWrapper"),
+        true
+      );
     });
 }
 
