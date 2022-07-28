@@ -16,7 +16,7 @@ class TweetType(models.Model):
 
 class Article(models.Model):
     article_id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=500)
+    title = models.CharField(max_length=500, db_index=True)
     link = models.URLField()
     pub_date = models.DateTimeField()
     source = models.ForeignKey(Source, blank=True, null=True, on_delete=models.SET_NULL)
