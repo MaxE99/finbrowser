@@ -146,7 +146,7 @@
             {% if list.creator == request.user %}
             <div class="contentWrapper interactionWrapper">
                 <div class="addSourcesButton addButton"><i class="fas fa-plus"></i></div>
-                <div class="contentWrapper addSourcesForm formContainer">
+                <div class="addSourcesForm formContainer">
                     <div class="formHeaderContainer">Add Sources<i class="fas fa-times closeFormContainerButton"></i>
                     </div>
                     <input id="textInput" type="text">
@@ -222,5 +222,5 @@
 
 
 {{ user_rating|json_script:"user-rating" }}
-<script src="{% static 'list/min_list_details_script_v4.js' %}"></script>
+<script src="{% static 'list/min_list_details_script_v5.js' %}"></script>
 {% endblock content %}

@@ -311,10 +311,13 @@ def youtube_get_profile_images():
     api_key = os.environ.get('YOUTUBE_API_KEY')
     youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
     for source in youtube_sources:
-        url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={source.external_id}&key={api_key}"
-        r = requests.get(url)
-        data = r.json()
-        source_profile_img_create(source, data['items'][0]['snippet']['thumbnails']['medium']['url'])
+        try:
+            url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={source.external_id}&key={api_key}"
+            r = requests.get(url)
+            data = r.json()
+            source_profile_img_create(source, data['items'][0]['snippet']['thumbnails']['medium']['url'])
+        except:
+            continue
 
 
 @shared_task
@@ -323,11 +326,14 @@ def spotify_get_profile_images():
     client_secret = os.environ.get('SPOTIFY_CLIENT_SECRET')
     spotify_sources = Source.objects.filter(website=get_object_or_404(Website, name="Spotify"))
     for source in spotify_sources:
-        spotify = SpotifyAPI(client_id, client_secret)
-        podcaster = spotify.get_podcaster(source.external_id)
-        if "images" in podcaster.keys():
-            source_profile_img_create(source, podcaster['images'][0]['url'])
-        else:
+        try:
+            spotify = SpotifyAPI(client_id, client_secret)
+            podcaster = spotify.get_podcaster(source.external_id)
+            if "images" in podcaster.keys():
+                source_profile_img_create(source, podcaster['images'][0]['url'])
+            else:
+                continue
+        except:
             continue
 
 

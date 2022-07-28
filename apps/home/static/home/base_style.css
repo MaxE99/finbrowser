@@ -884,8 +884,14 @@ h2 {
 
 .smallFormContentWrapper .leftContentSide .profileImageContainer img,
 .smallFormContentWrapper .leftContentSide .profileImageContainer a,
-.smallFormContentWrapper .sourceAndWebsiteContainer .sourceWebsiteProfileContainer img,
-.smallFormContentWrapper .sourceAndWebsiteContainer .sourceWebsiteProfileContainer a {
+.smallFormContentWrapper
+  .sourceAndWebsiteContainer
+  .sourceWebsiteProfileContainer
+  img,
+.smallFormContentWrapper
+  .sourceAndWebsiteContainer
+  .sourceWebsiteProfileContainer
+  a {
   position: absolute;
   top: 0;
   left: 0;
@@ -1391,6 +1397,23 @@ h2 {
 
   .mainInputSearch {
     max-width: 55vw;
+  }
+
+  .closeSearchIcon {
+    position: absolute;
+    top: 0;
+    right: 0.5%;
+    color: #fff;
+    background: red;
+    padding: 0.6rem;
+    cursor: pointer;
+    width: 10%;
+    font-size: 2.5rem;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.8rem;
   }
 
   .headerContainer .fa-bars {
