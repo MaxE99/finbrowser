@@ -123,6 +123,17 @@ def tweet_img_upload(tweet_type, file_url):
         return tweet_type
 
 
+def initial_tweet_img_path_upload(tweet_type, file_url):
+        urllib.request.urlretrieve(file_url, 'temp_file.png')
+        im = Image.open('temp_file.png')
+        output = BytesIO()
+        im.save(output, format='WEBP', quality=99)
+        output.seek(0)
+        s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.INITIAL_TWEET_IMG_FILE_DIRECTORY, f'initial_tweet_img_{tweet_type.tweet_type_id}.webp'))
+        tweet_type.image_path = f'home/initial_tweet_imgs/initial_tweet_img_{tweet_type.tweet_type_id}.webp'
+        return tweet_type
+
+
 # def change_format_of_pngs_and_upload_them_as_wepbs_from_dev():
 #     images = glob.glob("test_imgs/*.png")
 #     for image in images:

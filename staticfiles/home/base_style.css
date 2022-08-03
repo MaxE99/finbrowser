@@ -884,8 +884,14 @@ h2 {
 
 .smallFormContentWrapper .leftContentSide .profileImageContainer img,
 .smallFormContentWrapper .leftContentSide .profileImageContainer a,
-.smallFormContentWrapper .sourceAndWebsiteContainer .sourceWebsiteProfileContainer img,
-.smallFormContentWrapper .sourceAndWebsiteContainer .sourceWebsiteProfileContainer a {
+.smallFormContentWrapper
+  .sourceAndWebsiteContainer
+  .sourceWebsiteProfileContainer
+  img,
+.smallFormContentWrapper
+  .sourceAndWebsiteContainer
+  .sourceWebsiteProfileContainer
+  a {
   position: absolute;
   top: 0;
   left: 0;
@@ -1004,18 +1010,19 @@ h2 {
 
 .addToListForm .listContainer {
   margin-left: 1rem;
-  padding: 0.25rem 0;
-  font-size: 1.6rem;
+  padding: 0.3rem 0;
+  font-size: 1.7rem;
 }
 
 .addToListForm label {
-  font-size: 1.4rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .addToListForm input {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.6rem;
+  height: 1.6rem;
   margin-right: 0.5rem;
   cursor: pointer;
 }
@@ -1154,12 +1161,31 @@ h2 {
   transform: scale(1.05, 1.05);
 }
 
+.smallFormContentWrapper .replyWrapper,
+.smallFormContentWrapper .retweetWrapper {
+  font-size: 1.5rem;
+  text-align: justify;
+  font-family: serif;
+  font-weight: 400;
+  margin-top: 0.5rem;
+}
+
+.smallFormContentWrapper .retweetWrapper {
+  margin-bottom: 0.5rem;
+}
+
+.smallFormContentWrapper .replyWrapper span,
+.smallFormContentWrapper .retweetWrapper span {
+  color: rgb(29, 155, 240);
+}
+
 .smallFormContentWrapper .contentBody {
   padding: 0.5rem 0;
   cursor: text;
 }
 
-.smallFormContentWrapper .contentBody p {
+.smallFormContentWrapper .contentBody p,
+.smallFormContentWrapper .quoteText {
   font-size: 1.9rem;
   text-align: justify;
   font-family: serif;
@@ -1173,9 +1199,32 @@ h2 {
   margin: 0 0 0.5rem;
 }
 
-.smallFormContentWrapper .timeContainer {
+.smallFormContentWrapper .quoteWrapper {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  border: 0.1rem solid #e2e6ea;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.smallFormContentWrapper .quoteUpperContainer {
+  display: flex;
+  align-items: baseline;
+  font-size: 1.7rem;
+}
+
+.smallFormContentWrapper .quoteDate {
+  margin: 0 0 0.4rem 0.7rem;
+}
+
+.smallFormContentWrapper .timeContainer,
+.smallFormContentWrapper .quoteDate {
   color: gray;
   font-size: 1.4rem;
+}
+
+.smallFormContentWrapper .quoteText {
+  font-size: 1.7rem;
 }
 
 .smallFormContentWrapper .contentLink {
@@ -1392,8 +1441,35 @@ h2 {
     max-width: 55vw;
   }
 
+  .closeSearchIcon {
+    position: absolute;
+    top: 0;
+    right: 0.5%;
+    color: #fff;
+    background: red;
+    padding: 0.6rem;
+    cursor: pointer;
+    width: 10%;
+    font-size: 2.5rem;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.8rem;
+  }
+
+  #mainAutocomplete_result {
+    overflow-y: scroll;
+    max-height: calc(100vh - 8.5rem);
+  }
+
   .headerContainer .fa-bars {
     padding: 0 1.5rem;
+  }
+
+  .sliderHeader {
+    font-size: 2.1rem;
+    padding: 2.2rem 5rem;
   }
 
   .slider {
@@ -1450,6 +1526,10 @@ h2 {
   .messages {
     white-space: unset;
     width: 90%;
+  }
+
+  .quoteDate{
+    display: none;
   }
 }
 

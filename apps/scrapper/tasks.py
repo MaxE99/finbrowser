@@ -15,8 +15,10 @@ import requests
 import base64
 import os
 import boto3
+import re
+import json
 # Local imports
-from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload
+from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload, initial_tweet_img_path_upload
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
@@ -133,27 +135,57 @@ def scrape_twitter():
     sources = Source.objects.all() 
     tweet_creation_list = []
     for status in statuses:
-        tweet_external_id = status.id
-        if str(tweet_external_id) not in existing_tweets:
-            twitter_user_id = status.user.id
-            if sources.filter(external_id=twitter_user_id).exists():
-                title = html.unescape(status.full_text)
-                link = f'https://twitter.com/{status.user.screen_name}/status/{tweet_external_id}'
-                pub_date = status.created_at
-                tweet_type = TweetType.objects.create(type = "Basic")
-                if 'media' in status.entities:
-                    if 'media_url_https' in status.entities['media'][0]:
-                        tweet_type.type = "Image"
-                        tweet_type = tweet_img_upload(tweet_type, status.entities['media'][0]['media_url_https'])
-                if len(status.entities['urls']) > 0:
-                    if 'expanded_url' in status.entities['urls'][0]:
-                        tweet_type.type = "Link"
-                        tweet_type.link = status.entities['urls'][0]['expanded_url']
-                if title.startswith("rt @"):
-                    tweet_type.type = "Retweet"
-                tweet_type.save()
-                tweet_creation_list.append({'source': twitter_user_id, 'title': title, 'link': link, 'pub_date': pub_date, 'external_id': tweet_external_id, 'tweet_type': tweet_type})
-        last_id = tweet_external_id
+        try:
+            tweet_external_id = status.id
+            if str(tweet_external_id) not in existing_tweets:
+                twitter_user_id = status.user.id
+                if sources.filter(external_id=twitter_user_id).exists():
+                    title = re.sub(r'http\S+', '', html.unescape(status.full_text))
+                    link = f'https://twitter.com/{status.user.screen_name}/status/{tweet_external_id}'
+                    pub_date = status.created_at
+                    tweet_type = TweetType.objects.create(type = "Basic")
+                    if 'media' in status.entities:
+                        if 'media_url_https' in status.entities['media'][0]:
+                            tweet_type.type = "Image"
+                            tweet_type = tweet_img_upload(tweet_type, status.entities['media'][0]['media_url_https'])
+                    if len(status.entities['urls']) > 0:
+                        if 'expanded_url' in status.entities['urls'][0]:
+                            tweet_type.type = "Link"
+                            tweet_type.link = status.entities['urls'][0]['expanded_url']
+                    in_reply_to_user_id = status.in_reply_to_user_id
+                    if hasattr(status, "retweeted_status"):
+                        tweet_type.pub_date = status.retweeted_status.created_at
+                        tweet_type.text = re.sub(r'http\S+', '', html.unescape(status.retweeted_status.full_text))
+                        tweet_type.author = status.retweeted_status.user.name
+                        if 'media' in status.retweeted_status._json['entities']:
+                            if 'media_url_https' in status.retweeted_status._json['entities']['media'][0]:
+                                tweet_type = initial_tweet_img_path_upload(tweet_type, status.retweeted_status._json['entities']['media'][0]['media_url_https'])
+                        tweet_type.type = "Retweet"
+                    elif in_reply_to_user_id != None and in_reply_to_user_id != twitter_user_id:
+                        tweet_reply_id = status.in_reply_to_status_id
+                        tweet_reply_info = api.get_status(id=tweet_reply_id, tweet_mode='extended')
+                        tweet_type.pub_date = tweet_reply_info.created_at
+                        tweet_type.text = re.sub(r'http\S+', '', html.unescape(tweet_reply_info.full_text))
+                        tweet_type.author = tweet_reply_info.user.name
+                        if hasattr(tweet_reply_info.entities, 'media'):
+                            if 'media_url_https' in tweet_reply_info.entities['media'][0]:
+                                tweet_type = initial_tweet_img_path_upload(tweet_type, tweet_reply_info.entities['media'][0]['media_url_https'])
+                        tweet_type.type = "Reply"
+                    elif status.is_quote_status == True:
+                        tweet_type.pub_date = status.quoted_status.created_at
+                        tweet_type.text = re.sub(r'http\S+', '', html.unescape(status.quoted_status.full_text))
+                        tweet_type.author = status.quoted_status.user.name
+                        if 'media' in status.quoted_status._json['entities']:
+                            if 'media_url_https' in status.quoted_status._json['entities']['media'][0]:
+                                tweet_type = initial_tweet_img_path_upload(tweet_type, status.quoted_status._json['entities']['media'][0]['media_url_https'])
+                        tweet_type.type = "Quote"
+                    tweet_type.save()
+                    tweet_creation_list.append({'source': twitter_user_id, 'title': title, 'link': link, 'pub_date': pub_date, 'external_id': tweet_external_id, 'tweet_type': tweet_type})
+            else:
+                break
+            last_id = tweet_external_id
+        except:
+            continue
     cache.set('last_id', last_id)
     new_articles = [
         Article(
