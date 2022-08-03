@@ -78,11 +78,31 @@
                     </form>
                 </div>
             </div>
+            {% if tweet.tweet_type.type == "Retweet" %}
+            <div class="retweetWrapper">Retweeted post by <span>@{{ tweet.tweet_type.author }}</span></div>
+            {% endif %}
+            {% if tweet.tweet_type.type == "Reply" %}
+            <div class="replyWrapper">Replying to <span>@{{ tweet.tweet_type.author }}</span></div>
+            {% endif %}
+            {% if tweet.tweet_type.type != "Retweet" %}
             <div class="contentBody">
                 <p>{{ tweet.title }}</p>
             </div>
+            {% endif %}
             {% if tweet.tweet_type.image_path %}
             <img class="tweetImage" src="{% static tweet.tweet_type.image_path %}">
+            {% endif %}
+            {% if tweet.tweet_type.type == "Quote" or tweet.tweet_type.type == "Retweet" or tweet.tweet_type.type == "Reply" %}
+            <div class="quoteWrapper">
+                <div class="quoteUpperContainer">
+                    <div class="quoteAuthor">{{ tweet.tweet_type.author }}</div>
+                    <div class="quoteDate">{{ tweet.tweet_type.pub_date }}</div>
+                </div>
+                <div class="quoteText">{{ tweet.tweet_type.text }}</div>
+                {% if tweet.tweet_type.initial_tweet_img_path %}
+                <img class="tweetImage" src="{% static tweet.tweet_type.initial_tweet_img_path %}">
+                {% endif %}
+            </div>
             {% endif %}
             <div class="timeContainer">
                 <p>{{ tweet.pub_date }}</p>

@@ -200,16 +200,13 @@ details[open] {
 }
 
 details summary {
-  cursor: pointer;
-  list-style: none;
   display: flex;
   align-items: center;
-  padding: 1rem 0.5rem;
-  border-radius: 50%;
-  font-size: 1.7rem;
+  font-size: 3rem;
   justify-content: center;
   background: var(--primary-fontColor);
-  color: white;
+  color: #fff;
+  height: 100%;
 }
 
 details ul {
@@ -232,8 +229,7 @@ details li {
 }
 
 details img {
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 100%;
 }
 
 details ul li:hover {

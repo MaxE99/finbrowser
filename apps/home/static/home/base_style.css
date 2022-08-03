@@ -1161,12 +1161,31 @@ h2 {
   transform: scale(1.05, 1.05);
 }
 
+.smallFormContentWrapper .replyWrapper,
+.smallFormContentWrapper .retweetWrapper {
+  font-size: 1.5rem;
+  text-align: justify;
+  font-family: serif;
+  font-weight: 400;
+  margin-top: 0.5rem;
+}
+
+.smallFormContentWrapper .retweetWrapper {
+  margin-bottom: 0.5rem;
+}
+
+.smallFormContentWrapper .replyWrapper span,
+.smallFormContentWrapper .retweetWrapper span {
+  color: rgb(29, 155, 240);
+}
+
 .smallFormContentWrapper .contentBody {
   padding: 0.5rem 0;
   cursor: text;
 }
 
-.smallFormContentWrapper .contentBody p {
+.smallFormContentWrapper .contentBody p,
+.smallFormContentWrapper .quoteText {
   font-size: 1.9rem;
   text-align: justify;
   font-family: serif;
@@ -1180,9 +1199,32 @@ h2 {
   margin: 0 0 0.5rem;
 }
 
-.smallFormContentWrapper .timeContainer {
+.smallFormContentWrapper .quoteWrapper {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  border: 0.1rem solid #e2e6ea;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.smallFormContentWrapper .quoteUpperContainer {
+  display: flex;
+  align-items: baseline;
+  font-size: 1.7rem;
+}
+
+.smallFormContentWrapper .quoteDate {
+  margin: 0 0 0.4rem 0.7rem;
+}
+
+.smallFormContentWrapper .timeContainer,
+.smallFormContentWrapper .quoteDate {
   color: gray;
   font-size: 1.4rem;
+}
+
+.smallFormContentWrapper .quoteText {
+  font-size: 1.7rem;
 }
 
 .smallFormContentWrapper .contentLink {
@@ -1416,6 +1458,11 @@ h2 {
     border-radius: 0.8rem;
   }
 
+  #mainAutocomplete_result {
+    overflow-y: scroll;
+    max-height: calc(100vh - 8.5rem);
+  }
+
   .headerContainer .fa-bars {
     padding: 0 1.5rem;
   }
@@ -1479,6 +1526,10 @@ h2 {
   .messages {
     white-space: unset;
     width: 90%;
+  }
+
+  .quoteDate{
+    display: none;
   }
 }
 

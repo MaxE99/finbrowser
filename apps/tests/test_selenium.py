@@ -613,22 +613,17 @@ class ContentTest(LiveServerTestCase):
         driver.find_element(By.CSS_SELECTOR, '.searchButton').click()
         sleep(1)
         assert str(driver.current_url) == "http://127.0.0.1:8000/content/90/Defense/No/Substack/"
-        driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("test")
+        driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("China")
         sleep(2)
-        assert len(driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')) == 10      
-        # driver.find_element(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch').send_keys('test')
-        # sleep(2)
-        # driver.find_elements(By.CSS_SELECTOR, '#mainAutocomplete_result .searchResult a')[4].click()
-        # assert "Profile | FinBrowser" in driver.title  
-        # driver.back()
+        assert len(driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')) > 1     
         test_standard_use_cases("http://127.0.0.1:8000/content/90/Defense/No/Substack/")
         test_standard_use_cases("http://127.0.0.1:8000/content/90/Defense/No/Substack/", True)
 
     def test_content_search(self):
         driver = login("http://127.0.0.1:8000/content/")
-        driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("test")
-        sleep(1)
-        assert len(driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')) == 10
+        driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("China")
+        sleep(2)
+        assert len(driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')) > 1
 
     def test_paginations(self):
         test_pagination("http://127.0.0.1:8000/content/", 0, '?articles=2')

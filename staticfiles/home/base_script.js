@@ -68,6 +68,77 @@ function showMessage(message, type) {
   document.querySelector(".overlay").appendChild(messages);
 }
 
+document
+  .querySelector(".headerContainer #mainAutocomplete")
+  .addEventListener("click", () => {
+    if (
+      check_device_width_below(500) &&
+      !document.querySelector(
+        ".headerContainer .mainSearchWrapper .closeSearchIcon"
+      )
+    ) {
+      document.querySelector(".headerContainer .logoContainer").style.display =
+        "none";
+      document.querySelector(".headerContainer .fa-bars").style.display =
+        "none";
+      document.querySelector(
+        ".headerContainer .mainSearchWrapper"
+      ).style.width = "100%";
+      document.querySelector(
+        ".headerContainer .mainSearchContainer"
+      ).style.display = "flex";
+      document.querySelector(
+        ".headerContainer .mainSearchContainer"
+      ).style.justifyContent = "center";
+      document.querySelector(
+        ".headerContainer .mainSearchContainer"
+      ).style.position = "relative";
+      document.querySelector(
+        ".headerContainer .mainSearchContainer"
+      ).style.width = "90%";
+      document.querySelector(".headerContainer #mainAutocomplete").style.width =
+        "97.5%";
+      document.querySelector(
+        ".headerContainer #mainAutocomplete"
+      ).style.maxWidth = "unset";
+      const closeSearchIcon = document.createElement("i");
+      closeSearchIcon.classList.add("fas", "fa-times", "closeSearchIcon");
+      document
+        .querySelector(".headerContainer .mainSearchWrapper")
+        .appendChild(closeSearchIcon);
+      closeSearchIcon.addEventListener("click", () => {
+        document
+          .querySelector(".headerContainer .mainSearchWrapper .closeSearchIcon")
+          .remove();
+        document.querySelector(
+          ".headerContainer .logoContainer"
+        ).style.display = "";
+        document.querySelector(".headerContainer .fa-bars").style.display = "";
+        document.querySelector(
+          ".headerContainer .mainSearchWrapper"
+        ).style.width = "";
+        document.querySelector(
+          ".headerContainer .mainSearchContainer"
+        ).style.display = "";
+        document.querySelector(
+          ".headerContainer .mainSearchContainer"
+        ).style.justifyContent = "";
+        document.querySelector(
+          ".headerContainer .mainSearchContainer"
+        ).style.position = "";
+        document.querySelector(
+          ".headerContainer .mainSearchContainer"
+        ).style.width = "";
+        document.querySelector(
+          ".headerContainer #mainAutocomplete"
+        ).style.width = "";
+        document.querySelector(
+          ".headerContainer #mainAutocomplete"
+        ).style.maxWidth = "";
+      });
+    }
+  });
+
 // main search with autocomplete
 document
   .getElementById("mainAutocomplete")
@@ -100,7 +171,8 @@ document
                 if (list.list_pic) {
                   list_pic = list.list_pic;
                 } else {
-                  list_pic = "https://finbrowser.s3.us-east-2.amazonaws.com/static/home/media/finbrowser-bigger-logo.png";
+                  list_pic =
+                    "https://finbrowser.s3.us-east-2.amazonaws.com/static/home/media/finbrowser-bigger-logo.png";
                 }
                 const listRes = `<div class="searchResult"><img src="${list_pic}"><span>${list.name}</span><a href="${list_url}"></a></div>`;
                 results_list.innerHTML += listRes;
@@ -231,16 +303,19 @@ document
         }
         try {
           const data = { article_id: article_id };
-          const res = await fetch(`../../../../../../api/highlighted_articles/`, {
-            method: "POST",
-            headers: {
-              "X-CSRFToken": getCookie("csrftoken"),
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            mode: "same-origin",
-            body: JSON.stringify(data),
-          });
+          const res = await fetch(
+            `../../../../../../api/highlighted_articles/`,
+            {
+              method: "POST",
+              headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              mode: "same-origin",
+              body: JSON.stringify(data),
+            }
+          );
           if (!res.ok) {
             showMessage("Error: Network request failed unexpectedly!", "Error");
           } else {

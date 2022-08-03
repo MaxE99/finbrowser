@@ -8,11 +8,15 @@ from apps.source.models import Source
 User = get_user_model()
 
 class TweetType(models.Model):
-    TYPE_CHOICES = [('Image', 'Image'), ('Link', 'Link'), ('Retweet', 'Retweet'), ('Basic', 'Basic')]
+    TYPE_CHOICES = [('Image', 'Image'), ('Link', 'Link'), ('Retweet', 'Retweet'), ('Basic', 'Basic'), ('Quote', 'Quote'), ('Reply', 'Reply')]
     tweet_type_id = models.AutoField(primary_key=True)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='None')
     image_path = models.CharField(max_length=500, blank=True, null=True)
+    text = models.CharField(max_length=500, blank=True, null=True)
+    pub_date = models.DateTimeField(blank=True, null=True)
+    author = models.CharField(max_length=100, blank=True, null=True)
     link = models.CharField(max_length=500, blank=True, null=True)
+    initial_tweet_img_path = models.CharField(max_length=500, blank=True, null=True)
 
 class Article(models.Model):
     article_id = models.AutoField(primary_key=True)
