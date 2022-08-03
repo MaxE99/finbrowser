@@ -1,10 +1,29 @@
+//check if createListMenu at 7nth spot
+function check_interaction_wrapper_at_last_spot(sliderWrapper, closeMenu) {
+  spot = sliderWrapper.querySelectorAll(".contentWrapper").length;
+  items_per_screen = getComputedStyle(
+    sliderWrapper.querySelector(".slider")
+  ).getPropertyValue("--items-per-screen");
+  if (spot % items_per_screen == 0) {
+    if (closeMenu) {
+      sliderWrapper.querySelector(".slider").style.zIndex = "";
+    } else {
+      sliderWrapper.querySelector(".slider").style.zIndex = "1000";
+    }
+  }
+}
+
 // Open create list menu in slider
 document
   .querySelector(".sliderWrapper .interactionWrapper .createListButton")
   .addEventListener("click", () => {
-      document.querySelector(
-        ".interactionWrapper .createListMenu"
-      ).style.display = "flex";
+    document.querySelector(
+      ".interactionWrapper .createListMenu"
+    ).style.display = "flex";
+    check_interaction_wrapper_at_last_spot(
+      document.querySelectorAll(".sliderWrapper")[0],
+      false
+    );
   });
 
 // Close menus
@@ -14,14 +33,22 @@ document
     document.querySelector(
       ".interactionWrapper .createListMenu"
     ).style.display = "none";
+    check_interaction_wrapper_at_last_spot(
+      document.querySelectorAll(".sliderWrapper")[0],
+      true
+    );
   });
 
 //open add sources menu
 if (document.querySelector(".addSourcesButton")) {
   document.querySelector(".addSourcesButton").addEventListener("click", () => {
-      document.querySelector(
-        ".interactionWrapper .addSourcesForm"
-      ).style.display = "flex";
+    document.querySelector(
+      ".interactionWrapper .addSourcesForm"
+    ).style.display = "flex";
+    check_interaction_wrapper_at_last_spot(
+      document.querySelectorAll(".sliderWrapper")[2],
+      false
+    );
   });
 }
 
@@ -33,6 +60,10 @@ document
       element.parentElement.parentElement.parentElement.querySelector(
         ".addSourcesForm"
       ).style.display = "none";
+      check_interaction_wrapper_at_last_spot(
+        document.querySelectorAll(".sliderWrapper")[2],
+        true
+      );
     });
   });
 
@@ -151,9 +182,12 @@ document
 //open add lists menu
 if (document.querySelector(".addListsButton")) {
   document.querySelector(".addListsButton").addEventListener("click", () => {
-      document.querySelector(
-        ".interactionWrapper .addListsForm"
-      ).style.display = "flex";
+    document.querySelector(".interactionWrapper .addListsForm").style.display =
+      "flex";
+    check_interaction_wrapper_at_last_spot(
+      document.querySelectorAll(".sliderWrapper")[1],
+      false
+    );
   });
 }
 
@@ -165,6 +199,10 @@ document
       element.parentElement.parentElement.parentElement.querySelector(
         ".addListsForm"
       ).style.display = "none";
+      check_interaction_wrapper_at_last_spot(
+        document.querySelectorAll(".sliderWrapper")[1],
+        true
+      );
     });
   });
 
