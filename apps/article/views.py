@@ -23,7 +23,7 @@ class ArticleView(ListView, BaseMixin):
     paginate_by = 10
 
     def get_queryset(self):
-        return Article.objects.all().select_related('source', 'source__website', 'source__sector', 'tweet_type').order_by('-pub_date').only('article_id', 'source__favicon_path', 'source__slug', 'source__name', 'title', 'tweet_type__image_path', 'pub_date', 'link', 'source__source_id', 'source__website_id', 'source__sector__slug', 'source__sector', 'source__website__logo', 'source__sector__sector_id', 'source__sector__name', 'source__url')
+        return Article.objects.all().select_related('source', 'source__website', 'source__sector', 'tweet_type').order_by('-pub_date')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
