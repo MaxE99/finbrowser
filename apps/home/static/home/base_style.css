@@ -1460,7 +1460,6 @@ h2 {
 
   #mainAutocomplete_result {
     overflow-y: scroll;
-    max-height: calc(100vh - 8.5rem);
   }
 
   .headerContainer .fa-bars {
