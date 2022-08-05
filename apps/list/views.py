@@ -1,5 +1,4 @@
 # Django imports
-from curses.ascii import US
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.views.generic.list import ListView
@@ -9,7 +8,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth import get_user_model
 # Local imports
 from apps.logic.pure_logic import paginator_create
-from apps.mixins import BaseMixin, CreateListFormMixin
+from apps.mixins import BaseMixin, BaseFormMixins
 from apps.list.forms import ListNameChangeForm, ListPicChangeForm
 from apps.list.models import List, ListRating
 from apps.home.models import Notification
@@ -60,17 +59,17 @@ class ListDetailView(TemplateView, BaseMixin):
     template_name = 'list/list_details.html'
 
     def post(self, request, *args, **kwargs):
-        if 'createListForm' in request.POST:
-            post_res = CreateListFormMixin.post(self, request, multi_form_page=True)
-            if post_res == 'Failed':
-                return redirect('home:feed')
+        if 'createListForm' in request.POST or 'createKeywordNotificationForm' in request.POST:
+            post_res = BaseFormMixins.post(self, request, multi_form_page=True)
+            if post_res == 'Failed' or post_res == 'Notification created':
+                return HttpResponseRedirect(self.request.path_info)
             else:
                 profile_slug, list_slug = post_res
-                return redirect('list:list_details', profile_slug=profile_slug, list_slug=list_slug)
+                return redirect('list:list-details', profile_slug=profile_slug, list_slug=list_slug)
         elif 'changeListForm' in request.POST:
             profile_slug = self.request.path_info.rsplit('/', 2)[-2]
             list_slug = self.request.path_info.rsplit('/', 1)[-1]
-            list = get_object_or_404(List, slug=list_slug)
+            list = get_object_or_404(List, slug=list_slug, creator=request.user)
             if self.request.user == list.creator:
                 new_list_slug = slugify(request.POST.get('name'))
                 change_list_name_form = ListNameChangeForm(request.POST, instance=list)
