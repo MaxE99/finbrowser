@@ -28,11 +28,21 @@ def main_website_source_set(instance):
     return instance
 
 
-def notifications_create(articles):
+def notifications_create(created_articles):
     from apps.home.models import Notification, NotificationMessage
+    from apps.article.models import Article
+    article_ids = [article.article_id for article in created_articles]
+    articles = Article.objects.filter(article_id__in=article_ids)
     notifications = Notification.objects.all()
     notification_messages = NotificationMessage.objects.all().select_related("notification__user")
+    keyword_notifications = notifications.filter(keyword__isnull=False)
     notifications_creation_list = []
+    for keyword_notification in keyword_notifications:
+        articles_with_keywords = articles.filter(title__search=keyword_notification.keyword)
+        if articles_with_keywords.exists():
+            for keyword_article in articles_with_keywords:
+                if notification_messages.filter(article=keyword_article, notification__user=keyword_notification.user).exists() == False:
+                    notifications_creation_list.append({"notification": keyword_notification, 'article': keyword_article, 'date': now()}) 
     for article in articles:
         if notifications.filter(source=article.source).exists():
             source_notifications = notifications.filter(source=article.source)
@@ -45,7 +55,7 @@ def notifications_create(articles):
                 list_notifications = notifications.filter(list=list)
                 for list_notification in list_notifications:
                     if notification_messages.filter(article=article, notification__user=list_notification.user).exists() == False:
-                        notifications_creation_list.append({"notification": list_notification, 'article': article, 'date': now()})
+                        notifications_creation_list.append({"notification": list_notification, 'article': article, 'date': now()})                   
     new_notification_messages = [
         NotificationMessage(
             notification=new_notification['notification'],
@@ -130,7 +140,7 @@ def initial_tweet_img_path_upload(tweet_type, file_url):
         im.save(output, format='WEBP', quality=99)
         output.seek(0)
         s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.INITIAL_TWEET_IMG_FILE_DIRECTORY, f'initial_tweet_img_{tweet_type.tweet_type_id}.webp'))
-        tweet_type.image_path = f'home/initial_tweet_imgs/initial_tweet_img_{tweet_type.tweet_type_id}.webp'
+        tweet_type.initial_tweet_img_path = f'home/initial_tweet_imgs/initial_tweet_img_{tweet_type.tweet_type_id}.webp'
         return tweet_type
 
 
