@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v3.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v4.css' %}">
 <title>FinBrowser | Settings</title>
 {% endblock %}
 {% block content %}
@@ -123,6 +123,20 @@
                 <div class="sourceNameOuterContainer">
                     <div class="sourceNameInnerContainer">{{ notification.list.name }}</div>
                 </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <h2 class="notificationDeletionHeader">Keywords</h2>
+        <div class="notificationContainer">
+            {% for notification in notifications %}
+            {% if notification.keyword %}
+            <div class="keywordContainer">
+                <div class="iconContainer">
+                    <i class="fas fa-trash" id="notification_id_{{ notification.notification_id }}">
+                    </i>
+                </div>
+                {{ notification.keyword }}
             </div>
             {% endif %}
             {% endfor %}

@@ -206,7 +206,7 @@ class NotificationTest(LiveServerTestCase):
         create_list(content_container,driver)
         test_highlighting_content_is_working()
 
-    def test_open_source_from_list_notifications(self):
+    def test_open_source_from_keyword_notifications(self):
         driver = login()
         driver.find_element(By.CSS_SELECTOR, '.userSpace .notificationBell').click()
         sleep(1)
@@ -214,7 +214,7 @@ class NotificationTest(LiveServerTestCase):
         driver.find_elements(By.CSS_SELECTOR, '.activeNotificationContainer .articleContainer .sourceAndWebsiteContainer a')[0].click()
         assert "Profile | FinBrowser" in driver.title
 
-    def test_standard_use_cases_for_list_notifications(self):
+    def test_standard_use_cases_for_keyword_notifications(self):
         driver = login()
         driver.find_element(By.CSS_SELECTOR, '.userSpace .notificationBell').click()
         sleep(1)
@@ -240,6 +240,32 @@ class NotificationTest(LiveServerTestCase):
         add_to_list(content_container,driver)
         create_list(content_container,driver)
         test_highlighting_content_is_working()
+
+    def test_create_and_delete_keyword_notifications(self):
+        driver = login()
+        driver.find_element(By.CSS_SELECTOR, '.userSpace .notificationBell').click()
+        sleep(1)
+        driver.find_elements(By.CSS_SELECTOR, '.notificationContainer .notificationHeadersContainer div')[-1].click()     
+        sleep(1)
+        driver.find_element(By.CSS_SELECTOR, '.userSpace .notificationContainer .createKeywordNotificationForm input[name=keyword]').send_keys('Test123')
+        driver.find_element(By.CSS_SELECTOR, '.userSpace .notificationContainer .createKeywordNotificationForm .formSubmitButton').click()
+        sleep(1)   
+        driver.find_element(By.CSS_SELECTOR, '.userSpace .fa-cog a').click()
+        sleep(1) 
+        driver.find_elements(By.CSS_SELECTOR, ".settingSidebar .settingOption")[2].click()     
+        sleep(1)
+        keyword_notifications = driver.find_elements(By.CSS_SELECTOR, ".tabsContentActive .notificationContainer")[2]
+        last_keyword_notification = keyword_notifications.find_elements(By.CSS_SELECTOR, ".keywordContainer")[-1]
+        assert "Test123" in last_keyword_notification.get_attribute('innerText')
+        last_keyword_notification.find_element(By.CSS_SELECTOR, ".iconContainer .fa-trash").click()
+        driver.find_element(By.CSS_SELECTOR, '.userSpace .fa-cog a').click()
+        sleep(1) 
+        driver.find_elements(By.CSS_SELECTOR, ".settingSidebar .settingOption")[2].click()     
+        sleep(1)
+        keyword_notifications = driver.find_elements(By.CSS_SELECTOR, ".tabsContentActive .notificationContainer")[2]
+        last_keyword_notification = keyword_notifications.find_elements(By.CSS_SELECTOR, ".keywordContainer")[-1]
+        assert "Test123" not in last_keyword_notification.get_attribute('innerText')
+
 
 class MainSearchTest(LiveServerTestCase):
 
@@ -616,8 +642,8 @@ class ContentTest(LiveServerTestCase):
         driver.find_element(By.CSS_SELECTOR, '.searchContainer #search').send_keys("China")
         sleep(2)
         assert len(driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')) > 1     
-        test_standard_use_cases("http://127.0.0.1:8000/content/90/Defense/No/Substack/")
-        test_standard_use_cases("http://127.0.0.1:8000/content/90/Defense/No/Substack/", True)
+        test_standard_use_cases("http://127.0.0.1:8000/content/365/Tech/No/Twitter/")
+        test_standard_use_cases("http://127.0.0.1:8000/content/365/Tech/No/Twitter/", True)
 
     def test_content_search(self):
         driver = login("http://127.0.0.1:8000/content/")
@@ -633,16 +659,10 @@ class ContentTest(LiveServerTestCase):
 class SearchResultTest(LiveServerTestCase):
     
     def test_standard_use_cases(self):
-        test_standard_use_cases("http://127.0.0.1:8000/search_results/f")
-
-    def test_pagination(self):
-        driver = login("http://127.0.0.1:8000/search_results/f")
-        pagination = driver.find_elements(By.CSS_SELECTOR, '.pagination .step-links')[0]
-        pagination.find_elements(By.CSS_SELECTOR, 'a')[0].click()
-        assert str(driver.current_url).endswith('=2')
+        test_standard_use_cases("http://127.0.0.1:8000/search_results/China")
 
     def test_open_list_from_list_tab(self):
-        driver = login("http://127.0.0.1:8000/search_results/f")
+        driver = login("http://127.0.0.1:8000/search_results/China")
         driver.find_elements(By.CSS_SELECTOR, '.searchCategories .searchCategoryTab')[1].click()
         slider = driver.find_elements(By.CSS_SELECTOR, '.slider')[0]
         slider.find_elements(By.CSS_SELECTOR, '.contentContainer')[0].click()
@@ -650,7 +670,7 @@ class SearchResultTest(LiveServerTestCase):
         assert "List | FinBrowser" in driver.title
 
     def test_open_source_from_source_tab(self):
-        driver = login("http://127.0.0.1:8000/search_results/f")
+        driver = login("http://127.0.0.1:8000/search_results/China")
         driver.find_elements(By.CSS_SELECTOR, '.searchCategories .searchCategoryTab')[2].click()
         slider = driver.find_elements(By.CSS_SELECTOR, '.slider')[1]
         slider.find_elements(By.CSS_SELECTOR, '.contentContainer')[0].click()
@@ -658,27 +678,27 @@ class SearchResultTest(LiveServerTestCase):
         assert "Profile | FinBrowser" in driver.title
 
     def test_open_list_from_search(self):
-        driver = login("http://127.0.0.1:8000/search_results/f")
+        driver = login("http://127.0.0.1:8000/search_results/China")
         search_bar = driver.find_elements(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch')[1]
         search_bar.clear()
-        search_bar.send_keys('f')
+        search_bar.send_keys('China')
         sleep(2)
         driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')[0].click()
         sleep(1)
         assert 'List | FinBrowser' in driver.title
 
     def test_open_source_from_search(self):
-        driver = login("http://127.0.0.1:8000/search_results/f")
+        driver = login("http://127.0.0.1:8000/search_results/China")
         search_bar = driver.find_elements(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch')[1]
         search_bar.clear()
-        search_bar.send_keys('f')
+        search_bar.send_keys('China')
         sleep(2)
         driver.find_elements(By.CSS_SELECTOR, '#autocomplete_list_results .searchResult a')[4].click()
         sleep(1)
         assert 'Profile | FinBrowser' in driver.title
 
     def test_search_button(self):
-        driver = login("http://127.0.0.1:8000/search_results/f")
+        driver = login("http://127.0.0.1:8000/search_results/China")
         search_bar = driver.find_elements(By.CSS_SELECTOR, '.mainSearchWrapper .mainSearchContainer .mainInputSearch')[1]
         search_bar.clear()
         search_bar.send_keys('this is a test')  
@@ -687,8 +707,8 @@ class SearchResultTest(LiveServerTestCase):
         assert 'this is a test' in driver.title      
 
     def test_paginations(self):
-        test_pagination("http://127.0.0.1:8000/search_results/f", 0, '?filtered_articles=2')
-        test_pagination("http://127.0.0.1:8000/search_results/f", 1, '?filtered_tweets=2')
+        test_pagination("http://127.0.0.1:8000/search_results/China", 0, '?filtered_articles=2')
+        test_pagination("http://127.0.0.1:8000/search_results/China", 1, '?filtered_tweets=2')
 
 class SettingsTest(LiveServerTestCase):
     
@@ -913,32 +933,33 @@ class UserProfileTest(LiveServerTestCase):
 class ListDetailTest(LiveServerTestCase):
 
     def test_standard_use_cases(self):
-        test_standard_use_cases("http://127.0.0.1:8000/list/ebirdmax99/test0207-2")
-        test_standard_use_cases("http://127.0.0.1:8000/list/ebirdmax99/test0207-2", True)
+        test_standard_use_cases("http://127.0.0.1:8000/list/ebirdmax99/test0207-new")
+        test_standard_use_cases("http://127.0.0.1:8000/list/ebirdmax99/test0207-new", True)
 
     def test_change_notification_status(self):
-        driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-2")
+        driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-new")
         sleep(1)
         driver.find_element(By.CSS_SELECTOR, ".notificationAndSubscribtionContainer .fa-bell").click()  
         sleep(1)
         assert "NOTIFICATION HAS BEEN ADDED!" in driver.find_element(By.CSS_SELECTOR, ".messages li").get_attribute('innerText') or "NOTIFICATION HAS BEEN REMOVED!" in driver.find_element(By.CSS_SELECTOR, ".messages li").get_attribute('innerText')
 
     def test_paginations(self):
-        test_pagination("http://127.0.0.1:8000/list/ebirdmax99/test0207-2", 0, '?latest_articles=2')
-        test_pagination("http://127.0.0.1:8000/list/ebirdmax99/test0207-2", 1, '?highlighted_content=2')
-        test_pagination("http://127.0.0.1:8000/list/ebirdmax99/test0207-2", 2, '?newest_tweets=2')
+        test_pagination("http://127.0.0.1:8000/list/ebirdmax99/test0207-new", 0, '?latest_articles=2')
+        test_pagination("http://127.0.0.1:8000/list/ebirdmax99/test0207-new", 1, '?highlighted_content=2')
+        test_pagination("http://127.0.0.1:8000/list/ebirdmax99/test0207-new", 2, '?newest_tweets=2')
 
     def test_change_list_name(self):
-        driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-2")
+        driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-new")
         sleep(1)
         driver.find_element(By.CSS_SELECTOR, ".editButton").click()  
         driver.find_element(By.CSS_SELECTOR, ".nameChangeContainer #id_name").clear()
-        driver.find_element(By.CSS_SELECTOR, ".nameChangeContainer #id_name").send_keys("test0207-new")
+        driver.find_element(By.CSS_SELECTOR, ".nameChangeContainer #id_name").send_keys("test0207")
         driver.find_element(By.CSS_SELECTOR, ".notificationAndSubscribtionContainer .buttonContainer input").click()
-        assert str(driver.find_element(By.CSS_SELECTOR, "h3").get_attribute('innerText')) == "test0207-new"
+        sleep(1)
+        assert str(driver.find_element(By.CSS_SELECTOR, "h3").get_attribute('innerText')) == "Test0207-2-new"
         driver.find_element(By.CSS_SELECTOR, ".editButton").click()
         driver.find_element(By.CSS_SELECTOR, ".nameChangeContainer #id_name").clear()
-        driver.find_element(By.CSS_SELECTOR, ".nameChangeContainer #id_name").send_keys("Test0207-2")
+        driver.find_element(By.CSS_SELECTOR, ".nameChangeContainer #id_name").send_keys("Test0207-2-new")
         driver.find_element(By.CSS_SELECTOR, ".notificationAndSubscribtionContainer .buttonContainer input").click()
     
     def test_rate_list(self):
@@ -958,7 +979,7 @@ class ListDetailTest(LiveServerTestCase):
         assert "LIST SUBSCRIPTION ADDED!" in driver.find_element(By.CSS_SELECTOR, ".messages li").get_attribute('innerText') or "LIST SUBSCRIPTION REMOVED!" in driver.find_element(By.CSS_SELECTOR, ".messages li").get_attribute('innerText') 
 
     def test_remove_source(self):
-        driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-2")
+        driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-new")
         sleep(1)
         driver.find_element(By.CSS_SELECTOR, ".editButton").click() 
         source_container = driver.find_elements(By.CSS_SELECTOR, ".slider .contentContainer")[0]
@@ -970,7 +991,7 @@ class ListDetailTest(LiveServerTestCase):
         assert initital_first_source_name != driver.find_elements(By.CSS_SELECTOR, ".slider .contentContainer")[0].find_element(By.CSS_SELECTOR, ".contentName").get_attribute('innerText')
 
     def test_add_source(self):
-        driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-2")
+        driver = login("http://127.0.0.1:8000/list/ebirdmax99/test0207-new")
         sleep(1)
         driver.find_element(By.CSS_SELECTOR, ".editButton").click() 
         slider_wrapper = driver.find_element(By.CSS_SELECTOR, '.sliderWrapper')

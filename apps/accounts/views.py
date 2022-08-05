@@ -1,5 +1,5 @@
 # Django imports
-from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic.detail import DetailView
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 # Local imports
 from apps.logic.pure_logic import paginator_create
 from apps.accounts.forms import EmailAndUsernameChangeForm, PasswordChangingForm, ProfileChangeForm, PrivacySettingsForm
-from apps.mixins import BaseMixin
+from apps.mixins import BaseMixin, BaseFormMixins
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.accounts.models import PrivacySettings, Profile, SocialLink
@@ -39,7 +39,14 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
     template_name = 'accounts/settings.html'
 
     def post(self, request, *args, **kwargs):
-        if 'changeProfileForm' in request.POST:
+        if 'createListForm' in request.POST or 'createKeywordNotificationForm' in request.POST:
+            post_res = BaseFormMixins.post(self, request, multi_form_page=True)
+            if post_res == 'Failed' or post_res == 'Notification created':
+                return HttpResponseRedirect(self.request.path_info)
+            else:
+                profile_slug, list_slug = post_res
+                return redirect('list:list-details', profile_slug=profile_slug, list_slug=list_slug)
+        elif 'changeProfileForm' in request.POST:
             email_and_name_change_form = EmailAndUsernameChangeForm(request.POST, username=request.user.username, email=request.user.email, instance=request.user)
             profile_change_form = ProfileChangeForm(request.POST, request.FILES, instance=request.user.profile)
             if profile_change_form.is_valid():

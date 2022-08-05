@@ -508,30 +508,19 @@ if (document.querySelector(".userSpace .notificationBell")) {
 }
 
 //Notification switch
-document
-  .querySelectorAll(".notificationHeadersContainer div")
-  .forEach((headerContainer) => {
-    headerContainer.addEventListener("click", () => {
-      document
-        .querySelectorAll(".notificationHeadersContainer div")
-        .forEach((header) => {
-          if (header.classList.contains("activeNotificationCategory")) {
-            header.classList.remove("activeNotificationCategory");
-          } else {
-            header.classList.add("activeNotificationCategory");
-          }
-        });
-      document
-        .querySelectorAll(".notificationsContainer")
-        .forEach((container) => {
-          if (container.classList.contains("activeNotificationContainer")) {
-            container.classList.remove("activeNotificationContainer");
-          } else {
-            container.classList.add("activeNotificationContainer");
-          }
-        });
-    });
+const notificationTabs = document.querySelectorAll(".notificationHeadersContainer div");
+const notificationContent = document.querySelectorAll(".notificationsContainer");
+notificationTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    for (let i = 0, j = notificationTabs.length; i < j; i++) {
+      notificationTabs[i].classList.remove("activeNotificationCategory");
+      notificationContent[i].classList.remove("activeNotificationContainer");
+    }
+    notificationTabs[tab.dataset.forTab].classList.add("activeNotificationCategory");
+    notificationContent[tab.dataset.forTab].classList.add("activeNotificationContainer");
   });
+});
+
 
 // Carousell
 

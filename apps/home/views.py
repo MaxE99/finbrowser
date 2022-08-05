@@ -20,8 +20,7 @@ try:
 except:
     logger.error("Twitter not found! Problem with database")
     TWITTER = None
-
-# Mixins:
+    
 
 class NotificationView(TemplateView, BaseMixin):
     template_name = 'home/notifications.html'

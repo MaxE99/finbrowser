@@ -21,7 +21,7 @@
         type="font/woff2" crossorigin="anonymous">
     <link rel="preload" as="font" href="{% static 'home/fonts/lato-v23-latin/lato-v23-latin-900.woff' %}"
         type="font/woff" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v13.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v15.css' %}">
     {% block head %}
     {% endblock %}
 </head>
@@ -62,11 +62,14 @@
                         {% endif %}
                     </i>
                     <div class="notificationContainer">
+                        <h3>Notifications</h3>
                         <div class="notificationHeadersContainer">
-                            <div class="activeNotificationCategory">Source Notifications</div>
-                            <div>List Notifications</div>
+                            <div class="activeNotificationCategory" data-for-tab="0">Sources</div>
+                            <div data-for-tab="1">Lists</div>
+                            <div data-for-tab="2">Keywords</div>
                         </div>
-                        <div class="notificationsContainer activeNotificationContainer smallFormContentWrapper">
+                        <div class="notificationsContainer activeNotificationContainer smallFormContentWrapper"
+                            data-tab="0">
                             {% if source_notifications %}
                             {% for notification in source_notifications %}
                             <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
@@ -173,7 +176,7 @@
                             <div class="noNotificationsAvailable">No Source Notifications Available</div>
                             {% endif %}
                         </div>
-                        <div class="notificationsContainer smallFormContentWrapper">
+                        <div class="notificationsContainer smallFormContentWrapper" data-tab="1">
                             {% if list_notifications %}
                             {% for notification in list_notifications %}
                             <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
@@ -280,6 +283,119 @@
                             <div class="noNotificationsAvailable">No List Notifications Available</div>
                             {% endif %}
                         </div>
+                        <div class="notificationsContainer smallFormContentWrapper" data-tab="2">
+                            <form action="" enctype="multipart/form-data" method="POST"
+                                class="createKeywordNotificationForm">
+                                {% csrf_token %} {{ keyword_notification_creation_form }}
+                                <input name="createKeywordNotificationForm" type="submit" class="formSubmitButton"
+                                    value="Add" />
+                            </form>
+                            {% if keyword_notifications %}
+                            {% for notification in keyword_notifications %}
+                            <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
+                                id="article_id_{{ notification.article.article_id }}">
+                                <div class="leftContentSide">
+                                    <div class="profileImageContainer">
+                                        <img src="{% static notification.article.source.favicon_path %}" />
+                                        <a class="sourceProfile"
+                                            href="{{ notification.article.source.get_absolute_url }}"></a>
+                                    </div>
+                                </div>
+                                <div class="rightContentSide">
+                                    <div class="contentInfoContainer">
+                                        <div class="sourceAndWebsiteContainer">
+                                            <a class="sourceProfile"
+                                                href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
+                                            <div class="sourceWebsiteProfileContainer">
+                                                <img src="{% static notification.article.source.website.logo %}" />
+                                                <a href="{{ notification.article.source.url }}"></a>
+                                            </div>
+                                        </div>
+                                        <i class="fas fa-ellipsis-h"></i>
+                                        <div class="articleOptionsContainer">
+                                            {% if request.user.is_authenticated %}
+                                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list
+                                            </div>
+                                            {% if notification.article.title in highlighted_content_titles %}
+                                            <div class="addToHighlightedButton"><i
+                                                    class="fas fa-times"></i><span>Unhighlight
+                                                    article</span></div>
+                                            {% else %}
+                                            <div class="addToHighlightedButton"><i
+                                                    class="fas fa-highlighter"></i><span>Highlight
+                                                    article</span></div>
+                                            {% endif %}
+                                            {% else %}
+                                            <a href="{% url 'account_login' %}"
+                                                class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
+                                                to list</a>
+                                            <a href="{% url 'account_login' %}"
+                                                class="addToHighlightedButton registrationLink"><i
+                                                    class="fas fa-highlighter"></i><span>Highlight
+                                                    article</span></a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="addToListForm">
+                                            <div class="formHeaderContainer">Create A New List<i
+                                                    class="fas fa-times closeFormContainerButton"></i>
+                                            </div>
+                                            {% if user_lists %}
+                                            <div class="listSelectionContainer">
+                                                {% for list in user_lists %}
+                                                <div class="listContainer">
+                                                    <label for="list_id_{{ list.list_id }}">
+                                                        {% if notification.article in list.articles.all %}
+                                                        <input id="list_id_{{ list.list_id }}" type="checkbox"
+                                                            name="lists" checked="True"> {{ list }}
+                                                        {% else %}
+                                                        <input id="list_id_{{ list.list_id }}" type="checkbox"
+                                                            name="lists">
+                                                        {{ list }}
+                                                        {% endif %}
+                                                    </label>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="buttonsContainer">
+                                                <button class="saveButton">Save</button>
+                                                <button class="createNewListButton">Create</button>
+                                            </div>
+                                            {% else %}
+                                            <div class="listContainer">You haven't created any lists!</div>
+                                            <button class="createNewListButton createFirstList">Create First
+                                                List</button>
+                                            {% endif %}
+                                        </div>
+                                        <div class="createListMenu articleCreateListMenu formContainer">
+                                            <div class="formHeaderContainer">Create A New List<i
+                                                    class="fas fa-times closeFormContainerButton"></i>
+                                            </div>
+                                            <form action="" enctype="multipart/form-data" method="POST"
+                                                class="createListForm">
+                                                {% csrf_token %} {{ add_list_form }}
+                                                <input name="createListForm" type="submit" class="formSubmitButton"
+                                                    value="Save" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="contentBody">
+                                        <p>{{ notification.article.title }}</p>
+                                    </div>
+                                    {% if notification.article.tweet_type.image_path %}
+                                    <img class="tweetImage"
+                                        src="{% static notification.article.tweet_type.image_path %}">
+                                    {% endif %}
+                                    <div class="timeContainer">
+                                        <p>{{ notification.article.pub_date }}</p>
+                                    </div>
+                                    <a class="contentLink" href="{{ notification.article.link }}"></a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="noNotificationsAvailable">No Keyword Notifications Available</div>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="profileWrapper">
                         {% if request.user.is_authenticated %}
@@ -365,7 +481,7 @@
 
             {% block content %}
             {% endblock %}
-            <script src="{% static 'home/min_base_script_v7.js' %}"></script>
+            <script src="{% static 'home/min_base_script_v8.js' %}"></script>
         </div>
 
     </main>
