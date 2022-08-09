@@ -15,7 +15,11 @@
                 <div class="sourceAndWebsiteContainer">
                     <a class="sourceProfile" href="{{ tweet.article.source.get_absolute_url }}">{{ tweet.article.source.name }}</a>
                     <div class="sourceWebsiteProfileContainer">
+                        {% if tweet.article.source.website.name == "YouTube" %}
+                        <img class="youtubeLogo" src="{% static tweet.article.source.website.logo %}" />
+                        {% else %}
                         <img src="{% static tweet.article.source.website.logo %}" />
+                        {% endif %}
                         <a href="{{ tweet.article.source.url }}"></a>
                     </div>
                 </div>
