@@ -970,6 +970,11 @@ h2 {
   min-height: 20px;
 }
 
+.smallFormContentWrapper .sourceAndWebsiteContainer .sourceWebsiteProfileContainer .youtubeLogo{
+  background: #FF0000;
+  color: #FFFFFF;
+}
+
 .smallFormContentWrapper .fa-ellipsis-h {
   position: absolute;
   top: 0;
