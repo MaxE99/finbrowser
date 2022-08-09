@@ -148,8 +148,9 @@ def scrape_twitter():
                         if 'media_url_https' in status.entities['media'][0]:
                             tweet_type.type = "Image"
                             tweet_type = tweet_img_upload(tweet_type, status.entities['media'][0]['media_url_https'])
-                    if len(status.entities['urls']) > 0:
+                    elif len(status.entities['urls']) > 0:
                         if 'expanded_url' in status.entities['urls'][0]:
+                            title = html.unescape(status.full_text) # With links I don't escape the title
                             tweet_type.type = "Link"
                             tweet_type.link = status.entities['urls'][0]['expanded_url']
                     in_reply_to_user_id = status.in_reply_to_user_id
@@ -159,6 +160,7 @@ def scrape_twitter():
                         tweet_type.author = status.retweeted_status.user.name
                         if 'media' in status.retweeted_status._json['entities']:
                             if 'media_url_https' in status.retweeted_status._json['entities']['media'][0]:
+                                tweet_type.image_path = None # Despite the status being a retweet Twitter sometimes sends a picture in the media dictionary which would lead to the image being shown 2 times
                                 tweet_type = initial_tweet_img_path_upload(tweet_type, status.retweeted_status._json['entities']['media'][0]['media_url_https'])
                         tweet_type.type = "Retweet"
                     elif in_reply_to_user_id != None and in_reply_to_user_id != twitter_user_id:

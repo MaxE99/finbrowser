@@ -1,5 +1,4 @@
 # Django imports
-from ast import keyword
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.views.generic.base import ContextMixin
@@ -33,11 +32,11 @@ class NotificationMixin(ContextMixin):
             notifications_subscribtions = Notification.objects.filter(user=self.request.user)
             unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications_subscribtions, user_has_seen=False).count()
             source_notifications_subscribtions = Notification.objects.filter(user=self.request.user, source__isnull=False)
-            source_notifications = NotificationMessage.objects.filter(notification__in=source_notifications_subscribtions).select_related('article', 'article__source', 'article__source__website', 'article__tweet_type').order_by('-date').only('article__article_id', 'article__source__favicon_path', 'article__source__slug', 'article__source__name', 'article__source__website__logo', 'article__title', 'article__tweet_type__image_path', 'article__pub_date', 'article__link', 'user_has_seen', 'article__source__url')  
+            source_notifications = NotificationMessage.objects.filter(notification__in=source_notifications_subscribtions).select_related('article', 'article__source', 'article__source__website', 'article__tweet_type').only('article__article_id', 'article__source__favicon_path', 'article__source__slug', 'article__source__name', 'article__source__website__logo', 'article__title', 'article__tweet_type__image_path', 'article__pub_date', 'article__link', 'user_has_seen', 'article__source__url').order_by('-date')  
             list_notifications_subscribtions = Notification.objects.filter(user=self.request.user, list__isnull=False)
-            list_notifications = NotificationMessage.objects.filter(notification__in=list_notifications_subscribtions).select_related('article', 'article__source', 'article__source__website', 'article__tweet_type').order_by('-date').only('article__article_id', 'article__source__favicon_path', 'article__source__slug', 'article__source__name', 'article__source__website__logo', 'article__title', 'article__tweet_type__image_path', 'article__pub_date', 'article__link', 'user_has_seen', 'article__source__url')  
+            list_notifications = NotificationMessage.objects.filter(notification__in=list_notifications_subscribtions).select_related('article', 'article__source', 'article__source__website', 'article__tweet_type').only('article__article_id', 'article__source__favicon_path', 'article__source__slug', 'article__source__name', 'article__source__website__logo', 'article__title', 'article__tweet_type__image_path', 'article__pub_date', 'article__link', 'user_has_seen', 'article__source__url').order_by('-date')  
             keyword_notifications_subscribtions = Notification.objects.filter(user=self.request.user, keyword__isnull=False)
-            keyword_notifications = NotificationMessage.objects.filter(notification__in=keyword_notifications_subscribtions)
+            keyword_notifications = NotificationMessage.objects.filter(notification__in=keyword_notifications_subscribtions).order_by('-date')  
         else:
             unseen_notifications = source_notifications = list_notifications = keyword_notifications = None
         context['unseen_notifications'] = unseen_notifications
