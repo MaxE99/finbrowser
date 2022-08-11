@@ -4,6 +4,7 @@ from django.core.cache import cache
 from celery import shared_task
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
+from django.template.defaultfilters import slugify
 # Python imports
 import tweepy
 from datetime import timedelta
@@ -329,15 +330,16 @@ def twitter_scrape_followings():
     api = tweepy.API(auth)
     followings = api.get_friends(count=100)
     for follow in followings:
+        name = follow.name
         if Source.objects.filter(external_id=follow.id).exists():
             continue
-        else:
-            url = f'https://twitter.com/{follow.screen_name}'
-            slug = follow.screen_name
-            name = follow.name
-            external_id = follow.id
-            source = Source.objects.create(url=url, slug=slug, name=name, favicon_path=f'home/favicons/{slug}.png', paywall='No', website=get_object_or_404(Website, name="Twitter"), external_id=external_id)
-            source_profile_img_create(source, follow.profile_image_url_https.replace("_normal", ""))
+        elif Source.objects.filter(name=follow.name).exists():
+            name = follow.name + " - Twitter"
+        url = f'https://twitter.com/{follow.screen_name}'
+        slug = slugify(name)
+        external_id = follow.id
+        source = Source.objects.create(url=url, slug=slug, name=name, favicon_path=f'home/favicons/{slug}.png', paywall='No', website=get_object_or_404(Website, name="Twitter"), external_id=external_id)
+        source_profile_img_create(source, follow.profile_image_url_https.replace("_normal", ""))
 
 
 @shared_task
