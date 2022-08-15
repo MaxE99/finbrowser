@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v2.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v3.css' %}">
 <title>{{ search_term }} - Search Results | FinBrowser</title>
 {% endblock %}
 {% block content %}
@@ -56,6 +56,28 @@
                 </div>
             </div>
             {% endif %}
+        </div>
+        <div class="websiteSearchWrapper">
+            <div class="websiteSearchContainer">
+                <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="seekingalpha_logo">Search on Seeking Alpha
+                <a href="https://seekingalpha.com/search?q={{ search_term }}&tab=headlines"></a>
+            </div>
+            <div class="websiteSearchContainer">
+                <img src="{% static 'home/media/spotify_favicon.png' %}" alt="spotify_logo">Search on Spotify
+                <a href="https://open.spotify.com/search/{{ search_term }}"></a>
+            </div>
+            <div class="websiteSearchContainer">
+                <img src="{% static 'home/media/substack_logo.png' %}" alt="substack_logo">Search on Substack
+                <a href="https://substack.com/search/{{ search_term }}"></a>
+            </div>
+            <div class="websiteSearchContainer">
+                <img src="{% static 'home/media/twitter_logo.png' %}" alt="twitter_logo">Search on Twitter
+                <a href="https://twitter.com/search?q={{ search_term }}"></a>
+            </div>
+            <div class="websiteSearchContainer">
+                <img src="{% static 'home/media/youtube_logo.png' %}" alt="youtube_logo">Search on YouTube
+                <a href="https://www.youtube.com/results?search_query={{ search_term }}"></a>
+            </div>
         </div>
     </div>
     <div class="tabsContent" data-tab="1">
