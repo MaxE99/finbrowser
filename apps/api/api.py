@@ -10,13 +10,14 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.decorators import api_view
 # Local imports
-from apps.api.serializers import (List_Serializer, Article_Serializer, Source_Serializer, Profile_Serializer, HighlightedArticle_Serializer, SocialLink_Serializer, SourceRating_Serializer, ListRating_Serializer, Notification_Serializer)
+from apps.api.serializers import (List_Serializer, Stock_Serializer, Article_Serializer, Source_Serializer, Profile_Serializer, HighlightedArticle_Serializer, SocialLink_Serializer, SourceRating_Serializer, ListRating_Serializer, Notification_Serializer)
 from apps.api.permissions import IsListCreator, IsUser
 from apps.home.models import NotificationMessage, Notification
 from apps.accounts.models import Profile, SocialLink, Website
 from apps.article.models import HighlightedArticle, Article
 from apps.source.models import Source, SourceRating
 from apps.list.models import List, ListRating
+from apps.stock.models import Stock
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
@@ -286,21 +287,21 @@ class FilteredSite(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, search_term, format=None):
-        filtered_lists = List.objects.filter_lists(search_term).select_related('creator__profile')
+        filtered_stocks = Stock.objects.filter_stocks(search_term)
         filtered_sources = Source.objects.filter_sources(search_term)
         filtered_articles = Article.objects.filter(title__icontains=search_term).select_related('source').order_by('-pub_date')
         # rebalance spots that are displayed
-        len_filtered_lists = filtered_lists.count()
+        len_filtered_stocks = filtered_stocks.count()
         len_filtered_sources = filtered_sources.count()
         len_filtered_articles = filtered_articles.count()
-        display_spots_lists = 3 if len_filtered_lists > 3 else len_filtered_lists
+        display_spots_stocks = 3 if len_filtered_stocks > 3 else len_filtered_stocks
         display_spots_sources = 3 if len_filtered_sources > 3 else len_filtered_sources
         display_spots_articles = 3 if len_filtered_articles > 3 else len_filtered_articles
-        all_spots = display_spots_lists + display_spots_sources + display_spots_articles
+        all_spots = display_spots_stocks + display_spots_sources + display_spots_articles
         all_spots_previous_iteration = 0
         while all_spots < 9:
-            if len_filtered_lists > 3:
-                display_spots_lists += 1
+            if len_filtered_stocks > 3:
+                display_spots_stocks += 1
                 all_spots += 1
             if len_filtered_sources > 3:
                 display_spots_sources += 1
@@ -312,20 +313,17 @@ class FilteredSite(APIView):
                 break
             all_spots_previous_iteration = all_spots
         article_favicon_paths = []
-        list_urls = []
         for article in filtered_articles[0:display_spots_articles]:
             article_favicon_paths.append(article.source.favicon_path) 
-        for list in filtered_lists[0:display_spots_lists]:
-            list_urls.append(list.get_absolute_url())
-        list_serializer = List_Serializer(
-            filtered_lists[0:display_spots_lists], many=True)
+        stock_serializer = Stock_Serializer(
+            filtered_stocks[0:display_spots_stocks], many=True)
         sources_serializer = Source_Serializer(
             filtered_sources[0:display_spots_sources], many=True)
         articles_serializer = Article_Serializer(
             filtered_articles[0:display_spots_articles], many=True)
         return JsonResponse([
-            list_serializer.data, sources_serializer.data,
-            articles_serializer.data, article_favicon_paths, list_urls
+            stock_serializer.data, sources_serializer.data,
+            articles_serializer.data, article_favicon_paths
         ],
                             safe=False)
 

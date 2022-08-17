@@ -213,6 +213,20 @@ header {
   background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 100%);
 }
 
+.searchResult .stockContainer {
+  display: flex;
+  width: 100%;
+}
+
+.searchResult .stockContainer .stockTicker {
+  width: 15%;
+  color: var(--primary-fontColor);
+}
+
+.searchResult .stockContainer .companyName {
+  width: 85%;
+}
+
 .userSpace {
   display: flex;
   height: 100%;
@@ -309,13 +323,19 @@ header {
   align-items: center;
 }
 
-.userSpace .notificationContainer .createKeywordNotificationForm input[name="keyword"] {
+.userSpace
+  .notificationContainer
+  .createKeywordNotificationForm
+  input[name="keyword"] {
   padding: 0.75rem 1.5rem 0.75rem 0.75rem;
   border: 0.1rem solid rgb(226, 230, 234);
   margin-left: 0.5rem;
 }
 
-.userSpace .notificationContainer .createKeywordNotificationForm .formSubmitButton {
+.userSpace
+  .notificationContainer
+  .createKeywordNotificationForm
+  .formSubmitButton {
   display: flex;
   padding: 0.75rem 1.5rem;
   color: white;
@@ -970,9 +990,12 @@ h2 {
   min-height: 20px;
 }
 
-.smallFormContentWrapper .sourceAndWebsiteContainer .sourceWebsiteProfileContainer .youtubeLogo{
-  background: #FF0000;
-  color: #FFFFFF;
+.smallFormContentWrapper
+  .sourceAndWebsiteContainer
+  .sourceWebsiteProfileContainer
+  .youtubeLogo {
+  background: #ff0000;
+  color: #ffffff;
 }
 
 .smallFormContentWrapper .fa-ellipsis-h {
@@ -1497,6 +1520,14 @@ h2 {
 
   #mainAutocomplete_result {
     overflow-y: scroll;
+  }
+
+  .searchResult .stockContainer .stockTicker {
+    width: 25%;
+  }
+
+  .searchResult .stockContainer .companyName {
+    width: 75%;
   }
 
   .headerContainer .fa-bars {
