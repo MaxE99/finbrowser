@@ -163,20 +163,11 @@ document
             results_list.style.display = "flex";
             results_list.innerHTML = "";
             if (context[0].length > 0) {
-              results_list.innerHTML += `<div class="searchResultHeader">Lists</div>`;
-              for (let i = 0, j = context[0].length; i < j; i++) {
-                let list = context[0][i];
-                let list_url = context[4][i];
-                let list_pic;
-                if (list.list_pic) {
-                  list_pic = list.list_pic;
-                } else {
-                  list_pic =
-                    "https://finbrowser.s3.us-east-2.amazonaws.com/static/home/media/finbrowser-bigger-logo.png";
-                }
-                const listRes = `<div class="searchResult"><img src="${list_pic}"><span>${list.name}</span><a href="${list_url}"></a></div>`;
-                results_list.innerHTML += listRes;
-              }
+              results_list.innerHTML += `<div class="searchResultHeader">Stocks</div>`;
+              context[0].forEach((stock) => {
+                const sourceRes = `<div class="searchResult"><div class="stockContainer"><div class="stockTicker">${stock.ticker}</div><div class="companyName">${stock.full_company_name}</div><a href="../../../../../../stock/${stock.ticker}"></a></div></div>`;
+                results_list.innerHTML += sourceRes;
+              });
             }
             if (context[1].length > 0) {
               results_list.innerHTML += `<div class="searchResultHeader">Sources</div>`;
@@ -508,19 +499,26 @@ if (document.querySelector(".userSpace .notificationBell")) {
 }
 
 //Notification switch
-const notificationTabs = document.querySelectorAll(".notificationHeadersContainer div");
-const notificationContent = document.querySelectorAll(".notificationsContainer");
+const notificationTabs = document.querySelectorAll(
+  ".notificationHeadersContainer div"
+);
+const notificationContent = document.querySelectorAll(
+  ".notificationsContainer"
+);
 notificationTabs.forEach((tab) => {
   tab.addEventListener("click", () => {
     for (let i = 0, j = notificationTabs.length; i < j; i++) {
       notificationTabs[i].classList.remove("activeNotificationCategory");
       notificationContent[i].classList.remove("activeNotificationContainer");
     }
-    notificationTabs[tab.dataset.forTab].classList.add("activeNotificationCategory");
-    notificationContent[tab.dataset.forTab].classList.add("activeNotificationContainer");
+    notificationTabs[tab.dataset.forTab].classList.add(
+      "activeNotificationCategory"
+    );
+    notificationContent[tab.dataset.forTab].classList.add(
+      "activeNotificationContainer"
+    );
   });
 });
-
 
 // Carousell
 

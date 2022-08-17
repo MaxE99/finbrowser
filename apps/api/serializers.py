@@ -6,12 +6,19 @@ from apps.source.models import Source, SourceRating
 from apps.article.models import Article, HighlightedArticle
 from apps.list.models import List, ListRating
 from apps.home.models import Notification
+from apps.stock.models import Stock
 
 
 class Source_Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = Source
+        fields = '__all__'
+
+class Stock_Serializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Stock
         fields = '__all__'
 
 class Article_Serializer(serializers.ModelSerializer):

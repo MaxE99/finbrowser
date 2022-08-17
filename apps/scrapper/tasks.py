@@ -17,13 +17,14 @@ import base64
 import os
 import boto3
 import re
-import json
+import csv
 # Local imports
 from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload, initial_tweet_img_path_upload
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
 from apps.source.models import Source
+from apps.stock.models import Stock
 from apps.scrapper.web_crawler import crawl_thegeneralist, crawl_ben_evans, crawl_meritechcapital, crawl_stockmarketnerd
 
 s3 = boto3.client('s3')
@@ -427,3 +428,21 @@ def youtube_clean_up_double_articles():
             double_article = articles_from_source.filter(title=article.title, link=article.link)
             if double_article.count() > 1:
                 double_article.last().delete()
+
+
+@shared_task
+def stocks_create():
+    filename = 'stocks.csv'
+    with open(filename, 'r') as csvfile:
+        fillerwords = [" Inc.", " Corporation", "  & Co.", " Group", " Holding", " Holdings", " Ltd", " plc", " inc", " S.A.B. de C.V.", " S.A. de C.V.", ".com", " Technology", " Corp", " (The)", " International", " Limited", " N.A.", " Technologies", " L.P.", " Co.", " Incoperated", " S.A.", " (NJ)", " p.l.c.", " ,", ",", "."]
+        datareader = csv.reader(csvfile)
+        for row in datareader:
+            if "." in row[0] or "^" in row[0] or Stock.objects.filter(full_company_name=html.unescape(row[1])).exists():
+                continue
+            ticker = row[0]
+            short_company_name = full_company_name = html.unescape(row[1])
+            for fil in fillerwords:
+                short_company_name = short_company_name.replace(fil, "")
+            Stock.objects.create(ticker=ticker, full_company_name=full_company_name, short_company_name=short_company_name)
+
+

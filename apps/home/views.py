@@ -11,7 +11,7 @@ from apps.accounts.models import Website
 from apps.source.models import Source
 from apps.list.models import List 
 from apps.article.models import Article, HighlightedArticle
-
+from apps.stock.models import Stock
 
 User = get_user_model()
 
@@ -46,15 +46,11 @@ class SearchResultView(TemplateView, BaseMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         search_term = kwargs['search_term']
-        context['filtered_lists'] = paginator_create(self.request, List.objects.filter_lists(search_term), 10, 'filtered_lists')
+        context['filtered_stocks'] = paginator_create(self.request, Stock.objects.filter_stocks(search_term), 20, 'filtered_stocks')
         context['filtered_sources'] = Source.objects.filter_sources(search_term)
         filtered_content = Article.objects.filter_articles(search_term)
+        filtered_tweets = filtered_content.filter(source__website=TWITTER).select_related('source', 'source__sector', 'tweet_type', 'source__website').order_by('-pub_date')
+        context['filtered_tweets'] = paginator_create(self.request, filtered_tweets, 10, 'filtered_tweets')
         context['filtered_articles'] = paginator_create(self.request, filtered_content.exclude(source__website=TWITTER), 20, 'filtered_articles')
-        context['filtered_tweets'] = paginator_create(self.request, filtered_content.filter(source__website=TWITTER), 10, 'filtered_tweets')
         return context
-
-
-
-
-
 

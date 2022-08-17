@@ -88,6 +88,7 @@ INSTALLED_APPS = [
     'apps.article',
     'apps.scrapper',
     'apps.main',
+    'apps.stock',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
