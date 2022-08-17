@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v3.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v4.css' %}">
 <title>{{ search_term }} - Search Results | FinBrowser</title>
 {% endblock %}
 {% block content %}
@@ -19,7 +19,7 @@
     </div>
     <div class="searchCategories">
         <div class="searchCategoryTab searchCategoryTabActive" data-for-tab="0">Content</div>
-        <div class="searchCategoryTab" data-for-tab="1">Lists</div>
+        <div class="searchCategoryTab" data-for-tab="1">Stocks</div>
         <div class="searchCategoryTab" data-for-tab="2">Sources</div>
     </div>
     <div class="tabsContent tabsContentActive" data-tab="0">
@@ -59,7 +59,8 @@
         </div>
         <div class="websiteSearchWrapper">
             <div class="websiteSearchContainer">
-                <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="seekingalpha_logo">Search on Seeking Alpha
+                <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="seekingalpha_logo">Search on Seeking
+                Alpha
                 <a href="https://seekingalpha.com/search?q={{ search_term }}&tab=headlines"></a>
             </div>
             <div class="websiteSearchContainer">
@@ -81,40 +82,16 @@
         </div>
     </div>
     <div class="tabsContent" data-tab="1">
-        {% if filtered_lists %}
-        <div class="sliderWrapper">
-            <div class="sliderHeader">
-                <div class="sliderHeaderTitle">Search Results</div>
-                <div class="progressBar"></div>
+        {% if filtered_stocks %}
+        <div class="stocksWrapper">
+            <div class="categoryHeader">Stocks - Search Results</div>
+            {% for stock in filtered_stocks %}
+            <div class="stockContainer">
+                <div class="stockTicker">{{ stock.ticker }}</div>
+                <div class="companyName">{{ stock.full_company_name }}</div>
+                <a href="{{ stock.get_absolute_url }}"></a>
             </div>
-            <div class="sliderContentContainer">
-                <button class="handle leftHandle">
-                    <div class="handleSymbol">&#8249;</div>
-                </button>
-                <div class="slider">
-                    {% for list in filtered_lists %}
-                    <div class="contentWrapper">
-                        <div class="contentContainer">
-                            <div class="contentIconContainer">
-                                {% if list.list_pic %}
-                                <img class="contentIcon" src="{{ list.list_pic.url }}" alt="favicon" />
-                                {% else %}
-                                <img class="contentIcon" src="{% static 'home/media/finbrowser-bigger-logo.png' %}"
-                                    alt="favicon" />
-                                {% endif %}
-                            </div>
-                            <a class="contentLink" href="{{ list.get_absolute_url }}"></a>
-                            <div class="contentNameContainer">
-                                <div class="contentName">{{ list.name }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                <button class="handle rightHandle">
-                    <div class="handleSymbol">&#8250;</div>
-                </button>
-            </div>
+            {% endfor %}
         </div>
         {% endif %}
     </div>
@@ -125,5 +102,5 @@
     </div>
 </div>
 
-<script src="{% static 'home/min_search_results_script_v3.js' %}"></script>
+<script src="{% static 'home/min_search_results_script_v4.js' %}"></script>
 {% endblock content %}

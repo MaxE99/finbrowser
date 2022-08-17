@@ -27,6 +27,7 @@ urlpatterns = [
     path('', include('apps.list.urls', namespace='list')),
     path('', include('apps.sector.urls', namespace='sector')),
     path('', include('apps.main.urls', namespace='main')),
+    path('', include('apps.stock.urls', namespace='stock')),
     path('registration/', include('allauth.urls')),
     path('api/', include('apps.api.urls', namespace='api')),
     path('featodzbqawibezdahapryyiwedjydbeadefsdxnwvtlw/', admin.site.urls),

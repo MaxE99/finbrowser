@@ -1,9 +1,6 @@
 # Django imports
 from django.db import models
 from django.db.models import Sum
-from django.shortcuts import get_object_or_404
-
-from apps.accounts.models import Profile
 
 
 class ListManager(models.Manager):
@@ -24,7 +21,7 @@ class ListManager(models.Manager):
         return self.filter(subscribers=user).select_related('creator__profile').order_by('name').only('list_pic', 'slug', 'name', 'creator__profile')
 
     def filter_lists(self, search_term):
-        return self.filter(name__istartswith=search_term, is_public=True).select_related('creator__profile')
+        return self.filter(name__istartswith=search_term, is_public=True).select_related('creator__profile').order_by('name')
 
     def filter_lists_not_subscribed(self, search_term, user):
         return self.filter(name__istartswith=search_term, is_public=True).exclude(creator=user).exclude(subscribers=user).order_by('name')
