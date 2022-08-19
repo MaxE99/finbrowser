@@ -3,8 +3,16 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.timezone import now
 from django.db.models import Count, F
 from django.shortcuts import get_object_or_404
+from django.utils.functional import cached_property
 # Python imports
 from datetime import timedelta
+
+# class TestPaginator(Paginator):
+    
+#     @cached_property
+#     def count(self):
+#         return 10000
+
 
 def paginator_create(request, queryset, objects_per_site, page_name='page'):
     paginator = Paginator(queryset, objects_per_site)

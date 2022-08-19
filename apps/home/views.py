@@ -49,8 +49,7 @@ class SearchResultView(TemplateView, BaseMixin):
         context['filtered_stocks'] = paginator_create(self.request, Stock.objects.filter_stocks(search_term), 20, 'filtered_stocks')
         context['filtered_sources'] = Source.objects.filter_sources(search_term)
         filtered_content = Article.objects.filter_articles(search_term)
-        filtered_tweets = filtered_content.filter(source__website=TWITTER).select_related('source', 'source__sector', 'tweet_type', 'source__website').order_by('-pub_date')
-        context['filtered_tweets'] = paginator_create(self.request, filtered_tweets, 10, 'filtered_tweets')
-        context['filtered_articles'] = paginator_create(self.request, filtered_content.exclude(source__website=TWITTER), 20, 'filtered_articles')
+        context['filtered_tweets'] = paginator_create(self.request, filtered_content.filter(source__website=TWITTER), 10, 'filtered_tweets')
+        context['filtered_articles'] = paginator_create(self.request, filtered_content.exclude(source__website=TWITTER), 20, 'filtered_articles')     
         return context
 
