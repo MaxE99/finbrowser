@@ -93,6 +93,17 @@
             </div>
             {% endfor %}
         </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% for i in filtered_stocks.paginator.page_range %}
+                {% if filtered_stocks.number == i %}
+                <button class="currentPagination">{{ filtered_stocks.number }}</button>
+                {% elif i > filtered_stocks.number|add:'-3' and i < filtered_stocks.number|add:'3' %} <a
+                    href="?filtered_stocks={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
         {% endif %}
     </div>
     <div class="tabsContent" data-tab="2">
