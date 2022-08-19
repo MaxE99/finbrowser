@@ -446,3 +446,25 @@ def stocks_create():
             Stock.objects.create(ticker=ticker, full_company_name=full_company_name, short_company_name=short_company_name)
 
 
+@shared_task
+def stocks_create_with_nasdaq():
+    filename = 'nasdaq.csv'
+    with open(filename, 'r') as csvfile:
+        full_fillerwords = [" Class D", " American Depositary Shares each representing one-fifth of an Ordinary Share", " common stock", " Warrants", " Ordinary Shares", " ordinary share", " each representing 1/1000th interest in a share of Series I Non-CumulativePreferred Stock","Dep Shs Repstg 1/40th Perp Pfd Ser G", " Fixed-to-Floating Rate Non-Cumulative Perpetual Preferred Stock Series D", " 1 Unit", " Unit", " each representing one", " Ordinary Share", " Class A", " Voting Common Stock", " New Switzerland Registered Shares", " Series D Cumulative Preferred Stock", " Class B Preferred Stock", " Ordinary Shares"," American Depositary Shares",  " American Depositary Share", " Depositary Shares", " Common Shares", " of Beneficial Interest", " Warrant", " Warrants", " Common stock", " Common Shares", " Common Stock", " Series A", " Corp.s", " N.V.s", " American depositary shares each representing two ordinary shares", " AGs-fifth of an", " Redeemable Preferred Stock", " expiring", " and Class B Variable Voting Shares", " Right", ". 1s"]
+        short_fillerwords = [" & Co.", " Company", " Inc.", " Inc", " Corporation", "  & Co.", " Group", " Holdings", " Holding", " Ltd", " plc", " inc", " S.A.B. de C.V.", " S.A. de C.V.", ".com", " Technology", " Corp", " (The)", " International", " Limited", " N.A.", " N.V.", " Technologies", " L.P.", " Co.", " Incoperated", " S.A.", " (NJ)", " p.l.c.", " .s", " Public Companys", " Companys", " S.p.A.s", " S.p.A.",  " B.V.s"]
+        datareader = csv.reader(csvfile)
+        for row in datareader:
+            ticker = row[0]
+            full_company_name = html.unescape(row[1])
+            for fil in full_fillerwords:
+                full_company_name = full_company_name.replace(fil, "")
+            short_company_name = full_company_name
+            for fil in short_fillerwords:
+                short_company_name = short_company_name.replace(fil, "")
+                " ,", ",", "."
+            if "," in short_company_name or "." in short_company_name or "   " in row[1] or "/" in row[1] or "$" in row[1] or "(" in row[1] or "%" in row[1] or "." in row[0] or "^" in row[0] or Stock.objects.filter(full_company_name=full_company_name).exists() or Stock.objects.filter(ticker=ticker).exists() or len(full_company_name) > 45 or len(short_company_name) > 35:
+                continue
+            Stock.objects.create(ticker=ticker, full_company_name=full_company_name, short_company_name=short_company_name)
+
+
+# Company, N.V.
