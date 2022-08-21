@@ -236,6 +236,15 @@ def scrape_other_websites():
 
 
 @shared_task
+def scrape_news():
+    news_sources = Source.objects.filter(news=True)
+    articles = Article.objects.all()
+    for source in news_sources:
+        feed_url = f'{source.url}feed'
+        create_articles_from_feed(source, feed_url, articles)
+
+
+@shared_task
 def crawl_websites():
     articles = Article.objects.all()
     crawl_thegeneralist(articles)
