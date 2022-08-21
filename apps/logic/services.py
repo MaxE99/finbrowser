@@ -28,11 +28,20 @@ def main_website_source_set(instance):
     return instance
 
 
+def notification_double_prevention(notification_messages, notifications_creation_list, article, notification):
+    notification_created = False
+    for d in notifications_creation_list:
+        if d['notification'] == notification and d['article'] == article:
+            notification_created = True
+            break
+    if notification_messages.filter(article=article, notification__user=notification.user).exists() == False and notification_created == False:
+        notifications_creation_list.append({"notification": notification, 'article': article, 'date': now()}) 
+
+
 def notifications_create(created_articles):
     from apps.home.models import Notification, NotificationMessage
     from apps.article.models import Article
-    article_ids = [article.article_id for article in created_articles]
-    articles = Article.objects.filter(article_id__in=article_ids)
+    articles = Article.objects.filter(article_id__in=[article.article_id for article in created_articles])
     notifications = Notification.objects.all()
     notification_messages = NotificationMessage.objects.all().select_related("notification__user")
     keyword_notifications = notifications.filter(keyword__isnull=False)
@@ -41,21 +50,18 @@ def notifications_create(created_articles):
         articles_with_keywords = articles.filter(title__search=keyword_notification.keyword)
         if articles_with_keywords.exists():
             for keyword_article in articles_with_keywords:
-                if notification_messages.filter(article=keyword_article, notification__user=keyword_notification.user).exists() == False:
-                    notifications_creation_list.append({"notification": keyword_notification, 'article': keyword_article, 'date': now()}) 
+                notification_double_prevention(notification_messages, notifications_creation_list, keyword_article, keyword_notification)
     for article in articles:
         if notifications.filter(source=article.source).exists():
             source_notifications = notifications.filter(source=article.source)
             for source_notification in source_notifications:
-                if notification_messages.filter(article=article, notification__user=source_notification.user).exists() == False:
-                    notifications_creation_list.append({"notification": source_notification, 'article': article, 'date': now()})
+                notification_double_prevention(notification_messages, notifications_creation_list, article, source_notification)
         lists_that_include_source = article.source.lists.all()
         for list in lists_that_include_source:
             if notifications.filter(list=list).exists():
                 list_notifications = notifications.filter(list=list)
                 for list_notification in list_notifications:
-                    if notification_messages.filter(article=article, notification__user=list_notification.user).exists() == False:
-                        notifications_creation_list.append({"notification": list_notification, 'article': article, 'date': now()})                   
+                    notification_double_prevention(notification_messages, notifications_creation_list, article, list_notification)                 
     new_notification_messages = [
         NotificationMessage(
             notification=new_notification['notification'],
