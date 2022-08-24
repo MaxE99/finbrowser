@@ -17,6 +17,7 @@ import base64
 import os
 import boto3
 import re
+from apps.home.views import TWITTER
 # Local imports
 from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload, initial_tweet_img_path_upload
 from apps.article.models import Article, TweetType
@@ -427,22 +428,21 @@ def youtube_delete_innacurate_articles():
 
 
 @shared_task
-def articles_clean_up_doubles():
-    sources = Source.objects.all()
+def delete_article_duplicates():
+    sources = Source.objects.exclude(website=TWITTER)
+    ids_of_duplicate_articles = []
     for source in sources:
         articles_from_source = Article.objects.filter(source=source)
         for article in articles_from_source:
-            double_article = articles_from_source.filter(title=article.title, link=article.link)
-            if double_article.count() > 1:
-                double_article.last().delete()
-
-
-@shared_task
-def delete_articles_without_source():
-    articles = Article.objects.all()
-    for article in articles:
-        if article.source is None:
-            article.delete()
+            article_double_title_and_link = articles_from_source.filter(title=article.title, link=article.link)
+            article_double_title_and_date = articles_from_source.filter(title=article.title, pub_date=article.pub_date)
+            if article_double_title_and_link.count() > 1:
+                if article_double_title_and_link.last().article_id not in ids_of_duplicate_articles:
+                    ids_of_duplicate_articles.append(article_double_title_and_link.last().article_id)
+            elif article_double_title_and_date.count() > 1:
+                if article_double_title_and_date.last().article_id not in ids_of_duplicate_articles:
+                    ids_of_duplicate_articles.append(article_double_title_and_date.last().article_id)
+    Article.objects.filter(article_id__in=ids_of_duplicate_articles).delete()
 
 
 @shared_task
@@ -487,3 +487,11 @@ def delete_tweet_types_empty():
 #             if "," in short_company_name or "." in short_company_name or "   " in row[1] or "/" in row[1] or "$" in row[1] or "(" in row[1] or "%" in row[1] or "." in row[0] or "^" in row[0] or Stock.objects.filter(full_company_name=full_company_name).exists() or Stock.objects.filter(ticker=ticker).exists() or len(full_company_name) > 45 or len(short_company_name) > 35:
 #                 continue
 #             Stock.objects.create(ticker=ticker, full_company_name=full_company_name, short_company_name=short_company_name)
+
+
+# @shared_task
+# def delete_articles_without_source():
+#     articles = Article.objects.all()
+#     for article in articles:
+#         if article.source is None:
+#             article.delete()
