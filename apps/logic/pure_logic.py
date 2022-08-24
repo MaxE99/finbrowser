@@ -3,16 +3,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.timezone import now
 from django.db.models import Count, F
 from django.shortcuts import get_object_or_404
-from django.utils.functional import cached_property
 # Python imports
 from datetime import timedelta
-
-# class TestPaginator(Paginator):
-    
-#     @cached_property
-#     def count(self):
-#         return 10000
-
 
 def paginator_create(request, queryset, objects_per_site, page_name='page'):
     paginator = Paginator(queryset, objects_per_site)
@@ -88,3 +80,13 @@ def sources_filter(paywall, type, minimum_rating, website, sources):
         filter_args['website'] = get_object_or_404(Website, name=website)
     filter_args = dict((k, v) for k, v in filter_args.items() if v is not None and v != 'All')
     return sources.filter(**filter_args)
+
+
+def stocks_get_experts(filtered_content):
+    sources_articles_written = {}
+    for content in filtered_content:
+        if content.source in sources_articles_written.keys():
+            sources_articles_written[content.source] += 1
+        else:
+            sources_articles_written[content.source] = 1
+    return dict(sorted(sources_articles_written.items(), key=lambda item: item[1], reverse=True)[:10])

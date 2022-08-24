@@ -31,7 +31,7 @@ def main_website_source_set(instance):
 def notification_double_prevention(notification_messages, notifications_creation_list, article, notification):
     notification_created = False
     for d in notifications_creation_list:
-        if d['notification'] == notification and d['article'] == article:
+        if d['notification'].user == notification.user and d['article'] == article:
             notification_created = True
             break
     if notification_messages.filter(article=article, notification__user=notification.user).exists() == False and notification_created == False:
