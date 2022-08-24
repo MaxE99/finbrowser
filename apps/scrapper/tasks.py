@@ -17,14 +17,12 @@ import base64
 import os
 import boto3
 import re
-import csv
 # Local imports
 from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload, initial_tweet_img_path_upload
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
 from apps.source.models import Source
-from apps.stock.models import Stock
 from apps.scrapper.web_crawler import crawl_thegeneralist, crawl_ben_evans, crawl_meritechcapital, crawl_stockmarketnerd
 
 s3 = boto3.client('s3')
@@ -429,15 +427,30 @@ def youtube_delete_innacurate_articles():
 
 
 @shared_task
-def youtube_clean_up_double_articles():
-    youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
-    for source in youtube_sources:
+def articles_clean_up_doubles():
+    sources = Source.objects.all()
+    for source in sources:
         articles_from_source = Article.objects.filter(source=source)
         for article in articles_from_source:
             double_article = articles_from_source.filter(title=article.title, link=article.link)
             if double_article.count() > 1:
                 double_article.last().delete()
 
+
+@shared_task
+def delete_articles_without_source():
+    articles = Article.objects.all()
+    for article in articles:
+        if article.source is None:
+            article.delete()
+
+
+@shared_task
+def delete_tweet_types_empty():
+    tweet_types = TweetType.objects.all()
+    for type in tweet_types:
+        if not type.tweet.all():
+            type.delete()
 
 # @shared_task
 # def stocks_create():

@@ -12,6 +12,7 @@ from apps.source.models import Source
 from apps.list.models import List 
 from apps.article.models import Article, HighlightedArticle
 from apps.stock.models import Stock
+from apps.home.models import NotificationMessage, Notification
 
 User = get_user_model()
 
@@ -24,6 +25,15 @@ except:
 
 class NotificationView(TemplateView, BaseMixin):
     template_name = 'home/notifications.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        notification_subs = Notification.objects.filter(user=self.request.user)
+        notifications = NotificationMessage.objects.filter(notification__in=notification_subs)
+        for notification in notifications:
+            notification.user_has_seen = True
+            notification.save()
+        return context
 
 
 class FeedView(TemplateView, LoginRequiredMixin, BaseMixin):
