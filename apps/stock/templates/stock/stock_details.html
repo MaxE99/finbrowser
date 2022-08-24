@@ -5,6 +5,11 @@
 {% endblock %} {% block content %}
 
 <h2 class="stockHeader">{{ stock.full_company_name }}</h2>
+
+{% if expert_sources %}
+{% create_source_container "Primary Sources" expert_sources %}
+{% endif %}
+
 {% if filtered_articles or filtered_tweets %}
 <div class="contentColumnWrapper">
     {% if filtered_articles %}
