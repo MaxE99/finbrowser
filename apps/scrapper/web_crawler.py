@@ -4,13 +4,17 @@ import requests
 from bs4 import BeautifulSoup
 import html
 from datetime import datetime
+from urllib.request import Request, urlopen
+import xml.etree.cElementTree as ET
+import html
 # Local import
-from apps.article.models import Article
 from apps.source.models import Source
-from apps.logic.services import single_notification_create
+from apps.logic.services import bulk_create_articles_and_notifications
+from apps.logic.selectors import article_components_get
 
 
 def crawl_thegeneralist(articles):
+    create_article_list = []
     try:
         page = requests.get("https://www.readthegeneralist.com/briefings", headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'})
         soup = BeautifulSoup(page.content, 'lxml')
@@ -26,13 +30,14 @@ def crawl_thegeneralist(articles):
             if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
                 break
             else:
-                created_article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
-                single_notification_create(created_article)
+                create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
     except:
         pass
+    bulk_create_articles_and_notifications(create_article_list)
 
 
 def crawl_ben_evans(articles):
+    create_article_list = []
     try:
         page = requests.get("https://www.ben-evans.com/", headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'})
         soup = BeautifulSoup(page.content, 'lxml')
@@ -47,13 +52,14 @@ def crawl_ben_evans(articles):
             if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
                 break
             else:
-                created_article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
-                single_notification_create(created_article)
+                create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
     except:
         pass
+    bulk_create_articles_and_notifications(create_article_list)
 
 
 def crawl_meritechcapital(articles):
+    create_article_list = []
     try:
         page = requests.get("https://www.meritechcapital.com/insights", headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'})
         soup = BeautifulSoup(page.content, 'lxml')
@@ -68,13 +74,14 @@ def crawl_meritechcapital(articles):
             if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
                 break
             else:
-                created_article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
-                single_notification_create(created_article)
+                create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
     except:
         pass
+    bulk_create_articles_and_notifications(create_article_list)
 
 
 def crawl_stockmarketnerd(articles):
+    create_article_list = []
     try:
         page = requests.get("https://stockmarketnerd.beehiiv.com/", headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'})
         soup = BeautifulSoup(page.content, 'lxml')
@@ -89,7 +96,31 @@ def crawl_stockmarketnerd(articles):
             if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
                 break
             else:
-                created_article = Article.objects.create(title=title, link=link, pub_date=pub_date, source=source)
-                single_notification_create(created_article)
+                create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
     except:
         pass
+    bulk_create_articles_and_notifications(create_article_list)
+
+
+def crawl_palladium(source, feed_url, articles):
+    create_article_list = []
+    try:
+        req = Request(feed_url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0"})
+        website_data = urlopen(req)
+        website_xml = website_data.read()
+        website_data.close()
+        items = ET.fromstring(website_xml).findall('.//item')
+        for item in items:
+            try:
+                title, link, pub_date = article_components_get(item)
+                title = html.unescape(title)
+                title = 'https://palladiummag/' + title
+                if articles.filter(title=title, pub_date=pub_date, source=source).exists():
+                    break
+                else:
+                    create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
+            except:
+                continue   
+    except:
+        pass
+    bulk_create_articles_and_notifications(create_article_list)

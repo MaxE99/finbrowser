@@ -19,12 +19,12 @@ import boto3
 import re
 from apps.home.views import TWITTER
 # Local imports
-from apps.logic.services import notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload, initial_tweet_img_path_upload
+from apps.logic.services import bulk_create_articles_and_notifications, notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload, initial_tweet_img_path_upload
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
 from apps.source.models import Source
-from apps.scrapper.web_crawler import crawl_thegeneralist, crawl_ben_evans, crawl_meritechcapital, crawl_stockmarketnerd
+from apps.scrapper.web_crawler import crawl_palladium, crawl_thegeneralist, crawl_ben_evans, crawl_meritechcapital, crawl_stockmarketnerd
 
 s3 = boto3.client('s3')
 
@@ -250,6 +250,7 @@ def crawl_websites():
     crawl_ben_evans(articles)
     crawl_meritechcapital(articles)
     crawl_stockmarketnerd(articles)
+    crawl_palladium(get_object_or_404(Source, name="Palladium"), "https://www.palladiummag.com/feed/", articles)
 
 
 @shared_task
@@ -273,17 +274,7 @@ def scrape_spotify():
                     spotify_creation_list.append({'title': title, 'link': link, 'pub_date': now(), 'source': source})
         except:
             continue
-    new_articles = [
-        Article(
-            title=new_article['title'],
-            link=new_article['link'],
-            pub_date=new_article['pub_date'],
-            source=new_article['source']
-        )
-        for new_article in spotify_creation_list
-    ]
-    articles = Article.objects.bulk_create(new_articles)
-    notifications_create(articles)
+    bulk_create_articles_and_notifications(spotify_creation_list)
 
 
 @shared_task
@@ -315,17 +306,7 @@ def scrape_youtube():
                     youtube_creation_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
         except:
             continue
-    new_articles = [
-        Article(
-            title=new_article['title'],
-            link=new_article['link'],
-            pub_date=new_article['pub_date'],
-            source=new_article['source']
-        )
-        for new_article in youtube_creation_list
-    ]
-    articles = Article.objects.bulk_create(new_articles)
-    notifications_create(articles)
+    bulk_create_articles_and_notifications(youtube_creation_list)
 
 
 @shared_task
@@ -434,14 +415,10 @@ def delete_article_duplicates():
     for source in sources:
         articles_from_source = Article.objects.filter(source=source)
         for article in articles_from_source:
-            article_double_title_and_link = articles_from_source.filter(title=article.title, link=article.link)
-            article_double_title_and_date = articles_from_source.filter(title=article.title, pub_date=article.pub_date)
-            if article_double_title_and_link.count() > 1:
-                if article_double_title_and_link.last().article_id not in ids_of_duplicate_articles:
-                    ids_of_duplicate_articles.append(article_double_title_and_link.last().article_id)
-            elif article_double_title_and_date.count() > 1:
-                if article_double_title_and_date.last().article_id not in ids_of_duplicate_articles:
-                    ids_of_duplicate_articles.append(article_double_title_and_date.last().article_id)
+            article_duplicate = articles_from_source.filter(title=article.title, pub_date=article.pub_date)
+            if article_duplicate.count() > 1:
+                if article_duplicate.last().article_id not in ids_of_duplicate_articles:
+                    ids_of_duplicate_articles.append(article_duplicate.last().article_id)
     Article.objects.filter(article_id__in=ids_of_duplicate_articles).delete()
 
 
