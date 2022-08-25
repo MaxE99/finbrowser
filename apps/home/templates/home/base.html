@@ -163,12 +163,36 @@
                                             </form>
                                         </div>
                                     </div>
+                                    {% if notification.article.tweet_type.type == "Retweet" %}
+                                    <div class="retweetWrapper">Retweeted post by
+                                        <span>@{{ notification.article.tweet_type.author }}</span>
+                                    </div>
+                                    {% endif %}
+                                    {% if notification.article.tweet_type.type == "Reply" %}
+                                    <div class="replyWrapper">Replying to
+                                        <span>@{{ notification.article.tweet_type.author }}</span>
+                                    </div>
+                                    {% endif %}
+                                    {% if notification.article.tweet_type.type != "Retweet" %}
                                     <div class="contentBody">
                                         <p>{{ notification.article.title }}</p>
                                     </div>
+                                    {% endif %}
                                     {% if notification.article.tweet_type.image_path %}
                                     <img class="tweetImage"
                                         src="{% static notification.article.tweet_type.image_path %}">
+                                    {% endif %}
+                                    {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
+                                    <div class="quoteWrapper">
+                                        <div class="quoteUpperContainer">
+                                            <div class="quoteAuthor">{{ notification.article.tweet_type.author }}</div>
+                                        </div>
+                                        <div class="quoteText">{{ notification.article.tweet_type.text }}</div>
+                                        {% if notification.article.tweet_type.initial_tweet_img_path %}
+                                        <img class="tweetImage"
+                                            src="{% static notification.article.tweet_type.initial_tweet_img_path %}">
+                                        {% endif %}
+                                    </div>
                                     {% endif %}
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
@@ -275,12 +299,36 @@
                                             </form>
                                         </div>
                                     </div>
+                                    {% if notification.article.tweet_type.type == "Retweet" %}
+                                    <div class="retweetWrapper">Retweeted post by
+                                        <span>@{{ notification.article.tweet_type.author }}</span>
+                                    </div>
+                                    {% endif %}
+                                    {% if notification.article.tweet_type.type == "Reply" %}
+                                    <div class="replyWrapper">Replying to
+                                        <span>@{{ notification.article.tweet_type.author }}</span>
+                                    </div>
+                                    {% endif %}
+                                    {% if notification.article.tweet_type.type != "Retweet" %}
                                     <div class="contentBody">
                                         <p>{{ notification.article.title }}</p>
                                     </div>
+                                    {% endif %}
                                     {% if notification.article.tweet_type.image_path %}
                                     <img class="tweetImage"
                                         src="{% static notification.article.tweet_type.image_path %}">
+                                    {% endif %}
+                                    {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
+                                    <div class="quoteWrapper">
+                                        <div class="quoteUpperContainer">
+                                            <div class="quoteAuthor">{{ notification.article.tweet_type.author }}</div>
+                                        </div>
+                                        <div class="quoteText">{{ notification.article.tweet_type.text }}</div>
+                                        {% if notification.article.tweet_type.initial_tweet_img_path %}
+                                        <img class="tweetImage"
+                                            src="{% static notification.article.tweet_type.initial_tweet_img_path %}">
+                                        {% endif %}
+                                    </div>
                                     {% endif %}
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
@@ -393,12 +441,36 @@
                                             </form>
                                         </div>
                                     </div>
+                                    {% if notification.article.tweet_type.type == "Retweet" %}
+                                    <div class="retweetWrapper">Retweeted post by
+                                        <span>@{{ notification.article.tweet_type.author }}</span>
+                                    </div>
+                                    {% endif %}
+                                    {% if notification.article.tweet_type.type == "Reply" %}
+                                    <div class="replyWrapper">Replying to
+                                        <span>@{{ notification.article.tweet_type.author }}</span>
+                                    </div>
+                                    {% endif %}
+                                    {% if notification.article.tweet_type.type != "Retweet" %}
                                     <div class="contentBody">
                                         <p>{{ notification.article.title }}</p>
                                     </div>
+                                    {% endif %}
                                     {% if notification.article.tweet_type.image_path %}
                                     <img class="tweetImage"
                                         src="{% static notification.article.tweet_type.image_path %}">
+                                    {% endif %}
+                                    {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
+                                    <div class="quoteWrapper">
+                                        <div class="quoteUpperContainer">
+                                            <div class="quoteAuthor">{{ notification.article.tweet_type.author }}</div>
+                                        </div>
+                                        <div class="quoteText">{{ notification.article.tweet_type.text }}</div>
+                                        {% if notification.article.tweet_type.initial_tweet_img_path %}
+                                        <img class="tweetImage"
+                                            src="{% static notification.article.tweet_type.initial_tweet_img_path %}">
+                                        {% endif %}
+                                    </div>
                                     {% endif %}
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
