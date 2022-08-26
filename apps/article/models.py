@@ -1,6 +1,8 @@
 # Django imports
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchVectorField
 # Local imports
 from apps.article.managers import ArticleManager, HighlightedArticlesManager
 from apps.source.models import Source
@@ -29,6 +31,10 @@ class Article(models.Model):
     source = models.ForeignKey(Source, blank=True, null=True, on_delete=models.CASCADE)
     external_id = models.CharField(unique=True, null=True, blank=True, max_length=100)
     tweet_type = models.ForeignKey(TweetType, blank=True, null=True, on_delete=models.SET_NULL, related_name='tweet')
+    search_vector = SearchVectorField(null=True)
+
+    class Meta:
+        indexes = (GinIndex(fields=["search_vector"]),)
 
     objects = ArticleManager()
 
