@@ -49,8 +49,8 @@ class ArticleSearchView(ListView, BaseMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         qs = self.get_queryset()
-        tweets_qs = qs.filter(source__website=TWITTER).select_related('source', 'tweet_type')
-        articles_qs = qs.exclude(source__website=TWITTER).select_related('source', 'source__website', 'source__sector')
+        tweets_qs = qs.filter(source__website=TWITTER).select_related('tweet_type')
+        articles_qs = qs.exclude(source__website=TWITTER).select_related('source__sector')
         context['sectors'] = Sector.objects.all().order_by('name')
         context['articles'] = paginator_create(self.request, articles_qs, 10, 'articles')
         context['tweets'] = paginator_create(self.request, tweets_qs, 20, 'tweets')

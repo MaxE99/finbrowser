@@ -45,8 +45,7 @@ class HighlightedArticleViewSet(viewsets.ModelViewSet):
         article_id = request.data['article_id']
         article = get_object_or_404(Article, article_id=article_id)
         if HighlightedArticle.objects.filter(user=request.user, article=article).exists():
-            highlighted_article = HighlightedArticle.objects.get(user=request.user, article=article)
-            highlighted_article.delete()
+            HighlightedArticle.objects.get(user=request.user, article=article).delete()
             return Response("Article has been unhighlighted!")
         else:
             HighlightedArticle.objects.create(user=request.user, article=article)
@@ -265,11 +264,8 @@ class FilteredArticles(APIView):
     def get(self, request, search_term, format=None):
         filtered_articles = Article.objects.filter_articles(search_term)[0:10]
         serializer = Article_Serializer(filtered_articles, many=True)
-        article_favicon_paths = []
-        for article in filtered_articles:
-            article_favicon_paths.append(article.source.favicon_path)
-        return JsonResponse([serializer.data, article_favicon_paths],
-                            safe=False)
+        article_favicon_paths = list(filtered_articles.values_list("source__favicon_path", flat=True))
+        return JsonResponse([serializer.data, article_favicon_paths], safe=False)
 
 
 class FilteredSources(APIView):
@@ -312,20 +308,11 @@ class FilteredSite(APIView):
             if all_spots_previous_iteration == all_spots:
                 break
             all_spots_previous_iteration = all_spots
-        article_favicon_paths = []
-        for article in filtered_articles[0:display_spots_articles]:
-            article_favicon_paths.append(article.source.favicon_path) 
-        stock_serializer = Stock_Serializer(
-            filtered_stocks[0:display_spots_stocks], many=True)
-        sources_serializer = Source_Serializer(
-            filtered_sources[0:display_spots_sources], many=True)
-        articles_serializer = Article_Serializer(
-            filtered_articles[0:display_spots_articles], many=True)
-        return JsonResponse([
-            stock_serializer.data, sources_serializer.data,
-            articles_serializer.data, article_favicon_paths
-        ],
-                            safe=False)
+        article_favicon_paths = list(filtered_articles.values_list("source__favicon_path", flat=True)[0:10])
+        stock_serializer = Stock_Serializer(filtered_stocks[0:display_spots_stocks], many=True)
+        sources_serializer = Source_Serializer(filtered_sources[0:display_spots_sources], many=True)
+        articles_serializer = Article_Serializer(filtered_articles[0:display_spots_articles], many=True)
+        return JsonResponse([stock_serializer.data, sources_serializer.data, articles_serializer.data, article_favicon_paths], safe=False)
 
 
 class NotificationViewSet(viewsets.ModelViewSet):
@@ -338,12 +325,10 @@ class NotificationViewSet(viewsets.ModelViewSet):
         list_id = request.data.get('list_id', None)
         if source_id != None:
             source = get_object_or_404(Source, source_id=source_id)
-            notification, created = Notification.objects.get_or_create(
-                user=request.user, source=source)
+            notification, created = Notification.objects.get_or_create(user=request.user, source=source)
         elif list_id != None:
             list = get_object_or_404(List, list_id=list_id)
-            notification, created = Notification.objects.get_or_create(
-                user=request.user, list=list)
+            notification, created = Notification.objects.get_or_create(user=request.user, list=list)
         if created:
             return Response("Notification has been added!")
         else:
@@ -351,9 +336,5 @@ class NotificationViewSet(viewsets.ModelViewSet):
             return Response("Notification has been removed!")
 
     def put(self, request, *args, **kwargs):
-        notification_subs = Notification.objects.filter(user=request.user)
-        notifications = NotificationMessage.objects.filter(notification__in=notification_subs)
-        for notification in notifications:
-            notification.user_has_seen = True
-            notification.save()
+        NotificationMessage.objects.filter(notification__user=request.user).update(user_has_seen=True)
         return Response("Notifications have been marked as seen!")
