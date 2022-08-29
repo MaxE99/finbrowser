@@ -77,7 +77,7 @@
 <div class="contentColumnWrapper">
     {% if articles %}
     <div class="contentColumnContainer halfPageContainer">
-        {% create_content_container "Long-Form Content" articles request user_lists csrf_token add_list_form highlighted_content_titles %}
+        {% create_content_container "Long-Form Content" articles request user_lists csrf_token add_list_form highlighted_content_ids %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in articles.paginator.page_range %}
@@ -93,7 +93,7 @@
     {% endif %}
     {% if tweets %}
     <div class="contentColumnContainer halfPageContainer">
-        {% create_content_container "Tweets" tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+        {% create_content_container "Tweets" tweets request user_lists csrf_token add_list_form highlighted_content_ids %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in tweets.paginator.page_range %}
