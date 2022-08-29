@@ -42,18 +42,13 @@ class ListRatingManager(models.Manager):
         list_ratings = self.filter(list_id=list_id)
         sum_ratings = self.filter(list_id=list_id).aggregate(Sum('rating'))
         sum_ratings = sum_ratings.get("rating__sum", None)
-        if sum_ratings == None:
-            return "None"
-        else:
-            return round(sum_ratings /list_ratings.count(), 1)
+        return "None" if sum_ratings == None else round(sum_ratings /list_ratings.count(), 1)
 
     def get_ammount_of_ratings(self, list_id):
         return self.filter(list_id=list_id).count()
 
     def save_rating(self, user, list, rating):
         if self.filter(user=user, list=list).exists():
-            list_rating = self.get(user=user, list=list)
-            list_rating.rating = rating
-            list_rating.save()
+            self.get(user=user, list=list).update(rating=rating)
         else:
             self.create(user=user, list=list, rating=rating)

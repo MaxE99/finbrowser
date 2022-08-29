@@ -53,7 +53,7 @@
 {% if highlighted_content %}
 <div class="contentColumnWrapper">
     <div class="contentColumnContainer halfPageContainer">
-        {% create_fk_content_container "Highlighted Content" highlighted_content request user_lists csrf_token add_list_form highlighted_content_titles %}
+        {% create_fk_content_container "Highlighted Content" highlighted_content request user_lists csrf_token add_list_form highlighted_content_ids %}
     </div>
 </div>
 {% include "pagination.html" with page=highlighted_content %}

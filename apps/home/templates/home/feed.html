@@ -151,7 +151,7 @@
     {% if subscribed_content %}
     <div
         class="contentColumnContainer {% if not highlighted_content or not newest_tweets %}halfPageContainer{% endif %}">
-        {% create_content_container "Long-Form Content" subscribed_content request user_lists csrf_token add_list_form highlighted_content_titles %}
+        {% create_content_container "Long-Form Content" subscribed_content request user_lists csrf_token add_list_form highlighted_content_ids %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in subscribed_content.paginator.page_range %}
@@ -168,7 +168,7 @@
     {% if highlighted_content %}
     <div
         class="contentColumnContainer {% if not subscribed_content or not newest_tweets %}halfPageContainer{% endif %}">
-        {% create_fk_content_container "Highlighted Content" highlighted_content request user_lists csrf_token add_list_form highlighted_content_titles %}
+        {% create_fk_content_container "Highlighted Content" highlighted_content request user_lists csrf_token add_list_form highlighted_content_ids %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in highlighted_content.paginator.page_range %}
@@ -185,7 +185,7 @@
     {% if newest_tweets %}
     <div
         class="contentColumnContainer {% if not highlighted_content or not subscribed_content %}halfPageContainer{% endif %}">
-        {% create_content_container "Tweets" newest_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+        {% create_content_container "Tweets" newest_tweets request user_lists csrf_token add_list_form highlighted_content_ids %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in newest_tweets.paginator.page_range %}

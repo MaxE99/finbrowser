@@ -15,7 +15,7 @@
     {% if filtered_articles %}
     <div
         class="contentColumnContainer">
-        {% create_content_container "Long-Form Content" filtered_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
+        {% create_content_container "Long-Form Content" filtered_articles request user_lists csrf_token add_list_form highlighted_content_ids %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in filtered_articles.paginator.page_range %}
@@ -32,7 +32,7 @@
     {% if filtered_tweets %}
     <div
         class="contentColumnContainer">
-        {% create_content_container "Tweets" filtered_tweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+        {% create_content_container "Tweets" filtered_tweets request user_lists csrf_token add_list_form highlighted_content_ids %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in filtered_tweets.paginator.page_range %}

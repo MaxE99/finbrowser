@@ -11,12 +11,10 @@ class SourceManager(models.Manager):
         return self.filter(name__istartswith=search_term).order_by('name')
 
     def filter_sources_not_in_list(self, search_term, list):
-        return self.filter(name__istartswith=search_term).exclude(
-            source_id__in=list.sources.all()).order_by('name')
+        return self.filter(name__istartswith=search_term).exclude(source_id__in=list.sources.all()).order_by('name')
 
     def filter_sources_not_subscribed(self, search_term, user):
-        return self.filter(name__istartswith=search_term).exclude(
-            subscribers=user).order_by('name')
+        return self.filter(name__istartswith=search_term).exclude(subscribers=user).order_by('name')
 
 
 class SourceRatingManager(models.Manager):
@@ -31,18 +29,13 @@ class SourceRatingManager(models.Manager):
         list_ratings = self.filter(source=source)
         sum_ratings = self.filter(source=source).aggregate(Sum('rating'))
         sum_ratings = sum_ratings.get("rating__sum", None)
-        if sum_ratings == None:
-            return "None"
-        else:
-            return round(sum_ratings / list_ratings.count(), 1)
+        return None if sum_ratings == None else round(sum_ratings / list_ratings.count(), 1)
 
     def get_ammount_of_ratings(self, source):
         return self.filter(source=source).count()
 
     def save_rating(self, user, source, rating):
         if self.filter(user=user, source=source).exists():
-            source_rating = self.get(user=user, source=source)
-            source_rating.rating = rating
-            source_rating.save()
+            self.get(user=user, source=source).update(rating=rating)
         else:
             self.create(user=user, source=source, rating=rating)

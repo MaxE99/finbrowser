@@ -1,5 +1,4 @@
 # Django imports
-from django.shortcuts import get_object_or_404
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
@@ -64,10 +63,7 @@ class SourceRating(models.Model):
 
     def save(self, *args, **kwargs):
         super(SourceRating, self).save(*args, **kwargs)
-        rated_source = get_object_or_404(Source, source_id=self.source.source_id)
-        rated_source.average_rating = SourceRating.objects.get_average_rating(self.source.source_id)
-        rated_source.ammount_of_ratings = SourceRating.objects.get_ammount_of_ratings(self.source.source_id)
-        rated_source.save()
+        Source.objects.filter(source_id=self.source.source_id).update(average_rating=SourceRating.objects.get_average_rating(self.source.source_id), ammount_of_ratings=SourceRating.objects.get_ammount_of_ratings(self.source.source_id))
 
     def __str__(self):
         return f'{self.user} - {self.source} - {self.rating}'

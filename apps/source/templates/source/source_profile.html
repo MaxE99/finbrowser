@@ -130,7 +130,7 @@
   {% if latest_articles %}
   <div
       class="contentColumnContainer {% if not links_and_retweets or not images %}halfPageContainer{% endif %}">
-      {% create_content_container "Latest Tweets" latest_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
+      {% create_content_container "Latest Tweets" latest_articles request user_lists csrf_token add_list_form highlighted_content_ids %}
       <div class="pagination">
           <span class="step-links">
               {% for i in latest_articles.paginator.page_range %}
@@ -147,7 +147,7 @@
   {% if links_and_retweets %}
   <div
       class="contentColumnContainer {% if not latest_articles or not images %}halfPageContainer{% endif %}">
-      {% create_content_container "Links & Retweets" links_and_retweets request user_lists csrf_token add_list_form highlighted_content_titles %}
+      {% create_content_container "Links & Retweets" links_and_retweets request user_lists csrf_token add_list_form highlighted_content_ids %}
       <div class="pagination">
           <span class="step-links">
               {% for i in links_and_retweets.paginator.page_range %}
@@ -164,7 +164,7 @@
   {% if images %}
   <div
       class="contentColumnContainer {% if not latest_articles or not links_and_retweets %}halfPageContainer{% endif %}">
-      {% create_content_container "Graphics & Images" images request user_lists csrf_token add_list_form highlighted_content_titles %}
+      {% create_content_container "Graphics & Images" images request user_lists csrf_token add_list_form highlighted_content_ids %}
       <div class="pagination">
           <span class="step-links">
               {% for i in images.paginator.page_range %}
@@ -182,7 +182,7 @@
 {% else %}
 <div class="contentColumnWrapper">
   <div class="contentColumnContainer halfPageContainer">
-    {% create_content_container "Latest Content" latest_articles request user_lists csrf_token add_list_form highlighted_content_titles %}
+    {% create_content_container "Latest Content" latest_articles request user_lists csrf_token add_list_form highlighted_content_ids %}
     <div class="pagination">
       <span class="step-links">
         {% for i in latest_articles.paginator.page_range %}

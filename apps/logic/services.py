@@ -13,6 +13,7 @@ import boto3
 # Local import
 from apps.logic.selectors import article_components_get
 
+
 def main_website_source_set(instance):
     """If more than 50% of sources come from one website field main_website_source is set to this website"""
     websites = {'Other': 0, 'SeekingAlpha':0, 'Spotify':0, 'Substack':0, 'Twitter':0, 'YouTube':0}
@@ -38,6 +39,42 @@ def notification_double_prevention(notification_messages, notifications_creation
         notifications_creation_list.append({"notification": notification, 'article': article, 'date': now()}) 
 
 
+
+# def notifications_create(created_articles):
+#     from apps.home.models import Notification, NotificationMessage
+#     from apps.article.models import Article
+#     articles = Article.objects.filter(article_id__in=[article.article_id for article in created_articles])
+#     notifications = Notification.objects.all()
+#     notification_messages = NotificationMessage.objects.all().select_related("notification__user")
+#     keyword_notifications = notifications.filter(keyword__isnull=False)
+#     notifications_creation_list = []
+#     keyword_notifications_values = keyword_notifications.values_list("keyword", flat=True)
+#     articles_with_keywords 
+#     for keyword_notification in keyword_notifications:
+#         articles_with_keywords = articles.filter(search_vector=keyword_notification.keyword)
+#         if articles_with_keywords.exists():
+#             for keyword_article in articles_with_keywords:
+#                 notification_double_prevention(notification_messages, notifications_creation_list, keyword_article, keyword_notification)
+#     for article in articles:
+#         if notifications.filter(source=article.source).exists():
+#             for source_notification in notifications.filter(source=article.source).iterator():
+#                 notifications_creation_list.append({"notification": source_notification, 'article': article, 'date': now()}) 
+#         list_notifications = notifications.filter(list__in=article.source.lists.all())
+#         if list_notifications.exists():
+#             for list_notification in list_notifications.iterator():
+#                 notifications_creation_list.append({"notification": list_notification, 'article': article, 'date': now()}) 
+#     new_notification_messages = [
+#         NotificationMessage(
+#             notification=new_notification['notification'],
+#             article=new_notification['article'],
+#             date=new_notification['date'],
+#         )
+#         for new_notification in notifications_creation_list
+#     ]
+#     NotificationMessage.objects.bulk_create(new_notification_messages)
+
+
+
 def notifications_create(created_articles):
     from apps.home.models import Notification, NotificationMessage
     from apps.article.models import Article
@@ -47,7 +84,7 @@ def notifications_create(created_articles):
     keyword_notifications = notifications.filter(keyword__isnull=False)
     notifications_creation_list = []
     for keyword_notification in keyword_notifications:
-        articles_with_keywords = articles.filter(title__search=keyword_notification.keyword)
+        articles_with_keywords = articles.filter(search_vector=keyword_notification.keyword)
         if articles_with_keywords.exists():
             for keyword_article in articles_with_keywords:
                 notification_double_prevention(notification_messages, notifications_creation_list, keyword_article, keyword_notification)
