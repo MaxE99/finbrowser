@@ -101,7 +101,7 @@
                                             {% if request.user.is_authenticated %}
                                             <div class="addToListButton"><i class="fas fa-list"></i>Add to list
                                             </div>
-                                            {% if notification.article.title in highlighted_content_titles %}
+                                            {% if notification.article.article_id in highlighted_content_ids %}
                                             <div class="addToHighlightedButton"><i
                                                     class="fas fa-times"></i><span>Unhighlight
                                                     article</span></div>
@@ -237,7 +237,7 @@
                                             {% if request.user.is_authenticated %}
                                             <div class="addToListButton"><i class="fas fa-list"></i>Add to list
                                             </div>
-                                            {% if notification.article.title in highlighted_content_titles %}
+                                            {% if notification.article.article_id in highlighted_content_ids %}
                                             <div class="addToHighlightedButton"><i
                                                     class="fas fa-times"></i><span>Unhighlight
                                                     article</span></div>
@@ -379,7 +379,7 @@
                                             {% if request.user.is_authenticated %}
                                             <div class="addToListButton"><i class="fas fa-list"></i>Add to list
                                             </div>
-                                            {% if notification.article.title in highlighted_content_titles %}
+                                            {% if notification.article.article_id in highlighted_content_ids %}
                                             <div class="addToHighlightedButton"><i
                                                     class="fas fa-times"></i><span>Unhighlight
                                                     article</span></div>

@@ -12,12 +12,12 @@
 <div class="contentColumnWrapper">
     {% if source_notifications %}
     <div class="contentColumnContainer {% if not list_notifications %}halfPageContainer{% endif %}">
-        {% create_fk_content_container "Source Notifications" source_notifications request user_lists csrf_token add_list_form highlighted_content_titles %}
+        {% create_fk_content_container "Source Notifications" source_notifications request user_lists csrf_token add_list_form highlighted_content_ids %}
     </div>
     {% endif %}
     {% if list_notifications %}
     <div class="contentColumnContainer {% if not source_notifications %}halfPageContainer{% endif %}">
-        {% create_fk_content_container "List Notifications" list_notifications request user_lists csrf_token add_list_form highlighted_content_titles %}
+        {% create_fk_content_container "List Notifications" list_notifications request user_lists csrf_token add_list_form highlighted_content_ids %}
     </div>
     {% endif %}
     <div
@@ -54,7 +54,7 @@
                         <div class="articleOptionsContainer">
                             {% if request.user.is_authenticated %}
                             <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
-                            {% if notification.article.title in highlighted_content_titles %}
+                            {% if notification.article.article_id in highlighted_content_ids %}
                             <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight
                                     article</span></div>
                             {% else %}
