@@ -12,7 +12,7 @@ from apps.source.models import Source
 from apps.list.models import List 
 from apps.article.models import Article, HighlightedArticle
 from apps.stock.models import Stock
-from apps.home.models import NotificationMessage, Notification
+from apps.home.models import NotificationMessage
 
 User = get_user_model()
 
@@ -40,9 +40,9 @@ class FeedView(TemplateView, LoginRequiredMixin, BaseMixin):
         subscribed_sources = Source.objects.get_subscribed_sources(self.request.user)
         context['subscribed_lists'] = List.objects.get_subscribed_lists(self.request.user)
         context['subscribed_sources'] = subscribed_sources
-        context['subscribed_content'] = paginator_create(self.request, Article.objects.get_subscribed_content_excluding_website(subscribed_sources, TWITTER), 20, 'subscribed_content')
-        context['highlighted_content'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_content_of_user(self.request.user), 10, 'highlighted_content')
-        context['newest_tweets'] = paginator_create(self.request, Article.objects.get_subscribed_content_from_website(subscribed_sources, TWITTER), 10, 'newest_tweets')
+        context['subscribed_content'] = paginator_create(self.request, Article.objects.get_subscribed_content_excluding_website(subscribed_sources, TWITTER), 50, 'subscribed_content')
+        context['highlighted_content'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_content_of_user(self.request.user), 40, 'highlighted_content')
+        context['newest_tweets'] = paginator_create(self.request, Article.objects.get_subscribed_content_from_website(subscribed_sources, TWITTER), 25, 'newest_tweets')
         return context
 
 
@@ -52,10 +52,10 @@ class SearchResultView(TemplateView, BaseMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         search_term = kwargs['search_term']
-        context['filtered_stocks'] = paginator_create(self.request, Stock.objects.filter_stocks(search_term), 20, 'filtered_stocks')
+        context['filtered_stocks'] = paginator_create(self.request, Stock.objects.filter_stocks(search_term), 50, 'filtered_stocks')
         context['filtered_sources'] = Source.objects.filter_sources(search_term)
         filtered_content = Article.objects.filter_articles(search_term)
-        context['filtered_tweets'] = paginator_create(self.request, filtered_content.filter(source__website=TWITTER), 10, 'filtered_tweets')
-        context['filtered_articles'] = paginator_create(self.request, filtered_content.exclude(source__website=TWITTER), 20, 'filtered_articles')     
+        context['filtered_tweets'] = paginator_create(self.request, filtered_content.filter(source__website=TWITTER), 25, 'filtered_tweets')
+        context['filtered_articles'] = paginator_create(self.request, filtered_content.exclude(source__website=TWITTER), 50, 'filtered_articles')     
         return context
 
