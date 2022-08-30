@@ -29,83 +29,35 @@ def main_website_source_set(instance):
     return instance
 
 
-def notification_double_prevention(notification_messages, notifications_creation_list, article, notification):
-    notification_created = False
-    for d in notifications_creation_list:
-        if d['notification'].user == notification.user and d['article'] == article:
-            notification_created = True
-            break
-    if notification_messages.filter(article=article, notification__user=notification.user).exists() == False and notification_created == False:
-        notifications_creation_list.append({"notification": notification, 'article': article, 'date': now()}) 
-
-
-
-# def notifications_create(created_articles):
-#     from apps.home.models import Notification, NotificationMessage
-#     from apps.article.models import Article
-#     articles = Article.objects.filter(article_id__in=[article.article_id for article in created_articles])
-#     notifications = Notification.objects.all()
-#     notification_messages = NotificationMessage.objects.all().select_related("notification__user")
-#     keyword_notifications = notifications.filter(keyword__isnull=False)
-#     notifications_creation_list = []
-#     keyword_notifications_values = keyword_notifications.values_list("keyword", flat=True)
-#     articles_with_keywords 
-#     for keyword_notification in keyword_notifications:
-#         articles_with_keywords = articles.filter(search_vector=keyword_notification.keyword)
-#         if articles_with_keywords.exists():
-#             for keyword_article in articles_with_keywords:
-#                 notification_double_prevention(notification_messages, notifications_creation_list, keyword_article, keyword_notification)
-#     for article in articles:
-#         if notifications.filter(source=article.source).exists():
-#             for source_notification in notifications.filter(source=article.source).iterator():
-#                 notifications_creation_list.append({"notification": source_notification, 'article': article, 'date': now()}) 
-#         list_notifications = notifications.filter(list__in=article.source.lists.all())
-#         if list_notifications.exists():
-#             for list_notification in list_notifications.iterator():
-#                 notifications_creation_list.append({"notification": list_notification, 'article': article, 'date': now()}) 
-#     new_notification_messages = [
-#         NotificationMessage(
-#             notification=new_notification['notification'],
-#             article=new_notification['article'],
-#             date=new_notification['date'],
-#         )
-#         for new_notification in notifications_creation_list
-#     ]
-#     NotificationMessage.objects.bulk_create(new_notification_messages)
-
-
-
 def notifications_create(created_articles):
     from apps.home.models import Notification, NotificationMessage
     from apps.article.models import Article
-    articles = Article.objects.filter(article_id__in=[article.article_id for article in created_articles])
-    notifications = Notification.objects.all()
-    notification_messages = NotificationMessage.objects.all().select_related("notification__user")
-    keyword_notifications = notifications.filter(keyword__isnull=False)
     notifications_creation_list = []
-    for keyword_notification in keyword_notifications:
-        articles_with_keywords = articles.filter(search_vector=keyword_notification.keyword)
-        if articles_with_keywords.exists():
-            for keyword_article in articles_with_keywords:
-                notification_double_prevention(notification_messages, notifications_creation_list, keyword_article, keyword_notification)
+    notifications = Notification.objects.all()
+    list_notifications = notifications.filter(list__isnull=False)
+    source_notifications = notifications.filter(source__isnull=False)
+    articles = Article.objects.filter(article_id__in=[article.article_id for article in created_articles])
+    for notification in notifications.filter(keyword__isnull=False).iterator():
+        for article in articles.filter(search_vector=notification.keyword).iterator():
+            notifications_creation_list.append({"notification": notification, 'article': article, 'date': now(), 'user': notification.user})
     for article in articles:
-        if notifications.filter(source=article.source).exists():
-            source_notifications = notifications.filter(source=article.source)
-            for source_notification in source_notifications:
-                notification_double_prevention(notification_messages, notifications_creation_list, article, source_notification)
-        lists_that_include_source = article.source.lists.all()
-        for list in lists_that_include_source:
-            if notifications.filter(list=list).exists():
-                list_notifications = notifications.filter(list=list)
-                for list_notification in list_notifications:
-                    notification_double_prevention(notification_messages, notifications_creation_list, article, list_notification)                 
+        for notification in source_notifications.filter(source=article.source).iterator():
+            notifications_creation_list.append({"notification": notification, 'article': article, 'date': now(), 'user': notification.user})
+        for notification in list_notifications.filter(list__in=article.source.lists.all()).iterator():
+            notifications_creation_list.append({"notification": notification, 'article': article, 'date': now(), 'user': notification.user})
+    existing_dicts = set()
+    filtered_list = []
+    for d in notifications_creation_list:
+        if (d['article'], d['user']) not in existing_dicts:
+            existing_dicts.add((d['article'], d['user']))
+            filtered_list.append(d)
     new_notification_messages = [
         NotificationMessage(
             notification=new_notification['notification'],
             article=new_notification['article'],
             date=new_notification['date'],
         )
-        for new_notification in notifications_creation_list
+        for new_notification in filtered_list
     ]
     NotificationMessage.objects.bulk_create(new_notification_messages)
 
