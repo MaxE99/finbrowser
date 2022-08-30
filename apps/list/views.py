@@ -108,12 +108,12 @@ class ListDetailView(TemplateView, BaseMixin):
             notifications_activated = user_rating = None
             subscribed = False  
         context['list'] = list
-        context['latest_articles'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources_excluding_website(list, TWITTER), 20, 'latest_articles') 
+        context['latest_articles'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources_excluding_website(list, TWITTER), 50, 'latest_articles') 
         context['notifications_activated'] = notifications_activated
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating
-        context['highlighted_content'] = paginator_create(self.request, List.objects.get_highlighted_content(list_id), 10, 'highlighted_content')
-        context['newest_tweets'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources_and_website(list, TWITTER), 10, 'newest_tweets')
+        context['highlighted_content'] = paginator_create(self.request, List.objects.get_highlighted_content(list_id), 40, 'highlighted_content')
+        context['newest_tweets'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources_and_website(list, TWITTER), 25, 'newest_tweets')
         if self.request.user == list.creator:
             context['change_list_pic_form'] = ListPicChangeForm()
             context['change_list_name_form'] = ListNameChangeForm()

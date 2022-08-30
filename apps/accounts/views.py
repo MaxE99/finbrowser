@@ -31,7 +31,7 @@ class ProfileView(DetailView, BaseMixin):
         context['created_lists'] = List.objects.filter(creator=profile.user, is_public=True).select_related('creator__profile').order_by('name').only('slug', 'list_pic', 'name', 'creator__profile')
         context['subscribed_lists'] = List.objects.get_subscribed_lists(profile.user) if privacy_settings.list_subscribtions_public else None
         context['subscribed_sources'] = Source.objects.get_subscribed_sources(profile.user) if privacy_settings.subscribed_sources_public else None
-        context['highlighted_content'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_content_of_user(profile.user), 10) if privacy_settings.highlighted_articles_public else None
+        context['highlighted_content'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_content_of_user(profile.user), 40) if privacy_settings.highlighted_articles_public else None
         return context        
 
 

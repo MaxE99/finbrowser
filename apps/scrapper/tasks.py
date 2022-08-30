@@ -222,7 +222,7 @@ def scrape_seekingalpha():
     for source in seekingalpha_sources:
         feed_url = f'{source.url}.xml'
         create_articles_from_feed(source, feed_url, articles)
-        time.sleep(60)
+        time.sleep(30)
 
 
 @shared_task
