@@ -44,13 +44,13 @@ class ArticleSearchView(ListView, BaseMixin):
     def get_queryset(self):
         sector = get_object_or_404(Sector, name=self.kwargs['sector']).sector_id if self.kwargs['sector'] != "All" else "All"
         source = get_object_or_404(Website, name=self.kwargs['source']).website_id if self.kwargs['source'] != "All" else "All"
-        return articles_filter(self.kwargs['timeframe'], sector, self.kwargs['paywall'], source, Article.objects.select_related('source', 'source__website'))
+        return articles_filter(self.kwargs['timeframe'], sector, self.kwargs['paywall'], source, Article.objects.select_related('source', 'source__website', 'source__sector', 'tweet_type'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         qs = self.get_queryset()
-        tweets_qs = qs.filter(source__website=TWITTER).select_related('tweet_type')
-        articles_qs = qs.exclude(source__website=TWITTER).select_related('source__sector')
+        tweets_qs = qs.filter(source__website=TWITTER)
+        articles_qs = qs.exclude(source__website=TWITTER)
         context['sectors'] = Sector.objects.all().order_by('name')
         context['articles'] = paginator_create(self.request, articles_qs, 50, 'articles')
         context['tweets'] = paginator_create(self.request, tweets_qs, 25, 'tweets')
