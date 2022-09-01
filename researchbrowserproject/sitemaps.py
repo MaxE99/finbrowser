@@ -71,16 +71,3 @@ class ContentSitemaps(Sitemap):
 
     def location(self, item):
         return reverse(item)
-
-
-class HomePageSitemap(Sitemap):
-
-    changefreq = "weekly"
-    priority = 1.0
-    protocol = 'https'
-
-    def items(self):
-        return ['main:main']
-
-    def location(self, item):
-        return reverse(item)
