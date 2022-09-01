@@ -2,205 +2,320 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_feed_style_v3.css' %}">
-<title>FinBrowser | Feed</title>
+<link rel="stylesheet" type="text/css" href="{% static 'home/feed_style.css' %}">
+<title>FinBrowser | Home</title>
 {% endblock %}
 
 {% block content %}
 
-<div class="sliderWrapper">
-    <div class="sliderHeader">
-        <div class="sliderHeaderTitle">My Lists</div>
-        <div class="progressBar"></div>
-    </div>
-    <div class="sliderContentContainer">
-        <button class="handle leftHandle">
-            <div class="handleSymbol">&#8249;</div>
-        </button>
-        <div class="slider">
-            {% for list in user_lists %}
-            <div class="contentWrapper">
-                <div class="contentContainer">
-                    <div class="contentIconContainer">
-                        {% if list.list_pic %}
-                        <img class="contentIcon" src="{{ list.list_pic.url }}" alt="favicon" />
-                        {% else %}
-                        <img class="contentIcon" src="{% static 'home/media/finbrowser-bigger-logo.png' %}"
-                            alt="favicon" />
-                        {% endif %}
-                    </div>
-                    <a class="contentLink" href="{{ list.get_absolute_url }}"></a>
-                    <div class="contentNameContainer">
-                        <div class="contentName">{{ list.name }}</div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-            <div class="contentWrapper interactionWrapper">
-                <div class="createListButton addButton"><i class="fas fa-plus"></i></div>
-                <div class="createListMenu formContainer">
-                    <div class="formHeaderContainer">Create A New List<i
-                            class="fas fa-times closeFormContainerButton"></i>
-                    </div>
-                    <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
-                        {% csrf_token %} {{ add_list_form }}
-                        <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
-                    </form>
-                </div>
-            </div>
+{% if request.user.is_authenticated %}
+<div class="classicMain">
+    <div class="sliderWrapper">
+        <div class="sliderHeader">
+            <div class="sliderHeaderTitle">My Lists</div>
+            <div class="progressBar"></div>
         </div>
-        <button class="handle rightHandle">
-            <div class="handleSymbol">&#8250;</div>
-        </button>
-    </div>
-</div>
-
-<div class="sliderWrapper">
-    <div class="sliderHeader">
-        <div class="sliderHeaderTitle">Subscribed Lists</div>
-        <div class="progressBar"></div>
-    </div>
-    <div class="sliderContentContainer">
-        <button class="handle leftHandle">
-            <div class="handleSymbol">&#8249;</div>
-        </button>
-        <div class="slider">
-            {% for list in subscribed_lists %}
-            <div class="contentWrapper">
-                <div class="contentContainer">
-                    <div class="contentIconContainer">
-                        {% if list.list_pic %}
-                        <img class="contentIcon" src="{{ list.list_pic.url }}" alt="favicon" />
-                        {% else %}
-                        <img class="contentIcon" src="{% static 'home/media/finbrowser-bigger-logo.png' %}"
-                            alt="favicon" />
-                        {% endif %}
-                    </div>
-                    <a class="contentLink" href="{{ list.get_absolute_url }}"></a>
-                    <div class="contentNameContainer">
-                        <div class="contentName">{{ list.name }}</div>
+        <div class="sliderContentContainer">
+            <button class="handle leftHandle">
+                <div class="handleSymbol">&#8249;</div>
+            </button>
+            <div class="slider">
+                {% for list in user_lists %}
+                <div class="contentWrapper">
+                    <div class="contentContainer">
+                        <div class="contentIconContainer">
+                            {% if list.list_pic %}
+                            <img class="contentIcon" src="{{ list.list_pic.url }}" alt="favicon" />
+                            {% else %}
+                            <img class="contentIcon" src="{% static 'home/media/finbrowser-bigger-logo.png' %}"
+                                alt="favicon" />
+                            {% endif %}
+                        </div>
+                        <a class="contentLink" href="{{ list.get_absolute_url }}"></a>
+                        <div class="contentNameContainer">
+                            <div class="contentName">{{ list.name }}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            {% endfor %}
-            <div class="contentWrapper interactionWrapper">
-                <div class="addListsButton addButton"><i class="fas fa-plus"></i></div>
-                <div class="addListsForm formContainer">
-                    <div class="formHeaderContainer">Add Lists<i class="fas fa-times closeFormContainerButton"></i>
-                    </div>
-                    <input id="textInput" type="text">
-                    <div class="searchResultWrapper">
-                        <div id="searchResultsContainer"></div>
-                        <div class="selectionContainer"></div>
-                    </div>
-                    <button class="formSubmitButton">Add</button>
-                </div>
-            </div>
-        </div>
-        <button class="handle rightHandle">
-            <div class="handleSymbol">&#8250;</div>
-        </button>
-    </div>
-</div>
-
-<div class="sliderWrapper">
-    <div class="sliderHeader">
-        <div class="sliderHeaderTitle">Subscribed Sources</div>
-        <div class="progressBar"></div>
-    </div>
-    <div class="sliderContentContainer">
-        <button class="handle leftHandle">
-            <div class="handleSymbol">&#8249;</div>
-        </button>
-        <div class="slider">
-            {% for source in subscribed_sources %}
-            <div class="contentWrapper">
-                <div class="contentContainer">
-                    <div class="contentIconContainer">
-                        <img class="contentIcon" src="{% static source.favicon_path %}" alt="favicon" />
-                    </div>
-                    <a class="contentLink" href="{{ source.get_absolute_url }}"></a>
-                    <div class="contentNameContainer">
-                        <div class="contentName">{{ source.name }}</div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-            <div class="contentWrapper interactionWrapper">
-                <div class="addSourcesButton addButton"><i class="fas fa-plus"></i></div>
-                <div class="addSourcesForm formContainer">
-                    <div class="formHeaderContainer">Add Sources<i class="fas fa-times closeFormContainerButton"></i>
-                    </div>
-                    <input id="textInput" type="text">
-                    <div class="searchResultWrapper">
-                        <div id="searchResultsContainer"></div>
-                        <div class="selectionContainer"></div>
-                    </div>
-                    <button class="formSubmitButton">Add</button>
-                </div>
-            </div>
-        </div>
-        <button class="handle rightHandle">
-            <div class="handleSymbol">&#8250;</div>
-        </button>
-    </div>
-</div>
-
-{% if subscribed_content or highlighted_content or newest_tweets %}
-<div class="contentColumnWrapper">
-    {% if subscribed_content %}
-    <div
-        class="contentColumnContainer {% if not highlighted_content or not newest_tweets %}halfPageContainer{% endif %}">
-        {% create_content_container "Long-Form Content" subscribed_content request user_lists csrf_token add_list_form highlighted_content_ids %}
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in subscribed_content.paginator.page_range %}
-                {% if subscribed_content.number == i %}
-                <button class="currentPagination">{{ subscribed_content.number }}</button>
-                {% elif i > subscribed_content.number|add:'-3' and i < subscribed_content.number|add:'3' %} <a
-                    href="?subscribed_content={{ i }}">{{ i }}</a>
-                {% endif %}
                 {% endfor %}
-            </span>
+                <div class="contentWrapper interactionWrapper">
+                    <div class="createListButton addButton"><i class="fas fa-plus"></i></div>
+                    <div class="createListMenu formContainer">
+                        <div class="formHeaderContainer">Create A New List<i
+                                class="fas fa-times closeFormContainerButton"></i>
+                        </div>
+                        <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+                            {% csrf_token %} {{ add_list_form }}
+                            <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <button class="handle rightHandle">
+                <div class="handleSymbol">&#8250;</div>
+            </button>
         </div>
     </div>
-    {% endif %}
-    {% if highlighted_content %}
-    <div
-        class="contentColumnContainer {% if not subscribed_content or not newest_tweets %}halfPageContainer{% endif %}">
-        {% create_fk_content_container "Highlighted Content" highlighted_content request user_lists csrf_token add_list_form highlighted_content_ids %}
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in highlighted_content.paginator.page_range %}
-                {% if highlighted_content.number == i %}
-                <button class="currentPagination">{{ highlighted_content.number }}</button>
-                {% elif i > highlighted_content.number|add:'-3' and i < highlighted_content.number|add:'3' %} <a
-                    href="?highlighted_content={{ i }}">{{ i }}</a>
-                {% endif %}
+
+    <div class="sliderWrapper">
+        <div class="sliderHeader">
+            <div class="sliderHeaderTitle">Subscribed Lists</div>
+            <div class="progressBar"></div>
+        </div>
+        <div class="sliderContentContainer">
+            <button class="handle leftHandle">
+                <div class="handleSymbol">&#8249;</div>
+            </button>
+            <div class="slider">
+                {% for list in subscribed_lists %}
+                <div class="contentWrapper">
+                    <div class="contentContainer">
+                        <div class="contentIconContainer">
+                            {% if list.list_pic %}
+                            <img class="contentIcon" src="{{ list.list_pic.url }}" alt="favicon" />
+                            {% else %}
+                            <img class="contentIcon" src="{% static 'home/media/finbrowser-bigger-logo.png' %}"
+                                alt="favicon" />
+                            {% endif %}
+                        </div>
+                        <a class="contentLink" href="{{ list.get_absolute_url }}"></a>
+                        <div class="contentNameContainer">
+                            <div class="contentName">{{ list.name }}</div>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
-            </span>
+                <div class="contentWrapper interactionWrapper">
+                    <div class="addListsButton addButton"><i class="fas fa-plus"></i></div>
+                    <div class="addListsForm formContainer">
+                        <div class="formHeaderContainer">Add Lists<i class="fas fa-times closeFormContainerButton"></i>
+                        </div>
+                        <input id="textInput" type="text">
+                        <div class="searchResultWrapper">
+                            <div id="searchResultsContainer"></div>
+                            <div class="selectionContainer"></div>
+                        </div>
+                        <button class="formSubmitButton">Add</button>
+                    </div>
+                </div>
+            </div>
+            <button class="handle rightHandle">
+                <div class="handleSymbol">&#8250;</div>
+            </button>
         </div>
     </div>
-    {% endif %}
-    {% if newest_tweets %}
-    <div
-        class="contentColumnContainer {% if not highlighted_content or not subscribed_content %}halfPageContainer{% endif %}">
-        {% create_content_container "Tweets" newest_tweets request user_lists csrf_token add_list_form highlighted_content_ids %}
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in newest_tweets.paginator.page_range %}
-                {% if newest_tweets.number == i %}
-                <button class="currentPagination">{{ newest_tweets.number }}</button>
-                {% elif i > newest_tweets.number|add:'-3' and i < newest_tweets.number|add:'3' %} <a
-                    href="?newest_tweets={{ i }}">{{ i }}</a>
-                {% endif %}
+
+    <div class="sliderWrapper">
+        <div class="sliderHeader">
+            <div class="sliderHeaderTitle">Subscribed Sources</div>
+            <div class="progressBar"></div>
+        </div>
+        <div class="sliderContentContainer">
+            <button class="handle leftHandle">
+                <div class="handleSymbol">&#8249;</div>
+            </button>
+            <div class="slider">
+                {% for source in subscribed_sources %}
+                <div class="contentWrapper">
+                    <div class="contentContainer">
+                        <div class="contentIconContainer">
+                            <img class="contentIcon" src="{% static source.favicon_path %}" alt="favicon" />
+                        </div>
+                        <a class="contentLink" href="{{ source.get_absolute_url }}"></a>
+                        <div class="contentNameContainer">
+                            <div class="contentName">{{ source.name }}</div>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
-            </span>
+                <div class="contentWrapper interactionWrapper">
+                    <div class="addSourcesButton addButton"><i class="fas fa-plus"></i></div>
+                    <div class="addSourcesForm formContainer">
+                        <div class="formHeaderContainer">Add Sources<i
+                                class="fas fa-times closeFormContainerButton"></i>
+                        </div>
+                        <input id="textInput" type="text">
+                        <div class="searchResultWrapper">
+                            <div id="searchResultsContainer"></div>
+                            <div class="selectionContainer"></div>
+                        </div>
+                        <button class="formSubmitButton">Add</button>
+                    </div>
+                </div>
+            </div>
+            <button class="handle rightHandle">
+                <div class="handleSymbol">&#8250;</div>
+            </button>
         </div>
     </div>
-    {% endif %}
+
+    {% if subscribed_content or highlighted_content or newest_tweets %}
+    <div class="contentColumnWrapper">
+        {% if subscribed_content %}
+        <div
+            class="contentColumnContainer {% if not highlighted_content or not newest_tweets %}halfPageContainer{% endif %}">
+            {% create_content_container "Long-Form Content" subscribed_content request user_lists csrf_token add_list_form highlighted_content_ids %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% for i in subscribed_content.paginator.page_range %}
+                    {% if subscribed_content.number == i %}
+                    <button class="currentPagination">{{ subscribed_content.number }}</button>
+                    {% elif i > subscribed_content.number|add:'-3' and i < subscribed_content.number|add:'3' %} <a
+                        href="?subscribed_content={{ i }}">{{ i }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+        </div>
+        {% endif %}
+        {% if highlighted_content %}
+        <div
+            class="contentColumnContainer {% if not subscribed_content or not newest_tweets %}halfPageContainer{% endif %}">
+            {% create_fk_content_container "Highlighted Content" highlighted_content request user_lists csrf_token add_list_form highlighted_content_ids %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% for i in highlighted_content.paginator.page_range %}
+                    {% if highlighted_content.number == i %}
+                    <button class="currentPagination">{{ highlighted_content.number }}</button>
+                    {% elif i > highlighted_content.number|add:'-3' and i < highlighted_content.number|add:'3' %} <a
+                        href="?highlighted_content={{ i }}">{{ i }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+        </div>
+        {% endif %}
+        {% if newest_tweets %}
+        <div
+            class="contentColumnContainer {% if not highlighted_content or not subscribed_content %}halfPageContainer{% endif %}">
+            {% create_content_container "Tweets" newest_tweets request user_lists csrf_token add_list_form highlighted_content_ids %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% for i in newest_tweets.paginator.page_range %}
+                    {% if newest_tweets.number == i %}
+                    <button class="currentPagination">{{ newest_tweets.number }}</button>
+                    {% elif i > newest_tweets.number|add:'-3' and i < newest_tweets.number|add:'3' %} <a
+                        href="?newest_tweets={{ i }}">{{ i }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
 </div>
 {% endif %}
-
 <script src="{% static 'home/min_feed_script_v6.js' %}"></script>
+{% else %}
+
+<main class="main">
+    <section class="landingSection">
+        <div class="landingSectionContainer">
+            <h1>Research Aggregation For
+                <span>Retail Investors</span>
+            </h1>
+            <p>
+                Find valuable insights, news, analysis and stock tips from industry experts on the open web.
+            </p>
+            <a href="{% url 'account_login' %}" class="signUpButton">Get Started</a>
+        </div>
+        <div class="landingSectionImage">
+            <img src="{% static 'home/media/landing-page.svg' %}" alt="landing-page-logo">
+        </div>
+    </section>
+    <section class="featuresContainer" id="featuresContainer">
+        <div class="featureSubContainer">
+            <div class="featuresWrapper">
+                <div class="sectionText">
+                    <h2>Core Features</h2>
+                    <p>
+                        While FinBrowser's primary focus is to aggregate stock market-related insights, the site offers
+                        an array of additional features designed to simplify stock market research.
+                    </p>
+                </div>
+                <div class="featureWrapper">
+                    <div class="feature">
+                        <div class="featureImageContainer">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <div class="featureDescription">
+                            <h3>Find Great Stock Market Content</h3>
+                            <p>
+                                FinBrowser curates the best news, analysis, and other stock market-related content from
+                                websites like Substack, Twitter, SeekingAlpha and more.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="featureImageContainer">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="featureDescription">
+                            <h3>Stay Up To Date On Your Favorite Sources</h3>
+                            <p>
+                                Stay up-to-date on the activity of your favorite stock market content creators and
+                                receive notification when new content is available.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="featureImageContainer">
+                            <i class="fa-solid fa-industry"></i>
+                        </div>
+                        <div class="featureDescription">
+                            <h3>Get To Know More About A Specific Sector</h3>
+                            <p>
+                                Want to learn more about a specific industry? Here you will find the top articles and
+                                experts on the topic that will help you to become an expert yourself.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="featureWrapper">
+                    <div class="feature">
+                        <div class="featureImageContainer">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="featureDescription">
+                            <h3>Find Articles About Specific Stocks</h3>
+                            <p>
+                                Want to know more about a specific stock? Check out what the best sources on the open
+                                web have to say about it.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="featureImageContainer">
+                            <i class="fa-solid fa-list"></i>
+                        </div>
+                        <div class="featureDescription">
+                            <h3>Create And Follow Lists</h3>
+                            <p>
+                                Create lists to collect your research in one place and see what research other users
+                                have done.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="featureImageContainer">
+                            <i class="far fa-bell"></i>
+                        </div>
+                        <div class="featureDescription">
+                            <h3>Keyword Notifications</h3>
+                            <p>
+                                Want to stay informed about a particular segment or product of a company? Just type in
+                                the keyword, and you will be notified as soon as new content about that particular topic
+                                has been published.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endif %}
+
+
 {% endblock content %}
