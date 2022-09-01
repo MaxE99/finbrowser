@@ -32,17 +32,18 @@ class NotificationView(TemplateView, BaseMixin):
         return context
 
 
-class FeedView(TemplateView, LoginRequiredMixin, BaseMixin):
+class FeedView(TemplateView, BaseMixin):
     template_name = 'home/feed.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        subscribed_sources = Source.objects.get_subscribed_sources(self.request.user)
-        context['subscribed_lists'] = List.objects.get_subscribed_lists(self.request.user)
-        context['subscribed_sources'] = subscribed_sources
-        context['subscribed_content'] = paginator_create(self.request, Article.objects.get_subscribed_content_excluding_website(subscribed_sources, TWITTER), 50, 'subscribed_content')
-        context['highlighted_content'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_content_of_user(self.request.user), 40, 'highlighted_content')
-        context['newest_tweets'] = paginator_create(self.request, Article.objects.get_subscribed_content_from_website(subscribed_sources, TWITTER), 25, 'newest_tweets')
+        if self.request.user.is_authenticated: 
+            subscribed_sources = Source.objects.get_subscribed_sources(self.request.user)
+            context['subscribed_lists'] = List.objects.get_subscribed_lists(self.request.user)
+            context['subscribed_sources'] = subscribed_sources
+            context['subscribed_content'] = paginator_create(self.request, Article.objects.get_subscribed_content_excluding_website(subscribed_sources, TWITTER), 50, 'subscribed_content')
+            context['highlighted_content'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_content_of_user(self.request.user), 40, 'highlighted_content')
+            context['newest_tweets'] = paginator_create(self.request, Article.objects.get_subscribed_content_from_website(subscribed_sources, TWITTER), 25, 'newest_tweets')
         return context
 
 

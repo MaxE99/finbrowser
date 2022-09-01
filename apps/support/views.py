@@ -27,20 +27,20 @@ class TermsOfServiceView(TemplateView, BaseMixin):
 class ReportBugView(FormView, UserFeedbackMixin, BaseMixin):
     template_name = 'support/report_bug.html'
     form_class = BugReportForm
-    success_url = reverse_lazy('main:main')
+    success_url = reverse_lazy('home:feed')
 
 class FeatureSuggestionView(FormView, UserFeedbackMixin, BaseMixin):
     template_name = 'support/suggestions.html'
     form_class = FeatureSuggestionForm
-    success_url = reverse_lazy('main:main')
+    success_url = reverse_lazy('home:feed')
 
 class SourceSuggestionView(FormView, UserFeedbackMixin, BaseMixin):
     template_name = 'support/suggest_sources.html'
     form_class = SourceSuggestionForm
-    success_url = reverse_lazy('main:main')
+    success_url = reverse_lazy('home:feed')
 
 
 class ContactView(FormView, UserFeedbackMixin, BaseMixin):
     template_name = 'support/contact.html'
     form_class = ContactForm
-    success_url = reverse_lazy('main:main')
+    success_url = reverse_lazy('home:feed')

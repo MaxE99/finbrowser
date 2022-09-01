@@ -33,11 +33,15 @@
                 <div class="logoContainer">
                     <div class="logoSpace">
                         <img src="{% static 'home/media/finbrowser-logo.png' %}" alt="finbrowser-logo">
-                        <a href="{% url 'main:main' %}"></a>
+                        <a href="{% url 'home:feed' %}"></a>
                     </div>
                 </div>
                 <nav class="mainNavigation" role="navigation" aria-label="Main">
+                    {% if request.user.is_authenticated == False %}
+                    <div class="mainNavigationLink"><span>Feed</span><a href="{% url 'account_login' %}"></a></div>
+                    {% else %}
                     <div class="mainNavigationLink"><span>Feed</span><a href="{% url 'home:feed' %}"></a></div>
+                    {% endif %}
                     <div class="mainNavigationLink"><span>Lists</span><a href="{% url 'list:lists' %}"></a></div>
                     <div class="mainNavigationLink"><span>Sectors</span><a href="{% url 'sector:sectors' %}"></a>
                     </div>

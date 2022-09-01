@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 # Local imports
-from researchbrowserproject.sitemaps import ProfileSitemap, HomePageSitemap, SectorSitemap, RegistrationSitemaps, SourceSitemap, ListSitemap, ContentSitemaps
+from researchbrowserproject.sitemaps import ProfileSitemap, SectorSitemap, RegistrationSitemaps, SourceSitemap, ListSitemap, ContentSitemaps
 
 sitemaps = {
     'sources': SourceSitemap,
@@ -13,7 +13,6 @@ sitemaps = {
     'sectors': SectorSitemap,
     'profile': ProfileSitemap,
     'content': ContentSitemaps,
-    'home': HomePageSitemap,
     'registration': RegistrationSitemaps,
 }
 
@@ -26,7 +25,6 @@ urlpatterns = [
     path('', include('apps.article.urls', namespace='article')),
     path('', include('apps.list.urls', namespace='list')),
     path('', include('apps.sector.urls', namespace='sector')),
-    path('', include('apps.main.urls', namespace='main')),
     path('', include('apps.stock.urls', namespace='stock')),
     path('registration/', include('allauth.urls')),
     path('api/', include('apps.api.urls', namespace='api')),
