@@ -22,7 +22,7 @@ class SectorView(ListView, BaseMixin):
     model = Sector
     context_object_name = 'sectors'
     template_name = 'sector/sectors.html'
-    queryset = Sector.objects.prefetch_related('source_set').all().order_by('name')
+    queryset = Sector.objects.prefetch_related('source_set').all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -36,11 +36,11 @@ class SectorSearchView(ListView, BaseMixin):
     model = Sector
     context_object_name = 'sectors'
     template_name = 'sector/sectors.html'
-    queryset = Sector.objects.prefetch_related('source_set').all().order_by('name')
+    queryset = Sector.objects.prefetch_related('source_set').all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        filtered_sources = sources_filter(self.kwargs['paywall'], self.kwargs['type'], self.kwargs['minimum_rating'], self.kwargs['website'], Source.objects.all().order_by('name'))
+        filtered_sources = sources_filter(self.kwargs['paywall'], self.kwargs['type'], self.kwargs['minimum_rating'], self.kwargs['website'], Source.objects.all())
         context['results_found'] = filtered_sources.count()
         context['filtered_sources'] = filtered_sources.values_list('name', flat=True)
         return context

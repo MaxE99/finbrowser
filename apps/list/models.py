@@ -44,6 +44,9 @@ class List(models.Model):
     average_rating = models.FloatField(blank=True, null=True)
     ammount_of_ratings = models.IntegerField(default=0, null=True)
 
+    class Meta:
+        ordering = ('name', )
+
     objects = ListManager()
 
     @property
