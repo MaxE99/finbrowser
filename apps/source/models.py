@@ -36,6 +36,9 @@ class Source(models.Model):
     ammount_of_ratings = models.IntegerField(default=0, null=True)
     news = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ('name', )
+
     objects = SourceManager()
 
     def save(self, *args, **kwargs):

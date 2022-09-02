@@ -32,5 +32,8 @@ class NotificationMessage(models.Model):
     date = models.DateTimeField()
     user_has_seen = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ('-date', )
+
     def __str__(self):
         return f'{self.notification} - {self.article}'
