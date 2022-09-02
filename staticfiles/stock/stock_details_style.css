@@ -1,7 +1,11 @@
 .stockHeader{
     font-size: 3.5rem;
     text-align: center;
-    margin-top: 1rem;
+    margin: 1rem 0;
+}
+
+.sliderWrapper{
+    margin-top: 0;
 }
 
 .contentColumnWrapper .contentColumnContainer {
