@@ -40,7 +40,7 @@ def articles_filter(timeframe, sector, paywall, source, articles):
     if timeframe != 'All' and timeframe != None:
         filter_args['pub_date__gte'] = now()-timedelta(days=int(timeframe))
     filter_args = dict((k, v) for k, v in filter_args.items() if v is not None and v != 'All')
-    return articles.filter(**filter_args).order_by('-pub_date')
+    return articles.filter(**filter_args)
 
 
 def sources_filter(paywall, type, minimum_rating, website, sources):

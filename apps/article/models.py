@@ -34,8 +34,9 @@ class Article(models.Model):
     search_vector = SearchVectorField(null=True)
 
     class Meta:
+        ordering = ('-pub_date', )
         indexes = (GinIndex(fields=["search_vector"]),)
-
+        
     objects = ArticleManager()
 
     def __str__(self):

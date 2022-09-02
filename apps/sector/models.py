@@ -8,6 +8,9 @@ class Sector(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(unique=True)
 
+    class Meta:
+        ordering = ('name', )
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Sector, self).save(*args, **kwargs)

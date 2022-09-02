@@ -12,22 +12,22 @@ class ListManager(models.Manager):
             list.articles.add(article)                
 
     def get_created_lists(self, user):
-        return self.filter(creator=user).select_related('creator__profile').prefetch_related('articles', 'sources').order_by('name')
+        return self.filter(creator=user).select_related('creator__profile').prefetch_related('articles', 'sources')
 
     def get_highlighted_content(self, list_id):
-        return self.get(list_id=list_id).articles.all().select_related('source', 'source__website', 'source__sector', 'tweet_type').order_by('-pub_date')
+        return self.get(list_id=list_id).articles.all().select_related('source', 'source__website', 'source__sector', 'tweet_type')
 
     def get_subscribed_lists(self, user):
-        return self.filter(subscribers=user).select_related('creator__profile').order_by('name').only('list_pic', 'slug', 'name', 'creator__profile')
+        return self.filter(subscribers=user).select_related('creator__profile').only('list_pic', 'slug', 'name', 'creator__profile')
 
     def filter_lists(self, search_term):
-        return self.filter(name__istartswith=search_term, is_public=True).select_related('creator__profile').order_by('name')
+        return self.filter(name__istartswith=search_term, is_public=True).select_related('creator__profile')
 
     def filter_lists_not_subscribed(self, search_term, user):
-        return self.filter(name__istartswith=search_term, is_public=True).exclude(creator=user).exclude(subscribers=user).order_by('name')
+        return self.filter(name__istartswith=search_term, is_public=True).exclude(creator=user).exclude(subscribers=user)
 
     def get_lists_with_source(self, source):
-        return self.filter(sources__source_id=source.source_id, is_public=True).select_related('creator__profile', 'creator').order_by('name')
+        return self.filter(sources__source_id=source.source_id, is_public=True).select_related('creator__profile', 'creator')
 
 
 class ListRatingManager(models.Manager):
