@@ -322,13 +322,13 @@ class NotificationViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
         source_id = request.data.get('source_id', None)
-        list_id = request.data.get('list_id', None)
+        stock_id = request.data.get('stock_id', None)
         if source_id != None:
             source = get_object_or_404(Source, source_id=source_id)
             notification, created = Notification.objects.get_or_create(user=request.user, source=source)
-        elif list_id != None:
-            list = get_object_or_404(List, list_id=list_id)
-            notification, created = Notification.objects.get_or_create(user=request.user, list=list)
+        elif stock_id != None:
+            stock = get_object_or_404(Stock, stock_id=stock_id)
+            notification, created = Notification.objects.get_or_create(user=request.user, stock=stock)
         if created:
             return Response("Notification has been added!")
         else:

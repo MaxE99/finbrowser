@@ -2,7 +2,6 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
 # Local imports
 from apps.logic.pure_logic import paginator_create
 from apps.base_logger import logger

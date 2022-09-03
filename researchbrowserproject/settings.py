@@ -111,6 +111,7 @@ AUTH_USER_MODEL = 'accounts.User'
 SITE_ID = 2
 
 MIDDLEWARE = [
+    'django.middleware.gzip.GZipMiddleware',
     'django.middleware.security.SecurityMiddleware',
     # "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
