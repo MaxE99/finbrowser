@@ -8,20 +8,20 @@
 {% block content %}
 
 
-{% if source_notifications or list_notifications or keyword_notifications %}
+{% if source_notifications or stock_notifications or keyword_notifications %}
 <div class="contentColumnWrapper">
     {% if source_notifications %}
-    <div class="contentColumnContainer {% if not list_notifications %}halfPageContainer{% endif %}">
+    <div class="contentColumnContainer {% if not stock_notifications %}halfPageContainer{% endif %}">
         {% create_fk_content_container "Source Notifications" source_notifications request user_lists csrf_token add_list_form highlighted_content_ids %}
     </div>
     {% endif %}
-    {% if list_notifications %}
+    {% if stock_notifications %}
     <div class="contentColumnContainer {% if not source_notifications %}halfPageContainer{% endif %}">
-        {% create_fk_content_container "List Notifications" list_notifications request user_lists csrf_token add_list_form highlighted_content_ids %}
+        {% create_fk_content_container "Stock Notifications" stock_notifications request user_lists csrf_token add_list_form highlighted_content_ids %}
     </div>
     {% endif %}
     <div
-        class="contentColumnContainer {% if not source_notifications or not list_notifications %}halfPageContainer{% endif %}">
+        class="contentColumnContainer {% if not source_notifications or not stock_notifications %}halfPageContainer{% endif %}">
         <div class="categoryHeader">Keyword Notifications</div>
         <form action="" enctype="multipart/form-data" method="POST" class="createKeywordNotificationForm">
             {% csrf_token %} {{ keyword_notification_creation_form }}

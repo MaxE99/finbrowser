@@ -36,11 +36,6 @@
                 </div>
                 {% if list.creator == request.user %}
                 <div class="notificationAndSubscribtionContainer">
-                    {% if notifications_activated %}
-                    <i class="fas fa-bell notificationActivated"></i>
-                    {% else %}
-                    <i class="fas fa-bell"></i>
-                    {% endif %}
                     <button type="button" class="editButton"><i class="fas fa-edit"></i> Edit</button>
                     <div class="buttonContainer">
                         <button type="button" class="deleteListButton">Delete List</button>
@@ -51,11 +46,6 @@
                 {% else %}
                 <div class="notificationAndSubscribtionContainer">
                     {% if request.user.is_authenticated %}
-                    {% if notifications_activated %}
-                    <i class="fas fa-bell notificationActivated"></i>
-                    {% else %}
-                    <i class="fas fa-bell"></i>
-                    {% endif %}
                     {% if subscribed %}
                     <button type="button" class="subscribeButton subscribed">Subscribed</button>
                     {% else %}
@@ -222,5 +212,5 @@
 
 
 {{ user_rating|json_script:"user-rating" }}
-<script src="{% static 'list/min_list_details_script_v5.js' %}"></script>
+<script src="{% static 'list/min_list_details_script_v6.js' %}"></script>
 {% endblock content %}

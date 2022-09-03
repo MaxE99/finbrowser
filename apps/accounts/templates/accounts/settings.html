@@ -106,23 +106,16 @@
             {% endif %}
             {% endfor %}
         </div>
-        <h2 class="notificationDeletionHeader">Lists</h2>
+        <h2 class="notificationDeletionHeader">Stocks</h2>
         <div class="notificationContainer">
             {% for notification in notifications %}
-            {% if notification.list %}
-            <div class="sourceContainer">
+            {% if notification.stock %}
+            <div class="keywordContainer">
                 <div class="iconContainer">
-                    <i class="fas fa-trash" id="notification_id_{{ notification.notification_id }}"></i>
-                    {% if notification.list.list_pic %}
-                    <img class="sourcePic" src="{{ notification.list.list_pic.url }}" alt="favicon" />
-                    {% else %}
-                    <img class="sourcePic" src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="favicon" />
-                    {% endif %}
+                    <i class="fas fa-trash" id="notification_id_{{ notification.notification_id }}">
+                    </i>
                 </div>
-                <a class="sourceLink" href="{{ notification.list.get_absolute_url }}"></a>
-                <div class="sourceNameOuterContainer">
-                    <div class="sourceNameInnerContainer">{{ notification.list.name }}</div>
-                </div>
+                {{ notification.stock.ticker }}
             </div>
             {% endif %}
             {% endfor %}

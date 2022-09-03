@@ -101,15 +101,12 @@ class ListDetailView(TemplateView, BaseMixin):
         list = get_object_or_404(List, slug=self.kwargs['list_slug'], creator=get_object_or_404(User,profile=get_object_or_404(Profile, slug=self.kwargs['profile_slug'])))
         list_id = list.list_id
         if self.request.user.is_authenticated:
-            notifications_activated = Notification.objects.filter(user=self.request.user, list=list).exists()
             subscribed = True if self.request.user in list.subscribers.all() else False
             user_rating = ListRating.objects.get_user_rating(self.request.user, list_id)
         else:
-            notifications_activated = user_rating = None
-            subscribed = False  
+            user_rating, subscribed = None, False
         context['list'] = list
         context['latest_articles'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources_excluding_website(list, TWITTER), 50, 'latest_articles') 
-        context['notifications_activated'] = notifications_activated
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating
         context['highlighted_content'] = paginator_create(self.request, List.objects.get_highlighted_content(list_id), 40, 'highlighted_content')

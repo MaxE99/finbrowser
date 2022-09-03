@@ -33,15 +33,15 @@ class NotificationMixin(ContextMixin):
             unseen_notifications = NotificationMessage.objects.filter(notification__in=notifications_subscribtions, user_has_seen=False).count()
             source_notifications_subscribtions = Notification.objects.filter(user=self.request.user, source__isnull=False)
             source_notifications = NotificationMessage.objects.filter(notification__in=source_notifications_subscribtions).select_related('article', 'article__source', 'article__source__website', 'article__tweet_type') 
-            list_notifications_subscribtions = Notification.objects.filter(user=self.request.user, list__isnull=False)
-            list_notifications = NotificationMessage.objects.filter(notification__in=list_notifications_subscribtions).select_related('article', 'article__source', 'article__source__website', 'article__tweet_type')
+            stock_notifications_subscribtions = Notification.objects.filter(user=self.request.user, stock__isnull=False)
+            stock_notifications = NotificationMessage.objects.filter(notification__in=stock_notifications_subscribtions).select_related('article', 'article__source', 'article__source__website', 'article__tweet_type')
             keyword_notifications_subscribtions = Notification.objects.filter(user=self.request.user, keyword__isnull=False)
             keyword_notifications = NotificationMessage.objects.filter(notification__in=keyword_notifications_subscribtions).select_related('article', 'article__source', 'article__source__website', 'article__tweet_type')
         else:
-            unseen_notifications = source_notifications = list_notifications = keyword_notifications = None
+            unseen_notifications = source_notifications = stock_notifications = keyword_notifications = None
         context['unseen_notifications'] = unseen_notifications
         context['source_notifications'] = source_notifications
-        context['list_notifications'] = list_notifications
+        context['stock_notifications'] = stock_notifications
         context['keyword_notifications'] = keyword_notifications
         return context
 

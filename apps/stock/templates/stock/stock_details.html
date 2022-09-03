@@ -1,10 +1,19 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'stock/min_stock_details_style_v2.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'stock/min_stock_details_style_v3.css' %}" />
 <title>{{ stock.full_company_name }} | FinBrowser</title>
 <meta name="description" content="Discover the latest content from {{ sstock.full_company_name }}">
 {% endblock %} {% block content %}
 
-<h2 class="stockHeader">{{ stock.full_company_name }}</h2>
+<div class="companyNameAndNotificationHeader">
+    <h2 class="stockHeader" id="stock_id_{{ stock.stock_id }}">{{ stock.full_company_name }}</h2>
+    {% if request.user.is_authenticated %}
+    {% if notifications_activated %}
+    <i class="fas fa-bell notificationActivated"></i>
+    {% else %}
+    <i class="fas fa-bell"></i>
+    {% endif %}
+    {% endif %}
+</div>
 
 {% if expert_sources %}
 {% create_source_container "Primary Sources" expert_sources %}
@@ -51,4 +60,5 @@
 <div class="noContentFound">No content found!</div>
 {% endif %}
 
+<script src="{% static 'stock/stock_details_script.js' %}"></script>
 {% endblock content %}
