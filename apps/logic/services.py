@@ -1,6 +1,7 @@
 # Django import
 from django.utils.timezone import now
 from django.conf import settings
+from django.db.models import Q
 # Python import
 from urllib.request import Request, urlopen
 import xml.etree.cElementTree as ET
@@ -34,16 +35,17 @@ def notifications_create(created_articles):
     from apps.article.models import Article
     notifications_creation_list = []
     notifications = Notification.objects.all()
-    list_notifications = notifications.filter(list__isnull=False)
     source_notifications = notifications.filter(source__isnull=False)
     articles = Article.objects.filter(article_id__in=[article.article_id for article in created_articles])
-    for notification in notifications.filter(keyword__isnull=False).iterator():
-        for article in articles.filter(search_vector=notification.keyword).iterator():
-            notifications_creation_list.append({"notification": notification, 'article': article, 'date': now(), 'user': notification.user})
+    for notification in notifications.exclude(source__isnull=False).select_related("stock"):
+        if notification.keyword:
+            for article in articles.filter(search_vector=notification.keyword).iterator():
+                notifications_creation_list.append({"notification": notification, 'article': article, 'date': now(), 'user': notification.user})
+        else:
+            for article in articles.filter(Q(search_vector=notification.stock.ticker) | Q(search_vector=notification.stock.short_company_name)).iterator():
+                notifications_creation_list.append({"notification": notification, 'article': article, 'date': now(), 'user': notification.user})
     for article in articles:
         for notification in source_notifications.filter(source=article.source).iterator():
-            notifications_creation_list.append({"notification": notification, 'article': article, 'date': now(), 'user': notification.user})
-        for notification in list_notifications.filter(list__in=article.source.lists.all()).iterator():
             notifications_creation_list.append({"notification": notification, 'article': article, 'date': now(), 'user': notification.user})
     existing_dicts = set()
     filtered_list = []

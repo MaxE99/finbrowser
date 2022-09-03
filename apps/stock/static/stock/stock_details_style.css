@@ -1,7 +1,26 @@
+.companyNameAndNotificationHeader{
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.companyNameAndNotificationHeader .fa-bell{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    border-left: unset;
+    transform: translateY(-50%);
+}
+
+.companyNameAndNotificationHeader .notificationActivated {
+    color: var(--primary-fontColor);
+  }
+
 .stockHeader{
     font-size: 3.5rem;
     text-align: center;
     margin: 1rem 0;
+    max-width: 75%;
 }
 
 .sliderWrapper{

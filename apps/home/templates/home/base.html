@@ -69,7 +69,7 @@
                         <h3>Notifications</h3>
                         <div class="notificationHeadersContainer">
                             <div class="activeNotificationCategory" data-for-tab="0">Sources</div>
-                            <div data-for-tab="1">Lists</div>
+                            <div data-for-tab="1">Stocks</div>
                             <div data-for-tab="2">Keywords</div>
                         </div>
                         <div class="notificationsContainer activeNotificationContainer smallFormContentWrapper"
@@ -210,8 +210,8 @@
                             {% endif %}
                         </div>
                         <div class="notificationsContainer smallFormContentWrapper" data-tab="1">
-                            {% if list_notifications %}
-                            {% for notification in list_notifications %}
+                            {% if stock_notifications %}
+                            {% for notification in stock_notifications %}
                             <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
                                 id="article_id_{{ notification.article.article_id }}">
                                 <div class="leftContentSide">
@@ -342,7 +342,7 @@
                             </div>
                             {% endfor %}
                             {% else %}
-                            <div class="noNotificationsAvailable">No List Notifications Available</div>
+                            <div class="noNotificationsAvailable">No Stock Notifications Available</div>
                             {% endif %}
                         </div>
                         <div class="notificationsContainer smallFormContentWrapper" data-tab="2">
