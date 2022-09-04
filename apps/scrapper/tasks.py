@@ -323,7 +323,7 @@ def twitter_scrape_followings():
         name = follow.name
         if Source.objects.filter(external_id=follow.id).exists():
             continue
-        elif Source.objects.filter(name=follow.name).exists():
+        elif Source.objects.filter(name=follow.name).exists() or Source.objects.filter(slug=slugify(name)).exists():
             name = follow.name + " - Twitter"
         url = f'https://twitter.com/{follow.screen_name}'
         slug = slugify(name)
