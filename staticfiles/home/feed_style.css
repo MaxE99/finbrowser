@@ -205,8 +205,8 @@ main {
 .landingSection {
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 4.7rem 0;
-  margin-left: 11%;
   overflow-x: hidden;
   min-height: calc(100vh - 17rem);
 }
@@ -267,11 +267,6 @@ main {
 
 .landingSection .landingSectionImage {
   position: relative;
-}
-
-.landingSection .landingSectionImage img {
-  width: 200%;
-  max-width: 200%;
 }
 
 .featuresContainer {
@@ -403,7 +398,6 @@ main {
 
   .landingSectionImage {
     margin-top: 4rem;
-    margin-right: 50%;
   }
 
   .featuresContainer {
@@ -445,7 +439,7 @@ main {
 
 @media (max-width: 500px) {
   .landingSection .landingSectionContainer h1 {
-    font-size: 3.5rem;
+    font-size: 3.3rem;
   }
 
   .landingSection {
@@ -456,7 +450,7 @@ main {
   .sectionText p,
   .landingSection .landingSectionContainer p {
     text-align: justify;
-    font-size: 2.1rem;
+    font-size: 2rem;
   }
 
   .landingSection .landingSectionContainer p {
