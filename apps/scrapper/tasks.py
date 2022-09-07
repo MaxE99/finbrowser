@@ -133,7 +133,7 @@ def scrape_twitter():
     else:
         statuses = api.home_timeline(count=200, tweet_mode='extended', include_entities=True) 
     existing_tweets = Article.objects.filter(external_id__isnull=False).values_list('external_id', flat=True)
-    sources = Source.objects.all() 
+    sources = Source.objects.all().only("source_id", "external_id") 
     tweet_creation_list = []
     for status in statuses:
         try:
@@ -207,8 +207,8 @@ def scrape_twitter():
 
 @shared_task
 def scrape_substack():
-    substack_sources = Source.objects.filter(website=get_object_or_404(Website, name="Substack"))
-    articles = Article.objects.all()
+    substack_sources = Source.objects.filter(website=get_object_or_404(Website, name="Substack")).only("source_id", "url")
+    articles = Article.objects.filter(source__in=substack_sources).only('title', 'pub_date', 'source')
     for source in substack_sources:
         feed_url = f'{source.url}feed'
         create_articles_from_feed(source, feed_url, articles)
@@ -217,8 +217,8 @@ def scrape_substack():
 
 @shared_task
 def scrape_seekingalpha():
-    seekingalpha_sources = Source.objects.filter(website=get_object_or_404(Website, name="SeekingAlpha"))
-    articles = Article.objects.all()
+    seekingalpha_sources = Source.objects.filter(website=get_object_or_404(Website, name="SeekingAlpha")).only("source_id", "url")
+    articles = Article.objects.filter(source__in=seekingalpha_sources).only('title', 'pub_date', 'source')
     for source in seekingalpha_sources:
         feed_url = f'{source.url}.xml'
         create_articles_from_feed(source, feed_url, articles)
@@ -227,8 +227,8 @@ def scrape_seekingalpha():
 
 @shared_task
 def scrape_other_websites():
-    other_sources = Source.objects.filter(website=get_object_or_404(Website, name="Other")).exclude(external_id__isnull=False)
-    articles = Article.objects.all()
+    other_sources = Source.objects.filter(website=get_object_or_404(Website, name="Other")).exclude(external_id__isnull=False).only("source_id", "url")
+    articles = Article.objects.filter(source__in=other_sources).only('title', 'pub_date', 'source')
     for source in other_sources:
         feed_url = f'{source.url}feed'
         create_articles_from_feed(source, feed_url, articles)
@@ -236,8 +236,8 @@ def scrape_other_websites():
 
 @shared_task
 def scrape_news():
-    news_sources = Source.objects.filter(news=True)
-    articles = Article.objects.all()
+    news_sources = Source.objects.filter(news=True).only("source_id", "url")
+    articles = Article.objects.filter(source__in=news_sources).only('title', 'pub_date', 'source')
     for source in news_sources:
         feed_url = f'{source.url}feed'
         create_articles_from_feed(source, feed_url, articles)
@@ -245,7 +245,8 @@ def scrape_news():
 
 @shared_task
 def crawl_websites():
-    articles = Article.objects.all()
+    crawl_sources = Source.objects.filter(name="The Generalist").filter(name="Benedict Evans").filter(name="Meritech Capital").filter(name="Stock Market Nerd").filter(name="Palladium")
+    articles = Article.objects.filter(source__in=crawl_sources).only('title', 'pub_date', 'source')
     crawl_thegeneralist(articles)
     crawl_ben_evans(articles)
     crawl_meritechcapital(articles)
@@ -257,8 +258,8 @@ def crawl_websites():
 def scrape_spotify():
     client_id = os.environ.get('SPOTIFY_CLIENT_ID')
     client_secret = os.environ.get('SPOTIFY_CLIENT_SECRET')
-    spotify_sources = Source.objects.filter(website=get_object_or_404(Website, name="Spotify"))
-    articles = Article.objects.all()
+    spotify_sources = Source.objects.filter(website=get_object_or_404(Website, name="Spotify")).only("source_id", "external_id") 
+    articles = Article.objects.filter(source__in=spotify_sources).only('title', 'link', 'source')
     spotify_creation_list = []
     for source in spotify_sources:
         spotify = SpotifyAPI(client_id, client_secret)
@@ -280,8 +281,8 @@ def scrape_spotify():
 @shared_task
 def scrape_youtube():
     api_key = os.environ.get('YOUTUBE_API_KEY')
-    youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
-    articles = Article.objects.all()
+    youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube")).only("source_id", "external_id")
+    articles = Article.objects.filter(source__in=youtube_sources).only('title', 'pub_date', 'link', 'source')
     youtube_creation_list = []
     for source in youtube_sources:
         channel_data = requests.get(f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails").json()
