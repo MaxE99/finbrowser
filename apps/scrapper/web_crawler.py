@@ -27,7 +27,7 @@ def crawl_thegeneralist(articles):
             title = info_container.find("div", class_="single-article-title v2").text
             title = html.unescape(title)
             source = get_object_or_404(Source, name="The Generalist")
-            if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
+            if articles.filter(title=title, pub_date=pub_date, source=source).exists():
                 break
             else:
                 create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
@@ -49,7 +49,7 @@ def crawl_ben_evans(articles):
             title = title_with_link_tag.text
             title = html.unescape(title)
             source = get_object_or_404(Source, name="Benedict Evans")
-            if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
+            if articles.filter(title=title, pub_date=pub_date, source=source).exists():
                 break
             else:
                 create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
@@ -71,7 +71,7 @@ def crawl_meritechcapital(articles):
             link = f"https://www.meritechcapital.com{article['href']}"
             title = html.unescape(title)
             source = get_object_or_404(Source, name="Meritech Capital")
-            if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
+            if articles.filter(title=title, pub_date=pub_date, source=source).exists():
                 break
             else:
                 create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
@@ -93,7 +93,7 @@ def crawl_stockmarketnerd(articles):
             pub_date = datetime.strptime(pub_date.replace(",", ""), '%B %d %Y')
             title = html.unescape(title)
             source = get_object_or_404(Source, name="Stock Market Nerd")
-            if articles.filter(title=title, link=link, pub_date=pub_date, source=source).exists():
+            if articles.filter(title=title, pub_date=pub_date, source=source).exists():
                 break
             else:
                 create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
