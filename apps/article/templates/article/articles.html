@@ -84,7 +84,7 @@
                 {% if articles.number == i %}
                 <button class="currentPagination">{{ articles.number }}</button>
                 {% elif i > articles.number|add:'-3' and i < articles.number|add:'3' %} <a
-                    href="?articles={{ i }}">{{ i }}</a>
+                    href="?long_form_content={{ i }}">{{ i }}</a>
                 {% endif %}
                 {% endfor %}
             </span>
