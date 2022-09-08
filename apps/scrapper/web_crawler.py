@@ -24,13 +24,11 @@ def crawl_thegeneralist(articles):
             link = f"https://www.readthegeneralist.com{link_tag['href']}"
             pub_date = info_container.find("div", class_="published-date v2").text
             pub_date = datetime.strptime(pub_date.replace(",", ""), '%B %d %Y')
-            title = info_container.find("div", class_="single-article-title v2").text
-            title = html.unescape(title)
+            title = html.unescape(info_container.find("div", class_="single-article-title v2").text)
             source = get_object_or_404(Source, name="The Generalist")
             if articles.filter(title=title, pub_date=pub_date, source=source).exists():
                 break
-            else:
-                create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
+            create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
     except:
         pass
     bulk_create_articles_and_notifications(create_article_list)
@@ -46,13 +44,11 @@ def crawl_ben_evans(articles):
             pub_date = datetime.strptime(pub_date.replace(",", ""), '%b %d %Y')
             title_with_link_tag = article.find("a", class_="summary-title-link")
             link = f"https://www.ben-evans.com{title_with_link_tag['href']}"
-            title = title_with_link_tag.text
-            title = html.unescape(title)
+            title = html.unescape(title_with_link_tag.text)
             source = get_object_or_404(Source, name="Benedict Evans")
             if articles.filter(title=title, pub_date=pub_date, source=source).exists():
                 break
-            else:
-                create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
+            create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
     except:
         pass
     bulk_create_articles_and_notifications(create_article_list)
@@ -65,16 +61,14 @@ def crawl_meritechcapital(articles):
         soup = BeautifulSoup(page.content, 'lxml')
         for article in soup.find_all("a", class_="BlogLandingPage_card__FtA_n"):
             body_container = article.find("div", class_="BlogPostCard_body__knqKE")
-            title = body_container.find("h3", class_="BlogPostCard_title__dnPww").text
             pub_date = body_container.find_all("span")[-1].text
             pub_date = datetime.strptime(pub_date.replace(",", "").replace(" | ", ""), '%b %d %Y')
             link = f"https://www.meritechcapital.com{article['href']}"
-            title = html.unescape(title)
+            title = html.unescape(body_container.find("h3", class_="BlogPostCard_title__dnPww").text)
             source = get_object_or_404(Source, name="Meritech Capital")
             if articles.filter(title=title, pub_date=pub_date, source=source).exists():
                 break
-            else:
-                create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
+            create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
     except:
         pass
     bulk_create_articles_and_notifications(create_article_list)
@@ -88,15 +82,13 @@ def crawl_stockmarketnerd(articles):
         for article in soup.find_all("div", class_="p-8"):
             link_tag = article.find("a", class_="hover:bg-gray-100")
             link = f"https://stockmarketnerd.beehiiv.com{link_tag['href']}"
-            title = article.find("h2").text
             pub_date = article.find("time").text
             pub_date = datetime.strptime(pub_date.replace(",", ""), '%B %d %Y')
-            title = html.unescape(title)
+            title = html.unescape(article.find("h2").text)
             source = get_object_or_404(Source, name="Stock Market Nerd")
             if articles.filter(title=title, pub_date=pub_date, source=source).exists():
                 break
-            else:
-                create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
+            create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
     except:
         pass
     bulk_create_articles_and_notifications(create_article_list)
@@ -113,12 +105,10 @@ def crawl_palladium(source, feed_url, articles):
         for item in items:
             try:
                 title, link, pub_date = article_components_get(item)
-                title = html.unescape(title)
-                title = 'https://palladiummag/' + title
+                title = 'https://palladiummag/' + html.unescape(title)
                 if articles.filter(title=title, pub_date=pub_date, source=source).exists():
                     break
-                else:
-                    create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
+                create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
             except:
                 continue   
     except:

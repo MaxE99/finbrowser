@@ -11,7 +11,6 @@ from apps.logic.pure_logic import paginator_create
 from apps.mixins import BaseMixin, BaseFormMixins
 from apps.list.forms import ListNameChangeForm, ListPicChangeForm
 from apps.list.models import List, ListRating
-from apps.home.models import Notification
 from apps.article.models import Article
 from apps.accounts.models import Website, Profile
 from apps.base_logger import logger
@@ -63,9 +62,8 @@ class ListDetailView(TemplateView, BaseMixin):
             post_res = BaseFormMixins.post(self, request, multi_form_page=True)
             if post_res == 'Failed' or post_res == 'Notification created':
                 return HttpResponseRedirect(self.request.path_info)
-            else:
-                profile_slug, list_slug = post_res
-                return redirect('list:list-details', profile_slug=profile_slug, list_slug=list_slug)
+            profile_slug, list_slug = post_res
+            return redirect('list:list-details', profile_slug=profile_slug, list_slug=list_slug)
         elif 'changeListForm' in request.POST:
             profile_slug = self.request.path_info.rsplit('/', 2)[-2]
             list_slug = self.request.path_info.rsplit('/', 1)[-1]
@@ -106,11 +104,11 @@ class ListDetailView(TemplateView, BaseMixin):
         else:
             user_rating, subscribed = None, False
         context['list'] = list
-        context['latest_articles'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources_excluding_website(list, TWITTER), 50, 'latest_articles') 
+        context['latest_articles'] = paginator_create(self.request, Article.objects.filter_by_list_and_website(list, website_inclusive=False), 50, 'latest_articles') 
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating
         context['highlighted_content'] = paginator_create(self.request, List.objects.get_highlighted_content(list_id), 40, 'highlighted_content')
-        context['newest_tweets'] = paginator_create(self.request, Article.objects.get_articles_from_list_sources_and_website(list, TWITTER), 25, 'newest_tweets')
+        context['newest_tweets'] = paginator_create(self.request, Article.objects.filter_by_list_and_website(list), 25, 'newest_tweets')
         if self.request.user == list.creator:
             context['change_list_pic_form'] = ListPicChangeForm()
             context['change_list_name_form'] = ListNameChangeForm()

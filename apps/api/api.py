@@ -144,11 +144,11 @@ class SourceViewSet(viewsets.ModelViewSet):
         if list_search != None:
             list = get_object_or_404(List, list_id=list_id)
             if list.creator == self.request.user:   
-                return Source.objects.filter_sources_not_in_list(list_search, list)[0:10]
+                return Source.objects.filter_by_list_and_search_term_exclusive(list_search, list)[0:10]
             else:
                 return None
         elif feed_search != None:   
-            return Source.objects.filter_sources_not_subscribed(feed_search, self.request.user)[0:10]
+            return Source.objects.filter_by_subscription_and_search_term_exclusive(feed_search, self.request.user)[0:10]
         elif sectors_search != None:   
             return Source.objects.filter(name__istartswith=sectors_search)[0:10]
         else:
@@ -174,7 +174,7 @@ class ListViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         feed_search = self.request.GET.get("feed_search", None)
         if feed_search != None:
-            return List.objects.filter_lists_not_subscribed(feed_search, self.request.user)[0:10]
+            return List.objects.filter_by_search_term_and_subscription_status(feed_search, self.request.user)[0:10]
         else:
             return List.objects.all()
 
@@ -249,7 +249,7 @@ class FilteredLists(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, search_term, format=None):
-        filtered_lists =  List.objects.filter_lists(search_term)[0:10]
+        filtered_lists =  List.objects.filter_by_search_term(search_term)[0:10]
         list_urls = []
         for list in filtered_lists:
             list_urls.append(list.get_absolute_url())
@@ -262,7 +262,7 @@ class FilteredArticles(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, search_term, format=None):
-        filtered_articles = Article.objects.filter_articles(search_term)[0:10]
+        filtered_articles = Article.objects.filter_by_search_term(search_term)[0:10]
         serializer = Article_Serializer(filtered_articles, many=True)
         article_favicon_paths = list(filtered_articles.values_list("source__favicon_path", flat=True))
         return JsonResponse([serializer.data, article_favicon_paths], safe=False)
@@ -283,8 +283,8 @@ class FilteredSite(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, search_term, format=None):
-        filtered_stocks = Stock.objects.filter_stocks(search_term)
-        filtered_sources = Source.objects.filter_sources(search_term)
+        filtered_stocks = Stock.objects.filter_by_search_term(search_term)
+        filtered_sources = Source.objects.filter_by_search_term(search_term)
         filtered_articles = Article.objects.filter(search_vector=search_term).select_related('source')
         # rebalance spots that are displayed
         len_filtered_stocks = filtered_stocks.count()
