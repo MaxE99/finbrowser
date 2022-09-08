@@ -17,8 +17,8 @@ class AddToListInfoMixin(ContextMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
-            context['highlighted_content_ids'] = HighlightedArticle.objects.get_highlighted_articles_ids(self.request.user)
-            context['user_lists'] = List.objects.get_created_lists(self.request.user)
+            context['highlighted_content_ids'] = HighlightedArticle.objects.get_ids_by_user(self.request.user)
+            context['user_lists'] = List.objects.filter_by_creator(self.request.user)
         else:
             context['highlighted_content_ids'] = None
             context['user_lists'] = None
@@ -76,12 +76,11 @@ class BaseFormMixins(FormMixin):
             if form.is_valid():
                 form.save()
                 return "Notification created" if multi_form_page else HttpResponseRedirect(self.request.path_info)
+            if "You have already created a keyword with this term!" in str(form):
+                messages.error(request, "You have already created a keyword with this term!")
             else:
-                if "You have already created a keyword with this term!" in str(form):
-                    messages.error(request, "You have already created a keyword with this term!")
-                else:
-                    messages.error(request, "Keyword must consist of at least 3 characters!")
-                return "Failed" if multi_form_page else HttpResponseRedirect(self.request.path_info)
+                messages.error(request, "Keyword must consist of at least 3 characters!")
+            return "Failed" if multi_form_page else HttpResponseRedirect(self.request.path_info)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

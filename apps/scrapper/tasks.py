@@ -6,7 +6,6 @@ from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
 from django.template.defaultfilters import slugify
 # Python imports
-import tweepy
 from datetime import timedelta
 import logging
 from celery.signals import after_setup_logger
@@ -19,7 +18,7 @@ import boto3
 import re
 from apps.home.views import TWITTER
 # Local imports
-from apps.logic.services import bulk_create_articles_and_notifications, notifications_create, create_articles_from_feed, source_profile_img_create, tweet_img_upload, initial_tweet_img_path_upload
+from apps.logic.services import bulk_create_articles_and_notifications, notifications_create, create_articles_from_feed, source_profile_img_create, twitter_create_api_settings, tweet_type_create
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
@@ -120,13 +119,7 @@ class SpotifyAPI(object):
 
 @shared_task
 def scrape_twitter():    
-    consumer_key = os.environ.get('TWITTER_CONSUMER_KEY')
-    consumer_secret = os.environ.get('TWITTER_CONSUMER_SECRET')
-    access_token = os.environ.get('TWITTER_ACCESS_TOKEN')
-    access_token_secret = os.environ.get('TWITTER_ACCESS_TOKEN_SECRET')
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-    api = tweepy.API(auth)
+    api = twitter_create_api_settings()
     last_id = cache.get('last_id')
     if last_id:
         statuses = api.home_timeline(count=200, tweet_mode='extended', since_id=last_id, include_entities=True) 
@@ -144,45 +137,7 @@ def scrape_twitter():
                     title = re.sub(r'http\S+', '', html.unescape(status.full_text))
                     link = f'https://twitter.com/{status.user.screen_name}/status/{tweet_external_id}'
                     pub_date = status.created_at
-                    tweet_type = TweetType.objects.create(type = "Basic")
-                    if 'media' in status.entities:
-                        if 'media_url_https' in status.entities['media'][0]:
-                            tweet_type.type = "Image"
-                            tweet_type = tweet_img_upload(tweet_type, status.entities['media'][0]['media_url_https'])
-                    elif len(status.entities['urls']) > 0:
-                        if 'expanded_url' in status.entities['urls'][0]:
-                            title = html.unescape(status.full_text) # With links I don't escape the title
-                            tweet_type.type = "Link"
-                            tweet_type.link = status.entities['urls'][0]['expanded_url']
-                    in_reply_to_user_id = status.in_reply_to_user_id
-                    if hasattr(status, "retweeted_status"):
-                        tweet_type.pub_date = status.retweeted_status.created_at
-                        tweet_type.text = re.sub(r'http\S+', '', html.unescape(status.retweeted_status.full_text))
-                        tweet_type.author = status.retweeted_status.user.name
-                        if 'media' in status.retweeted_status._json['entities']:
-                            if 'media_url_https' in status.retweeted_status._json['entities']['media'][0]:
-                                tweet_type.image_path = None # Despite the status being a retweet Twitter sometimes sends a picture in the media dictionary which would lead to the image being shown 2 times
-                                tweet_type = initial_tweet_img_path_upload(tweet_type, status.retweeted_status._json['entities']['media'][0]['media_url_https'])
-                        tweet_type.type = "Retweet"
-                    elif in_reply_to_user_id != None and in_reply_to_user_id != twitter_user_id:
-                        tweet_reply_id = status.in_reply_to_status_id
-                        tweet_reply_info = api.get_status(id=tweet_reply_id, tweet_mode='extended')
-                        tweet_type.pub_date = tweet_reply_info.created_at
-                        tweet_type.text = re.sub(r'http\S+', '', html.unescape(tweet_reply_info.full_text))
-                        tweet_type.author = tweet_reply_info.user.name
-                        if hasattr(tweet_reply_info.entities, 'media'):
-                            if 'media_url_https' in tweet_reply_info.entities['media'][0]:
-                                tweet_type = initial_tweet_img_path_upload(tweet_type, tweet_reply_info.entities['media'][0]['media_url_https'])
-                        tweet_type.type = "Reply"
-                    elif status.is_quote_status == True:
-                        tweet_type.pub_date = status.quoted_status.created_at
-                        tweet_type.text = re.sub(r'http\S+', '', html.unescape(status.quoted_status.full_text))
-                        tweet_type.author = status.quoted_status.user.name
-                        if 'media' in status.quoted_status._json['entities']:
-                            if 'media_url_https' in status.quoted_status._json['entities']['media'][0]:
-                                tweet_type = initial_tweet_img_path_upload(tweet_type, status.quoted_status._json['entities']['media'][0]['media_url_https'])
-                        tweet_type.type = "Quote"
-                    tweet_type.save()
+                    title, tweet_type = tweet_type_create(status, twitter_user_id, api)
                     tweet_creation_list.append({'source': twitter_user_id, 'title': title, 'link': link, 'pub_date': pub_date, 'external_id': tweet_external_id, 'tweet_type': tweet_type})
             else:
                 break
@@ -271,8 +226,7 @@ def scrape_spotify():
                 link = episode_item['external_urls']['spotify']
                 if articles.filter(title=title, link=link, source=source).exists():
                     break
-                else:
-                    spotify_creation_list.append({'title': title, 'link': link, 'pub_date': now(), 'source': source})
+                spotify_creation_list.append({'title': title, 'link': link, 'pub_date': now(), 'source': source})
         except:
             continue
     bulk_create_articles_and_notifications(spotify_creation_list)
@@ -312,13 +266,7 @@ def scrape_youtube():
 
 @shared_task
 def twitter_scrape_followings():
-    consumer_key = os.environ.get('TWITTER_CONSUMER_KEY')
-    consumer_secret = os.environ.get('TWITTER_CONSUMER_SECRET')
-    access_token = os.environ.get('TWITTER_ACCESS_TOKEN')
-    access_token_secret = os.environ.get('TWITTER_ACCESS_TOKEN_SECRET')
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-    api = tweepy.API(auth)
+    api = twitter_create_api_settings()
     followings = api.get_friends(count=100)
     for follow in followings:
         name = follow.name

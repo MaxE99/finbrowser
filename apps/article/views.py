@@ -3,7 +3,6 @@ from django.shortcuts import get_object_or_404
 from django.views.generic.list import ListView
 # Local imports
 from apps.logic.pure_logic import paginator_create, articles_filter
-from apps.base_logger import logger
 from apps.mixins import BaseMixin
 from apps.accounts.models import Website
 from apps.article.models import Article
@@ -13,7 +12,6 @@ from apps.sector.models import Sector
 try:
     TWITTER = get_object_or_404(Website, name="Twitter")
 except:
-    logger.error("Twitter not found! Problem with database")
     TWITTER = None
 
 
