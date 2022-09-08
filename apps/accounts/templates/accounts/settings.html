@@ -1,10 +1,10 @@
 {% extends 'home/base.html' %}
 {% load static %}
-
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v4.css' %}">
 <title>FinBrowser | Settings</title>
 {% endblock %}
+
 {% block content %}
 
 <div class="settingSidebar">
@@ -14,7 +14,6 @@
     <div class="settingOption" data-for-tab="3">Privacy</div>
 </div>
 <div class="contentSection">
-
     <div class="tabsContent tabsContentActive" data-tab="0">
         <form action="" class="editSection changeProfileForm" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -77,13 +76,11 @@
                 <input class="saveButton" name="changeProfileForm" type="submit" value="Save">
             </div>
         </form>
-
     </div>
     <div class="tabsContent" data-tab="1">
         <h2>Change Password</h2>
         <form action="" class="changePasswordForm" method="POST">
-            {% csrf_token %}
-            {{ change_password_form }}
+            {% csrf_token %} {{ change_password_form }}
             <input name="changePasswordForm" type="submit" class="passwordChangeSubmit" value="Save" />
         </form>
     </div>
@@ -138,8 +135,6 @@
         <div class="noNotificationsActivated">You have not activated any notifications!</div>
         {% endif %}
     </div>
-
-
     <div class="tabsContent" data-tab="3">
         <h2>Change Privacy Settings</h2>
         <form action="" class="changePrivacySettingsForm" method="POST">
@@ -153,7 +148,8 @@
             {% endfor %}
             <input name="changePrivacySettingsForm" type="submit" class="privacySettingsChangeSubmit" value="Save" />
         </form>
-
     </div>
-    <script src="{% static 'accounts/min_settings_script_v3.js' %}"></script>
-    {% endblock content %}
+</div>
+
+<script src="{% static 'accounts/min_settings_script_v3.js' %}"></script>
+{% endblock content %}

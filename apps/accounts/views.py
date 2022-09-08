@@ -29,9 +29,9 @@ class ProfileView(DetailView, BaseMixin):
         privacy_settings = get_object_or_404(PrivacySettings, profile=profile)
         context['social_links'] = SocialLink.objects.filter(profile=profile).select_related('website').defer("website__url", "website__favicon", "website__name")
         context['created_lists'] = List.objects.filter(creator=profile.user, is_public=True).select_related('creator__profile').only('slug', 'list_pic', 'name', 'creator__profile')
-        context['subscribed_lists'] = List.objects.get_subscribed_lists(profile.user) if privacy_settings.list_subscribtions_public else None
-        context['subscribed_sources'] = Source.objects.get_subscribed_sources(profile.user) if privacy_settings.subscribed_sources_public else None
-        context['highlighted_content'] = paginator_create(self.request, HighlightedArticle.objects.get_highlighted_content_of_user(profile.user), 40) if privacy_settings.highlighted_articles_public else None
+        context['subscribed_lists'] = List.objects.get_subscribed_lists_by_user(profile.user) if privacy_settings.list_subscribtions_public else None
+        context['subscribed_sources'] = Source.objects.filter_by_subscription(profile.user) if privacy_settings.subscribed_sources_public else None
+        context['highlighted_content'] = paginator_create(self.request, HighlightedArticle.objects.filter_by_user(profile.user), 40) if privacy_settings.highlighted_articles_public else None
         return context        
 
 
@@ -43,9 +43,8 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
             post_res = BaseFormMixins.post(self, request, multi_form_page=True)
             if post_res == 'Failed' or post_res == 'Notification created':
                 return HttpResponseRedirect(self.request.path_info)
-            else:
-                profile_slug, list_slug = post_res
-                return redirect('list:list-details', profile_slug=profile_slug, list_slug=list_slug)
+            profile_slug, list_slug = post_res
+            return redirect('list:list-details', profile_slug=profile_slug, list_slug=list_slug)
         elif 'changeProfileForm' in request.POST:
             email_and_name_change_form = EmailAndUsernameChangeForm(request.POST, username=request.user.username, email=request.user.email, instance=request.user)
             profile_change_form = ProfileChangeForm(request.POST, request.FILES, instance=request.user.profile)
@@ -79,7 +78,7 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['websites'] = Website.objects.exclude(name="News")
-        context['social_links'] = SocialLink.objects.select_related('website').filter(profile=self.request.user.profile)
+        context['social_links'] = SocialLink.objects.filter(profile=self.request.user.profile).select_related('website')
         context['notifications'] = Notification.objects.filter(user=self.request.user).select_related('source', 'stock')
         context['profile_change_form'] = ProfileChangeForm()
         context['email_and_name_change_form'] = EmailAndUsernameChangeForm(username=self.request.user.username, email=self.request.user.email)

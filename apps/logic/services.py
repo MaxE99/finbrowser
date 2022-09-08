@@ -3,6 +3,7 @@ from django.utils.timezone import now
 from django.conf import settings
 from django.db.models import Q
 # Python import
+import tweepy
 from urllib.request import Request, urlopen
 import xml.etree.cElementTree as ET
 import html
@@ -11,6 +12,7 @@ from PIL import Image
 import urllib.request
 import os
 import boto3
+import re
 # Local import
 from apps.logic.selectors import article_components_get
 
@@ -138,6 +140,59 @@ def initial_tweet_img_path_upload(tweet_type, file_url):
         tweet_type.initial_tweet_img_path = f'home/initial_tweet_imgs/initial_tweet_img_{tweet_type.tweet_type_id}.webp'
         return tweet_type
 
+
+def twitter_create_api_settings():
+    consumer_key = os.environ.get('TWITTER_CONSUMER_KEY')
+    consumer_secret = os.environ.get('TWITTER_CONSUMER_SECRET')
+    access_token = os.environ.get('TWITTER_ACCESS_TOKEN')
+    access_token_secret = os.environ.get('TWITTER_ACCESS_TOKEN_SECRET')
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    return tweepy.API(auth)  
+
+
+def tweet_type_create(status, twitter_user_id, api):
+    from apps.article.models import TweetType
+    tweet_type = TweetType.objects.create(type = "Basic")
+    if 'media' in status.entities:
+        if 'media_url_https' in status.entities['media'][0]:
+            tweet_type.type = "Image"
+            tweet_type = tweet_img_upload(tweet_type, status.entities['media'][0]['media_url_https'])
+    elif len(status.entities['urls']) > 0:
+        if 'expanded_url' in status.entities['urls'][0]:
+            title = html.unescape(status.full_text) # With links I don't escape the title
+            tweet_type.type = "Link"
+            tweet_type.link = status.entities['urls'][0]['expanded_url']
+    in_reply_to_user_id = status.in_reply_to_user_id
+    if hasattr(status, "retweeted_status"):
+        tweet_type.pub_date = status.retweeted_status.created_at
+        tweet_type.text = re.sub(r'http\S+', '', html.unescape(status.retweeted_status.full_text))
+        tweet_type.author = status.retweeted_status.user.name
+        if 'media' in status.retweeted_status._json['entities']:
+            if 'media_url_https' in status.retweeted_status._json['entities']['media'][0]:
+                tweet_type.image_path = None # Despite the status being a retweet Twitter sometimes sends a picture in the media dictionary which would lead to the image being shown 2 times
+                tweet_type = initial_tweet_img_path_upload(tweet_type, status.retweeted_status._json['entities']['media'][0]['media_url_https'])
+        tweet_type.type = "Retweet"
+    elif in_reply_to_user_id != None and in_reply_to_user_id != twitter_user_id:
+        tweet_reply_id = status.in_reply_to_status_id
+        tweet_reply_info = api.get_status(id=tweet_reply_id, tweet_mode='extended')
+        tweet_type.pub_date = tweet_reply_info.created_at
+        tweet_type.text = re.sub(r'http\S+', '', html.unescape(tweet_reply_info.full_text))
+        tweet_type.author = tweet_reply_info.user.name
+        if hasattr(tweet_reply_info.entities, 'media'):
+            if 'media_url_https' in tweet_reply_info.entities['media'][0]:
+                tweet_type = initial_tweet_img_path_upload(tweet_type, tweet_reply_info.entities['media'][0]['media_url_https'])
+        tweet_type.type = "Reply"
+    elif status.is_quote_status == True:
+        tweet_type.pub_date = status.quoted_status.created_at
+        tweet_type.text = re.sub(r'http\S+', '', html.unescape(status.quoted_status.full_text))
+        tweet_type.author = status.quoted_status.user.name
+        if 'media' in status.quoted_status._json['entities']:
+            if 'media_url_https' in status.quoted_status._json['entities']['media'][0]:
+                tweet_type = initial_tweet_img_path_upload(tweet_type, status.quoted_status._json['entities']['media'][0]['media_url_https'])
+        tweet_type.type = "Quote"
+    tweet_type.save()
+    return title, tweet_type
 
 # def change_format_of_pngs_and_upload_them_as_wepbs_from_dev():
 #     images = glob.glob("test_imgs/*.png")
