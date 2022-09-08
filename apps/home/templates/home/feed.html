@@ -161,7 +161,7 @@
                     {% if subscribed_content.number == i %}
                     <button class="currentPagination">{{ subscribed_content.number }}</button>
                     {% elif i > subscribed_content.number|add:'-3' and i < subscribed_content.number|add:'3' %} <a
-                        href="?subscribed_content={{ i }}">{{ i }}</a>
+                        href="?long_form_content={{ i }}">{{ i }}</a>
                     {% endif %}
                     {% endfor %}
                 </span>
@@ -195,7 +195,7 @@
                     {% if newest_tweets.number == i %}
                     <button class="currentPagination">{{ newest_tweets.number }}</button>
                     {% elif i > newest_tweets.number|add:'-3' and i < newest_tweets.number|add:'3' %} <a
-                        href="?newest_tweets={{ i }}">{{ i }}</a>
+                        href="?tweets={{ i }}">{{ i }}</a>
                     {% endif %}
                     {% endfor %}
                 </span>

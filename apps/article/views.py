@@ -27,7 +27,7 @@ class ArticleView(ListView, BaseMixin):
         context = super().get_context_data(**kwargs)
         tweets_qs = self.get_queryset().filter(source__website=TWITTER)
         articles = self.get_queryset().exclude(source__website=TWITTER)
-        context['articles'] = paginator_create(self.request, articles , 50, 'articles')
+        context['articles'] = paginator_create(self.request, articles , 50, 'long_form_content')
         context['sectors'] = Sector.objects.all()
         context['tweets'] = paginator_create(self.request, tweets_qs, 25, 'tweets')
         context['results_found'] = self.get_queryset().count()
@@ -50,7 +50,7 @@ class ArticleSearchView(ListView, BaseMixin):
         tweets_qs = qs.filter(source__website=TWITTER)
         articles_qs = qs.exclude(source__website=TWITTER)
         context['sectors'] = Sector.objects.all()
-        context['articles'] = paginator_create(self.request, articles_qs, 50, 'articles')
+        context['articles'] = paginator_create(self.request, articles_qs, 50, 'long_form_content')
         context['tweets'] = paginator_create(self.request, tweets_qs, 25, 'tweets')
         context['results_found'] = qs.count()
         return context

@@ -33,7 +33,7 @@
                         {% if filtered_articles.number == i %}
                         <button class="currentPagination">{{ filtered_articles.number }}</button>
                         {% elif i > filtered_articles.number|add:'-3' and i < filtered_articles.number|add:'3' %} <a
-                            href="?filtered_articles={{ i }}">{{ i }}</a>
+                            href="?long_form_content={{ i }}">{{ i }}</a>
                         {% endif %}
                         {% endfor %}
                     </span>
@@ -49,7 +49,7 @@
                         {% if filtered_tweets.number == i %}
                         <button class="currentPagination">{{ filtered_tweets.number }}</button>
                         {% elif i > filtered_tweets.number|add:'-3' and i < filtered_tweets.number|add:'3' %} <a
-                            href="?filtered_tweets={{ i }}">{{ i }}</a>
+                            href="?tweets={{ i }}">{{ i }}</a>
                         {% endif %}
                         {% endfor %}
                     </span>
@@ -99,7 +99,7 @@
                 {% if filtered_stocks.number == i %}
                 <button class="currentPagination">{{ filtered_stocks.number }}</button>
                 {% elif i > filtered_stocks.number|add:'-3' and i < filtered_stocks.number|add:'3' %} <a
-                    href="?filtered_stocks={{ i }}">{{ i }}</a>
+                    href="?stocks={{ i }}">{{ i }}</a>
                 {% endif %}
                 {% endfor %}
             </span>
