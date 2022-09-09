@@ -5,7 +5,8 @@ subscribeButton.addEventListener("click", async () => {
     try {
       const source_id = document
         .querySelector(".upperInnerContainer h3")
-        .id.replace("source_id_", "");
+        .id.split("#")[1];
+      console.log(source_id)
       const action = subscribeButton.innerText;
       const res = await fetch(
         `../../api/sources/${source_id}/source_change_subscribtion_status/`,
@@ -118,7 +119,7 @@ document.querySelectorAll(".rankingStar").forEach((star) => {
     const rating = getNumericValue(id);
     const source_id = document
       .querySelector(".upperInnerContainer h3")
-      .id.replace("source_id_", "");
+      .id.split("#")[1];
     try {
       const data = { source_id: source_id, rating: rating };
       const res = await fetch(`../../api/source_ratings/`, {
@@ -170,7 +171,7 @@ if (notificationButton) {
     try {
       const source_id = document
         .querySelector(".upperInnerContainer h3")
-        .id.replace("source_id_", "");
+        .id.split("#")[1];
       const data = { source_id: source_id };
       const res = await fetch(`../../api/notifications/`, {
         method: "POST",
@@ -221,7 +222,7 @@ document
     saveButton.addEventListener("click", async () => {
       let source_id = document
         .querySelector(".upperInnerContainer .sourceName")
-        .id.replace("source_id_", "");
+        .id.split("#")[1];
       let lists_status = [];
       let initial_lists_status = [];
       let list_ids = [];
@@ -231,7 +232,7 @@ document
         );
       for (let i = 0, j = input_list.length; i < j; i++) {
         initial_lists_status.push(input_list[i].className);
-        list_ids.push(input_list[i].id.replace("id_list_", ""));
+        list_ids.push(input_list[i].id.split("#")[1]);
       }
       saveButton.parentElement.previousElementSibling
         .querySelectorAll("input")

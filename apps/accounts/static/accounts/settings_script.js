@@ -1,9 +1,9 @@
 // show only logos that are not already selected
 function checkSocialLogos() {
-  existingSocialLinks = [];
-  document.querySelectorAll(".existingSocialContainer img").forEach((image) => {
-    existingSocialLinks.push(image.className);
-  });
+  let existingSocialLinks = Array.from(
+    document.querySelectorAll(".existingSocialContainer img"),
+    (x) => x.className
+  );
   document.querySelectorAll(".addSocialLinksContainer img").forEach((image) => {
     if (existingSocialLinks.includes(image.className)) {
       image.parentElement.style.display = "none";
@@ -46,7 +46,7 @@ async function deleteSocialLinks(e) {
   const socialContainer = e.target.parentElement;
   socialContainer.remove();
   if (!socialContainer.classList.contains("newlyAdded")) {
-    const social_link_id = e.target.id.replace("social_link_id_", "");
+    const social_link_id = e.target.id.split("#")[1];
     try {
       const res = await fetch(
         `../../api/social_links/${social_link_id}/`,
@@ -68,9 +68,7 @@ async function deleteSocialLinks(e) {
 document
   .querySelector(".removeProfilePicButton")
   .addEventListener("click", async () => {
-    const user = document
-      .querySelector(".emailContainer")
-      .id.replace("user_profile_id_", "");
+    const user = document.querySelector(".emailContainer").id.split("#")[1];
     try {
       const res = await fetch(
         `../../api/profiles/${user}/profile_pic_delete/`,
@@ -100,7 +98,7 @@ addSocialLinkButton.addEventListener("click", async () => {
       addSocialLinkButton.parentElement.querySelector("summary img").src;
     const websiteID = addSocialLinkButton.parentElement
       .querySelector("summary img")
-      .id.replace("website_id_", "");
+      .id.split("#")[1];
     const existingSocialContainer = document.createElement("div");
     existingSocialContainer.classList.add(
       "existingSocialContainer",
@@ -178,13 +176,10 @@ for (let i = 0, j = socialLinkInput.length; i < j; i++) {
 
 document.querySelectorAll(".saveSocialLinkChanges").forEach((socialLink) => {
   socialLink.addEventListener("click", async () => {
-    const social_link_id = socialLink.previousElementSibling.id.replace(
-      "social_link_id_",
-      ""
-    );
+    const social_link_id = socialLink.previousElementSibling.id.split("#")[1];
     const websiteID = socialLink.parentElement
       .querySelector("img")
-      .id.replace("existing_website_id_", "");
+      .id.split("#")[1];
     const website_link = socialLink.parentElement.querySelector("input").value;
     try {
       const data = { website: websiteID, url: website_link };
@@ -216,10 +211,7 @@ document
   .forEach((deleteButton) => {
     deleteButton.addEventListener("click", async () => {
       try {
-        const notifications_id = deleteButton.id.replace(
-          "notification_id_",
-          ""
-        );
+        const notifications_id = deleteButton.id.split("#")[1];
         const res = await fetch(
           `../../api/notifications/${notifications_id}/`,
           get_fetch_settings("DELETE")

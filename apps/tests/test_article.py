@@ -1,14 +1,9 @@
 # Django Imports
-from django.shortcuts import get_object_or_404
 from django.test import TestCase
 from django.urls import reverse
-from django.utils.timezone import now
-# Python Import
-from datetime import timedelta
+
 # Local Imports
 from apps.tests.test_model_instances import create_test_users, create_test_sources, create_test_lists, create_test_sectors, create_test_website, create_test_articles
-from apps.article.models import Article, HighlightedArticle
-from apps.sector.models import Sector
 
 class AddExternalArticlesFormTests(TestCase):
     def setUp(self):

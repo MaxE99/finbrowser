@@ -122,10 +122,9 @@ document.querySelectorAll(".addSourcesForm #textInput").forEach((element) => {
                       selected_sources = selected_sources.filter(function (e) {
                         return (
                           e.toString() !==
-                          removeSourceButton.previousElementSibling.id.replace(
-                            "source_id_",
-                            ""
-                          )
+                          removeSourceButton.previousElementSibling.id.split(
+                            "#"
+                          )[1]
                         );
                       });
                     });
@@ -265,10 +264,9 @@ document.querySelectorAll(".addListsForm #textInput").forEach((element) => {
                       selected_lists = selected_lists.filter(function (e) {
                         return (
                           e.toString() !==
-                          removeListButton.previousElementSibling.id.replace(
-                            "list_",
-                            ""
-                          )
+                          removeListButton.previousElementSibling.id.split(
+                            "#"
+                          )[1]
                         );
                       });
                       removeListButton.parentElement.remove();

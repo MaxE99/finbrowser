@@ -28,7 +28,7 @@
         </div>
         <div class="rightInnerContainer">
             <div class="rightFirstRowContainer">
-                <h3 id="list_detail_for_{{ list.list_id }}">{{ list.name }}</h3>
+                <h3 id="ldi#{{ list.list_id }}">{{ list.name }}</h3>
                 <div class="nameChangeContainer">{{ change_list_name_form }}</div>
                 <div class="creatorContainer creatorContainerSmartphonePositioning">
                     <span>Creator: </span>
@@ -124,7 +124,7 @@
                         <img class="contentIcon" src="{% static source.favicon_path %}" alt="favicon" />
                     </div>
                     {% if list.creator == request.user %}
-                    <i class="fas fa-trash sourceDeleteOption" id="source_id_{{ source.source_id }}"></i>
+                    <i class="fas fa-trash sourceDeleteOption" id="si#{{ source.source_id }}"></i>
                     {% endif %}
                     <a class="contentLink" href="{{ source.get_absolute_url }}"></a>
                     <div class="contentNameContainer">
@@ -167,7 +167,7 @@
                 {% if latest_articles.number == i %}
                 <button class="currentPagination">{{ latest_articles.number }}</button>
                 {% elif i > latest_articles.number|add:'-3' and i < latest_articles.number|add:'3' %} <a
-                    href="?latest_articles={{ i }}">{{ i }}</a>
+                    href="?long_form_content={{ i }}">{{ i }}</a>
                 {% endif %}
                 {% endfor %}
             </span>
@@ -200,7 +200,7 @@
                 {% if newest_tweets.number == i %}
                 <button class="currentPagination">{{ newest_tweets.number }}</button>
                 {% elif i > newest_tweets.number|add:'-3' and i < newest_tweets.number|add:'3' %} <a
-                    href="?newest_tweets={{ i }}">{{ i }}</a>
+                    href="?tweets={{ i }}">{{ i }}</a>
                 {% endif %}
                 {% endfor %}
             </span>
@@ -212,5 +212,5 @@
 
 
 {{ user_rating|json_script:"user-rating" }}
-<script src="{% static 'list/min_list_details_script_v6.js' %}"></script>
+<script src="{% static 'list/min_list_details_script_v7.js' %}"></script>
 {% endblock content %}

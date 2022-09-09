@@ -35,15 +35,6 @@ class FeedViewTest(TestCase):
         self.assertEqual(response.context['user_lists'].count(),3)
         self.assertEqual(response.context['subscribed_lists'].count(),2)
         self.assertEqual(response.context['subscribed_sources'].count(),1)
-        self.assertEqual(len(response.context['subscribed_content'].object_list), 5)
-        self.assertEqual(len(response.context['highlighted_content'].object_list),5)
-        self.assertEqual(response.context['subscribed_content'].object_list[0], get_object_or_404(Article, title="TestArticle2"))
-        self.assertEqual(response.context['highlighted_content'].object_list[0], get_object_or_404(HighlightedArticle, article=get_object_or_404(Article, title="TestArticle1"), user=get_object_or_404(User, username="TestUser1")))
-
-    def test_feed_without_user(self):
-        response = self.client.get(reverse('home:feed'))
-        self.assertEqual(response.status_code,302)
-
 
 class SourceDetailViewTest(TestCase):
     def setUp(self):

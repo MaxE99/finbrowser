@@ -284,7 +284,7 @@ document
       if (!highlighterButton.classList.contains("registrationLink")) {
         const article_id = highlighterButton
           .closest(".articleContainer")
-          .id.replace("article_id_", "");
+          .id.split("#")[1];
         const highlightState = highlighterButton.lastElementChild.innerText;
         let action;
         if (highlightState == "Highlight article") {
@@ -335,7 +335,7 @@ function get_initial_list_statuses(element) {
   );
   for (let i = 0, j = input_list.length; i < j; i++) {
     initial_lists_status.push(input_list[i].checked);
-    list_ids.push(input_list[i].id.replace("list_id_", ""));
+    list_ids.push(input_list[i].id.split("#")[1]);
   }
   return [initial_lists_status, list_ids];
 }
@@ -397,7 +397,7 @@ document.querySelectorAll(".addToListButton").forEach((element) => {
           let list_ids = initial_lists_statuses[1];
           let article_id = saveButton
             .closest(".articleContainer")
-            .id.replace("article_id_", "");
+            .id.split("#")[1];
           let lists_status = check_new_list_status(saveButton);
           for (let i = 0, j = lists_status.length; i < j; i++) {
             if (lists_status[i] != initial_lists_status[i]) {

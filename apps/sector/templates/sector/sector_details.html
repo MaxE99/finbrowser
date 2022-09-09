@@ -46,7 +46,7 @@
                 {% if articles_from_sector.number == i %}
                 <button class="currentPagination">{{ articles_from_sector.number }}</button>
                 {% elif i > articles_from_sector.number|add:'-3' and i < articles_from_sector.number|add:'3' %} <a
-                    href="?articles_from_sector={{ i }}">{{ i }}</a>
+                    href="?long_form_content={{ i }}">{{ i }}</a>
                 {% endif %}
                 {% endfor %}
             </span>
@@ -62,7 +62,7 @@
                 {% if tweets_from_sector.number == i %}
                 <button class="currentPagination">{{ tweets_from_sector.number }}</button>
                 {% elif i > tweets_from_sector.number|add:'-3' and i < tweets_from_sector.number|add:'3' %} <a
-                    href="?tweets_from_sector={{ i }}">{{ i }}</a>
+                    href="?tweets={{ i }}">{{ i }}</a>
                 {% endif %}
                 {% endfor %}
             </span>

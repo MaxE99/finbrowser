@@ -78,7 +78,7 @@
                             {% if source_notifications %}
                             {% for notification in source_notifications %}
                             <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
-                                id="article_id_{{ notification.article.article_id }}">
+                                id="bsoni?ai#{{ notification.article.article_id }}">
                                 <div class="leftContentSide">
                                     <div class="profileImageContainer">
                                         <img src="{% static notification.article.source.favicon_path %}" />
@@ -133,12 +133,12 @@
                                             <div class="listSelectionContainer">
                                                 {% for list in user_lists %}
                                                 <div class="listContainer">
-                                                    <label for="list_id_{{ list.list_id }}">
+                                                    <label for="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
                                                         {% if notification.article in list.articles.all %}
-                                                        <input id="list_id_{{ list.list_id }}" type="checkbox"
+                                                        <input id="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
                                                             name="lists" checked="True"> {{ list }}
                                                         {% else %}
-                                                        <input id="list_id_{{ list.list_id }}" type="checkbox"
+                                                        <input id="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
                                                             name="lists">
                                                         {{ list }}
                                                         {% endif %}
@@ -214,7 +214,7 @@
                             {% if stock_notifications %}
                             {% for notification in stock_notifications %}
                             <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
-                                id="article_id_{{ notification.article.article_id }}">
+                                id="bstni?ai#{{ notification.article.article_id }}">
                                 <div class="leftContentSide">
                                     <div class="profileImageContainer">
                                         <img src="{% static notification.article.source.favicon_path %}" />
@@ -269,12 +269,12 @@
                                             <div class="listSelectionContainer">
                                                 {% for list in user_lists %}
                                                 <div class="listContainer">
-                                                    <label for="list_id_{{ list.list_id }}">
+                                                    <label for="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
                                                         {% if notification.article in list.articles.all %}
-                                                        <input id="list_id_{{ list.list_id }}" type="checkbox"
+                                                        <input id="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
                                                             name="lists" checked="True"> {{ list }}
                                                         {% else %}
-                                                        <input id="list_id_{{ list.list_id }}" type="checkbox"
+                                                        <input id="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
                                                             name="lists">
                                                         {{ list }}
                                                         {% endif %}
@@ -356,7 +356,7 @@
                             {% if keyword_notifications %}
                             {% for notification in keyword_notifications %}
                             <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
-                                id="article_id_{{ notification.article.article_id }}">
+                                id="bkni?ai#{{ notification.article.article_id }}">
                                 <div class="leftContentSide">
                                     <div class="profileImageContainer">
                                         <img src="{% static notification.article.source.favicon_path %}" />
@@ -411,12 +411,12 @@
                                             <div class="listSelectionContainer">
                                                 {% for list in user_lists %}
                                                 <div class="listContainer">
-                                                    <label for="list_id_{{ list.list_id }}">
+                                                    <label for="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
                                                         {% if notification.article in list.articles.all %}
-                                                        <input id="list_id_{{ list.list_id }}" type="checkbox"
+                                                        <input id="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
                                                             name="lists" checked="True"> {{ list }}
                                                         {% else %}
-                                                        <input id="list_id_{{ list.list_id }}" type="checkbox"
+                                                        <input id="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
                                                             name="lists">
                                                         {{ list }}
                                                         {% endif %}
@@ -573,7 +573,7 @@
 
             {% block content %}
             {% endblock %}
-            <script src="{% static 'home/min_base_script_v9.js' %}"></script>
+            <script src="{% static 'home/min_base_script_v10.js' %}"></script>
         </div>
 
     </main>

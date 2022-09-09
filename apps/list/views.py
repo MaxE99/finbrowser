@@ -12,17 +12,11 @@ from apps.mixins import BaseMixin, BaseFormMixins
 from apps.list.forms import ListNameChangeForm, ListPicChangeForm
 from apps.list.models import List, ListRating
 from apps.article.models import Article
-from apps.accounts.models import Website, Profile
+from apps.accounts.models import Profile
 from apps.base_logger import logger
 from apps.logic.pure_logic import lists_filter
 
 User = get_user_model()
-
-try:
-    TWITTER = get_object_or_404(Website, name="Twitter")
-except:
-    logger.error("Twitter not found! Problem with database")
-    TWITTER = None
 
 
 class ListView(ListView, BaseMixin):
@@ -104,11 +98,11 @@ class ListDetailView(TemplateView, BaseMixin):
         else:
             user_rating, subscribed = None, False
         context['list'] = list
-        context['latest_articles'] = paginator_create(self.request, Article.objects.filter_by_list_and_website(list, website_inclusive=False), 50, 'latest_articles') 
+        context['latest_articles'] = paginator_create(self.request, Article.objects.filter_by_list_and_website(list, website_inclusive=False), 50, 'long_form_content') 
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating
         context['highlighted_content'] = paginator_create(self.request, List.objects.get_highlighted_content(list_id), 40, 'highlighted_content')
-        context['newest_tweets'] = paginator_create(self.request, Article.objects.filter_by_list_and_website(list), 25, 'newest_tweets')
+        context['newest_tweets'] = paginator_create(self.request, Article.objects.filter_by_list_and_website(list), 25, 'tweets')
         if self.request.user == list.creator:
             context['change_list_pic_form'] = ListPicChangeForm()
             context['change_list_name_form'] = ListNameChangeForm()

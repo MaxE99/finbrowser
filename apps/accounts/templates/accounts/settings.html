@@ -23,7 +23,7 @@
                     {{ email_and_name_change_form.username.label_tag }}
                     {{ email_and_name_change_form.username }}
                 </div>
-                <div class="emailContainer" id="user_profile_id_{{ user.profile.profile_id }}">
+                <div class="emailContainer" id="upi#{{ user.profile.profile_id }}">
                     {{ email_and_name_change_form.email.label_tag }}
                     {{ email_and_name_change_form.email }}
                 </div>
@@ -47,10 +47,10 @@
             {% for social in social_links %}
             <div class="existingSocialContainer">
                 <img class="{{ social.website.name }}" src="{% static social.website.logo %}"
-                    id="existing_website_id_{{ social.website.website_id }}" alt="">
+                    id="ewi#{{ social.website.website_id }}" alt="">
                 <input type="text" value="{{ social.url }}">
                 <button type="button" class="removeSocialLinkButton"
-                    id="social_link_id_{{ social.social_link_id }}">Remove</button>
+                    id="sli#{{ social.social_link_id }}">Remove</button>
                 <button type="button" class="saveSocialLinkChanges">Save</button>
             </div>
             {% endfor %}
@@ -62,7 +62,7 @@
                             <ul>
                                 {% for website in websites %}
                                 <li><img class="{{ website.name }}" src="{% static website.favicon %}" alt=""
-                                        id="website_id_{{ website.website_id }}"></li>
+                                        id="wi#{{ website.website_id }}"></li>
                                 {% endfor %}
                             </ul>
                         </details>
@@ -92,7 +92,7 @@
             {% if notification.source %}
             <div class="sourceContainer">
                 <div class="iconContainer">
-                    <i class="fas fa-trash" id="notification_id_{{ notification.notification_id }}"></i>
+                    <i class="fas fa-trash" id="soni#{{ notification.notification_id }}"></i>
                     <img class="sourcePic" src="{% static notification.source.favicon_path %}" alt="favicon">
                 </div>
                 <a class="sourceLink" href="{{ notification.source.get_absolute_url }}"></a>
@@ -109,7 +109,7 @@
             {% if notification.stock %}
             <div class="keywordContainer">
                 <div class="iconContainer">
-                    <i class="fas fa-trash" id="notification_id_{{ notification.notification_id }}">
+                    <i class="fas fa-trash" id="stni#{{ notification.notification_id }}">
                     </i>
                 </div>
                 {{ notification.stock.ticker }}
@@ -123,7 +123,7 @@
             {% if notification.keyword %}
             <div class="keywordContainer">
                 <div class="iconContainer">
-                    <i class="fas fa-trash" id="notification_id_{{ notification.notification_id }}">
+                    <i class="fas fa-trash" id="kni#{{ notification.notification_id }}">
                     </i>
                 </div>
                 {{ notification.keyword }}
@@ -151,5 +151,5 @@
     </div>
 </div>
 
-<script src="{% static 'accounts/min_settings_script_v3.js' %}"></script>
+<script src="{% static 'accounts/min_settings_script_v4.js' %}"></script>
 {% endblock content %}

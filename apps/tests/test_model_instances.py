@@ -66,16 +66,16 @@ def create_test_social_links():
     SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser3").profile, url="www.website/testuser10.com", website=get_object_or_404(Website, name="TestWebsite8"))
 
 def create_test_notifications():
-    Notification.objects.create(user=get_object_or_404(User, username="TestUser1"), list=get_object_or_404(List, name="TestList1"))
-    Notification.objects.create(user=get_object_or_404(User, username="TestUser2"), list=get_object_or_404(List, name="TestList1"))
-    Notification.objects.create(user=get_object_or_404(User, username="TestUser2"), list=get_object_or_404(List, name="TestList2"))
-    Notification.objects.create(user=get_object_or_404(User, username="TestUser3"), list=get_object_or_404(List, name="TestList2"))
-    Notification.objects.create(user=get_object_or_404(User, username="TestUser3"), list=get_object_or_404(List, name="TestList3"))
-    Notification.objects.create(user=get_object_or_404(User, username="TestUser1"), list=get_object_or_404(List, name="TestList1"))
-    Notification.objects.create(user=get_object_or_404(User, username="TestUser1"), list=get_object_or_404(List, name="TestList3"))
-    Notification.objects.create(user=get_object_or_404(User, username="TestUser2"), list=get_object_or_404(List, name="TestList2"))
-    Notification.objects.create(user=get_object_or_404(User, username="TestUser1"), list=get_object_or_404(List, name="TestList1"))
-    Notification.objects.create(user=get_object_or_404(User, username="TestUser2"), list=get_object_or_404(List, name="TestList1"))
+    Notification.objects.create(user=get_object_or_404(User, username="TestUser1"), source=get_object_or_404(Source, name="TestSource1"))
+    Notification.objects.create(user=get_object_or_404(User, username="TestUser2"), source=get_object_or_404(Source, name="TestSource1"))
+    Notification.objects.create(user=get_object_or_404(User, username="TestUser2"), source=get_object_or_404(Source, name="TestSource2"))
+    Notification.objects.create(user=get_object_or_404(User, username="TestUser3"), source=get_object_or_404(Source, name="TestSource1"))
+    Notification.objects.create(user=get_object_or_404(User, username="TestUser3"), source=get_object_or_404(Source, name="TestSource3"))
+    Notification.objects.create(user=get_object_or_404(User, username="TestUser1"), source=get_object_or_404(Source, name="TestSource5"))
+    Notification.objects.create(user=get_object_or_404(User, username="TestUser1"), source=get_object_or_404(Source, name="TestSource7"))
+    Notification.objects.create(user=get_object_or_404(User, username="TestUser2"), source=get_object_or_404(Source, name="TestSource4"))
+    Notification.objects.create(user=get_object_or_404(User, username="TestUser1"), source=get_object_or_404(Source, name="TestSource3"))
+    Notification.objects.create(user=get_object_or_404(User, username="TestUser2"), source=get_object_or_404(Source, name="TestSource4"))
 
 def create_test_list_ratings():
     ListRating.objects.create(user=get_object_or_404(User, username="TestUser1"), list=get_object_or_404(List, name="TestList1"), rating=3)

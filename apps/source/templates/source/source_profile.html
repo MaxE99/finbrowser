@@ -13,7 +13,7 @@
   <div class="rightInnerContainer">
     <div class="upperInnerContainer">
       <div class="sourceNameAndWebsiteContainer">
-        <h3 class="sourceName" id="source_id_{{ source.source_id }}">{{ source.name }}</h3>
+        <h3 class="sourceName" id="sid#{{ source.source_id }}">{{ source.name }}</h3>
         <div class="sourceContainer">
           <div class="iconContainer">
             <img class="sourcePic" src="{% static source.website.logo %}" alt="website_logo" />
@@ -137,7 +137,7 @@
               {% if latest_articles.number == i %}
               <button class="currentPagination">{{ latest_articles.number }}</button>
               {% elif i > latest_articles.number|add:'-3' and i < latest_articles.number|add:'3' %} <a
-                  href="?latest_articles={{ i }}">{{ i }}</a>
+                  href="?latest_content={{ i }}">{{ i }}</a>
               {% endif %}
               {% endfor %}
           </span>
@@ -189,7 +189,7 @@
         {% if latest_articles.number == i %}
         <button class="currentPagination">{{ latest_articles.number }}</button>
         {% elif i > latest_articles.number|add:'-3' and i < latest_articles.number|add:'3' %} <a
-          href="?latest_articles={{ i }}">{{ i }}</a>
+          href="?latest_content={{ i }}">{{ i }}</a>
         {% endif %}
         {% endfor %}
       </span>
@@ -204,5 +204,5 @@
 {% endif %}
 
 {{ user_rating|json_script:"user-rating" }}
-<script src="{% static 'source/min_source_profile_script_v3.js' %}"></script>
+<script src="{% static 'source/min_source_profile_script_v4.js' %}"></script>
 {% endblock content %}
