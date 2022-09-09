@@ -3,7 +3,7 @@
 <div class="categoryHeader">{{ title }}</div>
 <div class="smallFormContentWrapper">
     {% for tweet in qs %}
-    <div class="articleContainer" id="article_id_{{ tweet.article.article_id }}">
+    <div class="articleContainer" id="fkcc#{{ tweet.article.article_id }}">
         <div class="leftContentSide">
             <div class="profileImageContainer">
                 <img src="{% static tweet.article.source.favicon_path %}" />
@@ -49,12 +49,12 @@
                     <div class="listSelectionContainer">
                         {% for list in user_lists %}
                         <div class="listContainer">
-                            <label for="list_id_{{ list.list_id }}">
+                            <label for="fkcc?ai{{ tweet.article.article_id }}?li#{{ list.list_id }}">
                                 {% if tweet in list.articles.all %}
-                                <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists" checked="True">
+                                <input id="fkcc?ai{{ tweet.article.article_id }}?li#{{ list.list_id }}" type="checkbox" name="lists" checked="True">
                                 {{ list }}
                                 {% else %}
-                                <input id="list_id_{{ list.list_id }}" type="checkbox" name="lists">
+                                <input id="fkcc?ai{{ tweet.article.article_id }}?li#{{ list.list_id }}" type="checkbox" name="lists">
                                 {{ list }}
                                 {% endif %}
                             </label>

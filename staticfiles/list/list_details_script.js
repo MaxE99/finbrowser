@@ -6,7 +6,7 @@ if (subscribeButton) {
       try {
         const list_id = document
           .querySelector(".rightFirstRowContainer h3")
-          .id.replace("list_detail_for_", "");
+          .id.split("#")[1];
         let action = subscribeButton.innerText;
         const res = await fetch(
           `../../api/lists/${list_id}/list_change_subscribtion_status/`,
@@ -33,7 +33,6 @@ if (subscribeButton) {
   });
 }
 
-
 //check if createListMenu at 7nth spot
 function check_interaction_wrapper_at_last_spot(sliderWrapper, closeMenu) {
   spot = sliderWrapper.querySelectorAll(".contentWrapper").length;
@@ -48,7 +47,6 @@ function check_interaction_wrapper_at_last_spot(sliderWrapper, closeMenu) {
     }
   }
 }
-
 
 const editButton = document.querySelector(".editButton");
 const listName = document.querySelector(".rightFirstRowContainer h3").innerText;
@@ -80,8 +78,8 @@ function openEditMenu() {
       try {
         const list_id = document
           .querySelector(".rightFirstRowContainer h3")
-          .id.replace("list_detail_for_", "");
-        const article_id = closeButton.parentElement.id.replace("article", "");
+          .id.split("#")[1];
+        const article_id = closeButton.parentElement.id.split("#")[1];
         const res = await fetch(
           `../../api/lists/${list_id}/delete_article_from_list/${article_id}/`,
           get_fetch_settings("DELETE")
@@ -105,8 +103,8 @@ function openEditMenu() {
         try {
           const list_id = document
             .querySelector(".rightFirstRowContainer h3")
-            .id.replace("list_detail_for_", "");
-          const source_id = trashButton.id.replace("source_id_", "");
+            .id.split("#")[1];
+          const source_id = trashButton.id.split("#")[1];
           const res = await fetch(
             `../../api/lists/${list_id}/delete_source_from_list/${source_id}/`,
             get_fetch_settings("DELETE")
@@ -143,7 +141,7 @@ if (document.querySelector(".deleteListButton")) {
       try {
         const list_id = document
           .querySelector(".rightFirstRowContainer h3")
-          .id.replace("list_detail_for_", "");
+          .id.split("#")[1];
         const res = await fetch(
           `../../api/lists/${list_id}/`,
           get_fetch_settings("DELETE")
@@ -202,7 +200,7 @@ if (document.querySelector(".addSourcesForm #textInput")) {
       );
       const list_id = document
         .querySelector(".rightFirstRowContainer h3")
-        .id.replace("list_detail_for_", "");
+        .id.split("#")[1];
       if (search_term && search_term.replaceAll(/\s/g, "") != "") {
         results_list.style.display = "block";
         selected_list.style.display = "none";
@@ -249,10 +247,9 @@ if (document.querySelector(".addSourcesForm #textInput")) {
                         ) {
                           return (
                             e.toString() !==
-                            removeSourceButton.previousElementSibling.id.replace(
-                              "source_id_",
-                              ""
-                            )
+                            removeSourceButton.previousElementSibling.id.split(
+                              "#"
+                            )[1]
                           );
                         });
                       });
@@ -286,7 +283,7 @@ if (document.querySelector(".addSourcesForm button")) {
     .addEventListener("click", async () => {
       const list_id = document
         .querySelector(".rightFirstRowContainer h3")
-        .id.replace("list_detail_for_", "");
+        .id.split("#")[1];
       if (selected_sources.length) {
         selected_sources = selected_sources.join();
         try {
@@ -309,7 +306,6 @@ if (document.querySelector(".addSourcesForm button")) {
       }
     });
 }
-
 
 // rating functions
 const one = document.getElementById("first");
@@ -398,7 +394,7 @@ document.querySelectorAll(".rankingStar").forEach((star) => {
     const rating = getNumericValue(id);
     const list_id = document
       .querySelector(".rightFirstRowContainer h3")
-      .id.replace("list_detail_for_", "");
+      .id.split("#")[1];
     try {
       const data = { list_id: list_id, rating: rating };
       const res = await fetch(`../../api/list_ratings/`, {

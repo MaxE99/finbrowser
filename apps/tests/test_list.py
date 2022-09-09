@@ -9,7 +9,6 @@ from apps.article.models import Article
 from apps.list.models import List
 from apps.accounts.models import Profile
 from apps.source.models import Source
-from apps.home.models import Notification
 
 User = get_user_model()
 
@@ -47,30 +46,30 @@ class ListsSearchViewTest(TestCase):
         self.assertEqual(response.context['results_found'], 3)
 
 
-class AddListFormTests(TestCase):
-    def setUp(self):
-        create_test_users()
-        create_test_lists()
+# class AddListFormTests(TestCase):
+#     def setUp(self):
+#         create_test_users()
+#         create_test_lists()
 
-    def test_succesfull_list_creation(self):
-        self.client.login(username="TestUser1", password="testpw99")
-        data = {'name': 'TestList11', 'is_public': True}
-        response = self.client.post(reverse('list:lists'), data)
-        self.assertEqual(response.status_code, 302)
-        self.assertTrue(List.objects.filter(name="TestList11").exists())
+#     def test_succesful_list_creation(self):
+#         self.client.login(username="TestUser1", password="testpw99")
+#         data = {'name': 'TestList11', 'is_public': True}
+#         response = self.client.post(reverse('list:lists'), data)
+#         self.assertEqual(response.status_code, 302)
+#         self.assertTrue(List.objects.filter(name="TestList11").exists())
 
-    def test_create_list_with_name_that_already_exists(self):
-        self.client.login(username="TestUser1", password="testpw99")
-        data = {'name': 'TestList1', 'is_public': False}
-        response = self.client.post(reverse('list:lists'), data)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(List.objects.filter(name="TestList1").count(), 1)
+#     def test_create_list_with_name_that_already_exists(self):
+#         self.client.login(username="TestUser1", password="testpw99")
+#         data = {'name': 'TestList1', 'is_public': False}
+#         response = self.client.post(reverse('list:lists'), data)
+#         self.assertEqual(response.status_code, 302)
+#         self.assertEqual(List.objects.filter(name="TestList1").count(), 1)
 
-    def test_create_list_without_user(self):
-        data = {'name': 'TestList11', 'is_public': False}
-        response = self.client.post(reverse('list:lists'), data)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(List.objects.all().count(),10)
+#     def test_create_list_without_user(self):
+#         data = {'name': 'TestList11', 'is_public': False}
+#         response = self.client.post(reverse('list:lists'), data)
+#         self.assertEqual(response.status_code, 302)
+#         self.assertEqual(List.objects.all().count(),10)
 
 class ListNameChangeFormTest(TestCase):
     def setUp(self):
@@ -112,25 +111,9 @@ class ListDetailViewTest(TestCase):
     def test_list_detail(self):
         self.client.login(username="TestUser1", password="testpw99")
         list = get_object_or_404(List, name="TestList1")
-        list.sources.add(get_object_or_404(Source, name="TestSource1").source_id)
-        list.sources.add(get_object_or_404(Source, name="TestSource2").source_id)
         testuser1 = get_object_or_404(User, username="TestUser1")
         response = self.client.get(reverse('list:list-details', kwargs={'profile_slug': testuser1.profile.slug, 'list_slug':list.slug}))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['notifications_activated'], Notification.objects.filter(user=testuser1, list=list).exists())
         self.assertFalse(response.context['subscribed'])
         self.assertEqual(response.context['user_rating'], 3)
         self.assertEqual(response.context['list'], list)
-        self.assertEqual(len(response.context['latest_articles'].object_list), 8)
-        self.assertEqual(response.context['latest_articles'].object_list[0], get_object_or_404(Article, title="TestArticle2"))
-
-    def test_notification_activated(self):
-        self.client.login(username="TestUser1", password="testpw99")
-        list = get_object_or_404(List, name="TestList1")
-        testuser1 = get_object_or_404(User, username="TestUser1")
-        Notification.objects.create(user=testuser1, list=list)
-        list.subscribers.add(testuser1.id)
-        response = self.client.get(reverse('list:list-details', kwargs={'profile_slug': testuser1.profile.slug, 'list_slug':list.slug}))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['notifications_activated'], Notification.objects.filter(user=testuser1, list=list).exists())
-        self.assertTrue(response.context['subscribed'])

@@ -7,7 +7,7 @@ const notificationButton = document.querySelector(
       try {
         const stock_id = document
           .querySelector(".companyNameAndNotificationHeader .stockHeader")
-          .id.replace("stock_id_", "");
+          .id.split("#")[1]
         const data = { stock_id: stock_id };
         const res = await fetch(`../../api/notifications/`, {
           method: "POST",

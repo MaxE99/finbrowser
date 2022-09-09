@@ -47,6 +47,6 @@ class SectorDetailView(DetailView, BaseMixin):
         context = super().get_context_data(**kwargs)
         sector = self.get_object()
         context['news_sources'] = Source.objects.filter(news=True, sector=sector)
-        context['articles_from_sector'] = paginator_create(self.request, Article.objects.filter_by_sector_and_website(sector, website_inclusive=False), 50, 'articles_from_sector')
-        context['tweets_from_sector'] = paginator_create(self.request, Article.objects.filter_by_sector_and_website(sector), 25, 'tweets_from_sector')
+        context['articles_from_sector'] = paginator_create(self.request, Article.objects.filter_by_sector_and_website(sector, website_inclusive=False), 50, 'long_form_content')
+        context['tweets_from_sector'] = paginator_create(self.request, Article.objects.filter_by_sector_and_website(sector), 25, 'tweets')
         return context
