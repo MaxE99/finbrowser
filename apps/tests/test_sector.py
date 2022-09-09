@@ -34,5 +34,3 @@ class SectorDetailViewTest(TestCase):
         response = self.client.get(reverse('sector:sector-details', kwargs={'slug': sector_slug}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,'sector/sector_details.html')
-        self.assertEqual(len(response.context['articles_from_sector'].object_list), 5)
-        self.assertEqual(len(response.context['tweets_from_sector'].object_list), 0)

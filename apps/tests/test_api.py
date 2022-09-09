@@ -278,17 +278,10 @@ class NotificationViewSetTest(APITestCase):
         create_test_users()
         self.client.login(username="TestUser1", password="testpw99")
         create_test_lists()
-        create_test_notifications()
         create_test_website()
         create_test_sectors()
         create_test_sources()
-
-    def test_list_notification_creation(self):
-        list = get_object_or_404(List, name="TestList8")
-        data = {'list_id': list.list_id}
-        self.assertFalse(Notification.objects.filter(list=list, user=get_object_or_404(User, username="TestUser1")).exists())
-        self.client.post(f"/api/notifications/", data)
-        self.assertTrue(Notification.objects.filter(list=list, user=get_object_or_404(User, username="TestUser1")).exists())
+        create_test_notifications()
 
     def test_source_notification_creation(self):
         source = get_object_or_404(Source, name="TestSource8")
@@ -322,8 +315,8 @@ class FilteredArticlesTest(APITestCase):
         create_test_articles()
 
     def test_filtered_articles_view(self):
-        response = self.client.get(f"/api/search_articles/TestArticle")
-        self.assertEqual(len(response.json()[0]), 10)
+        response = self.client.get(f"/api/search_articles/TestArticle1")
+        self.assertEqual(len(response.json()[0]), 1)
 
 
 class FilteredSiteTest(APITestCase):
@@ -338,6 +331,6 @@ class FilteredSiteTest(APITestCase):
 
     def test_filtered_site_view(self):
         response = self.client.get(f"/api/search_site/Test")
-        self.assertEqual(len(response.json()[0]), 3)
-        self.assertEqual(len(response.json()[1]), 3)
-        self.assertEqual(len(response.json()[2]), 3)
+        self.assertEqual(len(response.json()[0]), 0)
+        self.assertEqual(len(response.json()[1]), 9)
+        self.assertEqual(len(response.json()[2]), 0)

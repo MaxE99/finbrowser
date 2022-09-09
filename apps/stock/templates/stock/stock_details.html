@@ -5,7 +5,7 @@
 {% endblock %} {% block content %}
 
 <div class="companyNameAndNotificationHeader">
-    <h2 class="stockHeader" id="stock_id_{{ stock.stock_id }}">{{ stock.full_company_name }}</h2>
+    <h2 class="stockHeader" id="sti#{{ stock.stock_id }}">{{ stock.full_company_name }}</h2>
     {% if request.user.is_authenticated %}
     {% if notifications_activated %}
     <i class="fas fa-bell notificationActivated"></i>
@@ -31,7 +31,7 @@
                 {% if filtered_articles.number == i %}
                 <button class="currentPagination">{{ filtered_articles.number }}</button>
                 {% elif i > filtered_articles.number|add:'-3' and i < filtered_articles.number|add:'3' %} <a
-                    href="?filtered_articles={{ i }}">{{ i }}</a>
+                    href="?long_form_content={{ i }}">{{ i }}</a>
                 {% endif %}
                 {% endfor %}
             </span>
@@ -48,7 +48,7 @@
                 {% if filtered_tweets.number == i %}
                 <button class="currentPagination">{{ filtered_tweets.number }}</button>
                 {% elif i > filtered_tweets.number|add:'-3' and i < filtered_tweets.number|add:'3' %} <a
-                    href="?filtered_tweets={{ i }}">{{ i }}</a>
+                    href="?tweets={{ i }}">{{ i }}</a>
                 {% endif %}
                 {% endfor %}
             </span>
@@ -60,5 +60,5 @@
 <div class="noContentFound">No content found!</div>
 {% endif %}
 
-<script src="{% static 'stock/stock_details_script.js' %}"></script>
+<script src="{% static 'stock/min_stock_details_script_v2.js' %}"></script>
 {% endblock content %}

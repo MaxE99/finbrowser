@@ -25,6 +25,6 @@ class StockDetailView(DetailView, BaseMixin):
         filtered_tweets = filtered_content.filter(source__website=TWITTER).select_related('source', 'source__sector', 'tweet_type', 'source__website')
         context['notifications_activated'] = Notification.objects.filter(user=self.request.user, stock=stock).exists() if self.request.user.is_authenticated else None
         context['expert_sources'] = stocks_get_experts(filtered_content)
-        context['filtered_tweets'] = paginator_create(self.request, filtered_tweets, 25, 'filtered_tweets')
-        context['filtered_articles'] = paginator_create(self.request, filtered_content.exclude(source__website=TWITTER), 50, 'filtered_articles')
+        context['filtered_tweets'] = paginator_create(self.request, filtered_tweets, 25, 'tweets')
+        context['filtered_articles'] = paginator_create(self.request, filtered_content.exclude(source__website=TWITTER), 50, 'long_form_content')
         return context
