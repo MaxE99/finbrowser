@@ -5,6 +5,7 @@ from apps.article.models import Article, HighlightedArticle, TweetType
 
 class ArticleSearch(admin.ModelAdmin):
     search_fields = ['title', ]
+    list_filter = ['source',]
 
 class SearchInsteadOfDropdown(admin.ModelAdmin):
     autocomplete_fields = ['article', ]
