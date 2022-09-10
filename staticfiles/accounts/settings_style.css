@@ -296,8 +296,12 @@ details ul li:hover {
   box-shadow: var(--box-shadowScheme);
 }
 
-.notificationDeletionHeader {
-  margin-bottom: 0;
+.sliderHeader:first-of-type{
+  margin-top: 2rem;
+}
+
+.sliderHeader{
+  padding: 2rem 4rem;
 }
 
 .notificationContainer {

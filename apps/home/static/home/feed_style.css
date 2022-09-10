@@ -225,6 +225,7 @@ main {
   width: 100%;
   font-size: 7.5rem;
   line-height: 1.15;
+  text-align: center;
 }
 
 .landingSection .landingSectionContainer h1 span {
@@ -276,7 +277,7 @@ main {
 
 .featureSubContainer {
   position: relative;
-  width: 78%;
+  width: 80%;
   margin: 0 auto;
 }
 
@@ -381,6 +382,12 @@ main {
   line-height: 1.6;
 }
 
+@media (max-width: 1250px) {
+  .featureSubContainer {
+    width: 90%;
+  }
+}
+
 @media (max-width: 1000px) {
   .landingSection {
     display: flex;
@@ -438,8 +445,13 @@ main {
 }
 
 @media (max-width: 500px) {
-  .landingSection .landingSectionContainer h1 {
-    font-size: 3.3rem;
+  .landingSection .landingSectionContainer {
+    min-width: unset;
+  }
+
+  .landingSection .landingSectionContainer h1, 
+  .sectionText h2 {
+    font-size: 3.2rem;
   }
 
   .landingSection {
@@ -454,7 +466,12 @@ main {
   }
 
   .landingSection .landingSectionContainer p {
-    max-width: 75%;
+    max-width: 90%;
+  }
+
+.landingSectionContainer .signUpButton{
+  font-size: 2rem;
+  padding: 1.2rem 3.6rem;
   }
 
   .landingSectionImage {
@@ -463,6 +480,5 @@ main {
 
   .sectionText h2 {
     margin-top: 2rem;
-    font-size: 3.5rem;
   }
 }

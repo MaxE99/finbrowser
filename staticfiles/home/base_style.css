@@ -1471,6 +1471,10 @@ h2 {
 }
 
 @media (max-width: 625px) {
+  .slider{
+    --items-per-screen: 3;
+  }
+
   footer ul {
     flex-direction: column;
     align-items: center;
