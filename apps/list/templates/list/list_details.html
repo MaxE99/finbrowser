@@ -4,7 +4,7 @@
 <meta name="description" content="FinBrowser list created by {{ list.creator.username }}">
 {% endblock %} {% block content %}
 
-<form action="" class="changeListForm" method="POST" enctype="multipart/form-data">
+<form class="changeListForm" method="POST" enctype="multipart/form-data">
     <div class="upperContainer">
         <div class="leftInnerContainer">
             <div class="listPictureContainer">
@@ -54,8 +54,8 @@
                     <button type="button" class="subscribeButton unsubscribed">Subscribe</button>
                     {% endif %}
                     {% else %}
-                    <a href="{% url 'account_login' %}"
-                        class="subscribeButton unsubscribed registrationLink">Subscribe</a>
+                    <a href="{% url 'account_login' %}" class="subscribeButton unsubscribed registrationLink"
+                        aria-label="Login To Subscribe To Lists">Subscribe</a>
                     {% endif %}
                 </div>
                 {% endif %}
@@ -71,16 +71,22 @@
                     {% if request.user.is_authenticated %}
                     <button type="button" class="rateListButton">Rate</button>
                     {% else %}
-                    <a href="{% url 'account_login' %}" class="rateListButton registrationLink">Rate</a>
+                    <a href="{% url 'account_login' %}" class="rateListButton registrationLink"
+                        aria-label="Login To Rate Lists">Rate</a>
                     {% endif %}
                     <div class="rate-formUpperContainer">
                         <h3>Rate {{ list.name }}</h3>
                         <div role="form" aria-label="Rate List Form" class="rate-form" action="" method="POST">
-                            <button type="button" class="fa fa-star rankingStar" id="first"></button>
-                            <button type="button" class="fa fa-star rankingStar" id="second"></button>
-                            <button type="button" class="fa fa-star rankingStar" id="third"></button>
-                            <button type="button" class="fa fa-star rankingStar" id="fourth"></button>
-                            <button type="button" class="fa fa-star rankingStar" id="fifth"></button>
+                            <button aria-label="1 Star Rating" type="button" class="fa fa-star rankingStar"
+                                id="first"></button>
+                            <button aria-label="2 Star Rating" type="button" class="fa fa-star rankingStar"
+                                id="second"></button>
+                            <button aria-label="3 Star Rating" type="button" class="fa fa-star rankingStar"
+                                id="third"></button>
+                            <button aria-label="4 Star Rating" type="button" class="fa fa-star rankingStar"
+                                id="fourth"></button>
+                            <button aria-label="5 Star Rating" type="button" class="fa fa-star rankingStar"
+                                id="fifth"></button>
                         </div>
                     </div>
                     {% endif %}
@@ -88,11 +94,16 @@
                 <div class="rankingsContainer">
                     <div class="rating">
                         <div class="ratedContainer">
-                            <button type="button" class="fa fa-star ratedStar" id="first"></button>
-                            <button type="button" class="fa fa-star ratedStar" id="second"></button>
-                            <button type="button" class="fa fa-star ratedStar" id="third"></button>
-                            <button type="button" class="fa fa-star ratedStar" id="fourth"></button>
-                            <button type="button" class="fa fa-star ratedStar" id="fifth"></button>
+                            <button aria-label="1 Star Rating" type="button" class="fa fa-star ratedStar"
+                                id="first"></button>
+                            <button aria-label="2 Star Rating" type="button" class="fa fa-star ratedStar"
+                                id="second"></button>
+                            <button aria-label="3 Star Rating" type="button" class="fa fa-star ratedStar"
+                                id="third"></button>
+                            <button aria-label="4 Star Rating" type="button" class="fa fa-star ratedStar"
+                                id="fourth"></button>
+                            <button aria-label="5 Star Rating" type="button" class="fa fa-star ratedStar"
+                                id="fifth"></button>
                         </div>
                         {% if average_rating != "None" %}
                         <div class="avgRating"><span>{{ list.average_rating }}</span> out of 5</div>
@@ -115,7 +126,7 @@
         <div class="progressBar"></div>
     </div>
     <div class="sliderContentContainer">
-        <button class="handle leftHandle">
+        <button aria-label="Slide Left" class="handle leftHandle">
             <div class="handleSymbol">&#8249;</div>
         </button>
         <div class="slider">
@@ -128,7 +139,8 @@
                     {% if list.creator == request.user %}
                     <i class="fas fa-trash sourceDeleteOption" id="si#{{ source.source_id }}"></i>
                     {% endif %}
-                    <a class="contentLink" href="{{ source.get_absolute_url }}"></a>
+                    <a class="contentLink" href="{{ source.get_absolute_url }}"
+                        aria-label="Open Profile Of {{ source.name }}"></a>
                     <div class="contentNameContainer">
                         <div class="contentName">{{ source.name }}</div>
                     </div>
@@ -153,7 +165,7 @@
             </div>
             {% endif %}
         </div>
-        <button class="handle rightHandle">
+        <button aria-label="Slide Right" class="handle rightHandle">
             <div class="handleSymbol">&#8250;</div>
         </button>
     </div>

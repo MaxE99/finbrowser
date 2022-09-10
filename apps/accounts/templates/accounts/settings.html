@@ -15,7 +15,7 @@
 </div>
 <div class="contentSection">
     <div class="tabsContent tabsContentActive" data-tab="0">
-        <form action="" class="editSection changeProfileForm" method="POST" enctype="multipart/form-data">
+        <form class="editSection changeProfileForm" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <h2>Account</h2>
             <div class="usernameAndEmailContainer">
@@ -79,7 +79,7 @@
     </div>
     <div class="tabsContent" data-tab="1">
         <h2>Change Password</h2>
-        <form action="" class="changePasswordForm" method="POST">
+        <form class="changePasswordForm" method="POST">
             {% csrf_token %} {{ change_password_form }}
             <input name="changePasswordForm" type="submit" class="passwordChangeSubmit" value="Save" />
         </form>
@@ -96,7 +96,8 @@
                         aria-label="Delete Notification"></i>
                     <img class="sourcePic" src="{% static notification.source.favicon_path %}" alt="Source Picture">
                 </div>
-                <a class="sourceLink" href="{{ notification.source.get_absolute_url }}"></a>
+                <a aria-label="Open Profile Of {{ notification.source.name }}" class="sourceLink"
+                    href="{{ notification.source.get_absolute_url }}"></a>
                 <div class="sourceNameOuterContainer">
                     <div class="sourceNameInnerContainer">{{ notification.source.name }}</div>
                 </div>
@@ -140,7 +141,7 @@
     </div>
     <div class="tabsContent" data-tab="3">
         <h2>Change Privacy Settings</h2>
-        <form action="" class="changePrivacySettingsForm" method="POST">
+        <form class="changePrivacySettingsForm" method="POST">
             {% csrf_token %}
             {% for field in privacy_settings_form %}
             <div class="privacySettingsContainer">
