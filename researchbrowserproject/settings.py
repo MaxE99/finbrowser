@@ -56,10 +56,6 @@ else:
     CSP_SCRIPT_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/", "https://www.googletagmanager.com",)
     CSP_FONT_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/")
     CSP_IMG_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/")
-    CSP_INCLUDE_NONCE_IN = [
-        'script-src',
-        'script-src-elem'
-    ]
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
