@@ -6,7 +6,7 @@
         <div class="progressBar"></div>
     </div>
     <div class="sliderContentContainer">
-        <button class="handle leftHandle">
+        <button aria-label="Slide Left" class="handle leftHandle">
             <div class="handleSymbol">&#8249;</div>
         </button>
         <div class="slider">
@@ -16,7 +16,8 @@
                     <div class="contentIconContainer">
                         <img class="contentIcon" src="{% static source.favicon_path %}" alt="Source Picture" />
                     </div>
-                    <a class="contentLink" href="{{ source.get_absolute_url }}"></a>
+                    <a class="contentLink" href="{{ source.get_absolute_url }}"
+                        aria-label="Open Profile Of {{ source.name }}"></a>
                     <div class="contentNameContainer">
                         <div class="contentName">{{ source.name }}</div>
                     </div>
@@ -24,7 +25,7 @@
             </div>
             {% endfor %}
         </div>
-        <button class="handle rightHandle">
+        <button aria-label="Slide Right" class="handle rightHandle">
             <div class="handleSymbol">&#8250;</div>
         </button>
     </div>

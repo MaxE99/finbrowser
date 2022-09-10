@@ -4,6 +4,8 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'home/min_feed_style_v5.css' %}">
 <title>FinBrowser | Home</title>
+<meta name="description"
+    content="FinBrowser curates the best news, analysis, and other stock market-related content from websites like Substack, Twitter, SeekingAlpha and more.">
 {% endblock %}
 
 {% block content %}
@@ -16,7 +18,7 @@
             <div class="progressBar"></div>
         </div>
         <div class="sliderContentContainer">
-            <button class="handle leftHandle">
+            <button aria-label="Slide Left" class="handle leftHandle">
                 <div class="handleSymbol">&#8249;</div>
             </button>
             <div class="slider">
@@ -31,7 +33,8 @@
                                 alt="List Picture Placeholder" />
                             {% endif %}
                         </div>
-                        <a class="contentLink" href="{{ list.get_absolute_url }}"></a>
+                        <a aria-label="Open List - {{ list.name }}" class="contentLink"
+                            href="{{ list.get_absolute_url }}"></a>
                         <div class="contentNameContainer">
                             <div class="contentName">{{ list.name }}</div>
                         </div>
@@ -45,14 +48,14 @@
                         <div class="formHeaderContainer">Create A New List<i role="button"
                                 aria-label="Close Create List Menu" class="fas fa-times closeFormContainerButton"></i>
                         </div>
-                        <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+                        <form enctype="multipart/form-data" method="POST" class="createListForm">
                             {% csrf_token %} {{ add_list_form }}
                             <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
                         </form>
                     </div>
                 </div>
             </div>
-            <button class="handle rightHandle">
+            <button aria-label="Slide Right" class="handle rightHandle">
                 <div class="handleSymbol">&#8250;</div>
             </button>
         </div>
@@ -64,7 +67,7 @@
             <div class="progressBar"></div>
         </div>
         <div class="sliderContentContainer">
-            <button class="handle leftHandle">
+            <button aria-label="Slide Left" class="handle leftHandle">
                 <div class="handleSymbol">&#8249;</div>
             </button>
             <div class="slider">
@@ -79,7 +82,8 @@
                                 alt="List Picture Placeholder" />
                             {% endif %}
                         </div>
-                        <a class="contentLink" href="{{ list.get_absolute_url }}"></a>
+                        <a aria-label="Open List - {{ list.name }}" class="contentLink"
+                            href="{{ list.get_absolute_url }}"></a>
                         <div class="contentNameContainer">
                             <div class="contentName">{{ list.name }}</div>
                         </div>
@@ -102,7 +106,7 @@
                     </div>
                 </div>
             </div>
-            <button class="handle rightHandle">
+            <button aria-label="Slide Right" class="handle rightHandle">
                 <div class="handleSymbol">&#8250;</div>
             </button>
         </div>
@@ -114,7 +118,7 @@
             <div class="progressBar"></div>
         </div>
         <div class="sliderContentContainer">
-            <button class="handle leftHandle">
+            <button aria-label="Slide Left" class="handle leftHandle">
                 <div class="handleSymbol">&#8249;</div>
             </button>
             <div class="slider">
@@ -124,7 +128,8 @@
                         <div class="contentIconContainer">
                             <img class="contentIcon" src="{% static source.favicon_path %}" alt="Source Picture" />
                         </div>
-                        <a class="contentLink" href="{{ source.get_absolute_url }}"></a>
+                        <a class="contentLink" href="{{ source.get_absolute_url }}"
+                            aria-label="Open Profile Of {{ source.name }}"></a>
                         <div class="contentNameContainer">
                             <div class="contentName">{{ source.name }}</div>
                         </div>
@@ -147,7 +152,7 @@
                     </div>
                 </div>
             </div>
-            <button class="handle rightHandle">
+            <button aria-label="Slide Right" class="handle rightHandle">
                 <div class="handleSymbol">&#8250;</div>
             </button>
         </div>
@@ -221,7 +226,7 @@
             <p>
                 Find valuable insights, news, analysis and stock tips from industry experts on the open web.
             </p>
-            <a href="{% url 'account_login' %}" class="signUpButton">Get Started</a>
+            <a href="{% url 'account_login' %}" class="signUpButton" aria-label="Sign Up">Get Started</a>
         </div>
         <div class="landingSectionImage">
             <img src="{% static 'home/media/landing-page.svg' %}" alt="landing-page-logo">
