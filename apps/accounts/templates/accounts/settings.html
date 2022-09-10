@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<div class="settingSidebar">
+<div class="settingSidebar" role="navigation" aria-label="Settings Menu">
     <div class="settingOption activeSettingOption" data-for-tab="0">Profile</div>
     <div class="settingOption" data-for-tab="1">Password</div>
     <div class="settingOption" data-for-tab="2">Notifications</div>
@@ -32,11 +32,11 @@
                 {{ profile_change_form.profile_pic.label_tag }}
                 <div class="profilePicInnerContainer">
                     {% if user.profile.profile_pic %}
-                    <img src="{{ user.profile.profile_pic.url }}" alt="">
+                    <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
                     {% else %}
-                    <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="user-profile-pic">
+                    <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="Profile Picture Placeholder">
                     {% endif %}
-                    <div class="changeProfilePicButton">
+                    <div class="changeProfilePicButton" role="button">
                         <span>Change</span>
                         {{ profile_change_form.profile_pic }}
                     </div>
@@ -47,7 +47,7 @@
             {% for social in social_links %}
             <div class="existingSocialContainer">
                 <img class="{{ social.website.name }}" src="{% static social.website.logo %}"
-                    id="ewi#{{ social.website.website_id }}" alt="">
+                    id="ewi#{{ social.website.website_id }}" alt="Website Logo">
                 <input type="text" value="{{ social.url }}">
                 <button type="button" class="removeSocialLinkButton"
                     id="sli#{{ social.social_link_id }}">Remove</button>
@@ -56,13 +56,13 @@
             {% endfor %}
             <div class="socialLinksWrapper">
                 <div class="addSocialLinksContainer">
-                    <div class="selectContainer">
+                    <div class="selectContainer" role="button" aria-label="Select Social Link Website">
                         <details>
                             <summary><i class="fa fa-caret-down"></i></summary>
                             <ul>
                                 {% for website in websites %}
-                                <li><img class="{{ website.name }}" src="{% static website.favicon %}" alt=""
-                                        id="wi#{{ website.website_id }}"></li>
+                                <li><img class="{{ website.name }}" src="{% static website.favicon %}"
+                                        alt="Website Logo" id="wi#{{ website.website_id }}"></li>
                                 {% endfor %}
                             </ul>
                         </details>
@@ -92,8 +92,9 @@
             {% if notification.source %}
             <div class="sourceContainer">
                 <div class="iconContainer">
-                    <i class="fas fa-trash" id="soni#{{ notification.notification_id }}"></i>
-                    <img class="sourcePic" src="{% static notification.source.favicon_path %}" alt="favicon">
+                    <i class="fas fa-trash" id="soni#{{ notification.notification_id }}" role="button"
+                        aria-label="Delete Notification"></i>
+                    <img class="sourcePic" src="{% static notification.source.favicon_path %}" alt="Source Picture">
                 </div>
                 <a class="sourceLink" href="{{ notification.source.get_absolute_url }}"></a>
                 <div class="sourceNameOuterContainer">
@@ -109,7 +110,8 @@
             {% if notification.stock %}
             <div class="keywordContainer">
                 <div class="iconContainer">
-                    <i class="fas fa-trash" id="stni#{{ notification.notification_id }}">
+                    <i class="fas fa-trash" id="stni#{{ notification.notification_id }}" role="button"
+                        aria-label="Delete Notification">
                     </i>
                 </div>
                 {{ notification.stock.ticker }}
@@ -123,7 +125,8 @@
             {% if notification.keyword %}
             <div class="keywordContainer">
                 <div class="iconContainer">
-                    <i class="fas fa-trash" id="kni#{{ notification.notification_id }}">
+                    <i class="fas fa-trash" id="kni#{{ notification.notification_id }}" role="button"
+                        aria-label="Delete Notification">
                     </i>
                 </div>
                 {{ notification.keyword }}

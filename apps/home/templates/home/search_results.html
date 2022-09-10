@@ -11,13 +11,13 @@
     <h2>Search Results</h2>
     <div class="mainSearchWrapper searchWrapper">
         <div class="mainSearchContainer">
-            <input id="mainAutocomplete" type="text" class="mainInputSearch" value="{{ search_term }}"
-                placeholder="Search">
+            <input aria-label="Search" id="mainAutocomplete" type="text" class="mainInputSearch"
+                value="{{ search_term }}" placeholder="Search">
             <i class="fas fa-search"></i>
         </div>
         <div id="autocomplete_list_results"></div>
     </div>
-    <div class="searchCategories">
+    <div class="searchCategories" role="navigation" aria-label="Search Results Navigation">
         <div class="searchCategoryTab searchCategoryTabActive" data-for-tab="0">Content</div>
         <div class="searchCategoryTab" data-for-tab="1">Stocks</div>
         <div class="searchCategoryTab" data-for-tab="2">Sources</div>
@@ -59,25 +59,25 @@
         </div>
         <div class="websiteSearchWrapper">
             <div class="websiteSearchContainer">
-                <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="seekingalpha_logo">Search on Seeking
+                <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">Search on Seeking
                 Alpha
-                <a href="https://seekingalpha.com/search?q={{ search_term }}&tab=headlines"></a>
+                <a href="https://seekingalpha.com/search?q={{ search_term }}&tab=headlines" target="_blank"></a>
             </div>
             <div class="websiteSearchContainer">
-                <img src="{% static 'home/media/spotify_favicon.png' %}" alt="spotify_logo">Search on Spotify
-                <a href="https://open.spotify.com/search/{{ search_term }}"></a>
+                <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">Search on Spotify
+                <a href="https://open.spotify.com/search/{{ search_term }}" target="_blank"></a>
             </div>
             <div class="websiteSearchContainer">
-                <img src="{% static 'home/media/substack_logo.png' %}" alt="substack_logo">Search on Substack
-                <a href="https://substack.com/search/{{ search_term }}"></a>
+                <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">Search on Substack
+                <a href="https://substack.com/search/{{ search_term }}" target="_blank"></a>
             </div>
             <div class="websiteSearchContainer">
-                <img src="{% static 'home/media/twitter_logo.png' %}" alt="twitter_logo">Search on Twitter
-                <a href="https://twitter.com/search?q={{ search_term }}"></a>
+                <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">Search on Twitter
+                <a href="https://twitter.com/search?q={{ search_term }}" target="_blank"></a>
             </div>
             <div class="websiteSearchContainer">
-                <img src="{% static 'home/media/youtube_logo.png' %}" alt="youtube_logo">Search on YouTube
-                <a href="https://www.youtube.com/results?search_query={{ search_term }}"></a>
+                <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">Search on YouTube
+                <a href="https://www.youtube.com/results?search_query={{ search_term }}" target="_blank"></a>
             </div>
         </div>
     </div>

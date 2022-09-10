@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<div class="filterBar smallerScreenFilterBar">
+<div class="filterBar smallerScreenFilterBar" role="form" aria-label="Filter Menu">
     <div class="selectContainer filterSelectContainer">
         <button class="filterButton"><span>Filter</span><i class="fa-solid fa-filter"></i></button>
     </div>
@@ -57,7 +57,7 @@
     </div>
     <div class="selectContainer searchSelectContainer">
         <div class="searchContainer">
-            <input id="search" placeholder="Search term" type="text" />
+            <input aria-label="Search" id="search" placeholder="Search term" type="text" />
             <i class="fas fa-search"></i>
         </div>
         <div id="autocomplete_list_results"></div>

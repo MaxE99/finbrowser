@@ -25,10 +25,10 @@
                     <div class="contentContainer">
                         <div class="contentIconContainer">
                             {% if list.list_pic %}
-                            <img class="contentIcon" src="{{ list.list_pic.url }}" alt="favicon" />
+                            <img class="contentIcon" src="{{ list.list_pic.url }}" alt="List Picture" />
                             {% else %}
                             <img class="contentIcon" src="{% static 'home/media/finbrowser-bigger-logo.png' %}"
-                                alt="favicon" />
+                                alt="List Picture Placeholder" />
                             {% endif %}
                         </div>
                         <a class="contentLink" href="{{ list.get_absolute_url }}"></a>
@@ -39,10 +39,11 @@
                 </div>
                 {% endfor %}
                 <div class="contentWrapper interactionWrapper">
-                    <div class="createListButton addButton"><i class="fas fa-plus"></i></div>
+                    <div role="button" aria-label="Open Create List Menu" class="createListButton addButton"><i
+                            class="fas fa-plus"></i></div>
                     <div class="createListMenu formContainer">
-                        <div class="formHeaderContainer">Create A New List<i
-                                class="fas fa-times closeFormContainerButton"></i>
+                        <div class="formHeaderContainer">Create A New List<i role="button"
+                                aria-label="Close Create List Menu" class="fas fa-times closeFormContainerButton"></i>
                         </div>
                         <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
                             {% csrf_token %} {{ add_list_form }}
@@ -72,10 +73,10 @@
                     <div class="contentContainer">
                         <div class="contentIconContainer">
                             {% if list.list_pic %}
-                            <img class="contentIcon" src="{{ list.list_pic.url }}" alt="favicon" />
+                            <img class="contentIcon" src="{{ list.list_pic.url }}" alt="List Picture" />
                             {% else %}
                             <img class="contentIcon" src="{% static 'home/media/finbrowser-bigger-logo.png' %}"
-                                alt="favicon" />
+                                alt="List Picture Placeholder" />
                             {% endif %}
                         </div>
                         <a class="contentLink" href="{{ list.get_absolute_url }}"></a>
@@ -86,9 +87,11 @@
                 </div>
                 {% endfor %}
                 <div class="contentWrapper interactionWrapper">
-                    <div class="addListsButton addButton"><i class="fas fa-plus"></i></div>
+                    <div role="button" aria-label="Open Add Lists Menu" class="addListsButton addButton"><i
+                            class="fas fa-plus"></i></div>
                     <div class="addListsForm formContainer">
-                        <div class="formHeaderContainer">Add Lists<i class="fas fa-times closeFormContainerButton"></i>
+                        <div class="formHeaderContainer">Add Lists<i role="button" aria-label="Close Add Lists Menu"
+                                class="fas fa-times closeFormContainerButton"></i>
                         </div>
                         <input id="textInput" type="text">
                         <div class="searchResultWrapper">
@@ -119,7 +122,7 @@
                 <div class="contentWrapper">
                     <div class="contentContainer">
                         <div class="contentIconContainer">
-                            <img class="contentIcon" src="{% static source.favicon_path %}" alt="favicon" />
+                            <img class="contentIcon" src="{% static source.favicon_path %}" alt="Source Picture" />
                         </div>
                         <a class="contentLink" href="{{ source.get_absolute_url }}"></a>
                         <div class="contentNameContainer">
@@ -129,9 +132,10 @@
                 </div>
                 {% endfor %}
                 <div class="contentWrapper interactionWrapper">
-                    <div class="addSourcesButton addButton"><i class="fas fa-plus"></i></div>
+                    <div role="button" aria-label="Open Add Sources Menu" class="addSourcesButton addButton"><i
+                            class="fas fa-plus"></i></div>
                     <div class="addSourcesForm formContainer">
-                        <div class="formHeaderContainer">Add Sources<i
+                        <div class="formHeaderContainer">Add Sources<i role="button" aria-label="Close Add Sources Menu"
                                 class="fas fa-times closeFormContainerButton"></i>
                         </div>
                         <input id="textInput" type="text">

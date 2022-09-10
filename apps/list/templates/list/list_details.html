@@ -11,16 +11,16 @@
                 {% csrf_token %}
                 {% if list.creator == request.user %}
                 {% if list.list_pic %}
-                <img src="{{ list.list_pic.url }}">
+                <img src="{{ list.list_pic.url }}" alt="List Picture">
                 {% else %}
-                <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}">
+                <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="List Picture Placeholder">
                 {% endif %}
                 {{ change_list_pic_form }}
                 {% else %}
                 {% if list.list_pic %}
-                <img src="{{ list.list_pic.url }}">
+                <img src="{{ list.list_pic.url }}" alt="List Picture">
                 {% else %}
-                <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}">
+                <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="List Picture Placeholder">
                 {% endif %}
                 {% endif %}
                 <i class="fas fa-camera"></i>
@@ -29,7 +29,8 @@
         <div class="rightInnerContainer">
             <div class="rightFirstRowContainer">
                 <h3 id="ldi#{{ list.list_id }}">{{ list.name }}</h3>
-                <div class="nameChangeContainer">{{ change_list_name_form }}</div>
+                <div role="form" aria-label="Change List Name" class="nameChangeContainer">{{ change_list_name_form }}
+                </div>
                 <div class="creatorContainer creatorContainerSmartphonePositioning">
                     <span>Creator: </span>
                     <a href="{{ list.creator.profile.get_absolute_url }}">{{ list.creator.username }}</a>
@@ -39,7 +40,8 @@
                     <button type="button" class="editButton"><i class="fas fa-edit"></i> Edit</button>
                     <div class="buttonContainer">
                         <button type="button" class="deleteListButton">Delete List</button>
-                        <a href="{{ list.get_absolute_url }}" class="cancelButton">Cancel</a>
+                        <a role="button" aria-label="Cancel" href="{{ list.get_absolute_url }}"
+                            class="cancelButton">Cancel</a>
                         <input name="changeListForm" type="submit" value="Save">
                     </div>
                 </div>
@@ -73,7 +75,7 @@
                     {% endif %}
                     <div class="rate-formUpperContainer">
                         <h3>Rate {{ list.name }}</h3>
-                        <div class="rate-form" action="" method="POST">
+                        <div role="form" aria-label="Rate List Form" class="rate-form" action="" method="POST">
                             <button type="button" class="fa fa-star rankingStar" id="first"></button>
                             <button type="button" class="fa fa-star rankingStar" id="second"></button>
                             <button type="button" class="fa fa-star rankingStar" id="third"></button>
@@ -121,7 +123,7 @@
             <div class="contentWrapper">
                 <div class="contentContainer">
                     <div class="contentIconContainer">
-                        <img class="contentIcon" src="{% static source.favicon_path %}" alt="favicon" />
+                        <img class="contentIcon" src="{% static source.favicon_path %}" alt="Source Picture" />
                     </div>
                     {% if list.creator == request.user %}
                     <i class="fas fa-trash sourceDeleteOption" id="si#{{ source.source_id }}"></i>
@@ -135,9 +137,11 @@
             {% endfor %}
             {% if list.creator == request.user %}
             <div class="contentWrapper interactionWrapper">
-                <div class="addSourcesButton addButton"><i class="fas fa-plus"></i></div>
+                <div role="button" aria-label="Open Add Sources Menu" class="addSourcesButton addButton"><i
+                        class="fas fa-plus"></i></div>
                 <div class="addSourcesForm formContainer">
-                    <div class="formHeaderContainer">Add Sources<i class="fas fa-times closeFormContainerButton"></i>
+                    <div class="formHeaderContainer">Add Sources<i class="fas fa-times closeFormContainerButton"
+                            role="button" aria-label="Close Add Sources Menu"></i>
                     </div>
                     <input id="textInput" type="text">
                     <div class="searchResultWrapper">

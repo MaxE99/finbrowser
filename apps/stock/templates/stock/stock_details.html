@@ -8,9 +8,9 @@
     <h2 class="stockHeader" id="sti#{{ stock.stock_id }}">{{ stock.full_company_name }}</h2>
     {% if request.user.is_authenticated %}
     {% if notifications_activated %}
-    <i class="fas fa-bell notificationActivated"></i>
+    <i aria-label="Activate Notifications" class="fas fa-bell notificationActivated"></i>
     {% else %}
-    <i class="fas fa-bell"></i>
+    <i role="button" aria-label="Deactivate Notifications" class="fas fa-bell"></i>
     {% endif %}
     {% endif %}
 </div>
@@ -22,8 +22,7 @@
 {% if filtered_articles or filtered_tweets %}
 <div class="contentColumnWrapper">
     {% if filtered_articles %}
-    <div
-        class="contentColumnContainer">
+    <div class="contentColumnContainer">
         {% create_content_container "Long-Form Content" filtered_articles request user_lists csrf_token add_list_form highlighted_content_ids %}
         <div class="pagination">
             <span class="step-links">
@@ -39,8 +38,7 @@
     </div>
     {% endif %}
     {% if filtered_tweets %}
-    <div
-        class="contentColumnContainer">
+    <div class="contentColumnContainer">
         {% create_content_container "Tweets" filtered_tweets request user_lists csrf_token add_list_form highlighted_content_ids %}
         <div class="pagination">
             <span class="step-links">

@@ -33,7 +33,7 @@
             <div class="headerContainer">
                 <div class="logoContainer">
                     <div class="logoSpace">
-                        <img src="{% static 'home/media/finbrowser-logo.png' %}" alt="finbrowser-logo">
+                        <img src="{% static 'home/media/finbrowser-logo.png' %}" alt="Finbrowser Logo">
                         <a href="{% url 'home:feed' %}"></a>
                     </div>
                 </div>
@@ -51,7 +51,8 @@
                 </nav>
                 <div class="mainSearchWrapper">
                     <div class="mainSearchContainer">
-                        <input id="mainAutocomplete" type="text" class="mainInputSearch" placeholder="Search">
+                        <input aria-label="Search" id="mainAutocomplete" type="text" class="mainInputSearch"
+                            placeholder="Search">
                         <i class="fas fa-search"></i>
                     </div>
                     <div id="mainAutocomplete_result"></div>
@@ -68,7 +69,8 @@
                     </i>
                     <div class="notificationContainer">
                         <h3>Notifications</h3>
-                        <div class="notificationHeadersContainer">
+                        <div class="notificationHeadersContainer" role="navigation"
+                            aria-label="Notification Navigation">
                             <div class="activeNotificationCategory" data-for-tab="0">Sources</div>
                             <div data-for-tab="1">Stocks</div>
                             <div data-for-tab="2">Keywords</div>
@@ -81,7 +83,8 @@
                                 id="bsoni?ai#{{ notification.article.article_id }}">
                                 <div class="leftContentSide">
                                     <div class="profileImageContainer">
-                                        <img src="{% static notification.article.source.favicon_path %}" />
+                                        <img src="{% static notification.article.source.favicon_path %}"
+                                            alt="Source Picture" />
                                         <a class="sourceProfile"
                                             href="{{ notification.article.source.get_absolute_url }}"></a>
                                     </div>
@@ -94,24 +97,27 @@
                                             <div class="sourceWebsiteProfileContainer">
                                                 {% if notification.article.source.website.name == "YouTube" %}
                                                 <img class="youtubeLogo"
-                                                    src="{% static notification.article.source.website.logo %}" />
+                                                    src="{% static notification.article.source.website.logo %}"
+                                                    alt="Website Logo" />
                                                 {% else %}
-                                                <img src="{% static notification.article.source.website.logo %}" />
+                                                <img src="{% static notification.article.source.website.logo %}"
+                                                    alt="Website Logo" />
                                                 {% endif %}
-                                                <a href="{{ notification.article.source.url }}"></a>
+                                                <a href="{{ notification.article.source.url }}" target="_blank"></a>
                                             </div>
                                         </div>
-                                        <i class="fas fa-ellipsis-h"></i>
+                                        <i class="fas fa-ellipsis-h" role="button"
+                                            aria-label="Open Article Interactions"></i>
                                         <div class="articleOptionsContainer">
                                             {% if request.user.is_authenticated %}
                                             <div class="addToListButton"><i class="fas fa-list"></i>Add to list
                                             </div>
                                             {% if notification.article.article_id in highlighted_content_ids %}
-                                            <div class="addToHighlightedButton"><i
+                                            <div class="addToHighlightedButton" role="button"><i
                                                     class="fas fa-times"></i><span>Unhighlight
                                                     article</span></div>
                                             {% else %}
-                                            <div class="addToHighlightedButton"><i
+                                            <div class="addToHighlightedButton" role="button"><i
                                                     class="fas fa-highlighter"></i><span>Highlight
                                                     article</span></div>
                                             {% endif %}
@@ -125,21 +131,24 @@
                                                     article</span></a>
                                             {% endif %}
                                         </div>
-                                        <div class="addToListForm">
-                                            <div class="formHeaderContainer">Create A New List<i
+                                        <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
+                                            <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
                                                     class="fas fa-times closeFormContainerButton"></i>
                                             </div>
                                             {% if user_lists %}
                                             <div class="listSelectionContainer">
                                                 {% for list in user_lists %}
                                                 <div class="listContainer">
-                                                    <label for="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
+                                                    <label
+                                                        for="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
                                                         {% if notification.article in list.articles.all %}
-                                                        <input id="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
-                                                            name="lists" checked="True"> {{ list }}
+                                                        <input
+                                                            id="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
+                                                            type="checkbox" name="lists" checked="True"> {{ list }}
                                                         {% else %}
-                                                        <input id="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
-                                                            name="lists">
+                                                        <input
+                                                            id="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
+                                                            type="checkbox" name="lists">
                                                         {{ list }}
                                                         {% endif %}
                                                     </label>
@@ -185,7 +194,7 @@
                                     {% endif %}
                                     {% if notification.article.tweet_type.image_path %}
                                     <img class="tweetImage"
-                                        src="{% static notification.article.tweet_type.image_path %}">
+                                        src="{% static notification.article.tweet_type.image_path %}" alt="Tweet Image">
                                     {% endif %}
                                     {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
                                     <div class="quoteWrapper">
@@ -195,14 +204,15 @@
                                         <div class="quoteText">{{ notification.article.tweet_type.text }}</div>
                                         {% if notification.article.tweet_type.initial_tweet_img_path %}
                                         <img class="tweetImage"
-                                            src="{% static notification.article.tweet_type.initial_tweet_img_path %}">
+                                            src="{% static notification.article.tweet_type.initial_tweet_img_path %}"
+                                            alt="Tweet Reply Image">
                                         {% endif %}
                                     </div>
                                     {% endif %}
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
                                     </div>
-                                    <a class="contentLink" href="{{ notification.article.link }}"></a>
+                                    <a class="contentLink" href="{{ notification.article.link }}" target="_blank"></a>
                                 </div>
                             </div>
                             {% endfor %}
@@ -217,7 +227,8 @@
                                 id="bstni?ai#{{ notification.article.article_id }}">
                                 <div class="leftContentSide">
                                     <div class="profileImageContainer">
-                                        <img src="{% static notification.article.source.favicon_path %}" />
+                                        <img src="{% static notification.article.source.favicon_path %}"
+                                            alt="Source Picture" />
                                         <a class="sourceProfile"
                                             href="{{ notification.article.source.get_absolute_url }}"></a>
                                     </div>
@@ -230,24 +241,28 @@
                                             <div class="sourceWebsiteProfileContainer">
                                                 {% if notification.article.source.website.name == "YouTube" %}
                                                 <img class="youtubeLogo"
-                                                    src="{% static notification.article.source.website.logo %}" />
+                                                    src="{% static notification.article.source.website.logo %}"
+                                                    alt="Website Logo" />
                                                 {% else %}
-                                                <img src="{% static notification.article.source.website.logo %}" />
+                                                <img src="{% static notification.article.source.website.logo %}"
+                                                    alt="Website Logo" />
                                                 {% endif %}
-                                                <a href="{{ notification.article.source.url }}"></a>
+                                                <a href="{{ notification.article.source.url }}" target="_blank"></a>
                                             </div>
                                         </div>
-                                        <i class="fas fa-ellipsis-h"></i>
+                                        <i class="fas fa-ellipsis-h" role="button"
+                                            aria-label="Open Article Interactions"></i>
                                         <div class="articleOptionsContainer">
                                             {% if request.user.is_authenticated %}
-                                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list
+                                            <div class="addToListButton" role="button"><i class="fas fa-list"></i>Add to
+                                                list
                                             </div>
                                             {% if notification.article.article_id in highlighted_content_ids %}
-                                            <div class="addToHighlightedButton"><i
+                                            <div class="addToHighlightedButton" role="button"><i
                                                     class="fas fa-times"></i><span>Unhighlight
                                                     article</span></div>
                                             {% else %}
-                                            <div class="addToHighlightedButton"><i
+                                            <div class="addToHighlightedButton" role="button"><i
                                                     class="fas fa-highlighter"></i><span>Highlight
                                                     article</span></div>
                                             {% endif %}
@@ -261,21 +276,24 @@
                                                     article</span></a>
                                             {% endif %}
                                         </div>
-                                        <div class="addToListForm">
-                                            <div class="formHeaderContainer">Create A New List<i
+                                        <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
+                                            <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
                                                     class="fas fa-times closeFormContainerButton"></i>
                                             </div>
                                             {% if user_lists %}
                                             <div class="listSelectionContainer">
                                                 {% for list in user_lists %}
                                                 <div class="listContainer">
-                                                    <label for="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
+                                                    <label
+                                                        for="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
                                                         {% if notification.article in list.articles.all %}
-                                                        <input id="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
-                                                            name="lists" checked="True"> {{ list }}
+                                                        <input
+                                                            id="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
+                                                            type="checkbox" name="lists" checked="True"> {{ list }}
                                                         {% else %}
-                                                        <input id="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
-                                                            name="lists">
+                                                        <input
+                                                            id="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
+                                                            type="checkbox" name="lists">
                                                         {{ list }}
                                                         {% endif %}
                                                     </label>
@@ -321,7 +339,7 @@
                                     {% endif %}
                                     {% if notification.article.tweet_type.image_path %}
                                     <img class="tweetImage"
-                                        src="{% static notification.article.tweet_type.image_path %}">
+                                        src="{% static notification.article.tweet_type.image_path %}" alt="Tweet Image">
                                     {% endif %}
                                     {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
                                     <div class="quoteWrapper">
@@ -331,14 +349,15 @@
                                         <div class="quoteText">{{ notification.article.tweet_type.text }}</div>
                                         {% if notification.article.tweet_type.initial_tweet_img_path %}
                                         <img class="tweetImage"
-                                            src="{% static notification.article.tweet_type.initial_tweet_img_path %}">
+                                            src="{% static notification.article.tweet_type.initial_tweet_img_path %}"
+                                            alt="Tweet Reply Image">
                                         {% endif %}
                                     </div>
                                     {% endif %}
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
                                     </div>
-                                    <a class="contentLink" href="{{ notification.article.link }}"></a>
+                                    <a class="contentLink" href="{{ notification.article.link }}" target="_blank"></a>
                                 </div>
                             </div>
                             {% endfor %}
@@ -359,7 +378,8 @@
                                 id="bkni?ai#{{ notification.article.article_id }}">
                                 <div class="leftContentSide">
                                     <div class="profileImageContainer">
-                                        <img src="{% static notification.article.source.favicon_path %}" />
+                                        <img src="{% static notification.article.source.favicon_path %}"
+                                            alt="Source Picture" />
                                         <a class="sourceProfile"
                                             href="{{ notification.article.source.get_absolute_url }}"></a>
                                     </div>
@@ -372,24 +392,28 @@
                                             <div class="sourceWebsiteProfileContainer">
                                                 {% if notification.article.source.website.name == "YouTube" %}
                                                 <img class="youtubeLogo"
-                                                    src="{% static notification.article.source.website.logo %}" />
+                                                    src="{% static notification.article.source.website.logo %}"
+                                                    alt="Website Logo" />
                                                 {% else %}
-                                                <img src="{% static notification.article.source.website.logo %}" />
+                                                <img src="{% static notification.article.source.website.logo %}"
+                                                    alt="Website Logo" />
                                                 {% endif %}
-                                                <a href="{{ notification.article.source.url }}"></a>
+                                                <a href="{{ notification.article.source.url }}" target="_blank"></a>
                                             </div>
                                         </div>
-                                        <i class="fas fa-ellipsis-h"></i>
+                                        <i class="fas fa-ellipsis-h" role="button"
+                                            aria-label="Open Article Interactions"></i>
                                         <div class="articleOptionsContainer">
                                             {% if request.user.is_authenticated %}
-                                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list
+                                            <div class="addToListButton" role="button"><i class="fas fa-list"></i>Add to
+                                                list
                                             </div>
                                             {% if notification.article.article_id in highlighted_content_ids %}
-                                            <div class="addToHighlightedButton"><i
+                                            <div class="addToHighlightedButton" role="button"><i
                                                     class="fas fa-times"></i><span>Unhighlight
                                                     article</span></div>
                                             {% else %}
-                                            <div class="addToHighlightedButton"><i
+                                            <div class="addToHighlightedButton" role="button"><i
                                                     class="fas fa-highlighter"></i><span>Highlight
                                                     article</span></div>
                                             {% endif %}
@@ -403,21 +427,24 @@
                                                     article</span></a>
                                             {% endif %}
                                         </div>
-                                        <div class="addToListForm">
-                                            <div class="formHeaderContainer">Create A New List<i
+                                        <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
+                                            <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
                                                     class="fas fa-times closeFormContainerButton"></i>
                                             </div>
                                             {% if user_lists %}
                                             <div class="listSelectionContainer">
                                                 {% for list in user_lists %}
                                                 <div class="listContainer">
-                                                    <label for="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
+                                                    <label
+                                                        for="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
                                                         {% if notification.article in list.articles.all %}
-                                                        <input id="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
-                                                            name="lists" checked="True"> {{ list }}
+                                                        <input
+                                                            id="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
+                                                            type="checkbox" name="lists" checked="True"> {{ list }}
                                                         {% else %}
-                                                        <input id="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
-                                                            name="lists">
+                                                        <input
+                                                            id="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
+                                                            type="checkbox" name="lists">
                                                         {{ list }}
                                                         {% endif %}
                                                     </label>
@@ -463,7 +490,7 @@
                                     {% endif %}
                                     {% if notification.article.tweet_type.image_path %}
                                     <img class="tweetImage"
-                                        src="{% static notification.article.tweet_type.image_path %}">
+                                        src="{% static notification.article.tweet_type.image_path %}" alt="Tweet Image">
                                     {% endif %}
                                     {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
                                     <div class="quoteWrapper">
@@ -473,14 +500,15 @@
                                         <div class="quoteText">{{ notification.article.tweet_type.text }}</div>
                                         {% if notification.article.tweet_type.initial_tweet_img_path %}
                                         <img class="tweetImage"
-                                            src="{% static notification.article.tweet_type.initial_tweet_img_path %}">
+                                            src="{% static notification.article.tweet_type.initial_tweet_img_path %}"
+                                            alt="Tweet Reply Image">
                                         {% endif %}
                                     </div>
                                     {% endif %}
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
                                     </div>
-                                    <a class="contentLink" href="{{ notification.article.link }}"></a>
+                                    <a class="contentLink" href="{{ notification.article.link }}" target="_blank"></a>
                                 </div>
                             </div>
                             {% endfor %}
@@ -493,15 +521,16 @@
                         {% if request.user.is_authenticated %}
                         <div class="userProfile">
                             {% if user.profile.profile_pic %}
-                            <img src="{{ user.profile.profile_pic.url }}" alt="user-profile-pic">
+                            <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
                             {% else %}
-                            <div class="logoPlaceholder">{{ user.username.0 }}</div>
+                            <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">
+                                {{ user.username.0 }}</div>
                             {% endif %}
                             <div class="userInformation">
                                 <div class="userName">{{ user.username }}</div>
                                 <div class="accountType">{{ user.profile.account_type }}</div>
                             </div>
-                            <i class="fas fa-sort-down"></i>
+                            <i role="button" aria-label="Open Logout Option" class="fas fa-sort-down"></i>
                         </div>
                         <div class="profileMenu">
                             <div>
@@ -524,13 +553,13 @@
                         {% endif %}
                     </div>
                 </div>
-                <i class="fa-solid fa-bars"></i>
+                <i role="button" aria-label="Open Dropdown Navigation" class="fa-solid fa-bars"></i>
             </div>
         </div>
     </header>
     <main>
         <div class="overlay">
-            <nav class="horizontalNavigation" role="navigation" aria-label="Main">
+            <nav class="horizontalNavigation" role="navigation" aria-label="Smartphone Navigation">
                 <div class="mainNavigationLink"><span>Feed</span><a href="{% url 'home:feed' %}"></a></div>
                 <div class="mainNavigationLink"><span>Lists</span><a href="{% url 'list:lists' %}"></a></div>
                 <div class="mainNavigationLink"><span>Sectors</span><a href="{% url 'sector:sectors' %}"></a>

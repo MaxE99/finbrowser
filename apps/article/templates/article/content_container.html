@@ -6,7 +6,7 @@
     <div class="articleContainer" id="cc#{{ tweet.article_id }}">
         <div class="leftContentSide">
             <div class="profileImageContainer">
-                <img src="{% static tweet.source.favicon_path %}" />
+                <img src="{% static tweet.source.favicon_path %}" alt="Source Picture" />
                 <a class="sourceProfile" href="{{ tweet.source.get_absolute_url }}"></a>
             </div>
         </div>
@@ -16,22 +16,22 @@
                     <a class="sourceProfile" href="{{ tweet.source.get_absolute_url }}">{{ tweet.source.name }}</a>
                     <div class="sourceWebsiteProfileContainer">
                         {% if tweet.source.website.name == "YouTube" %}
-                        <img class="youtubeLogo" src="{% static tweet.source.website.logo %}" />
+                        <img class="youtubeLogo" src="{% static tweet.source.website.logo %}" alt="Website Logo" />
                         {% else %}
-                        <img src="{% static tweet.source.website.logo %}" />
+                        <img src="{% static tweet.source.website.logo %}" alt="Website Logo" />
                         {% endif %}
-                        <a href="{{ tweet.source.url }}"></a>
+                        <a href="{{ tweet.source.url }}" target="_blank"></a>
                     </div>
                 </div>
-                <i class="fas fa-ellipsis-h"></i>
+                <i class="fas fa-ellipsis-h" role="button" aria-label="Open Article Interactions"></i>
                 <div class="articleOptionsContainer">
                     {% if request.user.is_authenticated %}
-                    <div class="addToListButton"><i class="fas fa-list"></i>Add to list</div>
+                    <div class="addToListButton" role="button"><i class="fas fa-list"></i>Add to list</div>
                     {% if tweet.article_id in highlighted_content_ids %}
-                    <div class="addToHighlightedButton"><i class="fas fa-times"></i><span>Unhighlight
+                    <div class="addToHighlightedButton" role="button"><i class="fas fa-times"></i><span>Unhighlight
                             article</span></div>
                     {% else %}
-                    <div class="addToHighlightedButton"><i class="fas fa-highlighter"></i><span>Highlight
+                    <div class="addToHighlightedButton" role="button"><i class="fas fa-highlighter"></i><span>Highlight
                             article</span></div>
                     {% endif %}
                     {% else %}
@@ -42,8 +42,9 @@
                             class="fas fa-highlighter"></i><span>Highlight article</span></a>
                     {% endif %}
                 </div>
-                <div class="addToListForm">
-                    <div class="formHeaderContainer">Add To Lists<i class="fas fa-times closeFormContainerButton"></i>
+                <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
+                    <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
+                            class="fas fa-times closeFormContainerButton"></i>
                     </div>
                     {% if user_lists %}
                     <div class="listSelectionContainer">
@@ -51,10 +52,12 @@
                         <div class="listContainer">
                             <label for="cc?ai{{ tweet.article_id }}?li#{{ list.list_id }}">
                                 {% if tweet in list.articles.all %}
-                                <input id="cc?ai{{ tweet.article_id }}?li#{{ list.list_id }}" type="checkbox" name="lists" checked="True">
+                                <input id="cc?ai{{ tweet.article_id }}?li#{{ list.list_id }}" type="checkbox"
+                                    name="lists" checked="True">
                                 {{ list }}
                                 {% else %}
-                                <input id="cc?ai{{ tweet.article_id }}?li#{{ list.list_id }}" type="checkbox" name="lists">
+                                <input id="cc?ai{{ tweet.article_id }}?li#{{ list.list_id }}" type="checkbox"
+                                    name="lists">
                                 {{ list }}
                                 {% endif %}
                             </label>
@@ -94,7 +97,7 @@
             </div>
             {% endif %}
             {% if tweet.tweet_type.image_path %}
-            <img class="tweetImage" src="{% static tweet.tweet_type.image_path %}">
+            <img class="tweetImage" src="{% static tweet.tweet_type.image_path %}" alt="Tweet Image">
             {% endif %}
             {% if tweet.tweet_type.type == "Quote" or tweet.tweet_type.type == "Retweet" or tweet.tweet_type.type == "Reply" %}
             <div class="quoteWrapper">
@@ -104,14 +107,15 @@
                 </div>
                 <div class="quoteText">{{ tweet.tweet_type.text }}</div>
                 {% if tweet.tweet_type.initial_tweet_img_path %}
-                <img class="tweetImage" src="{% static tweet.tweet_type.initial_tweet_img_path %}">
+                <img class="tweetImage" src="{% static tweet.tweet_type.initial_tweet_img_path %}"
+                    alt="Tweet Reply Image">
                 {% endif %}
             </div>
             {% endif %}
             <div class="timeContainer">
                 <p>{{ tweet.pub_date }}</p>
             </div>
-            <a class="contentLink" href="{{ tweet.link }}"></a>
+            <a class="contentLink" href="{{ tweet.link }}" target="_blank"></a>
         </div>
     </div>
     {% endfor %}

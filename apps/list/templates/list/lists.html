@@ -5,7 +5,7 @@
   content="User-generated lists of stock market related sources and content from accross the open web.">
 {% endblock %} {% block content %}
 
-<div class="filterBar smallerScreenFilterBar">
+<div class="filterBar smallerScreenFilterBar" role="form" aria-label="Filter Menu">
   <div class="selectContainer filterSelectContainer">
     <button class="filterButton"><span>Filter</span><i class="fa-solid fa-filter"></i></button>
   </div>
@@ -75,7 +75,8 @@
     <i class="fas fa-plus"></i>Create List
   </button>
   <div class="createListMenu formContainer">
-    <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
+    <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton" role="button"
+        aria-label="Close Create List Menu"></i>
     </div>
     <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
       {% csrf_token %} {{ form }}
@@ -100,9 +101,9 @@
 <div class="listResultUpperCont">
   <div class="listCont">
     {% if list.list_pic %}
-    <img src="{{ list.list_pic.url }}" alt="">
+    <img src="{{ list.list_pic.url }}" alt="List Picture">
     {% else %}
-    <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="favicon" />
+    <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="List Picture Placeholder" />
     {% endif %}
     <div>{{ list.name }}</div>
   </div>
@@ -117,9 +118,9 @@
   <div class="creatorCont">
     <div class="description">Creator</div>
     {% if list.creator.profile.profile_pic %}
-    <img src="{{ list.creator.profile.profile_pic.url }}" alt="user-profile-pic">
+    <img src="{{ list.creator.profile.profile_pic.url }}" alt="Profile Picture">
     {% else %}
-    <div class="logoPlaceholder">{{ list.creator.username.0 }}</div>
+    <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">{{ list.creator.username.0 }}</div>
     {% endif %}
     <span>{{ list.creator.username }}</span>
   </div>

@@ -15,10 +15,10 @@
                 <div class="contentContainer">
                     <div class="contentIconContainer">
                         {% if list.list_pic %}
-                        <img class="contentIcon" src="{{ list.list_pic.url }}" alt="favicon" />
+                        <img class="contentIcon" src="{{ list.list_pic.url }}" alt="List Picture" />
                         {% else %}
                         <img class="contentIcon" src="{% static 'home/media/finbrowser-bigger-logo.png' %}"
-                            alt="favicon" />
+                            alt="List Picture Placeholder" />
                         {% endif %}
                     </div>
                     <a class="contentLink" href="{{ list.get_absolute_url }}"></a>
