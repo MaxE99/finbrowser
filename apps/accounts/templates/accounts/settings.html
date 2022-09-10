@@ -1,7 +1,7 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v5.css' %}">
 <title>FinBrowser | Settings</title>
 {% endblock %}
 
@@ -86,7 +86,9 @@
     </div>
     <div class="tabsContent" data-tab="2">
         {% if notifications %}
-        <h2 class="notificationDeletionHeader">Sources</h2>
+        <div class="sliderHeader">
+            <div class="sliderHeaderTitle">Source Notifications</div>
+        </div>
         <div class="notificationContainer">
             {% for notification in notifications %}
             {% if notification.source %}
@@ -105,7 +107,9 @@
             {% endif %}
             {% endfor %}
         </div>
-        <h2 class="notificationDeletionHeader">Stocks</h2>
+        <div class="sliderHeader">
+            <div class="sliderHeaderTitle">Stock Notifications</div>
+        </div>
         <div class="notificationContainer">
             {% for notification in notifications %}
             {% if notification.stock %}
@@ -120,7 +124,9 @@
             {% endif %}
             {% endfor %}
         </div>
-        <h2 class="notificationDeletionHeader">Keywords</h2>
+        <div class="sliderHeader">
+            <div class="sliderHeaderTitle">Keyword Notifications</div>
+        </div>
         <div class="notificationContainer">
             {% for notification in notifications %}
             {% if notification.keyword %}
@@ -136,7 +142,7 @@
             {% endfor %}
         </div>
         {% else %}
-        <div class="noNotificationsActivated">You have not activated any notifications!</div>
+        <div class="noNotificationsActivated">You haven't activated any notifications!</div>
         {% endif %}
     </div>
     <div class="tabsContent" data-tab="3">

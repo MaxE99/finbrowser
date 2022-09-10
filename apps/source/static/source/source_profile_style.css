@@ -100,22 +100,24 @@
 }
 
 .subscribeButton {
-  padding: 0.8rem 1.6rem;
+  padding: 0.6rem 1.4rem;
   font-size: 1.8rem;
-  color: white;
-  border: 0.3rem solid;
+  color: #fff;
+  border: 0.4rem solid;
   border-radius: 0.8rem;
   cursor: pointer;
   text-decoration: none;
   margin-right: 0.5rem;
+  text-transform: uppercase;
 }
 
 .subscribeButton:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .subscribed {
-  background: var(--primary-fontColor);
+  background: white;
+  color: var(--primary-fontColor);
 }
 
 .subscribed:hover {
@@ -123,12 +125,11 @@
 }
 
 .unsubscribed {
-  background: white;
-  color: var(--primary-fontColor);
+  background: var(--primary-fontColor);
 }
 
 .unsubscribed:hover {
-  color: green;
+  color: #7fd52c;
 }
 
 .sectorContainer {
