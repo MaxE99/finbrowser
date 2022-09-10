@@ -18,11 +18,13 @@
           <div class="iconContainer">
             <img class="sourcePic" src="{% static source.website.logo %}" alt="Website Logo" />
           </div>
-          <a class="sourceLink" href="{{ source.url }}" target="_blank"></a>
+          <a class="sourceLink" href="{{ source.url }}" target="_blank"
+            aria-label="Open External Profile Of {{ source.name }}"></a>
         </div>
       </div>
       <div class="sectorContainer sectorContainerSmartphonePositioning">Sector:
-        <a href="{{ source.sector.get_absolute_url }}">{{ source.sector.name }}</a>
+        <a href="{{ source.sector.get_absolute_url }}"
+          aria-label="Open Sector - {{ source.sector.name }}">{{ source.sector.name }}</a>
       </div>
       <div class="notificationAndSubscribtionContainer">
         {% if request.user.is_authenticated %}
@@ -31,7 +33,7 @@
         {% else %}
         <i role="button" aria-label="Deactivate Notifications" class="fas fa-bell"></i>
         {% endif %}
-        <button class="addSourceToListButton"><i class="fas fa-list"></i></button>
+        <button aria-label="Add Source To Lists" class="addSourceToListButton"><i class="fas fa-list"></i></button>
         <div role="form" class="addToListForm addSourceToListForm">
           <div class="formHeaderContainer">Add To Lists<i class="fas fa-times closeFormContainerButton"></i>
           </div>
@@ -64,7 +66,7 @@
         <div class="createListMenu sourcesCreateListMenu formContainer">
           <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
           </div>
-          <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+          <form enctype="multipart/form-data" method="POST" class="createListForm">
             {% csrf_token %} {{ add_list_form }}
             <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
           </form>
@@ -75,12 +77,14 @@
         <button class="subscribeButton unsubscribed">Subscribe</button>
         {% endif %}
         {% else %}
-        <a href="{% url 'account_login' %}" class="subscribeButton unsubscribed registrationLink">Subscribe</a>
+        <a href="{% url 'account_login' %}" class="subscribeButton unsubscribed registrationLink"
+          aria-label="Login To Subscribe To Source">Subscribe</a>
         {% endif %}
       </div>
     </div>
     <div class="sectorContainer">Sector:
-      <a href="{{ source.sector.get_absolute_url }}">{{ source.sector.name }}</a>
+      <a href="{{ source.sector.get_absolute_url }}"
+        aria-label="Open Sector - {{ source.sector.name }}">{{ source.sector.name }}</a>
     </div>
     <div class="ratingsWrapper">
       <div class="rankingsUpperContainer">
@@ -88,27 +92,28 @@
         {% if request.user.is_authenticated %}
         <button type="button" class="rateListButton openRateListButton">Rate</button>
         {% else %}
-        <a href="{% url 'account_login' %}" class="rateListButton registrationLink">Rate</a>
+        <a href="{% url 'account_login' %}" class="rateListButton registrationLink"
+          aria-label="Login To Rate Source">Rate</a>
         {% endif %}
         <div class="rate-formUpperContainer">
           <h3>Rate {{ source.name }}</h3>
           <div role="form" aria-label="Rate Source" class="rate-form" action="" method="POST">
-            <button type="submit" class="fa fa-star rankingStar" id="first"></button>
-            <button type="submit" class="fa fa-star rankingStar" id="second"></button>
-            <button type="submit" class="fa fa-star rankingStar" id="third"></button>
-            <button type="submit" class="fa fa-star rankingStar" id="fourth"></button>
-            <button type="submit" class="fa fa-star rankingStar" id="fifth"></button>
+            <button aria-label="1 Star Rating" type="submit" class="fa fa-star rankingStar" id="first"></button>
+            <button aria-label="2 Star Rating" type="submit" class="fa fa-star rankingStar" id="second"></button>
+            <button aria-label="3 Star Rating" type="submit" class="fa fa-star rankingStar" id="third"></button>
+            <button aria-label="4 Star Rating" type="submit" class="fa fa-star rankingStar" id="fourth"></button>
+            <button aria-label="5 Star Rating" type="submit" class="fa fa-star rankingStar" id="fifth"></button>
           </div>
         </div>
       </div>
       <div class="rankingsContainer">
         <div class="rating">
           <div class="ratedContainer">
-            <button type="button" class="fa fa-star ratedStar" id="first"></button>
-            <button type="button" class="fa fa-star ratedStar" id="second"></button>
-            <button type="button" class="fa fa-star ratedStar" id="third"></button>
-            <button type="button" class="fa fa-star ratedStar" id="fourth"></button>
-            <button type="button" class="fa fa-star ratedStar" id="fifth"></button>
+            <button aria-label="1 Star Rating" type="button" class="fa fa-star ratedStar" id="first"></button>
+            <button aria-label="2 Star Rating" type="button" class="fa fa-star ratedStar" id="second"></button>
+            <button aria-label="3 Star Rating" type="button" class="fa fa-star ratedStar" id="third"></button>
+            <button aria-label="4 Star Rating" type="button" class="fa fa-star ratedStar" id="fourth"></button>
+            <button aria-label="5 Star Rating" type="button" class="fa fa-star ratedStar" id="fifth"></button>
           </div>
           {% if average_rating != "None" %}
           <div class="avgRating"><span>{{ source.average_rating }}</span> out of 5</div>
@@ -168,7 +173,8 @@
         {% for i in images.paginator.page_range %}
         {% if images.number == i %}
         <button class="currentPagination">{{ images.number }}</button>
-        {% elif i > images.number|add:'-3' and i < images.number|add:'3' %} <a href="?images={{ i }}">{{ i }}</a>
+        {% elif i > images.number|add:'-3' and i < images.number|add:'3' %} <a href="?images={{ i }}"
+          aria-label="Change Page">{{ i }}</a>
         {% endif %}
         {% endfor %}
       </span>

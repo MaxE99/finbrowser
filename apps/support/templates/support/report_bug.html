@@ -7,7 +7,7 @@
 {% block content %}
 <div class="formContainer supportForm">
     <h3>Report Bug</h3>
-    <form action="" enctype="multipart/form-data" method="POST" class="createBugReportForm">
+    <form enctype="multipart/form-data" method="POST" class="createBugReportForm">
         {% csrf_token %} {{ form }}
         <input name="createBugReportForm" type="submit" class="formSubmitButton" value="Save" />
     </form>

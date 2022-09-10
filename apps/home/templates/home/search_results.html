@@ -61,23 +61,28 @@
             <div class="websiteSearchContainer">
                 <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">Search on Seeking
                 Alpha
-                <a href="https://seekingalpha.com/search?q={{ search_term }}&tab=headlines" target="_blank"></a>
+                <a href="https://seekingalpha.com/search?q={{ search_term }}&tab=headlines" target="_blank"
+                    aria-label="Redirect Search To SeekingAlpha"></a>
             </div>
             <div class="websiteSearchContainer">
                 <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">Search on Spotify
-                <a href="https://open.spotify.com/search/{{ search_term }}" target="_blank"></a>
+                <a href="https://open.spotify.com/search/{{ search_term }}" target="_blank"
+                    aria-label="Redirect Search To Spotify"></a>
             </div>
             <div class="websiteSearchContainer">
                 <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">Search on Substack
-                <a href="https://substack.com/search/{{ search_term }}" target="_blank"></a>
+                <a href="https://substack.com/search/{{ search_term }}" target="_blank"
+                    aria-label="Redirect Search To Substack"></a>
             </div>
             <div class="websiteSearchContainer">
                 <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">Search on Twitter
-                <a href="https://twitter.com/search?q={{ search_term }}" target="_blank"></a>
+                <a href="https://twitter.com/search?q={{ search_term }}" target="_blank"
+                    aria-label="Redirect Search To Twitter"></a>
             </div>
             <div class="websiteSearchContainer">
                 <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">Search on YouTube
-                <a href="https://www.youtube.com/results?search_query={{ search_term }}" target="_blank"></a>
+                <a href="https://www.youtube.com/results?search_query={{ search_term }}" target="_blank"
+                    aria-label="Redirect Search To YouTube"></a>
             </div>
         </div>
     </div>
@@ -89,7 +94,7 @@
             <div class="stockContainer">
                 <div class="stockTicker">{{ stock.ticker }}</div>
                 <div class="companyName">{{ stock.full_company_name }}</div>
-                <a href="{{ stock.get_absolute_url }}"></a>
+                <a href="{{ stock.get_absolute_url }}" aria-label="Open Profile Of {{ stock.full_company_name }}"></a>
             </div>
             {% endfor %}
         </div>

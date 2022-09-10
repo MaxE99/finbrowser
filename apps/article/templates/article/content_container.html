@@ -7,20 +7,23 @@
         <div class="leftContentSide">
             <div class="profileImageContainer">
                 <img src="{% static tweet.source.favicon_path %}" alt="Source Picture" />
-                <a class="sourceProfile" href="{{ tweet.source.get_absolute_url }}"></a>
+                <a class="sourceProfile" href="{{ tweet.source.get_absolute_url }}"
+                    aria-label="Open Profile Of {{ tweet.source.name }}"></a>
             </div>
         </div>
         <div class="rightContentSide">
             <div class="contentInfoContainer">
                 <div class="sourceAndWebsiteContainer">
-                    <a class="sourceProfile" href="{{ tweet.source.get_absolute_url }}">{{ tweet.source.name }}</a>
+                    <a class="sourceProfile" href="{{ tweet.source.get_absolute_url }}"
+                        aria-label="Open Profile Of {{ tweet.source.name }}">{{ tweet.source.name }}</a>
                     <div class="sourceWebsiteProfileContainer">
                         {% if tweet.source.website.name == "YouTube" %}
                         <img class="youtubeLogo" src="{% static tweet.source.website.logo %}" alt="Website Logo" />
                         {% else %}
                         <img src="{% static tweet.source.website.logo %}" alt="Website Logo" />
                         {% endif %}
-                        <a href="{{ tweet.source.url }}" target="_blank"></a>
+                        <a href="{{ tweet.source.url }}" aria-label="Open External Profile Of {{ tweet.source.name }}"
+                            target="_blank"></a>
                     </div>
                 </div>
                 <i class="fas fa-ellipsis-h" role="button" aria-label="Open Article Interactions"></i>
@@ -35,10 +38,11 @@
                             article</span></div>
                     {% endif %}
                     {% else %}
-                    <a href="{% url 'account_login' %}" class="addToListButton registrationLink"><i
-                            class="fas fa-list"></i>Add
+                    <a aria-label="Login To Articles Add To Lists" href="{% url 'account_login' %}"
+                        class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
                         to list</a>
-                    <a href="{% url 'account_login' %}" class="addToHighlightedButton registrationLink"><i
+                    <a aria-label="Login To Highlight Articles" href="{% url 'account_login' %}"
+                        class="addToHighlightedButton registrationLink"><i
                             class="fas fa-highlighter"></i><span>Highlight article</span></a>
                     {% endif %}
                 </div>
@@ -79,7 +83,7 @@
                     <div class="formHeaderContainer">Create A New List<i
                             class="fas fa-times closeFormContainerButton"></i>
                     </div>
-                    <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+                    <form enctype="multipart/form-data" method="POST" class="createListForm">
                         {% csrf_token %} {{ add_list_form }}
                         <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
                     </form>
@@ -115,7 +119,7 @@
             <div class="timeContainer">
                 <p>{{ tweet.pub_date }}</p>
             </div>
-            <a class="contentLink" href="{{ tweet.link }}" target="_blank"></a>
+            <a class="contentLink" href="{{ tweet.link }}" target="_blank" aria-label="Open Content"></a>
         </div>
     </div>
     {% endfor %}

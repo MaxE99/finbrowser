@@ -3,7 +3,8 @@
     {% for i in page.paginator.page_range %}
     {% if page.number == i %}
     <button class="currentPagination">{{ page.number }}</button>
-    {% elif i > page.number|add:'-3' and i < page.number|add:'3' %} <a href="?page={{ i }}">{{ i }}</a>
+    {% elif i > page.number|add:'-3' and i < page.number|add:'3' %} <a aria-label="Change Page"
+      href="?page={{ i }}">{{ i }}</a>
     {% endif %}
     {% endfor %}
   </span>

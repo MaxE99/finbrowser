@@ -34,19 +34,24 @@
                 <div class="logoContainer">
                     <div class="logoSpace">
                         <img src="{% static 'home/media/finbrowser-logo.png' %}" alt="Finbrowser Logo">
-                        <a href="{% url 'home:feed' %}"></a>
+                        <a aria-label="Open Main Page" href="{% url 'home:feed' %}"></a>
                     </div>
                 </div>
-                <nav class="mainNavigation" role="navigation" aria-label="Main">
+                <nav class="mainNavigation" aria-label="Main">
                     {% if request.user.is_authenticated == False %}
-                    <div class="mainNavigationLink"><span>Feed</span><a href="{% url 'account_login' %}"></a></div>
+                    <div class="mainNavigationLink"><span>Feed</span><a aria-label="Login To Open Feed"
+                            href="{% url 'account_login' %}"></a></div>
                     {% else %}
-                    <div class="mainNavigationLink"><span>Feed</span><a href="{% url 'home:feed' %}"></a></div>
+                    <div class="mainNavigationLink"><span>Feed</span><a aria-label="Open Feed"
+                            href="{% url 'home:feed' %}"></a></div>
                     {% endif %}
-                    <div class="mainNavigationLink"><span>Lists</span><a href="{% url 'list:lists' %}"></a></div>
-                    <div class="mainNavigationLink"><span>Sectors</span><a href="{% url 'sector:sectors' %}"></a>
+                    <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Lists"
+                            href="{% url 'list:lists' %}"></a></div>
+                    <div class="mainNavigationLink"><span>Sectors</span><a aria-label="Open Sectors"
+                            href="{% url 'sector:sectors' %}"></a>
                     </div>
-                    <div class="mainNavigationLink"><span>Content</span><a href="{% url 'article:articles' %}"></a>
+                    <div class="mainNavigationLink"><span>Content</span><a aria-label="Open Content"
+                            href="{% url 'article:articles' %}"></a>
                     </div>
                 </nav>
                 <div class="mainSearchWrapper">
@@ -58,10 +63,10 @@
                     <div id="mainAutocomplete_result"></div>
                 </div>
                 <div class="userSpace">
-                    <i class="fas fa-cog"><a href="{% url 'accounts:settings' %}"></a></i>
+                    <i class="fas fa-cog"><a aria-label="Open Settings" href="{% url 'accounts:settings' %}"></a></i>
                     <i class="far fa-bell {% if request.user.is_authenticated %}notificationBell{% endif %}">
                         {% if request.user.is_authenticated == False %}
-                        <a href="{% url 'account_login' %}"></a>
+                        <a aria-label="Login To Open Settings" href="{% url 'account_login' %}"></a>
                         {% endif %}
                         {% if unseen_notifications %}
                         <span class="unseenNotifications">{{ unseen_notifications }}</span>
@@ -85,14 +90,16 @@
                                     <div class="profileImageContainer">
                                         <img src="{% static notification.article.source.favicon_path %}"
                                             alt="Source Picture" />
-                                        <a class="sourceProfile"
+                                        <a aria-label="Open Profile Of {{ notification.article.source.name }}"
+                                            class="sourceProfile"
                                             href="{{ notification.article.source.get_absolute_url }}"></a>
                                     </div>
                                 </div>
                                 <div class="rightContentSide">
                                     <div class="contentInfoContainer">
                                         <div class="sourceAndWebsiteContainer">
-                                            <a class="sourceProfile"
+                                            <a aria-label="Open Profile Of {{ notification.article.source.name }}"
+                                                class="sourceProfile"
                                                 href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
                                             <div class="sourceWebsiteProfileContainer">
                                                 {% if notification.article.source.website.name == "YouTube" %}
@@ -103,7 +110,8 @@
                                                 <img src="{% static notification.article.source.website.logo %}"
                                                     alt="Website Logo" />
                                                 {% endif %}
-                                                <a href="{{ notification.article.source.url }}" target="_blank"></a>
+                                                <a aria-label="Open External Profile Of {{ notification.article.source.name }}"
+                                                    href="{{ notification.article.source.url }}" target="_blank"></a>
                                             </div>
                                         </div>
                                         <i class="fas fa-ellipsis-h" role="button"
@@ -122,10 +130,11 @@
                                                     article</span></div>
                                             {% endif %}
                                             {% else %}
-                                            <a href="{% url 'account_login' %}"
+                                            <a aria-label="Login To Articles Add To Lists"
+                                                href="{% url 'account_login' %}"
                                                 class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
                                                 to list</a>
-                                            <a href="{% url 'account_login' %}"
+                                            <a aria-label="Login To Highlight Articles" href="{% url 'account_login' %}"
                                                 class="addToHighlightedButton registrationLink"><i
                                                     class="fas fa-highlighter"></i><span>Highlight
                                                     article</span></a>
@@ -169,8 +178,7 @@
                                             <div class="formHeaderContainer">Create A New List<i
                                                     class="fas fa-times closeFormContainerButton"></i>
                                             </div>
-                                            <form action="" enctype="multipart/form-data" method="POST"
-                                                class="createListForm">
+                                            <form enctype="multipart/form-data" method="POST" class="createListForm">
                                                 {% csrf_token %} {{ add_list_form }}
                                                 <input name="createListForm" type="submit" class="formSubmitButton"
                                                     value="Save" />
@@ -212,7 +220,8 @@
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
                                     </div>
-                                    <a class="contentLink" href="{{ notification.article.link }}" target="_blank"></a>
+                                    <a aria-label="Open Content" class=" contentLink"
+                                        href="{{ notification.article.link }}" target="_blank"></a>
                                 </div>
                             </div>
                             {% endfor %}
@@ -230,14 +239,16 @@
                                         <img src="{% static notification.article.source.favicon_path %}"
                                             alt="Source Picture" />
                                         <a class="sourceProfile"
-                                            href="{{ notification.article.source.get_absolute_url }}"></a>
+                                            href="{{ notification.article.source.get_absolute_url }}"
+                                            aria-label="Open Profile Of {{ notification.article.source.name }}"></a>
                                     </div>
                                 </div>
                                 <div class="rightContentSide">
                                     <div class="contentInfoContainer">
                                         <div class="sourceAndWebsiteContainer">
                                             <a class="sourceProfile"
-                                                href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
+                                                href="{{ notification.article.source.get_absolute_url }}"
+                                                aria-label="Open Profile Of {{ notification.article.source.name }}">{{ notification.article.source.name }}</a>
                                             <div class="sourceWebsiteProfileContainer">
                                                 {% if notification.article.source.website.name == "YouTube" %}
                                                 <img class="youtubeLogo"
@@ -247,7 +258,8 @@
                                                 <img src="{% static notification.article.source.website.logo %}"
                                                     alt="Website Logo" />
                                                 {% endif %}
-                                                <a href="{{ notification.article.source.url }}" target="_blank"></a>
+                                                <a href="{{ notification.article.source.url }}" target="_blank"
+                                                    aria-label="Open External Profile Of {{ notification.article.source.name }}"></a>
                                             </div>
                                         </div>
                                         <i class="fas fa-ellipsis-h" role="button"
@@ -267,10 +279,11 @@
                                                     article</span></div>
                                             {% endif %}
                                             {% else %}
-                                            <a href="{% url 'account_login' %}"
+                                            <a aria-label="Login To Articles Add To Lists"
+                                                href="{% url 'account_login' %}"
                                                 class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
                                                 to list</a>
-                                            <a href="{% url 'account_login' %}"
+                                            <a aria-label="Login To Highlight Articles" href="{% url 'account_login' %}"
                                                 class="addToHighlightedButton registrationLink"><i
                                                     class="fas fa-highlighter"></i><span>Highlight
                                                     article</span></a>
@@ -314,8 +327,7 @@
                                             <div class="formHeaderContainer">Create A New List<i
                                                     class="fas fa-times closeFormContainerButton"></i>
                                             </div>
-                                            <form action="" enctype="multipart/form-data" method="POST"
-                                                class="createListForm">
+                                            <form enctype="multipart/form-data" method="POST" class="createListForm">
                                                 {% csrf_token %} {{ add_list_form }}
                                                 <input name="createListForm" type="submit" class="formSubmitButton"
                                                     value="Save" />
@@ -366,8 +378,7 @@
                             {% endif %}
                         </div>
                         <div class="notificationsContainer smallFormContentWrapper" data-tab="2">
-                            <form action="" enctype="multipart/form-data" method="POST"
-                                class="createKeywordNotificationForm">
+                            <form enctype="multipart/form-data" method="POST" class="createKeywordNotificationForm">
                                 {% csrf_token %} {{ keyword_notification_creation_form }}
                                 <input name="createKeywordNotificationForm" type="submit" class="formSubmitButton"
                                     value="Add" />
@@ -381,14 +392,16 @@
                                         <img src="{% static notification.article.source.favicon_path %}"
                                             alt="Source Picture" />
                                         <a class="sourceProfile"
-                                            href="{{ notification.article.source.get_absolute_url }}"></a>
+                                            href="{{ notification.article.source.get_absolute_url }}"
+                                            aria-label="Open Profile Of {{ notification.article.source.name }}"></a>
                                     </div>
                                 </div>
                                 <div class="rightContentSide">
                                     <div class="contentInfoContainer">
                                         <div class="sourceAndWebsiteContainer">
                                             <a class="sourceProfile"
-                                                href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
+                                                href="{{ notification.article.source.get_absolute_url }}"
+                                                aria-label="Open Profile Of {{ notification.article.source.name }}">{{ notification.article.source.name }}</a>
                                             <div class="sourceWebsiteProfileContainer">
                                                 {% if notification.article.source.website.name == "YouTube" %}
                                                 <img class="youtubeLogo"
@@ -398,7 +411,8 @@
                                                 <img src="{% static notification.article.source.website.logo %}"
                                                     alt="Website Logo" />
                                                 {% endif %}
-                                                <a href="{{ notification.article.source.url }}" target="_blank"></a>
+                                                <a href="{{ notification.article.source.url }}" target="_blank"
+                                                    aria-label="Open External Profile Of {{ notification.article.source.name }}"></a>
                                             </div>
                                         </div>
                                         <i class="fas fa-ellipsis-h" role="button"
@@ -418,11 +432,13 @@
                                                     article</span></div>
                                             {% endif %}
                                             {% else %}
-                                            <a href="{% url 'account_login' %}"
-                                                class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
+                                            <a href="{% url 'account_login' %}" class="addToListButton registrationLink"
+                                                aria-label="Login To Articles Add To Lists"><i
+                                                    class="fas fa-list"></i>Add
                                                 to list</a>
                                             <a href="{% url 'account_login' %}"
-                                                class="addToHighlightedButton registrationLink"><i
+                                                class="addToHighlightedButton registrationLink"
+                                                aria-label="Login To Highlight Articles"><i
                                                     class="fas fa-highlighter"></i><span>Highlight
                                                     article</span></a>
                                             {% endif %}
@@ -465,8 +481,7 @@
                                             <div class="formHeaderContainer">Create A New List<i
                                                     class="fas fa-times closeFormContainerButton"></i>
                                             </div>
-                                            <form action="" enctype="multipart/form-data" method="POST"
-                                                class="createListForm">
+                                            <form enctype="multipart/form-data" method="POST" class="createListForm">
                                                 {% csrf_token %} {{ add_list_form }}
                                                 <input name="createListForm" type="submit" class="formSubmitButton"
                                                     value="Save" />
@@ -508,7 +523,8 @@
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
                                     </div>
-                                    <a class="contentLink" href="{{ notification.article.link }}" target="_blank"></a>
+                                    <a class="contentLink" href="{{ notification.article.link }}" target="_blank"
+                                        aria-label="Open Content"></a>
                                 </div>
                             </div>
                             {% endfor %}
@@ -547,8 +563,8 @@
                         </div>
                         {% else %}
                         <div class="headerButtonContainer">
-                            <a href="{% url 'account_login' %}">Login</a>
-                            <a href="{% url 'account_signup' %}">Sign Up</a>
+                            <a href="{% url 'account_login' %}" aria-label="Login">Login</a>
+                            <a href="{% url 'account_signup' %}" aria-label="Logout">Sign Up</a>
                         </div>
                         {% endif %}
                     </div>
@@ -559,16 +575,27 @@
     </header>
     <main>
         <div class="overlay">
-            <nav class="horizontalNavigation" role="navigation" aria-label="Smartphone Navigation">
-                <div class="mainNavigationLink"><span>Feed</span><a href="{% url 'home:feed' %}"></a></div>
-                <div class="mainNavigationLink"><span>Lists</span><a href="{% url 'list:lists' %}"></a></div>
-                <div class="mainNavigationLink"><span>Sectors</span><a href="{% url 'sector:sectors' %}"></a>
+            <nav class="horizontalNavigation" aria-label="Smartphone Navigation">
+                {% if request.user.is_authenticated == False %}
+                <div class="mainNavigationLink"><span>Feed</span><a aria-label="Login To Open Feed"
+                        href="{% url 'account_login' %}"></a></div>
+                {% else %}
+                <div class="mainNavigationLink"><span>Feed</span><a aria-label="Open Feed"
+                        href="{% url 'home:feed' %}"></a></div>
+                {% endif %}
+                <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Lists"
+                        href="{% url 'list:lists' %}"></a></div>
+                <div class="mainNavigationLink"><span>Sectors</span><a aria-label="Open Sectors"
+                        href="{% url 'sector:sectors' %}"></a>
                 </div>
-                <div class="mainNavigationLink"><span>Content</span><a href="{% url 'article:articles' %}"></a>
+                <div class="mainNavigationLink"><span>Content</span><a aria-label="Open Content"
+                        href="{% url 'article:articles' %}"></a>
                 </div>
                 {% if request.user.is_authenticated %}
-                <div class="mainNavigationLink"><span>Settings</span><a href="{% url 'accounts:settings' %}"></a></div>
-                <div class="mainNavigationLink"><span>Notifications</span><a href="{% url 'home:notifications' %}"></a>
+                <div class="mainNavigationLink"><span>Settings</span><a aria-label="Open Settings"
+                        href="{% url 'accounts:settings' %}"></a></div>
+                <div class="mainNavigationLink"><span>Notifications</span><a aria-label="Open Notifications"
+                        href="{% url 'home:notifications' %}"></a>
                 </div>
                 <form class="mainNavigationLink" method="post" action="{% url 'account_logout' %}">
                     {% csrf_token %}
@@ -578,7 +605,8 @@
                     <button type="submit">{% trans 'Logout' %}</button>
                 </form>
                 {% else %}
-                <div class="mainNavigationLink"><span>Login/Register<a href="{% url 'account_login' %}"></a></span>
+                <div class="mainNavigationLink"><span>Login/Register<a aria-label="Login/Register"
+                            href="{% url 'account_login' %}"></a></span>
                 </div>
                 {% endif %}
             </nav>
@@ -586,7 +614,7 @@
             <div class="createListMenu formContainer smartphoneCreateListMenu">
                 <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
                 </div>
-                <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+                <form enctype="multipart/form-data" method="POST" class="createListForm">
                     {% csrf_token %} {{ add_list_form }}
                     <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
                 </form>
@@ -612,10 +640,10 @@
 
 <footer>
     <ul>
-        <li><a href="{% url 'support:contact' %}">Contact</a></li>
-        <li><a href="{% url 'support:cookie-statement' %}">Cookie Statement</a></li>
-        <li><a href="{% url 'support:privacy-policy' %}">Privacy Policy</a></li>
-        <li><a href="{% url 'support:terms-of-service' %}">Terms Of Service</a></li>
+        <li><a aria-label="Open Contact" href="{% url 'support:contact' %}">Contact</a></li>
+        <li><a aria-label="Open Cookie Statement" href="{% url 'support:cookie-statement' %}">Cookie Statement</a></li>
+        <li><a aria-label="Open Privacy Policy" href="{% url 'support:privacy-policy' %}">Privacy Policy</a></li>
+        <li><a aria-label="Open Terms Of Service" href="{% url 'support:terms-of-service' %}">Terms Of Service</a></li>
     </ul>
 </footer>
 

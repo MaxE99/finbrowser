@@ -6,7 +6,7 @@
         <div class="progressBar"></div>
     </div>
     <div class="sliderContentContainer">
-        <button class="handle leftHandle">
+        <button aria-label="Slide Left" class="handle leftHandle">
             <div class="handleSymbol">&#8249;</div>
         </button>
         <div class="slider">
@@ -21,7 +21,8 @@
                             alt="List Picture Placeholder" />
                         {% endif %}
                     </div>
-                    <a class="contentLink" href="{{ list.get_absolute_url }}"></a>
+                    <a class="contentLink" href="{{ list.get_absolute_url }}"
+                        aria-label="Open List - {{ list.name }}"></a>
                     <div class="contentNameContainer">
                         <div class="contentName">{{ list.name }}</div>
                     </div>
@@ -29,7 +30,7 @@
             </div>
             {% endfor %}
         </div>
-        <button class="handle rightHandle">
+        <button aria-label="Slide Right" class="handle rightHandle">
             <div class="handleSymbol">&#8250;</div>
         </button>
     </div>

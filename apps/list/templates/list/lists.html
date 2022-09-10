@@ -7,7 +7,7 @@
 
 <div class="filterBar smallerScreenFilterBar" role="form" aria-label="Filter Menu">
   <div class="selectContainer filterSelectContainer">
-    <button class="filterButton"><span>Filter</span><i class="fa-solid fa-filter"></i></button>
+    <button aria-label="Filter" class="filterButton"><span>Filter</span><i class="fa-solid fa-filter"></i></button>
   </div>
   <div class="filterBarMenu">
     <div class="selectContainer">
@@ -78,13 +78,13 @@
     <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton" role="button"
         aria-label="Close Create List Menu"></i>
     </div>
-    <form action="" enctype="multipart/form-data" method="POST" class="createListForm">
+    <form enctype="multipart/form-data" method="POST" class="createListForm">
       {% csrf_token %} {{ form }}
       <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
     </form>
   </div>
   {% else %}
-  <a href="{% url 'account_login' %}" class="createListButton registrationLink">
+  <a href="{% url 'account_login' %}" class="createListButton registrationLink" aria-label="Login To Create List">
     <i class="fas fa-plus"></i>Create List
   </a>
   {% endif %}
@@ -124,7 +124,7 @@
     {% endif %}
     <span>{{ list.creator.username }}</span>
   </div>
-  <a href="{{ list.get_absolute_url }}"></a>
+  <a href="{{ list.get_absolute_url }}" aria-label="Open List - {{ list.name }}"></a>
 </div>
 {% endfor %}
 {% endif %}
