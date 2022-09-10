@@ -89,7 +89,7 @@
 }
 
 .filterBar input:focus {
-  outline: 0.1rem solid var(--primary-fontColor);
+  outline: none;
 }
 
 .filterBar .searchButton,
@@ -196,6 +196,12 @@
   .searchSelectContainer {
     width: 65%;
   }
+
+  #autocomplete_list_results {
+    left: -16%;
+    width: 155.5%;
+    top: 4.75rem;
+}
 
   .filterBar .filterBarMenu {
     flex-direction: column;
