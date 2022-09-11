@@ -2,20 +2,9 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 # Local imports
-from apps.accounts.models import Profile
 from apps.source.models import Source
 from apps.sector.models import Sector
 from apps.list.models import List
-
-
-class ProfileSitemap(Sitemap):
-
-    changefreq = "daily"
-    priority = 0.5
-    protocol = 'https'
-
-    def items(self):
-        return Profile.objects.all()
 
 
 class RegistrationSitemaps(Sitemap):

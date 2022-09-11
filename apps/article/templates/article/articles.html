@@ -2,12 +2,23 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'article/min_articles_style_v3.css' %}">
-<title>FinBrowser | Content</title>
+<link rel="stylesheet" type="text/css" href="{% static 'article/min_articles_style_v4.css' %}">
+<title>{% if error_page %}Page not found{% else %}FinBrowser | Content{% endif %}</title>
 <meta name="description" content="The best stock market-related content from across the open web.">
 {% endblock %}
 
 {% block content %}
+
+{% if error_page %}
+<div class="errorContainer">
+    <img src="{% static 'home/media/404_image.png' %}" alt="404 Image">
+    <div class="errorMessageContainer">
+        <span>404 ERROR</span>
+        <span>Page not found!</span>
+        <span>The page you are looking for does not exist on this website! Instead, take a look at some of the latest news and analysis.</span>
+    </div>
+</div>
+{% endif %}
 
 <div class="filterBar smallerScreenFilterBar" role="form" aria-label="Filter Menu">
     <div class="selectContainer filterSelectContainer">

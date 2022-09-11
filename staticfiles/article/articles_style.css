@@ -1,3 +1,33 @@
+.errorContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorContainer img{
+  height: 250px;
+}
+
+.errorContainer .errorMessageContainer {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.8rem;
+  width: 40%;
+  text-align: center;
+}
+
+.errorContainer .errorMessageContainer span:nth-child(1) {
+  color: var(--primary-fontColor);
+}
+
+.errorContainer .errorMessageContainer span:nth-child(2) {
+  font-size: 3rem;
+}
+
+.errorContainer .errorMessageContainer span:nth-child(3) {
+  margin: 0 auto;
+}
+
 .filterBar {
   position: relative;
   display: flex;
@@ -180,6 +210,14 @@
 }
 
 @media (max-width: 500px) {
+  .errorContainer{
+    flex-direction: column;
+  }
+
+  .errorContainer .errorMessageContainer {
+    width: 90%;
+  }
+
   .selectContainer:first-of-type {
     width: 10%;
   }

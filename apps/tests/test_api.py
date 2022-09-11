@@ -3,8 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.test import APITestCase
 # Local Imports
-from apps.tests.test_model_instances import create_test_source_ratings, create_test_users, create_test_sources, create_test_lists, create_test_notifications, create_test_sectors, create_test_social_links, create_test_website, create_test_list_ratings, create_test_articles
-from apps.accounts.models import SocialLink, Website
+from apps.tests.test_model_instances import create_test_source_ratings, create_test_users, create_test_sources, create_test_lists, create_test_notifications, create_test_sectors, create_test_website, create_test_list_ratings, create_test_articles
 from apps.article.models import Article, HighlightedArticle
 from apps.source.models import Source, SourceRating
 from apps.list.models import List, ListRating
@@ -29,50 +28,6 @@ class HighlightedArticleViewSetTest(APITestCase):
         self.assertFalse(HighlightedArticle.objects.filter(user=get_object_or_404(User, username="TestUser1"), article=article).exists())
         self.client.post("/api/highlighted_articles/", data)
         self.assertTrue(HighlightedArticle.objects.filter(user=get_object_or_404(User, username="TestUser1"), article=article).exists())
-
-
-class SocialLinkViewSetTest(APITestCase):
-
-    def setUp(self):
-        create_test_users()
-        self.client.login(username="TestUser1", password="testpw99")
-        create_test_website()
-        create_test_sectors()
-        create_test_sources()
-        create_test_articles()
-        create_test_social_links()
-
-    def test_create_social_links(self):
-        data = {"website": get_object_or_404(Website, name="TestWebsite1").website_id, "url": "www.newtestlink.com"}
-        self.assertFalse(SocialLink.objects.filter(url="www.newtestlink.com").exists())
-        self.client.post(f"/api/social_links/", data)
-        self.assertTrue(SocialLink.objects.filter(url="www.newtestlink.com").exists())
-
-    def test_update_social_links(self):
-        data = {"website": get_object_or_404(Website, name="TestWebsite4").website_id, "url": "www.newtestlink.com"}
-        social_link = get_object_or_404(SocialLink, url="www.website/testuser1.com")
-        self.assertFalse(SocialLink.objects.filter(url="www.newtestlink.com").exists())
-        self.client.put(f"/api/social_links/{social_link.social_link_id}/", data)
-        self.assertTrue(SocialLink.objects.filter(url="www.newtestlink.com").exists())
-
-    def test_try_updating_other_users_social_links(self):
-        data = {"website": get_object_or_404(Website, name="TestWebsite8").website_id, "url": "www.newtestlink.com"}
-        social_link = get_object_or_404(SocialLink, url="www.website/testuser10.com")
-        self.client.put(f"/api/social_links/{social_link.social_link_id}/", data)
-        self.assertFalse(SocialLink.objects.filter(url="www.newtestlink.com").exists())
-        self.assertTrue(SocialLink.objects.filter(url="www.website/testuser10.com").exists())
-
-    def test_delete_social_links(self):
-        social_link = get_object_or_404(SocialLink, url="www.website/testuser1.com")
-        self.client.delete(f"/api/social_links/{social_link.social_link_id}/")
-        self.assertFalse(SocialLink.objects.filter(url="www.website/testuser1.com").exists())
-        self.assertEqual(SocialLink.objects.all().count(),9)
-
-    def test_try_deleting_other_users_social_links(self):
-        social_link = get_object_or_404(SocialLink, url="www.website/testuser10.com")
-        self.client.delete(f"/api/social_links/{social_link.social_link_id}/")
-        self.assertTrue(SocialLink.objects.filter(url="www.website/testuser10.com").exists())
-        self.assertEqual(SocialLink.objects.all().count(),10)
 
 
 class SourceRatingViewSetTest(APITestCase):

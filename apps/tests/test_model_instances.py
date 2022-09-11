@@ -6,7 +6,7 @@ from django.utils.timezone import now
 from datetime import timedelta
 # Local Imports
 from apps.sector.models import Sector
-from apps.accounts.models import Website, SocialLink
+from apps.accounts.models import Website
 from apps.list.models import List, ListRating
 from apps.source.models import Source, SourceRating
 from apps.article.models import Article, HighlightedArticle
@@ -52,18 +52,6 @@ def create_test_sources():
     Source.objects.create(url="www.testsource8.com/", slug="testsource8", name="TestSource8", paywall="Yes", website=get_object_or_404(Website, name="TestWebsite1"), sector=get_object_or_404(Sector, name="TestSector1"))
     Source.objects.create(url="www.testsource9.com/", slug="testsource9", name="TestSource9", paywall="Yes", website=get_object_or_404(Website, name="TestWebsite4"), sector=get_object_or_404(Sector, name="TestSector3"))
     Source.objects.create(url="www.testsource10.com/", slug="testsource10", name="TestSource10", paywall="Yes", website=get_object_or_404(Website, name="TestWebsite6"), sector=get_object_or_404(Sector, name="TestSector3"))
-
-def create_test_social_links():
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser1").profile, url="www.website/testuser1.com", website=get_object_or_404(Website, name="TestWebsite4"))
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser2").profile, url="www.website/testuser2.com", website=get_object_or_404(Website, name="TestWebsite1"))
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser3").profile, url="www.website/testuser3.com", website=get_object_or_404(Website, name="TestWebsite1"))
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser1").profile, url="www.website/testuser4.com", website=get_object_or_404(Website, name="TestWebsite3"))
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser2").profile, url="www.website/testuser5.com", website=get_object_or_404(Website, name="TestWebsite4"))
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser1").profile, url="www.website/testuser6.com", website=get_object_or_404(Website, name="TestWebsite1"))
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser1").profile, url="www.website/testuser7.com", website=get_object_or_404(Website, name="TestWebsite5"))
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser2").profile, url="www.website/testuser8.com", website=get_object_or_404(Website, name="TestWebsite2"))
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser1").profile, url="www.website/testuser9.com", website=get_object_or_404(Website, name="TestWebsite3"))
-    SocialLink.objects.create(profile=get_object_or_404(User, username="TestUser3").profile, url="www.website/testuser10.com", website=get_object_or_404(Website, name="TestWebsite8"))
 
 def create_test_notifications():
     Notification.objects.create(user=get_object_or_404(User, username="TestUser1"), source=get_object_or_404(Source, name="TestSource1"))
