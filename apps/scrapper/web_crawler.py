@@ -105,8 +105,8 @@ def crawl_palladium(source, feed_url, articles):
         for item in items:
             try:
                 title, link, pub_date = article_components_get(item)
-                link = 'https://palladiummag/' + html.unescape(title)
-                if articles.filter(pub_date=pub_date, source=source).exists():
+                link = 'https://palladiummag/' + link
+                if articles.filter(title=title, source=source).exists():
                     break
                 create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
             except:

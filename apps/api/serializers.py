@@ -1,7 +1,7 @@
 # Django imports
 from rest_framework import serializers
 # Local imports
-from apps.accounts.models import Profile, SocialLink
+from apps.accounts.models import Profile
 from apps.source.models import Source, SourceRating
 from apps.article.models import Article, HighlightedArticle
 from apps.list.models import List, ListRating
@@ -43,12 +43,6 @@ class HighlightedArticle_Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = HighlightedArticle
-        fields = '__all__'
-
-class SocialLink_Serializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = SocialLink
         fields = '__all__'
 
 class SourceRating_Serializer(serializers.ModelSerializer):

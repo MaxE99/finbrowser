@@ -75,7 +75,6 @@ h2 {
 #id_old_password,
 #id_new_password1,
 #id_new_password2,
-.existingSocialContainer input,
 .linkInput {
   border: 0.1rem solid rgb(226, 230, 234);
   border-radius: 0.6rem;
@@ -114,9 +113,7 @@ h2 {
 .cancelButton,
 .buttonContainer input,
 .changeProfilePicButton,
-.profilePicInnerContainer button,
-.addSocialLinkButton,
-.existingSocialContainer .removeSocialLinkButton {
+.profilePicInnerContainer button{
   font-size: 1.8rem;
   cursor: pointer;
   padding: 1rem 2rem;
@@ -132,9 +129,7 @@ h2 {
 .cancelButton:hover,
 .buttonContainer input:hover,
 .changeProfilePicButton:hover,
-.profilePicInnerContainer button:hover,
-.addSocialLinkButton:hover,
-.existingSocialContainer .removeSocialLinkButton:hover {
+.profilePicInnerContainer button:hover{
   transform: scale(1.1);
 }
 
@@ -148,116 +143,15 @@ h2 {
   cursor: pointer;
 }
 
-.profilePicInnerContainer button,
-.existingSocialContainer .removeSocialLinkButton {
+.profilePicInnerContainer button{
   background: red;
   color: white;
   margin-left: 1rem;
 }
 
-.existingSocialContainer {
-  display: flex;
-  align-items: center;
-  margin: 0.5rem 0;
-}
-
-.existingSocialContainer input,
 .linkInput {
   margin: 0 0 0 0.5rem;
   width: 100%;
-}
-
-.socialLinksWrapper {
-  display: flex;
-  align-items: center;
-}
-
-.addSocialLinksContainer {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin: 0.5rem 0;
-}
-
-.addSocialLinkButton {
-  height: 4.5rem;
-  width: 11rem;
-  margin-left: 1rem;
-}
-
-.selectContainer {
-  width: 4rem;
-  height: 4rem;
-}
-
-details {
-  position: relative;
-  height: 100%;
-}
-
-details[open] {
-  z-index: 1;
-}
-
-details summary {
-  display: flex;
-  align-items: center;
-  font-size: 3rem;
-  justify-content: center;
-  background: var(--primary-fontColor);
-  color: #fff;
-  height: 100%;
-}
-
-details ul {
-  width: 100%;
-  z-index: 15;
-  background: white;
-  position: absolute;
-  top: 4.8rem;
-  left: 0;
-  border: 0.2rem solid #ccc;
-}
-
-details li {
-  border-bottom: 0.1rem solid #ccc;
-  list-style: none;
-  padding: 1rem 0.5rem;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-}
-
-details img {
-  width: 100%;
-}
-
-details ul li:hover {
-  background: var(--primary-fontColor);
-  color: white;
-}
-
-.sourceLabel {
-  z-index: 5;
-}
-
-.saveSocialLinkChanges {
-  display: none;
-  background: green;
-  font-size: 1.8rem;
-  cursor: pointer;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 0.5rem;
-  box-shadow: var(--box-shadowScheme);
-  color: white;
-  min-width: 10rem;
-  text-decoration: none;
-  margin-left: 1rem;
-}
-
-.saveSocialLinkChanges:hover {
-  transform: scale(1.1);
 }
 
 .buttonContainer {
@@ -415,10 +309,6 @@ details ul li:hover {
   #id_new_password2,
   .changePasswordForm input {
     width: 100%;
-  }
-
-  .notificationDeletionHeader {
-    text-align: center;
   }
 
   .notificationContainer {

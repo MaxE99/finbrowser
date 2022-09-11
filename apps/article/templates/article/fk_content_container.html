@@ -1,4 +1,5 @@
 {% load static %}
+{% load tz %}
 
 <div class="categoryHeader">{{ title }}</div>
 <div class="smallFormContentWrapper">
@@ -108,7 +109,7 @@
             <div class="quoteWrapper">
                 <div class="quoteUpperContainer">
                     <div class="quoteAuthor">{{ tweet.article.tweet_type.author }}</div>
-                    <div class="quoteDate">{{ tweet.article.tweet_type.pub_date }}</div>
+                    <div class="quoteDate">{{ tweet.article.tweet_type.pub_date|localtime }}</div>
                 </div>
                 <div class="quoteText">{{ tweet.article.tweet_type.text }}</div>
                 {% if tweet.article.tweet_type.initial_tweet_img_path %}
@@ -118,7 +119,7 @@
             </div>
             {% endif %}
             <div class="timeContainer">
-                <p>{{ tweet.article.pub_date }}</p>
+                <p>{{ tweet.article.pub_date|localtime }}</p>
             </div>
             <a class="contentLink" href="{{ tweet.article.link }}" target="_blank" aria-label="Open Content"></a>
         </div>
