@@ -180,7 +180,7 @@
   font-size: 2rem;
 }
 
-.creatorContainer a {
+.creatorContainer span:last-of-type {
   color: var(--primary-fontColor);
   margin-left: 0.3rem;
   text-decoration: none;

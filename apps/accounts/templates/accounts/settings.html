@@ -1,7 +1,7 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v5.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v6.css' %}">
 <title>FinBrowser | Settings</title>
 {% endblock %}
 
@@ -42,34 +42,6 @@
                     </div>
                     <button type="button" class="removeProfilePicButton">Remove</button>
                 </div>
-            </div>
-            <label>Social Links:</label>
-            {% for social in social_links %}
-            <div class="existingSocialContainer">
-                <img class="{{ social.website.name }}" src="{% static social.website.logo %}"
-                    id="ewi#{{ social.website.website_id }}" alt="Website Logo">
-                <input type="text" value="{{ social.url }}">
-                <button type="button" class="removeSocialLinkButton"
-                    id="sli#{{ social.social_link_id }}">Remove</button>
-                <button type="button" class="saveSocialLinkChanges">Save</button>
-            </div>
-            {% endfor %}
-            <div class="socialLinksWrapper">
-                <div class="addSocialLinksContainer">
-                    <div class="selectContainer" role="button" aria-label="Select Social Link Website">
-                        <details>
-                            <summary><i class="fa fa-caret-down"></i></summary>
-                            <ul>
-                                {% for website in websites %}
-                                <li><img class="{{ website.name }}" src="{% static website.favicon %}"
-                                        alt="Website Logo" id="wi#{{ website.website_id }}"></li>
-                                {% endfor %}
-                            </ul>
-                        </details>
-                    </div>
-                    <input placeholder="Enter the url of your account" class="linkInput" type="text">
-                </div>
-                <button type="button" name="changeProfileForm" class="addSocialLinkButton">Add</button>
             </div>
             <div class="buttonContainer">
                 <button type="submit" href="{% url 'accounts:settings' %}" class="cancelButton">Cancel</button>
@@ -161,5 +133,5 @@
     </div>
 </div>
 
-<script src="{% static 'accounts/min_settings_script_v4.js' %}"></script>
+<script src="{% static 'accounts/min_settings_script_v5.js' %}"></script>
 {% endblock content %}

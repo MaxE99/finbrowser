@@ -10,10 +10,10 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.decorators import api_view
 # Local imports
-from apps.api.serializers import (List_Serializer, Stock_Serializer, Article_Serializer, Source_Serializer, Profile_Serializer, HighlightedArticle_Serializer, SocialLink_Serializer, SourceRating_Serializer, ListRating_Serializer, Notification_Serializer)
+from apps.api.serializers import (List_Serializer, Stock_Serializer, Article_Serializer, Source_Serializer, Profile_Serializer, HighlightedArticle_Serializer, SourceRating_Serializer, ListRating_Serializer, Notification_Serializer)
 from apps.api.permissions import IsListCreator, IsUser
 from apps.home.models import NotificationMessage, Notification
-from apps.accounts.models import Profile, SocialLink, Website
+from apps.accounts.models import Profile
 from apps.article.models import HighlightedArticle, Article
 from apps.source.models import Source, SourceRating
 from apps.list.models import List, ListRating
@@ -29,8 +29,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['delete'])
     def profile_pic_delete(self, request, *args, **kwargs):
-        profile = self.get_object()
-        profile.profile_pic.delete()
+        self.get_object().profile_pic.delete()
         return Response("Profile picture has been deleted!")
 
 
@@ -42,50 +41,12 @@ class HighlightedArticleViewSet(viewsets.ModelViewSet):
     http_method_names = ["post"]
 
     def create(self, request):
-        article_id = request.data['article_id']
-        article = get_object_or_404(Article, article_id=article_id)
+        article = get_object_or_404(Article, article_id=request.data['article_id'])
         if HighlightedArticle.objects.filter(user=request.user, article=article).exists():
             HighlightedArticle.objects.get(user=request.user, article=article).delete()
             return Response("Article has been unhighlighted!")
-        else:
-            HighlightedArticle.objects.create(user=request.user, article=article)
-            return Response("Article has been highlighted!")
-
-
-class SocialLinkViewSet(viewsets.ModelViewSet):
-    queryset = SocialLink.objects.all()
-    serializer_class = SocialLink_Serializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes=[SessionAuthentication] 
-    http_method_names = ["post", "put", "delete"]   
-
-    def create(self, request):
-        website = request.data['website']
-        website = get_object_or_404(Website, website_id=website)
-        url = request.data['url']
-        profile = request.user.profile
-        SocialLink.objects.create(website=website, url=url, profile=profile)
-        return Response("Link has been added!")
-
-    def update(self, request, pk):
-        social_link = self.get_object()
-        if social_link.profile.user == request.user:
-            website = request.data['website']
-            website = get_object_or_404(Website, website_id=website)
-            url = request.data['url']
-            social_link.url = url
-            social_link.save()
-            return Response("Link has been changed!")
-        else:
-            return Response("Access Denied")
-
-    def destroy(self, request, *args, **kwargs):
-        social_link = self.get_object()
-        if social_link.profile.user == request.user:
-            social_link.delete()
-            return Response("Link has been deleted!")
-        else:
-            return Response("Access Denied")
+        HighlightedArticle.objects.create(user=request.user, article=article)
+        return Response("Article has been highlighted!")
 
 
 class SourceRatingViewSet(viewsets.ModelViewSet):
@@ -96,17 +57,15 @@ class SourceRatingViewSet(viewsets.ModelViewSet):
     http_method_names = ["post"] 
 
     def create(self, request):
-        source_id = request.data['source_id']
-        source = get_object_or_404(Source, source_id=source_id)
+        source = get_object_or_404(Source, source_id=request.data['source_id'])
         rating = request.data['rating']
         if SourceRating.objects.filter(user=request.user, source=source).exists():
             rating_instance = SourceRating.objects.get(user=request.user, source=source)
             rating_instance.rating = rating
             rating_instance.save()
             return Response("Rating has been changed!")
-        else:
-            SourceRating.objects.create(user=request.user, source=source, rating=rating)
-            return Response("Rating has been added!")
+        SourceRating.objects.create(user=request.user, source=source, rating=rating)
+        return Response("Rating has been added!")
 
 
 class ListRatingViewSet(viewsets.ModelViewSet):
@@ -117,17 +76,15 @@ class ListRatingViewSet(viewsets.ModelViewSet):
     http_method_names = ["post"]
 
     def create(self, request):
-        list_id = request.data['list_id']
-        list = get_object_or_404(List, list_id=list_id)
+        list = get_object_or_404(List, list_id=request.data['list_id'])
         rating = request.data['rating']
         if ListRating.objects.filter(user=request.user, list=list).exists():
             rating_instance = ListRating.objects.get(user=request.user, list=list)
             rating_instance.rating = rating
             rating_instance.save()
             return Response("Rating has been changed!")
-        else:
-            ListRating.objects.create(user=request.user, list=list, rating=rating)
-            return Response("Rating has been added!")
+        ListRating.objects.create(user=request.user, list=list, rating=rating)
+        return Response("Rating has been added!")
 
 
 class SourceViewSet(viewsets.ModelViewSet):
@@ -145,8 +102,7 @@ class SourceViewSet(viewsets.ModelViewSet):
             list = get_object_or_404(List, list_id=list_id)
             if list.creator == self.request.user:   
                 return Source.objects.filter_by_list_and_search_term_exclusive(list_search, list)[0:10]
-            else:
-                return None
+            return None
         elif feed_search != None:   
             return Source.objects.filter_by_subscription_and_search_term_exclusive(feed_search, self.request.user)[0:10]
         elif sectors_search != None:   
@@ -160,9 +116,8 @@ class SourceViewSet(viewsets.ModelViewSet):
         if source.subscribers.filter(username=request.user.username).exists():
             source.subscribers.remove(request.user)
             return Response("Source has been unsubscribed!")
-        else:
-            source.subscribers.add(request.user.id)
-            return Response("Source has been subscribed!")
+        source.subscribers.add(request.user.id)
+        return Response("Source has been subscribed!")
 
 
 class ListViewSet(viewsets.ModelViewSet):
@@ -175,16 +130,13 @@ class ListViewSet(viewsets.ModelViewSet):
         feed_search = self.request.GET.get("feed_search", None)
         if feed_search != None:
             return List.objects.filter_by_search_term_and_subscription_status(feed_search, self.request.user)[0:10]
-        else:
-            return List.objects.all()
+        return List.objects.all()
 
     def destroy(self, request, *args, **kwargs):
-        list = self.get_object()
-        if list.creator == request.user:
+        if self.get_object().creator == request.user:
             self.get_object().delete()
             return Response("List has been deleted!")
-        else:
-            return Response("Access Denied")
+        return Response("Access Denied")
 
     @action(detail=True, methods=['post'], authentication_classes=[SessionAuthentication], permission_classes=[IsAuthenticated])
     def list_change_subscribtion_status(self, request, *args, **kwargs):
@@ -192,9 +144,8 @@ class ListViewSet(viewsets.ModelViewSet):
         if list.subscribers.filter(username=request.user.username).exists():
             list.subscribers.remove(request.user)
             return Response("List subscription removed!")
-        else:
-            list.subscribers.add(request.user.id)
-            return Response("List subscription added!")
+        list.subscribers.add(request.user.id)
+        return Response("List subscription added!")
 
     @action(detail=True, methods=['delete'], authentication_classes=[SessionAuthentication], url_path=r'delete_source_from_list/(?P<source_id>\d+)', permission_classes=[IsAuthenticated, IsListCreator])
     def delete_source_from_list(self, request, pk, source_id):
@@ -203,8 +154,7 @@ class ListViewSet(viewsets.ModelViewSet):
             source = get_object_or_404(Source, source_id=source_id)
             list.sources.remove(source)
             return Response("Source has been removed from the list!")
-        else:
-            return Response("Access Denied")
+        return Response("Access Denied")
 
     @action(detail=True, methods=['delete'], authentication_classes=[SessionAuthentication], url_path=r'delete_article_from_list/(?P<article_id>\d+)', permission_classes=[IsAuthenticated, IsListCreator])
     def delete_article_from_list(self, request, pk, article_id):
@@ -213,8 +163,7 @@ class ListViewSet(viewsets.ModelViewSet):
             article = get_object_or_404(Article, article_id=article_id)
             list.articles.remove(article)
             return Response("Article has been removed from the list!")
-        else:
-            return Response("Access Denied")
+        return Response("Access Denied")
 
     @action(detail=True, methods=['post'], authentication_classes=[SessionAuthentication], url_path=r'add_article_to_list/(?P<article_id>\d+)', permission_classes=[IsAuthenticated])
     def add_article_to_list(self, request, pk, article_id):
@@ -223,8 +172,8 @@ class ListViewSet(viewsets.ModelViewSet):
             article = get_object_or_404(Article, article_id=article_id)
             list.articles.add(article)
             return Response("Article has been added to the list!")
-        else:
-            return Response("Access Denied")
+        return Response("Access Denied")
+
 
 @api_view(["POST"])
 def add_sources_to_list(request, list_id, source_ids):
@@ -232,8 +181,7 @@ def add_sources_to_list(request, list_id, source_ids):
     if list.creator == request.user:
         list.sources.add(*source_ids.split(","))
         return Response("List has been updated!")
-    else:
-        return Response("Access Denied") 
+    return Response("Access Denied") 
 
 
 @api_view(["POST"])
@@ -250,9 +198,7 @@ class FilteredLists(APIView):
 
     def get(self, request, search_term, format=None):
         filtered_lists =  List.objects.filter_by_search_term(search_term)[0:10]
-        list_urls = []
-        for list in filtered_lists:
-            list_urls.append(list.get_absolute_url())
+        list_urls = [list.get_absolute_url() for list in filtered_lists]
         serializer = List_Serializer(filtered_lists, many=True)
         return JsonResponse([serializer.data, list_urls], safe=False)
 
@@ -331,9 +277,8 @@ class NotificationViewSet(viewsets.ModelViewSet):
             notification, created = Notification.objects.get_or_create(user=request.user, stock=stock)
         if created:
             return Response("Notification has been added!")
-        else:
-            notification.delete()
-            return Response("Notification has been removed!")
+        notification.delete()
+        return Response("Notification has been removed!")
 
     def put(self, request, *args, **kwargs):
         NotificationMessage.objects.filter(notification__user=request.user).update(user_has_seen=True)

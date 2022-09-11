@@ -15,6 +15,26 @@ except:
     TWITTER = None
 
 
+class NotFoundView(ListView, BaseMixin):
+    model = Article
+    template_name = 'article/articles.html'
+    paginate_by = 50
+
+    def get_queryset(self):
+        return Article.objects.all().select_related('source', 'source__website', 'source__sector', 'tweet_type')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tweets_qs = self.get_queryset().filter(source__website=TWITTER)
+        articles = self.get_queryset().exclude(source__website=TWITTER)
+        context['error_page'] = True
+        context['articles'] = paginator_create(self.request, articles , 50, 'long_form_content')
+        context['sectors'] = Sector.objects.all()
+        context['tweets'] = paginator_create(self.request, tweets_qs, 25, 'tweets')
+        context['results_found'] = self.get_queryset().count()
+        return context
+
+
 class ArticleView(ListView, BaseMixin):
     model = Article
     template_name = 'article/articles.html'

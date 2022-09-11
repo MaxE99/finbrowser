@@ -748,35 +748,6 @@ class SettingsTest(LiveServerTestCase):
         driver.find_element(By.CSS_SELECTOR, '.editSection .saveButton').click()
         assert "Ebirdmax99" == driver.find_element(By.CSS_SELECTOR, "#id_username").get_attribute('value') and "me-99@live.de" == driver.find_element(By.CSS_SELECTOR, "#id_email").get_attribute('value')
 
-    def test_add_social_link(self): # strangly this test sometimes doesn't work when selecting Spotify or Other as website or when it called as part of the overall settings test
-        driver = login("http://127.0.0.1:8000/profile/settings")
-        sleep(1)
-        driver.find_element(By.CSS_SELECTOR, '.addSocialLinksContainer summary').click()   
-        sleep(1)     
-        driver.find_elements(By.CSS_SELECTOR, '.addSocialLinksContainer .selectContainer ul li')[0].click() 
-        driver.find_element(By.CSS_SELECTOR, '.addSocialLinksContainer input').send_keys("https://www.testlink.com")  
-        sleep(1) 
-        driver.find_element(By.CSS_SELECTOR, '.socialLinksWrapper .addSocialLinkButton').click() 
-        sleep(1)
-        assert "https://www.testlink.com" == driver.find_elements(By.CSS_SELECTOR, ".existingSocialContainer input")[-1].get_attribute('value')
-
-    def test_change_social_link(self):
-        driver = login("http://127.0.0.1:8000/profile/settings")
-        sleep(1)
-        driver.find_elements(By.CSS_SELECTOR, ".existingSocialContainer input")[-1].clear()
-        driver.find_elements(By.CSS_SELECTOR, ".existingSocialContainer input")[-1].send_keys("https://www.newtestlink.com")
-        driver.find_elements(By.CSS_SELECTOR, ".existingSocialContainer .saveSocialLinkChanges")[-1].click()
-        sleep(1)
-        assert "https://www.newtestlink.com" == driver.find_elements(By.CSS_SELECTOR, ".existingSocialContainer input")[-1].get_attribute('value')
-
-    def test_delete_social_link(self):
-        driver = login("http://127.0.0.1:8000/profile/settings")
-        start = len(driver.find_elements(By.CSS_SELECTOR, ".existingSocialContainer"))
-        sleep(1)
-        driver.find_elements(By.CSS_SELECTOR, ".existingSocialContainer .removeSocialLinkButton")[-1].click()
-        sleep(1)
-        assert len(driver.find_elements(By.CSS_SELECTOR, ".existingSocialContainer")) == start-1
-
     def test_change_password(self):
         driver = login("http://127.0.0.1:8000/profile/settings")
         sleep(1)   

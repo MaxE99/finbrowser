@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v7.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v8.css' %}" />
 <title>{{ list.name }} List | FinBrowser</title>
 <meta name="description" content="FinBrowser list created by {{ list.creator.username }}">
 {% endblock %} {% block content %}
@@ -33,7 +33,7 @@
                 </div>
                 <div class="creatorContainer creatorContainerSmartphonePositioning">
                     <span>Creator: </span>
-                    <a href="{{ list.creator.profile.get_absolute_url }}">{{ list.creator.username }}</a>
+                    <span>{{ list.creator.username }}</span>
                 </div>
                 {% if list.creator == request.user %}
                 <div class="notificationAndSubscribtionContainer">
@@ -62,7 +62,7 @@
             </div>
             <div class="creatorContainer">
                 <span>Creator: </span>
-                <a href="{{ list.creator.profile.get_absolute_url }}">{{ list.creator.username }}</a>
+                <span>{{ list.creator.username }}</span>
             </div>
             <div class="ratingsWrapper">
                 <div class="rankingsUpperContainer">

@@ -1,38 +1,15 @@
 # Django imports
-from django.shortcuts import redirect, get_object_or_404
-from django.views.generic.detail import DetailView
+from django.shortcuts import redirect
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 # Local imports
-from apps.logic.pure_logic import paginator_create
 from apps.accounts.forms import EmailAndUsernameChangeForm, PasswordChangingForm, ProfileChangeForm, PrivacySettingsForm
 from apps.mixins import BaseMixin, BaseFormMixins
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from apps.accounts.models import PrivacySettings, Profile, SocialLink
-from apps.article.models import HighlightedArticle
-from apps.list.models import List
-from apps.source.models import Source
-from apps.accounts.models import SocialLink, Website
+from apps.accounts.models import Website
 from apps.home.models import Notification
-
-
-class ProfileView(DetailView, BaseMixin):
-    queryset = Profile.objects.select_related('user')
-    context_object_name = 'profile'    
-    template_name = 'accounts/profile.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        profile = self.get_object()
-        privacy_settings = get_object_or_404(PrivacySettings, profile=profile)
-        context['social_links'] = SocialLink.objects.filter(profile=profile).select_related('website').defer("website__url", "website__favicon", "website__name")
-        context['created_lists'] = List.objects.filter(creator=profile.user, is_public=True).select_related('creator__profile').only('slug', 'list_pic', 'name', 'creator__profile')
-        context['subscribed_lists'] = List.objects.get_subscribed_lists_by_user(profile.user) if privacy_settings.list_subscribtions_public else None
-        context['subscribed_sources'] = Source.objects.filter_by_subscription(profile.user) if privacy_settings.subscribed_sources_public else None
-        context['highlighted_content'] = paginator_create(self.request, HighlightedArticle.objects.filter_by_user(profile.user), 40) if privacy_settings.highlighted_articles_public else None
-        return context        
 
 
 class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
@@ -78,7 +55,6 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['websites'] = Website.objects.exclude(name="News")
-        context['social_links'] = SocialLink.objects.filter(profile=self.request.user.profile).select_related('website')
         context['notifications'] = Notification.objects.filter(user=self.request.user).select_related('source', 'stock')
         context['profile_change_form'] = ProfileChangeForm()
         context['email_and_name_change_form'] = EmailAndUsernameChangeForm(username=self.request.user.username, email=self.request.user.email)

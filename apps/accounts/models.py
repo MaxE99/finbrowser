@@ -171,13 +171,3 @@ class PrivacySettings(models.Model):
 
     def __str__(self):
         return f'{self.profile} - Privacy Settings'
-
-
-class SocialLink(models.Model):
-    social_link_id = models.AutoField(primary_key=True)
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    website = models.ForeignKey(Website, on_delete=models.CASCADE)
-    url = models.URLField()
-
-    def __str__(self):
-        return f'{self.profile} - {self.website}'
