@@ -626,17 +626,3 @@ function throttle(cb, delay = 1000) {
     setTimeout(timeoutFunc, delay);
   };
 }
-
-// open tweet images in new window
-document.querySelectorAll(".tweetImage").forEach((tweetImage) => {
-  tweetImage.addEventListener("click", () => {
-    tweetImage.style.width = 200 + "px";
-    tweetImage.style.height = 200 + "px";
-    const url = tweetImage.getAttribute("src");
-    window.open(
-      url,
-      "Image",
-      "width=tweetImage.stylewidth,height=tweetImage.style.height,resizable=1"
-    );
-  });
-});
