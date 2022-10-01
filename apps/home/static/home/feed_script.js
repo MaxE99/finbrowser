@@ -8,7 +8,7 @@ function check_interaction_wrapper_at_last_spot(sliderWrapper, closeMenu) {
     if (closeMenu) {
       sliderWrapper.querySelector(".slider").style.zIndex = "";
     } else {
-      sliderWrapper.querySelector(".slider").style.zIndex = "1000";
+      sliderWrapper.querySelector(".slider").style.zIndex = "500";
     }
   }
 }
@@ -17,13 +17,25 @@ function check_interaction_wrapper_at_last_spot(sliderWrapper, closeMenu) {
 document
   .querySelector(".sliderWrapper .interactionWrapper .createListButton")
   .addEventListener("click", () => {
-    document.querySelector(
-      ".interactionWrapper .createListMenu"
-    ).style.display = "flex";
-    check_interaction_wrapper_at_last_spot(
-      document.querySelectorAll(".sliderWrapper")[0],
-      false
-    );
+    if (check_device_width_below(500)) {
+      document.querySelector(".smartphoneCreateListMenu").style.display =
+        "flex";
+    } else if (check_device_width_below(1000)) {
+      const tabletCreateListMenu = document.querySelector(
+        ".tabletCreateListMenu"
+      );
+      tabletCreateListMenu.style.display = "flex";
+      tabletCreateListMenu.style.marginTop =
+        document.querySelector(".contentWrapper").clientHeight * -1 + "px";
+    } else {
+      document.querySelector(
+        ".interactionWrapper .createListMenu"
+      ).style.display = "flex";
+      check_interaction_wrapper_at_last_spot(
+        document.querySelectorAll(".sliderWrapper")[0],
+        false
+      );
+    }
   });
 
 // Close menus
