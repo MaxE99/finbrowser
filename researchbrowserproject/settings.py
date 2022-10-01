@@ -53,9 +53,10 @@ else:
     # CSP Settings
     CSP_DEFAULT_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/", "https://www.googletagmanager.com", "https://www.google-analytics.com",)
     CSP_STYLE_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/")
-    CSP_SCRIPT_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/", "https://www.googletagmanager.com",)
+    CSP_SCRIPT_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/", "https://www.googletagmanager.com", "https://www.google-analytics.com",)
     CSP_FONT_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/")
     CSP_IMG_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/")
+    CSC_CONNECT_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/", "https://www.googletagmanager.com", "https://www.google-analytics.com",)
     CSP_INCLUDE_NONCE_IN=['script-src']
     DATABASES = {
         'default': {
