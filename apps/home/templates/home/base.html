@@ -5,8 +5,6 @@
 <html lang="en">
 
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNS80QXCXR"></script>
-    <script src="{% static 'home/gtag.js' %}"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +15,13 @@
         type="font/woff" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/fontawesome/css/all.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v21.css' %}">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNS80QXCXR"></script>
+    <script nonce="{{request.csp_nonce}}">
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-JNS80QXCXR');
+    </script>
     {% block head %}
     {% endblock %}
 </head>
