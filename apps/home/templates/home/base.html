@@ -15,7 +15,7 @@
         type="font/woff" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/fontawesome/css/all.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v21.css' %}">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNS80QXCXR"></script>
+    <script nonce="{{request.csp_nonce}}" async src="https://www.googletagmanager.com/gtag/js?id=G-JNS80QXCXR"></script>
     <script nonce="{{request.csp_nonce}}">
         window.dataLayer = window.dataLayer || [];
         function gtag() { window.dataLayer.push(arguments); }
