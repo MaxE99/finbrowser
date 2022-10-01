@@ -41,6 +41,14 @@
   margin: auto;
 }
 
+.tabletCreateListMenu,
+.tabletAddListMenu,
+.tabletAddSourcesMenu {
+  width: 35%;
+  position: absolute;
+  right: 9rem;
+}
+
 .formContainer #textInput {
   font-size: 1.6rem;
   padding: 0.4rem 1rem;
@@ -449,7 +457,7 @@ main {
     min-width: unset;
   }
 
-  .landingSection .landingSectionContainer h1, 
+  .landingSection .landingSectionContainer h1,
   .sectionText h2 {
     font-size: 3.2rem;
   }
@@ -469,9 +477,9 @@ main {
     max-width: 90%;
   }
 
-.landingSectionContainer .signUpButton{
-  font-size: 2rem;
-  padding: 1.2rem 3.6rem;
+  .landingSectionContainer .signUpButton {
+    font-size: 2rem;
+    padding: 1.2rem 3.6rem;
   }
 
   .landingSectionImage {

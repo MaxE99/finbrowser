@@ -6,7 +6,6 @@ subscribeButton.addEventListener("click", async () => {
       const source_id = document
         .querySelector(".upperInnerContainer h3")
         .id.split("#")[1];
-      console.log(source_id)
       const action = subscribeButton.innerText;
       const res = await fetch(
         `../../api/sources/${source_id}/source_change_subscribtion_status/`,
@@ -16,7 +15,7 @@ subscribeButton.addEventListener("click", async () => {
         showMessage("Error: Network request failed unexpectedly!", "Error");
       } else {
         const context = await res.json();
-        if (action == "Subscribe") {
+        if (action == "SUBSCRIBE") {
           subscribeButton.classList.replace("unsubscribed", "subscribed");
           subscribeButton.innerText = "Subscribed";
           showMessage(context, "Success");
