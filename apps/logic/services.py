@@ -125,7 +125,7 @@ def tweet_img_upload(tweet_type, file_url):
         output = BytesIO()
         im.save(output, format='WEBP', quality=99)
         output.seek(0)
-        s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.TWEET_IMG_FILE_DIRECTORY, f'tweet_img_{tweet_type.tweet_type_id}.webp'))
+        s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.TWEET_IMG_FILE_DIRECTORY, f'tweet_img_{tweet_type.tweet_type_id}.webp'), ExtraArgs={'Metadata': {'Content-Type': 'image/webp'}})
         tweet_type.image_path = f'home/tweet_imgs/tweet_img_{tweet_type.tweet_type_id}.webp'
         return tweet_type
 
