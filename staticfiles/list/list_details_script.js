@@ -16,7 +16,7 @@ if (subscribeButton) {
           showMessage("Error: Network request failed unexpectedly!", "Error");
         } else {
           const context = await res.json();
-          if (action == "Subscribe") {
+          if (action == "SUBSCRIBE") {
             subscribeButton.classList.replace("unsubscribed", "subscribed");
             subscribeButton.innerText = "Subscribed";
             showMessage(context, "Success");
