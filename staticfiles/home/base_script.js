@@ -182,7 +182,7 @@ document
                 let xfavicon = context[3][i];
                 let xtitle = context[2][i].title;
                 let xlink = context[2][i].link;
-                const articleRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${xfavicon}"><span>${xtitle}</span><a href="${xlink}"></a></div>`;
+                const articleRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${xfavicon}"><span>${xtitle}</span><a href="${xlink}" target="_blank"></a></div>`;
                 results_list.innerHTML += articleRes;
               }
             }
