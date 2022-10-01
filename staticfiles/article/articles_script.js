@@ -62,7 +62,7 @@ document.getElementById("search").addEventListener("keyup", async function (e) {
               let favicon = context[1][i];
               let title = context[0][i].title;
               let link = context[0][i].link;
-              const articleRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${favicon}"><span>${title}</span><a href="${link}"></a></div>`;
+              const articleRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${favicon}"><span>${title}</span><a href="${link}" target="_blank"></a></div>`;
               results_list.innerHTML += articleRes;
             }
           }
