@@ -1245,6 +1245,9 @@ h2 {
 }
 
 .smallFormContentWrapper .tweetImage {
+  z-index: 3;
+  position: relative;
+  cursor: pointer;
   max-width: 100%;
   box-shadow: var(--box-shadowScheme);
   border-radius: 2rem;
