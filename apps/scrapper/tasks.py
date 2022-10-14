@@ -23,7 +23,7 @@ from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
 from apps.source.models import Source
-from apps.scrapper.web_crawler import crawl_palladium, crawl_thegeneralist, crawl_ben_evans, crawl_meritechcapital, crawl_stockmarketnerd
+from apps.scrapper.web_crawler import crawl_thegeneralist, crawl_ben_evans, crawl_meritechcapital, crawl_stockmarketnerd
 
 s3 = boto3.client('s3')
 
@@ -206,7 +206,7 @@ def crawl_websites():
     crawl_ben_evans(articles)
     crawl_meritechcapital(articles)
     crawl_stockmarketnerd(articles)
-    crawl_palladium(get_object_or_404(Source, name="Palladium"), "https://www.palladiummag.com/feed/", articles)
+    # crawl_palladium(get_object_or_404(Source, name="Palladium"), "https://www.palladiummag.com/feed/", articles)
 
 
 @shared_task

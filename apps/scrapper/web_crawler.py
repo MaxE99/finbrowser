@@ -94,23 +94,23 @@ def crawl_stockmarketnerd(articles):
     bulk_create_articles_and_notifications(create_article_list)
 
 
-def crawl_palladium(source, feed_url, articles):
-    create_article_list = []
-    try:
-        req = Request(feed_url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0"})
-        website_data = urlopen(req)
-        website_xml = website_data.read()
-        website_data.close()
-        items = ET.fromstring(website_xml).findall('.//item')
-        for item in items:
-            try:
-                title, link, pub_date = article_components_get(item)
-                link = 'https://palladiummag/' + link
-                if articles.filter(title=title, source=source).exists():
-                    break
-                create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
-            except:
-                continue   
-    except:
-        pass
-    bulk_create_articles_and_notifications(create_article_list)
+# def crawl_palladium(source, feed_url, articles):
+#     create_article_list = []
+#     try:
+#         req = Request(feed_url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0"})
+#         website_data = urlopen(req)
+#         website_xml = website_data.read()
+#         website_data.close()
+#         items = ET.fromstring(website_xml).findall('.//item')
+#         for item in items:
+#             try:
+#                 title, link, pub_date = article_components_get(item)
+#                 link = 'https://palladiummag/' + link
+#                 if articles.filter(title=title, source=source).exists():
+#                     break
+#                 create_article_list.append({'title': title, 'link': link, 'pub_date': pub_date, 'source': source})
+#             except:
+#                 continue   
+#     except:
+#         pass
+#     bulk_create_articles_and_notifications(create_article_list)
