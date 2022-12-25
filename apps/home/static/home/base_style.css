@@ -88,7 +88,15 @@ header {
 
 .logoSpace img {
   width: 100%;
-  padding: 0 0.5rem;
+  padding: 0 2rem;
+}
+
+.logoSpace .logoSmall {
+  display: none;
+  height: 80%;
+  aspect-ratio: 1 / 1;
+  width: unset;
+  padding: unset;
 }
 
 .logoSpace a {
@@ -148,7 +156,7 @@ header {
   width: 40rem;
   padding: 1.5rem 3em 1.5rem 1.5rem;
   border: 0.1rem solid rgb(226, 230, 234);
-  border-radius: 1.2rem;
+  border-radius: 0.45rem;
 }
 
 .mainSearchContainer i,
@@ -183,7 +191,7 @@ header {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 1rem;
   border-bottom: 0.1rem solid rgb(226, 230, 234);
   text-decoration: none;
   color: black;
@@ -207,6 +215,8 @@ header {
   position: absolute;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
 }
 
 .searchResult:hover {
@@ -244,6 +254,10 @@ header {
   color: #4c4a4a;
   border-left: 0.1rem solid rgb(226, 230, 234);
   cursor: pointer;
+}
+
+.userSpace .fa-bell {
+  border-right: 0.1rem solid rgb(226, 230, 234);
 }
 
 .userSpace i a {
@@ -316,6 +330,11 @@ header {
   width: 33.33%;
 }
 
+.userSpace .notificationContainer .notificationHeadersContainer div:hover {
+  background: var(--primary-fontColor);
+  color: white;
+}
+
 .userSpace .notificationContainer .createKeywordNotificationForm {
   font-size: 1.8rem;
   margin-top: 1rem;
@@ -343,6 +362,15 @@ header {
   background: var(--primary-fontColor);
   border: 0.2rem solid rgb(226, 230, 234);
   cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+}
+
+.userSpace
+  .notificationContainer
+  .createKeywordNotificationForm
+  .formSubmitButton:hover {
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+  background: #1a73e8 !important;
 }
 
 .userSpace .notificationContainer .notificationMessageContainer {
@@ -388,7 +416,6 @@ header {
   justify-content: center;
   margin: 0 auto;
   width: 25.5rem;
-  border-left: 0.1rem solid rgb(226, 230, 234);
 }
 
 .userProfile {
@@ -509,25 +536,34 @@ header {
 }
 
 .headerButtonContainer a {
-  padding: 0.8rem 1.6rem;
-  font-size: 1.8rem;
-  color: white;
-  border: none;
-  border-radius: 0.8rem;
+  background: #fff;
+  border: 0.1rem solid #e2e6ea;
+  color: var(--primary-fontColor);
   cursor: pointer;
-  background: var(--primary-fontColor);
-  border: 0.3rem solid;
+  font-size: 1.85rem;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
   text-decoration: none;
-  box-shadow: rgb(0 0 0 / 15%) 0px 3px 3px 0px;
+  border-radius: 0.45rem;
+  padding: 1.36rem 2.72rem;
 }
 
-.headerButtonContainer a:first-child {
-  color: var(--primary-fontColor);
-  background: white;
+.headerButtonContainer a:last-of-type,
+.headerButtonContainer a:hover {
+  background: var(--primary-fontColor);
+  color: white;
 }
 
 .headerButtonContainer a:hover {
-  transform: scale(1.1);
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+}
+
+.headerButtonContainer a:last-of-type {
+  white-space: nowrap;
+  margin-left: 2.3rem;
+}
+
+.headerButtonContainer a:last-of-type:hover {
+  background: #1a73e8 !important;
 }
 
 .headerContainer .fa-bars {
@@ -603,6 +639,10 @@ footer ul li {
 footer ul a {
   text-decoration: none;
   color: var(--secondary-fontColor);
+}
+
+footer ul a:hover {
+  text-decoration: underline;
 }
 
 .messages {
@@ -927,6 +967,10 @@ h2 {
   border-bottom: 0.1rem solid rgb(226, 230, 234);
 }
 
+.smallFormContentWrapper .articleContainer:hover {
+  box-shadow: var(--box-shadowScheme);
+}
+
 .smallFormContentWrapper .leftContentSide .profileImageContainer {
   position: relative;
   z-index: 3;
@@ -977,6 +1021,10 @@ h2 {
   z-index: 3;
   text-decoration: none;
   color: unset;
+}
+
+.smallFormContentWrapper .sourceAndWebsiteContainer .sourceProfile:hover {
+  text-decoration: underline;
 }
 
 .smallFormContentWrapper
@@ -1046,7 +1094,7 @@ h2 {
 .addToListForm {
   display: none;
   background: white;
-  width: 25rem;
+  width: 30rem;
   box-shadow: var(--box-shadowScheme);
   border-radius: 0.8rem;
   position: absolute;
@@ -1056,13 +1104,13 @@ h2 {
 }
 
 .addToListForm .listSelectionContainer {
-  max-height: 12rem;
+  max-height: 18rem;
   overflow-y: scroll;
 }
 
 .addToListForm .listContainer {
   margin-left: 1rem;
-  padding: 0.3rem 0;
+  padding: 0.6rem 0;
   font-size: 1.7rem;
 }
 
@@ -1070,12 +1118,14 @@ h2 {
   cursor: pointer;
   display: flex;
   align-items: center;
+  white-space: nowrap;
+  font-size: 1.8rem;
 }
 
 .addToListForm input {
-  width: 1.6rem;
-  height: 1.6rem;
-  margin-right: 0.5rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin-right: 1.5rem;
   cursor: pointer;
 }
 
@@ -1087,13 +1137,13 @@ h2 {
 }
 
 .addToListForm button {
-  padding: 0.4rem 1.6rem;
-  font-size: 1.5rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.7rem;
   color: white;
-  border-radius: 0.4rem;
+  border-radius: 0.45rem;
   cursor: pointer;
   background: var(--primary-fontColor);
-  border: 0.1rem solid var(--primary-fontColor);
+  border: 0.1rem solid #e2e6ea;
   width: 47.5%;
 }
 
@@ -1102,8 +1152,17 @@ h2 {
   background: white;
 }
 
+.addToListForm button:last-child:hover {
+  background: var(--primary-fontColor);
+  color: white;
+}
+
 .addToListForm button:hover {
-  transform: scale(1.1);
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+}
+
+.addToListForm button:first-of-type:hover {
+  background: #1a73e8 !important;
 }
 
 .addToListForm .createFirstList {
@@ -1131,8 +1190,7 @@ h2 {
 
 .articleCreateListMenu {
   position: absolute;
-  width: 25rem;
-  /* height: 22rem; */
+  width: 30rem;
   top: -0.2rem;
   right: -0.3rem;
 }
@@ -1182,7 +1240,7 @@ h2 {
   padding: 0.4rem 1rem;
   color: black;
   border: 0.2rem solid rgb(226, 230, 234);
-  border-radius: 0.8rem;
+  border-radius: 0.45rem;
 }
 
 .formContainer form #id_list_pic {
@@ -1198,19 +1256,20 @@ h2 {
 }
 
 .formContainer .formSubmitButton {
-  width: 100%;
-  padding: 0.4rem 1.6rem;
+  padding: 0.8rem 1.6rem;
   font-size: 1.7rem;
   color: white;
-  border-radius: 0.4rem;
+  border-radius: 0.45rem;
   cursor: pointer;
   background: var(--primary-fontColor);
-  border: 0.1rem solid var(--primary-fontColor);
-  margin: 0.5rem 0;
+  border: 0.1rem solid #e2e6ea;
+  width: 100%;
+  margin: 1rem 0;
 }
 
 .formContainer .formSubmitButton:hover {
-  transform: scale(1.05, 1.05);
+  background: #1a73e8;
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
 }
 
 .smallFormContentWrapper .replyWrapper,
@@ -1363,22 +1422,23 @@ h2 {
     width: 87.5%;
   }
 
-  .mainInputSearch {
-    width: 30rem;
-  }
-
   .slider {
     --items-per-screen: 6;
+  }
+}
+
+@media (max-width: 1350px) {
+  .mainNavigation {
+    margin-left: 0;
+  }
+  .profileWrapper {
+    width: 20rem;
   }
 }
 
 @media (max-width: 1250px) {
   main {
     width: 90%;
-  }
-
-  .logoContainer {
-    width: 22.5%;
   }
 
   .mainNavigation {
@@ -1391,6 +1451,25 @@ h2 {
 
   .sliderHeader .progressBar {
     display: none;
+  }
+
+  .mainNavigationLink {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .logoContainer {
+    width: 16%;
+  }
+  .mainInputSearch {
+    width: 35rem;
+  }
+  .searchResult .stockContainer .stockTicker {
+    width: 20%;
+  }
+  .searchResult .stockContainer .companyName {
+    width: 80%;
   }
 }
 
@@ -1419,6 +1498,16 @@ h2 {
 
   .slider {
     height: 205px;
+  }
+
+  .logoContainer {
+    width: 20%;
+  }
+  .searchResult .stockContainer .stockTicker {
+    width: 15%;
+  }
+  .searchResult .stockContainer .companyName {
+    width: 85%;
   }
 }
 
@@ -1449,6 +1538,12 @@ h2 {
   }
 }
 
+@media (max-width: 900px) {
+  .logoContainer {
+    width: 25%;
+  }
+}
+
 @media (max-width: 875px) {
   .slider {
     height: 195px;
@@ -1462,6 +1557,18 @@ h2 {
 
   .slider {
     height: 175px;
+  }
+}
+
+@media (max-width: 700px) {
+  .logoSpace .logoLarge {
+    display: none;
+  }
+  .logoSpace .logoSmall {
+    display: flex;
+  }
+  .logoContainer {
+    width: 17.5%;
   }
 }
 
@@ -1494,7 +1601,7 @@ h2 {
   }
 
   .logoContainer {
-    width: 27.5%;
+    width: 20%;
   }
 
   .mainInputSearch {
@@ -1597,6 +1704,12 @@ h2 {
 
   .quoteDate {
     display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .logoSpace .logoSmall {
+    height: 70%;
   }
 }
 

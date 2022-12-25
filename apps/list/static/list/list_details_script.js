@@ -1,37 +1,41 @@
-const subscribeButton = document.querySelector(".subscribeButton");
+const subscribeButtons = document.querySelectorAll(".subscribeButton");
 
-if (subscribeButton) {
-  subscribeButton.addEventListener("click", async () => {
-    if (!subscribeButton.classList.contains("registrationLink")) {
-      try {
-        const list_id = document
-          .querySelector(".rightFirstRowContainer h3")
-          .id.split("#")[1];
-        let action = subscribeButton.innerText;
-        const res = await fetch(
-          `../../api/lists/${list_id}/list_change_subscribtion_status/`,
-          get_fetch_settings("POST")
-        );
-        if (!res.ok) {
-          showMessage("Error: Network request failed unexpectedly!", "Error");
-        } else {
-          const context = await res.json();
-          if (action == "SUBSCRIBE") {
-            subscribeButton.classList.replace("unsubscribed", "subscribed");
-            subscribeButton.innerText = "Subscribed";
-            showMessage(context, "Success");
+subscribeButtons.forEach((subscribeButton) => {
+  if (subscribeButton) {
+    subscribeButton.addEventListener("click", async () => {
+      if (!subscribeButton.classList.contains("registrationLink")) {
+        try {
+          const list_id = subscribeButton
+            .closest(".upperContainer")
+            .querySelector(".rightFirstRowContainer h3")
+            .id.split("#")[1];
+          let action = subscribeButton.innerText;
+          const res = await fetch(
+            `../../api/lists/${list_id}/list_change_subscribtion_status/`,
+            get_fetch_settings("POST")
+          );
+          if (!res.ok) {
+            showMessage("Error: Network request failed unexpectedly!", "Error");
           } else {
-            subscribeButton.classList.replace("subscribed", "unsubscribed");
-            subscribeButton.innerText = "Subscribe";
-            showMessage(context, "Remove");
+            const context = await res.json();
+            console.log(action);
+            if (action == "Subscribe") {
+              subscribeButton.classList.replace("unsubscribed", "subscribed");
+              subscribeButton.innerText = "Subscribed";
+              showMessage(context, "Success");
+            } else {
+              subscribeButton.classList.replace("subscribed", "unsubscribed");
+              subscribeButton.innerText = "Subscribe";
+              showMessage(context, "Remove");
+            }
           }
+        } catch (e) {
+          // showMessage("Error: Unexpected error has occurred!", "Error");
         }
-      } catch (e) {
-        // showMessage("Error: Unexpected error has occurred!", "Error");
       }
-    }
-  });
-}
+    });
+  }
+});
 
 //check if createListMenu at 7nth spot
 function check_interaction_wrapper_at_last_spot(sliderWrapper, closeMenu) {
@@ -48,23 +52,22 @@ function check_interaction_wrapper_at_last_spot(sliderWrapper, closeMenu) {
   }
 }
 
-const editButton = document.querySelector(".editButton");
+const editButtons = document.querySelectorAll(".editButton");
 const listName = document.querySelector(".rightFirstRowContainer h3").innerText;
 
-function openEditMenu() {
-  editButton.remove();
-  if (check_device_width_below(500)) {
-    document.querySelector(
-      ".notificationAndSubscribtionContainer .fa-bell"
-    ).style.display = "none";
-  }
-  document.querySelector(".rightFirstRowContainer h3").style.display = "none";
-  document.querySelector(".nameChangeContainer").style.display = "block";
-  document.querySelector(".nameChangeContainer #id_name").value = listName;
-  document.querySelector(".listPictureContainer #id_list_pic").style.display =
-    "block";
-  document.querySelector(".fa-camera").style.display = "block";
-  document.querySelector(".buttonContainer").style.display = "flex";
+function openEditMenu(e) {
+  const upperContainer = e.target.closest(".upperContainer");
+  upperContainer.querySelector(".editButton").remove();
+  upperContainer.querySelector(".rightFirstRowContainer h3").style.display =
+    "none";
+  upperContainer.querySelector(".nameChangeContainer").style.display = "block";
+  upperContainer.querySelector(".nameChangeContainer #id_name").value =
+    listName;
+  upperContainer.querySelector(
+    ".listPictureContainer #id_list_pic"
+  ).style.display = "block";
+  upperContainer.querySelector(".fa-camera").style.display = "block";
+  upperContainer.querySelector(".buttonContainer").style.display = "flex";
   document.querySelector(".addSourcesButton").style.display = "flex";
   document
     .querySelectorAll(".highlightedArticlesContainer .article .fa-ellipsis-h")
@@ -76,7 +79,7 @@ function openEditMenu() {
     closeButton.style.display = "block";
     closeButton.addEventListener("click", async () => {
       try {
-        const list_id = document
+        const list_id = upperContainer
           .querySelector(".rightFirstRowContainer h3")
           .id.split("#")[1];
         const article_id = closeButton.parentElement.id.split("#")[1];
@@ -101,7 +104,7 @@ function openEditMenu() {
       trashButton.style.display = "block";
       trashButton.addEventListener("click", async () => {
         try {
-          const list_id = document
+          const list_id = upperContainer
             .querySelector(".rightFirstRowContainer h3")
             .id.split("#")[1];
           const source_id = trashButton.id.split("#")[1];
@@ -124,15 +127,19 @@ function openEditMenu() {
   });
 }
 
-if (editButton) {
-  editButton.addEventListener("click", openEditMenu);
-}
+editButtons.forEach((editButton) => {
+  if (editButton) {
+    editButton.addEventListener("click", (e) => {
+      openEditMenu(e);
+    });
+  }
+});
 
 // If list has no sources = directly open edit menu
-const sources = document.querySelectorAll(".slider-content li");
-if (sources.length === 1) {
-  openEditMenu();
-}
+// const sources = document.querySelectorAll(".slider-content li");
+// if (sources.length === 1) {
+//   openEditMenu();
+// }
 
 if (document.querySelector(".deleteListButton")) {
   document
@@ -379,7 +386,6 @@ const getNumericValue = (stringValue) => {
 
 if (one) {
   const arr = [one, two, three, four, five];
-
   arr.forEach((item) =>
     item.addEventListener("mouseover", (event) => {
       handleSelect(event.target.id);
@@ -429,16 +435,20 @@ if (document.querySelector(".avgRating span")) {
 }
 
 // open rate list menu
-const rateListButton = document.querySelector(".rateListButton");
-if (rateListButton) {
-  rateListButton.addEventListener("click", () => {
-    if (!rateListButton.classList.contains("registrationLink")) {
-      document.querySelector(".rate-formUpperContainer").style.display =
-        "block";
-      document.querySelector(".rating").style.opacity = "0";
-      document.querySelector(".ratingsAmmountContainer").style.opacity = "0";
-      document.querySelector(".rateListButton").style.opacity = "0";
-      document.querySelector(".rankingsHeader").style.opacity = "0";
-    }
-  });
-}
+const rateListButtons = document.querySelectorAll(".rateListButton");
+rateListButtons.forEach((rateListButton) => {
+  if (rateListButton) {
+    rateListButton.addEventListener("click", () => {
+      const upperContainer = rateListButton.closest(".upperContainer");
+      if (!rateListButton.classList.contains("registrationLink")) {
+        upperContainer.querySelector(".rate-formUpperContainer").style.display =
+          "block";
+        upperContainer.querySelector(".rating").style.opacity = "0";
+        upperContainer.querySelector(".ratingsAmmountContainer").style.opacity =
+          "0";
+        upperContainer.querySelector(".rateListButton").style.opacity = "0";
+        upperContainer.querySelector(".rankingsHeader").style.opacity = "0";
+      }
+    });
+  }
+});

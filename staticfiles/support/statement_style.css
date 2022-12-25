@@ -11,10 +11,12 @@ h2 {
 
 h1 {
   font-size: 3rem;
+  margin-bottom: 1rem;
 }
 
 h2 {
   font-size: 2.4rem;
+  margin: 2rem 0 1rem;
 }
 
 li {
@@ -24,6 +26,7 @@ li {
 p {
   text-align: justify;
   font-size: 1.6rem;
+  line-height: 1.4;
 }
 
 .overlay a:link,

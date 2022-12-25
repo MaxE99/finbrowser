@@ -35,7 +35,7 @@ document
   });
 
 document
-  .querySelectorAll(".iconContainer .fa-trash")
+  .querySelectorAll(".notificationContainer .fa-times")
   .forEach((deleteButton) => {
     deleteButton.addEventListener("click", async () => {
       try {
@@ -47,7 +47,9 @@ document
         if (!res.ok) {
           showMessage("Error: Network request failed unexpectedly!", "Error");
         } else {
-          deleteButton.parentElement.parentElement.remove();
+          deleteButton.closest(".sourceContainer")
+            ? deleteButton.closest(".sourceContainer").remove()
+            : deleteButton.closest(".keywordContainer").remove();
           showMessage("Notification has been deleted!", "Remove");
         }
       } catch (e) {
