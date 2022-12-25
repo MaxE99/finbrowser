@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_lists_style_v4.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_lists_style_v5.css' %}" />
 <title>FinBrowser | Lists</title>
 <meta name="description"
   content="User-generated lists of stock market related sources and content from accross the open web.">
@@ -90,46 +90,49 @@
   {% endif %}
 </div>
 
-<div class="listHeader">
-  <div>List</div>
-  <div>Rating</div>
-  <div>Content</div>
-  <div>Creator</div>
+<div class="listsWrapper">
+  <div class="listHeader">
+    <div>List</div>
+    <div>Rating</div>
+    <div>Content</div>
+    <div>Creator</div>
+  </div>
+  {% if lists %} {% for list in lists %}
+  <div class="listResultUpperCont">
+    <div class="listCont">
+      {% if list.list_pic %}
+      <img src="{{ list.list_pic.url }}" alt="List Picture">
+      {% else %}
+      <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="List Picture Placeholder" />
+      {% endif %}
+      <div>{{ list.name }}</div>
+    </div>
+    <div class="ratingsCont">
+      <div class="description">Ratings</div>
+      <span>Ø {{ list.average_rating }} out of {{ list.ammount_of_ratings }} ratings</span>
+    </div>
+    <div class="numberOfSourcesAndArticleCont">
+      <div class="description">Content</div>
+      <span> {{ list.articles.all|length }} Articles | {{ list.sources.all|length }} Sources</span>
+    </div>
+    <div class="creatorCont">
+      <div class="description">Creator</div>
+      {% if list.creator.profile.profile_pic %}
+      <img src="{{ list.creator.profile.profile_pic.url }}" alt="Profile Picture">
+      {% else %}
+      <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">{{ list.creator.username.0 }}
+      </div>
+      {% endif %}
+      <span>{{ list.creator.username }}</span>
+    </div>
+    <a href="{{ list.get_absolute_url }}" aria-label="Open List - {{ list.name }}"></a>
+  </div>
+  {% endfor %}
+  {% endif %}
 </div>
-
-{% if lists %} {% for list in lists %}
-<div class="listResultUpperCont">
-  <div class="listCont">
-    {% if list.list_pic %}
-    <img src="{{ list.list_pic.url }}" alt="List Picture">
-    {% else %}
-    <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="List Picture Placeholder" />
-    {% endif %}
-    <div>{{ list.name }}</div>
-  </div>
-  <div class="ratingsCont">
-    <div class="description">Ratings</div>
-    <span>Ø {{ list.average_rating }} out of {{ list.ammount_of_ratings }} ratings</span>
-  </div>
-  <div class="numberOfSourcesAndArticleCont">
-    <div class="description">Content</div>
-    <span> {{ list.articles.all|length }} Articles | {{ list.sources.all|length }} Sources</span>
-  </div>
-  <div class="creatorCont">
-    <div class="description">Creator</div>
-    {% if list.creator.profile.profile_pic %}
-    <img src="{{ list.creator.profile.profile_pic.url }}" alt="Profile Picture">
-    {% else %}
-    <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">{{ list.creator.username.0 }}</div>
-    {% endif %}
-    <span>{{ list.creator.username }}</span>
-  </div>
-  <a href="{{ list.get_absolute_url }}" aria-label="Open List - {{ list.name }}"></a>
-</div>
-{% endfor %}
-{% endif %}
 {% if is_paginated %}
 {% include "pagination.html" with page=page_obj %}
 {% endif %}
+
 <script src="{% static 'list/min_lists_script_v8.js' %}"></script>
 {% endblock %}

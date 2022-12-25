@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'source/min_source_profile_style_v3.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'source/min_source_profile_style_v4.css' %}" />
 <title>{{ source.name }} Profile | FinBrowser</title>
 <meta name="description" content="Discover the latest content from {{ source.name }}">
 {% endblock %} {% block content %}
@@ -28,12 +28,8 @@
       </div>
       <div class="notificationAndSubscribtionContainer">
         {% if request.user.is_authenticated %}
-        {% if notifications_activated %}
-        <i role="button" aria-label="Activate Notifications" class="fas fa-bell notificationActivated"></i>
-        {% else %}
-        <i role="button" aria-label="Deactivate Notifications" class="fas fa-bell"></i>
-        {% endif %}
-        <button aria-label="Add Source To Lists" class="addSourceToListButton"><i class="fas fa-list"></i></button>
+        <button aria-label="Add Source To Lists" class="addSourceToListButton"><i
+            class="fas fa-ellipsis-h"></i></button>
         <div role="form" class="addToListForm addSourceToListForm">
           <div class="formHeaderContainer">Add To Lists<i class="fas fa-times closeFormContainerButton"></i>
           </div>
@@ -71,6 +67,12 @@
             <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
           </form>
         </div>
+        {% if notifications_activated %}
+        <i role="button" aria-label="Activate Notifications"
+          class="fas fa-bell-slash notificationButton notificationActivated"></i>
+        {% else %}
+        <i role="button" aria-label="Deactivate Notifications" class="fas fa-bell notificationButton"></i>
+        {% endif %}
         {% if subscribed %}
         <button class="subscribeButton subscribed">Subscribed</button>
         {% else %}
@@ -128,6 +130,130 @@
   </div>
 </div>
 
+
+<div class="upperContainer smallScreenUpperContainer">
+  <div class="infoAndInteractionWrapper">
+    <div class="listPictureContainer">
+      <img class="profilePicture" src="{% static source.favicon_path %}" alt="Source Picture" />
+    </div>
+    <div class="rightInnerContainer">
+      <div class="upperInnerContainer">
+        <div class="sourceNameAndWebsiteContainer">
+          <div class="smallScreenNameAndProfileCont">
+            <h3 class="sourceName" id="sid#{{ source.source_id }}">{{ source.name }}</h3>
+            <div class="sourceContainer">
+              <div class="iconContainer">
+                <img class="sourcePic" src="{% static source.website.logo %}" alt="Website Logo" />
+              </div>
+              <a class="sourceLink" href="{{ source.url }}" target="_blank"
+                aria-label="Open External Profile Of {{ source.name }}"></a>
+            </div>
+          </div>
+          <div class="sectorContainer">Sector:
+            <a href="{{ source.sector.get_absolute_url }}"
+              aria-label="Open Sector - {{ source.sector.name }}">{{ source.sector.name }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="notificationAndSubscribtionContainer">
+    {% if request.user.is_authenticated %}
+    <button aria-label="Add Source To Lists" class="addSourceToListButton"><i class="fas fa-ellipsis-h"></i></button>
+    <div role="form" class="addToListForm addSourceToListForm">
+      <div class="formHeaderContainer">Add To Lists<i class="fas fa-times closeFormContainerButton"></i>
+      </div>
+      {% if user_lists %}
+      <div class="listSelectionContainer">
+        {% for list in user_lists %}
+        <div class="listContainer">
+          <label for="id_list_{{ list.list_id }}">
+            {% if source in list.sources.all %}
+            <input id="id_list_{{ list.list_id }}" class="sourceInList" type="checkbox" name="lists"
+              value="{{ list.list_id }}" checked="True"> {{ list }}
+            {% else %}
+            <input id="id_list_{{ list.list_id }}" class="sourceNotInList" type="checkbox" name="lists"
+              value="{{ list.list_id }}">
+            {{ list }}
+            {% endif %}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="buttonsContainer">
+        <button class="saveButton">Save</button>
+        <button class="createNewListButton">Create</button>
+      </div>
+      {% else %}
+      <div class="listContainer">You haven't created any lists!</div>
+      <button class="createNewListButton createFirstList">Create First List</button>
+      {% endif %}
+    </div>
+    <div class="createListMenu sourcesCreateListMenu formContainer">
+      <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
+      </div>
+      <form enctype="multipart/form-data" method="POST" class="createListForm">
+        {% csrf_token %} {{ add_list_form }}
+        <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+      </form>
+    </div>
+    {% if notifications_activated %}
+    <i role="button" aria-label="Activate Notifications"
+      class="fas fa-bell-slash notificationButton notificationActivated"></i>
+    {% else %}
+    <i role="button" aria-label="Deactivate Notifications" class="fas fa-bell notificationButton"></i>
+    {% endif %}
+    {% if subscribed %}
+    <button class="subscribeButton subscribed">Subscribed</button>
+    {% else %}
+    <button class="subscribeButton unsubscribed">Subscribe</button>
+    {% endif %}
+    {% else %}
+    <a href="{% url 'account_login' %}" class="subscribeButton unsubscribed registrationLink"
+      aria-label="Login To Subscribe To Source">Subscribe</a>
+    {% endif %}
+  </div>
+  <div class="ratingsWrapper">
+    <div class="rankingsUpperContainer">
+      <div class="rankingsHeader">Ratings</div>
+      {% if request.user.is_authenticated %}
+      <button type="button" class="rateListButton openRateListButton">Rate</button>
+      {% else %}
+      <a href="{% url 'account_login' %}" class="rateListButton registrationLink"
+        aria-label="Login To Rate Source">Rate</a>
+      {% endif %}
+      <div class="rate-formUpperContainer">
+        <h3>Rate {{ source.name }}</h3>
+        <div role="form" aria-label="Rate Source" class="rate-form" action="" method="POST">
+          <button aria-label="1 Star Rating" type="submit" class="fa fa-star rankingStar" id="first"></button>
+          <button aria-label="2 Star Rating" type="submit" class="fa fa-star rankingStar" id="second"></button>
+          <button aria-label="3 Star Rating" type="submit" class="fa fa-star rankingStar" id="third"></button>
+          <button aria-label="4 Star Rating" type="submit" class="fa fa-star rankingStar" id="fourth"></button>
+          <button aria-label="5 Star Rating" type="submit" class="fa fa-star rankingStar" id="fifth"></button>
+        </div>
+      </div>
+    </div>
+    <div class="rankingsContainer">
+      <div class="rating">
+        <div class="ratedContainer">
+          <button aria-label="1 Star Rating" type="button" class="fa fa-star ratedStar" id="first"></button>
+          <button aria-label="2 Star Rating" type="button" class="fa fa-star ratedStar" id="second"></button>
+          <button aria-label="3 Star Rating" type="button" class="fa fa-star ratedStar" id="third"></button>
+          <button aria-label="4 Star Rating" type="button" class="fa fa-star ratedStar" id="fourth"></button>
+          <button aria-label="5 Star Rating" type="button" class="fa fa-star ratedStar" id="fifth"></button>
+        </div>
+        {% if average_rating != "None" %}
+        <div class="avgRating"><span>{{ source.average_rating }}</span> out of 5</div>
+        {% else %}
+        <div class="avgRating">No Ratings</div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="ratingsAmmountContainer">based on <span class="ratingsAmmount">
+        {{ source.ammount_of_ratings }}</span> ratings</div>
+  </div>
+</div>
 
 {% if latest_articles %}
 {% if links_and_retweets or images %}
@@ -207,5 +333,5 @@
 {% endif %}
 
 {{ user_rating|json_script:"user-rating" }}
-<script src="{% static 'source/min_source_profile_script_v5.js' %}"></script>
+<script src="{% static 'source/min_source_profile_script_v6.js' %}"></script>
 {% endblock content %}

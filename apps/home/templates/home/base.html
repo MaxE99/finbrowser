@@ -14,7 +14,7 @@
     <link rel="prefetch" as="font" href="{% static 'home/fonts/lato-v23-latin/lato-v23-latin-900.woff' %}"
         type="font/woff" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/fontawesome/css/all.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v22.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v23.css' %}">
     <script nonce="{{request.csp_nonce}}" async src="https://www.googletagmanager.com/gtag/js?id=G-JNS80QXCXR"></script>
     <script nonce="{{request.csp_nonce}}">
         window.dataLayer = window.dataLayer || [];
@@ -33,7 +33,9 @@
             <div class="headerContainer">
                 <div class="logoContainer">
                     <div class="logoSpace">
-                        <img src="{% static 'home/media/finbrowser-logo.png' %}" alt="Finbrowser Logo">
+                        <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}"
+                            alt="Finbrowser logo large">
+                        <img class="logoSmall" src="{% static 'home/media/favicon.png' %}" alt="Finbrowser logo small">
                         <a aria-label="Open Main Page" href="{% url 'home:feed' %}"></a>
                     </div>
                 </div>
@@ -63,11 +65,9 @@
                     <div id="mainAutocomplete_result"></div>
                 </div>
                 <div class="userSpace">
+                    {% if request.user.is_authenticated %}
                     <i class="fas fa-cog"><a aria-label="Open Settings" href="{% url 'accounts:settings' %}"></a></i>
                     <i class="far fa-bell {% if request.user.is_authenticated %}notificationBell{% endif %}">
-                        {% if request.user.is_authenticated == False %}
-                        <a aria-label="Login To Open Settings" href="{% url 'account_login' %}"></a>
-                        {% endif %}
                         {% if unseen_notifications %}
                         <span class="unseenNotifications">{{ unseen_notifications }}</span>
                         {% endif %}
@@ -533,6 +533,7 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% endif %}
                     <div class="profileWrapper">
                         {% if request.user.is_authenticated %}
                         <div class="userProfile">

@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'article/min_articles_style_v4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'article/min_articles_style_v5.css' %}">
 <title>{% if error_page %}Page not found{% else %}FinBrowser | Content{% endif %}</title>
 <meta name="description" content="The best stock market-related content from across the open web.">
 {% endblock %}
@@ -15,7 +15,8 @@
     <div class="errorMessageContainer">
         <span>404 ERROR</span>
         <span>Page not found!</span>
-        <span>The page you are looking for does not exist on this website! Instead, take a look at some of the latest news and analysis.</span>
+        <span>The page you are looking for does not exist on this website! Instead, take a look at some of the latest
+            news and analysis.</span>
     </div>
 </div>
 {% endif %}
@@ -120,5 +121,5 @@
     {% endif %}
 </div>
 
-<script src="{% static 'article/min_articles_script_v7.js' %}"></script>
+<script src="{% static 'article/min_articles_script_v8.js' %}"></script>
 {% endblock content %}
