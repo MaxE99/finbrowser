@@ -1094,7 +1094,7 @@ h2 {
 .addToListForm {
   display: none;
   background: white;
-  width: 30rem;
+  width: 35rem;
   box-shadow: var(--box-shadowScheme);
   border-radius: 0.8rem;
   position: absolute;
@@ -1190,7 +1190,7 @@ h2 {
 
 .articleCreateListMenu {
   position: absolute;
-  width: 30rem;
+  width: 35rem;
   top: -0.2rem;
   right: -0.3rem;
 }
