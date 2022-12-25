@@ -1,7 +1,7 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v6.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v7.css' %}">
 <title>FinBrowser | Settings</title>
 {% endblock %}
 
@@ -66,7 +66,7 @@
             {% if notification.source %}
             <div class="sourceContainer">
                 <div class="iconContainer">
-                    <i class="fas fa-trash" id="soni#{{ notification.notification_id }}" role="button"
+                    <i class="fas fa-times" id="soni#{{ notification.notification_id }}" role="button"
                         aria-label="Delete Notification"></i>
                     <img class="sourcePic" src="{% static notification.source.favicon_path %}" alt="Source Picture">
                 </div>
@@ -86,12 +86,11 @@
             {% for notification in notifications %}
             {% if notification.stock %}
             <div class="keywordContainer">
-                <div class="iconContainer">
-                    <i class="fas fa-trash" id="stni#{{ notification.notification_id }}" role="button"
-                        aria-label="Delete Notification">
-                    </i>
-                </div>
+                <i class="fas fa-check"></i>
                 {{ notification.stock.ticker }}
+                <i class="fas fa-times" id="stni#{{ notification.notification_id }}" role="button"
+                    aria-label="Delete Notification">
+                </i>
             </div>
             {% endif %}
             {% endfor %}
@@ -103,12 +102,11 @@
             {% for notification in notifications %}
             {% if notification.keyword %}
             <div class="keywordContainer">
-                <div class="iconContainer">
-                    <i class="fas fa-trash" id="kni#{{ notification.notification_id }}" role="button"
-                        aria-label="Delete Notification">
-                    </i>
-                </div>
+                <i class="fas fa-check"></i>
                 {{ notification.keyword }}
+                <i class="fas fa-times" id="kni#{{ notification.notification_id }}" role="button"
+                    aria-label="Delete Notification">
+                </i>
             </div>
             {% endif %}
             {% endfor %}
@@ -133,5 +131,5 @@
     </div>
 </div>
 
-<script src="{% static 'accounts/min_settings_script_v5.js' %}"></script>
+<script src="{% static 'accounts/min_settings_script_v6.js' %}"></script>
 {% endblock content %}

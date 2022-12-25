@@ -73,18 +73,40 @@
 
 .notificationAndSubscribtionContainer {
   display: flex;
+  align-items: center;
 }
 
-.notificationAndSubscribtionContainer .fa-bell {
-  border-left: unset;
-}
-
-.notificationAndSubscribtionContainer .notificationActivated {
+.notificationAndSubscribtionContainer .fa-bell,
+.notificationAndSubscribtionContainer .notificationActivated,
+.notificationAndSubscribtionContainer .fa-ellipsis-h {
+  border-radius: 50%;
   color: var(--primary-fontColor);
+  background: white;
+  width: 4.5rem;
+  height: 4.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 2.5rem;
+  box-shadow: var(--box-shadowScheme);
+  cursor: pointer;
+  font-size: 2.5rem;
+  padding: unset;
+}
+
+.notificationAndSubscribtionContainer .fa-bell:hover,
+.notificationAndSubscribtionContainer .notificationActivated,
+.notificationAndSubscribtionContainer .fa-ellipsis-h:hover {
+  color: white;
+  background: var(--primary-fontColor);
+}
+
+.notificationAndSubscribtionContainer .notificationActivated:hover {
+  color: var(--primary-fontColor);
+  background: white;
 }
 
 .notificationAndSubscribtionContainer .addSourceToListButton {
-  margin-right: 2.5rem;
   background: transparent;
   border: none;
   font-size: 2.5rem;
@@ -100,36 +122,33 @@
 }
 
 .subscribeButton {
-  padding: 0.6rem 1.4rem;
-  font-size: 1.8rem;
-  color: #fff;
-  border: 0.4rem solid;
-  border-radius: 0.8rem;
+  background: white;
+  color: var(--primary-fontColor);
+  border: 0.1rem solid #e2e6ea;
   cursor: pointer;
+  font-size: 1.85rem;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
   text-decoration: none;
-  margin-right: 0.5rem;
-  text-transform: uppercase;
+  border-radius: 0.45rem;
+  padding: 1.36rem 2.72rem;
+  opacity: unset;
+  box-shadow: var(--box-shadowScheme);
 }
 
 .subscribeButton:hover {
-  transform: scale(1.05);
-}
-
-.subscribed {
-  background: white;
-  color: var(--primary-fontColor);
-}
-
-.subscribed:hover {
-  color: red;
-}
-
-.unsubscribed {
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+  color: white;
   background: var(--primary-fontColor);
 }
 
-.unsubscribed:hover {
-  color: #7fd52c;
+.subscribed {
+  background: var(--primary-fontColor);
+  color: white;
+}
+
+.subscribed:hover {
+  color: var(--primary-fontColor);
+  background: white;
 }
 
 .sectorContainer {
@@ -139,6 +158,10 @@
 .sectorContainer a {
   color: var(--primary-fontColor);
   text-decoration: none;
+}
+
+.sectorContainer a:hover {
+  text-decoration: underline;
 }
 
 .ratingsWrapper {
@@ -286,6 +309,42 @@
   margin-bottom: 1.5rem;
 }
 
+.smallScreenUpperContainer {
+  display: none;
+  flex-direction: column;
+}
+
+.smallScreenUpperContainer .infoAndInteractionWrapper {
+  display: flex;
+}
+
+.smallScreenUpperContainer .infoAndInteractionWrapper .listPictureContainer {
+  width: 10rem;
+  height: 10rem;
+  margin: 0;
+}
+
+.smallScreenUpperContainer .infoAndInteractionWrapper .creatorContainer {
+  margin-top: 0;
+}
+
+.smallScreenUpperContainer .ratingsWrapper {
+  margin: 2rem auto 0;
+}
+
+.smallScreenUpperContainer .smallScreenNameAndProfileCont {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.smallScreenUpperContainer .notificationAndSubscribtionContainer {
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto 0;
+  width: 100%;
+}
+
 @media (max-width: 1000px) {
   .leftInnerContainer {
     width: unset;
@@ -315,63 +374,72 @@
   }
 }
 
-@media (max-width: 500px) {
-  .listPictureContainer {
-    height: 10rem;
-    width: 10rem;
-  }
-
-  .upperInnerContainer {
-    position: relative;
-    flex-direction: column;
-    align-items: unset;
-  }
-
-  .sourceNameAndWebsiteContainer {
-    width: calc(100% - 5rem);
-  }
-
-  .upperInnerContainer .sourceName {
-    font-size: 2.5rem;
-  }
-
-  .sourceContainer {
-    width: 3rem;
-    height: 3rem;
-    position: absolute;
-    top: 0;
-    right: 2rem;
-  }
-
-  .rightInnerContainer .sectorContainerSmartphonePositioning {
-    display: block;
-  }
-
-  .sectorContainer {
+@media (max-width: 700px) {
+  .upperContainer {
     display: none;
-    margin-top: unset;
   }
-
-  .notificationAndSubscribtionContainer {
-    width: 100%;
-    margin: 0.5rem 0;
-  }
-
-  .notificationAndSubscribtionContainer .fa-bell {
-    padding-left: unset;
-  }
-
-  .ratingsWrapper {
-    margin-top: unset;
-  }
-
-  .rate-form {
+  .smallScreenUpperContainer {
     display: flex;
-    justify-content: center;
   }
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer {
+    position: relative;
+    flex-direction: row;
+    top: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer
+    button,
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer
+    input,
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer
+    a {
+    margin-bottom: 0;
+    width: unset;
+  }
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer
+    button,
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer
+    a {
+    margin-right: 2rem;
+  }
+  .listPictureContainer i {
+    bottom: 7.5%;
+    left: 57.5%;
+    font-size: 1.6rem;
+    padding: 0.6rem 0.9rem;
+  }
+  .rightInnerContainer {
+    width: calc(100% - 10rem - 3%);
+  }
+  .sourceNameAndWebsiteContainer {
+    align-items: start;
+    flex-direction: column;
+  }
+  .sectorContainer {
+    margin-top: 0;
+  }
+}
 
-  .rankingStar,
-  .ratedStar {
-    font-size: 3.5rem;
+@media (max-width: 500px) {
+  .upperInnerContainer .sourceName {
+    margin-right: 5rem;
+  }
+  .sourceContainer {
+    position: absolute;
+    right: 2rem;
+    top: 0;
   }
 }

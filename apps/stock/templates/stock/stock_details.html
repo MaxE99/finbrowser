@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'stock/min_stock_details_style_v3.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'stock/min_stock_details_style_v4.css' %}" />
 <title>{{ stock.full_company_name }} | FinBrowser</title>
 <meta name="description" content="Discover the latest content from {{ sstock.full_company_name }}">
 {% endblock %} {% block content %}
@@ -8,9 +8,9 @@
     <h2 class="stockHeader" id="sti#{{ stock.stock_id }}">{{ stock.full_company_name }}</h2>
     {% if request.user.is_authenticated %}
     {% if notifications_activated %}
-    <i aria-label="Activate Notifications" class="fas fa-bell notificationActivated"></i>
+    <i aria-label="Activate Notifications" class="fas fa-bell-slash notificationButton notificationActivated"></i>
     {% else %}
-    <i role="button" aria-label="Deactivate Notifications" class="fas fa-bell"></i>
+    <i role="button" aria-label="Deactivate Notifications" class="fas fa-bell notificationButton"></i>
     {% endif %}
     {% endif %}
 </div>
@@ -58,5 +58,5 @@
 <div class="noContentFound">No content found!</div>
 {% endif %}
 
-<script src="{% static 'stock/min_stock_details_script_v2.js' %}"></script>
+<script src="{% static 'stock/min_stock_details_script_v3.js' %}"></script>
 {% endblock content %}

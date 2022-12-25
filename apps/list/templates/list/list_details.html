@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v8.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v9.css' %}" />
 <title>{{ list.name }} List | FinBrowser</title>
 <meta name="description" content="FinBrowser list created by {{ list.creator.username }}">
 {% endblock %} {% block content %}
@@ -39,7 +39,7 @@
                 <div class="notificationAndSubscribtionContainer">
                     <button type="button" class="editButton"><i class="fas fa-edit"></i> Edit</button>
                     <div class="buttonContainer">
-                        <button type="button" class="deleteListButton">Delete List</button>
+                        <button type="button" class="deleteListButton">Delete</button>
                         <a role="button" aria-label="Cancel" href="{{ list.get_absolute_url }}"
                             class="cancelButton">Cancel</a>
                         <input name="changeListForm" type="submit" value="Save">
@@ -115,6 +115,119 @@
                 <div class="ratingsAmmountContainer">based on <span class="ratingsAmmount">
                         {{ list.ammount_of_ratings }}</span> ratings</div>
             </div>
+        </div>
+    </div>
+
+    <div class="upperContainer smallScreenUpperContainer">
+        <div class="infoAndInteractionWrapper">
+            <div class="listPictureContainer">
+                {% csrf_token %}
+                {% if list.creator == request.user %}
+                {% if list.list_pic %}
+                <img src="{{ list.list_pic.url }}" alt="List Picture">
+                {% else %}
+                <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="List Picture Placeholder">
+                {% endif %}
+                {{ change_list_pic_form }}
+                {% else %}
+                {% if list.list_pic %}
+                <img src="{{ list.list_pic.url }}" alt="List Picture">
+                {% else %}
+                <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="List Picture Placeholder">
+                {% endif %}
+                {% endif %}
+                <i class="fas fa-camera"></i>
+            </div>
+            <div class="rightInnerContainer">
+                <div class="rightFirstRowContainer">
+                    <h3 id="ldi#{{ list.list_id }}">{{ list.name }}</h3>
+                    <div role="form" aria-label="Change List Name" class="nameChangeContainer">
+                        {{ change_list_name_form }}
+                    </div>
+                    <div class="creatorContainer creatorContainerSmartphonePositioning">
+                        <span>Creator: </span>
+                        <span>{{ list.creator.username }}</span>
+                    </div>
+                </div>
+                <div class="creatorContainer">
+                    <span>Creator: </span>
+                    <span>{{ list.creator.username }}</span>
+                </div>
+            </div>
+        </div>
+        {% if list.creator == request.user %}
+        <div class="notificationAndSubscribtionContainer">
+            <button type="button" class="editButton"><i class="fas fa-edit"></i> Edit</button>
+            <div class="buttonContainer">
+                <button type="button" class="deleteListButton">Delete</button>
+                <a role="button" aria-label="Cancel" href="{{ list.get_absolute_url }}" class="cancelButton">Cancel</a>
+                <input name="changeListForm" type="submit" value="Save">
+            </div>
+        </div>
+        {% else %}
+        <div class="notificationAndSubscribtionContainer">
+            {% if request.user.is_authenticated %}
+            {% if subscribed %}
+            <button type="button" class="subscribeButton subscribed">Subscribed</button>
+            {% else %}
+            <button type="button" class="subscribeButton unsubscribed">Subscribe</button>
+            {% endif %}
+            {% else %}
+            <a href="{% url 'account_login' %}" class="subscribeButton unsubscribed registrationLink"
+                aria-label="Login To Subscribe To Lists">Subscribe</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        <div class="ratingsWrapper">
+            <div class="rankingsUpperContainer">
+                <div class="rankingsHeader">Ratings</div>
+                {% if list.creator != request.user %}
+                {% if request.user.is_authenticated %}
+                <button type="button" class="rateListButton">Rate</button>
+                {% else %}
+                <a href="{% url 'account_login' %}" class="rateListButton registrationLink"
+                    aria-label="Login To Rate Lists">Rate</a>
+                {% endif %}
+                <div class="rate-formUpperContainer">
+                    <h3>Rate {{ list.name }}</h3>
+                    <div role="form" aria-label="Rate List Form" class="rate-form" action="" method="POST">
+                        <button aria-label="1 Star Rating" type="button" class="fa fa-star rankingStar"
+                            id="first"></button>
+                        <button aria-label="2 Star Rating" type="button" class="fa fa-star rankingStar"
+                            id="second"></button>
+                        <button aria-label="3 Star Rating" type="button" class="fa fa-star rankingStar"
+                            id="third"></button>
+                        <button aria-label="4 Star Rating" type="button" class="fa fa-star rankingStar"
+                            id="fourth"></button>
+                        <button aria-label="5 Star Rating" type="button" class="fa fa-star rankingStar"
+                            id="fifth"></button>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="rankingsContainer">
+                <div class="rating">
+                    <div class="ratedContainer">
+                        <button aria-label="1 Star Rating" type="button" class="fa fa-star ratedStar"
+                            id="first"></button>
+                        <button aria-label="2 Star Rating" type="button" class="fa fa-star ratedStar"
+                            id="second"></button>
+                        <button aria-label="3 Star Rating" type="button" class="fa fa-star ratedStar"
+                            id="third"></button>
+                        <button aria-label="4 Star Rating" type="button" class="fa fa-star ratedStar"
+                            id="fourth"></button>
+                        <button aria-label="5 Star Rating" type="button" class="fa fa-star ratedStar"
+                            id="fifth"></button>
+                    </div>
+                    {% if average_rating != "None" %}
+                    <div class="avgRating"><span>{{ list.average_rating }}</span> out of 5</div>
+                    {% else %}
+                    <div class="avgRating">No Ratings</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="ratingsAmmountContainer">based on <span class="ratingsAmmount">
+                    {{ list.ammount_of_ratings }}</span> ratings</div>
         </div>
     </div>
 </form>
@@ -228,5 +341,5 @@
 
 
 {{ user_rating|json_script:"user-rating" }}
-<script src="{% static 'list/min_list_details_script_v8.js' %}"></script>
+<script src="{% static 'list/min_list_details_script_v9.js' %}"></script>
 {% endblock content %}

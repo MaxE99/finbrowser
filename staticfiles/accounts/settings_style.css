@@ -43,7 +43,7 @@
 
 h2 {
   font-size: 2.5rem;
-  margin: 2rem 0 1rem;
+  margin: 2rem 0;
 }
 
 .editSection {
@@ -66,7 +66,7 @@ h2 {
 
 .editSection label,
 .changePasswordForm label {
-  font-size: 1.6rem;
+  font-size: 2rem;
   margin-bottom: 0.5rem;
 }
 
@@ -89,18 +89,19 @@ h2 {
 
 .profilePicContainer {
   width: 47.5%;
-  margin-bottom: 2rem;
+  margin: 1.5rem 0 2rem;
 }
 
 .profilePicInnerContainer {
   display: flex;
+  align-items: center;
   margin-top: 0.5rem;
 }
 
 .profilePicContainer img,
 .existingSocialContainer img {
-  width: 4rem;
-  height: 4rem;
+  width: 4.5rem;
+  height: 4.5rem;
 }
 
 .changeProfilePicButton {
@@ -113,24 +114,39 @@ h2 {
 .cancelButton,
 .buttonContainer input,
 .changeProfilePicButton,
-.profilePicInnerContainer button{
-  font-size: 1.8rem;
-  cursor: pointer;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 0.5rem;
-  box-shadow: var(--box-shadowScheme);
+.profilePicInnerContainer button,
+.passwordChangeSubmit,
+.privacySettingsChangeSubmit {
   color: white;
   background: var(--primary-fontColor);
-  width: 10rem;
+  border: 0.1rem solid #e2e6ea;
+  cursor: pointer;
+  font-size: 1.85rem;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
   text-decoration: none;
+  border-radius: 0.45rem;
+  padding: 1.36rem 2.72rem;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.buttonContainer input:hover,
+.passwordChangeSubmit:hover,
+.privacySettingsChangeSubmit:hover {
+  background: #1a73e8 !important;
+}
+
+.cancelButton:hover {
+  background: var(--primary-fontColor) !important;
+  color: white !important;
 }
 
 .cancelButton:hover,
 .buttonContainer input:hover,
 .changeProfilePicButton:hover,
-.profilePicInnerContainer button:hover{
-  transform: scale(1.1);
+.profilePicInnerContainer button:hover,
+.passwordChangeSubmit:hover,
+.privacySettingsChangeSubmit:hover {
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
 }
 
 .changeProfilePicButton input {
@@ -143,7 +159,7 @@ h2 {
   cursor: pointer;
 }
 
-.profilePicInnerContainer button{
+.profilePicInnerContainer button {
   background: red;
   color: white;
   margin-left: 1rem;
@@ -177,24 +193,11 @@ h2 {
   width: 50%;
 }
 
-.passwordChangeSubmit,
-.privacySettingsChangeSubmit {
-  background: var(--primary-fontColor);
-  color: white;
-  padding: 1.3rem 1.2rem 1.3rem 1.2rem;
-  border-radius: 0.6rem;
-  font-size: 1.8rem;
-  width: 50%;
-  cursor: pointer;
-  border: none;
-  box-shadow: var(--box-shadowScheme);
-}
-
-.sliderHeader:first-of-type{
+.sliderHeader:first-of-type {
   margin-top: 2rem;
 }
 
-.sliderHeader{
+.sliderHeader {
   padding: 2rem 4rem;
 }
 
@@ -204,44 +207,50 @@ h2 {
   margin-bottom: 2rem;
 }
 
-.iconContainer .fa-trash,
-.keywordContainer .fa-trash {
+.iconContainer .fa-times {
   position: absolute;
-  color: white;
-  background: red;
-  padding: 1rem;
-  font-size: 2rem;
-  top: 0;
-  right: 0;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2.8rem;
+  color: red;
   cursor: pointer;
-  box-shadow: var(--box-shadowScheme);
   z-index: 100;
 }
 
-.keywordContainer{
+.keywordContainer {
   position: relative;
   font-size: 2rem;
   text-align: center;
   margin: 1rem 1rem 0 0;
   border-radius: 20rem;
   box-shadow: var(--box-shadowScheme);
-  padding: 1.5rem 4.5rem 1.5rem 3rem;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  display: flex;
+  align-items: center;
+}
+
+.keywordContainer:hover {
   background: var(--primary-fontColor);
   color: white;
 }
 
-.keywordContainer .iconContainer{
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: unset;
-  width: unset;
-  border-radius: unset;
+.keywordContainer:hover .fa-check {
+  background: white;
+  color: var(--primary-fontColor);
 }
 
-.keywordContainer .fa-trash{
-  border-radius: 0 1rem 0.5rem 0;
-  padding: 0.75rem;
+.keywordContainer .fa-check {
+  border-radius: 50%;
+  border: 0.3rem solid gray;
+  margin-right: 1rem;
+  padding: 0.2rem;
+  font-size: 12px;
+}
+
+.keywordContainer .fa-times {
+  margin-left: 1rem;
+  cursor: pointer;
 }
 
 .noNotificationsActivated {
@@ -257,11 +266,11 @@ h2 {
 .privacySettingsContainer {
   display: flex;
   align-items: center;
-  margin-top: 1rem;
+  padding: 1.5rem 0;
 }
 
 .privacySettingsContainer label {
-  font-size: 1.6rem;
+  font-size: 2.2rem;
   width: 80%;
 }
 

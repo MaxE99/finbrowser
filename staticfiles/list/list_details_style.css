@@ -18,6 +18,7 @@
 }
 
 .listPictureContainer img {
+  position: absolute;
   width: 100%;
   height: 100%;
 }
@@ -95,46 +96,52 @@
 }
 
 .subscribeButton,
-.editButton {
-  padding: 0.6rem 1.4rem;
-  font-size: 1.8rem;
-  color: #fff;
-  border: 0.4rem solid;
-  border-radius: 0.8rem;
+.editButton,
+.cancelButton,
+.buttonContainer input,
+.deleteListButton {
+  color: var(--primary-fontColor);
+  background: white;
+  border: 0.1rem solid #e2e6ea;
   cursor: pointer;
+  font-size: 1.85rem;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
   text-decoration: none;
-  margin-right: 0.5rem;
-  text-transform: uppercase;
+  border-radius: 0.45rem;
+  padding: 1.36rem 2.72rem;
+  opacity: unset;
+  box-shadow: var(--box-shadowScheme);
 }
 
 .subscribeButton:hover,
-.editButton:hover {
-  transform: scale(1.05);
+.editButton,
+.subscribed,
+.cancelButton:hover,
+.buttonContainer input {
+  color: white !important;
+  background: var(--primary-fontColor) !important;
 }
 
-.editButton {
-  background: var(--primary-fontColor);
+.editButton:hover,
+.subscribeButton:hover,
+.cancelButton:hover,
+.buttonContainer input:hover,
+.deleteListButton:hover {
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+}
+
+.editButton:hover,
+.buttonContainer input:hover {
+  background: #1a73e8 !important;
+}
+
+.subscribed:hover {
+  color: var(--primary-fontColor) !important;
+  background: white !important;
 }
 
 .editButton i {
   margin-right: 0.3rem;
-}
-
-.subscribed {
-  background: white;
-  color: var(--primary-fontColor);
-}
-
-.subscribed:hover {
-  color: red;
-}
-
-.unsubscribed {
-  background: var(--primary-fontColor);
-}
-
-.unsubscribed:hover {
-  color: #7fd52c;
 }
 
 .buttonContainer {
@@ -145,23 +152,7 @@
 .cancelButton,
 .buttonContainer input,
 .deleteListButton {
-  font-size: 1.8rem;
-  cursor: pointer;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 0.5rem;
-  box-shadow: var(--box-shadowScheme);
-  color: white;
-  background: var(--primary-fontColor);
-  width: 10rem;
-  text-decoration: none;
   margin-left: 1rem;
-}
-
-.cancelButton:hover,
-.buttonContainer input:hover,
-.deleteListButton:hover {
-  transform: scale(1.1);
 }
 
 .cancelButton {
@@ -172,6 +163,7 @@
 .deleteListButton {
   background: red;
   width: unset;
+  color: white;
 }
 
 .creatorContainer {
@@ -354,7 +346,7 @@
   height: 100%;
 }
 
-.slider .formContainer{
+.slider .formContainer {
   width: 100%;
 }
 
@@ -440,6 +432,38 @@
   z-index: 25;
 }
 
+.smallScreenUpperContainer {
+  display: none;
+  flex-direction: column;
+}
+
+.smallScreenUpperContainer .infoAndInteractionWrapper {
+  display: flex;
+}
+
+.smallScreenUpperContainer .infoAndInteractionWrapper .listPictureContainer {
+  width: 10rem;
+  height: 10rem;
+  margin: 0;
+}
+
+.smallScreenUpperContainer .infoAndInteractionWrapper .creatorContainer {
+  margin-top: 0;
+}
+
+.smallScreenUpperContainer .notificationAndSubscribtionContainer {
+  margin: 2rem auto 0;
+  width: 100%;
+}
+
+.smallScreenUpperContainer .notificationAndSubscribtionContainer button {
+  width: 100%;
+}
+
+.smallScreenUpperContainer .ratingsWrapper {
+  margin: 2rem auto 0;
+}
+
 @media (max-width: 1000px) {
   .leftInnerContainer {
     width: unset;
@@ -451,7 +475,7 @@
   }
 
   .rightInnerContainer {
-    width: 100%;
+    width: calc(100% - 15rem - 3%);
     margin-left: 3%;
   }
 
@@ -462,9 +486,11 @@
   .creatorContainer {
     margin-top: -0.5rem;
   }
-}
 
-@media (min-width: 500px) and (max-width: 1000px) {
+  .notificationAndSubscribtionContainer {
+    margin-right: 0;
+  }
+
   .notificationAndSubscribtionContainer .buttonContainer {
     position: absolute;
     top: 10.5rem;
@@ -478,10 +504,97 @@
     width: 14rem;
     text-align: center;
     margin-bottom: 1rem;
+    margin-left: 0;
+  }
+
+  .listPictureContainer i {
+    bottom: 7.5%;
+    left: 67.5%;
+  }
+}
+
+@media (max-width: 750px) {
+  .notificationAndSubscribtionContainer .buttonContainer {
+    right: 2rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .upperContainer {
+    display: none;
+  }
+  .smallScreenUpperContainer {
+    display: flex;
+  }
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer {
+    position: relative;
+    flex-direction: row;
+    top: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer
+    button,
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer
+    input,
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer
+    a {
+    margin-bottom: 0;
+    width: unset;
+  }
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer
+    button,
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer
+    a {
+    margin-right: 2rem;
+  }
+  .listPictureContainer i {
+    bottom: 7.5%;
+    left: 57.5%;
+    font-size: 1.6rem;
+    padding: 0.6rem 0.9rem;
+  }
+  .rightInnerContainer {
+    width: calc(100% - 10rem - 3%);
   }
 }
 
 @media (max-width: 500px) {
+  .rightInnerContainer .rightFirstRowContainer {
+    font-size: 2.3rem;
+  }
+  .nameChangeContainer input {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer
+    button,
+  .smallScreenUpperContainer
+    .notificationAndSubscribtionContainer
+    .buttonContainer
+    a {
+    margin-right: 1rem;
+  }
+}
+
+/* @media (max-width: 750px) {
+
   .listPictureContainer {
     height: 10rem;
     width: 10rem;
@@ -532,9 +645,6 @@
     width: unset;
   }
 
-  .deleteListButton {
-    margin-left: 0;
-  }
 
   .notificationAndSubscribtionContainer .fa-bell {
     padding-left: unset;
@@ -556,5 +666,5 @@
 
   .addSourcesButton {
     font-size: 10rem;
-}
-}
+  }
+} */

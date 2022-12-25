@@ -161,18 +161,21 @@ body {
 .loginUserForm button[type="submit"],
 .signInButton {
   background: var(--primary-fontColor);
-  border: none;
-  border-radius: 0.6rem;
+  border: 0.1rem solid #e2e6ea;
   color: white;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  padding: 1.3rem 1.2rem;
+  font-size: 1.85rem;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+  text-decoration: none;
+  border-radius: 0.45rem;
+  padding: 1.36rem 2.72rem;
   width: 100%;
-  position: relative;
   margin-top: 1.5rem;
+}
+
+.loginUserForm button[type="submit"]:hover {
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+  background: #1a73e8 !important;
 }
 
 .loginUserForm button[type="submit"] i {
@@ -212,13 +215,17 @@ body {
   position: relative;
   padding: 1.2rem 1.6rem;
   background: #fff;
-  border-radius: 2.5rem;
+  border-radius: 0.45rem;
   font-size: 1.6rem;
   line-height: 1.5em;
   letter-spacing: 0.022rem;
   border: 0.1rem solid;
   width: 100%;
   cursor: pointer;
+}
+
+.googleAuthButton:hover {
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 }
 
 .googleAuthButton a {
@@ -228,10 +235,6 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-button:hover {
-  transform: scale(1.05);
 }
 
 .googleLogo {
@@ -325,6 +328,10 @@ button:hover {
 .createAccount a {
   color: var(--primary-fontColor);
   cursor: pointer;
+}
+
+.createAccount a:hover {
+  text-decoration: underline;
 }
 
 .errorlist {
@@ -429,7 +436,7 @@ label[for="id_login"] {
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 2.5rem;
+  border-radius: 0.45rem;
   opacity: 0;
   cursor: pointer;
 }

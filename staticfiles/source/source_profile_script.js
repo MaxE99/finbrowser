@@ -1,34 +1,37 @@
-const subscribeButton = document.querySelector(".subscribeButton");
+const subscribeButtons = document.querySelectorAll(".subscribeButton");
 
-subscribeButton.addEventListener("click", async () => {
-  if (!subscribeButton.classList.contains("registrationLink")) {
-    try {
-      const source_id = document
-        .querySelector(".upperInnerContainer h3")
-        .id.split("#")[1];
-      const action = subscribeButton.innerText;
-      const res = await fetch(
-        `../../api/sources/${source_id}/source_change_subscribtion_status/`,
-        get_fetch_settings("POST")
-      );
-      if (!res.ok) {
-        showMessage("Error: Network request failed unexpectedly!", "Error");
-      } else {
-        const context = await res.json();
-        if (action == "SUBSCRIBE") {
-          subscribeButton.classList.replace("unsubscribed", "subscribed");
-          subscribeButton.innerText = "Subscribed";
-          showMessage(context, "Success");
+subscribeButtons.forEach((subscribeButton) => {
+  subscribeButton.addEventListener("click", async () => {
+    if (!subscribeButton.classList.contains("registrationLink")) {
+      try {
+        const source_id = subscribeButton
+          .closest(".upperContainer")
+          .querySelector(".upperInnerContainer h3")
+          .id.split("#")[1];
+        const action = subscribeButton.innerText;
+        const res = await fetch(
+          `../../api/sources/${source_id}/source_change_subscribtion_status/`,
+          get_fetch_settings("POST")
+        );
+        if (!res.ok) {
+          showMessage("Error: Network request failed unexpectedly!", "Error");
         } else {
-          subscribeButton.classList.replace("subscribed", "unsubscribed");
-          subscribeButton.innerText = "Subscribe";
-          showMessage(context, "Remove");
+          const context = await res.json();
+          if (action == "Subscribe") {
+            subscribeButton.classList.replace("unsubscribed", "subscribed");
+            subscribeButton.innerText = "Subscribed";
+            showMessage(context, "Success");
+          } else {
+            subscribeButton.classList.replace("subscribed", "unsubscribed");
+            subscribeButton.innerText = "Subscribe";
+            showMessage(context, "Remove");
+          }
         }
+      } catch (e) {
+        // showMessage("Error: Unexpected error has occurred!", "Error");
       }
-    } catch (e) {
-      // showMessage("Error: Unexpected error has occurred!", "Error");
     }
-  }
+  });
 });
 
 // rating functions
@@ -153,65 +156,82 @@ if (document.querySelector(".avgRating span")) {
 }
 
 // open rate list menu
-document.querySelector(".openRateListButton").addEventListener("click", () => {
-  document.querySelector(".rate-formUpperContainer").style.display = "block";
-  document.querySelector(".rating").style.opacity = "0";
-  document.querySelector(".ratingsAmmountContainer").style.opacity = "0";
-  document.querySelector(".rateListButton").style.opacity = "0";
-  document.querySelector(".rankingsHeader").style.opacity = "0";
+document.querySelectorAll(".openRateListButton").forEach((rateListButton) => {
+  rateListButton.addEventListener("click", () => {
+    const upperContainer = rateListButton.closest(".upperContainer");
+    upperContainer.querySelector(".rate-formUpperContainer").style.display =
+      "block";
+    upperContainer.querySelector(".rating").style.opacity = "0";
+    upperContainer.querySelector(".ratingsAmmountContainer").style.opacity =
+      "0";
+    upperContainer.querySelector(".rateListButton").style.opacity = "0";
+    upperContainer.querySelector(".rankingsHeader").style.opacity = "0";
+  });
 });
 
 //Notifications
-const notificationButton = document.querySelector(
-  ".notificationAndSubscribtionContainer .fa-bell"
+const notificationButtons = document.querySelectorAll(
+  ".notificationAndSubscribtionContainer .notificationButton"
 );
-if (notificationButton) {
-  notificationButton.addEventListener("click", async () => {
-    try {
-      const source_id = document
-        .querySelector(".upperInnerContainer h3")
-        .id.split("#")[1];
-      const data = { source_id: source_id };
-      const res = await fetch(`../../api/notifications/`, {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": getCookie("csrftoken"),
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        mode: "same-origin",
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) {
-        showMessage("Error: Network request failed unexpectedly!", "Error");
-      } else {
-        const context = await res.json();
-        if (notificationButton.classList.contains("notificationActivated")) {
-          notificationButton.classList.remove("notificationActivated");
-          showMessage(context, "Remove");
+notificationButtons.forEach((notificationButton) => {
+  if (notificationButton) {
+    notificationButton.addEventListener("click", async () => {
+      try {
+        const source_id = notificationButton
+          .closest(".upperContainer")
+          .querySelector(".upperInnerContainer h3")
+          .id.split("#")[1];
+        const data = { source_id: source_id };
+        const res = await fetch(`../../api/notifications/`, {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          mode: "same-origin",
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) {
+          showMessage("Error: Network request failed unexpectedly!", "Error");
         } else {
-          notificationButton.classList.add("notificationActivated");
-          showMessage(context, "Success");
+          const context = await res.json();
+          if (notificationButton.classList.contains("notificationActivated")) {
+            notificationButton.classList.remove("notificationActivated");
+            notificationButton.classList.replace("fa-bell-slash", "fa-bell");
+            showMessage(context, "Remove");
+          } else {
+            notificationButton.classList.add("notificationActivated");
+            notificationButton.classList.replace("fa-bell", "fa-bell-slash");
+            showMessage(context, "Success");
+          }
         }
+      } catch (e) {
+        // showMessage("Error: Unexpected error has occurred!", "Error");
       }
-    } catch (e) {
-      // showMessage("Error: Unexpected error has occurred!", "Error");
-    }
-  });
-}
+    });
+  }
+});
 
 //open add list to sources form
 document
-  .querySelector(".addSourceToListButton")
-  .addEventListener("click", () => {
-    document.querySelector(".addSourceToListForm").style.display = "block";
+  .querySelectorAll(".addSourceToListButton")
+  .forEach((addSourceButton) => {
+    addSourceButton.addEventListener("click", () => {
+      addSourceButton
+        .closest(".upperContainer")
+        .querySelector(".addSourceToListForm").style.display = "block";
+    });
   });
 
 //close add list sources form
+
 document
-  .querySelector(".addSourceToListForm .fa-times")
-  .addEventListener("click", () => {
-    document.querySelector(".addSourceToListForm").style.display = "none";
+  .querySelectorAll(".addSourceToListForm .fa-times")
+  .forEach((closeAddSourceFormButton) => {
+    closeAddSourceFormButton.addEventListener("click", () => {
+      document.querySelector(".addSourceToListForm").style.display = "none";
+    });
   });
 
 // add sources to lists
@@ -219,19 +239,19 @@ document
   .querySelectorAll(".addSourceToListForm .saveButton")
   .forEach((saveButton) => {
     saveButton.addEventListener("click", async () => {
-      let source_id = document
+      let source_id = saveButton
+        .closest(".upperContainer")
         .querySelector(".upperInnerContainer .sourceName")
         .id.split("#")[1];
       let lists_status = [];
       let initial_lists_status = [];
       let list_ids = [];
-      const input_list =
-        saveButton.parentElement.parentElement.querySelectorAll(
-          ".listContainer input"
-        );
+      const input_list = saveButton
+        .closest(".addSourceToListForm")
+        .querySelectorAll(".listContainer input");
       for (let i = 0, j = input_list.length; i < j; i++) {
         initial_lists_status.push(input_list[i].className);
-        list_ids.push(input_list[i].id.split("#")[1]);
+        list_ids.push(input_list[i].id.split("id_list_")[1]);
       }
       saveButton.parentElement.previousElementSibling
         .querySelectorAll("input")

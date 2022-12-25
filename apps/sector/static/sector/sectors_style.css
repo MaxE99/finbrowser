@@ -106,11 +106,12 @@
   letter-spacing: 0.11rem;
   height: 100%;
   width: 100%;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
 }
 
 .filterBar .searchButton:hover,
 .filterBar .filterButton:hover {
-  background: rgba(0, 85, 212, 0.8);
+  background: #1a73e8 !important;
 }
 
 .searchResultsWrapper {
@@ -133,7 +134,7 @@
   color: var(--primary-fontColor);
 }
 
-.sliderWrapper{
+.sliderWrapper {
   margin-top: 0;
 }
 
