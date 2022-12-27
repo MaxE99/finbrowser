@@ -5,7 +5,7 @@ from django.db.models import Sum
 class SourceManager(models.Manager):
 
     def filter_by_subscription(self, user):
-        return self.filter(subscribers=user).only('favicon_path', 'slug', 'name', 'average_rating')
+        return self.filter(subscribers=user).only('favicon_path', 'slug', 'name', 'average_rating', 'source_id')
 
     def filter_by_search_term(self, search_term):
         return self.filter(name__istartswith=search_term)
