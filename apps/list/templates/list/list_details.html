@@ -232,7 +232,7 @@
     </div>
 </form>
 
-
+{% if list.sources.all.count > 0 %}
 <div class="sliderWrapper">
     <div class="sliderContentContainer">
         <button aria-label="Slide Left" class="handle leftHandle">
@@ -279,6 +279,8 @@
         </button>
     </div>
 </div>
+{% endif %}
+
 {% if latest_articles or highlighted_content or newest_tweets %}
 <div class="contentColumnWrapper">
     {% if latest_articles %}

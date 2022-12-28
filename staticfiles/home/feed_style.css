@@ -14,6 +14,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 40%;
+  max-width: 500px;
 }
 
 .popupContainer .formContainer {
@@ -60,9 +61,10 @@
   padding: 0.6rem 0.75rem;
 }
 
-.popupContainer .formContainer .formSubmitButton {
-  color: white;
-  background: var(--primary-fontColor);
+.popupContainer .formContainer .formSubmitButton,
+.popupContainer .formContainer .closeFormContainerButton {
+  background: white;
+  color: var(--primary-fontColor);
   border: 0.1rem solid #e2e6ea;
   cursor: pointer;
   font-size: 1.85rem;
@@ -71,7 +73,18 @@
   border-radius: 0.45rem;
   padding: 1.36rem 2.72rem;
   width: 100%;
-  margin: 2rem 0;
+  margin: 2rem 0 1rem;
+}
+
+.popupContainer .formContainer .formSubmitButton,
+.popupContainer .formContainer .closeFormContainerButton:hover {
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+  background: var(--primary-fontColor);
+  color: white;
+}
+
+.popupContainer .formContainer .closeFormContainerButton {
+  margin: 0 0 2rem;
 }
 
 .popupContainer .formContainer .formSubmitButton:hover {
