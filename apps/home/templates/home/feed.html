@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_feed_style_v8.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_feed_style_v9.css' %}">
 <title>FinBrowser | Home</title>
 <meta name="description"
     content="FinBrowser curates the best news, analysis, and other stock market-related content from websites like Substack, Twitter, SeekingAlpha and more.">
@@ -14,20 +14,17 @@
 <div class="popupContainer">
     <div class="createListPopup popup">
         <div class="createListMenu formContainer">
-            <div class="formHeaderContainer">Create A New List<i role="button" aria-label="Close Create List Menu"
-                    class="fas fa-times closeFormContainerButton"></i>
-            </div>
+            <div class="formHeaderContainer">Create A New List</div>
             <form enctype="multipart/form-data" method="POST" class="createListForm">
                 {% csrf_token %} {{ add_list_form }}
                 <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+                <button class="closeFormContainerButton">Discard</button>
             </form>
         </div>
     </div>
     <div class="addListsPopup popup">
         <div class="addListsForm formContainer">
-            <div class="formHeaderContainer">Add Lists<i role="button" aria-label="Close Add Lists Menu"
-                    class="fas fa-times closeFormContainerButton"></i>
-            </div>
+            <div class="formHeaderContainer">Add Lists</div>
             <div class="actionWrapper">
                 <input id="textInput" type="text">
                 <div class="searchResultWrapper">
@@ -35,14 +32,13 @@
                     <div class="selectionContainer"></div>
                 </div>
                 <button class="formSubmitButton">Add</button>
+                <button class="closeFormContainerButton">Discard</button>
             </div>
         </div>
     </div>
     <div class="addSourcesPopup popup">
         <div class="addSourcesForm formContainer">
-            <div class="formHeaderContainer">Add Sources<i role="button" aria-label="Close Add Sources Menu"
-                    class="fas fa-times closeFormContainerButton"></i>
-            </div>
+            <div class="formHeaderContainer">Add Source</div>
             <div class="actionWrapper">
                 <input id="textInput" type="text">
                 <div class="searchResultWrapper">
@@ -50,6 +46,7 @@
                     <div class="selectionContainer"></div>
                 </div>
                 <button class="formSubmitButton">Add</button>
+                <button class="closeFormContainerButton">Discard</button>
             </div>
         </div>
     </div>
@@ -65,11 +62,12 @@
         <i class="fas fa-plus"></i>
     </div>
     <div class="tabsContent tabsContentActive" data-tab="0">
+        {% if user_lists.count > 0 %}
         <div class="sliderWrapper">
             <div class="sliderContentContainer">
                 <button aria-label="Slide Left" class="handle leftHandle">
                     <i class="fas fa-chevron-left"></i>
-                </button>
+                </button>  
                 <div class="slider">
                     {% for list in user_lists %}
                     <div class="contentWrapper" id="flul?li#{{ list.list_id }}">
@@ -100,8 +98,10 @@
                 </button>
             </div>
         </div>
+        {% endif %}
     </div>
     <div class="tabsContent" data-tab="1">
+        {% if subscribed_lists.count > 0 %}
         <div class="sliderWrapper">
             <div class="sliderContentContainer">
                 <button aria-label="Slide Left" class="handle leftHandle">
@@ -137,8 +137,10 @@
                 </button>
             </div>
         </div>
+        {% endif %}
     </div>
     <div class="tabsContent" data-tab="2">
+        {% if subscribed_sources.count > 0 %}
         <div class="sliderWrapper">
             <div class="sliderContentContainer">
                 <button aria-label="Slide Left" class="handle leftHandle">
@@ -171,6 +173,7 @@
                 </button>
             </div>
         </div>
+        {% endif %}
     </div>
 
     {% if subscribed_content or highlighted_content or newest_tweets %}
@@ -229,7 +232,7 @@
     </div>
 </div>
 {% endif %}
-<script src="{% static 'home/min_feed_script_v9.js' %}"></script>
+<script src="{% static 'home/min_feed_script_v10.js' %}"></script>
 {% else %}
 
 <main class="main">
