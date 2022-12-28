@@ -9,7 +9,7 @@ class AddListForm(ModelForm):
     class Meta:
         model = List
         fields = ['name', 'list_pic', 'is_public']
-        labels = {'list_pic': 'Picture', 'is_public': 'Make playlist public'}
+        labels = {'list_pic': 'Picture', 'is_public': 'Make list public'}
     
 
 class ListNameChangeForm(ModelForm):

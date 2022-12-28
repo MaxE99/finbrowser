@@ -9,6 +9,7 @@ from apps.mixins import BaseMixin, BaseFormMixins
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.accounts.models import Website
+from apps.source.models import Source
 from apps.home.models import Notification
 
 
@@ -54,6 +55,7 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['subscribed_sources'] = Source.objects.filter_by_subscription(self.request.user)
         context['websites'] = Website.objects.exclude(name="News")
         context['notifications'] = Notification.objects.filter(user=self.request.user).select_related('source', 'stock')
         context['profile_change_form'] = ProfileChangeForm()

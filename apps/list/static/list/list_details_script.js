@@ -38,19 +38,19 @@ subscribeButtons.forEach((subscribeButton) => {
 });
 
 //check if createListMenu at 7nth spot
-function check_interaction_wrapper_at_last_spot(sliderWrapper, closeMenu) {
-  spot = sliderWrapper.querySelectorAll(".contentWrapper").length;
-  items_per_screen = getComputedStyle(
-    sliderWrapper.querySelector(".slider")
-  ).getPropertyValue("--items-per-screen");
-  if (spot % items_per_screen == 0) {
-    if (closeMenu) {
-      sliderWrapper.querySelector(".slider").style.zIndex = "";
-    } else {
-      sliderWrapper.querySelector(".slider").style.zIndex = "1000";
-    }
-  }
-}
+// function check_interaction_wrapper_at_last_spot(sliderWrapper, closeMenu) {
+//   spot = sliderWrapper.querySelectorAll(".contentWrapper").length;
+//   items_per_screen = getComputedStyle(
+//     sliderWrapper.querySelector(".slider")
+//   ).getPropertyValue("--items-per-screen");
+//   if (spot % items_per_screen == 0) {
+//     if (closeMenu) {
+//       sliderWrapper.querySelector(".slider").style.zIndex = "";
+//     } else {
+//       sliderWrapper.querySelector(".slider").style.zIndex = "1000";
+//     }
+//   }
+// }
 
 const editButtons = document.querySelectorAll(".editButton");
 const listName = document.querySelector(".rightFirstRowContainer h3").innerText;
@@ -99,33 +99,35 @@ function openEditMenu(e) {
       }
     });
   });
-  document.querySelectorAll(".sourceDeleteOption").forEach((trashButton) => {
-    if (trashButton.style.display == "none" || !trashButton.style.display) {
-      trashButton.style.display = "block";
-      trashButton.addEventListener("click", async () => {
-        try {
-          const list_id = upperContainer
-            .querySelector(".rightFirstRowContainer h3")
-            .id.split("#")[1];
-          const source_id = trashButton.id.split("#")[1];
-          const res = await fetch(
-            `../../api/lists/${list_id}/delete_source_from_list/${source_id}/`,
-            get_fetch_settings("DELETE")
-          );
-          if (!res.ok) {
-            showMessage("Error: Network request failed unexpectedly!", "Error");
-          } else {
-            const context = await res.json();
-            showMessage(context, "Remove");
-            trashButton.parentElement.parentElement.remove();
-          }
-        } catch (e) {
-          // showMessage("Error: Unexpected error has occurred!", "Error");
-        }
-      });
-    }
-  });
 }
+
+document
+  .querySelectorAll(".sliderWrapper .slider .removeFromListButton")
+  .forEach((deleteButton) => {
+    deleteButton.addEventListener("click", async () => {
+      try {
+        const list_id = document
+          .querySelector(".upperContainer .rightFirstRowContainer h3")
+          .id.split("#")[1];
+        const source_id = deleteButton
+          .closest(".contentWrapper")
+          .id.split("#")[1];
+        const res = await fetch(
+          `../../api/lists/${list_id}/delete_source_from_list/${source_id}/`,
+          get_fetch_settings("DELETE")
+        );
+        if (!res.ok) {
+          showMessage("Error: Network request failed unexpectedly!", "Error");
+        } else {
+          const context = await res.json();
+          showMessage(context, "Remove");
+          deleteButton.closest(".contentWrapper").remove();
+        }
+      } catch (e) {
+        // showMessage("Error: Unexpected error has occurred!", "Error");
+      }
+    });
+  });
 
 editButtons.forEach((editButton) => {
   if (editButton) {

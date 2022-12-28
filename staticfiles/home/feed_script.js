@@ -1,83 +1,80 @@
-//check if createListMenu at 7nth spot
-function check_interaction_wrapper_at_last_spot(sliderWrapper, closeMenu) {
-  spot = sliderWrapper.querySelectorAll(".contentWrapper").length;
-  items_per_screen = getComputedStyle(
-    sliderWrapper.querySelector(".slider")
-  ).getPropertyValue("--items-per-screen");
-  if (spot % items_per_screen == 0) {
-    if (closeMenu) {
-      sliderWrapper.querySelector(".slider").style.zIndex = "";
-    } else {
-      sliderWrapper.querySelector(".slider").style.zIndex = "500";
-    }
-  }
-}
+// subscribed lists
 
-// Open create list menu in slider
-document
-  .querySelector(".sliderWrapper .interactionWrapper .createListButton")
-  .addEventListener("click", () => {
-    if (check_device_width_below(500)) {
-      document.querySelector(".smartphoneCreateListMenu").style.display =
-        "flex";
-    } else if (check_device_width_below(1000)) {
-      const tabletCreateListMenu = document.querySelector(
-        ".tabletCreateListMenu"
-      );
-      tabletCreateListMenu.style.display = "flex";
-      tabletCreateListMenu.style.marginTop =
-        document.querySelector(".contentWrapper").clientHeight * -1 + "px";
-    } else {
-      document.querySelector(
-        ".interactionWrapper .createListMenu"
-      ).style.display = "flex";
-      check_interaction_wrapper_at_last_spot(
-        document.querySelectorAll(".sliderWrapper")[0],
-        false
-      );
-    }
-  });
-
-// Close menus
-document
-  .querySelector(".interactionWrapper .closeFormContainerButton")
-  .addEventListener("click", () => {
-    document.querySelector(
-      ".interactionWrapper .createListMenu"
-    ).style.display = "none";
-    check_interaction_wrapper_at_last_spot(
-      document.querySelectorAll(".sliderWrapper")[0],
-      true
-    );
-  });
-
-//open add sources menu
-if (document.querySelector(".addSourcesButton")) {
-  document.querySelector(".addSourcesButton").addEventListener("click", () => {
-    document.querySelector(
-      ".interactionWrapper .addSourcesForm"
-    ).style.display = "flex";
-    check_interaction_wrapper_at_last_spot(
-      document.querySelectorAll(".sliderWrapper")[2],
-      false
-    );
-  });
-}
-
-//close add sources menu
-document
-  .querySelectorAll(".addSourcesForm .closeFormContainerButton")
-  .forEach((element) => {
-    element.addEventListener("click", () => {
-      element.parentElement.parentElement.parentElement.querySelector(
-        ".addSourcesForm"
-      ).style.display = "none";
-      check_interaction_wrapper_at_last_spot(
-        document.querySelectorAll(".sliderWrapper")[2],
-        true
-      );
+document.querySelectorAll(".listSubscribeButton").forEach((subscribeButton) => {
+  if (subscribeButton) {
+    subscribeButton.addEventListener("click", async () => {
+      if (!subscribeButton.classList.contains("registrationLink")) {
+        try {
+          const list_id = subscribeButton
+            .closest(".contentWrapper")
+            .id.split("#")[1];
+          let action = subscribeButton.innerText;
+          const res = await fetch(
+            `../../api/lists/${list_id}/list_change_subscribtion_status/`,
+            get_fetch_settings("POST")
+          );
+          if (!res.ok) {
+            showMessage("Error: Network request failed unexpectedly!", "Error");
+          } else {
+            const context = await res.json();
+            console.log(action);
+            if (action == "Subscribe") {
+              subscribeButton.classList.add("listSubscribed");
+              subscribeButton.innerText = "Subscribed";
+              showMessage(context, "Success");
+            } else {
+              subscribeButton.classList.remove("listSubscribed");
+              subscribeButton.innerText = "Subscribe";
+              showMessage(context, "Remove");
+            }
+          }
+        } catch (e) {
+          // showMessage("Error: Unexpected error has occurred!", "Error");
+        }
+      }
     });
+  }
+});
+
+// list delete
+
+document.querySelectorAll(".listDeleteButton").forEach((listDeleteButton) => {
+  listDeleteButton.addEventListener("click", async () => {
+    try {
+      const list_id = listDeleteButton
+        .closest(".contentWrapper")
+        .id.split("#")[1];
+      const res = await fetch(
+        `../../api/lists/${list_id}/`,
+        get_fetch_settings("DELETE")
+      );
+      if (!res.ok) {
+        showMessage("Error: Network request failed unexpectedly!", "Error");
+      } else {
+        const context = await res.json();
+        listDeleteButton.closest(".contentWrapper").remove();
+        showMessage(context, "Remove");
+      }
+    } catch (e) {
+      // showMessage("Error: Unexpected error has occurred!", "Error");
+    }
   });
+});
+
+//change tabs
+const feedTabs = document.querySelectorAll(".feedTabsContainer button");
+const tabsContent = document.querySelectorAll(".tabsContent");
+
+feedTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    for (let i = 0, j = feedTabs.length; i < j; i++) {
+      feedTabs[i].classList.remove("activatedTab");
+      tabsContent[i].classList.remove("tabsContentActive");
+    }
+    feedTabs[tab.dataset.forTab].classList.add("activatedTab");
+    tabsContent[tab.dataset.forTab].classList.add("tabsContentActive");
+  });
+});
 
 // add Sources Search
 let selected_sources = [];
@@ -115,7 +112,7 @@ document.querySelectorAll(".addSourcesForm #textInput").forEach((element) => {
                 resultImage.src = `https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}`;
                 const sourceName = document.createElement("span");
                 sourceName.innerText = source.name;
-                sourceName.id = `source_id_${source.source_id}`;
+                sourceName.id = `fass?si#${source.source_id}`;
                 searchResult.append(resultImage, sourceName);
                 results_list.appendChild(searchResult);
                 searchResult.addEventListener(
@@ -134,9 +131,10 @@ document.querySelectorAll(".addSourcesForm #textInput").forEach((element) => {
                       selected_sources = selected_sources.filter(function (e) {
                         return (
                           e.toString() !==
-                          removeSourceButton.previousElementSibling.id.split(
-                            "#"
-                          )[1]
+                          removeSourceButton
+                            .closest(".searchResult")
+                            .querySelector("span")
+                            .id.split("#")[1]
                         );
                       });
                     });
@@ -188,35 +186,6 @@ document
     });
   });
 
-// add list Search
-
-//open add lists menu
-if (document.querySelector(".addListsButton")) {
-  document.querySelector(".addListsButton").addEventListener("click", () => {
-    document.querySelector(".interactionWrapper .addListsForm").style.display =
-      "flex";
-    check_interaction_wrapper_at_last_spot(
-      document.querySelectorAll(".sliderWrapper")[1],
-      false
-    );
-  });
-}
-
-//close add lists menu
-document
-  .querySelectorAll(".addListsForm .closeFormContainerButton")
-  .forEach((element) => {
-    element.addEventListener("click", () => {
-      element.parentElement.parentElement.parentElement.querySelector(
-        ".addListsForm"
-      ).style.display = "none";
-      check_interaction_wrapper_at_last_spot(
-        document.querySelectorAll(".sliderWrapper")[1],
-        true
-      );
-    });
-  });
-
 // add lists
 let selected_lists = [];
 document.querySelectorAll(".addListsForm #textInput").forEach((element) => {
@@ -258,7 +227,7 @@ document.querySelectorAll(".addListsForm #textInput").forEach((element) => {
                 }
                 const listName = document.createElement("span");
                 listName.innerText = list.name;
-                listName.id = `list_${list.list_id}`;
+                listName.id = `flls?li#${list.list_id}`;
                 searchResult.append(resultImage, listName);
                 results_list.appendChild(searchResult);
                 searchResult.addEventListener(
@@ -276,9 +245,10 @@ document.querySelectorAll(".addListsForm #textInput").forEach((element) => {
                       selected_lists = selected_lists.filter(function (e) {
                         return (
                           e.toString() !==
-                          removeListButton.previousElementSibling.id.split(
-                            "#"
-                          )[1]
+                          removeListButton
+                            .closest(".searchResult")
+                            .querySelector("span")
+                            .id.split("#")[1]
                         );
                       });
                       removeListButton.parentElement.remove();
@@ -330,3 +300,45 @@ document.querySelectorAll(".addListsForm button").forEach((element) => {
     }
   });
 });
+
+document
+  .querySelector(".feedTabsContainer .fa-plus")
+  .addEventListener("click", () => {
+    const activatedTab = document.querySelector(".activatedTab").innerText;
+    if (activatedTab === "Your Lists") {
+      document.querySelector(
+        ".popupContainer .createListPopup .formContainer"
+      ).style.display = "flex";
+    } else if (activatedTab === "Subscribed Lists") {
+      document.querySelector(
+        ".popupContainer .addListsPopup .formContainer"
+      ).style.display = "flex";
+    } else if (activatedTab === "Subscribed Sources") {
+      document.querySelector(
+        ".popupContainer .addSourcesPopup .formContainer"
+      ).style.display = "flex";
+    }
+    document.querySelector(".classicMain").style.opacity = "0.1";
+    document.querySelector(".popupContainer").style.display = "block";
+  });
+
+document
+  .querySelectorAll(".popupContainer .formHeaderContainer .fa-times")
+  .forEach((closeButton) => {
+    closeButton.addEventListener("click", () => {
+      document.querySelector(".classicMain").style.opacity = "1";
+      document.querySelector(".popupContainer").style.display = "none";
+      closeButton
+        .closest(".popup")
+        .querySelector(".formContainer").style.display = "none";
+    });
+  });
+
+document
+  .querySelectorAll(".slider .contentWrapper .infoButton")
+  .forEach((infoButton) => {
+    infoButton.addEventListener("click", () => {
+      document.querySelector(".popupContainer .listInfoPopup").style.display =
+        "flex";
+    });
+  });

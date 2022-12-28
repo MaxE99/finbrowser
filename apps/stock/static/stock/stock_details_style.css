@@ -41,6 +41,19 @@
   max-width: 75%;
 }
 
+.sliderHeader {
+  margin-bottom: 2rem;
+  position: relative;
+  text-align: center;
+  padding: 0.75rem 0;
+  font-size: 2rem;
+  color: white;
+  border: 0.3rem solid white;
+  width: 100%;
+  background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
+}
+
 .sliderWrapper {
   margin-top: 0;
 }

@@ -1,12 +1,13 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v7.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v8.css' %}">
 <title>FinBrowser | Settings</title>
 {% endblock %}
 
 {% block content %}
 
+<div class="settingsHeader">Settings</div>
 <div class="settingSidebar" role="navigation" aria-label="Settings Menu">
     <div class="settingOption activeSettingOption" data-for-tab="0">Profile</div>
     <div class="settingOption" data-for-tab="1">Password</div>
@@ -56,32 +57,46 @@
             <input name="changePasswordForm" type="submit" class="passwordChangeSubmit" value="Save" />
         </form>
     </div>
-    <div class="tabsContent" data-tab="2">
+    <div class="tabsContent notificationTab" data-tab="2">
         {% if notifications %}
-        <div class="sliderHeader">
-            <div class="sliderHeaderTitle">Source Notifications</div>
-        </div>
+        <h2>Source Notifications</h2>
         <div class="notificationContainer">
-            {% for notification in notifications %}
-            {% if notification.source %}
-            <div class="sourceContainer">
-                <div class="iconContainer">
-                    <i class="fas fa-times" id="soni#{{ notification.notification_id }}" role="button"
-                        aria-label="Delete Notification"></i>
-                    <img class="sourcePic" src="{% static notification.source.favicon_path %}" alt="Source Picture">
-                </div>
-                <a aria-label="Open Profile Of {{ notification.source.name }}" class="sourceLink"
-                    href="{{ notification.source.get_absolute_url }}"></a>
-                <div class="sourceNameOuterContainer">
-                    <div class="sourceNameInnerContainer">{{ notification.source.name }}</div>
+            <div class="sliderWrapper">
+                <div class="sliderContentContainer">
+                    <button aria-label="Slide Left" class="handle leftHandle">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="slider">
+                        {% for notification in notifications %}
+                        {% if notification.source %}
+                        <div class="contentWrapper" id="fsss?si#{{ notification.source.source_id }}">
+                            <img src="{% static notification.source.favicon_path %}" alt="Source Picture" />
+                            <div class="contentRatingContainer">
+                                <i class="fa fa-star"></i>
+                                <span>{{ notification.source.average_rating }}</span>
+                            </div>
+                            <div class="nameContainer">
+                                <span>{{notification.source.name}}</span>
+                            </div>
+                            {% if notification.source in subscribed_sources %}
+                            <button class="subscribeButton subscribed">Subscribed</button>
+                            {% else %}
+                            <button class="subscribeButton">Subscribe</button>
+                            {% endif %}
+                            <button class="notificationButton notificationActivated">Notification Off</button>
+                            <a class="contentLink" href="{{ notification.source.get_absolute_url }}"
+                                aria-label="Open Profile Of {{ notification.source.name }}"></a>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <button aria-label="Slide right" class="handle rightHandle">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
-            {% endif %}
-            {% endfor %}
         </div>
-        <div class="sliderHeader">
-            <div class="sliderHeaderTitle">Stock Notifications</div>
-        </div>
+        <h2>Stock Notifications</h2>
         <div class="notificationContainer">
             {% for notification in notifications %}
             {% if notification.stock %}
@@ -95,9 +110,7 @@
             {% endif %}
             {% endfor %}
         </div>
-        <div class="sliderHeader">
-            <div class="sliderHeaderTitle">Keyword Notifications</div>
-        </div>
+        <h2>Keyword Notifications</h2>
         <div class="notificationContainer">
             {% for notification in notifications %}
             {% if notification.keyword %}

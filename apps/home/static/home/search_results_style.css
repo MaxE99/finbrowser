@@ -12,6 +12,8 @@
 
 .mainContent .mainInputSearch {
   width: 100%;
+  font-size: 1.8rem;
+  padding: 2.5rem 3rem 2.5rem 1.5rem;
 }
 
 .mainContent #autocomplete_list_results {
@@ -30,29 +32,44 @@
 }
 
 .searchCategories {
+  width: 50%;
+  white-space: nowrap;
+  overflow: auto;
+  border-bottom: 0.3rem solid rgb(226, 230, 234);
+  -ms-overflow-style: none;
   display: flex;
-  justify-content: space-around;
-  width: 25%;
-  margin: 0 auto;
-  font-size: 2rem;
+  scrollbar-width: none;
+  margin: 2rem auto 0;
+}
+
+.searchCategories::-webkit-scrollbar {
+  display: none;
+}
+
+.searchCategories .searchCategoryTab {
+  background: none;
+  border: none;
+  font-size: 2.2rem;
   cursor: pointer;
+  padding-right: 4rem;
+  margin-bottom: 1.5rem;
 }
 
 .searchCategoryTabActive,
 .searchCategoryTab:hover {
   text-decoration-line: underline;
-  text-underline-offset: 0.7rem;
-  text-decoration-thickness: 0.3rem;
+  text-underline-offset: 1.6rem;
+  text-decoration-thickness: 0.4rem;
   text-decoration-color: var(--primary-fontColor);
 }
 
 .tabsContent {
   display: none;
-  margin-top: 2rem;
 }
 
 .tabsContentActive {
   display: block;
+  margin-top: 2rem;
 }
 
 .articlesWrapper {
@@ -144,7 +161,7 @@
   width: 85%;
 }
 
-.stocksWrapper .stockContainer a{
+.stocksWrapper .stockContainer a {
   position: absolute;
   top: 0;
   left: 0;
