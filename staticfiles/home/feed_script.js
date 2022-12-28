@@ -275,32 +275,38 @@ document.querySelectorAll(".addListsForm #textInput").forEach((element) => {
 });
 
 // add/confirm lists
-document.querySelectorAll(".addListsForm button").forEach((element) => {
-  element.addEventListener("click", async () => {
-    if (selected_lists.length) {
-      for (let i = 0, j = selected_lists.length; i < j; i++) {
-        try {
-          const res = await fetch(
-            `../../api/lists/${selected_lists[i]}/list_change_subscribtion_status/`,
-            get_fetch_settings("POST")
-          );
-          if (!res.ok) {
-            showMessage("Error: Network request failed unexpectedly!", "Error");
-          } else {
-            const context = await res.json();
-            showMessage(context, "Success");
-            window.location.reload();
+document
+  .querySelectorAll(".addListsForm .formSubmitButton")
+  .forEach((element) => {
+    element.addEventListener("click", async () => {
+      if (selected_lists.length) {
+        for (let i = 0, j = selected_lists.length; i < j; i++) {
+          try {
+            const res = await fetch(
+              `../../api/lists/${selected_lists[i]}/list_change_subscribtion_status/`,
+              get_fetch_settings("POST")
+            );
+            if (!res.ok) {
+              showMessage(
+                "Error: Network request failed unexpectedly!",
+                "Error"
+              );
+            } else {
+              const context = await res.json();
+              showMessage(context, "Success");
+              window.location.reload();
+            }
+          } catch (e) {
+            // showMessage("Error: Unexpected error has occurred!", "Error");
           }
-        } catch (e) {
-          // showMessage("Error: Unexpected error has occurred!", "Error");
         }
+      } else {
+        showMessage("You need to select lists!", "Error");
       }
-    } else {
-      showMessage("You need to select lists!", "Error");
-    }
+    });
   });
-});
 
+// open popup
 document
   .querySelector(".feedTabsContainer .fa-plus")
   .addEventListener("click", () => {
@@ -322,8 +328,9 @@ document
     document.querySelector(".popupContainer").style.display = "block";
   });
 
+// close popups
 document
-  .querySelectorAll(".popupContainer .formHeaderContainer .fa-times")
+  .querySelectorAll(".popupContainer .formContainer .closeFormContainerButton")
   .forEach((closeButton) => {
     closeButton.addEventListener("click", () => {
       document.querySelector(".classicMain").style.opacity = "1";
@@ -331,14 +338,5 @@ document
       closeButton
         .closest(".popup")
         .querySelector(".formContainer").style.display = "none";
-    });
-  });
-
-document
-  .querySelectorAll(".slider .contentWrapper .infoButton")
-  .forEach((infoButton) => {
-    infoButton.addEventListener("click", () => {
-      document.querySelector(".popupContainer .listInfoPopup").style.display =
-        "flex";
     });
   });
