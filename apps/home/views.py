@@ -11,7 +11,7 @@ from apps.source.models import Source
 from apps.list.models import List 
 from apps.article.models import Article, HighlightedArticle
 from apps.stock.models import Stock
-from apps.home.models import NotificationMessage
+from apps.home.models import NotificationMessage, Notification
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 User = get_user_model()
@@ -39,6 +39,7 @@ class FeedView(TemplateView, BaseMixin):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated: 
             subscribed_sources = Source.objects.filter_by_subscription(self.request.user)
+            context['notification_sources'] = Notification.objects.filter(user=self.request.user).exclude(source=None).values_list('source', flat=True)
             context['subscribed_lists'] = List.objects.get_subscribed_lists_by_user(self.request.user)
             context['subscribed_sources'] = subscribed_sources
             context['subscribed_content'] = paginator_create(self.request, Article.objects.filter_by_subscription_and_website(subscribed_sources, website_inclusive=False), 50, 'long_form_content')
@@ -53,6 +54,9 @@ class SearchResultView(TemplateView, BaseMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         search_term = kwargs['search_term']
+        if self.request.user.is_authenticated: 
+            context['subscribed_sources'] = Source.objects.filter_by_subscription(self.request.user)
+            context['notification_sources'] = Notification.objects.filter(user=self.request.user).exclude(source=None).values_list('source', flat=True)
         context['filtered_stocks'] = paginator_create(self.request, Stock.objects.filter_by_search_term(search_term), 50, 'stocks')
         context['filtered_sources'] = Source.objects.filter_by_search_term(search_term)
         filtered_content = Article.objects.filter_by_search_term(search_term)

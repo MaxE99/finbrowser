@@ -345,6 +345,42 @@
   width: 100%;
 }
 
+.sliderHeader {
+  margin: 2rem 0;
+  position: relative;
+  text-align: center;
+  padding: 0.75rem 0;
+  font-size: 2rem;
+  color: white;
+  border: 0.3rem solid white;
+  width: 100%;
+  background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
+}
+
+.sliderWrapper .sliderContentContainer .listSubscribed {
+  color: white;
+  background: var(--primary-fontColor);
+  margin-bottom: 1rem !important;
+}
+
+.sliderWrapper .sliderContentContainer .listSubscribed:hover {
+  color: var(--primary-fontColor);
+  background: white;
+}
+
+.sliderWrapper .sliderContentContainer .infoContainer {
+  font-size: 1.6rem;
+  text-decoration: none;
+  padding: 1.485rem 0.5rem;
+  margin: 1rem 1rem;
+  white-space: nowrap;
+  border: 0.1rem solid #e2e6ea;
+  border-radius: 0.45rem;
+  text-align: center;
+  overflow: hidden;
+}
+
 @media (max-width: 1000px) {
   .leftInnerContainer {
     width: unset;

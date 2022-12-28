@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v5.css' %}">
 <title>{{ search_term }} - Search Results | FinBrowser</title>
 {% endblock %}
 {% block content %}
@@ -113,7 +113,48 @@
     </div>
     <div class="tabsContent" data-tab="2">
         {% if filtered_sources %}
-        {% create_source_container "Sources - Search Results" filtered_sources %}
+        <div class="sliderWrapper">
+            <div class="sliderContentContainer">
+                <button aria-label="Slide Left" class="handle leftHandle">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="slider">
+                    {% for source in filtered_sources  %}
+                    <div class="contentWrapper" id="fsss?si#{{ source.source_id }}">
+                        <img src="{% static source.favicon_path %}" alt="Source Picture" />
+                        <div class="contentRatingContainer">
+                            <i class="fa fa-star"></i>
+                            <span>{{ source.average_rating }}</span>
+                        </div>
+                        <div class="nameContainer">
+                            <span>{{source.name}}</span>
+                        </div>
+                        {% if request.user.is_authenticated %}
+                        {% if source in subscribed_sources %}
+                        <button class="subscribeButton subscribed">Subscribed</button>
+                        {% else %}
+                        <button class="subscribeButton">Subscribe</button>
+                        {% endif %}
+                        {% if source.source_id in notification_sources %}
+                        <button class="notificationButton notificationActivated">Notification Off</button>
+                        {% else %}
+                        <button class="notificationButton">Notification On</button>
+                        {% endif %}
+                        {% else %}
+                        <a class="loginRedirectButton" aria-label="Login to subscribe" href="{% url 'account_login' %}">Subscribe</a>
+                        <a class="loginRedirectButton" aria-label="Login to turn on notifications" href="{% url 'account_login' %}">Notification
+                            On</a>
+                        {% endif %}
+                        <a class="contentLink" href="{{ source.get_absolute_url }}"
+                            aria-label="Open Profile Of {{ source.name }}"></a>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button aria-label="Slide right" class="handle rightHandle">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
         {% endif %}
     </div>
 </div>

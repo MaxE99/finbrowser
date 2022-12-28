@@ -1,13 +1,33 @@
 .overlay {
-  display: flex;
-  justify-content: space-between;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.settingsHeader {
+  margin: 2rem 0;
+  position: relative;
+  text-align: center;
+  padding: 0.75rem 0;
+  font-size: 2rem;
+  color: white;
+  border: 0.3rem solid white;
+  width: 100%;
+  background: var(--primary-fontColor);
+  box-shadow: var(--box-shadowScheme);
 }
 
 .settingSidebar {
   display: flex;
-  flex-direction: column;
-  width: 15%;
-  margin-top: 2rem;
+  white-space: nowrap;
+  overflow: auto;
+  border-bottom: 0.3rem solid rgb(226, 230, 234);
+  margin: 2rem 1rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.settingSidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .settingSidebar h3 {
@@ -17,20 +37,24 @@
 }
 
 .settingSidebar div {
-  padding: 1rem 0 1rem 1rem;
-  font-size: 2rem;
+  background: none;
+  border: none;
+  font-size: 2.2rem;
   cursor: pointer;
-  margin-left: 2rem;
+  padding-right: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.settingSidebar div:last-of-type {
+  padding-right: 0;
 }
 
 .settingSidebar div:hover,
 .activeSettingOption {
-  background: var(--primary-fontColor);
-  color: white;
-}
-
-.contentSection {
-  width: 75%;
+  text-decoration-line: underline;
+  text-underline-offset: 1.6rem;
+  text-decoration-thickness: 0.4rem;
+  text-decoration-color: var(--primary-fontColor);
 }
 
 .tabsContent {
@@ -43,13 +67,12 @@
 
 h2 {
   font-size: 2.5rem;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
 }
 
 .editSection {
   display: flex;
   flex-direction: column;
-  width: 75%;
 }
 
 .usernameAndEmailContainer {
@@ -188,11 +211,6 @@ h2 {
   flex-direction: column;
 }
 
-.changePasswordForm input,
-.privacySettingsChangeSubmit input {
-  width: 50%;
-}
-
 .sliderHeader:first-of-type {
   margin-top: 2rem;
 }
@@ -204,7 +222,6 @@ h2 {
 .notificationContainer {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
 }
 
 .iconContainer .fa-times {
@@ -259,10 +276,6 @@ h2 {
   text-align: center;
 }
 
-.changePrivacySettingsForm {
-  width: 40%;
-}
-
 .privacySettingsContainer {
   display: flex;
   align-items: center;
@@ -285,46 +298,69 @@ h2 {
   width: 100%;
 }
 
-@media (max-width: 850px) {
-  .settingSidebar {
-    width: 20%;
-  }
+.sliderWrapper {
+  width: 100%;
+}
 
-  .settingSidebar div {
-    margin-left: 0;
-  }
+.sliderWrapper .sliderContentContainer .slider {
+  --items-per-screen: 4;
+}
 
-  .editSection {
+.notificationTab h2 {
+  margin: 2rem 0rem 1rem;
+}
+
+.notificationTab h2:first-of-type {
+  margin-bottom: 2rem;
+}
+
+.notificationTab h2:last-of-type {
+  margin-top: 4rem;
+}
+
+@media (max-width: 1200px) {
+  .overlay {
+    width: 90%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .overlay {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .sliderWrapper .sliderContentContainer .slider {
+    --items-per-screen: 3;
+  }
+}
+
+@media (max-width: 650px) {
+  .sliderWrapper .sliderContentContainer .slider {
+    --items-per-screen: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .usernameAndEmailContainer {
+    flex-direction: column;
+  }
+  .usernameAndEmailContainer .usernameContainer,
+  .usernameAndEmailContainer .emailContainer {
     width: 100%;
   }
 }
 
 @media (max-width: 500px) {
   .overlay {
-    flex-direction: column;
+    width: 95%;
+    margin: 0 2.5%;
   }
+}
 
-  .settingSidebar,
-  .contentSection {
-    width: 100%;
-  }
-
-  .profilePicContainer {
-    width: 100%;
-  }
-
-  #id_old_password,
-  #id_new_password1,
-  #id_new_password2,
-  .changePasswordForm input {
-    width: 100%;
-  }
-
-  .notificationContainer {
-    justify-content: center;
-  }
-
-  .changePrivacySettingsForm {
-    width: 100%;
+@media (max-width: 450px) {
+  .sliderWrapper .sliderContentContainer .slider {
+    --items-per-screen: 1;
   }
 }

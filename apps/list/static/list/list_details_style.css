@@ -1,6 +1,6 @@
 .upperContainer {
   display: flex;
-  margin-top: 2rem;
+  margin: 2rem 0;
 }
 
 .leftInnerContainer {
@@ -418,20 +418,6 @@
   width: 90% !important;
 }
 
-.contentWrapper .sourceDeleteOption {
-  display: none;
-  position: absolute;
-  color: white;
-  background: red;
-  padding: 1rem;
-  font-size: 2rem;
-  top: 0;
-  right: 0;
-  cursor: pointer;
-  box-shadow: var(--box-shadowScheme);
-  z-index: 25;
-}
-
 .smallScreenUpperContainer {
   display: none;
   flex-direction: column;
@@ -462,6 +448,12 @@
 
 .smallScreenUpperContainer .ratingsWrapper {
   margin: 2rem auto 0;
+}
+
+.sliderWrapper .slider .removeFromListButton,
+.sliderWrapper .slider .removeFromListButton:hover {
+  background: red;
+  color: white;
 }
 
 @media (max-width: 1000px) {

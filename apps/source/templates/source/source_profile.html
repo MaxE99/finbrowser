@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'source/min_source_profile_style_v4.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'source/min_source_profile_style_v5.css' %}" />
 <title>{{ source.name }} Profile | FinBrowser</title>
 <meta name="description" content="Discover the latest content from {{ source.name }}">
 {% endblock %} {% block content %}
@@ -329,7 +329,39 @@
 {% endif %}
 
 {% if lists %}
-{% create_list_slider_container "Lists" lists %}
+<div class="sliderHeader">Lists with {{ source.name }}</div>
+<div class="sliderWrapper">
+  <div class="sliderContentContainer">
+    <button aria-label="Slide Left" class="handle leftHandle">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <div class="slider">
+      {% for list in lists %}
+      <div class="contentWrapper" id="flsl?li#{{ list.list_id }}">
+        {% if list.list_pic %}
+        <img src="{{ list.list_pic.url }}" alt="List Picture" />
+        {% else %}
+        <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="List Picture Placeholder" />
+        {% endif %}
+        <div class="contentRatingContainer">
+          <i class="fa fa-star"></i>
+          <span>{{list.average_rating}}</span>
+        </div>
+        <div class="nameContainer">
+          <span>{{list.name}}</span>
+        </div>
+        <div class="infoContainer">
+          {{ list.articles.all|length }} Articles | {{ list.sources.all|length }} Sources
+        </div>
+        <a aria-label="Open List - {{ list.name }}" class="contentLink" href="{{ list.get_absolute_url }}"></a>
+      </div>
+      {% endfor %}
+    </div>
+    <button aria-label="Slide right" class="handle rightHandle">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div>
 {% endif %}
 
 {{ user_rating|json_script:"user-rating" }}
