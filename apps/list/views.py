@@ -13,6 +13,8 @@ from apps.list.forms import ListNameChangeForm, ListPicChangeForm
 from apps.list.models import List, ListRating
 from apps.article.models import Article
 from apps.accounts.models import Profile
+from apps.source.models import Source
+from apps.home.models import Notification
 from apps.base_logger import logger
 from apps.logic.pure_logic import lists_filter
 
@@ -95,6 +97,8 @@ class ListDetailView(TemplateView, BaseMixin):
         if self.request.user.is_authenticated:
             subscribed = True if self.request.user in list.subscribers.all() else False
             user_rating = ListRating.objects.get_user_rating(self.request.user, list_id)
+            context['subscribed_sources'] = Source.objects.filter_by_subscription(self.request.user)
+            context['notification_sources'] = Notification.objects.filter(user=self.request.user).exclude(source=None).values_list('source', flat=True)
         else:
             user_rating, subscribed = None, False
         context['list'] = list

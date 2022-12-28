@@ -1,6 +1,215 @@
+.popupContainer {
+  display: none;
+  z-index: 999;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.popupContainer .createListPopup,
+.popupContainer .addListsPopup,
+.popupContainer .addSourcesPopup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+}
+
+.popupContainer .formContainer {
+  min-width: unset;
+}
+
+.popupContainer .formContainer .formHeaderContainer {
+  position: relative;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 2rem;
+  color: white;
+  border: 0.3rem solid white;
+  width: 100%;
+  background: var(--primary-fontColor);
+  display: flex;
+  align-items: center;
+  height: unset;
+  margin-bottom: unset;
+  border-radius: 0.45rem 0.45rem 0 0;
+}
+
+.popupContainer .formContainer .searchResultWrapper {
+  overflow-y: auto;
+  height: 40rem;
+}
+
+.popupContainer .formContainer .searchResultWrapper #searchResultsContainer,
+.popupContainer .formContainer .searchResultWrapper .selectionContainer {
+  font-size: 1.8rem;
+}
+
+.popupContainer
+  .formContainer
+  .searchResultWrapper
+  .selectionContainer
+  .fa-trash {
+  position: absolute;
+  right: 0.6rem;
+  color: white;
+  background: red;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0.6rem 0.75rem;
+}
+
+.popupContainer .formContainer .formSubmitButton {
+  color: white;
+  background: var(--primary-fontColor);
+  border: 0.1rem solid #e2e6ea;
+  cursor: pointer;
+  font-size: 1.85rem;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+  text-decoration: none;
+  border-radius: 0.45rem;
+  padding: 1.36rem 2.72rem;
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.popupContainer .formContainer .formSubmitButton:hover {
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+  background: #1a73e8;
+}
+
+.popupContainer .formContainer .actionWrapper,
+.popupContainer .formContainer form {
+  width: 95%;
+}
+
+.popupContainer .formContainer .actionWrapper #textInput,
+.popupContainer .formContainer form input {
+  width: 100%;
+  font-size: 1.8rem;
+  padding: 1rem 3rem 1rem 1.5rem;
+  margin: 2rem auto;
+  border-radius: 0.45rem;
+  border: 0.1rem solid rgb(226, 230, 234);
+}
+
+.popupContainer .formContainer form input {
+  margin: 0;
+}
+
+.popupContainer .formContainer form label {
+  margin: 1rem 0;
+  font-size: 2rem;
+}
+
+.popupContainer .formContainer form #id_is_public {
+  width: 2.3rem;
+  height: 2.3rem;
+  margin-top: -3.1rem;
+  margin-left: 15.5rem;
+}
+
+.popupContainer .formContainer .formHeaderContainer .closeFormContainerButton {
+  padding: 1rem;
+  font-size: 2.4rem;
+  right: -0.1rem;
+}
+
 .classicMain {
   max-width: 160rem;
   margin: 0 auto 1rem;
+}
+
+.feedTabsContainer {
+  position: relative;
+  display: flex;
+  align-items: self-start;
+  width: calc(100% - 2rem);
+  white-space: nowrap;
+  overflow: auto;
+  border-bottom: 0.3rem solid rgb(226, 230, 234);
+  margin: 2rem 1rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.feedTabsContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.feedTabsContainer button {
+  background: none;
+  border: none;
+  font-size: 2.2rem;
+  cursor: pointer;
+  padding-right: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.feedTabsContainer .activatedTab,
+.feedTabsContainer button:hover {
+  text-decoration-line: underline;
+  text-underline-offset: 1.6rem;
+  text-decoration-thickness: 0.4rem;
+  text-decoration-color: var(--primary-fontColor);
+}
+
+.feedTabsContainer .fa-plus {
+  margin-left: auto;
+  background: var(--primary-fontColor);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  font-size: 2.2rem;
+  padding: 0.55rem 0.8rem;
+}
+
+.feedTabsContainer .fa-plus:hover {
+  background: #1a73e8 !important;
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+}
+
+.tabsContent {
+  display: none;
+}
+
+.tabsContentActive {
+  display: block;
+}
+
+.sliderWrapper .sliderContentContainer .listSubscribed {
+  color: white;
+  background: var(--primary-fontColor);
+  margin-bottom: 1rem !important;
+}
+
+.sliderWrapper .sliderContentContainer .listSubscribed:hover {
+  color: var(--primary-fontColor);
+  background: white;
+}
+
+.sliderWrapper .sliderContentContainer .listDeleteButton {
+  background: red;
+  color: white;
+  margin-bottom: 1rem !important;
+}
+
+.sliderWrapper .sliderContentContainer .listDeleteButton:hover {
+  background: red;
+  color: white;
+}
+
+.sliderWrapper .sliderContentContainer .infoContainer {
+  font-size: 1.6rem;
+  text-decoration: none;
+  padding: 1.485rem 0.5rem;
+  margin: 1rem 1rem 0;
+  white-space: nowrap;
+  border: 0.1rem solid #e2e6ea;
+  border-radius: 0.45rem;
+  text-align: center;
+  overflow: hidden;
 }
 
 .interactionWrapper {
@@ -49,7 +258,7 @@
   right: 9rem;
 }
 
-.formContainer #textInput {
+/* .formContainer #textInput {
   font-size: 1.6rem;
   padding: 0.4rem 1rem;
   color: black;
@@ -61,7 +270,6 @@
 
 .formContainer .searchResultWrapper {
   position: relative;
-  /* height: 11rem; */
   height: 100%;
   width: 90%;
   overflow-y: scroll;
@@ -117,7 +325,7 @@
 .addSourcesForm .formSubmitButton,
 .addListsForm .formSubmitButton {
   width: 90% !important;
-}
+} */
 
 @media (max-width: 1500px) {
   .classicMain {
@@ -450,6 +658,20 @@ main {
   .featureWrapper > div:nth-child(3) {
     margin-top: unset;
   }
+
+  .popupContainer .createListPopup,
+  .popupContainer .addListsPopup,
+  .popupContainer .addSourcesPopup {
+    width: 60%;
+  }
+}
+
+@media (max-width: 700px) {
+  .popupContainer .createListPopup,
+  .popupContainer .addListsPopup,
+  .popupContainer .addSourcesPopup {
+    width: 80%;
+  }
 }
 
 @media (max-width: 500px) {
@@ -488,5 +710,15 @@ main {
 
   .sectionText h2 {
     margin-top: 2rem;
+  }
+
+  .popupContainer .createListPopup,
+  .popupContainer .addListsPopup,
+  .popupContainer .addSourcesPopup {
+    width: 100%;
+    position: relative;
+    top: 0;
+    transform: unset;
+    left: 0;
   }
 }

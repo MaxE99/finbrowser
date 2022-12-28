@@ -522,107 +522,104 @@ notificationTabs.forEach((tab) => {
 
 // Carousell
 
-document.addEventListener("click", (e) => {
-  let handle;
-  if (e.target.matches(".handle")) {
-    handle = e.target;
-  } else {
-    handle = e.target.closest(".handle");
-  }
-  if (handle != null) onHandleClick(handle);
+document.querySelectorAll(".handle").forEach((handle) => {
+  handle.addEventListener("click", (e) => {
+    const slider = e.target.closest(".sliderWrapper").querySelector(".slider");
+    const sliderIndex = parseInt(
+      getComputedStyle(slider).getPropertyValue("--slider-index")
+    );
+    const itemsPerScreen = parseInt(
+      getComputedStyle(slider).getPropertyValue("--items-per-screen")
+    );
+    const progressBarItemCount = Math.ceil(
+      slider.querySelectorAll(".contentWrapper").length / itemsPerScreen
+    );
+    if (handle.classList.contains("leftHandle")) {
+      sliderIndex - 1 < 0
+        ? slider.style.setProperty("--slider-index", progressBarItemCount - 1)
+        : slider.style.setProperty("--slider-index", sliderIndex - 1);
+    }
+    if (handle.classList.contains("rightHandle")) {
+      sliderIndex + 1 >= progressBarItemCount
+        ? slider.style.setProperty("--slider-index", 0)
+        : slider.style.setProperty("--slider-index", sliderIndex + 1);
+    }
+  });
 });
 
-const throttleProgressBar = throttle(() => {
-  document.querySelectorAll(".progressBar").forEach(calculateProgressBar);
-}, 250);
-window.addEventListener("resize", throttleProgressBar);
+document
+  .querySelectorAll(".sliderWrapper .slider .subscribeButton")
+  .forEach((subscribeButton) => {
+    subscribeButton.addEventListener("click", async () => {
+      try {
+        const source_id = subscribeButton
+          .closest(".contentWrapper")
+          .id.split("#")[1];
+        const action = subscribeButton.innerText;
+        const res = await fetch(
+          `../../api/sources/${source_id}/source_change_subscribtion_status/`,
+          get_fetch_settings("POST")
+        );
+        if (!res.ok) {
+          showMessage("Error: Network request failed unexpectedly!", "Error");
+        } else {
+          const context = await res.json();
+          if (action == "Subscribe") {
+            subscribeButton.classList.add("subscribed");
+            subscribeButton.innerText = "Subscribed";
+            showMessage(context, "Success");
+          } else {
+            subscribeButton.classList.remove("subscribed");
+            subscribeButton.innerText = "Subscribe";
+            showMessage(context, "Remove");
+          }
+        }
+      } catch (e) {
+        // showMessage("Error: Unexpected error has occurred!", "Error");
+      }
+    });
+  });
 
-document.querySelectorAll(".progressBar").forEach(calculateProgressBar);
-
-function calculateProgressBar(progressBar) {
-  progressBar.innerHTML = "";
-  const slider = progressBar.closest(".sliderWrapper").querySelector(".slider");
-  const itemCount = slider.children.length;
-  const itemsPerScreen = parseInt(
-    getComputedStyle(slider).getPropertyValue("--items-per-screen")
-  );
-  let sliderIndex = parseInt(
-    getComputedStyle(slider).getPropertyValue("--slider-index")
-  );
-  const progressBarItemCount = Math.ceil(itemCount / itemsPerScreen);
-
-  if (sliderIndex >= progressBarItemCount) {
-    slider.style.setProperty("--slider-index", progressBarItemCount - 1);
-    sliderIndex = progressBarItemCount - 1;
-  }
-
-  for (let i = 0; i < progressBarItemCount; i++) {
-    const barItem = document.createElement("div");
-    barItem.classList.add("progressItem");
-    if (i === sliderIndex) {
-      barItem.classList.add("active");
+//Notifications
+document
+  .querySelectorAll(".sliderWrapper .slider .notificationButton")
+  .forEach((notificationButton) => {
+    if (notificationButton) {
+      notificationButton.addEventListener("click", async () => {
+        try {
+          const source_id = notificationButton
+            .closest(".contentWrapper")
+            .id.split("#")[1];
+          const data = { source_id: source_id };
+          const res = await fetch(`../../api/notifications/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": getCookie("csrftoken"),
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            mode: "same-origin",
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) {
+            showMessage("Error: Network request failed unexpectedly!", "Error");
+          } else {
+            const context = await res.json();
+            if (
+              notificationButton.classList.contains("notificationActivated")
+            ) {
+              notificationButton.classList.remove("notificationActivated");
+              notificationButton.innerText = "Notification On";
+              showMessage(context, "Remove");
+            } else {
+              notificationButton.classList.add("notificationActivated");
+              notificationButton.innerText = "Notification Off";
+              showMessage(context, "Success");
+            }
+          }
+        } catch (e) {
+          // showMessage("Error: Unexpected error has occurred!", "Error");
+        }
+      });
     }
-    progressBar.append(barItem);
-  }
-}
-
-function onHandleClick(handle) {
-  const progressBar = handle
-    .closest(".sliderWrapper")
-    .querySelector(".progressBar");
-  const slider = handle
-    .closest(".sliderContentContainer")
-    .querySelector(".slider");
-  const sliderIndex = parseInt(
-    getComputedStyle(slider).getPropertyValue("--slider-index")
-  );
-  const progressBarItemCount = progressBar.children.length;
-  if (handle.classList.contains("leftHandle")) {
-    if (sliderIndex - 1 < 0) {
-      slider.style.setProperty("--slider-index", progressBarItemCount - 1);
-      progressBar.children[sliderIndex].classList.remove("active");
-      progressBar.children[progressBarItemCount - 1].classList.add("active");
-    } else {
-      slider.style.setProperty("--slider-index", sliderIndex - 1);
-      progressBar.children[sliderIndex].classList.remove("active");
-      progressBar.children[sliderIndex - 1].classList.add("active");
-    }
-  }
-
-  if (handle.classList.contains("rightHandle")) {
-    if (sliderIndex + 1 >= progressBarItemCount) {
-      slider.style.setProperty("--slider-index", 0);
-      progressBar.children[sliderIndex].classList.remove("active");
-      progressBar.children[0].classList.add("active");
-    } else {
-      slider.style.setProperty("--slider-index", sliderIndex + 1);
-      progressBar.children[sliderIndex].classList.remove("active");
-      progressBar.children[sliderIndex + 1].classList.add("active");
-    }
-  }
-}
-
-function throttle(cb, delay = 1000) {
-  let shouldWait = false;
-  let waitingArgs;
-  const timeoutFunc = () => {
-    if (waitingArgs == null) {
-      shouldWait = false;
-    } else {
-      cb(...waitingArgs);
-      waitingArgs = null;
-      setTimeout(timeoutFunc, delay);
-    }
-  };
-
-  return (...args) => {
-    if (shouldWait) {
-      waitingArgs = args;
-      return;
-    }
-
-    cb(...args);
-    shouldWait = true;
-    setTimeout(timeoutFunc, delay);
-  };
-}
+  });
