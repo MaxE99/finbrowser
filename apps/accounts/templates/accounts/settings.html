@@ -58,7 +58,7 @@
         </form>
     </div>
     <div class="tabsContent notificationTab" data-tab="2">
-        {% if notifications %}
+        {% if source_notifications.count > 0 %}
         <h2>Source Notifications</h2>
         <div class="notificationContainer">
             <div class="sliderWrapper">
@@ -67,8 +67,7 @@
                         <i class="fas fa-chevron-left"></i>
                     </button>
                     <div class="slider">
-                        {% for notification in notifications %}
-                        {% if notification.source %}
+                        {% for notification in source_notifications %}
                         <div class="contentWrapper" id="fsss?si#{{ notification.source.source_id }}">
                             <img src="{% static notification.source.favicon_path %}" alt="Source Picture" />
                             <div class="contentRatingContainer">
@@ -87,7 +86,6 @@
                             <a class="contentLink" href="{{ notification.source.get_absolute_url }}"
                                 aria-label="Open Profile Of {{ notification.source.name }}"></a>
                         </div>
-                        {% endif %}
                         {% endfor %}
                     </div>
                     <button aria-label="Slide right" class="handle rightHandle">
@@ -96,10 +94,11 @@
                 </div>
             </div>
         </div>
+        {% endif %}
+        {% if stock_notifications.count > 0 %}
         <h2>Stock Notifications</h2>
         <div class="notificationContainer">
-            {% for notification in notifications %}
-            {% if notification.stock %}
+            {% for notification in stock_notifications %}
             <div class="keywordContainer">
                 <i class="fas fa-check"></i>
                 {{ notification.stock.ticker }}
@@ -107,13 +106,12 @@
                     aria-label="Delete Notification">
                 </i>
             </div>
-            {% endif %}
             {% endfor %}
         </div>
+        {% if keyword_notifications.count > 0 %}
         <h2>Keyword Notifications</h2>
         <div class="notificationContainer">
-            {% for notification in notifications %}
-            {% if notification.keyword %}
+            {% for notification in keyword_notifications %}
             <div class="keywordContainer">
                 <i class="fas fa-check"></i>
                 {{ notification.keyword }}
@@ -121,11 +119,11 @@
                     aria-label="Delete Notification">
                 </i>
             </div>
-            {% endif %}
             {% endfor %}
         </div>
         {% else %}
         <div class="noNotificationsActivated">You haven't activated any notifications!</div>
+        {% endif %}
         {% endif %}
     </div>
     <div class="tabsContent" data-tab="3">
