@@ -55,9 +55,11 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context ['source_notifications'] = Notification.objects.filter(user=self.request.user).exclude(source=None).select_related('source')
+        context ['stock_notifications'] = Notification.objects.filter(user=self.request.user).exclude(stock=None).select_related('stock')
+        context ['keyword_notifications'] = Notification.objects.filter(user=self.request.user).exclude(keyword=None)
         context['subscribed_sources'] = Source.objects.filter_by_subscription(self.request.user)
         context['websites'] = Website.objects.exclude(name="News")
-        context['notifications'] = Notification.objects.filter(user=self.request.user).select_related('source', 'stock')
         context['profile_change_form'] = ProfileChangeForm()
         context['email_and_name_change_form'] = EmailAndUsernameChangeForm(username=self.request.user.username, email=self.request.user.email)
         context['change_password_form'] = PasswordChangingForm(self.request.user)

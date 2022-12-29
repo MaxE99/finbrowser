@@ -1,6 +1,7 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% load cache %}
+{% load tags %}
 {% block head %}
 <title>FinBrowser | Sectors</title>
 <link rel="stylesheet" type="text/css" href="{% static 'sector/min_sectors_style_v5.css' %}">
@@ -76,6 +77,7 @@
 </div>
 
 {% for sector in sectors %}
+{% if sector.source_set.all.count > 0 and sector.source_set.all|check_inclusion:filtered_sources %}
 <div class="headerAndShowMoreContainer">
     <h3>{{ sector.name }}</h3>
     <a href="{{ sector.get_absolute_url }}" aria-label="Open Sector - {{ sector.name }}">Show More <i
@@ -125,6 +127,7 @@
         </button>
     </div>
 </div>
+{% endif %}
 {% endfor %}
 <script src="{% static 'sector/min_sectors_script_v3.js' %}"></script>
 {% endblock %}
