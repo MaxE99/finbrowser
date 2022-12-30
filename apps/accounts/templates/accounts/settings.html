@@ -1,17 +1,17 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v9.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v10.css' %}">
 <title>FinBrowser | Settings</title>
 {% endblock %}
 
 {% block content %}
 
 <div class="settingsHeader">Settings</div>
-<div class="settingSidebar" role="navigation" aria-label="Settings Menu">
-    <div class="settingOption activeSettingOption" data-for-tab="0">Profile</div>
-    <div class="settingOption" data-for-tab="1">Password</div>
-    <div class="settingOption" data-for-tab="2">Notifications</div>
+<div class="tabsContainer" role="navigation" aria-label="Settings Menu">
+    <button class="activatedTab" data-for-tab="0">Profile</button>
+    <button data-for-tab="1">Password</button>
+    <button data-for-tab="2">Notifications</button>
 </div>
 <div class="contentSection">
     <div class="tabsContent tabsContentActive" data-tab="0">
@@ -127,5 +127,5 @@
     </div>
 </div>
 
-<script src="{% static 'accounts/min_settings_script_v6.js' %}"></script>
+<script src="{% static 'accounts/min_settings_script_v7.js' %}"></script>
 {% endblock content %}

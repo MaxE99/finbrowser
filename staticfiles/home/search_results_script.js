@@ -1,17 +1,3 @@
-//change tabs
-const categoryTabs = document.querySelectorAll(".searchCategoryTab");
-const tabsContent = document.querySelectorAll(".tabsContent");
-categoryTabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    for (let i = 0, j = categoryTabs.length; i < j; i++) {
-      categoryTabs[i].classList.remove("searchCategoryTabActive");
-      tabsContent[i].classList.remove("tabsContentActive");
-    }
-    categoryTabs[tab.dataset.forTab].classList.add("searchCategoryTabActive");
-    tabsContent[tab.dataset.forTab].classList.add("tabsContentActive");
-  });
-});
-
 // main search with autocomplete
 document
   .querySelector(".searchWrapper #mainAutocomplete")

@@ -623,3 +623,18 @@ document
       });
     }
   });
+
+//change tabs
+const tabs = document.querySelectorAll(".tabsContainer button");
+const tabsContent = document.querySelectorAll(".tabsContent");
+
+tabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    for (let i = 0, j = tabs.length; i < j; i++) {
+      tabs[i].classList.remove("activatedTab");
+      tabsContent[i].classList.remove("tabsContentActive");
+    }
+    tabs[tab.dataset.forTab].classList.add("activatedTab");
+    tabsContent[tab.dataset.forTab].classList.add("tabsContentActive");
+  });
+});

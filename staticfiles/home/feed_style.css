@@ -134,41 +134,7 @@
   margin: 0 auto 1rem;
 }
 
-.feedTabsContainer {
-  position: relative;
-  display: flex;
-  align-items: self-start;
-  width: calc(100% - 2rem);
-  white-space: nowrap;
-  overflow: auto;
-  border-bottom: 0.3rem solid rgb(226, 230, 234);
-  margin: 2rem 1rem;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.feedTabsContainer::-webkit-scrollbar {
-  display: none;
-}
-
-.feedTabsContainer button {
-  background: none;
-  border: none;
-  font-size: 2.2rem;
-  cursor: pointer;
-  padding-right: 4rem;
-  margin-bottom: 1.5rem;
-}
-
-.feedTabsContainer .activatedTab,
-.feedTabsContainer button:hover {
-  text-decoration-line: underline;
-  text-underline-offset: 1.6rem;
-  text-decoration-thickness: 0.4rem;
-  text-decoration-color: var(--primary-fontColor);
-}
-
-.feedTabsContainer .fa-plus {
+.tabsContainer .fa-plus {
   margin-left: auto;
   background: var(--primary-fontColor);
   border-radius: 50%;
@@ -178,17 +144,9 @@
   padding: 0.55rem 0.8rem;
 }
 
-.feedTabsContainer .fa-plus:hover {
+.tabsContainer .fa-plus:hover {
   background: #1a73e8 !important;
   box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-}
-
-.tabsContent {
-  display: none;
-}
-
-.tabsContentActive {
-  display: block;
 }
 
 .sliderWrapper .sliderContentContainer .listSubscribed {
