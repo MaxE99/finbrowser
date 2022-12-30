@@ -133,11 +133,3 @@ class ProfileChangeForm(forms.ModelForm):
             'profile_pic': 'Profile Picture'
         }
 
-
-class PrivacySettingsForm(forms.ModelForm):
-
-    class Meta:
-        model = PrivacySettings
-        fields = ('list_subscribtions_public', 'subscribed_sources_public',
-                  'highlighted_articles_public')
-
