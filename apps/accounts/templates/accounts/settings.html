@@ -57,7 +57,7 @@
         </form>
     </div>
     <div class="tabsContent notificationTab" data-tab="2">
-        {% if source_notifications.count > 0 %}
+        {% if user_source_notifications.count > 0 %}
         <h2>Source Notifications</h2>
         <div class="notificationContainer">
             <div class="sliderWrapper">
@@ -66,7 +66,7 @@
                         <i class="fas fa-chevron-left"></i>
                     </button>
                     <div class="slider">
-                        {% for notification in source_notifications %}
+                        {% for notification in user_source_notifications %}
                         <div class="contentWrapper" id="fsss?si#{{ notification.source.source_id }}">
                             <img src="{% static notification.source.favicon_path %}" alt="Source Picture" />
                             <div class="contentRatingContainer">
@@ -94,10 +94,10 @@
             </div>
         </div>
         {% endif %}
-        {% if stock_notifications.count > 0 %}
+        {% if user_stock_notifications.count > 0 %}
         <h2>Stock Notifications</h2>
         <div class="notificationContainer">
-            {% for notification in stock_notifications %}
+            {% for notification in user_stock_notifications %}
             <div class="keywordContainer">
                 <i class="fas fa-check"></i>
                 {{ notification.stock.ticker }}
@@ -107,10 +107,10 @@
             </div>
             {% endfor %}
         </div>
-        {% if keyword_notifications.count > 0 %}
+        {% if user_keyword_notifications.count > 0 %}
         <h2>Keyword Notifications</h2>
         <div class="notificationContainer">
-            {% for notification in keyword_notifications %}
+            {% for notification in user_keyword_notifications %}
             <div class="keywordContainer">
                 <i class="fas fa-check"></i>
                 {{ notification.keyword }}
