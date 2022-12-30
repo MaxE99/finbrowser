@@ -16,53 +16,10 @@
   box-shadow: var(--box-shadowScheme);
 }
 
-.settingSidebar {
-  display: flex;
-  white-space: nowrap;
-  overflow: auto;
-  border-bottom: 0.3rem solid rgb(226, 230, 234);
-  margin: 2rem 1rem;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.settingSidebar::-webkit-scrollbar {
-  display: none;
-}
-
 .settingSidebar h3 {
   margin: 0 auto 2rem;
   font-size: 2.5rem;
   color: var(--primary-fontColor);
-}
-
-.settingSidebar div {
-  background: none;
-  border: none;
-  font-size: 2.2rem;
-  cursor: pointer;
-  padding-right: 4rem;
-  margin-bottom: 1.5rem;
-}
-
-.settingSidebar div:last-of-type {
-  padding-right: 0;
-}
-
-.settingSidebar div:hover,
-.activeSettingOption {
-  text-decoration-line: underline;
-  text-underline-offset: 1.6rem;
-  text-decoration-thickness: 0.4rem;
-  text-decoration-color: var(--primary-fontColor);
-}
-
-.tabsContent {
-  display: none;
-}
-
-.tabsContentActive {
-  display: block;
 }
 
 h2 {

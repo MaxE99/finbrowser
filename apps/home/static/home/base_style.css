@@ -1387,6 +1387,49 @@ h2 {
 /* Small Source Container - End */
 /* ####################################################*/
 
+.tabsContainer {
+  position: relative;
+  display: flex;
+  align-items: self-start;
+  width: calc(100% - 2rem);
+  white-space: nowrap;
+  overflow: auto;
+  border-bottom: 0.3rem solid rgb(226, 230, 234);
+  margin: 2rem 1rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.tabsContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.tabsContainer button {
+  background: none;
+  border: none;
+  font-size: 2.2rem;
+  cursor: pointer;
+  padding-right: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.tabsContainer .activatedTab,
+.tabsContainer button:hover {
+  text-decoration-line: underline;
+  text-underline-offset: 1.6rem;
+  text-decoration-thickness: 0.4rem;
+  text-decoration-color: var(--primary-fontColor);
+}
+
+.tabsContent {
+  display: none;
+}
+
+.tabsContentActive {
+  display: block !important;
+}
+
+
 /* ####################################################*/
 /* Media Queries - Start */
 /* ####################################################*/
