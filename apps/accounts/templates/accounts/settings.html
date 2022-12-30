@@ -1,7 +1,7 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v8.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v9.css' %}">
 <title>FinBrowser | Settings</title>
 {% endblock %}
 
@@ -12,7 +12,6 @@
     <div class="settingOption activeSettingOption" data-for-tab="0">Profile</div>
     <div class="settingOption" data-for-tab="1">Password</div>
     <div class="settingOption" data-for-tab="2">Notifications</div>
-    <div class="settingOption" data-for-tab="3">Privacy</div>
 </div>
 <div class="contentSection">
     <div class="tabsContent tabsContentActive" data-tab="0">
@@ -125,20 +124,6 @@
         <div class="noNotificationsActivated">You haven't activated any notifications!</div>
         {% endif %}
         {% endif %}
-    </div>
-    <div class="tabsContent" data-tab="3">
-        <h2>Change Privacy Settings</h2>
-        <form class="changePrivacySettingsForm" method="POST">
-            {% csrf_token %}
-            {% for field in privacy_settings_form %}
-            <div class="privacySettingsContainer">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                <input id="{{ field.id_for_label }}" type="checkbox" name="{{ field.name }}" {% if field.value %}
-                    checked {% endif %}>
-            </div>
-            {% endfor %}
-            <input name="changePrivacySettingsForm" type="submit" class="privacySettingsChangeSubmit" value="Save" />
-        </form>
     </div>
 </div>
 
