@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v5.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v6.css' %}">
 <title>{{ search_term }} - Search Results | FinBrowser</title>
 {% endblock %}
 {% block content %}
@@ -17,10 +17,10 @@
         </div>
         <div id="autocomplete_list_results"></div>
     </div>
-    <div class="searchCategories" role="navigation" aria-label="Search Results Navigation">
-        <div class="searchCategoryTab searchCategoryTabActive" data-for-tab="0">Content</div>
-        <div class="searchCategoryTab" data-for-tab="1">Stocks</div>
-        <div class="searchCategoryTab" data-for-tab="2">Sources</div>
+    <div class="tabsContainer" role="navigation" aria-label="Search Results Navigation">
+        <button class="activatedTab" data-for-tab="0">Content</button>
+        <button data-for-tab="1">Stocks</button>
+        <button data-for-tab="2">Sources</button>
     </div>
     <div class="tabsContent tabsContentActive" data-tab="0">
         <div class="contentColumnWrapper">
@@ -141,8 +141,10 @@
                         <button class="notificationButton">Notification On</button>
                         {% endif %}
                         {% else %}
-                        <a class="loginRedirectButton" aria-label="Login to subscribe" href="{% url 'account_login' %}">Subscribe</a>
-                        <a class="loginRedirectButton" aria-label="Login to turn on notifications" href="{% url 'account_login' %}">Notification
+                        <a class="loginRedirectButton" aria-label="Login to subscribe"
+                            href="{% url 'account_login' %}">Subscribe</a>
+                        <a class="loginRedirectButton" aria-label="Login to turn on notifications"
+                            href="{% url 'account_login' %}">Notification
                             On</a>
                         {% endif %}
                         <a class="contentLink" href="{{ source.get_absolute_url }}"
@@ -159,5 +161,5 @@
     </div>
 </div>
 
-<script src="{% static 'home/min_search_results_script_v4.js' %}"></script>
+<script src="{% static 'home/min_search_results_script_v5.js' %}"></script>
 {% endblock content %}

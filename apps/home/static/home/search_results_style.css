@@ -31,45 +31,9 @@
   max-width: 95%;
 }
 
-.searchCategories {
+.tabsContainer {
   width: 50%;
-  white-space: nowrap;
-  overflow: auto;
-  border-bottom: 0.3rem solid rgb(226, 230, 234);
-  -ms-overflow-style: none;
-  display: flex;
-  scrollbar-width: none;
-  margin: 2rem auto 0;
-}
-
-.searchCategories::-webkit-scrollbar {
-  display: none;
-}
-
-.searchCategories .searchCategoryTab {
-  background: none;
-  border: none;
-  font-size: 2.2rem;
-  cursor: pointer;
-  padding-right: 4rem;
-  margin-bottom: 1.5rem;
-}
-
-.searchCategoryTabActive,
-.searchCategoryTab:hover {
-  text-decoration-line: underline;
-  text-underline-offset: 1.6rem;
-  text-decoration-thickness: 0.4rem;
-  text-decoration-color: var(--primary-fontColor);
-}
-
-.tabsContent {
-  display: none;
-}
-
-.tabsContentActive {
-  display: block;
-  margin-top: 2rem;
+  margin: 2rem auto;
 }
 
 .articlesWrapper {
@@ -175,7 +139,8 @@
   }
 
   .mainContent .mainSearchWrapper,
-  .stocksWrapper {
+  .stocksWrapper,
+  .tabsContainer {
     width: 75%;
   }
 
@@ -191,7 +156,8 @@
 
 @media (max-width: 500px) {
   .mainContent .mainSearchWrapper,
-  .stocksWrapper {
+  .stocksWrapper,
+  .tabsContainer {
     width: 100%;
   }
 

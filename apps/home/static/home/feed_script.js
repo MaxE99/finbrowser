@@ -61,21 +61,6 @@ document.querySelectorAll(".listDeleteButton").forEach((listDeleteButton) => {
   });
 });
 
-//change tabs
-const feedTabs = document.querySelectorAll(".feedTabsContainer button");
-const tabsContent = document.querySelectorAll(".tabsContent");
-
-feedTabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    for (let i = 0, j = feedTabs.length; i < j; i++) {
-      feedTabs[i].classList.remove("activatedTab");
-      tabsContent[i].classList.remove("tabsContentActive");
-    }
-    feedTabs[tab.dataset.forTab].classList.add("activatedTab");
-    tabsContent[tab.dataset.forTab].classList.add("tabsContentActive");
-  });
-});
-
 // add Sources Search
 let selected_sources = [];
 document.querySelectorAll(".addSourcesForm #textInput").forEach((element) => {
@@ -308,7 +293,7 @@ document
 
 // open popup
 document
-  .querySelector(".feedTabsContainer .fa-plus")
+  .querySelector(".tabsContainer .fa-plus")
   .addEventListener("click", () => {
     const activatedTab = document.querySelector(".activatedTab").innerText;
     if (activatedTab === "Your Lists") {
