@@ -125,6 +125,8 @@ h2 {
 .existingSocialContainer img {
   width: 4.5rem;
   height: 4.5rem;
+  border-radius: 50%;
+  box-shadow: var(--box-shadowScheme);
 }
 
 .changeProfilePicButton {
@@ -274,28 +276,6 @@ h2 {
   margin-top: 3rem;
   font-size: 3rem;
   text-align: center;
-}
-
-.privacySettingsContainer {
-  display: flex;
-  align-items: center;
-  padding: 1.5rem 0;
-}
-
-.privacySettingsContainer label {
-  font-size: 2.2rem;
-  width: 80%;
-}
-
-.privacySettingsContainer input {
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-left: auto;
-}
-
-.privacySettingsChangeSubmit {
-  margin-top: 1.5rem;
-  width: 100%;
 }
 
 .sliderWrapper {

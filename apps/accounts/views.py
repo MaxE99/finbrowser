@@ -4,7 +4,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 # Local imports
-from apps.accounts.forms import EmailAndUsernameChangeForm, PasswordChangingForm, ProfileChangeForm, PrivacySettingsForm
+from apps.accounts.forms import EmailAndUsernameChangeForm, PasswordChangingForm, ProfileChangeForm
 from apps.mixins import BaseMixin, BaseFormMixins
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -44,13 +44,6 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
                 messages.success(request, 'Password has been changed!')
             else:
                 messages.error(request, 'New password is invalid!')
-        elif 'changePrivacySettingsForm' in request.POST:
-            privacy_settings_form = PrivacySettingsForm(request.POST, instance=request.user.profile.privacysettings)
-            if privacy_settings_form.is_valid():
-                form = privacy_settings_form.save(commit=False)
-                form.profile = request.user.profile
-                form.save()
-                messages.success(request, 'Privacy settings have been updated!')
         return HttpResponseRedirect(self.request.path_info)
 
     def get_context_data(self, **kwargs):
@@ -63,5 +56,4 @@ class SettingsView(LoginRequiredMixin, TemplateView, BaseMixin):
         context['profile_change_form'] = ProfileChangeForm()
         context['email_and_name_change_form'] = EmailAndUsernameChangeForm(username=self.request.user.username, email=self.request.user.email)
         context['change_password_form'] = PasswordChangingForm(self.request.user)
-        context['privacy_settings_form'] = PrivacySettingsForm(instance=self.request.user.profile.privacysettings)
         return context
