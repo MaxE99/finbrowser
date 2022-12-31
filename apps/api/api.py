@@ -176,6 +176,24 @@ class ListViewSet(viewsets.ModelViewSet):
 
 
 @api_view(["POST"])
+def change_source_status_from_lists(request):
+    source = get_object_or_404(Source, source_id=request.data['source_id'])
+    for list_id in request.data['add_lists']:
+        list = get_object_or_404(List, list_id=list_id)
+        if list.creator == request.user:
+            list.sources.add(source)
+        else:
+            return Response("Access Denied")
+    for list_id in request.data['remove_lists']:
+        list = get_object_or_404(List, list_id=list_id)
+        if list.creator == request.user:
+            list.sources.remove(source)
+        else:
+            return Response("Access Denied")
+    return Response("Lists have been updated!")
+
+
+@api_view(["POST"])
 def add_sources_to_list(request, list_id, source_ids):
     list = get_object_or_404(List, list_id=list_id)
     if list.creator == request.user:
