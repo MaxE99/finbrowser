@@ -7,8 +7,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
-from rest_framework.decorators import action
-from rest_framework.decorators import api_view
+from rest_framework.decorators import action, api_view, permission_classes, authentication_classes
 # Local imports
 from apps.api.serializers import (List_Serializer, Stock_Serializer, Article_Serializer, Source_Serializer, Profile_Serializer, HighlightedArticle_Serializer, SourceRating_Serializer, ListRating_Serializer, Notification_Serializer)
 from apps.api.permissions import IsListCreator, IsUser
@@ -176,6 +175,8 @@ class ListViewSet(viewsets.ModelViewSet):
 
 
 @api_view(["POST"])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((SessionAuthentication, ))
 def change_source_status_from_lists(request):
     source = get_object_or_404(Source, source_id=request.data['source_id'])
     for list_id in request.data['add_lists']:
@@ -194,6 +195,8 @@ def change_source_status_from_lists(request):
 
 
 @api_view(["POST"])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((SessionAuthentication, ))
 def add_sources_to_list(request, list_id, source_ids):
     list = get_object_or_404(List, list_id=list_id)
     if list.creator == request.user:
@@ -203,6 +206,8 @@ def add_sources_to_list(request, list_id, source_ids):
 
 
 @api_view(["POST"])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((SessionAuthentication, ))
 def subscribe_to_sources(request, source_ids):
     for source_id in source_ids.split(","):
         source = get_object_or_404(Source, source_id=source_id)
