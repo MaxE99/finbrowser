@@ -6,7 +6,7 @@ from rest_framework import routers
 from apps.api.api import (
      FilteredSite, FilteredArticles, ListViewSet, NotificationViewSet,
      SourceViewSet, ProfileViewSet, SourceRatingViewSet, ListRatingViewSet, 
-     HighlightedArticleViewSet, FilteredLists, FilteredSources, add_sources_to_list, subscribe_to_sources)
+     HighlightedArticleViewSet, FilteredLists, FilteredSources, add_sources_to_list, subscribe_to_sources, change_source_status_from_lists)
 
 app_name = 'api'
 
@@ -20,6 +20,7 @@ router.register('highlighted_articles', HighlightedArticleViewSet)
 router.register('notifications', NotificationViewSet)
 
 urlpatterns = [
+    path('lists/change_source_status_from_lists/', change_source_status_from_lists),
     path('lists/<int:list_id>/add_sources/<str:source_ids>/', add_sources_to_list),
     path('sources/subscribe_to_sources/<str:source_ids>/', subscribe_to_sources),
     path('search_site/<str:search_term>', FilteredSite.as_view()),

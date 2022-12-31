@@ -235,6 +235,29 @@ document
   });
 
 // add sources to lists
+
+function check_list_status(saveButton) {
+  let add_list_ids = [];
+  let remove_list_ids = [];
+  const input_list = saveButton
+    .closest(".addSourceToListForm")
+    .querySelectorAll(".listContainer input");
+  for (let i = 0, j = input_list.length; i < j; i++) {
+    if (
+      input_list[i].className === "sourceInList" &&
+      input_list[i].checked === false
+    ) {
+      remove_list_ids.push(input_list[i].id.split("id_list_")[1]);
+    } else if (
+      input_list[i].className === "sourceNotInList" &&
+      input_list[i].checked
+    ) {
+      add_list_ids.push(input_list[i].id.split("id_list_")[1]);
+    }
+  }
+  return [add_list_ids, remove_list_ids];
+}
+
 document
   .querySelectorAll(".addSourceToListForm .saveButton")
   .forEach((saveButton) => {
@@ -243,69 +266,35 @@ document
         .closest(".upperContainer")
         .querySelector(".upperInnerContainer .sourceName")
         .id.split("#")[1];
-      let lists_status = [];
-      let initial_lists_status = [];
-      let list_ids = [];
-      const input_list = saveButton
-        .closest(".addSourceToListForm")
-        .querySelectorAll(".listContainer input");
-      for (let i = 0, j = input_list.length; i < j; i++) {
-        initial_lists_status.push(input_list[i].className);
-        list_ids.push(input_list[i].id.split("id_list_")[1]);
-      }
-      saveButton.parentElement.previousElementSibling
-        .querySelectorAll("input")
-        .forEach((input) => {
-          if (input.checked) {
-            lists_status.push("sourceInList");
-          } else {
-            lists_status.push("sourceNotInList");
+      const [add_lists, remove_lists] = check_list_status(saveButton);
+      body = {
+        source_id: source_id,
+        add_lists: add_lists,
+        remove_lists: remove_lists,
+      };
+      try {
+        const res = await fetch(
+          `../../api/lists/change_source_status_from_lists/`,
+          {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": getCookie("csrftoken"),
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            mode: "same-origin",
+            body: JSON.stringify(body),
           }
-        });
-      for (let i = 0, j = lists_status.length; i < j; i++) {
-        if (lists_status[i] != initial_lists_status[i]) {
-          if (initial_lists_status[i] == "sourceNotInList") {
-            let list_id = list_ids[i];
-            try {
-              const res = await fetch(
-                `../../api/lists/${list_id}/add_sources/${source_id}/`,
-                get_fetch_settings("POST")
-              );
-              if (!res.ok) {
-                showMessage(
-                  "Error: Network request failed unexpectedly!",
-                  "Error"
-                );
-              } else {
-                const context = await res.json();
-                showMessage(context, "Success");
-                window.location.reload();
-              }
-            } catch (e) {
-              // showMessage("Error: Unexpected error has occurred!", "Error");
-            }
-          } else {
-            try {
-              let list_id = list_ids[i];
-              const res = await fetch(
-                `../../api/lists/${list_id}/delete_source_from_list/${source_id}/`,
-                get_fetch_settings("DELETE")
-              );
-              if (!res.ok) {
-                showMessage(
-                  "Error: Network request failed unexpectedly!",
-                  "Error"
-                );
-              } else {
-                const context = await res.json();
-                showMessage(context, "Success");
-                window.location.reload();
-              }
-            } catch (e) {
-              // showMessage("Error: Unexpected error has occurred!", "Error");
-            }
-          }
+        );
+        if (!res.ok) {
+          showMessage("Error: Network request failed unexpectedly!", "Error");
+        } else {
+          const context = await res.json();
+          showMessage(context, "Success");
+          window.location.reload();
         }
+      } catch (e) {
+        // showMessage("Error: Unexpected error has occurred!", "Error");
       }
     });
   });
