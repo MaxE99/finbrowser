@@ -55,6 +55,7 @@ h2 {
 #id_old_password,
 #id_new_password1,
 #id_new_password2,
+#id_timezone,
 .linkInput {
   border: 0.1rem solid rgb(226, 230, 234);
   border-radius: 0.6rem;
@@ -65,6 +66,14 @@ h2 {
   opacity: 0.6;
   margin-bottom: 1.5rem;
   box-shadow: var(--box-shadowScheme);
+}
+
+#id_timezone {
+  width: 47.5%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
 }
 
 .profilePicContainer {
@@ -284,7 +293,8 @@ h2 {
     flex-direction: column;
   }
   .usernameAndEmailContainer .usernameContainer,
-  .usernameAndEmailContainer .emailContainer {
+  .usernameAndEmailContainer .emailContainer,
+  #id_timezone {
     width: 100%;
   }
 }

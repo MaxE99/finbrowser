@@ -6,7 +6,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django import forms
 from django.template.defaultfilters import slugify
 # Local imports
-from apps.accounts.models import PrivacySettings, Profile
+from apps.accounts.models import Profile
 from apps.base_logger import logger
 
 User = get_user_model()
@@ -125,7 +125,7 @@ class PasswordChangingForm(PasswordChangeForm):
         self.fields['new_password2'].label = "Confirm new password"
 
 
-class ProfileChangeForm(forms.ModelForm):
+class ProfilePicChangeForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('profile_pic',)
@@ -133,3 +133,16 @@ class ProfileChangeForm(forms.ModelForm):
             'profile_pic': 'Profile Picture'
         }
 
+class TimezoneChangeForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.timezone = kwargs.pop('timezone', None)
+        super(TimezoneChangeForm, self).__init__(*args, **kwargs)
+        self.fields['timezone'].initial = self.timezone
+
+    class Meta:
+        model = Profile
+        fields = ('timezone',)
+        labels = {
+            'timezone': 'Timezone'
+        }

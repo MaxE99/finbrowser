@@ -5,8 +5,6 @@ from django.contrib.postgres.fields import CICharField
 from django.contrib.auth import get_user_model
 from django.template.defaultfilters import slugify
 from django.urls import reverse
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.core.validators import MaxLengthValidator
 from django.core.files.uploadedfile import InMemoryUploadedFile
 # Python imports
@@ -14,6 +12,7 @@ import os
 from io import BytesIO
 import sys
 from PIL import Image
+import pytz
 # Local imports
 from apps.accounts.validators import validate_domain_available
 
@@ -57,7 +56,6 @@ class UserManager(BaseUserManager):
         user.admin = True
         user.save(using=self._db)
         return user
-
 
 class User(AbstractBaseUser):
     username = CICharField(max_length=30, unique=True, validators=[MaxLengthValidator(30), validate_domain_available])
@@ -107,15 +105,6 @@ class User(AbstractBaseUser):
 
 User = get_user_model()
 
-
-@receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwargs):
-    if created:
-        user = instance
-        profile = Profile.objects.create(user=user)
-        PrivacySettings.objects.create(profile=profile)
-
-
 def create_profile_pic_name(self, filename):
     path = "profile_pics/"
     format = f"{self.user.username} - {filename}"
@@ -123,11 +112,13 @@ def create_profile_pic_name(self, filename):
 
 class Profile(models.Model):
     ACCOUNT_TYPES = [('Standard', 'Standard'), ('Premium', 'Premium'), ('Admin', 'Admin')]
+    TIMEZONES = tuple(zip(pytz.all_timezones, pytz.all_timezones))
     profile_id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
     slug = models.SlugField(unique=True)
     profile_pic = models.ImageField(null=True, blank=True, upload_to=create_profile_pic_name)
     account_type = models.CharField(max_length=50, choices=ACCOUNT_TYPES, default="Standard")
+    timezone = models.CharField(max_length=32, choices=TIMEZONES, default='UTC')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -161,13 +152,3 @@ class Website(models.Model):
     def __str__(self):
         return self.name
 
-
-class PrivacySettings(models.Model):
-    privacy_settings_id = models.AutoField(primary_key=True)
-    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
-    list_subscribtions_public = models.BooleanField(default=True)
-    subscribed_sources_public = models.BooleanField(default=True)
-    highlighted_articles_public = models.BooleanField(default=True)
-
-    def __str__(self):
-        return f'{self.profile} - Privacy Settings'
