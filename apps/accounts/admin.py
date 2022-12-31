@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 # Local imports
 from apps.accounts.forms import UserCreationForm, UserChangeForm
-from apps.accounts.models import Profile, Website, PrivacySettings
+from apps.accounts.models import Profile, Website
 
 User = get_user_model()
 
@@ -26,5 +26,4 @@ class UserAdmin(BaseUserAdmin):
 admin.site.register(User, UserAdmin)
 admin.site.register(Profile)
 admin.site.register(Website)
-admin.site.register(PrivacySettings)
 admin.site.unregister(Group)

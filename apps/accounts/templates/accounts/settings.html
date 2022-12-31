@@ -1,7 +1,8 @@
 {% extends 'home/base.html' %}
+{% load tz %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v10.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v11.css' %}">
 <title>FinBrowser | Settings</title>
 {% endblock %}
 
@@ -29,7 +30,7 @@
                 </div>
             </div>
             <div class="profilePicContainer">
-                {{ profile_change_form.profile_pic.label_tag }}
+                {{ profile_pic_change_form.profile_pic.label_tag }}
                 <div class="profilePicInnerContainer">
                     {% if user.profile.profile_pic %}
                     <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
@@ -43,6 +44,7 @@
                     <button type="button" class="removeProfilePicButton">Remove</button>
                 </div>
             </div>
+            {{ change_timezone_form }}
             <div class="buttonContainer">
                 <button type="submit" href="{% url 'accounts:settings' %}" class="cancelButton">Cancel</button>
                 <input class="saveButton" name="changeProfileForm" type="submit" value="Save">
