@@ -7,15 +7,15 @@ from django.utils.timezone import now
 from django.template.defaultfilters import slugify
 # Python imports
 from datetime import timedelta
-import logging
-from celery.signals import after_setup_logger
-import html
-import time
-import requests
-import base64
-import os
-import boto3
-import re
+# import html
+from html import unescape
+from time import sleep
+from requests import post as request_post
+from requests import get as request_get
+from base64 import b64encode
+from os import environ
+from boto3 import client
+from re import sub as re_sub
 from apps.home.views import TWITTER
 # Local imports
 from apps.logic.services import bulk_create_articles_and_notifications, notifications_create, create_articles_from_feed, source_profile_img_create, twitter_create_api_settings, tweet_type_create
@@ -25,18 +25,7 @@ from apps.accounts.models import Website
 from apps.source.models import Source
 from apps.scrapper.web_crawler import crawl_thegeneralist, crawl_ben_evans, crawl_meritechcapital, crawl_stockmarketnerd
 
-s3 = boto3.client('s3')
-
-@after_setup_logger.connect
-def setup_loggers(logger, *args, **kwargs):
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler('logs.log')
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-logger = logging.getLogger(__name__)
-
+s3 = client('s3')
 
 class SpotifyAPI(object):
     access_token = None
@@ -57,7 +46,7 @@ class SpotifyAPI(object):
         if client_id == None or client_secret == None:
             raise Exception("You must set client_id and client_secret")
         client_creds = f"{client_id}:{client_secret}"
-        client_creds_b64 = base64.b64encode(client_creds.encode())
+        client_creds_b64 = b64encode(client_creds.encode())
         return client_creds_b64.decode()
 
     def get_token_headers(self):
@@ -72,7 +61,7 @@ class SpotifyAPI(object):
         }
 
     def perform_auth(self):
-        r = requests.post(self.token_url, data=self.get_token_data(), headers=self.get_token_headers())
+        r = request_post(self.token_url, data=self.get_token_data(), headers=self.get_token_headers())
         if r.status_code not in range(200,299):
             raise Exception("Could not authenticate client.")
         data = r.json()
@@ -100,7 +89,7 @@ class SpotifyAPI(object):
             'Authorization': f"Bearer {access_token}"
         }
         lookup_url = f"https://api.spotify.com/v1/shows/{id}/episodes?market=US"
-        r = requests.get(lookup_url, headers=headers)
+        r = request_get(lookup_url, headers=headers)
         if r.status_code not in range(200,299):
             return {} 
         return r.json() 
@@ -111,7 +100,7 @@ class SpotifyAPI(object):
             'Authorization': f"Bearer {access_token}"
         }
         lookup_url = f"https://api.spotify.com/v1/shows/{id}?market=US"
-        r = requests.get(lookup_url, headers=headers)
+        r = request_get(lookup_url, headers=headers)
         if r.status_code not in range(200,299):
             return {} 
         return r.json() 
@@ -134,7 +123,7 @@ def scrape_twitter():
             if str(tweet_external_id) not in existing_tweets:
                 twitter_user_id = status.user.id
                 if sources.filter(external_id=twitter_user_id).exists():
-                    title = re.sub(r'http\S+', '', html.unescape(status.full_text))
+                    title = re_sub(r'http\S+', '', unescape(status.full_text))
                     link = f'https://twitter.com/{status.user.screen_name}/status/{tweet_external_id}'
                     pub_date = status.created_at
                     title, tweet_type = tweet_type_create(status, twitter_user_id, api)
@@ -167,7 +156,7 @@ def scrape_substack():
     for source in substack_sources:
         feed_url = f'{source.url}feed'
         create_articles_from_feed(source, feed_url, articles)
-        time.sleep(30)
+        sleep(30)
 
 
 @shared_task
@@ -177,7 +166,7 @@ def scrape_seekingalpha():
     for source in seekingalpha_sources:
         feed_url = f'{source.url}.xml'
         create_articles_from_feed(source, feed_url, articles)
-        time.sleep(30)
+        sleep(30)
 
 
 @shared_task
@@ -211,8 +200,8 @@ def crawl_websites():
 
 @shared_task
 def scrape_spotify():
-    client_id = os.environ.get('SPOTIFY_CLIENT_ID')
-    client_secret = os.environ.get('SPOTIFY_CLIENT_SECRET')
+    client_id = environ.get('SPOTIFY_CLIENT_ID')
+    client_secret = environ.get('SPOTIFY_CLIENT_SECRET')
     spotify_sources = Source.objects.filter(website=get_object_or_404(Website, name="Spotify")).only("source_id", "external_id") 
     articles = Article.objects.filter(source__in=spotify_sources).only('title', 'link', 'source')
     spotify_creation_list = []
@@ -222,7 +211,7 @@ def scrape_spotify():
             episodes = spotify.get_episodes(source.external_id)
             episode_items = episodes['items']
             for episode_item in episode_items:
-                title = html.unescape(episode_item['name'])
+                title = unescape(episode_item['name'])
                 link = episode_item['external_urls']['spotify']
                 if articles.filter(title=title, link=link, source=source).exists():
                     break
@@ -234,20 +223,20 @@ def scrape_spotify():
 
 @shared_task
 def scrape_youtube():
-    api_key = os.environ.get('YOUTUBE_API_KEY')
+    api_key = environ.get('YOUTUBE_API_KEY')
     youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube")).only("source_id", "external_id")
     articles = Article.objects.filter(source__in=youtube_sources).only('title', 'pub_date', 'link', 'source')
     youtube_creation_list = []
     for source in youtube_sources:
-        channel_data = requests.get(f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails").json()
+        channel_data = request_get(f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails").json()
         upload_id = channel_data['items'][0]['contentDetails']['relatedPlaylists']['uploads']
         url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=50"
-        r = requests.get(url)
+        r = request_get(url)
         data = r.json()
         try:
             items = data['items']
             for item in items:
-                title = html.unescape(item['snippet']['title'])
+                title = unescape(item['snippet']['title'])
                 link = f"https://www.youtube.com/watch?v={item['snippet']['resourceId']['videoId']}"
                 pub_date = item['snippet']['publishedAt']
                 if articles.filter(title=title, pub_date=pub_date, link=link, source=source).exists():
@@ -283,12 +272,12 @@ def twitter_scrape_followings():
 
 @shared_task
 def youtube_get_profile_images():
-    api_key = os.environ.get('YOUTUBE_API_KEY')
+    api_key = environ.get('YOUTUBE_API_KEY')
     youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
     for source in youtube_sources:
         try:
             url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={source.external_id}&key={api_key}"
-            r = requests.get(url)
+            r = request_get(url)
             data = r.json()
             source_profile_img_create(source, data['items'][0]['snippet']['thumbnails']['medium']['url'])
         except:
@@ -297,8 +286,8 @@ def youtube_get_profile_images():
 
 @shared_task
 def spotify_get_profile_images():
-    client_id = os.environ.get('SPOTIFY_CLIENT_ID')
-    client_secret = os.environ.get('SPOTIFY_CLIENT_SECRET')
+    client_id = environ.get('SPOTIFY_CLIENT_ID')
+    client_secret = environ.get('SPOTIFY_CLIENT_SECRET')
     spotify_sources = Source.objects.filter(website=get_object_or_404(Website, name="Spotify"))
     for source in spotify_sources:
         try:
@@ -319,15 +308,15 @@ def old_notifications_delete():
 
 @shared_task
 def youtube_delete_innacurate_articles():
-    api_key = os.environ.get('YOUTUBE_API_KEY')
+    api_key = environ.get('YOUTUBE_API_KEY')
     youtube_sources = Source.objects.filter(website=get_object_or_404(Website, name="YouTube"))
     youtube_videos = []
     for source in youtube_sources:
         saved_articles_from_source = Article.objects.filter(source=source)
-        channel_data = requests.get(f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails").json()
+        channel_data = request_get(f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails").json()
         upload_id = channel_data['items'][0]['contentDetails']['relatedPlaylists']['uploads']
         url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=1000"
-        r = requests.get(url)
+        r = request_get(url)
         item_list = []
         next_item = True
         iterations = 0
@@ -339,14 +328,14 @@ def youtube_delete_innacurate_articles():
                 nextPageToken = data["nextPageToken"]
                 iterations += 1
                 url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=1000&pageToken={nextPageToken}"
-                r = requests.get(url)
+                r = request_get(url)
             else:
                 next_item = False
                 break
         for items in item_list:
             try:
                 for item in items:
-                    title = html.unescape(item['snippet']['title'])
+                    title = unescape(item['snippet']['title'])
                     link = f"https://www.youtube.com/watch?v={item['snippet']['resourceId']['videoId']}"
                     pub_date = item['snippet']['publishedAt']
                     youtube_videos.append({'title': title, 'link': link, 'pub_date': pub_date})
