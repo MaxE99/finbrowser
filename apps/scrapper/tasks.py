@@ -303,7 +303,7 @@ def spotify_get_profile_images():
 
 @shared_task
 def old_notifications_delete():
-    NotificationMessage.objects.filter(date__lte=now()-timedelta(hours=24)).delete()
+    NotificationMessage.objects.filter(date__lte=now()-timedelta(hours=24*7)).delete()
 
 
 @shared_task
