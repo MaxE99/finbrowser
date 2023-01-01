@@ -126,7 +126,8 @@ def scrape_twitter():
                     title = re_sub(r'http\S+', '', unescape(status.full_text))
                     link = f'https://twitter.com/{status.user.screen_name}/status/{tweet_external_id}'
                     pub_date = status.created_at
-                    title, tweet_type = tweet_type_create(status, twitter_user_id, api)
+                    # title, tweet_type = tweet_type_create(status, twitter_user_id, api)
+                    tweet_type = tweet_type_create(status, twitter_user_id, api)
                     tweet_creation_list.append({'source': twitter_user_id, 'title': title, 'link': link, 'pub_date': pub_date, 'external_id': tweet_external_id, 'tweet_type': tweet_type})
             else:
                 break
