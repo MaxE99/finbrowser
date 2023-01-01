@@ -160,7 +160,7 @@ def tweet_type_create(status, twitter_user_id, api):
             tweet_type = tweet_img_upload(tweet_type, status.entities['media'][0]['media_url_https'])
     elif len(status.entities['urls']) > 0:
         if 'expanded_url' in status.entities['urls'][0]:
-            title = html.unescape(status.full_text) # With links I don't escape the title
+            # title = html.unescape(status.full_text) # With links I don't escape the title
             tweet_type.type = "Link"
             tweet_type.link = status.entities['urls'][0]['expanded_url']
     in_reply_to_user_id = status.in_reply_to_user_id
@@ -192,7 +192,8 @@ def tweet_type_create(status, twitter_user_id, api):
                 tweet_type = initial_tweet_img_path_upload(tweet_type, status.quoted_status._json['entities']['media'][0]['media_url_https'])
         tweet_type.type = "Quote"
     tweet_type.save()
-    return title, tweet_type
+    return tweet_type
+    # return title, tweet_type
 
 # def change_format_of_pngs_and_upload_them_as_wepbs_from_dev():
 #     images = glob.glob("test_imgs/*.png")
