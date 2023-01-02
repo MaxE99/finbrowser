@@ -180,11 +180,11 @@ header {
 }
 
 .searchResultHeader {
-  background: var(--primary-fontColor);
-  color: white;
   text-align: center;
   padding: 0.5rem;
   border: 0.3rem solid;
+  background: #fff;
+  color: black;
 }
 
 .searchResult {
@@ -1428,7 +1428,6 @@ h2 {
 .tabsContentActive {
   display: block !important;
 }
-
 
 /* ####################################################*/
 /* Media Queries - Start */

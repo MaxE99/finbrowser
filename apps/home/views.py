@@ -64,3 +64,11 @@ class SearchResultView(TemplateView, BaseMixin):
         context['filtered_articles'] = paginator_create(self.request, filtered_content.exclude(source__website=TWITTER), 50, 'long_form_content')     
         return context
 
+
+
+class NewPageView(TemplateView, BaseMixin):
+    template_name = 'home/new_page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
