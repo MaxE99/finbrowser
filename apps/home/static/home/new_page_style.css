@@ -50,10 +50,10 @@ header {
   position: fixed;
   z-index: 1000;
   height: 8.5rem;
-  width: 100%;
   background: var(--primary-color);
   box-shadow: 0 5px 5px -5px #333;
   border-bottom: 0.1rem solid rgb(226, 230, 234);
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -62,7 +62,7 @@ header {
   align-items: center;
   height: 8.5rem;
   width: 100%;
-  max-width: 160rem;
+  max-width: 1250px;
   margin: 0 auto;
   background: var(--primary-color);
 }
@@ -117,10 +117,10 @@ header {
   display: flex;
   align-items: center;
   font-size: 2rem;
-  padding: 2rem;
+  padding: 1.5rem 2rem;
   color: var(--secondary-fontColor);
-  border-radius: 2rem 3rem;
   cursor: pointer;
+  border-radius: 0.45rem;
 }
 
 .mainNavigationLink a {
@@ -129,13 +129,15 @@ header {
   height: 100%;
   left: 0;
   top: 0;
-  border-radius: 2rem 3rem;
 }
 
 .mainNavigationLink:hover,
 .mainNavigationLink:hover span {
-  background: var(--primary-fontColor);
-  color: white;
+  color: var(--primary-fontColor);
+  text-decoration-line: underline;
+  text-underline-offset: 1rem;
+  text-decoration-thickness: 0.4rem;
+  text-decoration-color: var(--primary-fontColor);
 }
 
 .mainSearchWrapper {
@@ -415,7 +417,6 @@ header {
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  width: 25.5rem;
 }
 
 .userProfile {
@@ -606,10 +607,11 @@ header {
 main {
   display: flex;
   flex-direction: column;
-  width: 85%;
+  width: 100%;
   max-width: 160rem;
   margin: 0 auto 1rem;
   min-height: calc(100vh - 9.5rem);
+  max-width: 1250px;
 }
 
 footer {

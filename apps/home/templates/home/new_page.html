@@ -14,7 +14,7 @@
     <link rel="prefetch" as="font" href="{% static 'home/fonts/lato-v23-latin/lato-v23-latin-900.woff' %}"
         type="font/woff" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/fontawesome/css/all.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v28.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/new_page_style.css' %}">
     <script nonce="{{request.csp_nonce}}" async src="https://www.googletagmanager.com/gtag/js?id=G-JNS80QXCXR"></script>
     <script nonce="{{request.csp_nonce}}">
         window.dataLayer = window.dataLayer || [];
@@ -40,19 +40,16 @@
                     </div>
                 </div>
                 <nav class="mainNavigation" aria-label="Main">
-                    {% if request.user.is_authenticated == False %}
-                    <div class="mainNavigationLink"><span>Feed</span><a aria-label="Login To Open Feed"
-                            href="{% url 'account_login' %}"></a></div>
-                    {% else %}
-                    <div class="mainNavigationLink"><span>Feed</span><a aria-label="Open Feed"
-                            href="{% url 'home:feed' %}"></a></div>
-                    {% endif %}
-                    <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Lists"
-                            href="{% url 'list:lists' %}"></a></div>
-                    <div class="mainNavigationLink"><span>Sectors</span><a aria-label="Open Sectors"
+                    <div class="mainNavigationLink"><span>Portfolio</span><a aria-label="Open Sectors"
                             href="{% url 'sector:sectors' %}"></a>
                     </div>
-                    <div class="mainNavigationLink"><span>Content</span><a aria-label="Open Content"
+                    <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Content"
+                            href="{% url 'article:articles' %}"></a>
+                    </div>
+                    <div class="mainNavigationLink"><span>Sources</span><a aria-label="Open Lists"
+                            href="{% url 'list:lists' %}"></a>
+                    </div>
+                    <div class="mainNavigationLink"><span>Guide</span><a aria-label="Open Content"
                             href="{% url 'article:articles' %}"></a>
                     </div>
                 </nav>
@@ -66,7 +63,6 @@
                 </div>
                 <div class="userSpace">
                     {% if request.user.is_authenticated %}
-                    <i class="fas fa-cog"><a aria-label="Open Settings" href="{% url 'accounts:settings' %}"></a></i>
                     <i class="far fa-bell {% if request.user.is_authenticated %}notificationBell{% endif %}">
                         {% if unseen_notifications %}
                         <span class="unseenNotifications">{{ unseen_notifications }}</span>
@@ -543,11 +539,6 @@
                             <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">
                                 {{ user.username.0 }}</div>
                             {% endif %}
-                            <div class="userInformation">
-                                <div class="userName">{{ user.username }}</div>
-                                <div class="accountType">{{ user.profile.account_type }}</div>
-                            </div>
-                            <i role="button" aria-label="Open Logout Option" class="fas fa-sort-down"></i>
                         </div>
                         <div class="profileMenu">
                             <div>
