@@ -43,3 +43,10 @@ document
       }
     });
   });
+
+// change profile pic
+document
+  .querySelector(".changeProfilePicButton")
+  .addEventListener("click", () => {
+    document.querySelector(".changeProfilePicForm input").click();
+  });
