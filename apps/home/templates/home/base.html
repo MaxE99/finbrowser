@@ -14,7 +14,7 @@
     <link rel="prefetch" as="font" href="{% static 'home/fonts/lato-v23-latin/lato-v23-latin-900.woff' %}"
         type="font/woff" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/fontawesome/css/all.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v28.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/base_style.css' %}">
     <script nonce="{{request.csp_nonce}}" async src="https://www.googletagmanager.com/gtag/js?id=G-JNS80QXCXR"></script>
     <script nonce="{{request.csp_nonce}}">
         window.dataLayer = window.dataLayer || [];
@@ -28,9 +28,27 @@
 
 <body>
     <script nonce="{{request.csp_nonce}}">0</script>
+    <div class="fullScreenPlaceholder">
+        <div class="createListMenu formContainer smartphoneCreateListMenu">
+            <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
+            </div>
+            <form enctype="multipart/form-data" method="POST" class="createListForm">
+                {% csrf_token %} {{ add_list_form }}
+                <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+            </form>
+        </div>
+    </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages|slice:":1" %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <header>
         <div class=" outerHeaderContainer">
             <div class="headerContainer">
+                <i role="button" aria-label="Open Dropdown Navigation" class="fa-solid fa-bars"></i>
                 <div class="logoContainer">
                     <div class="logoSpace">
                         <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}"
@@ -40,19 +58,16 @@
                     </div>
                 </div>
                 <nav class="mainNavigation" aria-label="Main">
-                    {% if request.user.is_authenticated == False %}
-                    <div class="mainNavigationLink"><span>Feed</span><a aria-label="Login To Open Feed"
-                            href="{% url 'account_login' %}"></a></div>
-                    {% else %}
-                    <div class="mainNavigationLink"><span>Feed</span><a aria-label="Open Feed"
-                            href="{% url 'home:feed' %}"></a></div>
-                    {% endif %}
-                    <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Lists"
-                            href="{% url 'list:lists' %}"></a></div>
-                    <div class="mainNavigationLink"><span>Sectors</span><a aria-label="Open Sectors"
+                    <div class="mainNavigationLink"><span>Portfolio</span><a aria-label="Open Sectors"
                             href="{% url 'sector:sectors' %}"></a>
                     </div>
-                    <div class="mainNavigationLink"><span>Content</span><a aria-label="Open Content"
+                    <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Content"
+                            href="{% url 'article:articles' %}"></a>
+                    </div>
+                    <div class="mainNavigationLink"><span>Sources</span><a aria-label="Open Lists"
+                            href="{% url 'source:source_ranking' %}"></a>
+                    </div>
+                    <div class="mainNavigationLink"><span>Guide</span><a aria-label="Open Content"
                             href="{% url 'article:articles' %}"></a>
                     </div>
                 </nav>
@@ -61,542 +76,538 @@
                         <input aria-label="Search" id="mainAutocomplete" type="text" class="mainInputSearch"
                             placeholder="Search">
                         <i class="fas fa-search"></i>
+                        <i class="fas fa-times closeSearchButton"></i>
                     </div>
                     <div id="mainAutocomplete_result"></div>
                 </div>
+                <i class="fas fa-search smallScreenSearchIcon"></i>
+                {% if request.user.is_authenticated %}
                 <div class="userSpace">
                     {% if request.user.is_authenticated %}
-                    <i class="fas fa-cog"><a aria-label="Open Settings" href="{% url 'accounts:settings' %}"></a></i>
                     <i class="far fa-bell {% if request.user.is_authenticated %}notificationBell{% endif %}">
                         {% if unseen_notifications %}
                         <span class="unseenNotifications">{{ unseen_notifications }}</span>
                         {% endif %}
                     </i>
-                    <div class="notificationContainer">
-                        <h3>Notifications</h3>
-                        <div class="notificationHeadersContainer" role="navigation"
-                            aria-label="Notification Navigation">
-                            <div class="activeNotificationCategory" data-for-tab="0">Sources</div>
-                            <div data-for-tab="1">Stocks</div>
-                            <div data-for-tab="2">Keywords</div>
-                        </div>
-                        <div class="notificationsContainer activeNotificationContainer smallFormContentWrapper"
-                            data-tab="0">
-                            {% if source_notifications %}
-                            {% for notification in source_notifications %}
-                            <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
-                                id="bsoni?ai#{{ notification.article.article_id }}">
-                                <div class="leftContentSide">
-                                    <div class="profileImageContainer">
-                                        <img src="{% static notification.article.source.favicon_path %}"
-                                            alt="Source Picture" />
-                                        <a aria-label="Open Profile Of {{ notification.article.source.name }}"
-                                            class="sourceProfile"
-                                            href="{{ notification.article.source.get_absolute_url }}"></a>
-                                    </div>
-                                </div>
-                                <div class="rightContentSide">
-                                    <div class="contentInfoContainer">
-                                        <div class="sourceAndWebsiteContainer">
-                                            <a aria-label="Open Profile Of {{ notification.article.source.name }}"
-                                                class="sourceProfile"
-                                                href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
-                                            <div class="sourceWebsiteProfileContainer">
-                                                {% if notification.article.source.website.name == "YouTube" %}
-                                                <img class="youtubeLogo"
-                                                    src="{% static notification.article.source.website.logo %}"
-                                                    alt="Website Logo" />
-                                                {% else %}
-                                                <img src="{% static notification.article.source.website.logo %}"
-                                                    alt="Website Logo" />
-                                                {% endif %}
-                                                <a aria-label="Open External Profile Of {{ notification.article.source.name }}"
-                                                    href="{{ notification.article.source.url }}" target="_blank"></a>
-                                            </div>
-                                        </div>
-                                        <i class="fas fa-ellipsis-h" role="button"
-                                            aria-label="Open Article Interactions"></i>
-                                        <div class="articleOptionsContainer">
-                                            {% if request.user.is_authenticated %}
-                                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list
-                                            </div>
-                                            {% if notification.article.article_id in highlighted_content_ids %}
-                                            <div class="addToHighlightedButton" role="button"><i
-                                                    class="fas fa-times"></i><span>Unhighlight
-                                                    article</span></div>
-                                            {% else %}
-                                            <div class="addToHighlightedButton" role="button"><i
-                                                    class="fas fa-highlighter"></i><span>Highlight
-                                                    article</span></div>
-                                            {% endif %}
-                                            {% else %}
-                                            <a aria-label="Login To Articles Add To Lists"
-                                                href="{% url 'account_login' %}"
-                                                class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
-                                                to list</a>
-                                            <a aria-label="Login To Highlight Articles" href="{% url 'account_login' %}"
-                                                class="addToHighlightedButton registrationLink"><i
-                                                    class="fas fa-highlighter"></i><span>Highlight
-                                                    article</span></a>
-                                            {% endif %}
-                                        </div>
-                                        <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
-                                            <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
-                                                    class="fas fa-times closeFormContainerButton"></i>
-                                            </div>
-                                            {% if user_lists %}
-                                            <div class="listSelectionContainer">
-                                                {% for list in user_lists %}
-                                                <div class="listContainer">
-                                                    <label
-                                                        for="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
-                                                        {% if notification.article in list.articles.all %}
-                                                        <input
-                                                            id="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                            type="checkbox" name="lists" checked="True"> {{ list }}
-                                                        {% else %}
-                                                        <input
-                                                            id="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                            type="checkbox" name="lists">
-                                                        {{ list }}
-                                                        {% endif %}
-                                                    </label>
-                                                </div>
-                                                {% endfor %}
-                                            </div>
-                                            <div class="buttonsContainer">
-                                                <button class="saveButton">Save</button>
-                                                <button class="createNewListButton">Create</button>
-                                            </div>
-                                            {% else %}
-                                            <div class="listContainer">You haven't created any lists!</div>
-                                            <button class="createNewListButton createFirstList">Create First
-                                                List</button>
-                                            {% endif %}
-                                        </div>
-                                        <div class="createListMenu articleCreateListMenu formContainer">
-                                            <div class="formHeaderContainer">Create A New List<i
-                                                    class="fas fa-times closeFormContainerButton"></i>
-                                            </div>
-                                            <form enctype="multipart/form-data" method="POST" class="createListForm">
-                                                {% csrf_token %} {{ add_list_form }}
-                                                <input name="createListForm" type="submit" class="formSubmitButton"
-                                                    value="Save" />
-                                            </form>
-                                        </div>
-                                    </div>
-                                    {% if notification.article.tweet_type.type == "Retweet" %}
-                                    <div class="retweetWrapper">Retweeted post by
-                                        <span>@{{ notification.article.tweet_type.author }}</span>
-                                    </div>
-                                    {% endif %}
-                                    {% if notification.article.tweet_type.type == "Reply" %}
-                                    <div class="replyWrapper">Replying to
-                                        <span>@{{ notification.article.tweet_type.author }}</span>
-                                    </div>
-                                    {% endif %}
-                                    {% if notification.article.tweet_type.type != "Retweet" %}
-                                    <div class="contentBody">
-                                        <p>{{ notification.article.title }}</p>
-                                    </div>
-                                    {% endif %}
-                                    {% if notification.article.tweet_type.image_path %}
-                                    <img class="tweetImage"
-                                        src="{% static notification.article.tweet_type.image_path %}" alt="Tweet Image">
-                                    {% endif %}
-                                    {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
-                                    <div class="quoteWrapper">
-                                        <div class="quoteUpperContainer">
-                                            <div class="quoteAuthor">{{ notification.article.tweet_type.author }}</div>
-                                        </div>
-                                        <div class="quoteText">{{ notification.article.tweet_type.text }}</div>
-                                        {% if notification.article.tweet_type.initial_tweet_img_path %}
-                                        <img class="tweetImage"
-                                            src="{% static notification.article.tweet_type.initial_tweet_img_path %}"
-                                            alt="Tweet Reply Image">
-                                        {% endif %}
-                                    </div>
-                                    {% endif %}
-                                    <div class="timeContainer">
-                                        <p>{{ notification.article.pub_date }}</p>
-                                    </div>
-                                    <a aria-label="Open Content" class=" contentLink"
-                                        href="{{ notification.article.link }}" target="_blank"></a>
-                                </div>
-                            </div>
-                            {% endfor %}
-                            {% else %}
-                            <div class="noNotificationsAvailable">No Source Notifications Available</div>
-                            {% endif %}
-                        </div>
-                        <div class="notificationsContainer smallFormContentWrapper" data-tab="1">
-                            {% if stock_notifications %}
-                            {% for notification in stock_notifications %}
-                            <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
-                                id="bstni?ai#{{ notification.article.article_id }}">
-                                <div class="leftContentSide">
-                                    <div class="profileImageContainer">
-                                        <img src="{% static notification.article.source.favicon_path %}"
-                                            alt="Source Picture" />
-                                        <a class="sourceProfile"
-                                            href="{{ notification.article.source.get_absolute_url }}"
-                                            aria-label="Open Profile Of {{ notification.article.source.name }}"></a>
-                                    </div>
-                                </div>
-                                <div class="rightContentSide">
-                                    <div class="contentInfoContainer">
-                                        <div class="sourceAndWebsiteContainer">
-                                            <a class="sourceProfile"
-                                                href="{{ notification.article.source.get_absolute_url }}"
-                                                aria-label="Open Profile Of {{ notification.article.source.name }}">{{ notification.article.source.name }}</a>
-                                            <div class="sourceWebsiteProfileContainer">
-                                                {% if notification.article.source.website.name == "YouTube" %}
-                                                <img class="youtubeLogo"
-                                                    src="{% static notification.article.source.website.logo %}"
-                                                    alt="Website Logo" />
-                                                {% else %}
-                                                <img src="{% static notification.article.source.website.logo %}"
-                                                    alt="Website Logo" />
-                                                {% endif %}
-                                                <a href="{{ notification.article.source.url }}" target="_blank"
-                                                    aria-label="Open External Profile Of {{ notification.article.source.name }}"></a>
-                                            </div>
-                                        </div>
-                                        <i class="fas fa-ellipsis-h" role="button"
-                                            aria-label="Open Article Interactions"></i>
-                                        <div class="articleOptionsContainer">
-                                            {% if request.user.is_authenticated %}
-                                            <div class="addToListButton" role="button"><i class="fas fa-list"></i>Add to
-                                                list
-                                            </div>
-                                            {% if notification.article.article_id in highlighted_content_ids %}
-                                            <div class="addToHighlightedButton" role="button"><i
-                                                    class="fas fa-times"></i><span>Unhighlight
-                                                    article</span></div>
-                                            {% else %}
-                                            <div class="addToHighlightedButton" role="button"><i
-                                                    class="fas fa-highlighter"></i><span>Highlight
-                                                    article</span></div>
-                                            {% endif %}
-                                            {% else %}
-                                            <a aria-label="Login To Articles Add To Lists"
-                                                href="{% url 'account_login' %}"
-                                                class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
-                                                to list</a>
-                                            <a aria-label="Login To Highlight Articles" href="{% url 'account_login' %}"
-                                                class="addToHighlightedButton registrationLink"><i
-                                                    class="fas fa-highlighter"></i><span>Highlight
-                                                    article</span></a>
-                                            {% endif %}
-                                        </div>
-                                        <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
-                                            <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
-                                                    class="fas fa-times closeFormContainerButton"></i>
-                                            </div>
-                                            {% if user_lists %}
-                                            <div class="listSelectionContainer">
-                                                {% for list in user_lists %}
-                                                <div class="listContainer">
-                                                    <label
-                                                        for="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
-                                                        {% if notification.article in list.articles.all %}
-                                                        <input
-                                                            id="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                            type="checkbox" name="lists" checked="True"> {{ list }}
-                                                        {% else %}
-                                                        <input
-                                                            id="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                            type="checkbox" name="lists">
-                                                        {{ list }}
-                                                        {% endif %}
-                                                    </label>
-                                                </div>
-                                                {% endfor %}
-                                            </div>
-                                            <div class="buttonsContainer">
-                                                <button class="saveButton">Save</button>
-                                                <button class="createNewListButton">Create</button>
-                                            </div>
-                                            {% else %}
-                                            <div class="listContainer">You haven't created any lists!</div>
-                                            <button class="createNewListButton createFirstList">Create First
-                                                List</button>
-                                            {% endif %}
-                                        </div>
-                                        <div class="createListMenu articleCreateListMenu formContainer">
-                                            <div class="formHeaderContainer">Create A New List<i
-                                                    class="fas fa-times closeFormContainerButton"></i>
-                                            </div>
-                                            <form enctype="multipart/form-data" method="POST" class="createListForm">
-                                                {% csrf_token %} {{ add_list_form }}
-                                                <input name="createListForm" type="submit" class="formSubmitButton"
-                                                    value="Save" />
-                                            </form>
-                                        </div>
-                                    </div>
-                                    {% if notification.article.tweet_type.type == "Retweet" %}
-                                    <div class="retweetWrapper">Retweeted post by
-                                        <span>@{{ notification.article.tweet_type.author }}</span>
-                                    </div>
-                                    {% endif %}
-                                    {% if notification.article.tweet_type.type == "Reply" %}
-                                    <div class="replyWrapper">Replying to
-                                        <span>@{{ notification.article.tweet_type.author }}</span>
-                                    </div>
-                                    {% endif %}
-                                    {% if notification.article.tweet_type.type != "Retweet" %}
-                                    <div class="contentBody">
-                                        <p>{{ notification.article.title }}</p>
-                                    </div>
-                                    {% endif %}
-                                    {% if notification.article.tweet_type.image_path %}
-                                    <img class="tweetImage"
-                                        src="{% static notification.article.tweet_type.image_path %}" alt="Tweet Image">
-                                    {% endif %}
-                                    {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
-                                    <div class="quoteWrapper">
-                                        <div class="quoteUpperContainer">
-                                            <div class="quoteAuthor">{{ notification.article.tweet_type.author }}</div>
-                                        </div>
-                                        <div class="quoteText">{{ notification.article.tweet_type.text }}</div>
-                                        {% if notification.article.tweet_type.initial_tweet_img_path %}
-                                        <img class="tweetImage"
-                                            src="{% static notification.article.tweet_type.initial_tweet_img_path %}"
-                                            alt="Tweet Reply Image">
-                                        {% endif %}
-                                    </div>
-                                    {% endif %}
-                                    <div class="timeContainer">
-                                        <p>{{ notification.article.pub_date }}</p>
-                                    </div>
-                                    <a class="contentLink" href="{{ notification.article.link }}" target="_blank"></a>
-                                </div>
-                            </div>
-                            {% endfor %}
-                            {% else %}
-                            <div class="noNotificationsAvailable">No Stock Notifications Available</div>
-                            {% endif %}
-                        </div>
-                        <div class="notificationsContainer smallFormContentWrapper" data-tab="2">
-                            <form enctype="multipart/form-data" method="POST" class="createKeywordNotificationForm">
-                                {% csrf_token %} {{ keyword_notification_creation_form }}
-                                <input name="createKeywordNotificationForm" type="submit" class="formSubmitButton"
-                                    value="Add" />
-                            </form>
-                            {% if keyword_notifications %}
-                            {% for notification in keyword_notifications %}
-                            <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
-                                id="bkni?ai#{{ notification.article.article_id }}">
-                                <div class="leftContentSide">
-                                    <div class="profileImageContainer">
-                                        <img src="{% static notification.article.source.favicon_path %}"
-                                            alt="Source Picture" />
-                                        <a class="sourceProfile"
-                                            href="{{ notification.article.source.get_absolute_url }}"
-                                            aria-label="Open Profile Of {{ notification.article.source.name }}"></a>
-                                    </div>
-                                </div>
-                                <div class="rightContentSide">
-                                    <div class="contentInfoContainer">
-                                        <div class="sourceAndWebsiteContainer">
-                                            <a class="sourceProfile"
-                                                href="{{ notification.article.source.get_absolute_url }}"
-                                                aria-label="Open Profile Of {{ notification.article.source.name }}">{{ notification.article.source.name }}</a>
-                                            <div class="sourceWebsiteProfileContainer">
-                                                {% if notification.article.source.website.name == "YouTube" %}
-                                                <img class="youtubeLogo"
-                                                    src="{% static notification.article.source.website.logo %}"
-                                                    alt="Website Logo" />
-                                                {% else %}
-                                                <img src="{% static notification.article.source.website.logo %}"
-                                                    alt="Website Logo" />
-                                                {% endif %}
-                                                <a href="{{ notification.article.source.url }}" target="_blank"
-                                                    aria-label="Open External Profile Of {{ notification.article.source.name }}"></a>
-                                            </div>
-                                        </div>
-                                        <i class="fas fa-ellipsis-h" role="button"
-                                            aria-label="Open Article Interactions"></i>
-                                        <div class="articleOptionsContainer">
-                                            {% if request.user.is_authenticated %}
-                                            <div class="addToListButton" role="button"><i class="fas fa-list"></i>Add to
-                                                list
-                                            </div>
-                                            {% if notification.article.article_id in highlighted_content_ids %}
-                                            <div class="addToHighlightedButton" role="button"><i
-                                                    class="fas fa-times"></i><span>Unhighlight
-                                                    article</span></div>
-                                            {% else %}
-                                            <div class="addToHighlightedButton" role="button"><i
-                                                    class="fas fa-highlighter"></i><span>Highlight
-                                                    article</span></div>
-                                            {% endif %}
-                                            {% else %}
-                                            <a href="{% url 'account_login' %}" class="addToListButton registrationLink"
-                                                aria-label="Login To Articles Add To Lists"><i
-                                                    class="fas fa-list"></i>Add
-                                                to list</a>
-                                            <a href="{% url 'account_login' %}"
-                                                class="addToHighlightedButton registrationLink"
-                                                aria-label="Login To Highlight Articles"><i
-                                                    class="fas fa-highlighter"></i><span>Highlight
-                                                    article</span></a>
-                                            {% endif %}
-                                        </div>
-                                        <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
-                                            <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
-                                                    class="fas fa-times closeFormContainerButton"></i>
-                                            </div>
-                                            {% if user_lists %}
-                                            <div class="listSelectionContainer">
-                                                {% for list in user_lists %}
-                                                <div class="listContainer">
-                                                    <label
-                                                        for="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
-                                                        {% if notification.article in list.articles.all %}
-                                                        <input
-                                                            id="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                            type="checkbox" name="lists" checked="True"> {{ list }}
-                                                        {% else %}
-                                                        <input
-                                                            id="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                            type="checkbox" name="lists">
-                                                        {{ list }}
-                                                        {% endif %}
-                                                    </label>
-                                                </div>
-                                                {% endfor %}
-                                            </div>
-                                            <div class="buttonsContainer">
-                                                <button class="saveButton">Save</button>
-                                                <button class="createNewListButton">Create</button>
-                                            </div>
-                                            {% else %}
-                                            <div class="listContainer">You haven't created any lists!</div>
-                                            <button class="createNewListButton createFirstList">Create First
-                                                List</button>
-                                            {% endif %}
-                                        </div>
-                                        <div class="createListMenu articleCreateListMenu formContainer">
-                                            <div class="formHeaderContainer">Create A New List<i
-                                                    class="fas fa-times closeFormContainerButton"></i>
-                                            </div>
-                                            <form enctype="multipart/form-data" method="POST" class="createListForm">
-                                                {% csrf_token %} {{ add_list_form }}
-                                                <input name="createListForm" type="submit" class="formSubmitButton"
-                                                    value="Save" />
-                                            </form>
-                                        </div>
-                                    </div>
-                                    {% if notification.article.tweet_type.type == "Retweet" %}
-                                    <div class="retweetWrapper">Retweeted post by
-                                        <span>@{{ notification.article.tweet_type.author }}</span>
-                                    </div>
-                                    {% endif %}
-                                    {% if notification.article.tweet_type.type == "Reply" %}
-                                    <div class="replyWrapper">Replying to
-                                        <span>@{{ notification.article.tweet_type.author }}</span>
-                                    </div>
-                                    {% endif %}
-                                    {% if notification.article.tweet_type.type != "Retweet" %}
-                                    <div class="contentBody">
-                                        <p>{{ notification.article.title }}</p>
-                                    </div>
-                                    {% endif %}
-                                    {% if notification.article.tweet_type.image_path %}
-                                    <img class="tweetImage"
-                                        src="{% static notification.article.tweet_type.image_path %}" alt="Tweet Image">
-                                    {% endif %}
-                                    {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
-                                    <div class="quoteWrapper">
-                                        <div class="quoteUpperContainer">
-                                            <div class="quoteAuthor">{{ notification.article.tweet_type.author }}</div>
-                                        </div>
-                                        <div class="quoteText">{{ notification.article.tweet_type.text }}</div>
-                                        {% if notification.article.tweet_type.initial_tweet_img_path %}
-                                        <img class="tweetImage"
-                                            src="{% static notification.article.tweet_type.initial_tweet_img_path %}"
-                                            alt="Tweet Reply Image">
-                                        {% endif %}
-                                    </div>
-                                    {% endif %}
-                                    <div class="timeContainer">
-                                        <p>{{ notification.article.pub_date }}</p>
-                                    </div>
-                                    <a class="contentLink" href="{{ notification.article.link }}" target="_blank"
-                                        aria-label="Open Content"></a>
-                                </div>
-                            </div>
-                            {% endfor %}
-                            {% else %}
-                            <div class="noNotificationsAvailable">No Keyword Notifications Available</div>
-                            {% endif %}
-                        </div>
-                    </div>
                     {% endif %}
-                    <div class="profileWrapper">
-                        {% if request.user.is_authenticated %}
-                        <div class="userProfile">
+                    {% if request.user.is_authenticated %}
+                    <div class="userProfile">
+                        {% if user.profile.profile_pic %}
+                        <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
+                        {% else %}
+                        <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">
+                            {{ user.username.0 }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="profileMenu">
+                        <div class="profileMenuInfoOption">
                             {% if user.profile.profile_pic %}
                             <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
                             {% else %}
                             <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">
                                 {{ user.username.0 }}</div>
                             {% endif %}
-                            <div class="userInformation">
-                                <div class="userName">{{ user.username }}</div>
-                                <div class="accountType">{{ user.profile.account_type }}</div>
-                            </div>
-                            <i role="button" aria-label="Open Logout Option" class="fas fa-sort-down"></i>
+                            <span class="userNameSpan">{{ user.username }}</span>
+                            <span class="userEmailSpan">{{ user.email }}</span>
                         </div>
-                        <div class="profileMenu">
-                            <div>
-                                <form method="post" action="{% url 'account_logout' %}">
-                                    {% csrf_token %}
-                                    {% if redirect_field_value %}
-                                    <input type="hidden" name="{{ redirect_field_name }}"
-                                        value="{{ redirect_field_value }}" />
-                                    {% endif %}
-                                    <button type="submit"><i
-                                            class="fas fa-sign-out-alt"></i>{% trans 'Sign Out' %}</button>
-                                </form>
-                            </div>
+                        <div class="profileMenuOption">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                            <a aria-label="Open Settings" href="{% url 'accounts:settings' %}"></a>
                         </div>
-                        {% else %}
-                        <div class="headerButtonContainer">
-                            <a href="{% url 'account_login' %}" aria-label="Login">Login</a>
-                            <a href="{% url 'account_signup' %}" aria-label="Logout">Sign Up</a>
+                        <div class="profileMenuOption">
+                            <form method="post" action="{% url 'account_logout' %}">
+                                {% csrf_token %}
+                                {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}"
+                                    value="{{ redirect_field_value }}" />
+                                {% endif %}
+                                <button type="submit"><i class="fas fa-sign-out-alt"></i>{% trans 'Sign Out' %}</button>
+                            </form>
                         </div>
-                        {% endif %}
                     </div>
+                    {% endif %}
                 </div>
-                <i role="button" aria-label="Open Dropdown Navigation" class="fa-solid fa-bars"></i>
+                {% else %}
+                <div class="headerButtonContainer">
+                    <a href="{% url 'account_login' %}" aria-label="Login">Login</a>
+                    <a href="{% url 'account_signup' %}" aria-label="Logout">Sign Up</a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </header>
     <main>
+        {% if request.user.is_authenticated %}
+        <div class="notificationPopupWrapper">
+            <h3>Notifications</h3>
+            <div class="notificationHeadersContainer" role="navigation" aria-label="Notification Navigation">
+                <div class="activeNotificationCategory" data-for-tab="0">Sources</div>
+                <div data-for-tab="1">Stocks</div>
+                <div data-for-tab="2">Keywords</div>
+            </div>
+            <div class="notificationsContainer activeNotificationContainer smallFormContentWrapper" data-tab="0">
+                {% if source_notifications %}
+                {% for notification in source_notifications %}
+                <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
+                    id="bsoni?ai#{{ notification.article.article_id }}">
+                    <div class="leftContentSide">
+                        <div class="profileImageContainer">
+                            <img src="{% static notification.article.source.favicon_path %}" alt="Source Picture" />
+                            <a aria-label="Open Profile Of {{ notification.article.source.name }}" class="sourceProfile"
+                                href="{{ notification.article.source.get_absolute_url }}"></a>
+                        </div>
+                    </div>
+                    <div class="rightContentSide">
+                        <div class="contentInfoContainer">
+                            <div class="sourceAndWebsiteContainer">
+                                <a aria-label="Open Profile Of {{ notification.article.source.name }}"
+                                    class="sourceProfile"
+                                    href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
+                                <div class="sourceWebsiteProfileContainer">
+                                    {% if notification.article.source.website.name == "YouTube" %}
+                                    <img class="youtubeLogo" src="{% static notification.article.source.website.logo %}"
+                                        alt="Website Logo" />
+                                    {% else %}
+                                    <img src="{% static notification.article.source.website.logo %}"
+                                        alt="Website Logo" />
+                                    {% endif %}
+                                    <a aria-label="Open External Profile Of {{ notification.article.source.name }}"
+                                        href="{{ notification.article.source.url }}" target="_blank"></a>
+                                </div>
+                            </div>
+                            <i class="fas fa-ellipsis-h" role="button" aria-label="Open Article Interactions"></i>
+                            <div class="articleOptionsContainer">
+                                {% if request.user.is_authenticated %}
+                                <div class="addToListButton"><i class="fas fa-list"></i>Add to list
+                                </div>
+                                {% if notification.article.article_id in highlighted_content_ids %}
+                                <div class="addToHighlightedButton" role="button"><i
+                                        class="fas fa-times"></i><span>Unhighlight
+                                        article</span></div>
+                                {% else %}
+                                <div class="addToHighlightedButton" role="button"><i
+                                        class="fas fa-highlighter"></i><span>Highlight
+                                        article</span></div>
+                                {% endif %}
+                                {% else %}
+                                <a aria-label="Login To Articles Add To Lists" href="{% url 'account_login' %}"
+                                    class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
+                                    to list</a>
+                                <a aria-label="Login To Highlight Articles" href="{% url 'account_login' %}"
+                                    class="addToHighlightedButton registrationLink"><i
+                                        class="fas fa-highlighter"></i><span>Highlight
+                                        article</span></a>
+                                {% endif %}
+                            </div>
+                            <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
+                                <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
+                                        class="fas fa-times closeFormContainerButton"></i>
+                                </div>
+                                {% if user_lists %}
+                                <div class="listSelectionContainer">
+                                    {% for list in user_lists %}
+                                    <div class="listContainer">
+                                        <label
+                                            for="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
+                                            {% if notification.article in list.articles.all %}
+                                            <input
+                                                id="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
+                                                type="checkbox" name="lists" checked="True"> {{ list }}
+                                            {% else %}
+                                            <input
+                                                id="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
+                                                type="checkbox" name="lists">
+                                            {{ list }}
+                                            {% endif %}
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="buttonsContainer">
+                                    <button class="saveButton">Save</button>
+                                    <button class="createNewListButton">Create</button>
+                                </div>
+                                {% else %}
+                                <div class="listContainer">You haven't created any lists!</div>
+                                <button class="createNewListButton createFirstList">Create First
+                                    List</button>
+                                {% endif %}
+                            </div>
+                            <div class="createListMenu articleCreateListMenu formContainer">
+                                <div class="formHeaderContainer">Create A New List<i
+                                        class="fas fa-times closeFormContainerButton"></i>
+                                </div>
+                                <form enctype="multipart/form-data" method="POST" class="createListForm">
+                                    {% csrf_token %} {{ add_list_form }}
+                                    <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+                                </form>
+                            </div>
+                        </div>
+                        {% if notification.article.tweet_type.type == "Retweet" %}
+                        <div class="retweetWrapper">Retweeted post by
+                            <span>@{{ notification.article.tweet_type.author }}</span>
+                        </div>
+                        {% endif %}
+                        {% if notification.article.tweet_type.type == "Reply" %}
+                        <div class="replyWrapper">Replying to
+                            <span>@{{ notification.article.tweet_type.author }}</span>
+                        </div>
+                        {% endif %}
+                        {% if notification.article.tweet_type.type != "Retweet" %}
+                        <div class="contentBody">
+                            <p>{{ notification.article.title }}</p>
+                        </div>
+                        {% endif %}
+                        {% if notification.article.tweet_type.image_path %}
+                        <img class="tweetImage" src="{% static notification.article.tweet_type.image_path %}"
+                            alt="Tweet Image">
+                        {% endif %}
+                        {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
+                        <div class="quoteWrapper">
+                            <div class="quoteUpperContainer">
+                                <div class="quoteAuthor">{{ notification.article.tweet_type.author }}</div>
+                            </div>
+                            <div class="quoteText">{{ notification.article.tweet_type.text }}</div>
+                            {% if notification.article.tweet_type.initial_tweet_img_path %}
+                            <img class="tweetImage"
+                                src="{% static notification.article.tweet_type.initial_tweet_img_path %}"
+                                alt="Tweet Reply Image">
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        <div class="timeContainer">
+                            <p>{{ notification.article.pub_date }}</p>
+                        </div>
+                        <a aria-label="Open Content" class=" contentLink" href="{{ notification.article.link }}"
+                            target="_blank"></a>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="noNotificationsAvailable">No Source Notifications Available</div>
+                {% endif %}
+            </div>
+            <div class="notificationsContainer smallFormContentWrapper" data-tab="1">
+                {% if stock_notifications %}
+                {% for notification in stock_notifications %}
+                <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
+                    id="bstni?ai#{{ notification.article.article_id }}">
+                    <div class="leftContentSide">
+                        <div class="profileImageContainer">
+                            <img src="{% static notification.article.source.favicon_path %}" alt="Source Picture" />
+                            <a class="sourceProfile" href="{{ notification.article.source.get_absolute_url }}"
+                                aria-label="Open Profile Of {{ notification.article.source.name }}"></a>
+                        </div>
+                    </div>
+                    <div class="rightContentSide">
+                        <div class="contentInfoContainer">
+                            <div class="sourceAndWebsiteContainer">
+                                <a class="sourceProfile" href="{{ notification.article.source.get_absolute_url }}"
+                                    aria-label="Open Profile Of {{ notification.article.source.name }}">{{ notification.article.source.name }}</a>
+                                <div class="sourceWebsiteProfileContainer">
+                                    {% if notification.article.source.website.name == "YouTube" %}
+                                    <img class="youtubeLogo" src="{% static notification.article.source.website.logo %}"
+                                        alt="Website Logo" />
+                                    {% else %}
+                                    <img src="{% static notification.article.source.website.logo %}"
+                                        alt="Website Logo" />
+                                    {% endif %}
+                                    <a href="{{ notification.article.source.url }}" target="_blank"
+                                        aria-label="Open External Profile Of {{ notification.article.source.name }}"></a>
+                                </div>
+                            </div>
+                            <i class="fas fa-ellipsis-h" role="button" aria-label="Open Article Interactions"></i>
+                            <div class="articleOptionsContainer">
+                                {% if request.user.is_authenticated %}
+                                <div class="addToListButton" role="button"><i class="fas fa-list"></i>Add to
+                                    list
+                                </div>
+                                {% if notification.article.article_id in highlighted_content_ids %}
+                                <div class="addToHighlightedButton" role="button"><i
+                                        class="fas fa-times"></i><span>Unhighlight
+                                        article</span></div>
+                                {% else %}
+                                <div class="addToHighlightedButton" role="button"><i
+                                        class="fas fa-highlighter"></i><span>Highlight
+                                        article</span></div>
+                                {% endif %}
+                                {% else %}
+                                <a aria-label="Login To Articles Add To Lists" href="{% url 'account_login' %}"
+                                    class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
+                                    to list</a>
+                                <a aria-label="Login To Highlight Articles" href="{% url 'account_login' %}"
+                                    class="addToHighlightedButton registrationLink"><i
+                                        class="fas fa-highlighter"></i><span>Highlight
+                                        article</span></a>
+                                {% endif %}
+                            </div>
+                            <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
+                                <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
+                                        class="fas fa-times closeFormContainerButton"></i>
+                                </div>
+                                {% if user_lists %}
+                                <div class="listSelectionContainer">
+                                    {% for list in user_lists %}
+                                    <div class="listContainer">
+                                        <label
+                                            for="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
+                                            {% if notification.article in list.articles.all %}
+                                            <input
+                                                id="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
+                                                type="checkbox" name="lists" checked="True"> {{ list }}
+                                            {% else %}
+                                            <input
+                                                id="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
+                                                type="checkbox" name="lists">
+                                            {{ list }}
+                                            {% endif %}
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="buttonsContainer">
+                                    <button class="saveButton">Save</button>
+                                    <button class="createNewListButton">Create</button>
+                                </div>
+                                {% else %}
+                                <div class="listContainer">You haven't created any lists!</div>
+                                <button class="createNewListButton createFirstList">Create First
+                                    List</button>
+                                {% endif %}
+                            </div>
+                            <div class="createListMenu articleCreateListMenu formContainer">
+                                <div class="formHeaderContainer">Create A New List<i
+                                        class="fas fa-times closeFormContainerButton"></i>
+                                </div>
+                                <form enctype="multipart/form-data" method="POST" class="createListForm">
+                                    {% csrf_token %} {{ add_list_form }}
+                                    <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+                                </form>
+                            </div>
+                        </div>
+                        {% if notification.article.tweet_type.type == "Retweet" %}
+                        <div class="retweetWrapper">Retweeted post by
+                            <span>@{{ notification.article.tweet_type.author }}</span>
+                        </div>
+                        {% endif %}
+                        {% if notification.article.tweet_type.type == "Reply" %}
+                        <div class="replyWrapper">Replying to
+                            <span>@{{ notification.article.tweet_type.author }}</span>
+                        </div>
+                        {% endif %}
+                        {% if notification.article.tweet_type.type != "Retweet" %}
+                        <div class="contentBody">
+                            <p>{{ notification.article.title }}</p>
+                        </div>
+                        {% endif %}
+                        {% if notification.article.tweet_type.image_path %}
+                        <img class="tweetImage" src="{% static notification.article.tweet_type.image_path %}"
+                            alt="Tweet Image">
+                        {% endif %}
+                        {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
+                        <div class="quoteWrapper">
+                            <div class="quoteUpperContainer">
+                                <div class="quoteAuthor">{{ notification.article.tweet_type.author }}</div>
+                            </div>
+                            <div class="quoteText">{{ notification.article.tweet_type.text }}</div>
+                            {% if notification.article.tweet_type.initial_tweet_img_path %}
+                            <img class="tweetImage"
+                                src="{% static notification.article.tweet_type.initial_tweet_img_path %}"
+                                alt="Tweet Reply Image">
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        <div class="timeContainer">
+                            <p>{{ notification.article.pub_date }}</p>
+                        </div>
+                        <a class="contentLink" href="{{ notification.article.link }}" target="_blank"></a>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="noNotificationsAvailable">No Stock Notifications Available</div>
+                {% endif %}
+            </div>
+            <div class="notificationsContainer smallFormContentWrapper" data-tab="2">
+                <form enctype="multipart/form-data" method="POST" class="createKeywordNotificationForm">
+                    {% csrf_token %} {{ keyword_notification_creation_form }}
+                    <input name="createKeywordNotificationForm" type="submit" class="formSubmitButton" value="Add" />
+                </form>
+                {% if keyword_notifications %}
+                {% for notification in keyword_notifications %}
+                <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
+                    id="bkni?ai#{{ notification.article.article_id }}">
+                    <div class="leftContentSide">
+                        <div class="profileImageContainer">
+                            <img src="{% static notification.article.source.favicon_path %}" alt="Source Picture" />
+                            <a class="sourceProfile" href="{{ notification.article.source.get_absolute_url }}"
+                                aria-label="Open Profile Of {{ notification.article.source.name }}"></a>
+                        </div>
+                    </div>
+                    <div class="rightContentSide">
+                        <div class="contentInfoContainer">
+                            <div class="sourceAndWebsiteContainer">
+                                <a class="sourceProfile" href="{{ notification.article.source.get_absolute_url }}"
+                                    aria-label="Open Profile Of {{ notification.article.source.name }}">{{ notification.article.source.name }}</a>
+                                <div class="sourceWebsiteProfileContainer">
+                                    {% if notification.article.source.website.name == "YouTube" %}
+                                    <img class="youtubeLogo" src="{% static notification.article.source.website.logo %}"
+                                        alt="Website Logo" />
+                                    {% else %}
+                                    <img src="{% static notification.article.source.website.logo %}"
+                                        alt="Website Logo" />
+                                    {% endif %}
+                                    <a href="{{ notification.article.source.url }}" target="_blank"
+                                        aria-label="Open External Profile Of {{ notification.article.source.name }}"></a>
+                                </div>
+                            </div>
+                            <i class="fas fa-ellipsis-h" role="button" aria-label="Open Article Interactions"></i>
+                            <div class="articleOptionsContainer">
+                                {% if request.user.is_authenticated %}
+                                <div class="addToListButton" role="button"><i class="fas fa-list"></i>Add to
+                                    list
+                                </div>
+                                {% if notification.article.article_id in highlighted_content_ids %}
+                                <div class="addToHighlightedButton" role="button"><i
+                                        class="fas fa-times"></i><span>Unhighlight
+                                        article</span></div>
+                                {% else %}
+                                <div class="addToHighlightedButton" role="button"><i
+                                        class="fas fa-highlighter"></i><span>Highlight
+                                        article</span></div>
+                                {% endif %}
+                                {% else %}
+                                <a href="{% url 'account_login' %}" class="addToListButton registrationLink"
+                                    aria-label="Login To Articles Add To Lists"><i class="fas fa-list"></i>Add
+                                    to list</a>
+                                <a href="{% url 'account_login' %}" class="addToHighlightedButton registrationLink"
+                                    aria-label="Login To Highlight Articles"><i
+                                        class="fas fa-highlighter"></i><span>Highlight
+                                        article</span></a>
+                                {% endif %}
+                            </div>
+                            <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
+                                <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
+                                        class="fas fa-times closeFormContainerButton"></i>
+                                </div>
+                                {% if user_lists %}
+                                <div class="listSelectionContainer">
+                                    {% for list in user_lists %}
+                                    <div class="listContainer">
+                                        <label for="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
+                                            {% if notification.article in list.articles.all %}
+                                            <input
+                                                id="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
+                                                type="checkbox" name="lists" checked="True"> {{ list }}
+                                            {% else %}
+                                            <input
+                                                id="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
+                                                type="checkbox" name="lists">
+                                            {{ list }}
+                                            {% endif %}
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="buttonsContainer">
+                                    <button class="saveButton">Save</button>
+                                    <button class="createNewListButton">Create</button>
+                                </div>
+                                {% else %}
+                                <div class="listContainer">You haven't created any lists!</div>
+                                <button class="createNewListButton createFirstList">Create First
+                                    List</button>
+                                {% endif %}
+                            </div>
+                            <div class="createListMenu articleCreateListMenu formContainer">
+                                <div class="formHeaderContainer">Create A New List<i
+                                        class="fas fa-times closeFormContainerButton"></i>
+                                </div>
+                                <form enctype="multipart/form-data" method="POST" class="createListForm">
+                                    {% csrf_token %} {{ add_list_form }}
+                                    <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
+                                </form>
+                            </div>
+                        </div>
+                        {% if notification.article.tweet_type.type == "Retweet" %}
+                        <div class="retweetWrapper">Retweeted post by
+                            <span>@{{ notification.article.tweet_type.author }}</span>
+                        </div>
+                        {% endif %}
+                        {% if notification.article.tweet_type.type == "Reply" %}
+                        <div class="replyWrapper">Replying to
+                            <span>@{{ notification.article.tweet_type.author }}</span>
+                        </div>
+                        {% endif %}
+                        {% if notification.article.tweet_type.type != "Retweet" %}
+                        <div class="contentBody">
+                            <p>{{ notification.article.title }}</p>
+                        </div>
+                        {% endif %}
+                        {% if notification.article.tweet_type.image_path %}
+                        <img class="tweetImage" src="{% static notification.article.tweet_type.image_path %}"
+                            alt="Tweet Image">
+                        {% endif %}
+                        {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
+                        <div class="quoteWrapper">
+                            <div class="quoteUpperContainer">
+                                <div class="quoteAuthor">{{ notification.article.tweet_type.author }}</div>
+                            </div>
+                            <div class="quoteText">{{ notification.article.tweet_type.text }}</div>
+                            {% if notification.article.tweet_type.initial_tweet_img_path %}
+                            <img class="tweetImage"
+                                src="{% static notification.article.tweet_type.initial_tweet_img_path %}"
+                                alt="Tweet Reply Image">
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        <div class="timeContainer">
+                            <p>{{ notification.article.pub_date }}</p>
+                        </div>
+                        <a class="contentLink" href="{{ notification.article.link }}" target="_blank"
+                            aria-label="Open Content"></a>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="noNotificationsAvailable">No Keyword Notifications Available</div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
         <div class="overlay">
             <nav class="horizontalNavigation" aria-label="Smartphone Navigation">
-                {% if request.user.is_authenticated == False %}
-                <div class="mainNavigationLink"><span>Feed</span><a aria-label="Login To Open Feed"
-                        href="{% url 'account_login' %}"></a></div>
-                {% else %}
-                <div class="mainNavigationLink"><span>Feed</span><a aria-label="Open Feed"
-                        href="{% url 'home:feed' %}"></a></div>
-                {% endif %}
-                <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Lists"
-                        href="{% url 'list:lists' %}"></a></div>
-                <div class="mainNavigationLink"><span>Sectors</span><a aria-label="Open Sectors"
-                        href="{% url 'sector:sectors' %}"></a>
+                <div class="mainNavigationLink">
+                    <span>Portfolio</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a aria-label="Open Sectors" href="{% url 'sector:sectors' %}"></a>
                 </div>
-                <div class="mainNavigationLink"><span>Content</span><a aria-label="Open Content"
-                        href="{% url 'article:articles' %}"></a>
+                <div class="mainNavigationLink">
+                    <span>Lists</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a aria-label="Open Content" href="{% url 'article:articles' %}"></a>
+                </div>
+                <div class="mainNavigationLink">
+                    <span>Sources</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a aria-label="Open Lists" href="{% url 'list:lists' %}"></a>
+                </div>
+                <div class="mainNavigationLink">
+                    <span>Guide</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a aria-label="Open Content" href="{% url 'article:articles' %}"></a>
                 </div>
                 {% if request.user.is_authenticated %}
-                <div class="mainNavigationLink"><span>Settings</span><a aria-label="Open Settings"
-                        href="{% url 'accounts:settings' %}"></a></div>
-                <div class="mainNavigationLink"><span>Notifications</span><a aria-label="Open Notifications"
-                        href="{% url 'home:notifications' %}"></a>
+                <div class="mainNavigationLink">
+                    <span>Settings</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a aria-label="Open Settings" href="{% url 'accounts:settings' %}"></a>
+                </div>
+                <div class="mainNavigationLink">
+                    <span>Notifications</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a aria-label="Open Notifications" href="{% url 'home:notifications' %}"></a>
                 </div>
                 <form class="mainNavigationLink" method="post" action="{% url 'account_logout' %}">
                     {% csrf_token %}
@@ -606,32 +617,16 @@
                     <button type="submit">{% trans 'Logout' %}</button>
                 </form>
                 {% else %}
-                <div class="mainNavigationLink"><span>Login/Register<a aria-label="Login/Register"
-                            href="{% url 'account_login' %}"></a></span>
+                <div class="headerButtonContainer">
+                    <a href="{% url 'account_login' %}" aria-label="Login">Login</a>
+                    <a href="{% url 'account_signup' %}" aria-label="Logout">Sign Up</a>
                 </div>
                 {% endif %}
             </nav>
 
-            <div class="createListMenu formContainer smartphoneCreateListMenu">
-                <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
-                </div>
-                <form enctype="multipart/form-data" method="POST" class="createListForm">
-                    {% csrf_token %} {{ add_list_form }}
-                    <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
-                </form>
-            </div>
-
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages|slice:":1" %}
-                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-
             {% block content %}
             {% endblock %}
-            <script src="{% static 'home/min_base_script_v15.js' %}"></script>
+            <script src="{% static 'home/base_script.js' %}"></script>
         </div>
 
     </main>

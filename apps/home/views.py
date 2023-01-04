@@ -57,18 +57,14 @@ class SearchResultView(TemplateView, BaseMixin):
         if self.request.user.is_authenticated: 
             context['subscribed_sources'] = Source.objects.filter_by_subscription(self.request.user)
             context['notification_sources'] = Notification.objects.filter(user=self.request.user).exclude(source=None).values_list('source', flat=True)
-        context['filtered_stocks'] = paginator_create(self.request, Stock.objects.filter_by_search_term(search_term), 50, 'stocks')
+        context['filtered_stocks'] = Stock.objects.filter_by_search_term(search_term)
         context['filtered_sources'] = Source.objects.filter_by_search_term(search_term)
         filtered_content = Article.objects.filter_by_search_term(search_term)
-        context['filtered_tweets'] = paginator_create(self.request, filtered_content.filter(source__website=TWITTER), 25, 'tweets')
-        context['filtered_articles'] = paginator_create(self.request, filtered_content.exclude(source__website=TWITTER), 50, 'long_form_content')     
+        context['analysis'] = paginator_create(self.request, filtered_content.filter(source__content_type = "Analysis"), 50, 'analysis')
+        context['commentary'] = paginator_create(self.request, filtered_content.filter(source__content_type = "Commentary"), 50, 'commentary')
+        context['news'] = paginator_create(self.request, filtered_content.filter(source__content_type = "News"), 50, 'news')
+        # context['filtered_tweets'] = paginator_create(self.request, filtered_content.filter(source__website=TWITTER), 25, 'tweets')
+        # context['filtered_articles'] = paginator_create(self.request, filtered_content.exclude(source__website=TWITTER), 50, 'long_form_content')
+        context['top_articles'] = Article.objects.filter(source__website__name="Substack")[0:10]     
         return context
 
-
-
-class NewPageView(TemplateView, BaseMixin):
-    template_name = 'home/new_page.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context

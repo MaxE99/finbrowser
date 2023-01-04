@@ -1,5 +1,6 @@
 # Django import
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 # Local import
 from apps.logic.pure_logic import paginator_create
 from apps.home.views import TWITTER, BaseMixin
@@ -34,4 +35,18 @@ class SourceDetailView(DetailView, BaseMixin):
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating
         context['notifications_activated'] = notifications_activated
+        return context
+
+
+class SourceRankingView(ListView, BaseMixin):
+    model = Source
+    context_object_name = 'source'
+    template_name = 'source/source_ranking.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sources'] = paginator_create(self.request, Source.objects.all().order_by("-average_rating"), 25, 'sources')
+        if self.request.user.is_authenticated: 
+            context['subscribed_sources'] = Source.objects.filter_by_subscription(self.request.user)
+            context['user_ratings'] = SourceRating.objects.filter(user=self.request.user)
         return context

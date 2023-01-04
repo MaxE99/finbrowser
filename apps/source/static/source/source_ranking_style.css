@@ -1,0 +1,244 @@
+.pageWrapper {
+  display: flex;
+}
+
+.sourceRankingWrapper {
+  width: 70%;
+}
+
+.sourceRankingContainer {
+  display: flex;
+  margin: 4rem 0;
+  background: white;
+  padding: 2rem 4rem;
+  border-radius: 0.45rem;
+  box-shadow: var(--box-shadowScheme);
+}
+
+.leftSide {
+  margin-right: 6.75rem;
+  border: 1px solid;
+  border-radius: 0.45rem;
+  position: relative;
+  width: 23rem;
+  height: 23rem;
+}
+
+.leftSide img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.leftSide .rating {
+  position: absolute;
+  right: -3rem;
+  bottom: -3rem;
+  border-radius: 50%;
+  border: 0.4rem solid;
+  padding: 1.2rem;
+  background: white;
+  color: var(--primary-fontColor);
+  font-size: 3.5rem;
+}
+
+.rightSide {
+  width: calc(100% - 29.75rem);
+}
+
+.firstRow,
+.secondRow,
+.thirdRow,
+.fourthRow {
+  display: flex;
+}
+
+.firstRow {
+  align-items: center;
+  margin-bottom: 0;
+  font-size: 3rem;
+}
+
+.firstRow .rank {
+  color: var(--primary-fontColor);
+}
+
+.firstRow .name {
+  text-transform: uppercase;
+  margin-left: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: unset;
+}
+
+.sectorInfoContainer a,
+.websiteInfoContainer a {
+  cursor: pointer;
+  text-decoration: none;
+  color: unset;
+}
+
+.firstRow .name:hover,
+.sectorInfoContainer a:hover,
+.websiteInfoContainer a:hover {
+  text-decoration: underline;
+}
+
+.secondRow {
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.secondRow .infoContainer {
+  display: flex;
+  flex-direction: column;
+  width: 33.33%;
+  font-size: 1.85rem;
+  margin-bottom: 2rem;
+}
+
+.infoContainer span:first-of-type {
+  color: gray;
+  margin-bottom: 0.5rem;
+}
+
+.infoContainer .fa-star {
+  color: gold;
+  margin-right: 0.5rem;
+}
+
+.infoContainer .notRated {
+  cursor: pointer;
+}
+
+.infoContainer .notRated:hover {
+  text-decoration: underline;
+}
+
+.thirdRow {
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.thirdRow .tag {
+  cursor: pointer;
+  font-size: 1.6rem;
+  white-space: nowrap;
+  border: 0.1rem solid #e2e6ea;
+  border-radius: 0.45rem;
+  text-align: center;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  margin-right: 2rem;
+  padding: 1.2rem 2.4rem;
+}
+
+.thirdRow .tag:hover {
+  color: white;
+  background: var(--primary-fontColor);
+}
+
+.fourthRow {
+  margin-bottom: 0;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.fourthRow button {
+  color: var(--primary-fontColor);
+  background: white;
+  border: 0.1rem solid #e2e6ea;
+  cursor: pointer;
+  font-size: 1.85rem;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+  text-decoration: none;
+  border-radius: 0.45rem;
+  padding: 1.36rem 2.72rem;
+  width: 47.5%;
+}
+
+.fourthRow button:hover,
+.fourthRow button:last-of-type,
+.fourthRow .subscribed {
+  color: white;
+  background: var(--primary-fontColor);
+}
+
+.fourthRow .subscribed:hover {
+  color: var(--primary-fontColor);
+  background: white;
+}
+
+.filterSidebar {
+  display: flex;
+  flex-direction: column;
+  width: 27.5%;
+  margin-left: 2.5%;
+  margin-top: 4rem;
+  background: white;
+  padding: 0 2.5rem;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 0.45rem;
+  max-height: calc(100vh - 16.5rem);
+  overflow-y: auto;
+  position: -webkit-sticky;
+  position: sticky;
+  right: 0;
+  top: 12.5rem;
+}
+
+.filterSidebar .selectContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  font-size: 2rem;
+}
+
+.filterSidebar .selectContainer select {
+  font-size: 1.8rem;
+  transition: border-color 250ms ease-in-out;
+}
+
+.filterSidebar .choiceContainer,
+.filterSidebar .selectContainer select {
+  margin-top: 0.5rem;
+  border: 0.1rem solid #ccc;
+  background: white;
+  padding: 1rem 1.25rem;
+  border-radius: 0.45rem;
+}
+
+.filterSidebar .choiceContainer input {
+  margin-right: 0.5rem;
+}
+
+.filterSidebar .applyFilterButton {
+  background: var(--primary-fontColor);
+  color: white;
+  border: 0.1rem solid #e2e6ea;
+  cursor: pointer;
+  font-size: 1.85rem;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+  text-decoration: none;
+  border-radius: 0.45rem;
+  padding: 1.36rem 2.72rem;
+  margin: 2rem auto;
+  width: 100%;
+}
+
+.filterSidebar .mainSearchWrapper {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.filterSidebar .selectContainer:last-of-type {
+  flex-direction: row;
+}
+
+.filterSidebar .selectContainer:last-of-type input {
+  margin-right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+}

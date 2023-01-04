@@ -2,13 +2,13 @@
 {% load tz %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v11.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/settings_style.css' %}">
 <title>FinBrowser | Settings</title>
 {% endblock %}
 
 {% block content %}
 
-<div class="settingsHeader">Settings</div>
+<h1>Account Settings</h1>
 <div class="tabsContainer" role="navigation" aria-label="Settings Menu">
     <button class="activatedTab" data-for-tab="0">Profile</button>
     <button data-for-tab="1">Password</button>
@@ -35,12 +35,13 @@
                     {% if user.profile.profile_pic %}
                     <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
                     {% else %}
-                    <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="Profile Picture Placeholder">
+                    <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">
+                        {{ user.username.0 }}</div>
                     {% endif %}
-                    <div class="changeProfilePicButton" role="button">
-                        <span>Change</span>
-                        {{ profile_change_form.profile_pic }}
+                    <div class="changeProfilePicForm" role="button">
+                        {{ profile_pic_change_form }}
                     </div>
+                    <button type="button" class="changeProfilePicButton">Change</button>
                     <button type="button" class="removeProfilePicButton">Remove</button>
                 </div>
             </div>
@@ -129,5 +130,5 @@
     </div>
 </div>
 
-<script src="{% static 'accounts/min_settings_script_v7.js' %}"></script>
+<script src="{% static 'accounts/settings_script.js' %}"></script>
 {% endblock content %}
