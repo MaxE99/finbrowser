@@ -1,0 +1,160 @@
+{% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'source/source_ranking_style.css' %}" />
+<title>{{ source.name }} Profile | FinBrowser</title>
+{% endblock %}
+{% block content %}
+
+<div class="pageWrapper">
+    <div class="sourceRankingWrapper">
+        {% for source in sources %}
+        <div class="sourceRankingContainer">
+            <div class="leftSide">
+                <img class="profilePicture" src="{% static source.favicon_path %}" alt="Source Picture" />
+                <div class="rating">{{ source.average_rating }}</div>
+            </div>
+            <div class="rightSide">
+                <div class="firstRow">
+                    <span class="rank">{{ forloop.counter|calc_ranking:sources.number }}</span>
+                    <a class="name" href="{{ source.get_absolute_url }}"
+                        aria-label="Open Profile Of {{ source.name }}">{{ source.name }}</a>
+                </div>
+                <div class="secondRow">
+                    <div class="infoContainer sectorInfoContainer">
+                        <span>Sector</span>
+                        <a href="{{ source.sector.get_absolute_url }}"
+                            aria-label="Open Sector - {{ source.sector.name }}">{{ source.sector.name }}</a>
+                    </div>
+                    <div class="infoContainer">
+                        <span>Content Type</span>
+                        <span>{{ source.content_type }}</span>
+                    </div>
+                    <div class="infoContainer websiteInfoContainer">
+                        <span>Website</span>
+                        <a href="{{ source.url }}" target="_blank"
+                            aria-label="Open External Profile Of {{ source.name }}">{{ source.website }}</a>
+                    </div>
+                    <div class="infoContainer">
+                        <span>Paywall</span>
+                        <span>{{ source.paywall }}</span>
+                    </div>
+                    <div class="infoContainer">
+                        <span>Amount of Ratings</span>
+                        <span>{{ source.ammount_of_ratings }}</span>
+                    </div>
+                    <div class="infoContainer">
+                        <span>Your Rating</span>
+                        {% if request.user.is_authenticated and source|check_has_rated:user_ratings %}
+                        <span><i class="fas fa-star"></i>{{ source|check_has_rated:user_ratings }}</span>
+                        {% else %}
+                        <span class="notRated"><i class="fas fa-star"></i>Rate</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="thirdRow">
+                    <div class="tag">Great Storyteller</div>
+                    <div class="tag">Research Service</div>
+                    <div class="tag">Blog</div>
+                    <div class="tag">Large Following</div>
+                    <div class="tag">Green Chicken</div>
+                    <div class="tag">Some Other Shit</div>
+                </div>
+                <div class="fourthRow">
+                    {% if request.user.is_authenticated and source in subscribed_sources %}
+                    <button class="subscribeButton subscribed">Subscribed</button>
+                    {% else %}
+                    <button class="subscribeButton">Subscribe</button>
+                    {% endif %}
+                    <button class="addToListButton">Add To List</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="pagination">
+            <span class="step-links">
+                {% for i in sources.paginator.page_range %}
+                {% if sources.number == i %}
+                <button class="currentPagination">{{ sources.number }}</button>
+                {% elif i > sources.number|add:'-3' and i < sources.number|add:'3' %} <a
+                    href="?sources={{ i }}">{{ i }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+    <div class="filterSidebar">
+        <div class="selectContainer">
+            <label for="website">Website</label>
+            <select id="website">
+                <option value="All" selected="selected">All</option>
+                <option value="SeekingAlpha">SeekingAlpha</option>
+                <option value="Spotify">Spotify </option>
+                <option value="Substack">Substack</option>
+                <option value="Twitter">Twitter</option>
+                <option value="YouTube">YouTube</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <div class="selectContainer">
+            <label for="minimum_rating">Sector</label>
+            <select id="minimum_rating">
+                <option value="All" selected="selected">All</option>
+                <option value="4.5">4.5 Stars</option>
+                <option value="4">4.0 Stars </option>
+                <option value="3.5">3.5 Stars</option>
+                <option value="3">3.0 Stars</option>
+                <option value="2.5">2.5 Stars</option>
+                <option value="2">2.0 Stars</option>
+            </select>
+        </div>
+        <div class="selectContainer">
+            <label for="type">Content Type</label>
+            <div class="choiceContainer">
+                <input type="checkbox" checked="true">
+                <label>Analysis</label>
+            </div>
+            <div class="choiceContainer">
+                <input type="checkbox" checked="true">
+                <label>Commentary</label>
+            </div>
+            <div class="choiceContainer">
+                <input type="checkbox" checked="true">
+                <label>News</label>
+            </div>
+        </div>
+        <div class="selectContainer">
+            <label for="paywall">Paywall</label>
+            <div class="choiceContainer">
+                <input type="checkbox" checked="true">
+                <label>Yes</label>
+            </div>
+            <div class="choiceContainer">
+                <input type="checkbox" checked="true">
+                <label>Semi</label>
+            </div>
+            <div class="choiceContainer">
+                <input type="checkbox" checked="true">
+                <label>No</label>
+            </div>
+        </div>
+        <div class="selectContainer">
+            <label for="minimum_rating">Tag</label>
+            <div class="mainSearchWrapper">
+                <div class="mainSearchContainer">
+                    <input aria-label="Search" id="mainAutocomplete" type="text" class="mainInputSearch"
+                        placeholder="Search">
+                    <i class="fas fa-search"></i>
+                    <i class="fas fa-times closeSearchButton"></i>
+                </div>
+                <div id="mainAutocomplete_result"></div>
+            </div>
+        </div>
+        <div class="selectContainer">
+            <input type="checkbox">
+            <label for="minimum_rating">Only Top Sources</label>
+        </div>
+        <button class="applyFilterButton">Apply Filter</button>
+    </div>
+</div>
+
+<script src="{% static 'source/source_ranking_script.js' %}"></script>
+{% endblock content %}

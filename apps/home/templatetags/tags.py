@@ -25,3 +25,16 @@ def check_inclusion(qs1, qs2):
         if(str(obj.name) in qs2):
             return True
     return False
+
+@register.filter(name='calc_ranking')
+def calk_ranking(counter, page_rank):
+    if page_rank == 1:
+        return counter
+    return counter + ((page_rank-1)*25)
+
+@register.filter(name='check_has_rated')
+def check_has_rated(source, user_ratings):
+    rating = user_ratings.filter(source=source)
+    if rating.exists():
+        return rating.first().rating
+    return False

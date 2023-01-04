@@ -1,7 +1,6 @@
 {% load static %}
 {% load tz %}
 
-<div class="categoryHeader">{{ title }}</div>
 <div class="smallFormContentWrapper">
     {% for tweet in qs %}
     <div class="articleContainer" id="cc#{{ tweet.article_id }}">

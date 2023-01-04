@@ -1,13 +1,30 @@
-.mainContent h2 {
-  color: var(--primary-fontColor);
-  font-size: 3.5rem;
-  text-align: center;
-  margin-top: 1rem;
+.pageWrapper {
+  display: flex;
+}
+
+.mainContent {
+  width: 70%;
+}
+
+.topContentSidebar {
+  width: 27.5%;
+  margin: 2rem 0 2rem 2.5%;
+}
+
+.topContentSidebar .smallFormContentWrapper .articleContainer {
+  border-bottom: none;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 0.45rem;
+  margin-bottom: 2rem;
+  background: white;
+}
+
+.contentColumnWrapper .contentColumnContainer {
+  width: 100%;
 }
 
 .mainContent .mainSearchWrapper {
-  margin: 1.5rem auto;
-  width: 50%;
+  margin: 2.5rem auto 1.5rem;
 }
 
 .mainContent .mainInputSearch {
@@ -32,7 +49,6 @@
 }
 
 .tabsContainer {
-  width: 50%;
   margin: 2rem auto;
 }
 
@@ -52,8 +68,7 @@
 
 .websiteSearchWrapper {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  flex-direction: column;
   margin-bottom: 1rem;
 }
 
@@ -61,13 +76,23 @@
   position: relative;
   display: flex;
   align-items: center;
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin-top: 2rem;
+  width: 100%;
+  background: white;
+  padding: 1rem 2rem;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 0.45rem;
+  cursor: pointer;
+}
+
+.websiteSearchWrapper .websiteSearchContainer:hover {
+  color: var(--primary-fontColor);
 }
 
 .websiteSearchWrapper img {
   width: 3rem;
-  margin-right: 0.5rem;
+  margin-right: 1rem;
 }
 
 .websiteSearchWrapper a {
@@ -81,8 +106,9 @@
 .stocksWrapper {
   display: flex;
   flex-direction: column;
-  width: 50%;
   margin: 0 auto;
+  box-shadow: var(--box-shadowScheme);
+  border-radius: 0.45rem;
 }
 
 .stocksWrapper .categoryHeader {
@@ -99,11 +125,26 @@
 .stocksWrapper .stockContainer {
   position: relative;
   display: flex;
+  align-items: center;
   background: white;
   cursor: pointer;
   font-size: 2rem;
-  padding: 1rem 0;
+  padding: 1.5rem 0;
   border-bottom: 0.1rem solid #e2e6ea;
+}
+
+.stocksWrapper .stockContainer:first-of-type {
+  border-radius: 0.45rem 0.45rem 0 0;
+}
+
+.stocksWrapper .stockContainer:last-of-type {
+  border-radius: 0 0 0.45rem 0.45rem;
+}
+
+.stocksWrapper .stockContainer .fa-chevron-right,
+.websiteSearchContainer .fa-chevron-right {
+  position: absolute;
+  right: 2rem;
 }
 
 .stocksWrapper .stockContainer:hover {
@@ -116,13 +157,13 @@
 }
 
 .stocksWrapper .stockContainer .stockTicker {
-  width: 15%;
-  padding-left: 2.5%;
+  width: 10%;
+  padding-left: 2rem;
   color: var(--primary-fontColor);
 }
 
 .stocksWrapper .stockContainer .companyName {
-  width: 85%;
+  width: calc(90% - 4rem);
 }
 
 .stocksWrapper .stockContainer a {
@@ -131,6 +172,10 @@
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.sliderWrapper .sliderContentContainer .slider {
+  --items-per-screen: 3;
 }
 
 @media (max-width: 1000px) {

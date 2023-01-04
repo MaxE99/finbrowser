@@ -1,17 +1,20 @@
-//open hamburger menu
+// open hamburger menu
 document
   .querySelector(".headerContainer .fa-bars")
-  .addEventListener("click", () => {
+  .addEventListener("click", (e) => {
+    if (e.target.classList.contains("fa-bars")) {
+      e.target.classList.replace("fa-bars", "fa-times");
+      e.target.classList.add("closeNavMenuButton");
+    } else {
+      e.target.classList.replace("fa-times", "fa-bars");
+      e.target.classList.remove("closeNavMenuButton");
+    }
     const horizontalNavigation = document.querySelector(
       ".horizontalNavigation"
     );
-    if (horizontalNavigation.value == "ON") {
-      horizontalNavigation.style.maxHeight = "0";
-      horizontalNavigation.value = "OFF";
-    } else {
-      horizontalNavigation.style.maxHeight = "100rem";
-      horizontalNavigation.value = "ON";
-    }
+    horizontalNavigation.style.display !== "flex"
+      ? (horizontalNavigation.style.display = "flex")
+      : (horizontalNavigation.style.display = "none");
   });
 
 // deactivate autocomplete for all inputs
@@ -68,76 +71,113 @@ function showMessage(message, type) {
   document.querySelector(".overlay").appendChild(messages);
 }
 
+// increase search bar width on smaller screens (onclick)
 document
   .querySelector(".headerContainer #mainAutocomplete")
   .addEventListener("click", () => {
     if (
       check_device_width_below(500) &&
-      !document.querySelector(
-        ".headerContainer .mainSearchWrapper .closeSearchIcon"
-      )
+      document.querySelector(".headerContainer .mainSearchWrapper .fa-times")
+        .style.display !== "flex"
     ) {
-      document.querySelector(".headerContainer .logoContainer").style.display =
-        "none";
-      document.querySelector(".headerContainer .fa-bars").style.display =
-        "none";
-      document.querySelector(
+      const logoContainer = document.querySelector(
+        ".headerContainer .logoContainer"
+      );
+      const switchButton = document.querySelector(".headerContainer .fa-bars");
+      const mainSearchWrapper = document.querySelector(
         ".headerContainer .mainSearchWrapper"
-      ).style.width = "100%";
-      document.querySelector(
-        ".headerContainer .mainSearchContainer"
-      ).style.display = "flex";
-      document.querySelector(
-        ".headerContainer .mainSearchContainer"
-      ).style.justifyContent = "center";
-      document.querySelector(
-        ".headerContainer .mainSearchContainer"
-      ).style.position = "relative";
-      document.querySelector(
-        ".headerContainer .mainSearchContainer"
-      ).style.width = "90%";
-      document.querySelector(".headerContainer #mainAutocomplete").style.width =
-        "97.5%";
-      document.querySelector(
-        ".headerContainer #mainAutocomplete"
-      ).style.maxWidth = "unset";
-      const closeSearchIcon = document.createElement("i");
-      closeSearchIcon.classList.add("fas", "fa-times", "closeSearchIcon");
-      document
-        .querySelector(".headerContainer .mainSearchWrapper")
-        .appendChild(closeSearchIcon);
-      closeSearchIcon.addEventListener("click", () => {
-        document
-          .querySelector(".headerContainer .mainSearchWrapper .closeSearchIcon")
-          .remove();
-        document.querySelector(
-          ".headerContainer .logoContainer"
-        ).style.display = "";
-        document.querySelector(".headerContainer .fa-bars").style.display = "";
-        document.querySelector(
-          ".headerContainer .mainSearchWrapper"
-        ).style.width = "";
-        document.querySelector(
-          ".headerContainer .mainSearchContainer"
-        ).style.display = "";
-        document.querySelector(
-          ".headerContainer .mainSearchContainer"
-        ).style.justifyContent = "";
-        document.querySelector(
-          ".headerContainer .mainSearchContainer"
-        ).style.position = "";
-        document.querySelector(
-          ".headerContainer .mainSearchContainer"
-        ).style.width = "";
-        document.querySelector(
-          ".headerContainer #mainAutocomplete"
-        ).style.width = "";
-        document.querySelector(
-          ".headerContainer #mainAutocomplete"
-        ).style.maxWidth = "";
+      );
+      const searchButton = document.querySelector(
+        ".headerContainer .mainSearchWrapper .fa-search"
+      );
+      const closeButton = document.querySelector(
+        ".headerContainer .mainSearchWrapper .fa-times"
+      );
+      logoContainer.style.display = "none";
+      switchButton.style.display = "none";
+      mainSearchWrapper.classList.add("fullWidthSearchWrapper");
+      searchButton.style.display = "none";
+      closeButton.style.display = "flex";
+      closeButton.addEventListener("click", () => {
+        logoContainer.style.display = "flex";
+        switchButton.style.display = "flex";
+        mainSearchWrapper.classList.remove("fullWidthSearchWrapper");
+        closeButton.style.display = "none";
+        searchButton.style.display = "flex";
       });
     }
   });
+
+// document
+//   .querySelector(".headerContainer #mainAutocomplete")
+//   .addEventListener("click", () => {
+//     if (
+//       check_device_width_below(500) &&
+//       !document.querySelector(
+//         ".headerContainer .mainSearchWrapper .closeSearchIcon"
+//       )
+//     ) {
+//       document.querySelector(".headerContainer .logoContainer").style.display =
+//         "none";
+//       document.querySelector(".headerContainer .fa-bars").style.display =
+//         "none";
+//       document.querySelector(
+//         ".headerContainer .mainSearchWrapper"
+//       ).style.width = "100%";
+//       document.querySelector(
+//         ".headerContainer .mainSearchContainer"
+//       ).style.display = "flex";
+//       document.querySelector(
+//         ".headerContainer .mainSearchContainer"
+//       ).style.justifyContent = "center";
+//       document.querySelector(
+//         ".headerContainer .mainSearchContainer"
+//       ).style.position = "relative";
+//       document.querySelector(
+//         ".headerContainer .mainSearchContainer"
+//       ).style.width = "90%";
+//       document.querySelector(".headerContainer #mainAutocomplete").style.width =
+//         "97.5%";
+//       document.querySelector(
+//         ".headerContainer #mainAutocomplete"
+//       ).style.maxWidth = "unset";
+//       const closeSearchIcon = document.createElement("i");
+//       closeSearchIcon.classList.add("fas", "fa-times", "closeSearchIcon");
+//       document
+//         .querySelector(".headerContainer .mainSearchWrapper")
+//         .appendChild(closeSearchIcon);
+//       closeSearchIcon.addEventListener("click", () => {
+//         document
+//           .querySelector(".headerContainer .mainSearchWrapper .closeSearchIcon")
+//           .remove();
+//         document.querySelector(
+//           ".headerContainer .logoContainer"
+//         ).style.display = "";
+//         document.querySelector(".headerContainer .fa-bars").style.display = "";
+//         document.querySelector(
+//           ".headerContainer .mainSearchWrapper"
+//         ).style.width = "";
+//         document.querySelector(
+//           ".headerContainer .mainSearchContainer"
+//         ).style.display = "";
+//         document.querySelector(
+//           ".headerContainer .mainSearchContainer"
+//         ).style.justifyContent = "";
+//         document.querySelector(
+//           ".headerContainer .mainSearchContainer"
+//         ).style.position = "";
+//         document.querySelector(
+//           ".headerContainer .mainSearchContainer"
+//         ).style.width = "";
+//         document.querySelector(
+//           ".headerContainer #mainAutocomplete"
+//         ).style.width = "";
+//         document.querySelector(
+//           ".headerContainer #mainAutocomplete"
+//         ).style.maxWidth = "";
+//       });
+//     }
+//   });
 
 // main search with autocomplete
 document
@@ -216,7 +256,7 @@ document
   });
 
 //Dropdown User Menu
-const dropdownButton = document.querySelector(".fa-sort-down");
+const dropdownButton = document.querySelector(".userProfile");
 if (dropdownButton) {
   dropdownButton.addEventListener("click", () => {
     const profileMenu = document.querySelector(".profileMenu");
@@ -224,9 +264,25 @@ if (dropdownButton) {
       profileMenu.style.display = "none";
     } else {
       profileMenu.style.display = "flex";
+      document.onclick = function (e) {
+        const withinProfileMenu = e.target.closest(".profileMenu");
+        const withinUserProfile = e.target.closest(".userProfile");
+        if (!withinProfileMenu && !withinUserProfile) {
+          profileMenu.style.display = "none";
+        }
+      };
     }
   });
 }
+
+// logout button click
+document
+  .querySelector(
+    ".headerContainer .profileMenu .profileMenuOption:last-of-type"
+  )
+  .addEventListener("click", (e) => {
+    e.target.querySelector("button").click();
+  });
 
 function checkForOpenContainers() {
   let allContainersClosed = true;
@@ -471,7 +527,7 @@ if (document.querySelector(".userSpace .notificationBell")) {
     .querySelector(".userSpace .notificationBell")
     .addEventListener("click", async () => {
       const notificationPopup = document.querySelector(
-        ".userSpace .notificationContainer"
+        ".notificationPopupWrapper"
       );
       if (notificationPopup.style.display == "block") {
         notificationPopup.style.display = "none";
@@ -547,6 +603,7 @@ document.querySelectorAll(".handle").forEach((handle) => {
   });
 });
 
+// Source Subscribtion function
 document
   .querySelectorAll(".sliderWrapper .slider .subscribeButton")
   .forEach((subscribeButton) => {

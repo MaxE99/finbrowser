@@ -11,12 +11,16 @@ from apps.sector.models import Sector
 
 User = get_user_model()
 
+class SourceTag(models.Model):
+    tag_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.name}'
+
 class Source(models.Model):
     PAYWALL_CHOICES = [('Yes', 'Yes'), ('Semi', 'Semi'), ('No', 'No')]
-    WEBSITE_CHOICES = [('Medium', 'Medium'), ('Other', 'Other'),
-                       ('SeekingAlpha', 'SeekingAlpha'),
-                       ('Substack', 'Substack'), ('Twitter', 'Twitter'),
-                       ('YouTube', 'YouTube')]
+    CONTENT_TYPE_CHOICES = [('Analysis', 'Analysis'), ('Commentary', 'Commentary'), ('News', 'News')]
     source_id = models.AutoField(primary_key=True)
     url = models.URLField(unique=True)
     slug = models.SlugField(unique=True)
@@ -34,7 +38,8 @@ class Source(models.Model):
     external_id = models.CharField(unique=True, null=True, blank=True, max_length=100)
     average_rating = models.FloatField(blank=True, null=True)
     ammount_of_ratings = models.IntegerField(default=0, null=True)
-    news = models.BooleanField(default=False)
+    content_type = models.CharField(max_length=15, choices=PAYWALL_CHOICES, default='Commentary')
+    tags = models.ManyToManyField(SourceTag, related_name="source_tags", blank=True)
 
     class Meta:
         ordering = ('name', )

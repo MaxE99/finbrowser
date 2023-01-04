@@ -130,7 +130,6 @@
 }
 
 .classicMain {
-  max-width: 160rem;
   margin: 0 auto 1rem;
 }
 
@@ -385,7 +384,6 @@
 
 main {
   width: 100%;
-  max-width: 100%;
   margin-bottom: 0;
 }
 
