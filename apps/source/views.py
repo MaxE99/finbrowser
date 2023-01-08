@@ -8,6 +8,7 @@ from apps.source.models import Source, SourceRating
 from apps.list.models import List
 from apps.article.models import Article
 from apps.home.models import Notification
+from apps.sector.models import Sector
 from django.db.models import Q
 
 
@@ -46,6 +47,7 @@ class SourceRankingView(ListView, BaseMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['sources'] = paginator_create(self.request, Source.objects.all().order_by("-average_rating"), 25, 'sources')
+        context['sectors'] = Sector.objects.all()
         if self.request.user.is_authenticated: 
             context['subscribed_sources'] = Source.objects.filter_by_subscription(self.request.user)
             context['user_ratings'] = SourceRating.objects.filter(user=self.request.user)
