@@ -63,7 +63,7 @@ class SourceRating(models.Model):
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0,
                                  validators=[
-                                     MaxValueValidator(5),
+                                     MaxValueValidator(10),
                                      MinValueValidator(0),
                                  ])
 

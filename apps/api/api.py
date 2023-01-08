@@ -9,12 +9,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from rest_framework.decorators import action, api_view, permission_classes, authentication_classes
 # Local imports
-from apps.api.serializers import (List_Serializer, Stock_Serializer, Article_Serializer, Source_Serializer, Profile_Serializer, HighlightedArticle_Serializer, SourceRating_Serializer, ListRating_Serializer, Notification_Serializer)
+from apps.api.serializers import (List_Serializer, Stock_Serializer, SourceTag_Serializer, Article_Serializer, Source_Serializer, Profile_Serializer, HighlightedArticle_Serializer, SourceRating_Serializer, ListRating_Serializer, Notification_Serializer)
 from apps.api.permissions import IsListCreator, IsUser
 from apps.home.models import NotificationMessage, Notification
 from apps.accounts.models import Profile
 from apps.article.models import HighlightedArticle, Article
-from apps.source.models import Source, SourceRating
+from apps.source.models import Source, SourceRating, SourceTag
 from apps.list.models import List, ListRating
 from apps.stock.models import Stock
 
@@ -306,3 +306,13 @@ class NotificationViewSet(viewsets.ModelViewSet):
     def put(self, request, *args, **kwargs):
         NotificationMessage.objects.filter(notification__user=request.user).update(user_has_seen=True)
         return Response("Notifications have been marked as seen!")
+
+
+class SourceTagViewSet(viewsets.ModelViewSet):
+    queryset = SourceTag.objects.all()
+    serializer_class = SourceTag_Serializer
+    http_method_names = ["get"]
+    authentication_classes = [SessionAuthentication]
+
+    def get_queryset(self):
+        return SourceTag.objects.filter(name__istartswith=self.request.GET['search_term']).order_by("name")
