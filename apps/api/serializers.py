@@ -2,7 +2,7 @@
 from rest_framework import serializers
 # Local imports
 from apps.accounts.models import Profile
-from apps.source.models import Source, SourceRating
+from apps.source.models import Source, SourceRating, SourceTag
 from apps.article.models import Article, HighlightedArticle
 from apps.list.models import List, ListRating
 from apps.home.models import Notification
@@ -61,4 +61,11 @@ class Notification_Serializer(serializers.ModelSerializer):
 
     class Meta:
         model = Notification
+        fields = '__all__'
+
+
+class SourceTag_Serializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SourceTag
         fields = '__all__'

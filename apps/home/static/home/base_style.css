@@ -134,10 +134,6 @@ header {
 .mainNavigationLink:hover,
 .mainNavigationLink:hover span {
   color: var(--primary-fontColor);
-  text-decoration-line: underline;
-  text-underline-offset: 1rem;
-  text-decoration-thickness: 0.4rem;
-  text-decoration-color: var(--primary-fontColor);
 }
 
 .mainSearchWrapper {
