@@ -316,6 +316,7 @@ header {
   height: calc(100vh - 8.5rem);
   box-shadow: var(--box-shadowScheme);
   max-height: calc(100vh - 8.5rem);
+  z-index: 100;
 }
 
 .notificationPopupWrapper h3 {
@@ -989,7 +990,7 @@ h2 {
   position: relative;
   display: flex;
   padding: 1.5rem;
-  box-shadow: 0 5px 5px -5px #333;
+  /* box-shadow: 0 5px 5px -5px #333; */
   border-bottom: 0.1rem solid rgb(226, 230, 234);
 }
 

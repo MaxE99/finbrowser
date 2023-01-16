@@ -15,49 +15,55 @@
             </div>
             <div class="rightSide">
                 <div class="firstRow">
-                    <span class="rank">{{ forloop.counter|calc_ranking:sources.number }}</span>
                     <a class="name" href="{{ source.get_absolute_url }}"
-                        aria-label="Open Profile Of {{ source.name }}">{{ source.name }}</a>
+                        aria-label="Open Profile Of {{ source.name }}"><span
+                            class="rank">{{ forloop.counter|calc_ranking:sources.number }}.</span>{{ source.name }}</a>
                 </div>
                 <div class="secondRow">
-                    <div class="infoContainer sectorInfoContainer">
-                        <span>Sector</span>
-                        <a href="{{ source.sector.get_absolute_url }}"
-                            aria-label="Open Sector - {{ source.sector.name }}">{{ source.sector.name }}</a>
+                    <div class="leftSide leftSideSecondRow">
+                        <img class="profilePicture" src="{% static source.favicon_path %}" alt="Source Picture" />
+                        <div class="rating">{{ source.average_rating }}</div>
+                        <a href="{{ source.get_absolute_url }}" aria-label="Open Profile Of {{ source.name }}"></a>
                     </div>
-                    <div class="infoContainer">
-                        <span>Content Type</span>
-                        <span>{{ source.content_type }}</span>
-                    </div>
-                    <div class="infoContainer websiteInfoContainer">
-                        <span>Website</span>
-                        <a href="{{ source.url }}" target="_blank"
-                            aria-label="Open External Profile Of {{ source.name }}">{{ source.website }}</a>
-                    </div>
-                    <div class="infoContainer">
-                        <span>Paywall</span>
-                        <span>{{ source.paywall }}</span>
-                    </div>
-                    <div class="infoContainer">
-                        <span>Amount of Ratings</span>
-                        <span>{{ source.ammount_of_ratings }}</span>
-                    </div>
-                    <div class="infoContainer">
-                        <span>Your Rating</span>
-                        {% if request.user.is_authenticated and source|check_has_rated:user_ratings %}
-                        <span><i class="fas fa-star"></i>{{ source|check_has_rated:user_ratings }}</span>
-                        {% else %}
-                        <span class="notRated"><i class="fas fa-star"></i>Rate</span>
-                        {% endif %}
+                    <div class="infoWrapper">
+                        <div class="infoContainer sectorInfoContainer">
+                            <span>Sector</span>
+                            <a href="{{ source.sector.get_absolute_url }}"
+                                aria-label="Open Sector - {{ source.sector.name }}">{{ source.sector.name }}</a>
+                        </div>
+                        <div class="infoContainer">
+                            <span>Content Type</span>
+                            <span>{{ source.content_type }}</span>
+                        </div>
+                        <div class="infoContainer websiteInfoContainer">
+                            <span>Website</span>
+                            <a href="{{ source.url }}" target="_blank"
+                                aria-label="Open External Profile Of {{ source.name }}">{{ source.website }}</a>
+                        </div>
+                        <div class="infoContainer">
+                            <span>Paywall</span>
+                            <span>{{ source.paywall }}</span>
+                        </div>
+                        <div class="infoContainer">
+                            <span>Amount of Ratings</span>
+                            <span>{{ source.ammount_of_ratings }}</span>
+                        </div>
+                        <div class="infoContainer">
+                            <span>Your Rating</span>
+                            {% if request.user.is_authenticated and source|check_has_rated:user_ratings %}
+                            <span><i class="fas fa-star"></i>{{ source|check_has_rated:user_ratings }}</span>
+                            {% else %}
+                            <span class="notRated"><i class="fas fa-star"></i>Rate</span>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="thirdRow">
-                    <div class="tag">Great Storyteller</div>
-                    <div class="tag">Research Service</div>
-                    <div class="tag">Blog</div>
-                    <div class="tag">Large Following</div>
-                    <div class="tag">Green Chicken</div>
-                    <div class="tag">Some Other Shit</div>
+                    {% if source.tags %}
+                    {% for tag in source.tags.all %}
+                    <div class="tag">{{ tag.name }}</div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
                 <div class="fourthRow">
                     {% if request.user.is_authenticated and source in subscribed_sources %}
@@ -109,114 +115,146 @@
             </div>
         </div>
         {% endfor %}
+        {% if sources.has_next %}
         <div class="pagination">
             <span class="step-links">
                 {% for i in sources.paginator.page_range %}
                 {% if sources.number == i %}
                 <button class="currentPagination">{{ sources.number }}</button>
-                {% elif i > sources.number|add:'-3' and i < sources.number|add:'3' %} <a
-                    href="?sources={{ i }}">{{ i }}</a>
+                {% elif i > sources.number|add:'-3' and i < sources.number|add:'3' %}
+                <a href="?{% query_transform page=i %}">{{ i }}</a>
                 {% endif %}
                 {% endfor %}
             </span>
         </div>
+        {% endif %}
     </div>
     <div class="filterSidebar">
-        <div class="selectContainer">
-            <label for="website">Website</label>
-            <div class="dropdown">Select Websites
-                <i class="fa-solid fa-chevron-down"></i>
-                <ul class="selectionList">
-                    <li value="SeekingAlpha">
-                        <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">
-                        <span>SeekingAlpha</span>
-                    </li>
-                    <li value="Spotify">
-                        <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">
-                        <span>Spotify</span>
-                    </li>
-                    <li value="Substack">
-                        <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">
-                        <span>Substack</span>
-                    </li>
-                    <li value="Twitter">
-                        <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">
-                        <span>Twitter</span>
-                    </li>
-                    <li value="YouTube">
-                        <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">
-                        <span>YouTube</span>
-                    </li>
-                    <li value="Other">
-                        <img src="{% static 'home/media/default_favicon.png' %}" alt="Website Logo">
-                        <span>Other</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="selectedOptionsContainer selectedWebsitesContainer"></div>
-        <div class="selectContainer">
-            <label for="sector">Sector</label>
-            <div class="dropdown">Select Sectors
-                <i class="fa-solid fa-chevron-down"></i>
-                <ul class="selectionList">
-                    {% for sector in sectors %}
-                    <li value="{{ sector.name }}">{{ sector.name }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <div class="selectedOptionsContainer selectedSectorsContainer"></div>
-        <div class="selectContainer">
-            <label for="minimum_rating">Tag</label>
-            <div class="mainSearchWrapper">
-                <div class="mainSearchContainer">
-                    <input aria-label="Search" id="tagAutocomplete" type="text" class="mainInputSearch"
-                        placeholder="Search">
-                    <i class="fas fa-search"></i>
-                    <i class="fas fa-times closeSearchButton"></i>
-                </div>
-                <div id="tagAutocomplete_result">
-                    <ul class="selectionList"></ul>
+        <form method="get" action="/sources">
+            <div class="selectContainer">
+                <label for="website">Website</label>
+                <div class="dropdown">Select Websites
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <ul>
+                        <li value="SeekingAlpha">
+                            <input type="checkbox"
+                                {% if search_parameters|check_param_selected:"website,SeekingAlpha" %} checked
+                                {% endif %} name="website" value="SeekingAlpha"></input>
+                            <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">
+                            <span>SeekingAlpha</span>
+                        </li>
+                        <li value="Spotify">
+                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Spotify" %}
+                                checked {% endif %} name="website" value="Spotify"></input>
+                            <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">
+                            <span>Spotify</span>
+                        </li>
+                        <li value="Substack">
+                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Substack" %}
+                                checked {% endif %} name="website" value="Substack"></input>
+                            <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">
+                            <span>Substack</span>
+                        </li>
+                        <li value="Twitter">
+                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Twitter" %}
+                                checked {% endif %} name="website" value="Twitter"></input>
+                            <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">
+                            <span>Twitter</span>
+                        </li>
+                        <li value="YouTube">
+                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,YouTube" %}
+                                checked {% endif %} name="website" value="YouTube"></input>
+                            <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">
+                            <span>YouTube</span>
+                        </li>
+                        <li value="Other">
+                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Other" %}
+                                checked {% endif %} name="website" value="Other"></input>
+                            <img src="{% static 'home/media/default_favicon.png' %}" alt="Website Logo">
+                            <span>Other</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-        <div class="selectedOptionsContainer selectedTagsContainer"></div>
-        <div class="selectContainer">
-            <label for="content_type">Content Type</label>
-            <div class="choiceContainer">
-                <input type="checkbox" checked="true">
-                <label>Analysis</label>
+            <div class="selectContainer">
+                <label for="sector">Sector</label>
+                <div class="dropdown">Select Sectors
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <ul>
+                        {% for sector in sectors %}
+                        <li value="{{ sector.name }}">
+                            <input type="checkbox" {% if search_parameters|check_param_selected:sector.name  %} checked
+                                {% endif %} name="sector" value="{{ sector.name }}">{{ sector.name }}</input>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-            <div class="choiceContainer">
-                <input type="checkbox" checked="true">
-                <label>Commentary</label>
+            <div class="selectContainer">
+                <label for="minimum_rating">Tag</label>
+                <div class="mainSearchWrapper">
+                    <div class="mainSearchContainer">
+                        <input aria-label="Search" id="tagAutocomplete" type="text" class="mainInputSearch"
+                            placeholder="Search">
+                        <i class="fas fa-search"></i>
+                        <i class="fas fa-times closeSearchButton"></i>
+                    </div>
+                    <div id="tagAutocomplete_result">
+                        <ul class="selectionList"></ul>
+                    </div>
+                </div>
             </div>
-            <div class="choiceContainer">
-                <input type="checkbox" checked="true">
-                <label>News</label>
+            <div class="selectedTagsContainer">
+                {% if search_parameters|get_tags != None %}
+                {% for selected_tag in search_parameters|get_tags %}
+                <li value="{{ selected_tag }}" class="selectedOption">{{ selected_tag }}<input hidden="true" name="tag"
+                        value="{{ selected_tag }}"><i class="fas fa-times"></i></li>
+                {% endfor %}
+                {% endif %}
             </div>
-        </div>
-        <div class="selectContainer">
-            <label for="paywall">Paywall</label>
-            <div class="choiceContainer">
-                <input type="checkbox" checked="true">
-                <label>Yes</label>
+            <div class="selectContainer">
+                <label for="content_type">Content Type</label>
+                <div class="choiceContainer">
+                    <input type="checkbox" {% if search_parameters|check_param_selected:"content,Analysis" %} checked
+                        {% endif %} name="content" value="Analysis">
+                    <label>Analysis</label>
+                </div>
+                <div class="choiceContainer">
+                    <input type="checkbox" {% if search_parameters|check_param_selected:"content,Commentary" %} checked
+                        {% endif %} name="content" value="Commentary">
+                    <label>Commentary</label>
+                </div>
+                <div class="choiceContainer">
+                    <input type="checkbox" {% if search_parameters|check_param_selected:"content,News" %} checked
+                        {% endif %} name="content" value="News">
+                    <label>News</label>
+                </div>
             </div>
-            <div class="choiceContainer">
-                <input type="checkbox" checked="true">
-                <label>Semi</label>
+            <div class="selectContainer">
+                <label for="paywall">Paywall</label>
+                <div class="choiceContainer">
+                    <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Yes" %} checked
+                        {% endif %} name="paywall" value="Yes">
+                    <label>Yes</label>
+                </div>
+                <div class="choiceContainer">
+                    <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Semi" %} checked
+                        {% endif %} name="paywall" value="Semi">
+                    <label>Semi</label>
+                </div>
+                <div class="choiceContainer">
+                    <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,No" %} checked
+                        {% endif %} name="paywall" value="No">
+                    <label>No</label>
+                </div>
             </div>
-            <div class="choiceContainer">
-                <input type="checkbox" checked="true">
-                <label>No</label>
+            <div class="selectContainer">
+                <input name="top_sources_only" {% if search_parameters|check_param_selected:"top_sources_only,on" %}
+                    checked {% endif %} type="checkbox">
+                <label for="top_sources">Only Top Sources</label>
             </div>
-        </div>
-        <div class="selectContainer">
-            <input type="checkbox">
-            <label for="top_sources">Only Top Sources</label>
-        </div>
-        <button class="applyFilterButton">Apply Filter</button>
+            <button type="submit" class="applyFilterButton">Apply Filter</button>
+        </form>
     </div>
 </div>
 

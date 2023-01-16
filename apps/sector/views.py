@@ -56,7 +56,11 @@ class SectorDetailView(DetailView, BaseMixin):
         if self.request.user.is_authenticated:
             context['subscribed_sources'] = Source.objects.filter_by_subscription(self.request.user)
             context['notification_sources'] = Notification.objects.filter(user=self.request.user).exclude(source=None).values_list('source', flat=True)
-        context['news_sources'] = Source.objects.filter(news=True, sector=sector)
-        context['articles_from_sector'] = paginator_create(self.request, Article.objects.filter_by_sector_and_website(sector, website_inclusive=False), 50, 'long_form_content')
-        context['tweets_from_sector'] = paginator_create(self.request, Article.objects.filter_by_sector_and_website(sector), 25, 'tweets')
+        # context['news_sources'] = Source.objects.filter(news=True, sector=sector)
+        analysis_sources = Source.objects.filter(content_type="Analysis", sector=sector)
+        commentary_sources = Source.objects.filter(content_type="Commentary", sector=sector)
+        news_sources = Source.objects.filter(content_type = "News", sector=sector)
+        context['analysis_content'] = paginator_create(self.request, Article.objects.filter(source__in=analysis_sources), 50, 'analysis_content')
+        context['commentary_content'] = paginator_create(self.request, Article.objects.filter(source__in=commentary_sources), 50, 'commentary_content')
+        context['news_content'] = paginator_create(self.request, Article.objects.filter(source__in=news_sources), 50, 'news_content')
         return context
