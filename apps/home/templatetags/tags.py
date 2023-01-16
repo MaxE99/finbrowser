@@ -38,3 +38,27 @@ def check_has_rated(source, user_ratings):
     if rating.exists():
         return rating.first().rating
     return False
+
+@register.filter(name="check_param_selected")
+def check_param_selected(params, args):
+    if "," in args:
+        key, value = args.split(',')
+    else:
+        key = "sector"
+        value = args
+    if not params or key not in params or value not in params[key]:
+        return False
+    return True
+
+
+@register.filter(name="get_tags")
+def get_tags(params):
+    return params['tag']
+
+
+@register.simple_tag(takes_context=True)
+def query_transform(context, **kwargs):
+    query = context['request'].GET.copy()
+    for k, v in kwargs.items():
+        query[k] = v
+    return query.urlencode()
