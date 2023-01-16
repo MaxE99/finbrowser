@@ -1,15 +1,15 @@
 # Django import
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.db.models import Q
 # Local import
 from apps.logic.pure_logic import paginator_create
 from apps.home.views import TWITTER, BaseMixin
-from apps.source.models import Source, SourceRating
+from apps.source.models import Source, SourceRating, Website, SourceTag
 from apps.list.models import List
 from apps.article.models import Article
 from apps.home.models import Notification
 from apps.sector.models import Sector
-from django.db.models import Q
 
 
 class SourceDetailView(DetailView, BaseMixin):
@@ -46,9 +46,32 @@ class SourceRankingView(ListView, BaseMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['sources'] = paginator_create(self.request, Source.objects.all().order_by("-average_rating"), 25, 'sources')
-        context['sectors'] = Sector.objects.all()
         if self.request.user.is_authenticated: 
             context['subscribed_sources'] = Source.objects.filter_by_subscription(self.request.user)
             context['user_ratings'] = SourceRating.objects.filter(user=self.request.user)
+        websites = self.request.GET.getlist("website")
+        sectors = self.request.GET.getlist("sector")
+        tags = self.request.GET.getlist("tag")
+        content = self.request.GET.getlist("content")
+        paywall = self.request.GET.getlist("paywall")
+        top_sources = self.request.GET.getlist("top_sources_only")
+        q_objects = Q()
+        if len(websites):
+            websites = Website.objects.filter(name__in=websites)
+            q_objects.add(Q(website__in=websites), Q.AND)
+        if len(sectors):
+            sectors = Sector.objects.filter(name__in=sectors)
+            q_objects.add(Q(sector__in=sectors), Q.AND)
+        if len(tags):
+            tags = SourceTag.objects.filter(name__in=tags)
+            q_objects.add(Q(tags__in=tags), Q.AND)
+        if len(content) > 0 and len(content) < 3:
+            q_objects.add(Q(content_type__in=content), Q.AND)
+        if len(paywall) > 0 and len(content) < 3:
+            q_objects.add(Q(paywall__in=paywall), Q.AND)
+        if top_sources:
+            q_objects.add(Q(top_source=True), Q.AND)
+        context['sources'] = paginator_create(self.request, Source.objects.filter(q_objects).order_by("-average_rating"), 25, 'page')
+        context['sectors'] = Sector.objects.all()
+        context['search_parameters'] = dict(self.request.GET)
         return context

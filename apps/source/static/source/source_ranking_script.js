@@ -31,43 +31,83 @@ document
     });
   });
 
+// select tags for filtering from source container
+document.querySelectorAll(".thirdRow .tag").forEach((tag) =>
+  tag.addEventListener("click", () => {
+    const selectedTagsContainer = document.querySelector(
+      ".selectedTagsContainer"
+    );
+    const selectedTags = [];
+    selectedTagsContainer.querySelectorAll("li").forEach((sTag) => {
+      selectedTags.push(sTag.innerText);
+    });
+    if (!selectedTags.includes(tag.innerText)) {
+      const li = document.createElement("li");
+      li.classList.add("selectedOption");
+      li.setAttribute("value", tag.innerText);
+      li.innerText = tag.innerText;
+      const input = document.createElement("input");
+      input.setAttribute("hidden", true);
+      input.setAttribute("name", "tag");
+      input.setAttribute("value", tag.innerText);
+      const deleteButton = document.createElement("i");
+      li.appendChild(input);
+      li.appendChild(deleteButton);
+      deleteButton.classList.add("fas", "fa-times");
+      deleteButton.addEventListener("click", () => {
+        li.remove();
+      });
+      selectedTagsContainer.appendChild(li);
+    }
+  })
+);
+
+// remove selected tags on click
+document
+  .querySelectorAll(".selectedTagsContainer li i")
+  .forEach((deleteButton) =>
+    deleteButton.addEventListener("click", () => {
+      deleteButton.closest("li").remove();
+    })
+  );
+
 // dropdown
 document
   .querySelectorAll(".filterSidebar .dropdown")
-  .forEach((dropdownButton) =>
+  .forEach((dropdownButton) => {
     dropdownButton.addEventListener("click", (e) => {
       e.target.querySelector("ul").style.display !== "block"
         ? (e.target.querySelector("ul").style.display = "block")
         : (e.target.querySelector("ul").style.display = "none");
-    })
-  );
+    });
+    document.onclick = function (e) {
+      if (!e.target.closest("ul") && e.target !== dropdownButton) {
+        dropdownButton.querySelector("ul").style.display = "none";
+      }
+    };
+  });
 
 function selectFilterOption(selection) {
   const selectContainer = selection.closest(".selectContainer");
-  const selectedOptionsContainer = selectContainer.nextElementSibling;
+  const selectedTagsContainer = document.querySelector(
+    ".selectedTagsContainer"
+  );
   const clonedSelection = selection.cloneNode(true);
   clonedSelection.classList.add("selectedOption");
   const deleteSelectionButton = document.createElement("i");
   deleteSelectionButton.classList.add("fas", "fa-times");
   deleteSelectionButton.addEventListener("click", () => {
-    if (
-      selectContainer.querySelector(
-        `ul li[value=${clonedSelection.getAttribute("value")}`
-      )
-    ) {
-      selectContainer.querySelector(
-        `ul li[value=${clonedSelection.getAttribute("value")}`
-      ).style.display = "flex";
-    }
     clonedSelection.remove();
-    if (selectedOptionsContainer.querySelectorAll("li").length === 0) {
-      selectedOptionsContainer.style.display = "none";
-    }
   });
+  const hiddenInput = document.createElement("input");
+  hiddenInput.setAttribute("hidden", true);
+  hiddenInput.setAttribute("name", "tag");
+  hiddenInput.setAttribute("value", clonedSelection.innerText);
+  clonedSelection.appendChild(hiddenInput);
   clonedSelection.appendChild(deleteSelectionButton);
   selection.style.display = "none";
-  selectedOptionsContainer.appendChild(clonedSelection);
-  selectedOptionsContainer.style.display = "block";
+  selectedTagsContainer.appendChild(clonedSelection);
+  selectedTagsContainer.style.display = "block";
   selectContainer.querySelector("ul").style.display = "none";
 }
 
@@ -113,13 +153,10 @@ document
       document.onclick = function (e) {
         if (e.target.id !== "autocomplete_list_results") {
           results_list.style.display = "none";
-          document.querySelector(".mainInputSearch").style.borderRadius =
-            "0.8rem";
         }
       };
     } else {
       results_list.style.display = "none";
-      document.querySelector(".mainInputSearch").style.borderRadius = "0.8rem";
     }
   });
 
