@@ -1545,7 +1545,7 @@ h2 {
   .mainNavigationLink {
     padding: 1.5rem 1rem;
   }
-  .mainInputSearch {
+  .headerContainer .mainInputSearch {
     width: 37.5rem;
   }
   .searchResult .stockContainer .stockTicker {
@@ -1557,7 +1557,7 @@ h2 {
 }
 
 @media (max-width: 1075px) {
-  .mainInputSearch {
+  .headerContainer .mainInputSearch {
     width: 32.5rem;
   }
 
@@ -1577,7 +1577,7 @@ h2 {
     cursor: pointer;
   }
 
-  .mainSearchWrapper {
+  .outerHeaderContainer .mainSearchWrapper {
     display: none;
   }
 
