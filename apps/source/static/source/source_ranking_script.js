@@ -72,26 +72,24 @@ document
   );
 
 // dropdown
-document
-  .querySelectorAll(".filterSidebar .dropdown")
-  .forEach((dropdownButton) => {
-    dropdownButton.addEventListener("click", (e) => {
-      e.target.querySelector("ul").style.display !== "block"
-        ? (e.target.querySelector("ul").style.display = "block")
-        : (e.target.querySelector("ul").style.display = "none");
-    });
-    document.onclick = function (e) {
-      if (!e.target.closest("ul") && e.target !== dropdownButton) {
-        dropdownButton.querySelector("ul").style.display = "none";
-      }
-    };
+document.querySelectorAll("form .dropdown").forEach((dropdownButton) => {
+  dropdownButton.addEventListener("click", (e) => {
+    e.target.querySelector("ul").style.display !== "block"
+      ? (e.target.querySelector("ul").style.display = "block")
+      : (e.target.querySelector("ul").style.display = "none");
   });
+  document.onclick = function (e) {
+    if (!e.target.closest("ul") && e.target !== dropdownButton) {
+      dropdownButton.querySelector("ul").style.display = "none";
+    }
+  };
+});
 
 function selectFilterOption(selection) {
   const selectContainer = selection.closest(".selectContainer");
-  const selectedTagsContainer = document.querySelector(
-    ".selectedTagsContainer"
-  );
+  const selectedTagsContainer = selection
+    .closest("form")
+    .querySelector(".selectedTagsContainer");
   const clonedSelection = selection.cloneNode(true);
   clonedSelection.classList.add("selectedOption");
   const deleteSelectionButton = document.createElement("i");
@@ -107,16 +105,17 @@ function selectFilterOption(selection) {
   clonedSelection.appendChild(deleteSelectionButton);
   selection.style.display = "none";
   selectedTagsContainer.appendChild(clonedSelection);
-  selectedTagsContainer.style.display = "block";
+  selectedTagsContainer.style.display = "flex";
   selectContainer.querySelector("ul").style.display = "none";
 }
 
 // search tags
-document
-  .getElementById("tagAutocomplete")
-  .addEventListener("keyup", async function () {
-    let search_term = document.getElementById("tagAutocomplete").value;
-    let results_list = document.querySelector("#tagAutocomplete_result ul");
+document.querySelectorAll("form .mainInputSearch").forEach((searchInput) =>
+  searchInput.addEventListener("keyup", async function () {
+    let search_term = searchInput.value;
+    let results_list = searchInput
+      .closest("form")
+      .querySelector("#tagAutocomplete_result ul");
     if (search_term && search_term.replaceAll(/\s/g, "") != "") {
       try {
         const res = await fetch(
@@ -158,7 +157,8 @@ document
     } else {
       results_list.style.display = "none";
     }
-  });
+  })
+);
 
 // filter selection
 document
@@ -258,4 +258,18 @@ document
         // showMessage("Error: Unexpected error has occurred!", "Error");
       }
     });
+  });
+
+// openFiltersMenu
+document.querySelector(".openFiltersButton").addEventListener("click", () => {
+  document.querySelector(".horizontalFilterMenu").style.display = "flex";
+  document.querySelector(".pageWrapper").style.opacity = "0.1";
+});
+
+// closeFiltersMenu
+document
+  .querySelector(".horizontalFilterMenu .discardButton")
+  .addEventListener("click", () => {
+    document.querySelector(".horizontalFilterMenu").style.display = "none";
+    document.querySelector(".pageWrapper").removeAttribute("style");
   });

@@ -4,12 +4,13 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  max-width: 1250px;
 }
 
 .popupContainer .createListPopup,
 .popupContainer .addListsPopup,
 .popupContainer .addSourcesPopup {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -21,20 +22,14 @@
   min-width: unset;
 }
 
-.popupContainer .formContainer .formHeaderContainer {
-  position: relative;
-  text-align: center;
-  padding: 1rem 0;
-  font-size: 2rem;
-  color: white;
-  border: 0.3rem solid white;
+.popupContainer .popupHeader {
+  font-size: 2.2rem;
+  margin: 1.25rem auto 0;
+  border-bottom: 0.1rem solid rgb(226, 230, 234);
   width: 100%;
-  background: var(--primary-fontColor);
+  padding-bottom: 1.25rem;
   display: flex;
-  align-items: center;
-  height: unset;
-  margin-bottom: unset;
-  border-radius: 0.45rem 0.45rem 0 0;
+  justify-content: center;
 }
 
 .popupContainer .formContainer .searchResultWrapper {
@@ -71,7 +66,7 @@
   transition: background 0.2s, box-shadow 0.2s, color 0.2s;
   text-decoration: none;
   border-radius: 0.45rem;
-  padding: 1.36rem 2.72rem;
+  padding: 1.2rem 2.4rem;
   width: 100%;
   margin: 2rem 0 1rem;
 }
@@ -112,8 +107,12 @@
 }
 
 .popupContainer .formContainer form label {
-  margin: 1rem 0;
+  margin: 2rem 0 1rem;
   font-size: 2rem;
+}
+
+.popupContainer .formContainer form #id_list_pic {
+  padding: 0;
 }
 
 .popupContainer .formContainer form #id_is_public {

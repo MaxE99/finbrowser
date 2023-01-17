@@ -10,6 +10,7 @@ from apps.list.models import List
 from apps.article.models import Article
 from apps.home.models import Notification
 from apps.sector.models import Sector
+from apps.stock.models import Stock
 
 
 class SourceDetailView(DetailView, BaseMixin):
@@ -28,11 +29,9 @@ class SourceDetailView(DetailView, BaseMixin):
             subscribed = False  
             user_rating = notifications_activated = None
         latest_content = Article.objects.filter_by_source(source)
-        if source.website == TWITTER:
-            context['links_and_retweets'] = paginator_create(self.request, latest_content.filter(Q(tweet_type__type="Retweet") | Q(tweet_type__type="Link")), 25, 'links_and_retweets')
-            context['images'] = paginator_create(self.request, latest_content.filter(tweet_type__type="Image"), 25, 'images')
-        context['latest_articles'] = paginator_create(self.request, latest_content, 50, 'latest_content')
-        context['lists'] = paginator_create(self.request, List.objects.filter_by_source(source), 50, 'lists')
+        context['latest_articles'] = paginator_create(self.request, latest_content, 25, 'latest_content')
+        context['similiar_sources'] = Source.objects.all()[0:10]
+        context['most_covered_stocks'] = Stock.objects.all()[0:10]
         context['subscribed'] = subscribed
         context['user_rating'] = user_rating
         context['notifications_activated'] = notifications_activated

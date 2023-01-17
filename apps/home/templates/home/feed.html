@@ -14,7 +14,7 @@
 <div class="popupContainer">
     <div class="createListPopup popup">
         <div class="createListMenu formContainer">
-            <div class="formHeaderContainer">Create A New List</div>
+            <div class="popupHeader">Create A New List</div>
             <form enctype="multipart/form-data" method="POST" class="createListForm">
                 {% csrf_token %} {{ add_list_form }}
                 <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
@@ -24,7 +24,7 @@
     </div>
     <div class="addListsPopup popup">
         <div class="addListsForm formContainer">
-            <div class="formHeaderContainer">Add Lists</div>
+            <div class="popupHeader">Add Lists</div>
             <div class="actionWrapper">
                 <input id="textInput" type="text">
                 <div class="searchResultWrapper">
@@ -38,7 +38,7 @@
     </div>
     <div class="addSourcesPopup popup">
         <div class="addSourcesForm formContainer">
-            <div class="formHeaderContainer">Add Source</div>
+            <div class="popupHeader">Add Sources</div>
             <div class="actionWrapper">
                 <input id="textInput" type="text">
                 <div class="searchResultWrapper">
