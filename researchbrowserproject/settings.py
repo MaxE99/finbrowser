@@ -107,11 +107,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django.contrib.sitemaps",
     "django_celery_beat",
-<<<<<<< HEAD
     # 'debug_toolbar',
-=======
-    # "debug_toolbar",
->>>>>>> bf25551ecedf7f2312c10bdb5cc9c21b398f84e8
     "django_cleanup.apps.CleanupConfig",
     "apps.accounts",
     "apps.home",
