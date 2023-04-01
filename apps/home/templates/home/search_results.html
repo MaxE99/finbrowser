@@ -2,164 +2,158 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v6.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v7.css' %}">
 <title>{{ search_term }} - Search Results | FinBrowser</title>
 {% endblock %}
 {% block content %}
 
-<div class="mainContent">
-    <h2>Search Results</h2>
-    <div class="mainSearchWrapper searchWrapper">
-        <div class="mainSearchContainer">
-            <input aria-label="Search" id="mainAutocomplete" type="text" class="mainInputSearch"
-                value="{{ search_term }}" placeholder="Search">
-            <i class="fas fa-search"></i>
+<div class="pageWrapper">
+    <div class="mainContent">
+        <div class="mainSearchWrapper searchWrapper">
+            <div class="mainSearchContainer">
+                <input aria-label="Search" id="mainAutocomplete" type="text" class="mainInputSearch"
+                    value="{{ search_term }}" placeholder="Search" autocomplete="off" spellcheck="false">
+                <i class="fas fa-search"></i>
+            </div>
+            <div id="autocomplete_list_results"></div>
         </div>
-        <div id="autocomplete_list_results"></div>
-    </div>
-    <div class="tabsContainer" role="navigation" aria-label="Search Results Navigation">
-        <button class="activatedTab" data-for-tab="0">Content</button>
-        <button data-for-tab="1">Stocks</button>
-        <button data-for-tab="2">Sources</button>
-    </div>
-    <div class="tabsContent tabsContentActive" data-tab="0">
-        <div class="contentColumnWrapper">
-            {% if filtered_articles %}
-            <div class="contentColumnContainer halfPageContainer">
-                {% create_content_container "Long-Form Content" filtered_articles request user_lists csrf_token add_list_form highlighted_content_ids %}
-                <div class="pagination">
-                    <span class="step-links">
-                        {% for i in filtered_articles.paginator.page_range %}
-                        {% if filtered_articles.number == i %}
-                        <button class="currentPagination">{{ filtered_articles.number }}</button>
-                        {% elif i > filtered_articles.number|add:'-3' and i < filtered_articles.number|add:'3' %} <a
-                            href="?long_form_content={{ i }}">{{ i }}</a>
-                        {% endif %}
-                        {% endfor %}
-                    </span>
+        <div class="tabsContainer" id="content" role="navigation" aria-label="Search Results Navigation">
+            <button class="activatedTab" data-for-tab="0">Analysis</button>
+            <button data-for-tab="1">Commentary</button>
+            <button data-for-tab="2">News</button>
+            <button data-for-tab="3">Sources</button>
+            <button data-for-tab="4">Stocks</button>
+        </div>
+        <div class="tabsContent tabsContentActive" data-tab="0">
+            <div class="contentColumnWrapper">
+                {% if analysis %}
+                <div class="contentColumnContainer">
+                    {% create_content_container analysis request highlighted_content_ids "analysis" %}
                 </div>
+                {% else %}
+                <div class="emptyInformationContainer">
+                    <h3>No Results Found!</h3>
+                    <div>Try a different search.</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="tabsContent" data-tab="1">
+            <div class="contentColumnWrapper">
+                {% if commentary %}
+                <div class="contentColumnContainer">
+                    {% create_content_container commentary request highlighted_content_ids "commentary" %}
+                </div>
+                {% else %}
+                <div class="emptyInformationContainer">
+                    <h3>No Results Found!</h3>
+                    <div>Try a different search.</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="tabsContent" data-tab="2">
+            <div class="contentColumnWrapper">
+                {% if news %}
+                <div class="contentColumnContainer">
+                    {% create_content_container news request highlighted_content_ids "news" %}
+                </div>
+                {% else %}
+                <div class="emptyInformationContainer">
+                    <h3>No Results Found!</h3>
+                    <div>Try a different search.</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="tabsContent" data-tab="3">
+            {% if filtered_sources %}
+            {% create_source_container filtered_sources subscribed_sources request %}
+            {% else %}
+            <div class="emptyInformationContainer">
+                <h3>No Results Found!</h3>
+                <div>Try a different search.</div>
             </div>
             {% endif %}
-            {% if filtered_tweets %}
-            <div class="contentColumnContainer halfPageContainer">
-                {% create_content_container "Tweets" filtered_tweets request user_lists csrf_token add_list_form highlighted_content_ids %}
-                <div class="pagination">
-                    <span class="step-links">
-                        {% for i in filtered_tweets.paginator.page_range %}
-                        {% if filtered_tweets.number == i %}
-                        <button class="currentPagination">{{ filtered_tweets.number }}</button>
-                        {% elif i > filtered_tweets.number|add:'-3' and i < filtered_tweets.number|add:'3' %} <a
-                            href="?tweets={{ i }}">{{ i }}</a>
-                        {% endif %}
-                        {% endfor %}
-                    </span>
+        </div>
+        <div class="tabsContent" data-tab="4">
+            {% if filtered_stocks %}
+            <div class="stocksWrapper">
+                {% for stock in filtered_stocks %}
+                <div class="stockContainer">
+                    <div class="stockTicker">{{ stock.ticker }}</div>
+                    <div class="companyName">{{ stock.full_company_name }}</div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a href="{{ stock.get_absolute_url }}"
+                        aria-label="Open Profile Of {{ stock.full_company_name }}"></a>
                 </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="emptyInformationContainer">
+                <h3>No Results Found!</h3>
+                <div>Try a different search.</div>
             </div>
             {% endif %}
         </div>
+    </div>
+
+    <div class="searchSidebar">
+        <h2>Search On Other Websites</h2>
         <div class="websiteSearchWrapper">
+            <div class="websiteSearchContainer">
+                <img src="{% static 'home/media/bloomberg_icon.png' %}" alt="Bloomberg Logo">Search on Bloomberg
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="https://www.bloomberg.com/search?query={{ search_term }}" target="_blank"
+                    aria-label="Redirect Search To Bloomberg"></a>
+            </div>
+            <div class="websiteSearchContainer">
+                <img src="{% static 'home/media/google_icon.png' %}" alt="SeekingAlpha Logo">Search on Google
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="https://www.google.com/search?q={{ search_term }}" target="_blank"
+                    aria-label="Redirect Search To Google"></a>
+            </div>
+            <div class="websiteSearchContainer">
+                <img src="{% static 'home/media/reuters_icon.png' %}" alt="Bloomberg Logo">Search on Reuters
+                <i class="fa-solid fa-chevron-right"></i>
+                <a href="https://www.reuters.com/site-search/?query={{ search_term }}" target="_blank"
+                    aria-label="Redirect Search To Reuters"></a>
+            </div>
             <div class="websiteSearchContainer">
                 <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">Search on Seeking
                 Alpha
+                <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://seekingalpha.com/search?q={{ search_term }}&tab=headlines" target="_blank"
                     aria-label="Redirect Search To SeekingAlpha"></a>
             </div>
             <div class="websiteSearchContainer">
                 <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">Search on Spotify
+                <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://open.spotify.com/search/{{ search_term }}" target="_blank"
                     aria-label="Redirect Search To Spotify"></a>
             </div>
             <div class="websiteSearchContainer">
                 <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">Search on Substack
+                <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://substack.com/search/{{ search_term }}" target="_blank"
                     aria-label="Redirect Search To Substack"></a>
             </div>
             <div class="websiteSearchContainer">
                 <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">Search on Twitter
+                <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://twitter.com/search?q={{ search_term }}" target="_blank"
                     aria-label="Redirect Search To Twitter"></a>
             </div>
             <div class="websiteSearchContainer">
                 <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">Search on YouTube
+                <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://www.youtube.com/results?search_query={{ search_term }}" target="_blank"
                     aria-label="Redirect Search To YouTube"></a>
             </div>
         </div>
     </div>
-    <div class="tabsContent" data-tab="1">
-        {% if filtered_stocks %}
-        <div class="stocksWrapper">
-            <div class="categoryHeader">Stocks - Search Results</div>
-            {% for stock in filtered_stocks %}
-            <div class="stockContainer">
-                <div class="stockTicker">{{ stock.ticker }}</div>
-                <div class="companyName">{{ stock.full_company_name }}</div>
-                <a href="{{ stock.get_absolute_url }}" aria-label="Open Profile Of {{ stock.full_company_name }}"></a>
-            </div>
-            {% endfor %}
-        </div>
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in filtered_stocks.paginator.page_range %}
-                {% if filtered_stocks.number == i %}
-                <button class="currentPagination">{{ filtered_stocks.number }}</button>
-                {% elif i > filtered_stocks.number|add:'-3' and i < filtered_stocks.number|add:'3' %} <a
-                    href="?stocks={{ i }}">{{ i }}</a>
-                {% endif %}
-                {% endfor %}
-            </span>
-        </div>
-        {% endif %}
-    </div>
-    <div class="tabsContent" data-tab="2">
-        {% if filtered_sources %}
-        <div class="sliderWrapper">
-            <div class="sliderContentContainer">
-                <button aria-label="Slide Left" class="handle leftHandle">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="slider">
-                    {% for source in filtered_sources  %}
-                    <div class="contentWrapper" id="fsss?si#{{ source.source_id }}">
-                        <img src="{% static source.favicon_path %}" alt="Source Picture" />
-                        <div class="contentRatingContainer">
-                            <i class="fa fa-star"></i>
-                            <span>{{ source.average_rating }}</span>
-                        </div>
-                        <div class="nameContainer">
-                            <span>{{source.name}}</span>
-                        </div>
-                        {% if request.user.is_authenticated %}
-                        {% if source in subscribed_sources %}
-                        <button class="subscribeButton subscribed">Subscribed</button>
-                        {% else %}
-                        <button class="subscribeButton">Subscribe</button>
-                        {% endif %}
-                        {% if source.source_id in notification_sources %}
-                        <button class="notificationButton notificationActivated">Notification Off</button>
-                        {% else %}
-                        <button class="notificationButton">Notification On</button>
-                        {% endif %}
-                        {% else %}
-                        <a class="loginRedirectButton" aria-label="Login to subscribe"
-                            href="{% url 'account_login' %}">Subscribe</a>
-                        <a class="loginRedirectButton" aria-label="Login to turn on notifications"
-                            href="{% url 'account_login' %}">Notification
-                            On</a>
-                        {% endif %}
-                        <a class="contentLink" href="{{ source.get_absolute_url }}"
-                            aria-label="Open Profile Of {{ source.name }}"></a>
-                    </div>
-                    {% endfor %}
-                </div>
-                <button aria-label="Slide right" class="handle rightHandle">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-        {% endif %}
-    </div>
 </div>
 
-<script src="{% static 'home/min_search_results_script_v5.js' %}"></script>
+
+<script src="{% static 'home/min_search_results_script_v6.js' %}"></script>
 {% endblock content %}

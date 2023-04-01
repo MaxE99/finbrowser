@@ -1,0 +1,417 @@
+{% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'source/min_source_ranking_style_v1.css' %}" />
+<title>Source Ranking | FinBrowser</title>
+{% endblock %}
+{% block content %}
+
+<div class="sourceRatingsWrapper">
+    <div class="sourceRatingsContainer">
+        <div class="ratingsContainer">
+            <div class="header">
+                <h3></h3>
+                <i class="fas fa-times"></i>
+            </div>
+            <span>How would you rate this source in terms of content quality?</span>
+            <div class="ratingsButtonContainer">
+                <button>1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button>5</button>
+                <button>6</button>
+                <button>7</button>
+                <button>8</button>
+                <button>9</button>
+                <button>10</button>
+            </div>
+            <button class="rateSourceButton">Rate</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="horizontalFilterMenu">
+    <form method="get" action="/sources">
+        <div class="selectContainer">
+            <label for="website">Website</label>
+            <div class="dropdown websiteDropdown">Select Websites
+                <i class="fa-solid fa-chevron-down"></i>
+                <ul class="websiteList">
+                    <li value="SeekingAlpha">
+                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,SeekingAlpha" %}
+                            checked {% endif %} name="website" value="SeekingAlpha"></input>
+                        <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">
+                        SeekingAlpha
+                    </li>
+                    <li value="Spotify">
+                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,Spotify" %} checked
+                            {% endif %} name="website" value="Spotify"></input>
+                        <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">
+                        Spotify
+                    </li>
+                    <li value="Substack">
+                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,Substack" %}
+                            checked {% endif %} name="website" value="Substack"></input>
+                        <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">
+                        Substack
+                    </li>
+                    <li value="Twitter">
+                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,Twitter" %} checked
+                            {% endif %} name="website" value="Twitter"></input>
+                        <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">
+                        Twitter
+                    </li>
+                    <li value="YouTube">
+                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,YouTube" %} checked
+                            {% endif %} name="website" value="YouTube"></input>
+                        <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">
+                        YouTube
+                    </li>
+                    <li value="Other">
+                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,Other" %} checked
+                            {% endif %} name="website" value="Other"></input>
+                        <img src="{% static 'home/media/default_favicon.png' %}" alt="Website Logo">
+                        Other
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="selectContainer">
+            <label for="sector">Sector</label>
+            <div class="dropdown sectorDropdown">Select Sectors
+                <i class="fa-solid fa-chevron-down"></i>
+                <ul class="sectorList">
+                    {% for sector in sectors %}
+                    <li value="{{ sector.name }}">
+                        <input type="checkbox" {% if search_parameters|check_param_selected:sector.name  %} checked
+                            {% endif %} name="sector" value="{{ sector.name }}">{{ sector.name }}</input>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="selectContainer">
+            <label>Tag</label>
+            <div class="tagSearchWrapper">
+                <div class="tagSearchContainer">
+                    <input aria-label="Search" id="tagAutocomplete" class="tagInputSearch" placeholder="Search"
+                        autocomplete="off" spellcheck="false">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div id="tagAutocomplete_result">
+                    <ul class="selectionList"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="selectedTagsContainer">
+            {% if search_parameters|get_tags != None %}
+            {% for selected_tag in search_parameters|get_tags %}
+            <li value="{{ selected_tag }}" class="selectedOption">{{ selected_tag }}<input hidden="true" name="tag"
+                    value="{{ selected_tag }}"><i class="fas fa-times"></i></li>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="selectContainer">
+            <label for="content_type">Content Type</label>
+            <div class="choiceContainer">
+                <input type="checkbox" {% if search_parameters|check_param_selected:"content,Analysis" %} checked
+                    {% endif %} name="content" value="Analysis">
+                <label>Analysis</label>
+            </div>
+            <div class="choiceContainer">
+                <input type="checkbox" {% if search_parameters|check_param_selected:"content,Commentary" %} checked
+                    {% endif %} name="content" value="Commentary">
+                <label>Commentary</label>
+            </div>
+            <div class="choiceContainer">
+                <input type="checkbox" {% if search_parameters|check_param_selected:"content,News" %} checked
+                    {% endif %} name="content" value="News">
+                <label>News</label>
+            </div>
+        </div>
+        <div class="selectContainer">
+            <label for="paywall">Paywall</label>
+            <div class="choiceContainer">
+                <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Yes" %} checked {% endif %}
+                    name="paywall" value="Yes">
+                <label>Yes</label>
+            </div>
+            <div class="choiceContainer">
+                <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Semi" %} checked
+                    {% endif %} name="paywall" value="Semi">
+                <label>Semi</label>
+            </div>
+            <div class="choiceContainer">
+                <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,No" %} checked {% endif %}
+                    name="paywall" value="No">
+                <label>No</label>
+            </div>
+        </div>
+
+
+        <div class="selectContainer topSourcesOnlyContainer">
+            <input name="top_sources_only" {% if search_parameters|check_param_selected:"top_sources_only,on" %} checked
+                {% endif %} type="checkbox">
+            <label for="top_sources">Only Top Sources</label>
+            <span class="infoLink"><i class="fas fa-info"></i></span>
+        </div>
+        <div class="actionButtonsContainer">
+            <button type="button" class="discardButton">Discard</button>
+            <button type="submit" class="applyFilterButton">Apply Filter</button>
+        </div>
+    </form>
+</div>
+
+<div class="pageWrapper">
+    <div class="horizontalFilterWrapper">
+        <button class="openFiltersButton"><i class="fa-solid fa-filter"></i>Open Filters</button>
+    </div>
+    <div class="sourceRankingWrapper">
+        {% if sources %}
+        {% for source in sources %}
+        <div class="sourceRankingContainer" id="src?si#{{ source.source_id }}">
+            <div class="leftSide {% if source.top_source %}topSource{% endif %}">
+                <img class="profilePicture" src="{% static source.favicon_path %}" alt="Source Picture" />
+                <div class="rating">{{ source.average_rating }}</div>
+                <a href="{{ source.get_absolute_url }}" aria-label="Open Profile Of {{ source.name }}"></a>
+            </div>
+            <div class="rightSide">
+                <div class="firstRow">
+                    <a class="name" href="{{ source.get_absolute_url }}"
+                        aria-label="Open Profile Of {{ source.name }}"><span
+                            class="rank">{{ forloop.counter|calc_ranking:sources.number }}.</span><span>{{ source.name }}</span></a>
+                </div>
+                <div class="secondRow">
+                    <div class="leftSide leftSideSecondRow {% if source.top_source %}topSource{% endif %}">
+                        <img class="profilePicture" src="{% static source.favicon_path %}" alt="Source Picture" />
+                        <div class="rating">{{ source.average_rating }}</div>
+                        <a href="{{ source.get_absolute_url }}" aria-label="Open Profile Of {{ source.name }}"></a>
+                    </div>
+                    <div class="infoWrapper">
+                        <div class="infoContainer sectorInfoContainer">
+                            <span>Sector</span>
+                            <a href="{{ source.sector.get_absolute_url }}"
+                                aria-label="Open Sector - {{ source.sector.name }}">{{ source.sector.name }}</a>
+                        </div>
+                        <div class="infoContainer">
+                            <span>Content Type</span>
+                            <span>{{ source.content_type }}</span>
+                        </div>
+                        <div class="infoContainer websiteInfoContainer">
+                            <span>Website</span>
+                            <a href="{{ source.url }}" target="_blank"
+                                aria-label="Open External Profile Of {{ source.name }}">{{ source.website }}</a>
+                        </div>
+                        <div class="infoContainer">
+                            <span>Paywall</span>
+                            <span>{{ source.paywall }}</span>
+                        </div>
+                        <div class="infoContainer">
+                            <span>Amount of Ratings</span>
+                            <span>{{ source.ammount_of_ratings }}</span>
+                        </div>
+                        <div class="infoContainer">
+                            <span>Your Rating</span>
+                            {% if request.user.is_authenticated %}
+                            {% if source|check_has_rated:user_ratings %}
+                            <span class="rateSpan"><i
+                                    class="fas fa-star"></i>{{ source|check_has_rated:user_ratings }}</span>
+                            {% else %}
+                            <span class="notRated rateSpan"><i class="fas fa-star"></i>Rate</span>
+                            {% endif %}
+                            {% else %}
+                            <span class="notRated rateSpan openAuthPrompt ap7"><i class="fas fa-star"></i>Rate</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="thirdRow">
+                    {% if source.tags %}
+                    {% for tag in source.tags.all %}
+                    <div class="tag">{{ tag.name }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="fourthRow">
+                    {% if request.user.is_authenticated %}
+                    {% if source in subscribed_sources %}
+                    <button class="subscribeButton subscribed">Subscribed</button>
+                    {% else %}
+                    <button class="subscribeButton">Subscribe</button>
+                    {% endif %}
+                    <button class="sourceAddToListButton">Add To List</button>
+                    {% else %}
+                    <button class="subscribeButton openAuthPrompt ap2">Subscribe</button>
+                    <button class="sourceAddToListButton openAuthPrompt ap1">Add To List</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if sources.paginator.num_pages > 1 %}
+        <div class="pagination">
+            <div class="currOffset"><span>{{ sources.start_index }} - {{ sources.end_index }} </span> of
+                {{ sources.paginator.count }} Results</div>
+            <span class="step-links">
+                {% if sources.number == 1 %}
+                <button class="backButton notClickable"><i class="fas fa-chevron-left"></i></button>
+                {% else %}
+                <a class="backButton" href="?page={{ sources.number|add:'-1' }}"><i class="fas fa-chevron-left"></i></a>
+                {% endif %}
+                <div class="paginationButtonsContainer">
+                    {% for i in sources.paginator.page_range %}
+                    {% if sources.number == i %}
+                    <button class="currentPagination">{{ sources.number }}</button>
+                    {% elif i > sources.number|add:'-3' and i < sources.number|add:'3' %}
+                    <a href="?{% query_transform page=i %}">{{ i }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% if sources.number == sources.paginator.num_pages %}
+                <button class="nextButton notClickable"><i class="fas fa-chevron-right"></i></button>
+                {% else %}
+                <a class="nextButton" href="?page={{ sources.number|add:'1' }}"><i class="fas fa-chevron-right"></i></a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="emptyInformationContainer">
+            <h3>No results found!</h3>
+            <div>Change your filters to get more results.</div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="filterSidebar">
+        <form method="get" action="/sources">
+            <div class="selectContainer">
+                <label for="website">Website</label>
+                <div class="dropdown websiteDropdown">Select Websites
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <ul class="websiteList">
+                        <li value="SeekingAlpha">
+                            <input type="checkbox"
+                                {% if search_parameters|check_param_selected:"website,SeekingAlpha" %} checked
+                                {% endif %} name="website" value="SeekingAlpha"></input>
+                            <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">
+                            SeekingAlpha
+                        </li>
+                        <li value="Spotify">
+                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Spotify" %}
+                                checked {% endif %} name="website" value="Spotify"></input>
+                            <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">
+                            Spotify
+                        </li>
+                        <li value="Substack">
+                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Substack" %}
+                                checked {% endif %} name="website" value="Substack"></input>
+                            <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">
+                            Substack
+                        </li>
+                        <li value="Twitter">
+                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Twitter" %}
+                                checked {% endif %} name="website" value="Twitter"></input>
+                            <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">
+                            Twitter
+                        </li>
+                        <li value="YouTube">
+                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,YouTube" %}
+                                checked {% endif %} name="website" value="YouTube"></input>
+                            <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">
+                            YouTube
+                        </li>
+                        <li value="Other">
+                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Other" %}
+                                checked {% endif %} name="website" value="Other"></input>
+                            <img src="{% static 'home/media/default_favicon.png' %}" alt="Website Logo">
+                            Other
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="selectContainer">
+                <label for="sector">Sector</label>
+                <div class="dropdown sectorDropdown">Select Sectors
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <ul class="sectorList">
+                        {% for sector in sectors %}
+                        <li value="{{ sector.name }}">
+                            <input type="checkbox" {% if search_parameters|check_param_selected:sector.name  %} checked
+                                {% endif %} name="sector" value="{{ sector.name }}">{{ sector.name }}</input>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="selectContainer">
+                <label>Tag</label>
+                <div class="tagSearchWrapper">
+                    <div class="tagSearchContainer">
+                        <input aria-label="Search" id="tagAutocomplete" class="tagInputSearch" placeholder="Search"
+                            autocomplete="off" spellcheck="false">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div id="tagAutocomplete_result">
+                        <ul class="selectionList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="selectedTagsContainer">
+                {% if search_parameters|get_tags != None %}
+                {% for selected_tag in search_parameters|get_tags %}
+                <li value="{{ selected_tag }}" class="selectedOption">{{ selected_tag }}<input hidden="true" name="tag"
+                        value="{{ selected_tag }}"><i class="fas fa-times"></i></li>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="selectContainer">
+                <label for="content_type">Content Type</label>
+                <div class="choiceContainer">
+                    <input type="checkbox" {% if search_parameters|check_param_selected:"content,Analysis" %} checked
+                        {% endif %} name="content" value="Analysis">
+                    <label>Analysis</label>
+                </div>
+                <div class="choiceContainer">
+                    <input type="checkbox" {% if search_parameters|check_param_selected:"content,Commentary" %} checked
+                        {% endif %} name="content" value="Commentary">
+                    <label>Commentary</label>
+                </div>
+                <div class="choiceContainer">
+                    <input type="checkbox" {% if search_parameters|check_param_selected:"content,News" %} checked
+                        {% endif %} name="content" value="News">
+                    <label>News</label>
+                </div>
+            </div>
+            <div class="selectContainer">
+                <label for="paywall">Paywall</label>
+                <div class="choiceContainer">
+                    <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Yes" %} checked
+                        {% endif %} name="paywall" value="Yes">
+                    <label>Yes</label>
+                </div>
+                <div class="choiceContainer">
+                    <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Semi" %} checked
+                        {% endif %} name="paywall" value="Semi">
+                    <label>Semi</label>
+                </div>
+                <div class="choiceContainer">
+                    <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,No" %} checked
+                        {% endif %} name="paywall" value="No">
+                    <label>No</label>
+                </div>
+            </div>
+            <div class="selectContainer">
+                <input name="top_sources_only" {% if search_parameters|check_param_selected:"top_sources_only,on" %}
+                    checked {% endif %} type="checkbox">
+                <label for="top_sources">Only Top Sources</label>
+                <span class="infoLink"><i class="fas fa-info"></i></span>
+            </div>
+            <button type="submit" class="applyFilterButton">Apply Filter</button>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'source/min_source_ranking_script_v1.js' %}"></script>
+{% endblock content %}
