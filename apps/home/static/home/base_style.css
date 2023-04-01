@@ -2372,3 +2372,33 @@ footer ul a:hover {
     padding: 4rem 0.5rem 2rem;
     text-align: center;
 }
+
+.errorContainer {
+    display: flex;
+    align-items: center;
+}
+
+.errorContainer img {
+    height: 300px;
+    margin: 0 auto;
+}
+
+.errorContainer .errorMessageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.errorContainer .errorMessageContainer h2 {
+    font-size: 3rem;
+    color: red;
+}
+
+.errorContainer .errorMessageContainer span:first-of-type {
+    margin: 2rem 0;
+}
+
+.errorContainer .errorMessageContainer span {
+    font-size: 2.5rem;
+    text-align: center;
+}

@@ -68,7 +68,7 @@ class GuideView(TemplateView, BaseMixin):
             "Holger Zschaepitz",
         ]
         energy = [
-            "Giovanni Staunovo",
+            "Giovanni Staunovo🛢🇮🇹",
             "Doomberg",
             "Portfolio Matters",
             "Stephen Stapczynski",
