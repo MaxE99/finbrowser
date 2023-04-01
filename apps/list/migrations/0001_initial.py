@@ -13,36 +13,86 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('source', '0001_initial'),
-        ('article', '0001_initial'),
+        ("source", "0001_initial"),
+        ("article", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='List',
+            name="List",
             fields=[
-                ('list_id', models.AutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=30, validators=[django.core.validators.MaxLengthValidator(30)])),
-                ('slug', models.SlugField()),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('list_pic', models.ImageField(blank=True, null=True, upload_to=apps.list.models.create_list_pic_name)),
-                ('is_public', models.BooleanField(default=False)),
-                ('main_website_source', models.CharField(blank=True, max_length=100)),
-                ('average_rating', models.FloatField(blank=True, null=True)),
-                ('ammount_of_ratings', models.IntegerField(default=0, null=True)),
-                ('articles', models.ManyToManyField(blank=True, related_name='articles_list', to='article.Article')),
-                ('creator', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
-                ('sources', models.ManyToManyField(blank=True, related_name='lists', to='source.Source')),
-                ('subscribers', models.ManyToManyField(blank=True, related_name='subscriber_list', to=settings.AUTH_USER_MODEL)),
+                ("list_id", models.AutoField(primary_key=True, serialize=False)),
+                (
+                    "name",
+                    models.CharField(
+                        max_length=30,
+                        validators=[django.core.validators.MaxLengthValidator(30)],
+                    ),
+                ),
+                ("slug", models.SlugField()),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                # ('list_pic', models.ImageField(blank=True, null=True, upload_to=apps.list.models.create_list_pic_name)),
+                ("is_public", models.BooleanField(default=False)),
+                ("main_website_source", models.CharField(blank=True, max_length=100)),
+                ("average_rating", models.FloatField(blank=True, null=True)),
+                ("ammount_of_ratings", models.IntegerField(default=0, null=True)),
+                (
+                    "articles",
+                    models.ManyToManyField(
+                        blank=True, related_name="articles_list", to="article.Article"
+                    ),
+                ),
+                (
+                    "creator",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "sources",
+                    models.ManyToManyField(
+                        blank=True, related_name="lists", to="source.Source"
+                    ),
+                ),
+                (
+                    "subscribers",
+                    models.ManyToManyField(
+                        blank=True,
+                        related_name="subscriber_list",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ListRating',
+            name="ListRating",
             fields=[
-                ('list_rating_id', models.AutoField(primary_key=True, serialize=False)),
-                ('rating', models.IntegerField(default=0, validators=[django.core.validators.MaxValueValidator(5), django.core.validators.MinValueValidator(0)])),
-                ('list', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='list.list')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ("list_rating_id", models.AutoField(primary_key=True, serialize=False)),
+                (
+                    "rating",
+                    models.IntegerField(
+                        default=0,
+                        validators=[
+                            django.core.validators.MaxValueValidator(5),
+                            django.core.validators.MinValueValidator(0),
+                        ],
+                    ),
+                ),
+                (
+                    "list",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="list.list"
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

@@ -1,318 +1,318 @@
 # Django imports
+from django.http import JsonResponse, HttpResponse
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from rest_framework import status
 from rest_framework.response import Response
-from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
-from rest_framework.decorators import action, api_view, permission_classes, authentication_classes
+from rest_framework.decorators import (
+    api_view,
+    permission_classes,
+    authentication_classes,
+)
+from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
+from django.http import Http404
+
+
 # Local imports
-from apps.api.serializers import (List_Serializer, Stock_Serializer, SourceTag_Serializer, Article_Serializer, Source_Serializer, Profile_Serializer, HighlightedArticle_Serializer, SourceRating_Serializer, ListRating_Serializer, Notification_Serializer)
-from apps.api.permissions import IsListCreator, IsUser
+from apps.api.serializers import (
+    ListSerializer,
+    StockSerializer,
+    SourceTagSerializer,
+    SourceSerializer,
+    ProfileSerializer,
+    HighlightedArticleSerializer,
+    SourceRatingSerializer,
+    NotificationSerializer,
+    PortfolioSerializer,
+    PortfolioStockSerializer,
+    PortfolioKeywordSerializer,
+    ArticleSerializer,
+)
+from apps.api.permissions import (
+    IsUser,
+    IsListCreator,
+    IsPortfolioCreator,
+    PortfolioKeywordPermission,
+)
 from apps.home.models import NotificationMessage, Notification
 from apps.accounts.models import Profile
 from apps.article.models import HighlightedArticle, Article
 from apps.source.models import Source, SourceRating, SourceTag
-from apps.list.models import List, ListRating
-from apps.stock.models import Stock
+from apps.list.models import List
+from apps.stock.models import Stock, Portfolio, PortfolioStock, PortfolioKeyword
+from apps.logic.pure_logic import balance_search_results
+
+
+class ListViewSet(viewsets.ModelViewSet):
+    queryset = List.objects.all()
+    serializer_class = ListSerializer
+    http_method_names = ["post", "patch", "delete"]
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated, IsListCreator]
+
+    def destroy(self, request, *args, **kwargs):
+        user_lists = List.objects.filter(creator=request.user)
+        if user_lists.count() > 1:
+            selected_list = get_object_or_404(List, list_id=kwargs.get("pk"))
+            if selected_list.main:
+                new_main_list = user_lists.exclude(main=True).first()
+                new_main_list.main = True
+                new_main_list.save()
+            return super().destroy(request, *args, **kwargs)
+        return Response(
+            data="You are not allowed to delete your last list!",
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+class SourceViewSet(viewsets.ModelViewSet):
+    queryset = Source.objects.all()
+    serializer_class = SourceSerializer
+    http_method_names = ["get", "patch"]
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication]
+
+    def get_queryset(self):
+        list_search = self.request.GET.get("list_search", None)
+        blacklist_search = self.request.GET.get("blacklist_search", None)
+        if list_search:
+            selected_list = get_object_or_404(
+                List, list_id=self.request.GET.get("list_id", None)
+            )
+            if selected_list.creator == self.request.user:
+                return Source.objects.filter_by_list_and_search_term_exclusive(
+                    list_search, selected_list
+                )[0:10]
+            raise Http404(
+                "Could not find a list with that ID owned by the current user"
+            )
+        if blacklist_search:
+            portfolio = get_object_or_404(
+                Portfolio, portfolio_id=self.request.GET.get("portfolio_id")
+            )
+            if portfolio.user == self.request.user:
+                return Source.objects.filter(
+                    name__istartswith=blacklist_search
+                ).exclude(
+                    source_id__in=portfolio.blacklisted_sources.values_list(
+                        "source_id", flat=True
+                    )
+                )[
+                    0:10
+                ]
+            raise Http404(
+                "Could not find a list with that ID owned by the current user"
+            )
+        return Source.objects.all()
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsUser]
-    authentication_classes=[SessionAuthentication]
+    authentication_classes = [SessionAuthentication]
     queryset = Profile.objects.all()
-    serializer_class = Profile_Serializer
-    http_method_names = ["delete"]
+    serializer_class = ProfileSerializer
+    parser_classes = (JSONParser, MultiPartParser, FormParser)
+    http_method_names = ["patch"]
 
-    @action(detail=True, methods=['delete'])
-    def profile_pic_delete(self, request, *args, **kwargs):
-        self.get_object().profile_pic.delete()
-        return Response("Profile picture has been deleted!")
+
+class SourceRatingViewSet(viewsets.ModelViewSet):
+    queryset = SourceRating.objects.all()
+    serializer_class = SourceRatingSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication]
+    http_method_names = ["post"]
 
 
 class HighlightedArticleViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    authentication_classes=[SessionAuthentication]
+    authentication_classes = [SessionAuthentication]
     queryset = HighlightedArticle.objects.all()
-    serializer_class = HighlightedArticle_Serializer
+    serializer_class = HighlightedArticleSerializer
     http_method_names = ["post"]
 
-    def create(self, request):
-        article = get_object_or_404(Article, article_id=request.data['article_id'])
-        if HighlightedArticle.objects.filter(user=request.user, article=article).exists():
+    def create(self, request, *args, **kwargs):
+        article = get_object_or_404(Article, article_id=request.data["article"])
+        if HighlightedArticle.objects.filter(
+            user=request.user, article=article
+        ).exists():
             HighlightedArticle.objects.get(user=request.user, article=article).delete()
             return Response("Article has been unhighlighted!")
         HighlightedArticle.objects.create(user=request.user, article=article)
         return Response("Article has been highlighted!")
 
 
-class SourceRatingViewSet(viewsets.ModelViewSet):
-    queryset = SourceRating.objects.all()
-    serializer_class = SourceRating_Serializer    
-    permission_classes = [IsAuthenticated]
-    authentication_classes=[SessionAuthentication] 
-    http_method_names = ["post"] 
-
-    def create(self, request):
-        source = get_object_or_404(Source, source_id=request.data['source_id'])
-        rating = request.data['rating']
-        if SourceRating.objects.filter(user=request.user, source=source).exists():
-            rating_instance = SourceRating.objects.get(user=request.user, source=source)
-            rating_instance.rating = rating
-            rating_instance.save()
-            return Response("Rating has been changed!")
-        SourceRating.objects.create(user=request.user, source=source, rating=rating)
-        return Response("Rating has been added!")
-
-
-class ListRatingViewSet(viewsets.ModelViewSet):
-    queryset = ListRating.objects.all()
-    serializer_class = ListRating_Serializer    
-    permission_classes = [IsAuthenticated]
-    authentication_classes=[SessionAuthentication]  
-    http_method_names = ["post"]
-
-    def create(self, request):
-        list = get_object_or_404(List, list_id=request.data['list_id'])
-        rating = request.data['rating']
-        if ListRating.objects.filter(user=request.user, list=list).exists():
-            rating_instance = ListRating.objects.get(user=request.user, list=list)
-            rating_instance.rating = rating
-            rating_instance.save()
-            return Response("Rating has been changed!")
-        ListRating.objects.create(user=request.user, list=list, rating=rating)
-        return Response("Rating has been added!")
-
-
-class SourceViewSet(viewsets.ModelViewSet):
-    queryset = Source.objects.all()
-    serializer_class = Source_Serializer
-    http_method_names = ["post", "get"]
+class NotificationViewSet(viewsets.ModelViewSet):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated, IsUser]
     authentication_classes = [SessionAuthentication]
+    http_method_names = ["put", "post", "delete"]
+
+    def put(self, request, *args, **kwargs):
+        NotificationMessage.objects.filter(notification__user=request.user).update(
+            user_has_seen=True
+        )
+        return Response("Notifications have been marked as seen!")
+
+
+class SourceTagViewSet(viewsets.ModelViewSet):
+    queryset = SourceTag.objects.all()
+    serializer_class = SourceTagSerializer
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [AllowAny]
+    http_method_names = ["get"]
 
     def get_queryset(self):
-        list_id = self.request.GET.get("list_id", None)
-        list_search = self.request.GET.get('list_search', None)
-        feed_search = self.request.GET.get('feed_search', None)
-        sectors_search = self.request.GET.get('sectors_search', None)
-        if list_search != None:
-            list = get_object_or_404(List, list_id=list_id)
-            if list.creator == self.request.user:   
-                return Source.objects.filter_by_list_and_search_term_exclusive(list_search, list)[0:10]
-            return None
-        elif feed_search != None:   
-            return Source.objects.filter_by_subscription_and_search_term_exclusive(feed_search, self.request.user)[0:10]
-        elif sectors_search != None:   
-            return Source.objects.filter(name__istartswith=sectors_search)[0:10]
-        else:
-            return Source.objects.all()
-
-    @action(detail=True, methods=['post'], authentication_classes=[SessionAuthentication], permission_classes=[IsAuthenticated])
-    def source_change_subscribtion_status(self, request, *args, **kwargs):
-        source = self.get_object()
-        if source.subscribers.filter(username=request.user.username).exists():
-            source.subscribers.remove(request.user)
-            return Response("Source has been unsubscribed!")
-        source.subscribers.add(request.user.id)
-        return Response("Source has been subscribed!")
+        return SourceTag.objects.filter(
+            name__istartswith=self.request.GET["search_term"]
+        ).order_by("name")
 
 
-class ListViewSet(viewsets.ModelViewSet):
-    queryset = List.objects.all()
-    serializer_class = List_Serializer
-    http_method_names = ["post", "delete", "get"]
+class PortfolioViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated, IsUser]
     authentication_classes = [SessionAuthentication]
-
-    def get_queryset(self):
-        feed_search = self.request.GET.get("feed_search", None)
-        if feed_search != None:
-            return List.objects.filter_by_search_term_and_subscription_status(feed_search, self.request.user)[0:10]
-        return List.objects.all()
+    queryset = Portfolio.objects.all()
+    serializer_class = PortfolioSerializer
+    http_method_names = ["post", "patch", "delete"]
 
     def destroy(self, request, *args, **kwargs):
-        if self.get_object().creator == request.user:
-            self.get_object().delete()
-            return Response("List has been deleted!")
-        return Response("Access Denied")
-
-    @action(detail=True, methods=['post'], authentication_classes=[SessionAuthentication], permission_classes=[IsAuthenticated])
-    def list_change_subscribtion_status(self, request, *args, **kwargs):
-        list = self.get_object()
-        if list.subscribers.filter(username=request.user.username).exists():
-            list.subscribers.remove(request.user)
-            return Response("List subscription removed!")
-        list.subscribers.add(request.user.id)
-        return Response("List subscription added!")
-
-    @action(detail=True, methods=['delete'], authentication_classes=[SessionAuthentication], url_path=r'delete_source_from_list/(?P<source_id>\d+)', permission_classes=[IsAuthenticated, IsListCreator])
-    def delete_source_from_list(self, request, pk, source_id):
-        list = self.get_object()
-        if list.creator == request.user:
-            source = get_object_or_404(Source, source_id=source_id)
-            list.sources.remove(source)
-            return Response("Source has been removed from the list!")
-        return Response("Access Denied")
-
-    @action(detail=True, methods=['delete'], authentication_classes=[SessionAuthentication], url_path=r'delete_article_from_list/(?P<article_id>\d+)', permission_classes=[IsAuthenticated, IsListCreator])
-    def delete_article_from_list(self, request, pk, article_id):
-        list = self.get_object()
-        if list.creator == request.user:
-            article = get_object_or_404(Article, article_id=article_id)
-            list.articles.remove(article)
-            return Response("Article has been removed from the list!")
-        return Response("Access Denied")
-
-    @action(detail=True, methods=['post'], authentication_classes=[SessionAuthentication], url_path=r'add_article_to_list/(?P<article_id>\d+)', permission_classes=[IsAuthenticated])
-    def add_article_to_list(self, request, pk, article_id):
-        list = self.get_object()
-        if list.creator == request.user:
-            article = get_object_or_404(Article, article_id=article_id)
-            list.articles.add(article)
-            return Response("Article has been added to the list!")
-        return Response("Access Denied")
+        user_portfolios = Portfolio.objects.filter(user=request.user)
+        if user_portfolios.count() > 1:
+            selected_portfolio = get_object_or_404(
+                Portfolio, portfolio_id=kwargs.get("pk")
+            )
+            if selected_portfolio.main:
+                new_main_portfolio = user_portfolios.exclude(main=True).first()
+                new_main_portfolio.main = True
+                new_main_portfolio.save()
+            return super().destroy(request, *args, **kwargs)
+        return Response(
+            data="You are not allowed to delete your last portfolio!",
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
 
-@api_view(["POST"])
-@permission_classes((IsAuthenticated, ))
-@authentication_classes((SessionAuthentication, ))
-def change_source_status_from_lists(request):
-    source = get_object_or_404(Source, source_id=request.data['source_id'])
-    for list_id in request.data['add_lists']:
-        list = get_object_or_404(List, list_id=list_id)
-        if list.creator == request.user:
-            list.sources.add(source)
+class StockViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
+    authentication_classes = [SessionAuthentication]
+    queryset = Stock.objects.all()
+    serializer_class = StockSerializer
+    http_method_names = ["get"]
+
+    def get_queryset(self):
+        if self.request.GET.get("search_term"):
+            search_term = self.request.GET.get("search_term")
+            return Stock.objects.filter(
+                Q(ticker__istartswith=search_term)
+                | Q(search_vector=search_term)
+                | Q(short_company_name__istartswith=search_term)
+            )[:25]
+        return super().get_queryset()
+
+
+class PortfolioStockViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated, IsPortfolioCreator]
+    authentication_classes = [SessionAuthentication]
+    queryset = PortfolioStock.objects.all()
+    serializer_class = PortfolioStockSerializer
+    http_method_names = ["get", "post", "delete"]
+
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        obj = queryset.get(pk=self.kwargs["pk"])
+        return obj
+        # print(obj.keywords.all())
+        # return PortfolioKeywordSerializer(obj.keywords.all(), many=True)
+
+    def create(self, request, *args, **kwargs):
+        if request.data.get("portfolios"):
+            for portfolio_id in request.data.get("portfolios"):
+                selected_portfolio = get_object_or_404(
+                    Portfolio, portfolio_id=portfolio_id, user=request.user
+                )
+                PortfolioStock.objects.create(
+                    portfolio=selected_portfolio,
+                    stock=get_object_or_404(
+                        Stock, stock_id=request.data.get("stock_id")
+                    ),
+                )
         else:
-            return Response("Access Denied")
-    for list_id in request.data['remove_lists']:
-        list = get_object_or_404(List, list_id=list_id)
-        if list.creator == request.user:
-            list.sources.remove(source)
-        else:
-            return Response("Access Denied")
-    return Response("Lists have been updated!")
+            for stock_id in request.data.get("stocks"):
+                PortfolioStock.objects.create(
+                    stock=get_object_or_404(Stock, stock_id=stock_id),
+                    portfolio=get_object_or_404(
+                        Portfolio,
+                        portfolio_id=request.data.get("portfolio"),
+                        user=request.user,
+                    ),
+                )
+        return HttpResponse(status=201)
 
 
-@api_view(["POST"])
-@permission_classes((IsAuthenticated, ))
-@authentication_classes((SessionAuthentication, ))
-def add_sources_to_list(request, list_id, source_ids):
-    list = get_object_or_404(List, list_id=list_id)
-    if list.creator == request.user:
-        list.sources.add(*source_ids.split(","))
-        return Response("List has been updated!")
-    return Response("Access Denied") 
+@api_view(["DELETE"])
+@permission_classes((IsAuthenticated, IsPortfolioCreator))
+@authentication_classes((SessionAuthentication,))
+def remove_stock_from_portfolio(request, portfolio_id, stock_id):
+    get_object_or_404(
+        PortfolioStock,
+        portfolio=get_object_or_404(
+            Portfolio, portfolio_id=portfolio_id, user=request.user
+        ),
+        stock=get_object_or_404(Stock, stock_id=stock_id),
+    ).delete()
+    return HttpResponse(status=204)
 
 
-@api_view(["POST"])
-@permission_classes((IsAuthenticated, ))
-@authentication_classes((SessionAuthentication, ))
-def subscribe_to_sources(request, source_ids):
-    for source_id in source_ids.split(","):
-        source = get_object_or_404(Source, source_id=source_id)
-        source.subscribers.add(request.user)
-    return Response("List has been updated!")
-
-
-class FilteredLists(APIView):
+class PortfolioKeywordViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated, PortfolioKeywordPermission]
     authentication_classes = [SessionAuthentication]
-    permission_classes = [AllowAny]
-
-    def get(self, request, search_term, format=None):
-        filtered_lists =  List.objects.filter_by_search_term(search_term)[0:10]
-        list_urls = [list.get_absolute_url() for list in filtered_lists]
-        serializer = List_Serializer(filtered_lists, many=True)
-        return JsonResponse([serializer.data, list_urls], safe=False)
-
-
-class FilteredArticles(APIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [AllowAny]
-
-    def get(self, request, search_term, format=None):
-        filtered_articles = Article.objects.filter_by_search_term(search_term)[0:10]
-        serializer = Article_Serializer(filtered_articles, many=True)
-        article_favicon_paths = list(filtered_articles.values_list("source__favicon_path", flat=True))
-        return JsonResponse([serializer.data, article_favicon_paths], safe=False)
-
-
-class FilteredSources(APIView):
-    authentication_classes = [SessionAuthentication]
-    permission_classes = [AllowAny]
-
-    def get(self, request, search_term, format=None):
-        filtered_sources = Source.objects.filter(name__istartswith=search_term)[0:10]
-        serializer = Source_Serializer(filtered_sources, many=True)
-        return JsonResponse(serializer.data, safe=False)
+    queryset = PortfolioKeyword.objects.all()
+    serializer_class = PortfolioKeywordSerializer
+    http_method_names = ["post", "delete"]
 
 
 class FilteredSite(APIView):
     authentication_classes = [SessionAuthentication]
     permission_classes = [AllowAny]
 
-    def get(self, request, search_term, format=None):
+    def get(self, request, search_term):
         filtered_stocks = Stock.objects.filter_by_search_term(search_term)
         filtered_sources = Source.objects.filter_by_search_term(search_term)
-        filtered_articles = Article.objects.filter(search_vector=search_term).select_related('source')
-        # rebalance spots that are displayed
-        len_filtered_stocks = filtered_stocks.count()
-        len_filtered_sources = filtered_sources.count()
-        len_filtered_articles = filtered_articles.count()
-        display_spots_stocks = 3 if len_filtered_stocks > 3 else len_filtered_stocks
-        display_spots_sources = 3 if len_filtered_sources > 3 else len_filtered_sources
-        display_spots_articles = 3 if len_filtered_articles > 3 else len_filtered_articles
-        all_spots = display_spots_stocks + display_spots_sources + display_spots_articles
-        all_spots_previous_iteration = 0
-        while all_spots < 9:
-            if len_filtered_stocks > 3:
-                display_spots_stocks += 1
-                all_spots += 1
-            if len_filtered_sources > 3:
-                display_spots_sources += 1
-                all_spots += 1
-            if len_filtered_articles > 3:
-                display_spots_articles += 1
-                all_spots += 1
-            if all_spots_previous_iteration == all_spots:
-                break
-            all_spots_previous_iteration = all_spots
-        article_favicon_paths = list(filtered_articles.values_list("source__favicon_path", flat=True)[0:10])
-        stock_serializer = Stock_Serializer(filtered_stocks[0:display_spots_stocks], many=True)
-        sources_serializer = Source_Serializer(filtered_sources[0:display_spots_sources], many=True)
-        articles_serializer = Article_Serializer(filtered_articles[0:display_spots_articles], many=True)
-        return JsonResponse([stock_serializer.data, sources_serializer.data, articles_serializer.data, article_favicon_paths], safe=False)
+        filtered_articles = Article.objects.filter(
+            search_vector=search_term
+        ).select_related("source")
+        (
+            stock_serializer,
+            sources_serializer,
+            articles_serializer,
+        ) = balance_search_results(filtered_stocks, filtered_sources, filtered_articles)
+        return JsonResponse(
+            [
+                stock_serializer.data,
+                sources_serializer.data,
+                articles_serializer.data,
+            ],
+            safe=False,
+        )
 
 
-class NotificationViewSet(viewsets.ModelViewSet):
-    queryset = Notification.objects.all()
-    serializer_class = Notification_Serializer    
+class ArticleViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
     authentication_classes = [SessionAuthentication]
-
-    def create(self, request):
-        source_id = request.data.get('source_id', None)
-        stock_id = request.data.get('stock_id', None)
-        if source_id != None:
-            source = get_object_or_404(Source, source_id=source_id)
-            notification, created = Notification.objects.get_or_create(user=request.user, source=source)
-        elif stock_id != None:
-            stock = get_object_or_404(Stock, stock_id=stock_id)
-            notification, created = Notification.objects.get_or_create(user=request.user, stock=stock)
-        if created:
-            return Response("Notification has been added!")
-        notification.delete()
-        return Response("Notification has been removed!")
-
-    def put(self, request, *args, **kwargs):
-        NotificationMessage.objects.filter(notification__user=request.user).update(user_has_seen=True)
-        return Response("Notifications have been marked as seen!")
-
-
-class SourceTagViewSet(viewsets.ModelViewSet):
-    queryset = SourceTag.objects.all()
-    serializer_class = SourceTag_Serializer
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
     http_method_names = ["get"]
-    authentication_classes = [SessionAuthentication]
 
     def get_queryset(self):
-        return SourceTag.objects.filter(name__istartswith=self.request.GET['search_term']).order_by("name")
+        if self.request.GET.get("feed_content"):
+            position = int(self.request.GET.get("feed_content"))
+            return Article.objects.get_top_content_anon()[position : position + 25]
+        if self.request.GET.get("best_tweets"):
+            position = int(self.request.GET.get("best_tweets"))
+            return Article.objects.get_best_tweets_anon()[position : position + 25]
+        return super().get_queryset()
