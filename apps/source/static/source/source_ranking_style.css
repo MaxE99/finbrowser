@@ -302,8 +302,8 @@
 .fourthRow .subscribeButton:hover,
 .fourthRow .sourceAddToListButton,
 .fourthRow .subscribed {
-    color: white;
-    background: var(--primary-fontColor);
+    color: white !important;
+    background: var(--primary-fontColor) !important;
 }
 
 .fourthRow .subscribed:hover {
