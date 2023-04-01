@@ -1,342 +1,222 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v10.css' %}" />
-<title>{{ list.name }} List | FinBrowser</title>
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v11.css' %}" />
+{% if request.user.is_authenticated %}
+<title>{{ list.name }} | FinBrowser</title>
+{% else %}
+<title>Lists | FinBrowser</title>
+{% endif %}
 <meta name="description" content="FinBrowser list created by {{ list.creator.username }}">
 {% endblock %} {% block content %}
 
-<form class="changeListForm" method="POST" enctype="multipart/form-data">
-    <div class="upperContainer">
-        <div class="leftInnerContainer">
-            <div class="listPictureContainer">
-                {% csrf_token %}
-                {% if list.creator == request.user %}
-                {% if list.list_pic %}
-                <img src="{{ list.list_pic.url }}" alt="List Picture">
-                {% else %}
-                <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="List Picture Placeholder">
-                {% endif %}
-                {{ change_list_pic_form }}
-                {% else %}
-                {% if list.list_pic %}
-                <img src="{{ list.list_pic.url }}" alt="List Picture">
-                {% else %}
-                <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="List Picture Placeholder">
-                {% endif %}
-                {% endif %}
-                <i class="fas fa-camera"></i>
-            </div>
-        </div>
-        <div class="rightInnerContainer">
-            <div class="rightFirstRowContainer">
-                <h3 id="ldi#{{ list.list_id }}">{{ list.name }}</h3>
-                <div role="form" aria-label="Change List Name" class="nameChangeContainer">{{ change_list_name_form }}
-                </div>
-                <div class="creatorContainer creatorContainerSmartphonePositioning">
-                    <span>Creator: </span>
-                    <span>{{ list.creator.username }}</span>
-                </div>
-                {% if list.creator == request.user %}
-                <div class="notificationAndSubscribtionContainer">
-                    <button type="button" class="editButton"><i class="fas fa-edit"></i> Edit</button>
-                    <div class="buttonContainer">
-                        <button type="button" class="deleteListButton">Delete</button>
-                        <a role="button" aria-label="Cancel" href="{{ list.get_absolute_url }}"
-                            class="cancelButton">Cancel</a>
-                        <input name="changeListForm" type="submit" value="Save">
-                    </div>
-                </div>
-                {% else %}
-                <div class="notificationAndSubscribtionContainer">
-                    {% if request.user.is_authenticated %}
-                    {% if subscribed %}
-                    <button type="button" class="subscribeButton subscribed">Subscribed</button>
-                    {% else %}
-                    <button type="button" class="subscribeButton unsubscribed">Subscribe</button>
-                    {% endif %}
-                    {% else %}
-                    <a href="{% url 'account_login' %}" class="subscribeButton unsubscribed registrationLink"
-                        aria-label="Login To Subscribe To Lists">Subscribe</a>
-                    {% endif %}
-                </div>
-                {% endif %}
-            </div>
-            <div class="creatorContainer">
-                <span>Creator: </span>
-                <span>{{ list.creator.username }}</span>
-            </div>
-            <div class="ratingsWrapper">
-                <div class="rankingsUpperContainer">
-                    <div class="rankingsHeader">Ratings</div>
-                    {% if list.creator != request.user %}
-                    {% if request.user.is_authenticated %}
-                    <button type="button" class="rateListButton">Rate</button>
-                    {% else %}
-                    <a href="{% url 'account_login' %}" class="rateListButton registrationLink"
-                        aria-label="Login To Rate Lists">Rate</a>
-                    {% endif %}
-                    <div class="rate-formUpperContainer">
-                        <h3>Rate {{ list.name }}</h3>
-                        <div role="form" aria-label="Rate List Form" class="rate-form" action="" method="POST">
-                            <button aria-label="1 Star Rating" type="button" class="fa fa-star rankingStar"
-                                id="first"></button>
-                            <button aria-label="2 Star Rating" type="button" class="fa fa-star rankingStar"
-                                id="second"></button>
-                            <button aria-label="3 Star Rating" type="button" class="fa fa-star rankingStar"
-                                id="third"></button>
-                            <button aria-label="4 Star Rating" type="button" class="fa fa-star rankingStar"
-                                id="fourth"></button>
-                            <button aria-label="5 Star Rating" type="button" class="fa fa-star rankingStar"
-                                id="fifth"></button>
-                        </div>
-                    </div>
-                    {% endif %}
-                </div>
-                <div class="rankingsContainer">
-                    <div class="rating">
-                        <div class="ratedContainer">
-                            <button aria-label="1 Star Rating" type="button" class="fa fa-star ratedStar"
-                                id="first"></button>
-                            <button aria-label="2 Star Rating" type="button" class="fa fa-star ratedStar"
-                                id="second"></button>
-                            <button aria-label="3 Star Rating" type="button" class="fa fa-star ratedStar"
-                                id="third"></button>
-                            <button aria-label="4 Star Rating" type="button" class="fa fa-star ratedStar"
-                                id="fourth"></button>
-                            <button aria-label="5 Star Rating" type="button" class="fa fa-star ratedStar"
-                                id="fifth"></button>
-                        </div>
-                        {% if average_rating != "None" %}
-                        <div class="avgRating"><span>{{ list.average_rating }}</span> out of 5</div>
-                        {% else %}
-                        <div class="avgRating">No Ratings</div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="ratingsAmmountContainer">based on <span class="ratingsAmmount">
-                        {{ list.ammount_of_ratings }}</span> ratings</div>
-            </div>
-        </div>
-    </div>
+{% if request.user.is_authenticated %}
 
-    <div class="upperContainer smallScreenUpperContainer">
-        <div class="infoAndInteractionWrapper">
-            <div class="listPictureContainer">
-                {% csrf_token %}
-                {% if list.creator == request.user %}
-                {% if list.list_pic %}
-                <img src="{{ list.list_pic.url }}" alt="List Picture">
-                {% else %}
-                <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="List Picture Placeholder">
-                {% endif %}
-                {{ change_list_pic_form }}
-                {% else %}
-                {% if list.list_pic %}
-                <img src="{{ list.list_pic.url }}" alt="List Picture">
-                {% else %}
-                <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="List Picture Placeholder">
-                {% endif %}
-                {% endif %}
-                <i class="fas fa-camera"></i>
+<div class="listMenuWrapper">
+    <div class="menuContainer">
+        <div class="addSourceContainer">
+            <div class="header">
+                <h2>Add Sources</h2><i class="fas fa-times closeAddSourceContainer"></i>
             </div>
-            <div class="rightInnerContainer">
-                <div class="rightFirstRowContainer">
-                    <h3 id="ldi#{{ list.list_id }}">{{ list.name }}</h3>
-                    <div role="form" aria-label="Change List Name" class="nameChangeContainer">
-                        {{ change_list_name_form }}
-                    </div>
-                    <div class="creatorContainer creatorContainerSmartphonePositioning">
-                        <span>Creator: </span>
-                        <span>{{ list.creator.username }}</span>
-                    </div>
+            <div class="actionWrapper">
+                <input id="textInput" type="text" autocomplete="off" spellcheck="false">
+                <div class="searchResultWrapper">
+                    <div id="searchResultsContainer"></div>
+                    <div class="selectionContainer"></div>
                 </div>
-                <div class="creatorContainer">
-                    <span>Creator: </span>
-                    <span>{{ list.creator.username }}</span>
-                </div>
+                <button class="addSourceButton">Add</button>
             </div>
         </div>
-        {% if list.creator == request.user %}
-        <div class="notificationAndSubscribtionContainer">
-            <button type="button" class="editButton"><i class="fas fa-edit"></i> Edit</button>
-            <div class="buttonContainer">
-                <button type="button" class="deleteListButton">Delete</button>
-                <a role="button" aria-label="Cancel" href="{{ list.get_absolute_url }}" class="cancelButton">Cancel</a>
-                <input name="changeListForm" type="submit" value="Save">
+        <div class="editMenu">
+            <div class="header">
+                <h2>Edit Menu</h2> <i class="fas fa-times"></i>
             </div>
-        </div>
-        {% else %}
-        <div class="notificationAndSubscribtionContainer">
-            {% if request.user.is_authenticated %}
-            {% if subscribed %}
-            <button type="button" class="subscribeButton subscribed">Subscribed</button>
-            {% else %}
-            <button type="button" class="subscribeButton unsubscribed">Subscribe</button>
-            {% endif %}
-            {% else %}
-            <a href="{% url 'account_login' %}" class="subscribeButton unsubscribed registrationLink"
-                aria-label="Login To Subscribe To Lists">Subscribe</a>
-            {% endif %}
-        </div>
-        {% endif %}
-        <div class="ratingsWrapper">
-            <div class="rankingsUpperContainer">
-                <div class="rankingsHeader">Ratings</div>
-                {% if list.creator != request.user %}
-                {% if request.user.is_authenticated %}
-                <button type="button" class="rateListButton">Rate</button>
-                {% else %}
-                <a href="{% url 'account_login' %}" class="rateListButton registrationLink"
-                    aria-label="Login To Rate Lists">Rate</a>
-                {% endif %}
-                <div class="rate-formUpperContainer">
-                    <h3>Rate {{ list.name }}</h3>
-                    <div role="form" aria-label="Rate List Form" class="rate-form" action="" method="POST">
-                        <button aria-label="1 Star Rating" type="button" class="fa fa-star rankingStar"
-                            id="first"></button>
-                        <button aria-label="2 Star Rating" type="button" class="fa fa-star rankingStar"
-                            id="second"></button>
-                        <button aria-label="3 Star Rating" type="button" class="fa fa-star rankingStar"
-                            id="third"></button>
-                        <button aria-label="4 Star Rating" type="button" class="fa fa-star rankingStar"
-                            id="fourth"></button>
-                        <button aria-label="5 Star Rating" type="button" class="fa fa-star rankingStar"
-                            id="fifth"></button>
-                    </div>
-                </div>
-                {% endif %}
+            <div class="listNameContainer">
+                <label>List Name</label>
+                <input minlength="1" maxlength="30" value="{{ list.name }}" autocomplete="off" spellcheck="false">
             </div>
-            <div class="rankingsContainer">
-                <div class="rating">
-                    <div class="ratedContainer">
-                        <button aria-label="1 Star Rating" type="button" class="fa fa-star ratedStar"
-                            id="first"></button>
-                        <button aria-label="2 Star Rating" type="button" class="fa fa-star ratedStar"
-                            id="second"></button>
-                        <button aria-label="3 Star Rating" type="button" class="fa fa-star ratedStar"
-                            id="third"></button>
-                        <button aria-label="4 Star Rating" type="button" class="fa fa-star ratedStar"
-                            id="fourth"></button>
-                        <button aria-label="5 Star Rating" type="button" class="fa fa-star ratedStar"
-                            id="fifth"></button>
-                    </div>
-                    {% if average_rating != "None" %}
-                    <div class="avgRating"><span>{{ list.average_rating }}</span> out of 5</div>
-                    {% else %}
-                    <div class="avgRating">No Ratings</div>
-                    {% endif %}
-                </div>
+            <div class="mainListContainer">
+                <label>Main List</label>
+                {% if list.main %}
+                <input type="checkbox" checked="True" disabled>
+                {% else %}
+                <input type="checkbox">
+                {% endif %}
+                <span class="infoLink"><i class="fas fa-info"></i></span>
             </div>
-            <div class="ratingsAmmountContainer">based on <span class="ratingsAmmount">
-                    {{ list.ammount_of_ratings }}</span> ratings</div>
+            <button class="saveEditsButton">Save</button>
+            <button class="deleteListButton">Delete List</button>
         </div>
-    </div>
-</form>
-
-{% if list.sources.all.count > 0 %}
-<div class="sliderWrapper">
-    <div class="sliderContentContainer">
-        <button aria-label="Slide Left" class="handle leftHandle">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <div class="slider">
-            {% for source in list.sources.all|dictsort:"name" %}
-            <div class="contentWrapper" id="ldsls?si#{{ source.source_id }}">
-                <img src="{% static source.favicon_path %}" alt="Source Picture" />
-                <div class="contentRatingContainer">
-                    <i class="fa fa-star"></i>
-                    <span>{{ source.average_rating }}</span>
-                </div>
-                <div class="nameContainer">
-                    <span>{{source.name}}</span>
-                </div>
-                {% if request.user.is_authenticated %}
-                {% if source in subscribed_sources %}
-                <button class="subscribeButton subscribed">Subscribed</button>
-                {% else %}
-                <button class="subscribeButton">Subscribe</button>
-                {% endif %}
-                {% if list.creator == request.user %}
-                <button class="removeFromListButton">Remove</button>
-                {% else %}
-                {% if source.source_id in notification_sources %}
-                <button class="notificationButton notificationActivated">Notification Off</button>
-                {% else %}
-                <button class="notificationButton">Notification On</button>
-                {% endif %}
-                {% endif %}
-                {% else %}
-                <a class="loginRedirectButton" aria-label="Login to subscribe" href="{% url 'account_login' %}">Subscribe</a>
-                <a class="loginRedirectButton" aria-label="Login to turn on notifications" href="{% url 'account_login' %}">Notification
-                    On</a>
-                {% endif %}
-                <a class="contentLink" href="{{ source.get_absolute_url }}"
-                    aria-label="Open Profile Of {{ source.name }}"></a>
-            </div>
-            {% endfor %}
+        <div class="warningMessageContainer">
+            <div class="faTimesContainer">!</div>
+            <h3>Warning!</h3>
+            <span>Are you sure you want to delete this list? This action can not be undone!</span>
+            <div class="buttonContainer"><button class="discardButton">Discard</button><button
+                    class="confirmButton">Confirm</button></div>
         </div>
-        <button aria-label="Slide right" class="handle rightHandle">
-            <i class="fas fa-chevron-right"></i>
-        </button>
     </div>
 </div>
-{% endif %}
 
-{% if latest_articles or highlighted_content or newest_tweets %}
-<div class="contentColumnWrapper">
-    {% if latest_articles %}
-    <div
-        class="contentColumnContainer {% if not highlighted_content or not newest_tweets %}halfPageContainer{% endif %}">
-        {% create_content_container "Long-Form Content" latest_articles request user_lists csrf_token add_list_form highlighted_content_ids %}
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in latest_articles.paginator.page_range %}
-                {% if latest_articles.number == i %}
-                <button class="currentPagination">{{ latest_articles.number }}</button>
-                {% elif i > latest_articles.number|add:'-3' and i < latest_articles.number|add:'3' %} <a
-                    href="?long_form_content={{ i }}">{{ i }}</a>
-                {% endif %}
-                {% endfor %}
-            </span>
+
+<div class="pageWrapper">
+    <div class="firstRow">
+        <div class="nameContainer">
+            <h2 id="{{ list.list_id }}">{{ list.name }}</h2>
+            <i class="fas fa-chevron-down"></i>
+            <div class="listOptionsContainer">
+                <div class="listsContainer">
+                    {% for llist in lists %}
+                    <div id="list{{llist.list_id}}" class="listOption">
+                        <span>{{ llist.name }}</span>
+                        <a href="{{ llist.get_absolute_url }}" aria-label="Open list {{ llist.name }}"></a>
+                    </div>
+                    {% endfor %}
+                    <div class="listOption">
+                        <span>Subscribed Sources</span>
+                        <a href="{% url 'list:list-subscribed_sources' %}" aria-label="Open subscribed sources"></a>
+                    </div>
+                    <div class="listOption">
+                        <span>Highlighted Content</span>
+                        <a href="{% url 'list:list-highlighted_content' %}" aria-label="Open highlighted content"></a>
+                    </div>
+                </div>
+                <button class="createListButton"><i class="fas fa-plus"></i>Create New List</button>
+            </div>
+        </div>
+        <div class="actionButtonContainer">
+            <button class="editListButton"><i class="fas fa-edit"></i><span>Edit</span></button>
+            <button class="addSourceButton"><i class="fas fa-plus"></i><span>Add</span></button>
         </div>
     </div>
-    {% endif %}
-    {% if highlighted_content %}
-    <div class="contentColumnContainer {% if not latest_articles or not newest_tweets %}halfPageContainer{% endif %}">
-        {% create_content_container "Highlighted Content" highlighted_content request user_lists csrf_token add_list_form highlighted_content_ids %}
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in highlighted_content.paginator.page_range %}
-                {% if highlighted_content.number == i %}
-                <button class="currentPagination">{{ highlighted_content.number }}</button>
-                {% elif i > highlighted_content.number|add:'-3' and i < highlighted_content.number|add:'3' %} <a
-                    href="?highlighted_content={{ i }}">{{ i }}</a>
-                {% endif %}
+
+    {% if list.sources.all.count > 0 %}
+    <div class="sliderWrapper">
+        <div class="sliderContentContainer">
+            <button aria-label="Slide Left" class="handle leftHandle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="slider">
+                {% for source in list.sources.all|dictsort:"name" %}
+                <div class="contentWrapper" id="ldsls?si#{{ source.source_id }}">
+                    <img src="{% static source.favicon_path %}" alt="Source Picture" />
+                    <div class="contentRatingContainer">
+                        <i class="fa fa-star"></i>
+                        <span>{{ source.average_rating }}</span>
+                    </div>
+                    <div class="nameContainer">
+                        <span>{{source.name}}</span>
+                    </div>
+                    {% if source in subscribed_sources %}
+                    <button class="subscribeButton subscribed">Subscribed</button>
+                    {% else %}
+                    <button class="subscribeButton">Subscribe</button>
+                    {% endif %}
+                    <button class="removeFromListButton">Remove</button>
+                    <a class="contentLink" href="{{ source.get_absolute_url }}"
+                        aria-label="Open Profile Of {{ source.name }}"></a>
+                </div>
                 {% endfor %}
-            </span>
+            </div>
+            <button aria-label="Slide right" class="handle rightHandle">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
     </div>
-    {% endif %}
-    {% if newest_tweets %}
-    <div
-        class="contentColumnContainer {% if not latest_articles or not highlighted_content %}halfPageContainer{% endif %}">
-        {% create_content_container "Tweets" newest_tweets request user_lists csrf_token add_list_form highlighted_content_ids %}
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in newest_tweets.paginator.page_range %}
-                {% if newest_tweets.number == i %}
-                <button class="currentPagination">{{ newest_tweets.number }}</button>
-                {% elif i > newest_tweets.number|add:'-3' and i < newest_tweets.number|add:'3' %} <a
-                    href="?tweets={{ i }}">{{ i }}</a>
-                {% endif %}
-                {% endfor %}
-            </span>
+    <div class="tabsContainer" id="content" role="navigation" aria-label="Stock Content Navigation">
+        <button class="activatedTab" data-for-tab="0">Analysis</button>
+        <button data-for-tab="1">Commentary</button>
+        <button data-for-tab="2">News</button>
+        <button data-for-tab="3">Saved</button>
+    </div>
+    <div class="tabsContent tabsContentActive" data-tab="0">
+        <div class="contentColumnWrapper">
+            {% if analysis %}
+            <div class="contentColumnContainer">
+                {% create_content_container analysis request highlighted_content_ids "analysis" %}
+            </div>
+            {% else %}
+            <div class="emptyInformationContainer">
+                <h3>No analytical content found!</h3>
+                <div>Consider adding more sources to this list!</div>
+                <button><i class="fas fa-plus"></i>Add</button>
+            </div>
+            {% endif %}
         </div>
+
+    </div>
+    <div class="tabsContent" data-tab="1">
+        <div class="contentColumnWrapper">
+            {% if commentary %}
+            <div class="contentColumnContainer">
+                {% create_content_container commentary request highlighted_content_ids "commentary" %}
+            </div>
+            {% else %}
+            <div class="emptyInformationContainer">
+                <h3>No commentary found!</h3>
+                <div>Consider adding more sources to this list!</div>
+                <button><i class="fas fa-plus"></i>Add</button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="tabsContent" data-tab="2">
+        <div class="contentColumnWrapper">
+            {% if news %}
+            <div class="contentColumnContainer">
+                {% create_content_container news request highlighted_content_ids "news" %}
+            </div>
+            {% else %}
+            <div class="emptyInformationContainer">
+                <h3>No news content found!</h3>
+                <div>Consider adding more sources to this list!</div>
+                <button><i class="fas fa-plus"></i>Add</button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="tabsContent" data-tab="3">
+        <div class="contentColumnWrapper">
+            {% if saved_content %}
+            <div class="contentColumnContainer">
+                {% create_content_container saved_content request highlighted_content_ids "saved_content" %}
+            </div>
+            {% else %}
+            <div class="emptyInformationContainer">
+                <h3>No saved content found!</h3>
+                <div>You can add content to this list by opening the individual content options menu!</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <div class="emptyInformationContainer">
+        <h3>This list is empty!</h3>
+        <div>Add sources to this list to get the latest information from your favorite content creators.</div>
+        <button><i class="fas fa-plus"></i>Add</button>
     </div>
     {% endif %}
 </div>
+
+<script src="{% static 'list/min_list_details_script_v11.js' %}"></script>
+
+{% else %}
+
+<main class="main">
+    <section class="landingSection">
+        <div class="landingSectionContainer">
+            <h1>FinBrowser
+                <span>Lists</span>
+            </h1>
+            <p>
+                Save interesting content, create lists on specific topics, and always stay up to date when one of your
+                favorite stock market content creators publishes new content.
+            </p>
+            <a href="{% url 'account_login' %}" class="signUpButton" aria-label="Sign Up">Get Started</a>
+        </div>
+        <div class="landingSectionImage">
+            <img src="{% static 'home/media/landing-page.svg' %}" alt="landing-page-logo">
+        </div>
+    </section>
+</main>
+
 {% endif %}
 
-
-{{ user_rating|json_script:"user-rating" }}
-<script src="{% static 'list/min_list_details_script_v10.js' %}"></script>
 {% endblock content %}

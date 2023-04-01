@@ -4,29 +4,33 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import PasswordChangeForm
 from django import forms
-from django.template.defaultfilters import slugify
+
 # Local imports
 from apps.accounts.models import Profile
 from apps.base_logger import logger
 
 User = get_user_model()
 
+
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
+
     password1 = forms.CharField(
-        label='Password',
-        widget=forms.PasswordInput(attrs={'placeholder': 'Enter Password'}))
+        label="Password",
+        widget=forms.PasswordInput(attrs={"placeholder": "Enter Password"}),
+    )
     password2 = forms.CharField(
-        label='Password confirmation',
-        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
+        label="Password confirmation",
+        widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password"}),
+    )
 
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ("username", "email")
         widgets = {
-            'username': forms.TextInput(attrs={'placeholder': 'Username'}),
-            'email': forms.TextInput(attrs={'placeholder': 'Email'}),
+            "username": forms.TextInput(attrs={"placeholder": "Username"}),
+            "email": forms.TextInput(attrs={"placeholder": "Email"}),
         }
 
     def clean_password2(self):
@@ -46,103 +50,110 @@ class UserCreationForm(forms.ModelForm):
                 user.save()
             return user
         except:
-            logger.exception('User save method failed!')
+            logger.exception("User save method failed!")
 
 
 class UserChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's
     disabled password hash display field.
+    => Admin only form
     """
+
     password = ReadOnlyPasswordHashField()
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ("username", "email", "password")
 
 
 class EmailAndUsernameChangeForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
-        self.username = kwargs.pop('username', None)
-        self.email = kwargs.pop('email', None)
+        self.username = kwargs.pop("username", None)
+        self.email = kwargs.pop("email", None)
         super(EmailAndUsernameChangeForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget = forms.TextInput(
-            attrs={'value': self.username})
-        self.fields['email'].widget = forms.TextInput(
-            attrs={'value': self.email})
+        self.fields["username"].widget = forms.TextInput(
+            attrs={
+                "value": self.username,
+                "minlength": 3,
+                "maxlength": 30,
+            }
+        )
+        self.fields["email"].widget = forms.TextInput(
+            attrs={
+                "value": self.email,
+                "minlength": 5,
+                "maxlength": 50,
+            }
+        )
 
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ("username", "email")
         widgets = {
-            'username': forms.TextInput(attrs={
-                'placeholder': 'Username',
-            }),
-            'email': forms.TextInput(attrs={'placeholder': 'Email'}),
+            "username": forms.TextInput(attrs={"placeholder": "Username"}),
+            "email": forms.TextInput(attrs={"placeholder": "Email"}),
         }
 
     def clean_username(self):
-        username = self.cleaned_data['username']
-        if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists() or User.objects.exclude(pk=self.instance.pk).filter(profile__slug=slugify(username)).exists():
-            raise forms.ValidationError('Username is already in use.')
+        username = self.cleaned_data.get("username", None)
+        if (
+            username
+            and User.objects.exclude(pk=self.instance.pk)
+            .filter(username=username)
+            .exists()
+        ):
+            raise forms.ValidationError("Username is already in use.")
         return username
 
     def clean_email(self):
-        email = self.cleaned_data['email']
-        if User.objects.exclude(pk=self.instance.pk).filter(email=email).exists():
-            raise forms.ValidationError('Email is already in use.')
+        email = self.cleaned_data.get("email", None)
+        if (
+            email
+            and User.objects.exclude(pk=self.instance.pk).filter(email=email).exists()
+        ):
+            raise forms.ValidationError("Email is already in use.")
         return email
 
 
 class PasswordChangingForm(PasswordChangeForm):
     old_password = forms.CharField(
         max_length=100,
-        widget=forms.PasswordInput(attrs={
-            'type': 'password',
-            'label': 'Old password',
-        }))
+        widget=forms.PasswordInput(
+            attrs={
+                "type": "password",
+                "label": "Old password",
+            }
+        ),
+    )
     new_password1 = forms.CharField(
-        max_length=100,
-        widget=forms.PasswordInput(attrs={
-            'type': 'password',
-            'label': 'New password'
-        }))
+        max_length=50,
+        widget=forms.PasswordInput(attrs={"type": "password", "label": "New password"}),
+    )
     new_password2 = forms.CharField(
-        max_length=100,
-        widget=forms.PasswordInput(attrs={
-            'type': 'password',
-            'label': 'Confirm new password'
-        }))
+        max_length=50,
+        widget=forms.PasswordInput(
+            attrs={"type": "password", "label": "Confirm new password"}
+        ),
+    )
 
     class Meta:
         model = User
-        fields = ('old_password', 'new_password1', 'new_password2')
+        fields = ("old_password", "new_password1", "new_password2")
 
     def __init__(self, *args, **kwargs):
         super(PasswordChangingForm, self).__init__(*args, **kwargs)
-        self.fields['new_password1'].label = "New password"
-        self.fields['new_password2'].label = "Confirm new password"
+        self.fields["new_password1"].label = "New password"
+        self.fields["new_password2"].label = "Confirm new password"
 
-
-class ProfilePicChangeForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ('profile_pic',)
-        labels = {
-            'profile_pic': 'Profile Picture'
-        }
 
 class TimezoneChangeForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
-        self.timezone = kwargs.pop('timezone', None)
+        self.timezone = kwargs.pop("timezone", None)
         super(TimezoneChangeForm, self).__init__(*args, **kwargs)
-        self.fields['timezone'].initial = self.timezone
+        self.fields["timezone"].initial = self.timezone
 
     class Meta:
         model = Profile
-        fields = ('timezone',)
-        labels = {
-            'timezone': 'Timezone'
-        }
+        fields = ("timezone",)
+        labels = {"timezone": "Timezone"}

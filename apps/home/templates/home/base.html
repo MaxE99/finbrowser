@@ -1,6 +1,7 @@
 {% load static %}
 {% load i18n %}
 {% load account socialaccount %}
+{% load tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +15,7 @@
     <link rel="prefetch" as="font" href="{% static 'home/fonts/lato-v23-latin/lato-v23-latin-900.woff' %}"
         type="font/woff" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/fontawesome/css/all.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v28.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v29.css' %}">
     <script nonce="{{request.csp_nonce}}" async src="https://www.googletagmanager.com/gtag/js?id=G-JNS80QXCXR"></script>
     <script nonce="{{request.csp_nonce}}">
         window.dataLayer = window.dataLayer || [];
@@ -28,9 +29,88 @@
 
 <body>
     <script nonce="{{request.csp_nonce}}">0</script>
+    <div class="fullScreenPlaceholder">
+        <div class="fullScreenWrapper">
+            <div role="form" class="addToListForm addSourceToListForm">
+                <div class="formHeaderContainer">
+                    <h2>Add <span></span> To Your Lists</h2>
+                    <i class="fas fa-times closeFormContainerButton"></i>
+                </div>
+                {% if user_lists %}
+                <div class="descContainer">
+                    <span>Name</span>
+                    <span>In List</span>
+                </div>
+                <div class="listSelectionContainer">
+                    {% for list in user_lists %}
+                    <div class="listContainer">
+                        <label>{{ list.name }}</label>
+                        <input id="id_list_{{ list.list_id }}" class="sourceNotInList" type="checkbox" name="lists"
+                            value="{{ list.list_id }}">
+                        <input class="sourcesInList" value="{{ list.sources.all|get_source_ids_in_list }}" hidden />
+                        <input class="articlesInList" value="{{ list.articles.all|get_article_ids_in_list }}" hidden />
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="buttonsContainer">
+                    <button class="cancelButton">Cancel</button>
+                    <button class="saveButton">Save</button>
+                </div>
+                {% endif %}
+            </div>
+            <div class="authPromptContainer">
+                <i class="fas fa-times"></i>
+                <img src="{% static 'home/media/finbrowser-logo.png' %}">
+                <h3></h3>
+                <div class="desc">Hey there! If you haven't already, you'll need to log in or create a new account in
+                    order to continue. Don't worry, it's quick and easy!</div>
+                <div class="buttonContainer">
+                    <a class="loginButton" href="{% url 'account_login' %}">Login</a>
+                    <a class="registerButton" href="{% url 'account_signup' %}">Register</a>
+                </div>
+            </div>
+            <div class="explanationContainer">
+                <div class="formHeaderContainer">
+                    <h3></h3>
+                    <i class="fas fa-times closeFormContainerButton"></i>
+                </div>
+                <div class="explanation"></div>
+            </div>
+            <div class="smallScreenSearchContainer">
+                <div class="mainSearchWrapper">
+                    <div class="mainSearchContainer">
+                        <input aria-label="Search" id="mainAutocomplete" type="text" class="mainInputSearch"
+                            placeholder="Search" autocomplete="off" spellcheck="false">
+                        <i class="fas fa-search"></i>
+                        <i class="fas fa-times closeSearchButton"></i>
+                    </div>
+                </div>
+                <div class="smallFormContentWrapper">
+                    <div id="mainAutocomplete_result"></div>
+                    <div class="recommendedContainer">
+                        <h3>Recommended Content</h3>
+                        <div class="trendingTopicsContainer">
+                            {% create_fk_content_container trending_topics_search request highlighted_content_ids "trending_topics_search" %}
+                        </div>
+                    </div>
+                    <div class="noResultsFound"></div>
+                </div>
+
+            </div>
+        </div>
+        <i class="fas fa-times closeImageButton"></i>
+    </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages|slice:":1" %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <header>
         <div class=" outerHeaderContainer">
             <div class="headerContainer">
+                <i role="button" aria-label="Open Dropdown Navigation" class="fa-solid fa-bars"></i>
                 <div class="logoContainer">
                     <div class="logoSpace">
                         <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}"
@@ -40,45 +120,84 @@
                     </div>
                 </div>
                 <nav class="mainNavigation" aria-label="Main">
-                    {% if request.user.is_authenticated == False %}
-                    <div class="mainNavigationLink"><span>Feed</span><a aria-label="Login To Open Feed"
-                            href="{% url 'account_login' %}"></a></div>
-                    {% else %}
-                    <div class="mainNavigationLink"><span>Feed</span><a aria-label="Open Feed"
-                            href="{% url 'home:feed' %}"></a></div>
-                    {% endif %}
-                    <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Lists"
-                            href="{% url 'list:lists' %}"></a></div>
-                    <div class="mainNavigationLink"><span>Sectors</span><a aria-label="Open Sectors"
-                            href="{% url 'sector:sectors' %}"></a>
+                    <div class="mainNavigationLink"><span>Portfolio</span><a aria-label="Open Sectors"
+                            href="{% url 'stock:portfolio' %}"></a>
                     </div>
-                    <div class="mainNavigationLink"><span>Content</span><a aria-label="Open Content"
-                            href="{% url 'article:articles' %}"></a>
+                    <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Content"
+                            href="{% url 'list:lists' %}"></a>
+                    </div>
+                    <div class="mainNavigationLink"><span>Sources</span><a aria-label="Open Lists"
+                            href="{% url 'source:source_ranking' %}"></a>
+                    </div>
+                    <div class="mainNavigationLink"><span>Guide</span><a aria-label="Open Content"
+                            href="{% url 'home:guide' %}"></a>
                     </div>
                 </nav>
                 <div class="mainSearchWrapper">
                     <div class="mainSearchContainer">
                         <input aria-label="Search" id="mainAutocomplete" type="text" class="mainInputSearch"
-                            placeholder="Search">
+                            placeholder="Search" autocomplete="off" spellcheck="false">
                         <i class="fas fa-search"></i>
+                        <i class="fas fa-times closeSearchButton"></i>
                     </div>
                     <div id="mainAutocomplete_result"></div>
                 </div>
+                <i class="fas fa-search smallScreenSearchIcon"></i>
+                {% if request.user.is_authenticated %}
                 <div class="userSpace">
                     {% if request.user.is_authenticated %}
-                    <i class="fas fa-cog"><a aria-label="Open Settings" href="{% url 'accounts:settings' %}"></a></i>
                     <i class="far fa-bell {% if request.user.is_authenticated %}notificationBell{% endif %}">
                         {% if unseen_notifications %}
                         <span class="unseenNotifications">{{ unseen_notifications }}</span>
                         {% endif %}
                     </i>
-                    <div class="notificationContainer">
-                        <h3>Notifications</h3>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                    <div class="userProfile">
+                        {% if user.profile.profile_pic %}
+                        <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
+                        {% else %}
+                        <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">
+                            {{ user.username.0 }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="profileMenu">
+                        <div class="profileMenuInfoOption">
+                            {% if user.profile.profile_pic %}
+                            <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
+                            {% else %}
+                            <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">
+                                {{ user.username.0 }}</div>
+                            {% endif %}
+                            <span class="userNameSpan">{{ user.username }}</span>
+                            <span class="userEmailSpan">{{ user.email }}</span>
+                        </div>
+                        <div class="profileMenuOption">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                            <a aria-label="Open Settings" href="{% url 'accounts:settings' %}"></a>
+                        </div>
+                        <div class="profileMenuOption">
+                            <form method="post" action="{% url 'account_logout' %}">
+                                {% csrf_token %}
+                                {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}"
+                                    value="{{ redirect_field_value }}" />
+                                {% endif %}
+                                <button type="submit"><i class="fas fa-sign-out-alt"></i>{% trans 'Sign Out' %}</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="notificationPopupWrapper">
+                        <div class="notificationHeader">
+                            <h3>Notifications</h3>
+                            <i class="fas fa-cog"><a href="{% url 'accounts:settings' %}#notifications"></a></i>
+                        </div>
                         <div class="notificationHeadersContainer" role="navigation"
                             aria-label="Notification Navigation">
-                            <div class="activeNotificationCategory" data-for-tab="0">Sources</div>
-                            <div data-for-tab="1">Stocks</div>
-                            <div data-for-tab="2">Keywords</div>
+                            <button class="activeNotificationCategory" data-for-tab="0">Sources</button>
+                            <button data-for-tab="1">Stocks</button>
+                            <button data-for-tab="2">Keywords</button>
                         </div>
                         <div class="notificationsContainer activeNotificationContainer smallFormContentWrapper"
                             data-tab="0">
@@ -166,7 +285,6 @@
                                             </div>
                                             <div class="buttonsContainer">
                                                 <button class="saveButton">Save</button>
-                                                <button class="createNewListButton">Create</button>
                                             </div>
                                             {% else %}
                                             <div class="listContainer">You haven't created any lists!</div>
@@ -315,7 +433,6 @@
                                             </div>
                                             <div class="buttonsContainer">
                                                 <button class="saveButton">Save</button>
-                                                <button class="createNewListButton">Create</button>
                                             </div>
                                             {% else %}
                                             <div class="listContainer">You haven't created any lists!</div>
@@ -378,11 +495,6 @@
                             {% endif %}
                         </div>
                         <div class="notificationsContainer smallFormContentWrapper" data-tab="2">
-                            <form enctype="multipart/form-data" method="POST" class="createKeywordNotificationForm">
-                                {% csrf_token %} {{ keyword_notification_creation_form }}
-                                <input name="createKeywordNotificationForm" type="submit" class="formSubmitButton"
-                                    value="Add" />
-                            </form>
                             {% if keyword_notifications %}
                             {% for notification in keyword_notifications %}
                             <div class="articleContainer {% if notification.user_has_seen == False %}unseenNotification{% endif %}"
@@ -469,7 +581,6 @@
                                             </div>
                                             <div class="buttonsContainer">
                                                 <button class="saveButton">Save</button>
-                                                <button class="createNewListButton">Create</button>
                                             </div>
                                             {% else %}
                                             <div class="listContainer">You haven't created any lists!</div>
@@ -531,72 +642,60 @@
                             {% else %}
                             <div class="noNotificationsAvailable">No Keyword Notifications Available</div>
                             {% endif %}
+                            <div class="createKeywordNotificationModal">
+                                <div>Keyword:<span class="infoLink"><i class="fas fa-info"></i></span></div>
+                                <input minlength="3" maxlength="30" type="text" autocomplete="off" spellcheck="false">
+                                <button class="saveButton">Add</button>
+                                <button class="discardButton">Discard</button>
+                            </div>
+                            <div class="addKeywordsContainer"><button><i class="fas fa-plus"></i>Add Keywords</button>
+                            </div>
                         </div>
                     </div>
                     {% endif %}
-                    <div class="profileWrapper">
-                        {% if request.user.is_authenticated %}
-                        <div class="userProfile">
-                            {% if user.profile.profile_pic %}
-                            <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
-                            {% else %}
-                            <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">
-                                {{ user.username.0 }}</div>
-                            {% endif %}
-                            <div class="userInformation">
-                                <div class="userName">{{ user.username }}</div>
-                                <div class="accountType">{{ user.profile.account_type }}</div>
-                            </div>
-                            <i role="button" aria-label="Open Logout Option" class="fas fa-sort-down"></i>
-                        </div>
-                        <div class="profileMenu">
-                            <div>
-                                <form method="post" action="{% url 'account_logout' %}">
-                                    {% csrf_token %}
-                                    {% if redirect_field_value %}
-                                    <input type="hidden" name="{{ redirect_field_name }}"
-                                        value="{{ redirect_field_value }}" />
-                                    {% endif %}
-                                    <button type="submit"><i
-                                            class="fas fa-sign-out-alt"></i>{% trans 'Sign Out' %}</button>
-                                </form>
-                            </div>
-                        </div>
-                        {% else %}
-                        <div class="headerButtonContainer">
-                            <a href="{% url 'account_login' %}" aria-label="Login">Login</a>
-                            <a href="{% url 'account_signup' %}" aria-label="Logout">Sign Up</a>
-                        </div>
-                        {% endif %}
-                    </div>
                 </div>
-                <i role="button" aria-label="Open Dropdown Navigation" class="fa-solid fa-bars"></i>
+                {% else %}
+                <div class="headerButtonContainer">
+                    <a href="{% url 'account_login' %}" aria-label="Login">Login</a>
+                    <a href="{% url 'account_signup' %}" aria-label="Logout">Sign Up</a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </header>
     <main>
         <div class="overlay">
             <nav class="horizontalNavigation" aria-label="Smartphone Navigation">
-                {% if request.user.is_authenticated == False %}
-                <div class="mainNavigationLink"><span>Feed</span><a aria-label="Login To Open Feed"
-                        href="{% url 'account_login' %}"></a></div>
-                {% else %}
-                <div class="mainNavigationLink"><span>Feed</span><a aria-label="Open Feed"
-                        href="{% url 'home:feed' %}"></a></div>
-                {% endif %}
-                <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Lists"
-                        href="{% url 'list:lists' %}"></a></div>
-                <div class="mainNavigationLink"><span>Sectors</span><a aria-label="Open Sectors"
-                        href="{% url 'sector:sectors' %}"></a>
+                <div class="mainNavigationLink">
+                    <span>Portfolio</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a aria-label="Open Sectors" href="{% url 'stock:portfolio' %}"></a>
                 </div>
-                <div class="mainNavigationLink"><span>Content</span><a aria-label="Open Content"
-                        href="{% url 'article:articles' %}"></a>
+                <div class="mainNavigationLink">
+                    <span>Lists</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a aria-label="Open Content" href="{% url 'list:lists' %}"></a>
+                </div>
+                <div class="mainNavigationLink">
+                    <span>Sources</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a aria-label="Open Lists" href="{% url 'source:source_ranking' %}"></a>
+                </div>
+                <div class="mainNavigationLink">
+                    <span>Guide</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a aria-label="Open Content" href="{% url 'home:guide' %}"></a>
                 </div>
                 {% if request.user.is_authenticated %}
-                <div class="mainNavigationLink"><span>Settings</span><a aria-label="Open Settings"
-                        href="{% url 'accounts:settings' %}"></a></div>
-                <div class="mainNavigationLink"><span>Notifications</span><a aria-label="Open Notifications"
-                        href="{% url 'home:notifications' %}"></a>
+                <div class="mainNavigationLink">
+                    <span>Settings</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a aria-label="Open Settings" href="{% url 'accounts:settings' %}"></a>
+                </div>
+                <div class="mainNavigationLink">
+                    <span>Notifications</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <a aria-label="Open Notifications" href="{% url 'home:notifications' %}"></a>
                 </div>
                 <form class="mainNavigationLink" method="post" action="{% url 'account_logout' %}">
                     {% csrf_token %}
@@ -606,32 +705,16 @@
                     <button type="submit">{% trans 'Logout' %}</button>
                 </form>
                 {% else %}
-                <div class="mainNavigationLink"><span>Login/Register<a aria-label="Login/Register"
-                            href="{% url 'account_login' %}"></a></span>
+                <div class="headerButtonContainer">
+                    <a href="{% url 'account_login' %}" aria-label="Login">Login</a>
+                    <a href="{% url 'account_signup' %}" aria-label="Logout">Sign Up</a>
                 </div>
                 {% endif %}
             </nav>
 
-            <div class="createListMenu formContainer smartphoneCreateListMenu">
-                <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
-                </div>
-                <form enctype="multipart/form-data" method="POST" class="createListForm">
-                    {% csrf_token %} {{ add_list_form }}
-                    <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
-                </form>
-            </div>
-
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages|slice:":1" %}
-                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-
             {% block content %}
             {% endblock %}
-            <script src="{% static 'home/min_base_script_v15.js' %}"></script>
+            <script src="{% static 'home/min_base_script_v16.js' %}"></script>
         </div>
 
     </main>
@@ -647,5 +730,8 @@
         <li><a aria-label="Open Terms Of Service" href="{% url 'support:terms-of-service' %}">Terms Of Service</a></li>
     </ul>
 </footer>
+
+
+
 
 </html>

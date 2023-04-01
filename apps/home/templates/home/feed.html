@@ -2,347 +2,73 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_feed_style_v10.css' %}">
-<title>FinBrowser | Home</title>
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_feed_style_v11.css' %}">
+<title>Feed | FinBrowser</title>
 <meta name="description"
     content="FinBrowser curates the best news, analysis, and other stock market-related content from websites like Substack, Twitter, SeekingAlpha and more.">
 {% endblock %}
 
 {% block content %}
 
+{% if error_page %}
+<div class="errorContainer">
+    <img src="{% static 'home/media/404_image.png' %}" alt="404 Image">
+    <div class="errorMessageContainer">
+        <span>404 ERROR</span>
+        <span>Page not found!</span>
+        <span>The page you are looking for does not exist on this website! Instead, take a look at some of the latest
+            news and analysis.</span>
+    </div>
+</div>
+{% endif %}
 
-<div class="popupContainer">
-    <div class="createListPopup popup">
-        <div class="createListMenu formContainer">
-            <div class="formHeaderContainer">Create A New List</div>
-            <form enctype="multipart/form-data" method="POST" class="createListForm">
-                {% csrf_token %} {{ add_list_form }}
-                <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
-                <button class="closeFormContainerButton">Discard</button>
-            </form>
-        </div>
-    </div>
-    <div class="addListsPopup popup">
-        <div class="addListsForm formContainer">
-            <div class="formHeaderContainer">Add Lists</div>
-            <div class="actionWrapper">
-                <input id="textInput" type="text">
-                <div class="searchResultWrapper">
-                    <div id="searchResultsContainer"></div>
-                    <div class="selectionContainer"></div>
+
+<div class="pageWrapper">
+    <div class="longFormContentContainer">
+        <div class="firstRow">
+            <div class="smallLatestContainer">
+                <h3>Latest Analysis</h3>
+                {% for content in latest_analysis %}
+                <div class="smallContentContainer">
+                    <img src="{% static content.source.favicon_path %}" alt="Source Picture" />
+                    <div>{{ content.title }}</div>
+                    <a class="contentLink" href="{{ content.link }}" target="_blank" aria-label="Open Content"></a>
                 </div>
-                <button class="formSubmitButton">Add</button>
-                <button class="closeFormContainerButton">Discard</button>
+                {% endfor %}
+            </div>
+            <div class="smallLatestContainer">
+                <h3>Latest News</h3>
+                {% for content in latest_news %}
+                <div class="smallContentContainer">
+                    <img src="{% static content.source.favicon_path %}" alt="Source Picture" />
+                    <div>{{ content.title }}</div>
+                    <a class="contentLink" href="{{ content.link }}" target="_blank" aria-label="Open Content"></a>
+                </div>
+                {% endfor %}
             </div>
         </div>
-    </div>
-    <div class="addSourcesPopup popup">
-        <div class="addSourcesForm formContainer">
-            <div class="formHeaderContainer">Add Source</div>
-            <div class="actionWrapper">
-                <input id="textInput" type="text">
-                <div class="searchResultWrapper">
-                    <div id="searchResultsContainer"></div>
-                    <div class="selectionContainer"></div>
-                </div>
-                <button class="formSubmitButton">Add</button>
-                <button class="closeFormContainerButton">Discard</button>
-            </div>
+        <h3>Trending Topics</h3>
+        <div class="trendingTopicsContainer">
+            {% create_fk_content_container trending_topics request highlighted_content_ids "trending_topics" %}
         </div>
+        <h3>Recommended Sources</h3>
+        {% create_source_container recommended_sources subscribed_sources request %}
+        <div class="tabsContainer" id="content" role="navigation" aria-label="Stock Content Navigation">
+            <button class="activatedTab" data-for-tab="0">Recommended Content</button>
+            <button data-for-tab="1">Recommended Tweets</button>
+        </div>
+        <h3 class="recommendedHeader">Recommended Content</h3>
+        <div class="recommendedContentContainer tabsContent tabsContentActive">
+            {% create_content_container recommended_content request highlighted_content_ids "recommended_content" %}
+        </div>
+    </div>
+    <div class="tweetsContainer tabsContent">
+        <h3 class="recommendedHeader">Recommended Tweets</h3>
+        {% create_content_container top_tweets request highlighted_content_ids "top_tweets" %}
     </div>
 </div>
 
 
-{% if request.user.is_authenticated %}
-<div class="classicMain">
-    <div class="tabsContainer">
-        <button class="activatedTab" data-for-tab="0">Your Lists</button>
-        <button data-for-tab="1">Subscribed Lists</button>
-        <button data-for-tab="2">Subscribed Sources</button>
-        <i class="fas fa-plus"></i>
-    </div>
-    <div class="tabsContent tabsContentActive" data-tab="0">
-        {% if user_lists.count > 0 %}
-        <div class="sliderWrapper">
-            <div class="sliderContentContainer">
-                <button aria-label="Slide Left" class="handle leftHandle">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="slider">
-                    {% for list in user_lists %}
-                    <div class="contentWrapper" id="flul?li#{{ list.list_id }}">
-                        {% if list.list_pic %}
-                        <img src="{{ list.list_pic.url }}" alt="List Picture" />
-                        {% else %}
-                        <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}"
-                            alt="List Picture Placeholder" />
-                        {% endif %}
-                        <div class="contentRatingContainer">
-                            <i class="fa fa-star"></i>
-                            <span>{{list.average_rating}}</span>
-                        </div>
-                        <div class="nameContainer">
-                            <span>{{list.name}}</span>
-                        </div>
-                        <div class="infoContainer">
-                            {{ list.articles.all|length }} Articles | {{ list.sources.all|length }} Sources
-                        </div>
-                        <button class="listDeleteButton">Delete</button>
-                        <a aria-label="Open List - {{ list.name }}" class="contentLink"
-                            href="{{ list.get_absolute_url }}"></a>
-                    </div>
-                    {% endfor %}
-                </div>
-                <button aria-label="Slide right" class="handle rightHandle">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-    <div class="tabsContent" data-tab="1">
-        {% if subscribed_lists.count > 0 %}
-        <div class="sliderWrapper">
-            <div class="sliderContentContainer">
-                <button aria-label="Slide Left" class="handle leftHandle">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="slider">
-                    {% for list in subscribed_lists %}
-                    <div class="contentWrapper" id="flsl?li#{{ list.list_id }}">
-                        {% if list.list_pic %}
-                        <img src="{{ list.list_pic.url }}" alt="List Picture" />
-                        {% else %}
-                        <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}"
-                            alt="List Picture Placeholder" />
-                        {% endif %}
-                        <div class="contentRatingContainer">
-                            <i class="fa fa-star"></i>
-                            <span>{{list.average_rating}}</span>
-                        </div>
-                        <div class="nameContainer">
-                            <span>{{list.name}}</span>
-                        </div>
-                        <div class="infoContainer">
-                            {{ list.articles.all|length }} Articles | {{ list.sources.all|length }} Sources
-                        </div>
-                        <button class="listSubscribeButton listSubscribed">Subscribed</button>
-                        <a aria-label="Open List - {{ list.name }}" class="contentLink"
-                            href="{{ list.get_absolute_url }}"></a>
-                    </div>
-                    {% endfor %}
-                </div>
-                <button aria-label="Slide right" class="handle rightHandle">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-    <div class="tabsContent" data-tab="2">
-        {% if subscribed_sources.count > 0 %}
-        <div class="sliderWrapper">
-            <div class="sliderContentContainer">
-                <button aria-label="Slide Left" class="handle leftHandle">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="slider">
-                    {% for source in subscribed_sources %}
-                    <div class="contentWrapper" id="fsss?si#{{ source.source_id }}">
-                        <img src="{% static source.favicon_path %}" alt="Source Picture" />
-                        <div class="contentRatingContainer">
-                            <i class="fa fa-star"></i>
-                            <span>{{ source.average_rating }}</span>
-                        </div>
-                        <div class="nameContainer">
-                            <span>{{source.name}}</span>
-                        </div>
-                        <button class="subscribeButton subscribed">Subscribed</button>
-                        {% if source.source_id in notification_sources %}
-                        <button class="notificationButton notificationActivated">Notification Off</button>
-                        {% else %}
-                        <button class="notificationButton">Notification On</button>
-                        {% endif %}
-                        <a class="contentLink" href="{{ source.get_absolute_url }}"
-                            aria-label="Open Profile Of {{ source.name }}"></a>
-                    </div>
-                    {% endfor %}
-                </div>
-                <button aria-label="Slide right" class="handle rightHandle">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-
-    {% if subscribed_content or highlighted_content or newest_tweets %}
-    <div class="contentColumnWrapper">
-        {% if subscribed_content %}
-        <div
-            class="contentColumnContainer {% if not highlighted_content or not newest_tweets %}halfPageContainer{% endif %}">
-            {% create_content_container "Long-Form Content" subscribed_content request user_lists csrf_token add_list_form highlighted_content_ids %}
-            <div class="pagination">
-                <span class="step-links">
-                    {% for i in subscribed_content.paginator.page_range %}
-                    {% if subscribed_content.number == i %}
-                    <button class="currentPagination">{{ subscribed_content.number }}</button>
-                    {% elif i > subscribed_content.number|add:'-3' and i < subscribed_content.number|add:'3' %} <a
-                        href="?long_form_content={{ i }}">{{ i }}</a>
-                    {% endif %}
-                    {% endfor %}
-                </span>
-            </div>
-        </div>
-        {% endif %}
-        {% if highlighted_content %}
-        <div
-            class="contentColumnContainer {% if not subscribed_content or not newest_tweets %}halfPageContainer{% endif %}">
-            {% create_fk_content_container "Highlighted Content" highlighted_content request user_lists csrf_token add_list_form highlighted_content_ids %}
-            <div class="pagination">
-                <span class="step-links">
-                    {% for i in highlighted_content.paginator.page_range %}
-                    {% if highlighted_content.number == i %}
-                    <button class="currentPagination">{{ highlighted_content.number }}</button>
-                    {% elif i > highlighted_content.number|add:'-3' and i < highlighted_content.number|add:'3' %} <a
-                        href="?highlighted_content={{ i }}">{{ i }}</a>
-                    {% endif %}
-                    {% endfor %}
-                </span>
-            </div>
-        </div>
-        {% endif %}
-        {% if newest_tweets %}
-        <div
-            class="contentColumnContainer {% if not highlighted_content or not subscribed_content %}halfPageContainer{% endif %}">
-            {% create_content_container "Tweets" newest_tweets request user_lists csrf_token add_list_form highlighted_content_ids %}
-            <div class="pagination">
-                <span class="step-links">
-                    {% for i in newest_tweets.paginator.page_range %}
-                    {% if newest_tweets.number == i %}
-                    <button class="currentPagination">{{ newest_tweets.number }}</button>
-                    {% elif i > newest_tweets.number|add:'-3' and i < newest_tweets.number|add:'3' %} <a
-                        href="?tweets={{ i }}">{{ i }}</a>
-                    {% endif %}
-                    {% endfor %}
-                </span>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-</div>
-{% endif %}
-<script src="{% static 'home/min_feed_script_v11.js' %}"></script>
-{% else %}
-
-<main class="main">
-    <section class="landingSection">
-        <div class="landingSectionContainer">
-            <h1>Research Aggregation For
-                <span>Retail Investors</span>
-            </h1>
-            <p>
-                Find valuable insights, news, analysis and stock tips from industry experts on the open web.
-            </p>
-            <a href="{% url 'account_login' %}" class="signUpButton" aria-label="Sign Up">Get Started</a>
-        </div>
-        <div class="landingSectionImage">
-            <img src="{% static 'home/media/landing-page.svg' %}" alt="landing-page-logo">
-        </div>
-    </section>
-    <section class="featuresContainer" id="featuresContainer">
-        <div class="featureSubContainer">
-            <div class="featuresWrapper">
-                <div class="sectionText">
-                    <h2>Core Features</h2>
-                    <p>
-                        While FinBrowser's primary focus is to aggregate stock market-related insights, the site offers
-                        an array of additional features designed to simplify stock market research.
-                    </p>
-                </div>
-                <div class="featureWrapper">
-                    <div class="feature">
-                        <div class="featureImageContainer">
-                            <i class="fa-solid fa-database"></i>
-                        </div>
-                        <div class="featureDescription">
-                            <h3>Find Great Stock Market Content</h3>
-                            <p>
-                                FinBrowser curates the best news, analysis, and other stock market-related content from
-                                websites like Substack, Twitter, SeekingAlpha and more.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="featureImageContainer">
-                            <i class="fa-solid fa-users"></i>
-                        </div>
-                        <div class="featureDescription">
-                            <h3>Stay Up To Date On Your Favorite Sources</h3>
-                            <p>
-                                Stay up-to-date on the activity of your favorite stock market content creators and
-                                receive notification when new content is available.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="featureImageContainer">
-                            <i class="fa-solid fa-industry"></i>
-                        </div>
-                        <div class="featureDescription">
-                            <h3>Get To Know More About A Specific Sector</h3>
-                            <p>
-                                Want to learn more about a specific industry? Here you will find the top articles and
-                                experts on the topic that will help you to become an expert yourself.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="featureWrapper">
-                    <div class="feature">
-                        <div class="featureImageContainer">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <div class="featureDescription">
-                            <h3>Find Articles About Specific Stocks</h3>
-                            <p>
-                                Want to know more about a specific stock? Check out what the best sources on the open
-                                web have to say about it.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="featureImageContainer">
-                            <i class="fa-solid fa-list"></i>
-                        </div>
-                        <div class="featureDescription">
-                            <h3>Create And Follow Lists</h3>
-                            <p>
-                                Create lists to collect your research in one place and see what research other users
-                                have done.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="feature">
-                        <div class="featureImageContainer">
-                            <i class="far fa-bell"></i>
-                        </div>
-                        <div class="featureDescription">
-                            <h3>Keyword Notifications</h3>
-                            <p>
-                                Want to stay informed about a particular segment or product of a company? Just type in
-                                the keyword, and you will be notified as soon as new content about that particular topic
-                                has been published.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-
-{% endif %}
-
+<script src="{% static 'home/min_feed_script_v1.js' %}"></script>
 
 {% endblock content %}

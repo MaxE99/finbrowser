@@ -1,128 +1,113 @@
 {% load static %}
 {% load tz %}
 
-<div class="categoryHeader">{{ title }}</div>
 <div class="smallFormContentWrapper">
-    {% for tweet in qs %}
-    <div class="articleContainer" id="fkcc#{{ tweet.article.article_id }}">
+    {% for content in qs %}
+    <div class="articleContainer" id="fkcc#{{ content.article.article_id }}">
         <div class="leftContentSide">
             <div class="profileImageContainer">
-                <img src="{% static tweet.article.source.favicon_path %}" alt="Source Picture" />
-                <a class="sourceProfile" href="{{ tweet.article.source.get_absolute_url }}"
-                    aria-label="Open Profile Of {{ tweet.article.source.name }}"></a>
+                <img src="{% static content.article.source.favicon_path %}" alt="Source Picture" />
+                <a class="sourceProfile" href="{{ content.article.source.get_absolute_url }}"
+                    aria-label="Open Profile Of {{ content.article.source.name }}"></a>
             </div>
         </div>
         <div class="rightContentSide">
             <div class="contentInfoContainer">
                 <div class="sourceAndWebsiteContainer">
-                    <a class="sourceProfile" href="{{ tweet.article.source.get_absolute_url }}"
-                        aria-label="Open Profile Of {{ tweet.article.source.name }}">{{ tweet.article.source.name }}</a>
+                    <a class="sourceProfile" href="{{ content.article.source.get_absolute_url }}"
+                        aria-label="Open Profile Of {{ content.article.source.name }}">{{ content.article.source.name }}</a>
                     <div class="sourceWebsiteProfileContainer">
-                        {% if tweet.article.source.website.name == "YouTube" %}
-                        <img class="youtubeLogo" src="{% static tweet.article.source.website.logo %}"
+                        {% if content.article.source.website.name == "YouTube" %}
+                        <img class="youtubeLogo" src="{% static content.article.source.website.logo %}"
                             alt="Website Logo" />
                         {% else %}
-                        <img src="{% static tweet.article.source.website.logo %}" alt="Website Logo" />
+                        <img src="{% static content.article.source.website.logo %}" alt="Website Logo" />
                         {% endif %}
-                        <a href="{{ tweet.article.source.url }}"
-                            aria-label="Open External Profile Of {{ tweet.article.source.name }}" target="_blank"></a>
+                        <a href="{{ content.article.source.url }}"
+                            aria-label="Open External Profile Of {{ content.article.source.name }}" target="_blank"></a>
                     </div>
                 </div>
+                {% if request.user.is_authenticated %}
                 <i class="fas fa-ellipsis-h" role="button" aria-label="Open Article Interactions"></i>
+                {% else %}
+                <i class="fas fa-ellipsis-h openAuthPrompt ap6" role="button"
+                    aria-label="Open Article Interactions"></i>
+                {% endif %}
                 <div class="articleOptionsContainer">
                     {% if request.user.is_authenticated %}
-                    <div class="addToListButton" role="button"><i class="fas fa-list"></i>Add to list</div>
-                    {% if tweet.article.article_id in highlighted_content_ids %}
+                    <div class="addToListButton" role="button"><i class="fas fa-list"></i>Add to List</div>
+                    {% if content.article.article_id in highlighted_content_ids %}
                     <div class="addToHighlightedButton" role="button"><i class="fas fa-times"></i><span>Unhighlight
                             article</span></div>
                     {% else %}
                     <div class="addToHighlightedButton" role="button"><i class="fas fa-highlighter"></i><span>Highlight
                             article</span></div>
                     {% endif %}
-                    {% else %}
-                    <a aria-label="Login To Articles Add To Lists" href="{% url 'account_login' %}"
-                        class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
-                        to list</a>
-                    <a aria-label="Login To Highlight Articles" href="{% url 'account_login' %}"
-                        class="addToHighlightedButton registrationLink"><i
-                            class="fas fa-highlighter"></i><span>Highlight article</span></a>
                     {% endif %}
-                </div>
-                <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
-                    <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
-                            class="fas fa-times closeFormContainerButton"></i>
-                    </div>
-                    {% if user_lists %}
-                    <div class="listSelectionContainer">
-                        {% for list in user_lists %}
-                        <div class="listContainer">
-                            <label for="fkcc?ai{{ tweet.article.article_id }}?li#{{ list.list_id }}">
-                                {% if tweet in list.articles.all %}
-                                <input id="fkcc?ai{{ tweet.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
-                                    name="lists" checked="True">
-                                {{ list }}
-                                {% else %}
-                                <input id="fkcc?ai{{ tweet.article.article_id }}?li#{{ list.list_id }}" type="checkbox"
-                                    name="lists">
-                                {{ list }}
-                                {% endif %}
-                            </label>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <div class="buttonsContainer">
-                        <button class="saveButton">Save</button>
-                        <button class="createNewListButton">Create</button>
-                    </div>
-                    {% else %}
-                    <div class="listContainer">You haven't created any lists!</div>
-                    <button class="createNewListButton createFirstList">Create
-                        First
-                        List</button>
-                    {% endif %}
-                </div>
-                <div class="createListMenu articleCreateListMenu formContainer">
-                    <div class="formHeaderContainer">Create A New List<i
-                            class="fas fa-times closeFormContainerButton"></i>
-                    </div>
-                    <form enctype="multipart/form-data" method="POST" class="createListForm">
-                        {% csrf_token %} {{ add_list_form }}
-                        <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
-                    </form>
                 </div>
             </div>
-            {% if tweet.article.tweet_type.type == "Retweet" %}
-            <div class="retweetWrapper">Retweeted post by <span>@{{ tweet.article.tweet_type.author }}</span></div>
+            {% if content.article.tweet_type.type == "Retweet" %}
+            <div class="retweetWrapper">Retweeted post by <span>@{{ content.article.tweet_type.author }}</span></div>
             {% endif %}
-            {% if tweet.article.tweet_type.type == "Reply" %}
-            <div class="replyWrapper">Replying to <span>@{{ tweet.article.tweet_type.author }}</span></div>
+            {% if content.article.tweet_type.type == "Reply" %}
+            <div class="replyWrapper">Replying to <span>@{{ content.article.tweet_type.author }}</span></div>
             {% endif %}
-            {% if tweet.article.tweet_type.type != "Retweet" %}
+            {% if content.article.tweet_type.type != "Retweet" %}
             <div class="contentBody">
-                <p>{{ tweet.article.title }}</p>
+                <p>{{ content.article.title }}</p>
             </div>
             {% endif %}
-            {% if tweet.article.tweet_type.image_path %}
-            <img class="tweetImage" src="{% static tweet.article.tweet_type.image_path %}" alt="Tweet Image">
+            {% if content.article.tweet_type.image_path %}
+            <img class="tweetImage" src="{% static content.article.tweet_type.image_path %}" alt="Tweet Image">
             {% endif %}
-            {% if tweet.article.tweet_type.type == "Quote" or tweet.article.tweet_type.type == "Retweet" or tweet.article.tweet_type.type == "Reply" %}
+            {% if content.article.tweet_type.type == "Quote" or content.article.tweet_type.type == "Retweet" or content.article.tweet_type.type == "Reply" %}
             <div class="quoteWrapper">
                 <div class="quoteUpperContainer">
-                    <div class="quoteAuthor">{{ tweet.article.tweet_type.author }}</div>
-                    <div class="quoteDate">{{ tweet.article.tweet_type.pub_date|localtime }}</div>
+                    <div class="quoteAuthor">{{ content.article.tweet_type.author }}</div>
+                    <div class="quoteDate">{{ content.article.tweet_type.pub_date|localtime }}</div>
                 </div>
-                <div class="quoteText">{{ tweet.article.tweet_type.text }}</div>
-                {% if tweet.article.tweet_type.initial_tweet_img_path %}
-                <img class="tweetImage" src="{% static tweet.article.tweet_type.initial_tweet_img_path %}"
+                <div class="quoteText">{{ content.article.tweet_type.text }}</div>
+                {% if content.article.tweet_type.initial_tweet_img_path %}
+                <img class="tweetImage" src="{% static content.article.tweet_type.initial_tweet_img_path %}"
                     alt="Tweet Reply Image">
                 {% endif %}
             </div>
             {% endif %}
             <div class="timeContainer">
-                <p>{{ tweet.article.pub_date|localtime }}</p>
+                <p>{{ content.article.pub_date|localtime }}</p>
             </div>
-            <a class="contentLink" href="{{ tweet.article.link }}" target="_blank" aria-label="Open Content"></a>
+            <a class="contentLink" href="{{ content.article.link }}" target="_blank" aria-label="Open Content"></a>
         </div>
     </div>
     {% endfor %}
 </div>
+{% if qs.paginator.num_pages > 1 %}
+<div class="pagination">
+    <div class="currOffset"><span>{{ qs.start_index }} - {{ qs.end_index }}
+        </span> of
+        {{ qs.paginator.count }} Results</div>
+    <span class="step-links">
+        {% if qs.number == 1 %}
+        <button class="backButton notClickable"><i class="fas fa-chevron-left"></i></button>
+        {% else %}
+        <a class="backButton" href="?{{qs_name}}={{ qs.number|add:'-1' }}#content"><i
+                class="fas fa-chevron-left"></i></a>
+        {% endif %}
+        <div class="paginationButtonsContainer">
+            {% for i in qs.paginator.page_range %}
+            {% if qs.number == i %}
+            <button class="currentPagination">{{ qs.number }}</button>
+            {% elif i > qs.number|add:'-3' and i < qs.number|add:'3' %}
+            <a href="?{{qs_name}}={{ i }}#content">{{ i }}</a>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% if qs.number == qs.paginator.num_pages %}
+        <button class="nextButton notClickable"><i class="fas fa-chevron-right"></i></button>
+        {% else %}
+        <a class="nextButton" href="?{{qs_name}}={{ qs.number|add:'1' }}#content"><i
+                class="fas fa-chevron-right"></i></a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
