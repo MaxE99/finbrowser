@@ -1,0 +1,50 @@
+{% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v11.css' %}" />
+<title>Highlighted Content | FinBrowser</title>
+<meta name="description" content="FinBrowser list created by {{ list.creator.username }}">
+{% endblock %} {% block content %}
+
+<div class="pageWrapper">
+    <div class="firstRow">
+        <div class="nameContainer">
+            <h2 id="{{ list.list_id }}">Highlighted Content</h2>
+            <i class="fas fa-chevron-down"></i>
+            <div class="listOptionsContainer">
+                <div class="listsContainer">
+                    {% for llist in lists %}
+                    <div id="list{{llist.list_id}}" class="listOption">
+                        <span>{{ llist.name }}</span>
+                        <a href="{{ llist.get_absolute_url }}" aria-label="Open list {{ llist.name }}"></a>
+                    </div>
+                    {% endfor %}
+                    <div class="listOption">
+                        <span>Subscribed Sources</span>
+                        <a href="{% url 'list:list-subscribed_sources' %}" aria-label="Open subscribed sources"></a>
+                    </div>
+                    <div class="listOption">
+                        <span>Highlighted Content</span>
+                        <a href="{% url 'list:list-highlighted_content' %}" aria-label="Open highlighted content"></a>
+                    </div>
+                </div>
+                <button class="createListButton"><i class="fas fa-plus"></i>Create New List</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="contentColumnWrapper">
+        {% if highlighted_content %}
+        <div class="contentColumnContainer">
+            {% create_fk_content_container highlighted_content request highlighted_content_ids "page" %}
+        </div>
+        {% else %}
+        <div class="emptyInformationContainer">
+            <h3>No saved content found!</h3>
+            <div>You can add content to this list by opening the individual content options menu!</div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<script src="{% static 'list/highlighted_content_script.js' %}"></script>
+{% endblock content %}

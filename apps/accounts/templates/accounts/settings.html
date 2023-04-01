@@ -2,132 +2,133 @@
 {% load tz %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v11.css' %}">
-<title>FinBrowser | Settings</title>
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v12.css' %}">
+<title>Settings | FinBrowser</title>
 {% endblock %}
 
 {% block content %}
-
-<div class="settingsHeader">Settings</div>
-<div class="tabsContainer" role="navigation" aria-label="Settings Menu">
-    <button class="activatedTab" data-for-tab="0">Profile</button>
-    <button data-for-tab="1">Password</button>
-    <button data-for-tab="2">Notifications</button>
-</div>
-<div class="contentSection">
-    <div class="tabsContent tabsContentActive" data-tab="0">
-        <form class="editSection changeProfileForm" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <h2>Account</h2>
-            <div class="usernameAndEmailContainer">
-                <div class="usernameContainer">
-                    {{ email_and_name_change_form.username.label_tag }}
-                    {{ email_and_name_change_form.username }}
-                </div>
-                <div class="emailContainer" id="upi#{{ user.profile.profile_id }}">
-                    {{ email_and_name_change_form.email.label_tag }}
-                    {{ email_and_name_change_form.email }}
-                </div>
-            </div>
-            <div class="profilePicContainer">
-                {{ profile_pic_change_form.profile_pic.label_tag }}
-                <div class="profilePicInnerContainer">
-                    {% if user.profile.profile_pic %}
-                    <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
-                    {% else %}
-                    <img src="{% static 'home/media/finbrowser-bigger-logo.png' %}" alt="Profile Picture Placeholder">
-                    {% endif %}
-                    <div class="changeProfilePicButton" role="button">
-                        <span>Change</span>
-                        {{ profile_change_form.profile_pic }}
+<div class="pageWrapper">
+    <h1>Account Settings</h1>
+    <div class="tabsContainer" role="navigation" aria-label="Settings Menu">
+        <button class="activatedTab" data-for-tab="0">Profile</button>
+        <button data-for-tab="1">Password</button>
+        <button data-for-tab="2">Notifications</button>
+    </div>
+    <div class="contentSection">
+        <div class="tabsContent tabsContentActive" data-tab="0">
+            <form class="editSection changeProfileForm" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2>Account</h2>
+                <div class="usernameAndEmailContainer">
+                    <div class="usernameContainer">
+                        {{ email_and_name_change_form.username.label_tag }}
+                        {{ email_and_name_change_form.username }}
                     </div>
-                    <button type="button" class="removeProfilePicButton">Remove</button>
+                    <div class="emailContainer" id="upi#{{ user.profile.profile_id }}">
+                        {{ email_and_name_change_form.email.label_tag }}
+                        {{ email_and_name_change_form.email }}
+                    </div>
                 </div>
-            </div>
-            {{ change_timezone_form }}
-            <div class="buttonContainer">
-                <button type="submit" href="{% url 'accounts:settings' %}" class="cancelButton">Cancel</button>
-                <input class="saveButton" name="changeProfileForm" type="submit" value="Save">
-            </div>
-        </form>
-    </div>
-    <div class="tabsContent" data-tab="1">
-        <h2>Change Password</h2>
-        <form class="changePasswordForm" method="POST">
-            {% csrf_token %} {{ change_password_form }}
-            <input name="changePasswordForm" type="submit" class="passwordChangeSubmit" value="Save" />
-        </form>
-    </div>
-    <div class="tabsContent notificationTab" data-tab="2">
-        {% if user_source_notifications.count > 0 %}
-        <h2>Source Notifications</h2>
-        <div class="notificationContainer">
-            <div class="sliderWrapper">
-                <div class="sliderContentContainer">
-                    <button aria-label="Slide Left" class="handle leftHandle">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <div class="slider">
-                        {% for notification in user_source_notifications %}
-                        <div class="contentWrapper" id="fsss?si#{{ notification.source.source_id }}">
-                            <img src="{% static notification.source.favicon_path %}" alt="Source Picture" />
-                            <div class="contentRatingContainer">
-                                <i class="fa fa-star"></i>
-                                <span>{{ notification.source.average_rating }}</span>
+                <div class="profilePicContainer">
+                    <div class="profilePicInnerContainer">
+                        {% if user.profile.profile_pic %}
+                        <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
+                        {% else %}
+                        <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">
+                            {{ user.username.0 }}</div>
+                        {% endif %}
+                        <input hidden="true" type="file" accept="image/*" />
+                        <button type="button" class="changeProfilePicButton">Change</button>
+                        <button type="button" class="removeProfilePicButton">Remove</button>
+                    </div>
+                </div>
+                {{ change_timezone_form }}
+                <div class="buttonContainer">
+                    <button type="submit" href="{% url 'accounts:settings' %}" class="cancelButton">Cancel</button>
+                    <input class="saveButton" name="changeProfileForm" type="submit" value="Save">
+                </div>
+            </form>
+        </div>
+        <div class="tabsContent" data-tab="1">
+            <h2>Change Password</h2>
+            <form class="changePasswordForm" method="POST">
+                {% csrf_token %} {{ change_password_form }}
+                <input name="changePasswordForm" type="submit" class="passwordChangeSubmit" value="Save" />
+            </form>
+        </div>
+        <div class="tabsContent notificationTab" data-tab="2">
+            {% if user_source_notifications.count > 0 %}
+            <h2>Source Notifications</h2>
+            <div class="notificationContainer">
+                <div class="sliderWrapper">
+                    <div class="sliderContentContainer">
+                        <button aria-label="Slide Left" class="handle leftHandle">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="slider">
+                            {% for notification in user_source_notifications %}
+                            <div class="contentWrapper" id="fsss?si#{{ notification.source.source_id }}">
+                                <img src="{% static notification.source.favicon_path %}" alt="Source Picture" />
+                                <div class="contentRatingContainer">
+                                    <i class="fa fa-star"></i>
+                                    <span>{{ notification.source.average_rating }}</span>
+                                </div>
+                                <div class="nameContainer">
+                                    <span>{{notification.source.name}}</span>
+                                </div>
+                                {% if notification.source in subscribed_sources %}
+                                <button class="subscribeButton subscribed">Subscribed</button>
+                                {% else %}
+                                <button class="subscribeButton">Subscribe</button>
+                                {% endif %}
+                                <button id="nid#{{notification.notification_id}}"
+                                    class="notificationButton notificationActivated">Notification Off</button>
+                                <a class="contentLink" href="{{ notification.source.get_absolute_url }}"
+                                    aria-label="Open Profile Of {{ notification.source.name }}"></a>
                             </div>
-                            <div class="nameContainer">
-                                <span>{{notification.source.name}}</span>
-                            </div>
-                            {% if notification.source in subscribed_sources %}
-                            <button class="subscribeButton subscribed">Subscribed</button>
-                            {% else %}
-                            <button class="subscribeButton">Subscribe</button>
-                            {% endif %}
-                            <button class="notificationButton notificationActivated">Notification Off</button>
-                            <a class="contentLink" href="{{ notification.source.get_absolute_url }}"
-                                aria-label="Open Profile Of {{ notification.source.name }}"></a>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
+                        <button aria-label="Slide right" class="handle rightHandle">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
-                    <button aria-label="Slide right" class="handle rightHandle">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
                 </div>
             </div>
-        </div>
-        {% endif %}
-        {% if user_stock_notifications.count > 0 %}
-        <h2>Stock Notifications</h2>
-        <div class="notificationContainer">
-            {% for notification in user_stock_notifications %}
-            <div class="keywordContainer">
-                <i class="fas fa-check"></i>
-                {{ notification.stock.ticker }}
-                <i class="fas fa-times" id="stni#{{ notification.notification_id }}" role="button"
-                    aria-label="Delete Notification">
-                </i>
+            {% endif %}
+            {% if user_stock_notifications.count > 0 %}
+            <h2>Stock Notifications</h2>
+            <div class="notificationContainer">
+                {% for notification in user_stock_notifications %}
+                <div class="keywordContainer">
+                    <i class="fas fa-check"></i>
+                    {{ notification.stock.ticker }}
+                    <i class="fas fa-times" id="stni#{{ notification.notification_id }}" role="button"
+                        aria-label="Delete Notification">
+                    </i>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
-        {% if user_keyword_notifications.count > 0 %}
-        <h2>Keyword Notifications</h2>
-        <div class="notificationContainer">
-            {% for notification in user_keyword_notifications %}
-            <div class="keywordContainer">
-                <i class="fas fa-check"></i>
-                {{ notification.keyword }}
-                <i class="fas fa-times" id="kni#{{ notification.notification_id }}" role="button"
-                    aria-label="Delete Notification">
-                </i>
+            {% if user_keyword_notifications.count > 0 %}
+            <h2>Keyword Notifications</h2>
+            <div class="notificationContainer">
+                {% for notification in user_keyword_notifications %}
+                <div class="keywordContainer">
+                    <i class="fas fa-check"></i>
+                    {{ notification.keyword }}
+                    <i class="fas fa-times" id="kni#{{ notification.notification_id }}" role="button"
+                        aria-label="Delete Notification">
+                    </i>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            {% else %}
+            <div class="noNotificationsActivated">You haven't activated any notifications!</div>
+            {% endif %}
+            {% endif %}
         </div>
-        {% else %}
-        <div class="noNotificationsActivated">You haven't activated any notifications!</div>
-        {% endif %}
-        {% endif %}
     </div>
-</div>
 
-<script src="{% static 'accounts/min_settings_script_v7.js' %}"></script>
+    <script src="{% static 'accounts/min_settings_script_v8.js' %}"></script>
+
+</div>
 {% endblock content %}

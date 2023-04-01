@@ -1,37 +1,71 @@
 # Django import
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+
 # Local import
 from apps.logic.pure_logic import paginator_create
-from apps.home.views import TWITTER, BaseMixin
+from apps.logic.selectors import filter_sources
+from apps.home.views import BaseMixin
 from apps.source.models import Source, SourceRating
-from apps.list.models import List
 from apps.article.models import Article
 from apps.home.models import Notification
-from django.db.models import Q
+from apps.sector.models import Sector
 
 
 class SourceDetailView(DetailView, BaseMixin):
     model = Source
-    context_object_name = 'source'
-    template_name = 'source/source_profile.html'
+    context_object_name = "source"
+    template_name = "source/source_profile.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         source = self.get_object()
         if self.request.user.is_authenticated:
-            subscribed = True if self.request.user in source.subscribers.all() else False
-            user_rating = SourceRating.objects.get_user_rating(self.request.user, source)
-            notifications_activated = Notification.objects.filter(user=self.request.user, source=source).exists()
+            subscribed = (
+                True if self.request.user in source.subscribers.all() else False
+            )
+            user_rating = SourceRating.objects.get_user_rating(
+                self.request.user, source
+            )
+            context[
+                "notification_id"
+            ] = Notification.objects.check_source_notification_exists(
+                self.request.user, source
+            )
         else:
-            subscribed = False  
-            user_rating = notifications_activated = None
-        latest_content = Article.objects.filter_by_source(source)
-        if source.website == TWITTER:
-            context['links_and_retweets'] = paginator_create(self.request, latest_content.filter(Q(tweet_type__type="Retweet") | Q(tweet_type__type="Link")), 25, 'links_and_retweets')
-            context['images'] = paginator_create(self.request, latest_content.filter(tweet_type__type="Image"), 25, 'images')
-        context['latest_articles'] = paginator_create(self.request, latest_content, 50, 'latest_content')
-        context['lists'] = paginator_create(self.request, List.objects.filter_by_source(source), 50, 'lists')
-        context['subscribed'] = subscribed
-        context['user_rating'] = user_rating
-        context['notifications_activated'] = notifications_activated
+            subscribed = user_rating = None
+        context["latest_content"] = paginator_create(
+            self.request, Article.objects.filter_by_source(source), 25, "latest_content"
+        )
+        context["similiar_sources"] = Source.objects.filter(
+            source_id__in=source.sim_sources.all()
+        ).select_related("sector")
+        context["subscribed"] = subscribed
+        context["user_rating"] = user_rating
+        context["source_ranking"] = (
+            Source.objects.filter(average_rating__gt=source.average_rating).count() + 1
+        )
+        return context
+
+
+class SourceRankingView(ListView, BaseMixin):
+    model = Source
+    context_object_name = "source"
+    template_name = "source/source_ranking.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context["user_ratings"] = SourceRating.objects.get_user_ratings_dict(
+                self.request.user
+            )
+        print(len(filter_sources(self.request.GET)))
+        context["sources"] = paginator_create(
+            self.request,
+            filter_sources(self.request.GET),
+            25,
+            "page",
+        )
+        context["sectors"] = Sector.objects.all()
+        context["search_parameters"] = dict(self.request.GET)
         return context

@@ -11,6 +11,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 FAVICON_FILE_DIRECTORY = "static/home/favicons"
 TWEET_IMG_FILE_DIRECTORY = "static/home/tweet_imgs"
 INITIAL_TWEET_IMG_FILE_DIRECTORY = "static/home/initial_tweet_imgs"
+
 DEBUG = False
 
 if DEBUG:
@@ -106,7 +107,11 @@ INSTALLED_APPS = [
     "rest_framework",
     "django.contrib.sitemaps",
     "django_celery_beat",
+<<<<<<< HEAD
     # 'debug_toolbar',
+=======
+    # "debug_toolbar",
+>>>>>>> bf25551ecedf7f2312c10bdb5cc9c21b398f84e8
     "django_cleanup.apps.CleanupConfig",
     "apps.accounts",
     "apps.home",

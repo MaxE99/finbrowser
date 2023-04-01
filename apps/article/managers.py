@@ -1,45 +1,91 @@
 # Django imports
-from django.shortcuts import get_object_or_404
 from django.db import models
-# Local imports
-from apps.accounts.models import Website
-
-try:
-    TWITTER = get_object_or_404(Website, name="Twitter")
-except:
-    TWITTER = None
+from django.db.models import Q
 
 
 class ArticleManager(models.Manager):
+    def get_list_content_by_content_type(self, list_sources):
+        source_ids = list_sources.values_list("source_id", flat=True)
+        analysis = self.filter(
+            source__in=source_ids,
+            source__content_type="Analysis",
+        ).select_related("source", "source__website", "tweet_type")
+        commentary = self.filter(
+            source__in=source_ids,
+            source__content_type="Commentary",
+        ).select_related("source", "source__website", "tweet_type")
+        news = self.filter(
+            source__in=source_ids,
+            source__content_type="News",
+        ).select_related("source", "source__website", "tweet_type")
+        return analysis, commentary, news
+
+    def get_subscribed_content_by_content_type(self, subscribed_sources):
+        analysis_content = self.filter(
+            source__in=subscribed_sources["analysis"]
+        ).select_related("source", "source__website", "tweet_type")
+        commentary_content = self.filter(
+            source__in=subscribed_sources["commentary"]
+        ).select_related("source", "source__website", "tweet_type")
+        news_content = self.filter(
+            source__in=subscribed_sources["news"]
+        ).select_related("source", "source__website", "tweet_type")
+        return analysis_content, commentary_content, news_content
+
+    def get_portfolio_content(self, portfolio_stocks):
+        article_ids = []
+        for stock in portfolio_stocks:
+            article_ids += list(
+                stock.get("articles").values_list("article_id", flat=True)
+            )
+        return self.filter(article_id__in=article_ids).select_related(
+            "source", "source__website", "tweet_type"
+        )
+
+    def get_content_about_stock(self, stock):
+        if len(stock.ticker) > 1:
+            return self.filter(
+                Q(search_vector=stock.ticker)
+                | Q(search_vector=stock.short_company_name)
+            ).select_related("source", "tweet_type", "source__website")
+        return self.filter(
+            Q(title__contains=f"${stock.ticker} ")
+            | Q(search_vector=stock.short_company_name)
+        ).select_related("source", "tweet_type", "source__website")
 
     def filter_by_search_term(self, search_term):
-        return self.filter(search_vector=search_term).select_related('source', 'source__sector', 'tweet_type', 'source__website')
-
-    def filter_by_list_and_website(self, list, website=TWITTER, website_inclusive=True):
-        if website_inclusive:
-            return self.filter(source__in=list.sources.all().values_list("source_id", flat=True), source__website=website).select_related('source', 'source__sector', 'tweet_type', 'source__website')
-        return self.filter(source__in=list.sources.all().values_list("source_id", flat=True)).exclude(source__website=website).select_related('source', 'source__sector', 'source__website')
+        if len(search_term) > 1:
+            return self.filter(search_vector=search_term).select_related(
+                "source", "tweet_type", "source__website"
+            )
+        return self.none()
 
     def filter_by_source(self, source):
-        return self.filter(source=source).select_related('source', 'source__sector', 'source__website', 'tweet_type')
+        return self.filter(source=source).select_related(
+            "source", "source__website", "tweet_type"
+        )
 
-    def filter_by_sector_and_website(self, sector, website=TWITTER, website_inclusive=True):
-        if website_inclusive:
-            return self.filter(source__website=website, source__in=sector.source_set.all().values_list("source_id", flat=True)).select_related('source', 'source__sector', 'tweet_type', 'source__website')
-        return self.filter(source__in=sector.source_set.all().values_list("source_id", flat=True)).exclude(source__website=website).select_related('source', 'source__sector', 'source__website', 'tweet_type')
+    def get_best_tweets_anon(self):
+        return self.filter(
+            source__top_source=True, source__website__name="Twitter"
+        ).select_related("source", "source__website", "tweet_type")
 
-    def filter_by_subscription_and_website(self, sources, website=TWITTER, website_inclusive=True):
-        if website_inclusive:
-            return self.filter(source__in=sources, source__website=website).select_related('source', 'source__sector', 'source__website', 'tweet_type')
-        return self.filter(source__in=sources).exclude(source__website=website).select_related('source', 'source__sector', 'source__website', 'tweet_type')
+    def get_latest_analysis(self):
+        return self.filter(source__content_type="Analysis").select_related("source")[
+            0:5
+        ]
+
+    def get_latest_news(self):
+        return self.filter(source__content_type="News").select_related("source")[0:5]
+
+    def get_top_content_anon(self):
+        return (
+            self.filter(source__top_source=True)
+            .exclude(source__website__name="Twitter")
+            .select_related("source", "source__website")
+        )
 
 
 class HighlightedArticlesManager(models.Manager):
-
-    def filter_by_user(self, user):
-        return self.filter(user=user).select_related('article__source', 'article__source__sector', 'article__source__website', 'article__tweet_type').order_by('-article__pub_date')
-
     def get_ids_by_user(self, user):
         return self.filter(user=user).values_list("article", flat=True)
-
- 
