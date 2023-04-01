@@ -1,116 +1,57 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'sector/sector_details_style.css' %}">
-<title>{{ sector.name }} Sector | FinBrowser</title>
+<title>{{ sector.name }} | FinBrowser</title>
 <meta name="description" content="Discover the latest content related to {{ sector }}.">
 {% endblock %} {% block content %}
 
-<h2>{{sector.name}} - Sources</h2>
-<div class="sliderWrapper">
-    <div class="sliderContentContainer">
-        <button aria-label="Slide Left" class="handle leftHandle">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <div class="slider">
-            {% for source in sector.source_set.all|dictsort:"name" %}
-            <div class="contentWrapper" id="fsss?si#{{ source.source_id }}">
-                <img src="{% static source.favicon_path %}" alt="Source Picture" />
-                <div class="contentRatingContainer">
-                    <i class="fa fa-star"></i>
-                    <span>{{ source.average_rating }}</span>
-                </div>
-                <div class="nameContainer">
-                    <span>{{source.name}}</span>
-                </div>
-                {% if request.user.is_authenticated %}
-                {% if source in subscribed_sources %}
-                <button class="subscribeButton subscribed">Subscribed</button>
-                {% else %}
-                <button class="subscribeButton">Subscribe</button>
-                {% endif %}
-                {% if source.source_id in notification_sources %}
-                <button class="notificationButton notificationActivated">Notification Off</button>
-                {% else %}
-                <button class="notificationButton">Notification On</button>
-                {% endif %}
-                {% else %}
-                <a class="loginRedirectButton" aria-label="Login to subscribe"
-                    href="{% url 'account_login' %}">Subscribe</a>
-                <a class="loginRedirectButton" aria-label="Login to turn on notifications"
-                    href="{% url 'account_login' %}">Notification
-                    On</a>
-                {% endif %}
-                <a class="contentLink" href="{{ source.get_absolute_url }}"
-                    aria-label="Open Profile Of {{ source.name }}"></a>
-            </div>
-            {% endfor %}
+<div class="pageWrapper">
+    <h2>{{sector.name}}</h2>
+
+    <div class="tabsContainer" id="content">
+        <button class="activatedTab" data-for-tab="0">Analysis</button>
+        <button data-for-tab="1">Commentary</button>
+        <button data-for-tab="2">News</button>
+    </div>
+
+    <div class="tabsContent tabsContentActive" data-tab="0">
+        {% if analysis_sources %}
+        <div class="contentColumnContainer halfPageContainer">
+            {% create_source_container analysis_sources subscribed_sources request %}
+            {% create_content_container analysis request highlighted_content_ids "analysis" %}
         </div>
-        <button aria-label="Slide right" class="handle rightHandle">
-            <i class="fas fa-chevron-right"></i>
-        </button>
+        {% else %}
+        <div class="emptyInformationContainer">
+            <span>No analytical content found!</span>
+        </div>
+        {% endif %}
+    </div>
+    <div class="tabsContent" data-tab="1">
+        {% if commentary_sources %}
+        <div class="contentColumnContainer halfPageContainer">
+            {% create_source_container commentary_sources subscribed_sources request %}
+            {% create_content_container commentary request highlighted_content_ids "commentary" %}
+        </div>
+        {% else %}
+        <div class="emptyInformationContainer">
+            <span>No commentary found!</span>
+        </div>
+        {% endif %}
+    </div>
+    <div class="tabsContent" data-tab="2">
+        {% if news_sources %}
+        <div class="contentColumnContainer halfPageContainer">
+            {% create_source_container news_sources subscribed_sources request %}
+            {% create_content_container news request highlighted_content_ids "news" %}
+        </div>
+        {% else %}
+        <div class="emptyInformationContainer">
+            <span>No news content found!</span>
+        </div>
+        {% endif %}
     </div>
 </div>
 
-<div class="tabsContainer">
-    <button class="activatedTab" data-for-tab="0">Analysis</button>
-    <button data-for-tab="1">Commentary</button>
-    <button data-for-tab="2">News</button>
-</div>
-<div class="tabsContent tabsContentActive" data-tab="0">
-    {% if analysis_content %}
-    <div class="contentColumnContainer halfPageContainer">
-        {% create_content_container "Long-Form Content" analysis_content request user_lists csrf_token add_list_form highlighted_content_ids %}
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in analysis_content.paginator.page_range %}
-                {% if analysis_content.number == i %}
-                <button class="currentPagination">{{ analysis_content.number }}</button>
-                {% elif i > analysis_content.number|add:'-3' and i < analysis_content.number|add:'3' %} <a
-                    href="?analysis_content={{ i }}">{{ i }}</a>
-                {% endif %}
-                {% endfor %}
-            </span>
-        </div>
-    </div>
-    {% endif %}
-</div>
-<div class="tabsContent" data-tab="1">
-    {% if commentary_content %}
-    <div class="contentColumnContainer halfPageContainer">
-        {% create_content_container "Tweets" commentary_content request user_lists csrf_token add_list_form highlighted_content_ids %}
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in commentary_content.paginator.page_range %}
-                {% if commentary_content.number == i %}
-                <button class="currentPagination">{{ commentary_content.number }}</button>
-                {% elif i > commentary_content.number|add:'-3' and i < commentary_content.number|add:'3' %} <a
-                    href="?commentary_content={{ i }}">{{ i }}</a>
-                {% endif %}
-                {% endfor %}
-            </span>
-        </div>
-    </div>
-    {% endif %}
-</div>
-<div class="tabsContent" data-tab="2">
-    {% if news_content %}
-    <div class="contentColumnContainer halfPageContainer">
-        {% create_content_container "Long-Form Content" news_content request user_lists csrf_token add_list_form highlighted_content_ids %}
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in news_content.paginator.page_range %}
-                {% if news_content.number == i %}
-                <button class="currentPagination">{{ news_content.number }}</button>
-                {% elif i > news_content.number|add:'-3' and i < news_content.number|add:'3' %} <a
-                    href="?news_content={{ i }}">{{ i }}</a>
-                {% endif %}
-                {% endfor %}
-            </span>
-        </div>
-    </div>
-    {% endif %}
-</div>
 
 
-
-
+<script src="{% static 'sector/sector_details_script.js' %}"></script>
 {% endblock content %}

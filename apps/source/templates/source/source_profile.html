@@ -1,166 +1,162 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'source/source_profile_style.css' %}" />
-<title>{{ source.name }} Profile | FinBrowser</title>
+<link rel="stylesheet" type="text/css" href="{% static 'source/min_source_profile_style_v7.css' %}" />
+<title>{{ source.name }} | FinBrowser</title>
 <meta name="description" content="Discover the latest content from {{ source.name }}">
 {% endblock %} {% block content %}
 
-<div class="firstRow">
-  <h2>{{ source.name }}</h2>
-  <div class="notificationAndSubscribtionContainer">
-    {% if request.user.is_authenticated %}
-    <button aria-label="Add Source To Lists" class="addSourceToListButton"><i class="fas fa-ellipsis-h"></i></button>
-    <div role="form" class="addToListForm addSourceToListForm">
-      <div class="formHeaderContainer">Add To Lists<i class="fas fa-times closeFormContainerButton"></i>
+
+<div class="sourceRatingsWrapper">
+  <div class="sourceRatingsContainer">
+    <div class="ratingsContainer">
+      <div class="header">
+        <h3></h3>
+        <i class="fas fa-times"></i>
       </div>
-      {% if user_lists %}
-      <div class="listSelectionContainer">
-        {% for list in user_lists %}
-        <div class="listContainer">
-          <label for="id_list_{{ list.list_id }}">
-            {% if source in list.sources.all %}
-            <input id="id_list_{{ list.list_id }}" class="sourceInList" type="checkbox" name="lists"
-              value="{{ list.list_id }}" checked="True"> {{ list }}
-            {% else %}
-            <input id="id_list_{{ list.list_id }}" class="sourceNotInList" type="checkbox" name="lists"
-              value="{{ list.list_id }}">
-            {{ list }}
-            {% endif %}
-          </label>
-        </div>
-        {% endfor %}
+      <span>How would you rate this source in terms of content quality?</span>
+      <div class="ratingsButtonContainer">
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button>10</button>
       </div>
-      <div class="buttonsContainer">
-        <button class="saveButton">Save</button>
-        <button class="createNewListButton">Create</button>
-      </div>
-      {% else %}
-      <div class="listContainer">You haven't created any lists!</div>
-      <button class="createNewListButton createFirstList">Create First List</button>
-      {% endif %}
+      <button class="rateSourceButton">Rate</button>
     </div>
-    <div class="createListMenu sourcesCreateListMenu formContainer">
-      <div class="formHeaderContainer">Create A New List<i class="fas fa-times closeFormContainerButton"></i>
-      </div>
-      <form enctype="multipart/form-data" method="POST" class="createListForm">
-        {% csrf_token %} {{ add_list_form }}
-        <input name="createListForm" type="submit" class="formSubmitButton" value="Save" />
-      </form>
-    </div>
-    {% if notifications_activated %}
-    <i role="button" aria-label="Activate Notifications"
-      class="fas fa-bell-slash notificationButton notificationActivated"></i>
-    {% else %}
-    <i role="button" aria-label="Deactivate Notifications" class="fas fa-bell notificationButton"></i>
-    {% endif %}
-    {% if subscribed %}
-    <button class="subscribeButton subscribed">Subscribed</button>
-    {% else %}
-    <button class="subscribeButton unsubscribed">Subscribe</button>
-    {% endif %}
-    {% else %}
-    <a href="{% url 'account_login' %}" class="subscribeButton unsubscribed registrationLink"
-      aria-label="Login To Subscribe To Source">Subscribe</a>
-    {% endif %}
-  </div>
-</div>
-<div class="secondRow">
-  <div class="leftSideContainer">
-    <div class="sourcePicContainer">
-      <img class="profilePicture" src="{% static source.favicon_path %}" alt="Source Picture" />
-    </div>
-    <h3>Most Covered Stocks</h3>
-    <div class="coveredStocksContainer">
-      {% for stock in most_covered_stocks %}
-      <div class="stockContainer">
-        <span>{{ stock.ticker }}</span>
-        <span>-</span>
-        <span>{{ stock.short_company_name }}</span>
-        <i class="fa-solid fa-chevron-right"></i>
-        <a href="{{ stock.get_absolute_url }}" aria-label="Open Profile Of {{ stock.full_company_name }}"></a>
-      </div>
-      {% endfor %}
-    </div>
-    <h3>Tags</h3>
-    {% if source.tags %}
-    <div class="tagsContainer">
-      {% for tag in source.tags.all %}
-      <div class="tag">{{ tag.name }}</div>
-      {% endfor %}
-    </div>
-    {% endif %}
-    <h3>Similiar Sources</h3>
-    <div class="similiarSourcesContainer">
-      {% for sim_source in similiar_sources %}
-      <div class="simSourceContainer">
-        <img class="profilePicture" src="{% static sim_source.favicon_path %}" alt="Source Picture" />
-        <span>{{ sim_source.name }}</span>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="rightSideContainer">
-    <div class="ratingContainer"></div>
-    <div class="infoWrapper">
-      <div class="infoContainer sectorInfoContainer">
-        <span>Sector</span>
-        <a href="{{ source.sector.get_absolute_url }}"
-          aria-label="Open Sector - {{ source.sector.name }}">{{ source.sector.name }}</a>
-      </div>
-      <div class="infoContainer">
-        <span>Content Type</span>
-        <span>{{ source.content_type }}</span>
-      </div>
-      <div class="infoContainer websiteInfoContainer">
-        <span>Website</span>
-        <a href="{{ source.url }}" target="_blank"
-          aria-label="Open External Profile Of {{ source.name }}">{{ source.website }}</a>
-      </div>
-      <div class="infoContainer">
-        <span>Paywall</span>
-        <span>{{ source.paywall }}</span>
-      </div>
-      <div class="infoContainer">
-        <span>Amount of Ratings</span>
-        <span>{{ source.ammount_of_ratings }}</span>
-      </div>
-      <div class="infoContainer">
-        <span>Your Rating</span>
-        {% if request.user.is_authenticated and source|check_has_rated:user_ratings %}
-        <span><i class="fas fa-star"></i>{{ source|check_has_rated:user_ratings }}</span>
-        {% else %}
-        <span class="notRated"><i class="fas fa-star"></i>Rate</span>
-        {% endif %}
-      </div>
-      <div class="infoContainer">
-        <span>Latest Article</span>
-        <span>https://www.youtube.com/watch?v=fnfmO2ETny8</span>
-      </div>
-      <div class="infoContainer">
-        <span>Nr. of Articles Last 30d</span>
-        <span>15</span>
-      </div>
-    </div>
-    {% if latest_articles %}
-    <div class="contentColumnWrapper">
-      <div class="contentColumnContainer">
-        {% create_content_container "Latest Content" latest_articles request user_lists csrf_token add_list_form highlighted_content_ids %}
-        <div class="pagination">
-          <span class="step-links">
-            {% for i in latest_articles.paginator.page_range %}
-            {% if latest_articles.number == i %}
-            <button class="currentPagination">{{ latest_articles.number }}</button>
-            {% elif i > latest_articles.number|add:'-3' and i < latest_articles.number|add:'3' %} <a
-              href="?latest_content={{ i }}">{{ i }}</a>
-            {% endif %}
-            {% endfor %}
-          </span>
-        </div>
-      </div>
-    </div>
-    {% endif %}
   </div>
 </div>
 
-{{ user_rating|json_script:"user-rating" }}
-<script src="{% static 'source/min_source_profile_script_v7.js' %}"></script>
+<div class="pageWrapper">
+  <div class="firstRow">
+    <div class="sourcePicContainer smallScreenContainer">
+      <img class="profilePicture" src="{% static source.favicon_path %}" alt="Source Picture" />
+    </div>
+    <h2 id="source#{{source.source_id}}">{{ source.name }}</h2>
+    <div class="notificationAndSubscribtionContainer">
+      {% if request.user.is_authenticated %}
+      <button aria-label="Add Source To Lists" class="addSourceToListButton"><i class="fas fa-ellipsis-h"></i></button>
+      {% if notification_id %}
+      <i id="nid#{{notification_id}}" role="button" aria-label="Activated Notification"
+        class="fas fa-bell-slash notificationButton notificationActivated"></i>
+      {% else %}
+      <i role="button" aria-label="Deactive Notification" class="fas fa-bell notificationButton"></i>
+      {% endif %}
+      {% if subscribed %}
+      <button class="subscribeButton subscribed">Subscribed</button>
+      {% else %}
+      <button class="subscribeButton unsubscribed">Subscribe</button>
+      {% endif %}
+      {% else %}
+      <button aria-label="Add Source To Lists" class="addSourceToListButton openAuthPrompt ap1"><i
+          class="fas fa-ellipsis-h openAuthPrompt ap1"></i></button>
+      <i role="button" aria-label="Deactivate Notifications"
+        class="fas fa-bell notificationButton openAuthPrompt ap3"></i>
+      <button class="subscribeButton unsubscribed openAuthPrompt ap2">Subscribe</button>
+      {% endif %}
+    </div>
+  </div>
+  <div class="secondRow">
+    <div class="leftSideContainer">
+      <div class="sourcePicContainer">
+        <img class="profilePicture" src="{% static source.favicon_path %}" alt="Source Picture" />
+      </div>
+      <h3>Tags</h3>
+      {% if source.tags %}
+      <div class="tagsContainer">
+        {% for tag in source.tags.all %}
+        <div class="tag">{{ tag.name }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <h3>Similiar Sources</h3>
+      <div class="similiarSourcesContainer">
+        {% for sim_source in similiar_sources %}
+        <div class="simSourceContainer">
+          <div class="imageContainer">
+            <img class="profilePicture" src="{% static sim_source.favicon_path %}" alt="Source Picture" />
+          </div>
+          <div class="simSourceInfoContainer">
+            <span class="sourceName">{{ sim_source.name }}</span>
+            <div class="innerRatingContainer">
+              <span>{{ sim_source.sector }} - {{ sim_source.content_type }} - <i
+                  class="fas fa-star"></i>{{ sim_source.average_rating }}</span>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right"></i>
+          <a href="{{ sim_source.get_absolute_url }}" aria-label="Open Profile Of {{ sim_source.name }}"></a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="rightSideContainer">
+      <div class="tabsContainer" id="content" role="navigation" aria-label="Stock Content Navigation">
+        <button class="activatedTab" data-for-tab="0">Recommended Content</button>
+        <button data-for-tab="1">Recommended Tweets</button>
+      </div>
+      <h3 class="summaryHeader">Summary</h3>
+      <div class="infoWrapper tabsContent tabsContentActive">
+        <div class="infoContainer sectorInfoContainer">
+          <span>Sector</span>
+          <a href="{{ source.sector.get_absolute_url }}"
+            aria-label="Open Sector - {{ source.sector.name }}">{{ source.sector.name }}</a>
+        </div>
+        <div class="infoContainer">
+          <span>Content Type</span>
+          <span>{{ source.content_type }}</span>
+        </div>
+        <div class="infoContainer websiteInfoContainer">
+          <span>Website</span>
+          <a href="{{ source.url }}" target="_blank"
+            aria-label="Open External Profile Of {{ source.name }}">{{ source.website }}</a>
+        </div>
+        <div class="infoContainer">
+          <span>Paywall</span>
+          <span>{{ source.paywall }}</span>
+        </div>
+      </div>
+      <h3 class="ratingHeader">Ratings</h3>
+      <div class="ratingContainer tabsContent">
+        <div class="infoContainer">
+          <span>Average Rating</span>
+          <span><i class="fas fa-star"></i>{{ source.average_rating }}</span>
+        </div>
+        <div class="infoContainer">
+          <span>Ratings</span>
+          <span>{{ source.ammount_of_ratings }}</span>
+        </div>
+        <div class="infoContainer">
+          <span>Your Rating</span>
+          {% if request.user.is_authenticated %}
+          {% if user_rating %}
+          <span class="rateSpan"><i class="fas fa-star"></i>{{ user_rating }}</span>
+          {% else %}
+          <span class="notRated rateSpan"><i class="fas fa-star"></i>Rate</span>
+          {% endif %}
+          {% else %}
+          <span class="notRated rateSpan openAuthPrompt ap7"><i class="fas fa-star"></i>Rate</span>
+          {% endif %}
+        </div>
+        <div class="infoContainer">
+          <span>Ranking</span>
+          <span>{{ source_ranking }}</span>
+        </div>
+      </div>
+
+      {% if latest_content %}
+      <h3>Content</h3>
+      <div class="contentColumnWrapper">
+        <div class="contentColumnContainer">
+          {% create_content_container latest_content request highlighted_content_ids "latest_content" %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'source/min_source_profile_script_v8.js' %}"></script>
 {% endblock content %}

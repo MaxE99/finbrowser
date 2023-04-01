@@ -1,11 +1,20 @@
-h2 {
-  margin: 2rem 0;
-  font-size: 3rem;
-  color: unset;
+.pageWrapper h2 {
+    font-size: 3.5rem;
+    margin: 2rem 0;
+    color: var(--secondary-fontColor);
 }
 
 .tabsContent .smallFormContentWrapper {
-  background: white;
-  border-radius: 0.45rem;
-  box-shadow: var(--box-shadowScheme);
+    background: white;
+    border-radius: 0.45rem;
+    box-shadow: var(--box-shadowScheme);
+}
+
+@media (max-width: 550px) {
+    .pageWrapper h2 {
+        padding: 0 2rem;
+    }
+    .tabsContent .smallFormContentWrapper {
+        border-radius: 0;
+    }
 }

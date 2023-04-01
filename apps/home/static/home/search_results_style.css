@@ -1,220 +1,333 @@
+h2 {
+    font-size: 2.2rem;
+}
+
 .pageWrapper {
-  display: flex;
+    display: flex;
 }
 
 .mainContent {
-  width: 70%;
+    width: 70%;
 }
 
-.topContentSidebar {
-  width: 27.5%;
-  margin: 2rem 0 2rem 2.5%;
+.searchResult .stockContainer .stockTicker {
+    max-width: 6.5rem;
 }
 
-.topContentSidebar .smallFormContentWrapper .articleContainer {
-  border-bottom: none;
-  box-shadow: var(--box-shadowScheme);
-  border-radius: 0.45rem;
-  margin-bottom: 2rem;
-  background: white;
+.searchSidebar {
+    width: 27.5%;
+    margin: 2rem 0 0 2.5%;
+    max-height: calc(100vh - 12.5rem);
+    overflow-y: auto;
+    position: -webkit-sticky;
+    position: sticky;
+    right: 0;
+    top: 10.5rem;
+}
+
+.searchSidebar .smallFormContentWrapper .articleContainer {
+    border-bottom: none;
+    box-shadow: var(--box-shadowScheme);
+    border-radius: 0.45rem;
+    margin-bottom: 2rem;
+    background: white;
 }
 
 .contentColumnWrapper .contentColumnContainer {
-  width: 100%;
+    width: 100%;
 }
 
 .mainContent .mainSearchWrapper {
-  margin: 2.5rem auto 1.5rem;
+    margin: 2.5rem auto 1.5rem;
 }
 
 .mainContent .mainInputSearch {
-  width: 100%;
-  font-size: 1.8rem;
-  padding: 2.5rem 3rem 2.5rem 1.5rem;
+    width: 100%;
+    font-size: 1.8rem;
+    padding: 2.5rem 3rem 2.5rem 1.5rem;
 }
 
 .mainContent #autocomplete_list_results {
-  position: absolute;
-  display: none;
-  flex-direction: column;
-  width: 100%;
-  background: white;
-  box-shadow: var(--box-shadowScheme);
-  z-index: 100;
-  font-size: 1.6rem;
+    position: absolute;
+    top: 5rem;
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: white;
+    box-shadow: var(--box-shadowScheme);
+    z-index: 100;
+    font-size: 1.6rem;
 }
 
 .mainContent #autocomplete_list_results .searchResult span {
-  max-width: 95%;
+    max-width: 95%;
 }
 
 .tabsContainer {
-  margin: 2rem auto;
+    margin: 2rem auto;
 }
 
 .articlesWrapper {
-  height: unset;
+    height: unset;
 }
 
 .articlesWrapper .articleContainer {
-  width: 100%;
+    width: 100%;
 }
 
 .categoryContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .websiteSearchWrapper {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
 }
 
 .websiteSearchWrapper .websiteSearchContainer {
-  position: relative;
-  display: flex;
-  align-items: center;
-  font-size: 2rem;
-  margin-top: 2rem;
-  width: 100%;
-  background: white;
-  padding: 1rem 2rem;
-  box-shadow: var(--box-shadowScheme);
-  border-radius: 0.45rem;
-  cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    margin-top: 2rem;
+    width: 100%;
+    background: white;
+    padding: 1rem 2rem;
+    box-shadow: var(--box-shadowScheme);
+    border-radius: 0.45rem;
+    cursor: pointer;
 }
 
 .websiteSearchWrapper .websiteSearchContainer:hover {
-  color: var(--primary-fontColor);
+    color: var(--primary-fontColor);
 }
 
 .websiteSearchWrapper img {
-  width: 3rem;
-  margin-right: 1rem;
+    width: 3rem;
+    margin-right: 1rem;
 }
 
 .websiteSearchWrapper a {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .stocksWrapper {
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  box-shadow: var(--box-shadowScheme);
-  border-radius: 0.45rem;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    box-shadow: var(--box-shadowScheme);
+    border-radius: 0.45rem;
 }
 
 .stocksWrapper .categoryHeader {
-  position: relative;
-  text-align: center;
-  padding: 0.75rem 0;
-  font-size: 2rem;
-  color: #fff;
-  border: 0.3rem solid #fff;
-  width: 100%;
-  background: var(--primary-fontColor);
+    position: relative;
+    text-align: center;
+    padding: 0.75rem 0;
+    font-size: 2rem;
+    color: #fff;
+    border: 0.3rem solid #fff;
+    width: 100%;
+    background: var(--primary-fontColor);
 }
 
 .stocksWrapper .stockContainer {
-  position: relative;
-  display: flex;
-  align-items: center;
-  background: white;
-  cursor: pointer;
-  font-size: 2rem;
-  padding: 1.5rem 0;
-  border-bottom: 0.1rem solid #e2e6ea;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: white;
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 0.1rem solid #e2e6ea;
 }
 
 .stocksWrapper .stockContainer:first-of-type {
-  border-radius: 0.45rem 0.45rem 0 0;
+    border-radius: 0.45rem 0.45rem 0 0;
 }
 
 .stocksWrapper .stockContainer:last-of-type {
-  border-radius: 0 0 0.45rem 0.45rem;
+    border-radius: 0 0 0.45rem 0.45rem;
 }
 
 .stocksWrapper .stockContainer .fa-chevron-right,
 .websiteSearchContainer .fa-chevron-right {
-  position: absolute;
-  right: 2rem;
+    position: absolute;
+    right: 2rem;
 }
 
 .stocksWrapper .stockContainer:hover {
-  background: var(--primary-fontColor);
-  color: white;
+    background: var(--primary-fontColor);
+    color: white;
 }
 
 .stocksWrapper .stockContainer:hover .stockTicker {
-  color: white;
+    color: white;
 }
 
 .stocksWrapper .stockContainer .stockTicker {
-  width: 10%;
-  padding-left: 2rem;
-  color: var(--primary-fontColor);
+    width: 10%;
+    padding-left: 2rem;
+    color: var(--primary-fontColor);
 }
 
 .stocksWrapper .stockContainer .companyName {
-  width: calc(90% - 4rem);
+    width: calc(90% - 4rem);
 }
 
 .stocksWrapper .stockContainer a {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .sliderWrapper .sliderContentContainer .slider {
-  --items-per-screen: 3;
+    --items-per-screen: 3;
 }
 
-@media (max-width: 1000px) {
-  .mainContent {
-    width: 100%;
-  }
+@media (max-width: 1200px) {
+    .stocksWrapper .stockContainer .stockTicker {
+        width: 12.5%;
+    }
+    .stocksWrapper .stockContainer .companyName {
+        width: calc(87.5% - 4rem);
+    }
+}
 
-  .mainContent .mainSearchWrapper,
-  .stocksWrapper,
-  .tabsContainer {
-    width: 75%;
-  }
+@media (max-width: 1050px) {
+    .pageWrapper {
+        flex-direction: column;
+    }
 
-  .mainContent .searchCategories {
-    width: 50%;
-  }
+    .mainContent,
+    .searchSidebar {
+        width: 100%;
+    }
 
-  .mainContent .mainInputSearch {
-    min-width: unset;
-    max-width: unset;
-  }
+    .searchSidebar {
+        position: relative;
+        top: 0;
+        margin-left: 0;
+        max-height: unset;
+    }
+    .sliderWrapper .sliderContentContainer .slider {
+        --items-per-screen: 4;
+    }
+}
+
+@media (max-width: 800px) {
+    .sliderWrapper .sliderContentContainer .slider {
+        --items-per-screen: 3;
+    }
+    .stocksWrapper .stockContainer .stockTicker {
+        width: 15%;
+    }
+    .stocksWrapper .stockContainer .companyName {
+        width: calc(85% - 4rem);
+    }
+}
+
+@media (max-width: 600px) {
+    .stocksWrapper .stockContainer .stockTicker {
+        width: 17.5%;
+    }
+    .stocksWrapper .stockContainer .companyName {
+        width: calc(82.5% - 4rem);
+    }
+}
+
+@media (max-width: 575px) {
+    .sliderWrapper .sliderContentContainer .slider {
+        --items-per-screen: 2;
+    }
+}
+
+@media (max-width: 550px) {
+    .mainContent .mainSearchWrapper {
+        margin: 2.5rem 2rem 1.5rem;
+    }
+
+    .searchSidebar {
+        margin: 2rem 2rem 0;
+        width: unset;
+    }
 }
 
 @media (max-width: 500px) {
-  .mainContent .mainSearchWrapper,
-  .stocksWrapper,
-  .tabsContainer {
-    width: 100%;
-  }
-
-  .mainContent .searchCategories {
-    width: 75%;
-  }
-
-  .stockContainer .stockTicker {
-    width: 25%;
-  }
-
-  .stockContainer .companyName {
-    width: 75%;
-  }
+    .stocksWrapper .stockContainer .stockTicker {
+        width: 20%;
+    }
+    .stocksWrapper .stockContainer .companyName {
+        width: calc(80% - 4rem);
+    }
 }
+
+@media (max-width: 400px) {
+    .stocksWrapper .stockContainer .stockTicker {
+        width: 22.5%;
+    }
+    .stocksWrapper .stockContainer .companyName {
+        width: calc(77.5% - 4rem);
+    }
+}
+
+@media (max-width: 350px) {
+    .sliderWrapper .sliderContentContainer .slider {
+        --items-per-screen: 1;
+    }
+    .stocksWrapper .stockContainer .stockTicker {
+        width: 25%;
+    }
+    .stocksWrapper .stockContainer .companyName {
+        width: calc(75% - 4rem);
+    }
+}
+
+/* @media (max-width: 1000px) {
+    .mainContent {
+        width: 100%;
+    }
+
+    .mainContent .mainSearchWrapper,
+    .stocksWrapper,
+    .tabsContainer {
+        width: 75%;
+    }
+
+    .mainContent .searchCategories {
+        width: 50%;
+    }
+
+    .mainContent .mainInputSearch {
+        min-width: unset;
+        max-width: unset;
+    }
+}
+
+@media (max-width: 500px) {
+    .mainContent .mainSearchWrapper,
+    .stocksWrapper,
+    .tabsContainer {
+        width: 100%;
+    }
+
+    .mainContent .searchCategories {
+        width: 75%;
+    }
+
+    .stockContainer .stockTicker {
+        width: 25%;
+    }
+
+    .stockContainer .companyName {
+        width: 75%;
+    }
+} */

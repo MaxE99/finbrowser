@@ -1,38 +1,40 @@
 # Django imports
 from django.db import models
-from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.contrib.postgres.fields import CICharField
 from django.contrib.auth import get_user_model
 from django.template.defaultfilters import slugify
-from django.urls import reverse
-from django.core.validators import MaxLengthValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 # Python imports
 import os
 from io import BytesIO
 import sys
 from PIL import Image
 import pytz
-# Local imports
-from apps.accounts.validators import validate_domain_available
 
 
 class UserManager(BaseUserManager):
     # overwritten get so to always load profile with user
     def get(self, *args, **kwargs):
-        return super().select_related('profile').get(*args, **kwargs)
+        return super().select_related("profile").get(*args, **kwargs)
 
     def create_user(self, username, email, password=None):
         """
         Creates and saves a User with the given username, email and password.
         """
         if not username:
-            raise ValueError('Users must have a username')
+            raise ValueError("Users must have a username")
 
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError("Users must have an email address")
 
-        user = self.model(email=self.normalize_email(email), )
+        user = self.model(
+            email=self.normalize_email(email),
+        )
 
         user.set_password(password)
         user.save(using=self._db)
@@ -57,17 +59,26 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class User(AbstractBaseUser):
-    username = CICharField(max_length=30, unique=True, validators=[MaxLengthValidator(30), validate_domain_available])
-    email = models.EmailField(max_length=255, unique=True)
+    username = CICharField(
+        max_length=30,
+        unique=True,
+        validators=[MinLengthValidator(3), MaxLengthValidator(30)],
+    )
+    email = models.EmailField(
+        max_length=50,
+        unique=True,
+        validators=[MinLengthValidator(5), MaxLengthValidator(50)],
+    )
     is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)  # a admin user; non super-user
     admin = models.BooleanField(default=False)  # a superuser
 
     # notice the absence of a "Password field", that is built in.
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']  # Email & Password are required by default.
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]  # Email & Password are required by default.
 
     objects = UserManager()
 
@@ -105,38 +116,61 @@ class User(AbstractBaseUser):
 
 User = get_user_model()
 
+
+@receiver(post_save, sender=User)
+def create_profile_and_mains(sender, instance, created, **kwargs):
+    if created:
+        from apps.list.models import List
+        from apps.stock.models import Portfolio
+
+        Profile.objects.create(user=instance)
+        Portfolio.objects.create(user=instance, name="Main Portfolio", main=True)
+        List.objects.create(creator=instance, name="Main List", main=True)
+
+
 def create_profile_pic_name(self, filename):
     path = "profile_pics/"
     format = f"{self.user.username} - {filename}"
     return os.path.join(path, format)
 
+
 class Profile(models.Model):
-    ACCOUNT_TYPES = [('Standard', 'Standard'), ('Premium', 'Premium'), ('Admin', 'Admin')]
+    ACCOUNT_TYPES = [
+        ("Standard", "Standard"),
+        ("Premium", "Premium"),
+        ("Admin", "Admin"),
+    ]
     TIMEZONES = tuple(zip(pytz.all_timezones, pytz.all_timezones))
     profile_id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
-    slug = models.SlugField(unique=True)
-    profile_pic = models.ImageField(null=True, blank=True, upload_to=create_profile_pic_name)
-    account_type = models.CharField(max_length=50, choices=ACCOUNT_TYPES, default="Standard")
-    timezone = models.CharField(max_length=32, choices=TIMEZONES, default='UTC')
+    profile_pic = models.ImageField(
+        null=True, blank=True, upload_to=create_profile_pic_name
+    )
+    account_type = models.CharField(
+        max_length=50, choices=ACCOUNT_TYPES, default="Standard"
+    )
+    timezone = models.CharField(max_length=32, choices=TIMEZONES, default="UTC")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.__original_profile_pic = self.profile_pic
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.user.username)
         if self.__original_profile_pic != self.profile_pic:
             im = Image.open(self.profile_pic)
             output = BytesIO()
             im = im.resize((175, 175))
-            im.save(output, format='WEBP', quality=99)
+            im.save(output, format="WEBP", quality=99)
             output.seek(0)
-            self.profile_pic = InMemoryUploadedFile(output, 'ImageField', "%s.webp" % self.profile_pic.name.split('.')[0], 'image/webp', sys.getsizeof(output), None)
+            self.profile_pic = InMemoryUploadedFile(
+                output,
+                "ImageField",
+                "%s.webp" % self.profile_pic.name.split(".")[0],
+                "image/webp",
+                sys.getsizeof(output),
+                None,
+            )
         super(Profile, self).save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        return reverse('accounts:profile', kwargs={'slug': self.slug})
 
     def __str__(self):
         return str(self.user)
@@ -151,4 +185,3 @@ class Website(models.Model):
 
     def __str__(self):
         return self.name
-

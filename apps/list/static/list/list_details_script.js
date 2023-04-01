@@ -1,456 +1,354 @@
-const subscribeButtons = document.querySelectorAll(".subscribeButton");
-
-subscribeButtons.forEach((subscribeButton) => {
-  if (subscribeButton) {
-    subscribeButton.addEventListener("click", async () => {
-      if (!subscribeButton.classList.contains("registrationLink")) {
-        try {
-          const list_id = subscribeButton
-            .closest(".upperContainer")
-            .querySelector(".rightFirstRowContainer h3")
-            .id.split("#")[1];
-          let action = subscribeButton.innerText;
-          const res = await fetch(
-            `../../api/lists/${list_id}/list_change_subscribtion_status/`,
-            get_fetch_settings("POST")
-          );
-          if (!res.ok) {
-            showMessage("Error: Network request failed unexpectedly!", "Error");
-          } else {
-            const context = await res.json();
-            console.log(action);
-            if (action == "Subscribe") {
-              subscribeButton.classList.replace("unsubscribed", "subscribed");
-              subscribeButton.innerText = "Subscribed";
-              showMessage(context, "Success");
-            } else {
-              subscribeButton.classList.replace("subscribed", "unsubscribed");
-              subscribeButton.innerText = "Subscribe";
-              showMessage(context, "Remove");
-            }
-          }
-        } catch (e) {
-          // showMessage("Error: Unexpected error has occurred!", "Error");
-        }
-      }
-    });
-  }
-});
-
-//check if createListMenu at 7nth spot
-// function check_interaction_wrapper_at_last_spot(sliderWrapper, closeMenu) {
-//   spot = sliderWrapper.querySelectorAll(".contentWrapper").length;
-//   items_per_screen = getComputedStyle(
-//     sliderWrapper.querySelector(".slider")
-//   ).getPropertyValue("--items-per-screen");
-//   if (spot % items_per_screen == 0) {
-//     if (closeMenu) {
-//       sliderWrapper.querySelector(".slider").style.zIndex = "";
-//     } else {
-//       sliderWrapper.querySelector(".slider").style.zIndex = "1000";
-//     }
-//   }
-// }
-
-const editButtons = document.querySelectorAll(".editButton");
-const listName = document.querySelector(".rightFirstRowContainer h3").innerText;
-
-function openEditMenu(e) {
-  const upperContainer = e.target.closest(".upperContainer");
-  upperContainer.querySelector(".editButton").remove();
-  upperContainer.querySelector(".rightFirstRowContainer h3").style.display =
-    "none";
-  upperContainer.querySelector(".nameChangeContainer").style.display = "block";
-  upperContainer.querySelector(".nameChangeContainer #id_name").value =
-    listName;
-  upperContainer.querySelector(
-    ".listPictureContainer #id_list_pic"
-  ).style.display = "block";
-  upperContainer.querySelector(".fa-camera").style.display = "block";
-  upperContainer.querySelector(".buttonContainer").style.display = "flex";
-  document.querySelector(".addSourcesButton").style.display = "flex";
-  document
-    .querySelectorAll(".highlightedArticlesContainer .article .fa-ellipsis-h")
-    .forEach((ellipsis) => {
-      ellipsis.style.display = "none";
-    });
-  const deleteArticlesButton = document.querySelectorAll(".article .fa-times");
-  deleteArticlesButton.forEach((closeButton) => {
-    closeButton.style.display = "block";
-    closeButton.addEventListener("click", async () => {
-      try {
-        const list_id = upperContainer
-          .querySelector(".rightFirstRowContainer h3")
-          .id.split("#")[1];
-        const article_id = closeButton.parentElement.id.split("#")[1];
-        const res = await fetch(
-          `../../api/lists/${list_id}/delete_article_from_list/${article_id}/`,
-          get_fetch_settings("DELETE")
-        );
-        if (!res.ok) {
-          showMessage("Error: Network request failed unexpectedly!", "Error");
-        } else {
-          const context = await res.json();
-          showMessage(context, "Remove");
-          closeButton.parentElement.remove();
-        }
-      } catch (e) {
-        // showMessage("Error: Unexpected error has occurred!", "Error");
-      }
-    });
-  });
+// open the right tab when opening the page
+if (location.href.includes('?commentary=')) {
+    const tabs = document.querySelectorAll('.pageWrapper .tabsContainer button');
+    const tabsContent = document.querySelectorAll('.pageWrapper .tabsContent');
+    for (let i = 0, j = tabs.length; i < j; i++) {
+        tabs[i].classList.remove('activatedTab');
+        tabsContent[i].classList.remove('tabsContentActive');
+    }
+    tabs[1].classList.add('activatedTab');
+    tabsContent[1].classList.add('tabsContentActive');
 }
 
+if (location.href.includes('?news=')) {
+    const tabs = document.querySelectorAll('.pageWrapper .tabsContainer button');
+    const tabsContent = document.querySelectorAll('.pageWrapper .tabsContent');
+    for (let i = 0, j = tabs.length; i < j; i++) {
+        tabs[i].classList.remove('activatedTab');
+        tabsContent[i].classList.remove('tabsContentActive');
+    }
+    tabs[2].classList.add('activatedTab');
+    tabsContent[2].classList.add('tabsContentActive');
+}
+
+if (location.href.includes('?saved_content=')) {
+    const tabs = document.querySelectorAll('.pageWrapper .tabsContainer button');
+    const tabsContent = document.querySelectorAll('.pageWrapper .tabsContent');
+    for (let i = 0, j = tabs.length; i < j; i++) {
+        tabs[i].classList.remove('activatedTab');
+        tabsContent[i].classList.remove('tabsContentActive');
+    }
+    tabs[3].classList.add('activatedTab');
+    tabsContent[3].classList.add('tabsContentActive');
+}
+
+// remove source from list
 document
-  .querySelectorAll(".sliderWrapper .slider .removeFromListButton")
-  .forEach((deleteButton) => {
-    deleteButton.addEventListener("click", async () => {
-      try {
-        const list_id = document
-          .querySelector(".upperContainer .rightFirstRowContainer h3")
-          .id.split("#")[1];
-        const source_id = deleteButton
-          .closest(".contentWrapper")
-          .id.split("#")[1];
-        const res = await fetch(
-          `../../api/lists/${list_id}/delete_source_from_list/${source_id}/`,
-          get_fetch_settings("DELETE")
-        );
-        if (!res.ok) {
-          showMessage("Error: Network request failed unexpectedly!", "Error");
-        } else {
-          const context = await res.json();
-          showMessage(context, "Remove");
-          deleteButton.closest(".contentWrapper").remove();
-        }
-      } catch (e) {
-        // showMessage("Error: Unexpected error has occurred!", "Error");
-      }
+    .querySelectorAll('.sliderWrapper .slider .removeFromListButton')
+    .forEach((deleteButton) => {
+        deleteButton.addEventListener('click', async () => {
+            try {
+                const list_id = document.querySelector('.firstRow .nameContainer h2').id;
+                const source_id = deleteButton.closest('.contentWrapper').id.split('#')[1];
+                const data = { source_id: source_id };
+                const res = await fetch(
+                    `../../api/lists/${list_id}/`,
+                    get_fetch_settings('PATCH', data)
+                );
+                if (!res.ok) {
+                    showMessage('Error: Network request failed unexpectedly!', 'Error');
+                } else {
+                    showMessage((context = 'Source has been removed!'), 'Remove');
+                    deleteButton.closest('.contentWrapper').remove();
+                }
+            } catch (e) {
+                // showMessage("Error: Unexpected error has occurred!", "Error");
+            }
+        });
     });
-  });
-
-editButtons.forEach((editButton) => {
-  if (editButton) {
-    editButton.addEventListener("click", (e) => {
-      openEditMenu(e);
-    });
-  }
-});
-
-// If list has no sources = directly open edit menu
-// const sources = document.querySelectorAll(".slider-content li");
-// if (sources.length === 1) {
-//   openEditMenu();
-// }
-
-if (document.querySelector(".deleteListButton")) {
-  document
-    .querySelector(".deleteListButton")
-    .addEventListener("click", async () => {
-      try {
-        const list_id = document
-          .querySelector(".rightFirstRowContainer h3")
-          .id.split("#")[1];
-        const res = await fetch(
-          `../../api/lists/${list_id}/`,
-          get_fetch_settings("DELETE")
-        );
-        if (!res.ok) {
-          showMessage("Error: Network request failed unexpectedly!", "Error");
-        } else {
-          const context = await res.json();
-          showMessage(context, "Remove");
-          window.location.href = "../../lists";
-        }
-      } catch (e) {
-        // showMessage("Error: Unexpected error has occurred!", "Error");
-      }
-    });
-}
-
-//open add sources menu
-if (document.querySelector(".addSourcesButton")) {
-  document.querySelector(".addSourcesButton").addEventListener("click", () => {
-    document.querySelector(".addSourcesForm").style.display = "flex";
-    check_interaction_wrapper_at_last_spot(
-      document.querySelector(".sliderWrapper"),
-      false
-    );
-  });
-}
-
-//close add sources menu
-if (document.querySelector(".addSourcesForm .closeFormContainerButton")) {
-  document
-    .querySelector(".addSourcesForm .closeFormContainerButton")
-    .addEventListener("click", () => {
-      document.querySelector(".addSourcesForm").style.display = "none";
-      check_interaction_wrapper_at_last_spot(
-        document.querySelector(".sliderWrapper"),
-        true
-      );
-    });
-}
 
 // add Sources Search
 let selected_sources = [];
-if (document.querySelector(".addSourcesForm #textInput")) {
-  document
-    .querySelector(".addSourcesForm #textInput")
-    .addEventListener("keyup", async function (e) {
-      let search_term = document.querySelector(
-        ".addSourcesForm #textInput"
-      ).value;
-      let results_list = document.querySelector(
-        ".addSourcesForm #searchResultsContainer"
-      );
-      let selected_list = document.querySelector(
-        ".addSourcesForm .selectionContainer"
-      );
-      const list_id = document
-        .querySelector(".rightFirstRowContainer h3")
-        .id.split("#")[1];
-      if (search_term && search_term.replaceAll(/\s/g, "") != "") {
-        results_list.style.display = "block";
-        selected_list.style.display = "none";
-        try {
-          const res = await fetch(
-            `../../api/sources/?list_search=${search_term}&list_id=${list_id}`,
-            get_fetch_settings("GET")
-          );
-          if (!res.ok) {
-            showMessage("Error: Network request failed unexpectedly!", "Error");
-          } else {
-            const context = await res.json();
-            results_list.innerHTML = "";
-            const resultHeader = document.createElement("div");
-            resultHeader.innerText = "Results:";
-            results_list.append(resultHeader);
-            if (context.length > 0) {
-              context.forEach((source) => {
-                if (selected_sources.includes(source.source_id) == false) {
-                  const searchResult = document.createElement("div");
-                  searchResult.classList.add("searchResult");
-                  const resultImage = document.createElement("img");
-                  resultImage.src = `https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}`;
-                  const sourceName = document.createElement("span");
-                  sourceName.innerText = source.name;
-                  sourceName.id = `source_id_${source.source_id}`;
-                  searchResult.append(resultImage, sourceName);
-                  results_list.appendChild(searchResult);
-                  searchResult.addEventListener(
-                    "click",
-                    function addSelectedSource() {
-                      // Remove the listener from the element the first time the listener is run:
-                      searchResult.removeEventListener(
-                        "click",
-                        addSelectedSource
-                      );
-                      selected_sources.push(source.source_id);
-                      const removeSourceButton = document.createElement("i");
-                      removeSourceButton.classList.add("fas", "fa-trash");
-                      removeSourceButton.addEventListener("click", () => {
-                        removeSourceButton.parentElement.remove();
-                        selected_sources = selected_sources.filter(function (
-                          e
-                        ) {
-                          return (
-                            e.toString() !==
-                            removeSourceButton.previousElementSibling.id.split(
-                              "#"
-                            )[1]
-                          );
-                        });
-                      });
-                      searchResult.appendChild(removeSourceButton);
-                      selected_list.appendChild(searchResult);
-                      results_list.style.display = "none";
-                      selected_list.style.display = "block";
-                      document.querySelector(
-                        ".addSourcesForm #textInput"
-                      ).value = "";
+if (document.querySelector('.addSourceContainer #textInput')) {
+    document
+        .querySelector('.addSourceContainer #textInput')
+        .addEventListener('keyup', async function () {
+            let search_term = document.querySelector('.addSourceContainer #textInput').value;
+            let results_list = document.querySelector(
+                '.addSourceContainer #searchResultsContainer'
+            );
+            let selected_list = document.querySelector('.addSourceContainer .selectionContainer');
+            const list_id = document.querySelector('.firstRow .nameContainer h2').id;
+            if (search_term && search_term.replaceAll(/\s/g, '') != '') {
+                results_list.style.display = 'block';
+                selected_list.style.display = 'none';
+                try {
+                    const res = await fetch(
+                        `../../api/sources/?list_search=${search_term}&list_id=${list_id}`,
+                        get_fetch_settings('GET')
+                    );
+                    if (!res.ok) {
+                        showMessage('Error: Network request failed unexpectedly!', 'Error');
+                    } else {
+                        const context = await res.json();
+                        results_list.innerHTML = '';
+                        const resultHeader = document.createElement('div');
+                        resultHeader.innerText = 'Results:';
+                        results_list.append(resultHeader);
+                        if (context.length > 0) {
+                            context.forEach((source) => {
+                                if (selected_sources.includes(source.source_id) == false) {
+                                    const searchResult = document.createElement('div');
+                                    searchResult.classList.add('searchResult');
+                                    const resultImage = document.createElement('img');
+                                    resultImage.src = `https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}`;
+                                    const sourceName = document.createElement('span');
+                                    sourceName.innerText = source.name;
+                                    sourceName.id = `source_id_${source.source_id}`;
+                                    searchResult.append(resultImage, sourceName);
+                                    results_list.appendChild(searchResult);
+                                    searchResult.addEventListener(
+                                        'click',
+                                        function addSelectedSource() {
+                                            // Remove the listener from the element the first time the listener is run:
+                                            searchResult.removeEventListener(
+                                                'click',
+                                                addSelectedSource
+                                            );
+                                            selected_sources.push(source.source_id);
+                                            const removeSourceButton = document.createElement('i');
+                                            removeSourceButton.classList.add('fas', 'fa-times');
+                                            removeSourceButton.addEventListener('click', () => {
+                                                removeSourceButton.parentElement.remove();
+                                                selected_sources = selected_sources.filter(
+                                                    function (e) {
+                                                        return (
+                                                            e.toString() !==
+                                                            removeSourceButton.previousElementSibling.id.split(
+                                                                '#'
+                                                            )[1]
+                                                        );
+                                                    }
+                                                );
+                                            });
+                                            searchResult.appendChild(removeSourceButton);
+                                            selected_list.appendChild(searchResult);
+                                            results_list.style.display = 'none';
+                                            selected_list.style.display = 'block';
+                                            document.querySelector(
+                                                '.addSourcesForm #textInput'
+                                            ).value = '';
+                                        }
+                                    );
+                                }
+                            });
+                        }
                     }
-                  );
+                } catch (e) {
+                    // showMessage("Error: Unexpected error has occurred!", "Error");
                 }
-              });
+            } else {
+                results_list.style.display = 'none';
+                selected_list.style.display = 'block';
             }
-          }
-        } catch (e) {
-          // showMessage("Error: Unexpected error has occurred!", "Error");
-        }
-      } else {
-        results_list.style.display = "none";
-        selected_list.style.display = "block";
-      }
-    });
+        });
 }
 
 // add/confirm sources to list
-if (document.querySelector(".addSourcesForm button")) {
-  document
-    .querySelector(".addSourcesForm button")
-    .addEventListener("click", async () => {
-      const list_id = document
-        .querySelector(".rightFirstRowContainer h3")
-        .id.split("#")[1];
-      if (selected_sources.length) {
-        selected_sources = selected_sources.join();
-        try {
-          const res = await fetch(
-            `../../api/lists/${list_id}/add_sources/${selected_sources}/`,
-            get_fetch_settings("POST")
-          );
-          if (!res.ok) {
-            showMessage("Error: Network request failed unexpectedly!", "Error");
-          } else {
-            const context = await res.json();
-            showMessage(context, "Success");
-            window.location.reload();
-          }
-        } catch (e) {
-          // showMessage("Error: Unexpected error has occurred!", "Error");
+let activatedButton = false;
+document.querySelector('.addSourceContainer button').addEventListener('click', async () => {
+    const list_id = document.querySelector('.firstRow .nameContainer h2').id;
+    if (selected_sources.length && !activatedButton) {
+        activatedButton = true;
+        for (let i = 0, j = selected_sources.length; i < j; i++) {
+            try {
+                const data = { source_id: selected_sources[i] };
+                const res = await fetch(
+                    `../../api/lists/${list_id}/`,
+                    get_fetch_settings('PATCH', data)
+                );
+                if (!res.ok) {
+                    showMessage('Error: Network request failed unexpectedly!', 'Error');
+                }
+            } catch (e) {
+                // showMessage("Error: Unexpected error has occurred!", "Error");
+            }
         }
-      } else {
-        showMessage("You need to select sources!", "Error");
-      }
-    });
-}
-
-// rating functions
-const one = document.getElementById("first");
-const two = document.getElementById("second");
-const three = document.getElementById("third");
-const four = document.getElementById("fourth");
-const five = document.getElementById("fifth");
-
-// get the form, confirm-box and csrf token
-// const form = document.querySelector(".rate-form");
-const confirmBox = document.getElementById("confirm-box");
-// const csrf = document.getElementsByName("csrfmiddlewaretoken");
-
-const handleStarSelect = (size, form) => {
-  const children = form.children;
-  for (let i = 0; i < children.length; i++) {
-    if (i < size) {
-      children[i].classList.add("checked");
-    } else {
-      children[i].classList.remove("checked");
-    }
-  }
-};
-
-const handleSelect = (selection) => {
-  let form = document.querySelector(".rate-form");
-  switch (selection) {
-    case "first": {
-      handleStarSelect(1, form);
-      return;
-    }
-    case "second": {
-      handleStarSelect(2, form);
-      return;
-    }
-    case "third": {
-      handleStarSelect(3, form);
-      return;
-    }
-    case "fourth": {
-      handleStarSelect(4, form);
-      return;
-    }
-    case "fifth": {
-      handleStarSelect(5, form);
-      return;
-    }
-    default: {
-      handleStarSelect(0, form);
-    }
-  }
-};
-
-const getNumericValue = (stringValue) => {
-  let numericValue;
-  if (stringValue === "first") {
-    numericValue = 1;
-  } else if (stringValue === "second") {
-    numericValue = 2;
-  } else if (stringValue === "third") {
-    numericValue = 3;
-  } else if (stringValue === "fourth") {
-    numericValue = 4;
-  } else if (stringValue === "fifth") {
-    numericValue = 5;
-  } else {
-    numericValue = 0;
-  }
-  return numericValue;
-};
-
-if (one) {
-  const arr = [one, two, three, four, five];
-  arr.forEach((item) =>
-    item.addEventListener("mouseover", (event) => {
-      handleSelect(event.target.id);
-    })
-  );
-}
-
-document.querySelectorAll(".rankingStar").forEach((star) => {
-  star.addEventListener("click", async (e) => {
-    const id = e.target.id;
-    // value of the rating translated into numeric
-    const rating = getNumericValue(id);
-    const list_id = document
-      .querySelector(".rightFirstRowContainer h3")
-      .id.split("#")[1];
-    try {
-      const data = { list_id: list_id, rating: rating };
-      const res = await fetch(`../../api/list_ratings/`, {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": getCookie("csrftoken"),
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        mode: "same-origin",
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) {
-        showMessage("Error: Network request failed unexpectedly!", "Error");
-      } else {
-        const context = await res.json();
-        showMessage(context, "Success");
+        showMessage((context = 'List has been updated!'), 'Success');
         window.location.reload();
-      }
-    } catch (e) {
-      // showMessage("Error: Unexpected error has occurred!", "Error");
+    } else {
+        showMessage('You need to select sources!', 'Error');
     }
-  });
 });
 
-//set stars to average rating
-if (document.querySelector(".avgRating span")) {
-  const average_rating = Math.round(
-    document.querySelector(".avgRating span").innerText
-  );
-  handleStarSelect(average_rating, document.querySelector(".ratedContainer"));
-}
+// switch list
+document.querySelector('.firstRow .nameContainer').addEventListener('click', () => {
+    const dropdownSymbol = document.querySelector('.firstRow .nameContainer i');
+    const optionsContainer = document.querySelector('.listOptionsContainer');
+    if (optionsContainer.style.display === 'block') {
+        optionsContainer.style.display = 'none';
+        dropdownSymbol.classList.replace('fa-chevron-up', 'fa-chevron-down');
+    } else {
+        optionsContainer.style.display = 'block';
+        dropdownSymbol.classList.replace('fa-chevron-down', 'fa-chevron-up');
+    }
+});
 
-// open rate list menu
-const rateListButtons = document.querySelectorAll(".rateListButton");
-rateListButtons.forEach((rateListButton) => {
-  if (rateListButton) {
-    rateListButton.addEventListener("click", () => {
-      const upperContainer = rateListButton.closest(".upperContainer");
-      if (!rateListButton.classList.contains("registrationLink")) {
-        upperContainer.querySelector(".rate-formUpperContainer").style.display =
-          "block";
-        upperContainer.querySelector(".rating").style.opacity = "0";
-        upperContainer.querySelector(".ratingsAmmountContainer").style.opacity =
-          "0";
-        upperContainer.querySelector(".rateListButton").style.opacity = "0";
-        upperContainer.querySelector(".rankingsHeader").style.opacity = "0";
-      }
+// create list
+document.querySelector('.firstRow .listOptionsContainer .createListButton').addEventListener(
+    'click',
+    async () => {
+        try {
+            const res = await fetch(`../../api/lists/`, get_fetch_settings('POST'));
+            if (!res.ok) {
+                showMessage('Error: Network request failed unexpectedly!', 'Error');
+            } else {
+                const context = await res.json();
+                window.location.replace(`../../list/${context.list_id}`);
+            }
+        } catch (e) {
+            // showMessage("Error: Unexpected error has occurred!", "Error");
+        }
+    },
+    { once: true }
+);
+
+// delete list
+document.querySelector('.editMenu .deleteListButton').addEventListener('click', () => {
+    const list_id = document.querySelector('.nameContainer h2').id;
+    if (document.querySelectorAll('.listsContainer .listOption').length === 1) {
+        showMessage('You are not allowed to delete your last watchlist!', 'Error');
+    } else {
+        document.querySelector('.listMenuWrapper').style.display = 'none';
+        document.querySelector('.editMenu').style.display = 'none';
+        document.querySelector('.listMenuWrapper').style.display = 'block';
+        document.querySelector('.listMenuWrapper .warningMessageContainer').style.display = 'flex';
+        document
+            .querySelector('.listMenuWrapper .warningMessageContainer .discardButton')
+            .addEventListener('click', () => {
+                removeModalStyle();
+                document.querySelector('.listMenuWrapper').style.display = 'none';
+                document.querySelector('.listMenuWrapper .warningMessageContainer').style.display =
+                    'none';
+            });
+        document
+            .querySelector('.listMenuWrapper .warningMessageContainer .confirmButton')
+            .addEventListener(
+                'click',
+                async () => {
+                    try {
+                        const res = await fetch(
+                            `../../api/lists/${list_id}/`,
+                            get_fetch_settings('DELETE')
+                        );
+                        if (!res.ok) {
+                            showMessage('Error: Network request failed unexpectedly!', 'Error');
+                        } else {
+                            document
+                                .querySelectorAll('.listOptionsContainer .listOption')
+                                .forEach((listOption) => {
+                                    if (listOption.id.replace('list', '') !== list_id) {
+                                        window.location.replace(`../../lists`);
+                                    }
+                                });
+                        }
+                    } catch (e) {
+                        // showMessage("Error: Unexpected error has occurred!", "Error");
+                    }
+                },
+                { once: true }
+            );
+    }
+});
+
+// open add source menu
+document.querySelector('.actionButtonContainer .addSourceButton').addEventListener('click', () => {
+    document.querySelector('.listMenuWrapper').style.display = 'block';
+    document.querySelector('.addSourceContainer').style.display = 'block';
+    setModalStyle();
+});
+
+document.querySelectorAll('.emptyInformationContainer button').forEach((addSourcesButton) =>
+    addSourcesButton.addEventListener('click', () => {
+        document.querySelector('.listMenuWrapper').style.display = 'block';
+        document.querySelector('.addSourceContainer').style.display = 'block';
+        setModalStyle();
+    })
+);
+
+// close add source menu
+document
+    .querySelector('.addSourceContainer .closeAddSourceContainer')
+    .addEventListener('click', () => {
+        document.querySelector('.listMenuWrapper').style.display = 'none';
+        document.querySelector('.addSourceContainer').style.display = 'none';
+        removeModalStyle();
     });
-  }
+
+// open edit menu
+document.querySelector('.editListButton').addEventListener('click', () => {
+    document.querySelector('.listMenuWrapper').style.display = 'block';
+    document.querySelector('.editMenu').style.display = 'block';
+    setModalStyle();
 });
+
+// close edit menu
+document.querySelector('.editMenu .fa-times').addEventListener('click', () => {
+    document.querySelector('.listMenuWrapper').style.display = 'none';
+    document.querySelector('.editMenu').style.display = 'none';
+    removeModalStyle();
+});
+
+// edit list
+document.querySelector('.menuContainer .editMenu .saveEditsButton').addEventListener(
+    'click',
+    async () => {
+        const list_id = document.querySelector('.firstRow .nameContainer h2').id;
+        const newName = document.querySelector('.editMenu .listNameContainer input').value;
+        const mainList = document.querySelector('.editMenu .mainListContainer input').checked;
+        const data = { name: newName, main: mainList };
+        if (newName.trim().length) {
+            try {
+                const res = await fetch(`../../api/lists/${list_id}/`, {
+                    method: 'PATCH',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    mode: 'same-origin',
+                    body: JSON.stringify(data),
+                });
+                if (!res.ok) {
+                    showMessage('Error: Network request failed unexpectedly!', 'Error');
+                } else {
+                    window.location.reload();
+                }
+            } catch (e) {
+                // showMessage("Error: Unexpected error has occurred!", "Error");
+            }
+        } else {
+            showMessage('Please enter a name!', 'Error');
+        }
+    },
+    { once: true }
+);
+
+// main list explanation
+document
+    .querySelector('.listMenuWrapper .editMenu .mainListContainer .infoLink i')
+    .addEventListener('click', () => {
+        document.querySelector('.listMenuWrapper').style.display = 'none';
+        document.querySelector('.listMenuWrapper .editMenu').style.display = 'none';
+        document.querySelector('.fullScreenPlaceholder').style.display = 'flex';
+        document.querySelector('.fullScreenPlaceholder .explanationContainer').style.display =
+            'block';
+        document.querySelector('.fullScreenPlaceholder .explanationContainer h3').innerText =
+            'Main List';
+        document.querySelector(
+            '.fullScreenPlaceholder .explanationContainer .explanation'
+        ).innerText =
+            "Your main portfolio is opened whenever you click on the portfolio button in the header. You always have to have atleast one main portfolio. If you don't have more than one portfolio you can't delete your main portfolio. If you have more than one portfolio and delete your main the next portfolio alphabetically will become your new main portfolio. You can change your main portfolio by opening the edit menu of a portfolio which currently is not your main portfolio and set it to your new main portfolio.";
+        document
+            .querySelector(
+                '.fullScreenPlaceholder .fullScreenWrapper .explanationContainer .fa-times'
+            )
+            .addEventListener('click', () => {
+                document.querySelector('.fullScreenPlaceholder').style.display = 'none';
+                document.querySelector(
+                    '.fullScreenPlaceholder .explanationContainer'
+                ).style.display = 'none';
+                document.querySelector('.listMenuWrapper').style.display = 'flex';
+                document.querySelector('.listMenuWrapper .editMenu').style.display = 'block';
+            });
+    });

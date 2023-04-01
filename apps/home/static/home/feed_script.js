@@ -1,327 +1,276 @@
-// subscribed lists
+let contentIsLoading = false;
 
-document.querySelectorAll(".listSubscribeButton").forEach((subscribeButton) => {
-  if (subscribeButton) {
-    subscribeButton.addEventListener("click", async () => {
-      if (!subscribeButton.classList.contains("registrationLink")) {
-        try {
-          const list_id = subscribeButton
-            .closest(".contentWrapper")
-            .id.split("#")[1];
-          let action = subscribeButton.innerText;
-          const res = await fetch(
-            `../../api/lists/${list_id}/list_change_subscribtion_status/`,
-            get_fetch_settings("POST")
-          );
-          if (!res.ok) {
-            showMessage("Error: Network request failed unexpectedly!", "Error");
-          } else {
-            const context = await res.json();
-            console.log(action);
-            if (action == "Subscribe") {
-              subscribeButton.classList.add("listSubscribed");
-              subscribeButton.innerText = "Subscribed";
-              showMessage(context, "Success");
-            } else {
-              subscribeButton.classList.remove("listSubscribed");
-              subscribeButton.innerText = "Subscribe";
-              showMessage(context, "Remove");
-            }
-          }
-        } catch (e) {
-          // showMessage("Error: Unexpected error has occurred!", "Error");
+function createTwitterPart(content, rightContentSide) {
+    if (content.tweet_type.type === 'Retweet') {
+        const retweetWrapper = document.createElement('div');
+        retweetWrapper.className = 'retweetWrapper';
+        const author = document.createElement('span');
+        author.textContent = `@${content.tweet_type.author}`;
+        retweetWrapper.appendChild(document.createTextNode('Retweeted post by '));
+        retweetWrapper.appendChild(author);
+        rightContentSide.appendChild(retweetWrapper);
+    }
+
+    if (content.tweet_type.type === 'Reply') {
+        const replyWrapper = document.createElement('div');
+        replyWrapper.className = 'replyWrapper';
+        const author = document.createElement('span');
+        author.textContent = `@${content.tweet_type.author}`;
+        replyWrapper.appendChild(document.createTextNode('Replying to '));
+        replyWrapper.appendChild(author);
+        rightContentSide.appendChild(replyWrapper);
+    }
+
+    if (content.tweet_type.image_path) {
+        const tweetImage = document.createElement('img');
+        tweetImage.className = 'tweetImage';
+        tweetImage.setAttribute('src', content.tweet_type.image_path);
+        tweetImage.setAttribute('alt', 'Tweet Image');
+        rightContentSide.appendChild(tweetImage);
+    }
+
+    if (
+        content.tweet_type.type === 'Quote' ||
+        content.tweet_type.type === 'Retweet' ||
+        content.tweet_type.type === 'Reply'
+    ) {
+        const quoteWrapper = document.createElement('div');
+        quoteWrapper.className = 'quoteWrapper';
+
+        const quoteUpperContainer = document.createElement('div');
+        quoteUpperContainer.className = 'quoteUpperContainer';
+
+        const quoteAuthor = document.createElement('div');
+        quoteAuthor.className = 'quoteAuthor';
+        quoteAuthor.textContent = content.tweet_type.author;
+
+        quoteUpperContainer.appendChild(quoteAuthor);
+        quoteWrapper.appendChild(quoteUpperContainer);
+
+        const quoteText = document.createElement('div');
+        quoteText.className = 'quoteText';
+        quoteText.textContent = content.tweet_type.text;
+        quoteWrapper.appendChild(quoteText);
+
+        if (content.tweet_type.initial_tweet_img_path) {
+            const tweetImage = document.createElement('img');
+            tweetImage.className = 'tweetImage';
+            tweetImage.setAttribute('src', content.tweet_type.initial_tweet_img_path);
+            tweetImage.setAttribute('alt', 'Tweet Reply Image');
+            quoteWrapper.appendChild(tweetImage);
         }
-      }
+
+        rightContentSide.appendChild(quoteWrapper);
+
+        rightContentSide.appendChild(contentLink);
+    }
+}
+
+function addNewContentToContainer(article, tweet = false) {
+    const articleContainer = document.createElement('div');
+    articleContainer.classList.add('articleContainer');
+    articleContainer.id = 'cc#' + article.article_id;
+    const leftContentSide = document.createElement('div');
+    leftContentSide.classList.add('leftContentSide');
+    const profileImageContainer = document.createElement('div');
+    profileImageContainer.classList.add('profileImageContainer');
+    const imgTag1 = document.createElement('img');
+    imgTag1.src = '/static/' + article.source.favicon_path;
+    const sourceProfile1 = document.createElement('a');
+    sourceProfile1.classList.add('sourceProfile');
+    sourceProfile1.href = '/source/' + article.source.slug;
+    profileImageContainer.append(imgTag1, sourceProfile1);
+    leftContentSide.appendChild(profileImageContainer);
+    articleContainer.appendChild(leftContentSide);
+    const rightContentSide = document.createElement('div');
+    rightContentSide.classList.add('rightContentSide');
+    const contentInfoContainer = document.createElement('div');
+    contentInfoContainer.classList.add('contentInfoContainer');
+    const sourceAndWebsiteContainer = document.createElement('div');
+    sourceAndWebsiteContainer.classList.add('sourceAndWebsiteContainer');
+    const sourceProfile2 = document.createElement('a');
+    sourceProfile2.classList.add('sourceProfile');
+    sourceProfile2.href = '/source/' + article.source.slug;
+    sourceProfile2.innerText = article.source.name;
+    const sourceWebsiteProfileContainer = document.createElement('div');
+    sourceWebsiteProfileContainer.classList.add('sourceWebsiteProfileContainer');
+    const imgTag2 = document.createElement('img');
+    imgTag2.src = '/static/' + article.source.website.logo;
+    const aTag1 = document.createElement('a');
+    aTag1.href = article.source.url;
+    sourceWebsiteProfileContainer.append(imgTag2, aTag1);
+    sourceAndWebsiteContainer.append(sourceProfile2, sourceWebsiteProfileContainer);
+    contentInfoContainer.appendChild(sourceAndWebsiteContainer);
+    const ellipsis = document.createElement('i');
+    ellipsis.classList.add('fas', 'fa-ellipsis-h');
+    if (
+        document
+            .querySelector('.articleContainer .fa-ellipsis-h')
+            .classList.contains('openAuthPrompt')
+    ) {
+        ellipsis.classList.add('openAuthPrompt', 'ap6');
+        ellipsis.addEventListener('click', () => {
+            openAuthPrompt(ellipsis);
+        });
+    }
+    ellipsis.addEventListener('click', (e) => {
+        openContentOptionsMenu(e, ellipsis);
     });
-  }
-});
+    const articleOptionsContainer = document.createElement('div');
+    articleOptionsContainer.classList.add('articleOptionsContainer');
+    const addToListButton = document.createElement('div');
+    addToListButton.classList.add('addToListButton');
+    const faList = document.createElement('i');
+    faList.classList.add('fas', 'fa-list');
+    const spanTag1 = document.createElement('span');
+    spanTag1.innerText = 'Add to list';
+    addToListButton.append(faList, spanTag1);
+    addToListButton.addEventListener('click', (e) => {
+        openAddToListMenu(e);
+    });
+    const addToHighlightedButton = document.createElement('div');
+    addToHighlightedButton.classList.add('addToHighlightedButton');
+    const faHighlighter = document.createElement('i');
+    faHighlighter.classList.add('fas', 'fa-highlighter');
+    const spanTag2 = document.createElement('span');
+    if (article.is_highlighted) {
+        spanTag2.innerText = 'Unhighlight Article';
+    } else {
+        spanTag2.innerText = 'Highlight article';
+    }
+    addToHighlightedButton.append(faHighlighter, spanTag2);
+    addToHighlightedButton.addEventListener('click', () => {
+        highlightContent(addToHighlightedButton);
+    });
+    articleOptionsContainer.append(addToListButton, addToHighlightedButton);
+    contentInfoContainer.append(ellipsis, articleOptionsContainer);
+    const contentBody = document.createElement('div');
+    contentBody.classList.add('contentBody');
+    contentBody.id = 'cc#' + article.article_id;
+    const pTag1 = document.createElement('p');
+    pTag1.innerText = article.title;
+    contentBody.appendChild(pTag1);
+    const timeContainer = document.createElement('div');
+    timeContainer.classList.add('timeContainer');
+    const pTag2 = document.createElement('p');
+    pTag2.innerText = article.pub_date;
+    timeContainer.appendChild(pTag2);
+    contentLink = document.createElement('a');
+    contentLink.classList.add('contentLink');
+    contentLink.href = article.link;
+    rightContentSide.append(contentInfoContainer, contentBody, contentLink);
+    if (tweet) {
+        createTwitterPart(article, rightContentSide);
+        rightContentSide.appendChild(timeContainer);
+        articleContainer.appendChild(rightContentSide);
+        document
+            .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
+            .appendChild(articleContainer);
+    } else {
+        rightContentSide.appendChild(timeContainer);
+        articleContainer.appendChild(rightContentSide);
+        document
+            .querySelector(
+                '.pageWrapper .longFormContentContainer .recommendedContentContainer .smallFormContentWrapper'
+            )
+            .appendChild(articleContainer);
+    }
+}
 
-// list delete
-
-document.querySelectorAll(".listDeleteButton").forEach((listDeleteButton) => {
-  listDeleteButton.addEventListener("click", async () => {
+async function createContent() {
     try {
-      const list_id = listDeleteButton
-        .closest(".contentWrapper")
-        .id.split("#")[1];
-      const res = await fetch(
-        `../../api/lists/${list_id}/`,
-        get_fetch_settings("DELETE")
-      );
-      if (!res.ok) {
-        showMessage("Error: Network request failed unexpectedly!", "Error");
-      } else {
-        const context = await res.json();
-        listDeleteButton.closest(".contentWrapper").remove();
-        showMessage(context, "Remove");
-      }
-    } catch (e) {
-      // showMessage("Error: Unexpected error has occurred!", "Error");
-    }
-  });
-});
-
-// add Sources Search
-let selected_sources = [];
-document.querySelectorAll(".addSourcesForm #textInput").forEach((element) => {
-  element.addEventListener("keyup", async function (e) {
-    let search_term = element.value;
-    let results_list = element.parentElement.querySelector(
-      ".addSourcesForm #searchResultsContainer"
-    );
-    let selected_list = element.parentElement.querySelector(
-      ".addSourcesForm .selectionContainer"
-    );
-    if (search_term && search_term.replaceAll(/\s/g, "") != "") {
-      results_list.style.display = "block";
-      selected_list.style.display = "none";
-      try {
+        const position = document.querySelectorAll(
+            '.pageWrapper .longFormContentContainer .recommendedContentContainer .smallFormContentWrapper .articleContainer'
+        ).length;
         const res = await fetch(
-          `../../api/sources/?feed_search=${search_term}`,
-          get_fetch_settings("GET")
+            `../../api/articles/?feed_content=${position}`,
+            get_fetch_settings('GET')
         );
         if (!res.ok) {
-          showMessage("Error: Network request failed unexpectedly!", "Error");
+            showMessage('Error: Network request failed unexpectedly!', 'Error');
         } else {
-          const context = await res.json();
-          results_list.innerHTML = "";
-          const resultHeader = document.createElement("div");
-          resultHeader.innerText = "Results:";
-          results_list.append(resultHeader);
-          if (context.length > 0) {
-            context.forEach((source) => {
-              if (selected_sources.includes(source.source_id) == false) {
-                const searchResult = document.createElement("div");
-                searchResult.classList.add("searchResult");
-                const resultImage = document.createElement("img");
-                resultImage.src = `https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}`;
-                const sourceName = document.createElement("span");
-                sourceName.innerText = source.name;
-                sourceName.id = `fass?si#${source.source_id}`;
-                searchResult.append(resultImage, sourceName);
-                results_list.appendChild(searchResult);
-                searchResult.addEventListener(
-                  "click",
-                  function addSelectedSource() {
-                    // Remove the listener from the element the first time the listener is run:
-                    searchResult.removeEventListener(
-                      "click",
-                      addSelectedSource
-                    );
-                    selected_sources.push(source.source_id);
-                    const removeSourceButton = document.createElement("i");
-                    removeSourceButton.classList.add("fas", "fa-trash");
-                    removeSourceButton.addEventListener("click", () => {
-                      removeSourceButton.parentElement.remove();
-                      selected_sources = selected_sources.filter(function (e) {
-                        return (
-                          e.toString() !==
-                          removeSourceButton
-                            .closest(".searchResult")
-                            .querySelector("span")
-                            .id.split("#")[1]
-                        );
-                      });
-                    });
-                    searchResult.appendChild(removeSourceButton);
-                    selected_list.appendChild(searchResult);
-                    results_list.style.display = "none";
-                    selected_list.style.display = "block";
-                    element.value = "";
-                  }
-                );
-              }
-            });
-          }
-        }
-      } catch (e) {
-        // showMessage("Error: Unexpected error has occurred!", "Error");
-      }
-    } else {
-      results_list.style.display = "none";
-      selected_list.style.display = "block";
-    }
-  });
-});
-
-// add/confirm sources to user
-document
-  .querySelectorAll(".addSourcesForm .formSubmitButton")
-  .forEach((element) => {
-    element.addEventListener("click", async () => {
-      if (selected_sources.length) {
-        try {
-          const res = await fetch(
-            `../../api/sources/subscribe_to_sources/${selected_sources}/`,
-            get_fetch_settings("POST")
-          );
-          if (!res.ok) {
-            showMessage("Error: Network request failed unexpectedly!", "Error");
-          } else {
             const context = await res.json();
-            showMessage(context, "Success");
-            window.location.reload();
-          }
-        } catch (e) {
-          // showMessage("Error: Unexpected error has occurred!", "Error");
+            context.forEach((article) => {
+                addNewContentToContainer(article);
+            });
+            document.querySelector('.recommendedContentContainer .loader').remove();
+            contentIsLoading = false;
         }
-      } else {
-        showMessage("You need to select sources!", "Error");
-      }
-    });
-  });
+    } catch (e) {
+        // showMessage("Error: Unexpected error has occurred!", "Error");
+    }
+}
 
-// add lists
-let selected_lists = [];
-document.querySelectorAll(".addListsForm #textInput").forEach((element) => {
-  element.addEventListener("keyup", async function (e) {
-    let search_term = element.value;
-    let results_list = element.parentElement.querySelector(
-      ".addListsForm #searchResultsContainer"
-    );
-    let selected_list = element.parentElement.querySelector(
-      ".addListsForm .selectionContainer"
-    );
-    if (search_term && search_term.replaceAll(/\s/g, "") != "") {
-      results_list.style.display = "block";
-      selected_list.style.display = "none";
-      try {
+async function createTweets() {
+    try {
+        const position = document.querySelectorAll(
+            '.pageWrapper .tweetsContainer .smallFormContentWrapper .articleContainer'
+        ).length;
         const res = await fetch(
-          `../../api/lists/?feed_search=${search_term}`,
-          get_fetch_settings("GET")
+            `../../api/articles/?best_tweets=${position}`,
+            get_fetch_settings('GET')
         );
         if (!res.ok) {
-          showMessage("Error: Network request failed unexpectedly!", "Error");
+            showMessage('Error: Network request failed unexpectedly!', 'Error');
         } else {
-          const context = await res.json();
-          results_list.innerHTML = "";
-          const resultHeader = document.createElement("div");
-          resultHeader.innerText = "Results:";
-          results_list.append(resultHeader);
-          if (context.length > 0) {
-            context.forEach((list) => {
-              if (selected_lists.includes(list.list_id) == false) {
-                const searchResult = document.createElement("div");
-                searchResult.classList.add("searchResult");
-                const resultImage = document.createElement("img");
-                if (list.list_pic) {
-                  resultImage.src = list.list_pic;
-                } else {
-                  resultImage.src =
-                    "https://finbrowser.s3.us-east-2.amazonaws.com/static/home/media/finbrowser-bigger-logo.png";
-                }
-                const listName = document.createElement("span");
-                listName.innerText = list.name;
-                listName.id = `flls?li#${list.list_id}`;
-                searchResult.append(resultImage, listName);
-                results_list.appendChild(searchResult);
-                searchResult.addEventListener(
-                  "click",
-                  function addSelectedSource() {
-                    // Remove the listener from the element the first time the listener is run:
-                    searchResult.removeEventListener(
-                      "click",
-                      addSelectedSource
-                    );
-                    selected_lists.push(list.list_id);
-                    const removeListButton = document.createElement("i");
-                    removeListButton.classList.add("fas", "fa-trash");
-                    removeListButton.addEventListener("click", () => {
-                      selected_lists = selected_lists.filter(function (e) {
-                        return (
-                          e.toString() !==
-                          removeListButton
-                            .closest(".searchResult")
-                            .querySelector("span")
-                            .id.split("#")[1]
-                        );
-                      });
-                      removeListButton.parentElement.remove();
-                    });
-                    searchResult.appendChild(removeListButton);
-                    selected_list.appendChild(searchResult);
-                    results_list.style.display = "none";
-                    selected_list.style.display = "block";
-                    element.value = "";
-                  }
-                );
-              }
+            const context = await res.json();
+            context.forEach((article) => {
+                addNewContentToContainer(article, true);
             });
-          }
+            document
+                .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper .loader')
+                .remove();
+            contentIsLoading = false;
         }
-      } catch (e) {
+    } catch (e) {
         // showMessage("Error: Unexpected error has occurred!", "Error");
-      }
-    } else {
-      results_list.style.display = "none";
-      selected_list.style.display = "block";
     }
-  });
+}
+
+window.addEventListener('scroll', () => {
+    const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+    if (scrollTop + clientHeight > scrollHeight - 5 && !contentIsLoading) {
+        const loader = document.createElement('div');
+        loader.classList.add('loader');
+        if (
+            window.innerWidth < 1001 &&
+            document
+                .querySelector('.pageWrapper .tweetsContainer')
+                .classList.contains('tabsContentActive')
+        ) {
+            document
+                .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
+                .appendChild(loader);
+            createTweets();
+            contentIsLoading = true;
+        } else {
+            document
+                .querySelector(
+                    '.pageWrapper .longFormContentContainer .recommendedContentContainer'
+                )
+                .appendChild(loader);
+            createContent();
+            contentIsLoading = true;
+        }
+    }
 });
 
-// add/confirm lists
-document
-  .querySelectorAll(".addListsForm .formSubmitButton")
-  .forEach((element) => {
-    element.addEventListener("click", async () => {
-      if (selected_lists.length) {
-        for (let i = 0, j = selected_lists.length; i < j; i++) {
-          try {
-            const res = await fetch(
-              `../../api/lists/${selected_lists[i]}/list_change_subscribtion_status/`,
-              get_fetch_settings("POST")
-            );
-            if (!res.ok) {
-              showMessage(
-                "Error: Network request failed unexpectedly!",
-                "Error"
-              );
-            } else {
-              const context = await res.json();
-              showMessage(context, "Success");
-              window.location.reload();
-            }
-          } catch (e) {
-            // showMessage("Error: Unexpected error has occurred!", "Error");
-          }
-        }
-      } else {
-        showMessage("You need to select lists!", "Error");
-      }
-    });
-  });
+const scrollableDiv = document.querySelector(
+    '.pageWrapper .tweetsContainer .smallFormContentWrapper'
+);
 
-// open popup
-document
-  .querySelector(".tabsContainer .fa-plus")
-  .addEventListener("click", () => {
-    const activatedTab = document.querySelector(".activatedTab").innerText;
-    if (activatedTab === "Your Lists") {
-      document.querySelector(
-        ".popupContainer .createListPopup .formContainer"
-      ).style.display = "flex";
-    } else if (activatedTab === "Subscribed Lists") {
-      document.querySelector(
-        ".popupContainer .addListsPopup .formContainer"
-      ).style.display = "flex";
-    } else if (activatedTab === "Subscribed Sources") {
-      document.querySelector(
-        ".popupContainer .addSourcesPopup .formContainer"
-      ).style.display = "flex";
+scrollableDiv.addEventListener('scroll', function () {
+    if (
+        Math.ceil(scrollableDiv.scrollTop + scrollableDiv.clientHeight) >=
+            scrollableDiv.scrollHeight &&
+        !contentIsLoading
+    ) {
+        const loader = document.createElement('div');
+        loader.classList.add('loader');
+        document
+            .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
+            .appendChild(loader);
+        createTweets();
+        contentIsLoading = true;
     }
-    document.querySelector(".classicMain").style.opacity = "0.1";
-    document.querySelector(".popupContainer").style.display = "block";
-  });
-
-// close popups
-document
-  .querySelectorAll(".popupContainer .formContainer .closeFormContainerButton")
-  .forEach((closeButton) => {
-    closeButton.addEventListener("click", () => {
-      document.querySelector(".classicMain").style.opacity = "1";
-      document.querySelector(".popupContainer").style.display = "none";
-      closeButton
-        .closest(".popup")
-        .querySelector(".formContainer").style.display = "none";
-    });
-  });
+});

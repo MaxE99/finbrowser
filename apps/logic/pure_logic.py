@@ -1,12 +1,11 @@
 # Django imports
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.utils.timezone import now
-from django.db.models import Count, F
-from django.shortcuts import get_object_or_404
-# Python imports
-from datetime import timedelta
 
-def paginator_create(request, queryset, objects_per_site, page_name='page'):
+# Local imports
+from apps.api.serializers import SourceSerializer, ArticleSerializer, StockSerializer
+
+
+def paginator_create(request, queryset, objects_per_site, page_name="page"):
     paginator = Paginator(queryset, objects_per_site)
     page = request.GET.get(page_name)
     try:
@@ -16,46 +15,6 @@ def paginator_create(request, queryset, objects_per_site, page_name='page'):
     except EmptyPage:
         objects = paginator.page(paginator.num_pages)
     return objects
-    
-
-def lists_filter(timeframe, content_type, minimum_rating, primary_source, lists):
-    filter_args = {}
-    if timeframe != 'All' and timeframe != None:
-        filter_args['updated_at__gte'] = now()-timedelta(days=int(timeframe))
-    if minimum_rating != 'All' and type != None:
-        filter_args['average_rating__gte'] = float(minimum_rating)
-    if primary_source != 'All' and type != None:
-        filter_args['main_website_source'] = primary_source    
-    lists = lists.filter(**filter_args).order_by('average_rating') 
-    if content_type != "All":
-            if content_type == "Articles":
-                lists = lists.annotate(list_articles=Count('articles', distinct=True), list_sources=Count('sources', distinct=True)).filter(list_articles__gt=F('list_sources'))
-            else:
-                lists = lists.annotate(list_sources=Count('sources', distinct=True), list_articles=Count('articles', distinct=True)).filter(list_sources__gt=F('list_articles')) 
-    return lists
-
-
-def articles_filter(timeframe, sector, paywall, source, articles):
-    filter_args = {'source__sector': sector, 'source__paywall': paywall, 'source__website': source}
-    if timeframe != 'All' and timeframe != None:
-        filter_args['pub_date__gte'] = now()-timedelta(days=int(timeframe))
-    filter_args = dict((k, v) for k, v in filter_args.items() if v is not None and v != 'All')
-    return articles.filter(**filter_args)
-
-
-def sources_filter(paywall, type, minimum_rating, website, sources):
-    from apps.accounts.models import Website
-    filter_args = {'paywall': paywall}
-    if type != 'All' and type != None and type == "Analysis":
-        filter_args['news'] = False
-    elif type != 'All' and type != None and type == "News":
-        filter_args['news'] = True
-    if minimum_rating != 'All' and type != None:
-        filter_args['average_rating__gte'] = float(minimum_rating)
-    if website != 'All' and type != None:
-        filter_args['website'] = get_object_or_404(Website, name=website)
-    filter_args = dict((k, v) for k, v in filter_args.items() if v is not None and v != 'All')
-    return sources.filter(**filter_args)
 
 
 def stocks_get_experts(filtered_content):
@@ -65,4 +24,55 @@ def stocks_get_experts(filtered_content):
             sources_articles_written[content.source] += 1
         else:
             sources_articles_written[content.source] = 1
-    return dict(sorted(sources_articles_written.items(), key=lambda item: item[1], reverse=True)[:10])
+    sorted_sources = dict(
+        sorted(sources_articles_written.items(), key=lambda item: item[1], reverse=True)
+    )
+    analysis_sources = []
+    commentary_sources = []
+    news_sources = []
+    for source in sorted_sources:
+        if source.content_type == "Analysis" and len(analysis_sources) < 16:
+            analysis_sources.append(source)
+        elif source.content_type == "Commentary" and len(commentary_sources) < 16:
+            commentary_sources.append(source)
+        elif source.content_type == "News" and len(news_sources) < 16:
+            news_sources.append(source)
+    return [analysis_sources, commentary_sources, news_sources]
+
+
+def balance_search_results(filtered_stocks, filtered_sources, filtered_articles):
+    len_filtered_stocks = filtered_stocks.count()
+    len_filtered_sources = filtered_sources.count()
+    len_filtered_articles = filtered_articles.count()
+    display_spots_stocks = 3 if len_filtered_stocks > 3 else len_filtered_stocks
+    display_spots_sources = 3 if len_filtered_sources > 3 else len_filtered_sources
+    display_spots_articles = 3 if len_filtered_articles > 3 else len_filtered_articles
+    all_spots = display_spots_stocks + display_spots_sources + display_spots_articles
+    all_spots_previous_iteration = 0
+    while all_spots < 9:
+        if len_filtered_stocks > 3:
+            display_spots_stocks += 1
+            all_spots += 1
+        if len_filtered_sources > 3:
+            display_spots_sources += 1
+            all_spots += 1
+        if len_filtered_articles > 3:
+            display_spots_articles += 1
+            all_spots += 1
+        if all_spots_previous_iteration == all_spots:
+            break
+        all_spots_previous_iteration = all_spots
+    stock_serializer = StockSerializer(
+        filtered_stocks[0:display_spots_stocks], many=True
+    )
+    sources_serializer = SourceSerializer(
+        filtered_sources[0:display_spots_sources], many=True
+    )
+    articles_serializer = ArticleSerializer(
+        filtered_articles[0:display_spots_articles], many=True
+    )
+    return (
+        stock_serializer,
+        sources_serializer,
+        articles_serializer,
+    )

@@ -1,60 +1,60 @@
 .overlay {
-  width: 100%;
+    width: 100%;
 }
 
 h1 {
-  margin-top: 2rem;
-  font-size: 2.5rem;
+    margin-top: 2rem;
+    font-size: 2.5rem;
 }
 
 .tabsContainer .activatedTab,
 .tabsContainer button:hover {
-  text-underline-offset: 1.53rem;
+    text-underline-offset: 1.53rem;
 }
 
 h2 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
 }
 
 .tabsContent {
-  background: white;
-  padding: 2rem 4rem;
-  border-radius: 0.45rem;
-  width: 75%;
-  box-shadow: var(--box-shadowScheme);
+    background: white;
+    padding: 2rem 4rem;
+    border-radius: 0.45rem;
+    width: 75%;
+    box-shadow: var(--box-shadowScheme);
 }
 
 .tabsContent:last-of-type {
-  width: 100%;
+    width: 100%;
 }
 
 .sliderWrapper .sliderContentContainer .slider .contentWrapper {
-  box-shadow: unset;
-  border: 0.1rem solid #ccc;
+    box-shadow: unset;
+    border: 0.1rem solid #ccc;
 }
 
 .editSection {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .usernameAndEmailContainer {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .usernameContainer,
 .emailContainer {
-  display: flex;
-  flex-direction: column;
-  width: 47.5%;
+    display: flex;
+    flex-direction: column;
+    width: 47.5%;
 }
 
 .editSection label,
 .changePasswordForm label {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
 }
 
 #id_email,
@@ -64,64 +64,62 @@ h2 {
 #id_new_password2,
 #id_timezone,
 .linkInput {
-  border: 0.1rem solid #ccc;
-  border-radius: 0.6rem;
-  font-size: 1.8rem;
-  padding: 1.3rem 1.2rem 1.3rem 1.2rem;
-  transition: border-color 250ms ease-in-out;
-  background: white;
-  opacity: 0.6;
-  margin-bottom: 1.5rem;
+    border: 0.1rem solid #ccc;
+    border-radius: 0.6rem;
+    font-size: 1.8rem;
+    padding: 1.3rem 1.2rem 1.3rem 1.2rem;
+    transition: border-color 250ms ease-in-out;
+    background: white;
+    opacity: 0.6;
+    margin-bottom: 1.5rem;
 }
 
 #id_timezone {
-  width: 47.5%;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
+    width: 47.5%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
 }
 
 .profilePicContainer {
-  width: 47.5%;
-  margin: 1.5rem 0 2rem;
+    width: 47.5%;
+    margin: 1.5rem 0 2rem;
 }
 
 .profilePicInnerContainer {
-  display: flex;
-  align-items: center;
-  margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
 }
 
 .profilePicInnerContainer .logoPlaceholder {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Times New Roman";
-  font-weight: 900;
-  text-transform: UPPERCASE;
-  font-size: 3.5rem;
-  width: 5rem;
-  height: 5rem;
-  color: white;
-  background: var(--primary-fontColor);
-  border-radius: 50%;
-  padding: 0.25rem 1.5rem;
-  user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Times New Roman';
+    font-weight: 900;
+    text-transform: UPPERCASE;
+    font-size: 3.5rem;
+    width: 5rem;
+    height: 5rem;
+    color: white;
+    background: var(--primary-fontColor);
+    border-radius: 50%;
+    padding: 0.25rem 1.5rem;
+    user-select: none;
 }
 
 .profilePicContainer img,
 .existingSocialContainer img {
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
 }
 
 .changeProfilePicButton {
-  position: relative;
-  background: white;
-  color: black;
-  margin-left: 1rem;
+    position: relative;
+    margin-left: 1rem;
 }
 
 .cancelButton,
@@ -130,26 +128,26 @@ h2 {
 .profilePicInnerContainer button,
 .passwordChangeSubmit,
 .privacySettingsChangeSubmit {
-  color: white;
-  background: var(--primary-fontColor);
-  border: 0.1rem solid #e2e6ea;
-  cursor: pointer;
-  font-size: 1.85rem;
-  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-  text-decoration: none;
-  border-radius: 0.45rem;
-  padding: 1.36rem 2.72rem;
+    color: white;
+    background: var(--primary-fontColor);
+    border: 0.1rem solid #e2e6ea;
+    cursor: pointer;
+    font-size: 1.85rem;
+    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+    text-decoration: none;
+    border-radius: 0.45rem;
+    padding: 1.36rem 2.72rem;
 }
 
 .buttonContainer input:hover,
 .passwordChangeSubmit:hover,
 .privacySettingsChangeSubmit:hover {
-  background: #1a73e8 !important;
+    background: #1a73e8 !important;
 }
 
 .cancelButton:hover {
-  background: var(--primary-fontColor) !important;
-  color: white !important;
+    background: var(--primary-fontColor) !important;
+    color: white !important;
 }
 
 .cancelButton:hover,
@@ -158,230 +156,233 @@ h2 {
 .profilePicInnerContainer button:hover,
 .passwordChangeSubmit:hover,
 .privacySettingsChangeSubmit:hover {
-  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
 }
 
 .changeProfilePicButton input {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  top: 0;
-  left: 0;
-  cursor: pointer;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    cursor: pointer;
 }
 
 .changeProfilePicForm {
-  display: none;
+    display: none;
 }
 
 .profilePicInnerContainer button:last-of-type {
-  background: red;
-  color: white;
-  margin-left: 1rem;
+    background: red;
+    color: white;
+    margin-left: 1rem;
 }
 
 .linkInput {
-  margin: 0 0 0 0.5rem;
-  width: 100%;
+    margin: 0 0 0 0.5rem;
+    width: 100%;
 }
 
 .buttonContainer {
-  margin-left: auto;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+    margin-left: auto;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .cancelButton {
-  background: white !important;
-  margin-right: 1rem;
-  color: var(--primary-fontColor) !important;
+    background: white !important;
+    margin-right: 1rem;
+    color: var(--primary-fontColor) !important;
 }
 
 .changePasswordForm,
 .changePrivacySettingsForm {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .sliderHeader:first-of-type {
-  margin-top: 2rem;
+    margin-top: 2rem;
 }
 
 .sliderHeader {
-  padding: 2rem 4rem;
+    padding: 2rem 4rem;
 }
 
 .notificationContainer {
-  display: flex;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .iconContainer .fa-times {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 2.8rem;
-  color: red;
-  cursor: pointer;
-  z-index: 100;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2.8rem;
+    color: red;
+    cursor: pointer;
+    z-index: 100;
 }
 
 .keywordContainer {
-  position: relative;
-  font-size: 2rem;
-  text-align: center;
-  margin: 1rem 1rem 0 0;
-  border-radius: 20rem;
-  border: 0.1rem solid #ccc;
-  padding: 0.75rem 1.5rem;
-  background: white;
-  display: flex;
-  align-items: center;
+    position: relative;
+    font-size: 2rem;
+    text-align: center;
+    margin: 1rem 1rem 0 0;
+    border-radius: 20rem;
+    border: 0.1rem solid #ccc;
+    padding: 0.75rem 1.5rem;
+    background: white;
+    display: flex;
+    align-items: center;
 }
 
 .keywordContainer:hover {
-  background: var(--primary-fontColor);
-  color: white;
+    background: var(--primary-fontColor);
+    color: white;
 }
 
 .keywordContainer:hover .fa-check {
-  background: white;
-  color: var(--primary-fontColor);
+    background: white;
+    color: var(--primary-fontColor);
 }
 
 .keywordContainer .fa-check {
-  border-radius: 50%;
-  border: 0.3rem solid gray;
-  margin-right: 1rem;
-  padding: 0.2rem;
-  font-size: 12px;
+    border-radius: 50%;
+    border: 0.3rem solid gray;
+    margin-right: 1rem;
+    padding: 0.2rem;
+    font-size: 12px;
 }
 
 .keywordContainer .fa-times {
-  margin-left: 1rem;
-  cursor: pointer;
+    margin-left: 1rem;
+    cursor: pointer;
 }
 
 .noNotificationsActivated {
-  margin-top: 3rem;
-  font-size: 3rem;
-  text-align: center;
+    margin-top: 3rem;
+    font-size: 3rem;
+    text-align: center;
 }
 
 .sliderWrapper {
-  width: 100%;
+    width: 100%;
 }
 
 .sliderWrapper .sliderContentContainer .slider {
-  --items-per-screen: 5;
+    --items-per-screen: 5;
 }
 
 .notificationTab h2 {
-  margin: 2rem 0rem 1rem;
+    margin: 2rem 0rem 1rem;
 }
 
 .notificationTab h2:first-of-type {
-  margin: 0 0 2rem;
+    margin: 0 0 2rem;
 }
 
 .notificationTab h2:last-of-type {
-  margin-top: 4rem;
-}
-
-@media (max-width: 1300px) {
-  .overlay {
-    padding: 0 2rem;
-  }
+    margin-top: 4rem;
 }
 
 @media (max-width: 1150px) {
-  .sliderWrapper .sliderContentContainer .slider {
-    --items-per-screen: 4;
-  }
+    .sliderWrapper .sliderContentContainer .slider {
+        --items-per-screen: 4;
+    }
 }
 
 @media (max-width: 1100px) {
-  .tabsContent {
-    width: 100%;
-  }
+    .tabsContent {
+        width: 100%;
+    }
 }
 
 @media (max-width: 950px) {
-  .sliderWrapper .sliderContentContainer .slider {
-    --items-per-screen: 3;
-  }
+    .sliderWrapper .sliderContentContainer .slider {
+        --items-per-screen: 3;
+    }
 }
 
 @media (max-width: 800px) {
-  .tabsContent {
-    padding: 2rem 3rem;
-  }
+    .tabsContent {
+        padding: 2rem 3rem;
+    }
 }
 
 @media (max-width: 700px) {
-  .sliderWrapper .sliderContentContainer .slider {
-    --items-per-screen: 2;
-  }
+    .sliderWrapper .sliderContentContainer .slider {
+        --items-per-screen: 2;
+    }
 
-  .usernameAndEmailContainer {
-    flex-direction: column;
-  }
-  .usernameAndEmailContainer .usernameContainer,
-  .usernameAndEmailContainer .emailContainer,
-  #id_timezone {
-    width: 100%;
-  }
+    .usernameAndEmailContainer {
+        flex-direction: column;
+    }
+    .usernameAndEmailContainer .usernameContainer,
+    .usernameAndEmailContainer .emailContainer,
+    #id_timezone {
+        width: 100%;
+    }
 }
 
 @media (max-width: 600px) {
-  .tabsContent {
-    padding: 2rem;
-  }
+    .tabsContent {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 550px) {
+    h1 {
+        padding: 0 2rem;
+    }
+    .tabsContent {
+        border-radius: 0;
+    }
 }
 
 @media (max-width: 500px) {
-  .notificationTab .notificationContainer {
-    flex-direction: column;
-  }
+    .notificationTab .notificationContainer {
+        flex-direction: column;
+    }
 
-  .notificationTab .notificationContainer .keywordContainer {
-    justify-content: space-between;
-    margin: 1.5rem 1rem 0 0;
-    padding: 1.5rem 2rem;
-  }
+    .notificationTab .notificationContainer .keywordContainer {
+        justify-content: space-between;
+        margin: 1.5rem 1rem 0 0;
+        padding: 1.5rem 2rem;
+    }
 }
 
 @media (max-width: 450px) {
-  .sliderWrapper .sliderContentContainer .slider {
-    --items-per-screen: 1;
-  }
+    .sliderWrapper .sliderContentContainer .slider {
+        --items-per-screen: 1;
+    }
 }
 
 @media (max-width: 350px) {
-  .profilePicContainer {
-    width: 100%;
-  }
+    .profilePicContainer {
+        width: 100%;
+    }
 
-  .profilePicInnerContainer {
-    flex-direction: column;
-    width: 100%;
-  }
+    .profilePicInnerContainer {
+        flex-direction: column;
+        width: 100%;
+    }
 
-  .profilePicInnerContainer img {
-    width: 8rem;
-    height: 8rem;
-    margin-top: 1rem;
-  }
+    .profilePicInnerContainer img {
+        width: 8rem;
+        height: 8rem;
+        margin-top: 1rem;
+    }
 
-  .profilePicInnerContainer button {
-    margin-left: 0;
-    width: 100%;
-  }
+    .profilePicInnerContainer button {
+        margin-left: 0 !important;
+        width: 100%;
+    }
 
-  .profilePicInnerContainer .changeProfilePicButton {
-    text-align: center;
-    margin: 1rem 0;
-    width: 100%;
-  }
+    .profilePicInnerContainer .changeProfilePicButton {
+        text-align: center;
+        margin: 1rem 0;
+        width: 100%;
+    }
 }
