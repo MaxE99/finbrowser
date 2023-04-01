@@ -1,0 +1,100 @@
+{% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v11.css' %}" />
+<title>Subscribed Sources | FinBrowser</title>
+<meta name="description" content="FinBrowser list created by {{ list.creator.username }}">
+{% endblock %} {% block content %}
+
+<div class="pageWrapper">
+    <div class="firstRow">
+        <div class="nameContainer">
+            <h2 id="{{ list.list_id }}">Subscribed Sources</h2>
+            <i class="fas fa-chevron-down"></i>
+            <div class="listOptionsContainer">
+                <div class="listsContainer">
+                    {% for llist in lists %}
+                    <div id="list{{llist.list_id}}" class="listOption">
+                        <span>{{ llist.name }}</span>
+                        <a href="{{ llist.get_absolute_url }}" aria-label="Open list {{ llist.name }}"></a>
+                    </div>
+                    {% endfor %}
+                    <div class="listOption">
+                        <span>Subscribed Sources</span>
+                        <a href="{% url 'list:list-subscribed_sources' %}" aria-label="Open subscribed sources"></a>
+                    </div>
+                    <div class="listOption">
+                        <span>Highlighted Content</span>
+                        <a href="{% url 'list:list-highlighted_content' %}" aria-label="Open highlighted content"></a>
+                    </div>
+                </div>
+                <button class="createListButton"><i class="fas fa-plus"></i>Create New List</button>
+            </div>
+        </div>
+    </div>
+
+    {% if subscribed_sources %}
+    <div class="tabsContainer" id="content" role="navigation" aria-label="Stock Content Navigation">
+        <button class="activatedTab" data-for-tab="0">Analysis</button>
+        <button data-for-tab="1">Commentary</button>
+        <button data-for-tab="2">News</button>
+    </div>
+    <div class="tabsContent tabsContentActive" data-tab="0">
+        {% create_source_container analysis_sources subscribed_sources request %}
+        <div class="contentColumnWrapper">
+            {% if analysis %}
+            <div class="contentColumnContainer">
+                {% create_content_container analysis request highlighted_content_ids "analysis" %}
+            </div>
+            {% else %}
+            <div class="emptyInformationContainer">
+                <h3>No analytical content found!</h3>
+                <div>Consider adding more sources to this list!</div>
+                <button><i class="fas fa-plus"></i>Add</button>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+    <div class="tabsContent" data-tab="1">
+        {% create_source_container commentary_sources subscribed_sources request %}
+        <div class="contentColumnWrapper">
+            {% if commentary %}
+            <div class="contentColumnContainer">
+                {% create_content_container commentary request highlighted_content_ids "commentary" %}
+            </div>
+            {% else %}
+            <div class="emptyInformationContainer">
+                <h3>No commentary found!</h3>
+                <div>Consider adding more sources to this list!</div>
+                <button><i class="fas fa-plus"></i>Add</button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="tabsContent" data-tab="2">
+        {% create_source_container news_sources subscribed_sources request %}
+        <div class="contentColumnWrapper">
+            {% if news %}
+            <div class="contentColumnContainer">
+                {% create_content_container news request highlighted_content_ids "news" %}
+            </div>
+            {% else %}
+            <div class="emptyInformationContainer">
+                <h3>No news content found!</h3>
+                <div>Consider adding more sources to this list!</div>
+                <button><i class="fas fa-plus"></i>Add</button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <div class="emptyInformationContainer">
+        <h3>This list is empty!</h3>
+        <div>Add sources to this list to get the latest information from your favorite content creators.</div>
+        <button><i class="fas fa-plus"></i>Add</button>
+    </div>
+    {% endif %}
+</div>
+
+
+<script src="{% static 'list/highlighted_content_script.js' %}"></script>
+{% endblock content %}

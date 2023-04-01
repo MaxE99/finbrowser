@@ -1,104 +1,140 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'stock/min_stock_details_style_v5.css' %}" />
-<title>{{ stock.full_company_name }} | FinBrowser</title>
+<link rel="stylesheet" type="text/css" href="{% static 'stock/min_stock_details_style_v6.css' %}" />
+<title>{{ stock.short_company_name }} | FinBrowser</title>
 <meta name="description" content="Discover the latest content from {{ sstock.full_company_name }}">
 {% endblock %} {% block content %}
 
-<div class="companyNameAndNotificationHeader">
-    <h2 class="stockHeader" id="sti#{{ stock.stock_id }}">{{ stock.full_company_name }}</h2>
-    {% if request.user.is_authenticated %}
-    {% if notifications_activated %}
-    <i aria-label="Activate Notifications" class="fas fa-bell-slash notificationButton notificationActivated"></i>
-    {% else %}
-    <i role="button" aria-label="Deactivate Notifications" class="fas fa-bell notificationButton"></i>
-    {% endif %}
-    {% endif %}
-</div>
 
-{% if expert_sources %}
-<div class="sliderHeader">Primary Sources</div>
-<div class="sliderWrapper">
-    <div class="sliderContentContainer">
-        <button aria-label="Slide Left" class="handle leftHandle">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <div class="slider">
-            {% for source in expert_sources %}
-            <div class="contentWrapper" id="fsss?si#{{ source.source_id }}">
-                <img src="{% static source.favicon_path %}" alt="Source Picture" />
-                <div class="contentRatingContainer">
-                    <i class="fa fa-star"></i>
-                    <span>{{ source.average_rating }}</span>
-                </div>
-                <div class="nameContainer">
-                    <span>{{source.name}}</span>
-                </div>
-                {% if request.user.is_authenticated %}
-                {% if source in subscribed_sources %}
-                <button class="subscribeButton subscribed">Subscribed</button>
-                {% else %}
-                <button class="subscribeButton">Subscribe</button>
-                {% endif %}
-                {% if source.source_id in notification_sources %}
-                <button class="notificationButton notificationActivated">Notification Off</button>
-                {% else %}
-                <button class="notificationButton">Notification On</button>
-                {% endif %}
-                {% else %}
-                <a class="loginRedirectButton" aria-label="Login to subscribe" href="{% url 'account_login' %}">Subscribe</a>
-                <a class="loginRedirectButton" aria-label="Login to turn on notifications" href="{% url 'account_login' %}">Notification
-                    On</a>
-                {% endif %}
-                <a class="contentLink" href="{{ source.get_absolute_url }}"
-                    aria-label="Open Profile Of {{ source.name }}"></a>
+<div class="stockMenuWrapper">
+    <div class="menuContainer">
+        <div role="form" class="addStockContainer">
+            <div class="formHeaderContainer">
+                <h2>Add <span>{{ stock.short_company_name }}</span> To Your Portfolios</h2>
+                <i class="fas fa-times closeFormContainerButton"></i>
             </div>
-            {% endfor %}
+            {% if portfolios %}
+            <div class="descContainer">
+                <span>Name</span>
+                <span>In Portfolio</span>
+            </div>
+            <div class="portfolioSelectionContainer">
+                {% for portfolio in portfolios %}
+                <div class="portfolioContainer">
+                    <label>{{ portfolio.name }}</label>
+                    {% if stock.stock_id in portfolio.stocks %}
+                    <input id="id_portfolio_{{ portfolio.portfolio_id }}" class="portfolioInList" type="checkbox"
+                        name="portfolios" value="{{ portfolio.portfolio_id }}" checked>
+                    {% else %}
+                    <input id="id_portfolio_{{ portfolio.portfolio_id }}" class="portfolioNotInList" type="checkbox"
+                        name="portfolios" value="{{ portfolio.portfolio_id }}">
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="buttonsContainer">
+                <button class="cancelButton">Cancel</button>
+                <button class="saveButton">Save</button>
+            </div>
+            {% endif %}
         </div>
-        <button aria-label="Slide right" class="handle rightHandle">
-            <i class="fas fa-chevron-right"></i>
-        </button>
     </div>
 </div>
-{% endif %}
 
-{% if filtered_articles or filtered_tweets %}
-<div class="contentColumnWrapper">
-    {% if filtered_articles %}
-    <div class="contentColumnContainer">
-        {% create_content_container "Long-Form Content" filtered_articles request user_lists csrf_token add_list_form highlighted_content_ids %}
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in filtered_articles.paginator.page_range %}
-                {% if filtered_articles.number == i %}
-                <button class="currentPagination">{{ filtered_articles.number }}</button>
-                {% elif i > filtered_articles.number|add:'-3' and i < filtered_articles.number|add:'3' %} <a
-                    href="?long_form_content={{ i }}">{{ i }}</a>
-                {% endif %}
-                {% endfor %}
-            </span>
+
+<div class="pageWrapper">
+    <div class="companyNameAndNotificationHeader">
+        <div class="stockHeader" id="sti#{{ stock.stock_id }}"">
+            <h2>{{ stock.ticker }}</h2>
+            <h2 class=" seperator"> - </h2>
+            <h2>{{ stock.full_company_name }}</h2>
+        </div>
+        <div class="stockActionContainer">
+            {% if request.user.is_authenticated %}
+            <button aria-label="Add Stock To Lists" class="addStockToListButton"><i
+                    class="fas fa-ellipsis-h"></i></button>
+            <div role="form" class="addToListForm addStockToListForm">
+                <div class="formHeaderContainer">Add To portfolios<i class="fas fa-times closeFormContainerButton"></i>
+                </div>
+                <div class="listSelectionContainer">
+                    {% for portfolio in portfolios %}
+                    <div class="listContainer">
+                        {% if stock.stock_id in portfolio.stocks %}
+                        <input id="portfolio_{{portfolio.portfolio_id}}" type="checkbox"
+                            value="{{portfolio.portfolio_id}}" checked="True">
+                        {% else %}
+                        <input id="portfolio_{{portfolio.portfolio_id}}" type="checkbox"
+                            value="{{portfolio.portfolio_id}}">
+                        {% endif %}
+                        <label>{{ portfolio.name }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="saveButton">Save</button>
+            </div>
+            {% if notification_id %}
+            <i id="nid#{{notification_id}}" aria-label="Active Notification"
+                class="fas fa-bell-slash notificationButton notificationActivated"></i>
+            {% else %}
+            <i role="button" aria-label="Inactive Notification" class="fas fa-bell notificationButton"></i>
+            {% endif %}
+            {% else %}
+            <button aria-label="Add Stock To Lists" class="addStockToListButton openAuthPrompt ap4"><i
+                    class="fas fa-ellipsis-h openAuthPrompt ap4"></i></button>
+            <i aria-label="Activate Notifications"
+                class="fas fa-bell-slash notificationButton notificationActivated openAuthPrompt ap3"></i>
+            {% endif %}
         </div>
     </div>
-    {% endif %}
-    {% if filtered_tweets %}
-    <div class="contentColumnContainer">
-        {% create_content_container "Tweets" filtered_tweets request user_lists csrf_token add_list_form highlighted_content_ids %}
-        <div class="pagination">
-            <span class="step-links">
-                {% for i in filtered_tweets.paginator.page_range %}
-                {% if filtered_tweets.number == i %}
-                <button class="currentPagination">{{ filtered_tweets.number }}</button>
-                {% elif i > filtered_tweets.number|add:'-3' and i < filtered_tweets.number|add:'3' %} <a
-                    href="?tweets={{ i }}">{{ i }}</a>
-                {% endif %}
-                {% endfor %}
-            </span>
+
+    <div class="tabsContainer" id="content" role="navigation" aria-label="Stock Content Navigation">
+        <button class="activatedTab" data-for-tab="0">Analysis</button>
+        <button data-for-tab="1">Commentary</button>
+        <button data-for-tab="2">News</button>
+    </div>
+    <div class="tabsContent tabsContentActive" data-tab="0">
+        {% create_source_container analysis_sources subscribed_sources request %}
+        <div class="contentColumnWrapper">
+            {% if analysis %}
+            <div class="contentColumnContainer">
+                {% create_content_container analysis request highlighted_content_ids "analysis" %}
+            </div>
+            {% else %}
+            <div class="emptyInformationContainer">
+                <span>No analytical content found!</span>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+    <div class="tabsContent" data-tab="1">
+        {% create_source_container commentary_sources subscribed_sources request %}
+        <div class="contentColumnWrapper">
+            {% if commentary %}
+            <div class="contentColumnContainer">
+                {% create_content_container commentary request highlighted_content_ids "commentary" %}
+            </div>
+            {% else %}
+            <div class="emptyInformationContainer">
+                <span>No commentary found!</span>
+            </div>
+            {% endif %}
         </div>
     </div>
-    {% endif %}
+    <div class="tabsContent" data-tab="2">
+        {% create_source_container news_sources subscribed_sources request %}
+        <div class="contentColumnWrapper">
+            {% if news %}
+            <div class="contentColumnContainer">
+                {% create_content_container news request highlighted_content_ids "news" %}
+            </div>
+            {% else %}
+            <div class="emptyInformationContainer">
+                <span>No news content found!</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
-{% else %}
-<div class="noContentFound">No content found!</div>
-{% endif %}
 
-<script src="{% static 'stock/min_stock_details_script_v3.js' %}"></script>
+<script src="{% static 'stock/min_stock_details_script_v4.js' %}"></script>
 {% endblock content %}
