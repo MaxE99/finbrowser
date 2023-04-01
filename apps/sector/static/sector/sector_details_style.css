@@ -1,12 +1,20 @@
-.sliderHeader {
-  margin: 2rem 0;
-  position: relative;
-  text-align: center;
-  padding: 0.75rem 0;
-  font-size: 2rem;
-  color: white;
-  border: 0.3rem solid white;
-  width: 100%;
-  background: var(--primary-fontColor);
-  box-shadow: var(--box-shadowScheme);
+.pageWrapper h2 {
+    font-size: 3.5rem;
+    margin: 2rem 0;
+    color: var(--secondary-fontColor);
+}
+
+.tabsContent .smallFormContentWrapper {
+    background: white;
+    border-radius: 0.45rem;
+    box-shadow: var(--box-shadowScheme);
+}
+
+@media (max-width: 550px) {
+    .pageWrapper h2 {
+        padding: 0 2rem;
+    }
+    .tabsContent .smallFormContentWrapper {
+        border-radius: 0;
+    }
 }
