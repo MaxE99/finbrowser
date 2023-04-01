@@ -49,7 +49,7 @@ class Source(models.Model):
     average_rating = models.FloatField(blank=True, null=True)
     ammount_of_ratings = models.IntegerField(default=0, null=True)
     content_type = models.CharField(
-        max_length=15, choices=PAYWALL_CHOICES, default="Commentary"
+        max_length=15, choices=CONTENT_TYPE_CHOICES, default="Commentary"
     )
     tags = models.ManyToManyField(SourceTag, related_name="source_tags", blank=True)
 
