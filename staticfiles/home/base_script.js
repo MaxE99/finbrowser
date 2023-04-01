@@ -183,7 +183,9 @@ function closeAllPotentialOpenPopups() {
     if (document.querySelector('.keywordCreationWrapper')) {
         document.querySelector('.keywordCreationWrapper').style.display = 'none';
     }
-    document.querySelector('.notificationPopupWrapper').style.display = 'none';
+    if (document.querySelector('.notificationPopupWrapper')) {
+        document.querySelector('.notificationPopupWrapper').style.display = 'none';
+    }
     if (document.querySelector('.sourceRatingsWrapper')) {
         document.querySelector('.sourceRatingsWrapper').style.display = 'none';
     }
