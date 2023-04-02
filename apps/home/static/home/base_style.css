@@ -1197,8 +1197,9 @@ footer ul a:hover {
     top: 0;
     right: 0;
     cursor: pointer;
-    padding: 0 0.5rem 0.5rem 0.5rem;
+    padding: 2rem;
     z-index: 3;
+    margin: -2rem -1.5rem -1.5rem -2rem;
 }
 
 .articleOptionsContainer {
