@@ -24,7 +24,10 @@ function createTwitterPart(content, rightContentSide) {
     if (content.tweet_type.image_path) {
         const tweetImage = document.createElement('img');
         tweetImage.className = 'tweetImage';
-        tweetImage.setAttribute('src', content.tweet_type.image_path);
+        tweetImage.setAttribute(
+            'src',
+            'https://finbrowser.s3.us-east-2.amazonaws.com/static/' + content.tweet_type.image_path
+        );
         tweetImage.setAttribute('alt', 'Tweet Image');
         rightContentSide.appendChild(tweetImage);
     }
@@ -55,7 +58,11 @@ function createTwitterPart(content, rightContentSide) {
         if (content.tweet_type.initial_tweet_img_path) {
             const tweetImage = document.createElement('img');
             tweetImage.className = 'tweetImage';
-            tweetImage.setAttribute('src', content.tweet_type.initial_tweet_img_path);
+            tweetImage.setAttribute(
+                'src',
+                'https://finbrowser.s3.us-east-2.amazonaws.com/static/' +
+                    content.tweet_type.initial_tweet_img_path
+            );
             tweetImage.setAttribute('alt', 'Tweet Reply Image');
             quoteWrapper.appendChild(tweetImage);
         }
@@ -75,7 +82,8 @@ function addNewContentToContainer(article, tweet = false) {
     const profileImageContainer = document.createElement('div');
     profileImageContainer.classList.add('profileImageContainer');
     const imgTag1 = document.createElement('img');
-    imgTag1.src = '/static/' + article.source.favicon_path;
+    imgTag1.src =
+        'https://finbrowser.s3.us-east-2.amazonaws.com/static/' + article.source.favicon_path;
     const sourceProfile1 = document.createElement('a');
     sourceProfile1.classList.add('sourceProfile');
     sourceProfile1.href = '/source/' + article.source.slug;
@@ -95,7 +103,8 @@ function addNewContentToContainer(article, tweet = false) {
     const sourceWebsiteProfileContainer = document.createElement('div');
     sourceWebsiteProfileContainer.classList.add('sourceWebsiteProfileContainer');
     const imgTag2 = document.createElement('img');
-    imgTag2.src = '/static/' + article.source.website.logo;
+    imgTag2.src =
+        'https://finbrowser.s3.us-east-2.amazonaws.com/static/' + article.source.website.logo;
     const aTag1 = document.createElement('a');
     aTag1.href = article.source.url;
     sourceWebsiteProfileContainer.append(imgTag2, aTag1);
