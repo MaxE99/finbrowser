@@ -11,6 +11,7 @@ from researchbrowserproject.sitemaps import (
     RegistrationSitemaps,
     SourceSitemap,
     ContentSitemaps,
+    StockSitemap,
 )
 
 from apps.home.views import NotFoundView
@@ -19,6 +20,7 @@ sitemaps = {
     "sources": SourceSitemap,
     "sectors": SectorSitemap,
     "content": ContentSitemaps,
+    "stocks": StockSitemap,
     "registration": RegistrationSitemaps,
 }
 

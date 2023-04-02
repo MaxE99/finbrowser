@@ -20,7 +20,7 @@ class StockDetailView(DetailView, BaseMixin):
 
     def get_object(self, queryset=None):
         slug = self.kwargs["slug"]
-        return Stock.objects.get(ticker=slug)
+        return get_object_or_404(Stock, ticker=slug)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
