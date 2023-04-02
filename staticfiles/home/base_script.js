@@ -772,7 +772,13 @@ function openAddToListMenu(e) {
     const articleName = e.target
         .closest('.articleContainer')
         .querySelector('.contentBody p')?.innerText;
-    document.querySelector('.fullScreenPlaceholder .addToListForm h2 span').innerText = articleName;
+    if (articleName) {
+        document.querySelector('.fullScreenPlaceholder .addToListForm h2 span').innerText =
+            articleName;
+    } else {
+        document.querySelector('.fullScreenPlaceholder .addToListForm h2 span').innerText =
+            'Retweet/Reply';
+    }
     setModalStyle();
     document.querySelector('.fullScreenPlaceholder').style.display = 'flex';
     document.querySelector('.fullScreenPlaceholder .addToListForm').id = 'article_id' + article_id;

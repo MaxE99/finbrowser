@@ -544,11 +544,11 @@ def stocks_create_models_from_json():
         symbol = item["symbol"]
         if (
             item["type"] == "stock"
-            and all(char not in symbol for char in (".", "-"))
+            and all(char not in symbol for char in ("."))
             and len(symbol) < 7
         ):
-            if "/" in symbol:
-                symbol = symbol.replace("/", ".")
+            if "-" in symbol:
+                symbol = symbol.replace("-", ".")
             full_name = item["name"]
             short_name = full_name
             for word in full_fillerwords:

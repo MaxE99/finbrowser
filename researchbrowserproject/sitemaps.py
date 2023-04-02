@@ -42,7 +42,7 @@ class StockSitemap(Sitemap):
         return Stock.objects.all()
 
     def location(self, obj):
-        return reverse("stock: stock-details", args=[obj.ticker])
+        return reverse("stock:stock-details", args=[obj.ticker])
 
 
 class SectorSitemap(Sitemap):
@@ -55,7 +55,7 @@ class SectorSitemap(Sitemap):
         return Sector.objects.all()
 
     def location(self, obj):
-        return reverse("sector: sector-details", args=[obj.slug])
+        return reverse("sector:sector-details", args=[obj.slug])
 
 
 class ContentSitemaps(Sitemap):
@@ -65,7 +65,7 @@ class ContentSitemaps(Sitemap):
     protocol = "https"
 
     def items(self):
-        return ["home:feed", "home:guide", "source: source_ranking"]
+        return ["home:feed", "home:guide", "source:source_ranking"]
 
     def location(self, item):
         return reverse(item)
