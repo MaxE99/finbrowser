@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v11.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v12.css' %}" />
 <title>Highlighted Content | FinBrowser</title>
 <meta name="description" content="FinBrowser list created by {{ list.creator.username }}">
 {% endblock %} {% block content %}
@@ -7,7 +7,7 @@
 <div class="pageWrapper">
     <div class="firstRow">
         <div class="nameContainer">
-            <h2 id="{{ list.list_id }}">Highlighted Content</h2>
+            <h2 class="noOverflowHeader" id="{{ list.list_id }}">Highlighted Content</h2>
             <i class="fas fa-chevron-down"></i>
             <div class="listOptionsContainer">
                 <div class="listsContainer">

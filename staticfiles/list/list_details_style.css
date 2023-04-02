@@ -1025,6 +1025,11 @@
     font-size: 2.3rem;
 }
 
+.firstRow .nameContainer .noOverflowHeader{
+    max-width: unset;
+    overflow: unset;
+}
+
 @media (max-width: 1000px) {
     .firstRow h2 {
         font-size: 3.5rem;
