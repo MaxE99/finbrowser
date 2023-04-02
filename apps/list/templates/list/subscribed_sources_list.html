@@ -4,6 +4,25 @@
 <meta name="description" content="FinBrowser list created by {{ list.creator.username }}">
 {% endblock %} {% block content %}
 
+<div class="listMenuWrapper">
+    <div class="menuContainer">
+        <div class="addSourceContainer">
+            <div class="header">
+                <h2>Add Sources</h2><i class="fas fa-times closeAddSourceContainer"></i>
+            </div>
+            <div class="actionWrapper">
+                <input id="textInput" type="text" autocomplete="off" spellcheck="false">
+                <div class="searchResultWrapper">
+                    <div id="searchResultsContainer"></div>
+                    <div class="selectionContainer"></div>
+                </div>
+                <button class="addSourceButton">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="pageWrapper">
     <div class="firstRow">
         <div class="nameContainer">
@@ -96,5 +115,5 @@
 </div>
 
 
-<script src="{% static 'list/highlighted_content_script.js' %}"></script>
+<script src="{% static 'list/min_subscribed_sources_script_v1.js' %}"></script>
 {% endblock content %}

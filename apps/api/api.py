@@ -80,6 +80,7 @@ class SourceViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         list_search = self.request.GET.get("list_search", None)
         blacklist_search = self.request.GET.get("blacklist_search", None)
+        subs_search = self.request.GET.get("subs_search", None)
         if list_search:
             selected_list = get_object_or_404(
                 List, list_id=self.request.GET.get("list_id", None)
@@ -108,6 +109,13 @@ class SourceViewSet(viewsets.ModelViewSet):
             raise Http404(
                 "Could not find a list with that ID owned by the current user"
             )
+        if subs_search:
+            subscribed_sources = Source.objects.filter_by_subscription(
+                self.request.user
+            )
+            return Source.objects.filter(name__istartswith=subs_search).exclude(
+                source_id__in=subscribed_sources
+            )[:10]
         return Source.objects.all()
 
 
