@@ -1,11 +1,15 @@
 function setModalStyle() {
     document.querySelector('body').style.overflow = 'hidden';
     document.querySelector('.pageWrapper').style.opacity = '0.1';
+    document.querySelector('header').style.opacity = 0.1;
+    document.querySelector('header . outerHeaderContainer').style.zIndex = 0;
 }
 
 function removeModalStyle() {
     document.querySelector('body').style.removeProperty('overflow');
     document.querySelector('.pageWrapper').style.removeProperty('opacity');
+    document.querySelector('header').style.removeProperty('opacity');
+    document.querySelector('header . outerHeaderContainer').style.zIndex = 1000;
 }
 
 // open hamburger menu
