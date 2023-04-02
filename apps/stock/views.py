@@ -19,8 +19,8 @@ class StockDetailView(DetailView, BaseMixin):
     template_name = "stock/stock_details.html"
 
     def get_object(self, queryset=None):
-        slug = self.kwargs["slug"]
-        return get_object_or_404(Stock, ticker=slug)
+        slug_with_point = self.kwargs["slug_with_point"]
+        return get_object_or_404(Stock, ticker=slug_with_point)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

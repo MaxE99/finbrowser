@@ -1,5 +1,5 @@
 # Django imports
-from django.urls import path
+from django.urls import path, re_path
 
 # Local imports
 from apps.stock.views import StockDetailView, PortfolioView, PortfolioDetailView
@@ -7,8 +7,17 @@ from apps.stock.views import StockDetailView, PortfolioView, PortfolioDetailView
 
 app_name = "stock"
 
+# Define a custom route converter to accept a slug with a point
+class SlugWithPointConverter:
+    regex = r"[\w\-\.]+"
+
+
 urlpatterns = [
-    path("stock/<slug:slug>", StockDetailView.as_view(), name="stock-details"),
+    re_path(
+        r"^stock/(?P<slug_with_point>[\w\-\.]+)/$",
+        StockDetailView.as_view(),
+        name="stock-details",
+    ),
     path("portfolio/", PortfolioView.as_view(), name="portfolio"),
     path(
         "portfolio/<int:portfolio_id>",
