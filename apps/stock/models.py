@@ -27,7 +27,7 @@ class Stock(models.Model):
     objects = StockManager()
 
     def get_absolute_url(self):
-        return reverse("stock:stock-details", kwargs={"slug": self.ticker})
+        return reverse("stock:stock-details", kwargs={"slug_with_point": self.ticker})
 
     def __str__(self):
         return f"{self.ticker} - {self.full_company_name} - {self.short_company_name}"
