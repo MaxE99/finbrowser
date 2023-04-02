@@ -126,7 +126,7 @@ if (document.querySelector('.addSourceContainer #textInput')) {
                                             results_list.style.display = 'none';
                                             selected_list.style.display = 'block';
                                             document.querySelector(
-                                                '.addSourcesForm #textInput'
+                                                '.listMenuWrapper .addSourceContainer #textInput'
                                             ).value = '';
                                         }
                                     );
