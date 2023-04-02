@@ -1,89 +1,91 @@
 .overlay {
-  height: calc(100vh - 8.5rem);
+    height: calc(100vh - 8.5rem);
 }
 
 .formContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 90%;
-  max-width: 625px;
-  margin: 0 auto;
-  background: white;
-  box-shadow: var(--box-shadowScheme);
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 0.45rem;
-  padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 625px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: var(--box-shadowScheme);
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 0.45rem;
+    padding: 2rem;
 }
 
 .formContainer .header {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  border-bottom: 0.1rem solid #e2e6ea;
-  padding-bottom: 1rem;
-  width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-bottom: 0.1rem solid #e2e6ea;
+    padding-bottom: 1rem;
+    width: 100%;
 }
 
 .formContainer .header h2 {
-  font-size: 2.5rem;
+    font-size: 2.5rem;
 }
 
 .formContainer form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: calc(100vh - 22rem);
+    overflow-y: auto;
 }
 
 .formContainer input,
 .formContainer textarea,
 .formContainer select {
-  padding: 1rem !important;
-  border: 0.2rem solid rgb(226, 230, 234) !important;
-  border-radius: 0.45rem !important;
-  margin: 0 0 1.5rem !important;
-  font-size: 1.6rem;
+    padding: 1rem !important;
+    border: 0.2rem solid rgb(226, 230, 234) !important;
+    border-radius: 0.45rem !important;
+    margin: 0 0 1.5rem !important;
+    font-size: 1.6rem;
 }
 
 .formContainer textarea {
-  outline-color: var(--primary-fontColor);
+    outline-color: var(--primary-fontColor);
 }
 
 .formContainer textarea {
-  padding: 2rem !important;
-  font-size: 1.8rem !important;
-  min-height: 40rem;
+    padding: 2rem !important;
+    font-size: 1.8rem !important;
+    min-height: 40rem;
 }
 
 .formContainer label {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
 }
 
 .formContainer .formSubmitButton {
-  color: white;
-  background: var(--primary-fontColor);
-  border: 0.1rem solid #e2e6ea;
-  cursor: pointer;
-  font-size: 1.85rem;
-  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-  text-decoration: none;
-  border-radius: 0.45rem;
-  padding: 1.36rem 2.72rem;
-  margin-bottom: 0 !important;
-  box-shadow: none;
+    color: white;
+    background: var(--primary-fontColor);
+    border: 0.1rem solid #e2e6ea;
+    cursor: pointer;
+    font-size: 1.85rem;
+    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+    text-decoration: none;
+    border-radius: 0.45rem;
+    padding: 1.36rem 2.72rem;
+    margin-bottom: 0 !important;
+    box-shadow: none;
 }
 
 .formContainer .formSubmitButton:hover {
-  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-  background: #1a73e8;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+    background: #1a73e8;
 }
 
 @media (max-width: 600px) {
-  .formContainer {
-    width: 95%;
-  }
+    .formContainer {
+        width: 95%;
+    }
 }
