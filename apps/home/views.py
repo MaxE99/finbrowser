@@ -1,6 +1,7 @@
 # Django imports
 from django.contrib.auth import get_user_model
 from django.views.generic import TemplateView
+from django.http import HttpResponseServerError
 
 # Local imports
 from apps.logic.pure_logic import paginator_create
@@ -152,27 +153,38 @@ class SearchResultView(TemplateView, BaseMixin):
     template_name = "home/search_results.html"
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        search_term = kwargs["search_term"]
-        context["filtered_stocks"] = Stock.objects.filter_by_search_term(search_term)
-        context["filtered_sources"] = Source.objects.filter_by_search_term(search_term)
-        filtered_content = Article.objects.filter_by_search_term(search_term)
-        context["analysis"] = paginator_create(
-            self.request,
-            filtered_content.filter(source__content_type="Analysis"),
-            50,
-            "analysis",
-        )
-        context["commentary"] = paginator_create(
-            self.request,
-            filtered_content.filter(source__content_type="Commentary"),
-            50,
-            "commentary",
-        )
-        context["news"] = paginator_create(
-            self.request,
-            filtered_content.filter(source__content_type="News"),
-            50,
-            "news",
-        )
-        return context
+        try:
+            context = super().get_context_data(**kwargs)
+            search_term = kwargs["search_term"]
+            context["filtered_stocks"] = Stock.objects.filter_by_search_term(
+                search_term
+            )
+            context["filtered_sources"] = Source.objects.filter_by_search_term(
+                search_term
+            )
+            filtered_content = Article.objects.filter_by_search_term(search_term)
+            context["analysis"] = paginator_create(
+                self.request,
+                filtered_content.filter(source__content_type="Analysis"),
+                50,
+                "analysis",
+            )
+            context["commentary"] = paginator_create(
+                self.request,
+                filtered_content.filter(source__content_type="Commentary"),
+                50,
+                "commentary",
+            )
+            context["news"] = paginator_create(
+                self.request,
+                filtered_content.filter(source__content_type="News"),
+                50,
+                "news",
+            )
+            return context
+        except Exception as e:
+            print(
+                "ATTENTION THE ERROR IS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+            )
+            print(e)
+            return HttpResponseServerError("Internal Server Error")
