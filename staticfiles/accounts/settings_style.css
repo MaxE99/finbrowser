@@ -262,7 +262,6 @@ h2 {
 }
 
 .noNotificationsActivated {
-    margin-top: 3rem;
     font-size: 3rem;
     text-align: center;
 }
@@ -279,12 +278,12 @@ h2 {
     margin: 2rem 0rem 1rem;
 }
 
-.notificationTab h2:first-of-type {
-    margin: 0 0 2rem;
+.sliderWrapper .sliderContentContainer .slider {
+    margin-bottom: 0;
 }
 
-.notificationTab h2:last-of-type {
-    margin-top: 4rem;
+.notificationTab h2:first-of-type {
+    margin: 0 0 2rem;
 }
 
 @media (max-width: 1150px) {

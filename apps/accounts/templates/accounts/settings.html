@@ -2,7 +2,7 @@
 {% load tz %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v12.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v14.css' %}">
 <title>Settings | FinBrowser</title>
 {% endblock %}
 
@@ -57,6 +57,7 @@
             </form>
         </div>
         <div class="tabsContent notificationTab" data-tab="2">
+            {% if user_source_notifications or user_stock_notifications or user_keyword_notifications %}
             {% if user_source_notifications.count > 0 %}
             <h2>Source Notifications</h2>
             <div class="notificationContainer">
@@ -108,6 +109,7 @@
                 </div>
                 {% endfor %}
             </div>
+            {% endif %}
             {% if user_keyword_notifications.count > 0 %}
             <h2>Keyword Notifications</h2>
             <div class="notificationContainer">
@@ -121,9 +123,9 @@
                 </div>
                 {% endfor %}
             </div>
+            {% endif %}
             {% else %}
             <div class="noNotificationsActivated">You haven't activated any notifications!</div>
-            {% endif %}
             {% endif %}
         </div>
     </div>
