@@ -236,7 +236,7 @@ async function createTweets() {
     }
 }
 
-window.addEventListener('scroll', () => {
+function contentScroll() {
     const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
     if (scrollTop + clientHeight > scrollHeight - 5 && !contentIsLoading) {
         const loader = document.createElement('div');
@@ -262,13 +262,9 @@ window.addEventListener('scroll', () => {
             contentIsLoading = true;
         }
     }
-});
+}
 
-const scrollableDiv = document.querySelector(
-    '.pageWrapper .tweetsContainer .smallFormContentWrapper'
-);
-
-scrollableDiv.addEventListener('scroll', function () {
+function twitterScroll() {
     if (
         Math.ceil(scrollableDiv.scrollTop + scrollableDiv.clientHeight) >=
             scrollableDiv.scrollHeight &&
@@ -282,4 +278,24 @@ scrollableDiv.addEventListener('scroll', function () {
         createTweets();
         contentIsLoading = true;
     }
+}
+
+window.addEventListener('scroll', () => {
+    contentScroll();
+});
+
+window.addEventListener('touchmove', () => {
+    contentScroll();
+});
+
+const scrollableDiv = document.querySelector(
+    '.pageWrapper .tweetsContainer .smallFormContentWrapper'
+);
+
+scrollableDiv.addEventListener('scroll', function () {
+    twitterScroll();
+});
+
+scrollableDiv.addEventListener('touchmove', () => {
+    twitterScroll();
 });
