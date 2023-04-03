@@ -1,6 +1,6 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'stock/min_stock_details_style_v6.css' %}" />
-<title>{{ stock.short_company_name }} | FinBrowser</title>
+<title>{{ stock.full_company_name }} | FinBrowser</title>
 <meta name="description" content="Discover the latest content from {{ sstock.full_company_name }}">
 {% endblock %} {% block content %}
 
@@ -9,7 +9,7 @@
     <div class="menuContainer">
         <div role="form" class="addStockContainer">
             <div class="formHeaderContainer">
-                <h2>Add <span>{{ stock.short_company_name }}</span> To Your Portfolios</h2>
+                <h2>Add <span>{{ stock.full_company_name }}</span> To Your Portfolios</h2>
                 <i class="fas fa-times closeFormContainerButton"></i>
             </div>
             {% if portfolios %}

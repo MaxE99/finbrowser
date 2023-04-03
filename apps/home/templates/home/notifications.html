@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_notifications_style_v4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_notifications_style_v5.css' %}">
 <title>Notifications | FinBrowser</title>
 {% endblock %}
 {% block content %}
@@ -35,6 +35,8 @@
             <div class="contentColumnContainer {% if not stock_notifications %}halfPageContainer{% endif %}">
                 {% create_fk_content_container source_notifications request highlighted_content_ids "source_notifications" %}
             </div>
+            {% else %}
+            <div class="noNotificationsAvailable">No Source Notifications Available</div>
             {% endif %}
         </div>
         <div class="tabsContent" data-tab="1">
@@ -42,6 +44,8 @@
             <div class="contentColumnContainer {% if not source_notifications %}halfPageContainer{% endif %}">
                 {% create_fk_content_container stock_notifications request highlighted_content_ids "stock_notifications" %}
             </div>
+            {% else %}
+            <div class="noNotificationsAvailable">No Stock Notifications Available</div>
             {% endif %}
         </div>
         <div class="tabsContent" data-tab="2">

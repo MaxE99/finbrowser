@@ -342,6 +342,7 @@ header {
 }
 
 .notificationPopupWrapper .notificationHeader .fa-cog {
+    position: relative;
     color: grey;
     cursor: pointer;
     width: 4rem;
@@ -1385,7 +1386,7 @@ footer ul a:hover {
 .formContainer .formHeaderContainer h2,
 .addToListForm .formHeaderContainer h2 {
     font-size: 2rem;
-    max-width: 92.5%;
+    max-width: 90%;
     text-align: justify;
 }
 
