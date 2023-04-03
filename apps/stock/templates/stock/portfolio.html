@@ -143,7 +143,7 @@
                             aria-label="Open Profile Of {{ stock.stock.full_company_name }}"></a>
                     </td>
                     <td class="companyNameContainer">
-                        <span>{{ stock.stock.short_company_name }}</span>
+                        <span>{{ stock.stock.full_company_name }}</span>
                         <a href="{{ stock.absolute_path }}"
                             aria-label="Open Profile Of {{ stock.stock.full_company_name }}"></a>
                     </td>
@@ -155,9 +155,9 @@
                     <td>
                         {% if stock.articles_last_7d < 5 %}
                         <span class="low">Low</span>
-                        {% elif stock.articles_last_7d < 10 %}
+                        {% elif stock.articles_last_7d > 5 and stock.articles_last_7d < 10 %}
                         <span class="mid">Mid</span>
-                        {% elif stock.articles_last_7d > 15 %}
+                        {% elif stock.articles_last_7d > 10 %}
                         <span class="high">High</span>
                         {% endif %}
                         <a href="{{ stock.absolute_path }}"
@@ -167,28 +167,6 @@
                         <span class="keywordButton">{{ stock.keywords|length }}</span>
                         <a href="{{ stock.absolute_path }}"
                             aria-label="Open Profile Of {{ stock.stock.full_company_name }}"></a>
-                        <!-- <div class="keywordModal">
-                            <div class="keywordHeader">Keywords for <span>{{ stock.stock.ticker }}</span><i
-                                    class="fas fa-times"></i>
-                            </div>
-                            <div class="createKeywordsContainer">
-                                <label>Create New Keyword</label>
-                                <div class="inputContainer">
-                                    <input minlength="3" maxlength="30" placeholder="Enter keyword..."
-                                        autocomplete="off" spellcheck="false">
-                                </div>
-                                <span class="infoLink"><i class="fas fa-info"></i></span>
-                            </div>
-                            <div class="keywordsContainer">
-                                {% for keyword in stock.keywords %}
-                                <div id="wkw{{keyword.pkeyword_id }}" class="keywordContainer">
-                                    <span>{{ keyword.keyword }}</span>
-                                    <i class="fas fa-times"></i>
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <button class="addButton">Add</button>
-                        </div> -->
                     </td>
                     <td class="actionContainer">
                         <a href="{{ stock.absolute_path }}" class="openStockButton">Open</a>
@@ -259,7 +237,7 @@
     </div>
     {% endif %}
 </div>
-<script src="{% static 'stock/min_portfolio_script_v1.js' %}"></script>
+<script src="{% static 'stock/min_portfolio_script_v2.js' %}"></script>
 
 {% else %}
 

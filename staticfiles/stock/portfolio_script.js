@@ -139,7 +139,7 @@ document
                                 ticker.innerText = stock.ticker;
                                 ticker.classList.add('stockTicker');
                                 const companyName = document.createElement('div');
-                                companyName.innerText = stock.short_company_name;
+                                companyName.innerText = stock.full_company_name;
                                 companyName.classList.add('companyName');
                                 stockContainer.append(ticker, companyName);
                                 searchResult.appendChild(stockContainer);

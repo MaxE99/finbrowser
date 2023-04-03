@@ -130,6 +130,19 @@
     background: #1a73e8;
 }
 
+.pageWrapper .tabsContent {
+    width: 100%;
+}
+
+.pageWrapper .noNotificationsAvailable {
+    font-size: 3rem;
+    text-align: center;
+    background: #fff;
+    padding: 2rem 4rem;
+    border-radius: 0.45rem;
+    box-shadow: var(--box-shadowScheme);
+}
+
 @media (max-width: 1125px) {
     .contentColumnWrapper .listNoficiationHeader {
         margin-top: 2rem;
