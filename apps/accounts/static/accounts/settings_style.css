@@ -4,7 +4,7 @@
 
 h1 {
     margin-top: 2rem;
-    font-size: 2.5rem;
+    font-family: var(--site-Font);
 }
 
 .tabsContainer .activatedTab,
@@ -31,7 +31,7 @@ h2 {
 
 .sliderWrapper .sliderContentContainer .slider .contentWrapper {
     box-shadow: unset;
-    border: 0.1rem solid #ccc;
+    border: 0.2rem solid var(--border-fontColor);
 }
 
 .editSection {
@@ -64,7 +64,7 @@ h2 {
 #id_new_password2,
 #id_timezone,
 .linkInput {
-    border: 0.1rem solid #ccc;
+    border: 0.2rem solid var(--border-secondaryFontColor);
     border-radius: 0.6rem;
     font-size: 1.8rem;
     padding: 1.3rem 1.2rem 1.3rem 1.2rem;
@@ -89,8 +89,7 @@ h2 {
 
 .profilePicInnerContainer {
     display: flex;
-    align-items: center;
-    margin-top: 0.5rem;
+    align-items: end;
 }
 
 .profilePicInnerContainer .logoPlaceholder {
@@ -100,21 +99,21 @@ h2 {
     font-family: 'Times New Roman';
     font-weight: 900;
     text-transform: UPPERCASE;
-    font-size: 3.5rem;
-    width: 5rem;
-    height: 5rem;
+    font-size: 7.5rem;
+    width: 10rem;
+    height: 10rem;
     color: white;
     background: var(--primary-fontColor);
-    border-radius: 50%;
+    border-radius: 0.45rem;
     padding: 0.25rem 1.5rem;
     user-select: none;
 }
 
 .profilePicContainer img,
 .existingSocialContainer img {
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50%;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 0.45rem;
 }
 
 .changeProfilePicButton {
@@ -122,41 +121,10 @@ h2 {
     margin-left: 1rem;
 }
 
-.cancelButton,
-.buttonContainer input,
-.changeProfilePicButton,
-.profilePicInnerContainer button,
-.passwordChangeSubmit,
-.privacySettingsChangeSubmit {
-    color: white;
-    background: var(--primary-fontColor);
-    border: 0.1rem solid #e2e6ea;
-    cursor: pointer;
-    font-size: 1.85rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    text-decoration: none;
-    border-radius: 0.45rem;
-    padding: 1.36rem 2.72rem;
-}
-
-.buttonContainer input:hover,
-.passwordChangeSubmit:hover,
-.privacySettingsChangeSubmit:hover {
-    background: #1a73e8 !important;
-}
-
-.cancelButton:hover {
-    background: var(--primary-fontColor) !important;
-    color: white !important;
-}
-
-.cancelButton:hover,
-.buttonContainer input:hover,
-.changeProfilePicButton:hover,
-.profilePicInnerContainer button:hover,
-.passwordChangeSubmit:hover,
-.privacySettingsChangeSubmit:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+.profilePicInnerContainer button {
+    background: white;
+    color: var(--primary-fontColor);
+    border: 0.2rem solid;
 }
 
 .changeProfilePicButton input {
@@ -174,9 +142,31 @@ h2 {
 }
 
 .profilePicInnerContainer button:last-of-type {
+    color: red;
+    background: white;
+    border: 0.2rem solid;
+    margin-left: 1rem;
+    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+    text-decoration: none;
+    border-radius: 0.45rem;
+    padding: 1.36rem 2.72rem;
+}
+
+.profilePicInnerContainer button:last-of-type:hover {
     background: red;
     color: white;
-    margin-left: 1rem;
+}
+
+form .profilePicInnerContainer .disabledRemove,
+form .profilePicInnerContainer .disabledRemove:hover {
+    color: rgba(0, 0, 0, 0.26);
+    background: rgba(0, 0, 0, 0.12);
+    cursor: none;
+    box-shadow: none;
+    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+    border-radius: 0.45rem;
+    padding: 1.36rem 2.72rem;
+    font-size: 2rem;
 }
 
 .linkInput {
@@ -184,16 +174,14 @@ h2 {
     width: 100%;
 }
 
-.buttonContainer {
+.pageWrapper .buttonContainer {
     margin-left: auto;
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
 }
 
-.cancelButton {
-    background: white !important;
-    margin-right: 1rem;
-    color: var(--primary-fontColor) !important;
+.pageWrapper .buttonContainer input {
+    margin-left: 1rem;
 }
 
 .changePasswordForm,
@@ -231,21 +219,18 @@ h2 {
     text-align: center;
     margin: 1rem 1rem 0 0;
     border-radius: 20rem;
-    border: 0.1rem solid #ccc;
+    border: 0.2rem solid var(--border-fontColor);
     padding: 0.75rem 1.5rem;
     background: white;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .keywordContainer:hover {
-    background: var(--primary-fontColor);
-    color: white;
-}
-
-.keywordContainer:hover .fa-check {
-    background: white;
     color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
+    border: 0.2rem solid var(--primary-fontColor);
 }
 
 .keywordContainer .fa-check {
@@ -258,7 +243,6 @@ h2 {
 
 .keywordContainer .fa-times {
     margin-left: 1rem;
-    cursor: pointer;
 }
 
 .noNotificationsActivated {
@@ -284,6 +268,12 @@ h2 {
 
 .notificationTab h2:first-of-type {
     margin: 0 0 2rem;
+}
+
+.slider .notificationActivated:hover {
+    box-shadow: none;
+    color: var(--primary-fontColor);
+    background: white;
 }
 
 @media (max-width: 1150px) {
@@ -369,9 +359,9 @@ h2 {
     }
 
     .profilePicInnerContainer img {
-        width: 8rem;
-        height: 8rem;
-        margin-top: 1rem;
+        width: 15rem;
+        height: 15rem;
+        margin: 0 auto;
     }
 
     .profilePicInnerContainer button {

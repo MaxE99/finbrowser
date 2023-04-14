@@ -186,6 +186,14 @@ function addNewContentToContainer(article, tweet = false) {
     }
 }
 
+const scrollableContentContainer = document.querySelector(
+    '.pageWrapper .recommendedContentContainer .smallFormContentWrapper'
+);
+
+const scrollableTweetContainer = document.querySelector(
+    '.pageWrapper .tweetsContainer .smallFormContentWrapper'
+);
+
 async function createContent() {
     try {
         const position = document.querySelectorAll(
@@ -237,37 +245,31 @@ async function createTweets() {
 }
 
 function contentScroll() {
-    const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
-    if (scrollTop + clientHeight > scrollHeight - 5 && !contentIsLoading) {
+    if (
+        Math.ceil(scrollableContentContainer.scrollTop + scrollableContentContainer.clientHeight) >=
+            scrollableContentContainer.scrollHeight &&
+        !contentIsLoading
+    ) {
         const loader = document.createElement('div');
         loader.classList.add('loader');
-        if (
-            window.innerWidth < 1001 &&
-            document
-                .querySelector('.pageWrapper .tweetsContainer')
-                .classList.contains('tabsContentActive')
-        ) {
-            document
-                .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
-                .appendChild(loader);
-            createTweets();
-            contentIsLoading = true;
-        } else {
-            document
-                .querySelector(
-                    '.pageWrapper .longFormContentContainer .recommendedContentContainer'
-                )
-                .appendChild(loader);
-            createContent();
-            contentIsLoading = true;
-        }
+        document
+            .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
+            .appendChild(loader);
+        createTweets();
+        contentIsLoading = true;
+    } else {
+        document
+            .querySelector('.pageWrapper .longFormContentContainer .recommendedContentContainer')
+            .appendChild(loader);
+        createContent();
+        contentIsLoading = true;
     }
 }
 
 function twitterScroll() {
     if (
-        Math.ceil(scrollableDiv.scrollTop + scrollableDiv.clientHeight) >=
-            scrollableDiv.scrollHeight &&
+        Math.ceil(scrollableTweetContainer.scrollTop + scrollableTweetContainer.clientHeight) >=
+            scrollableTweetContainer.scrollHeight &&
         !contentIsLoading
     ) {
         const loader = document.createElement('div');
@@ -280,22 +282,18 @@ function twitterScroll() {
     }
 }
 
-window.addEventListener('scroll', () => {
+scrollableContentContainer.addEventListener('scroll', () => {
     contentScroll();
 });
 
-window.addEventListener('touchmove', () => {
+scrollableContentContainer.addEventListener('touchmove', () => {
     contentScroll();
 });
 
-const scrollableDiv = document.querySelector(
-    '.pageWrapper .tweetsContainer .smallFormContentWrapper'
-);
-
-scrollableDiv.addEventListener('scroll', function () {
+scrollableTweetContainer.addEventListener('scroll', function () {
     twitterScroll();
 });
 
-scrollableDiv.addEventListener('touchmove', () => {
+scrollableTweetContainer.addEventListener('touchmove', () => {
     twitterScroll();
 });

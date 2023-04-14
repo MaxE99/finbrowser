@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'home/fontawesome/css/all.css' %}">
-    <link rel="stylesheet" href="{% static 'registration/min_register_style_v3.css' %}">
+    <link rel="stylesheet" href="{% static 'registration/min_register_style_v4.css' %}">
     <link rel="icon" type="image/png" href="{% static 'home/media/favicon.png' %}">
     <title>Register | FinBrowser</title>
     <meta name="description"
@@ -20,7 +20,29 @@
     <main>
         <div class="signupForm">
             <div id="form-wrapper">
-                <h1>Create Account</h1>
+                <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}" alt="Finbrowser logo large">
+                <div class="loginAccount">Already have an account? <a href="{{ login_url }}">Go to login</a></div>
+                <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <p>
+                        {{ field.errors }}
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.name == "terms_and_privacy" %}
+                        <label class="container">I agree to the <a target="_blank"
+                                href="{% url 'support:terms-of-service' %}">Terms</a>
+                            and
+                            <a target="_blank" href="{% url 'support:privacy-policy' %}">Privacy Policy</a>.
+                        </label>
+                        {% endif %}
+                    </p>
+                    {% endfor %}
+                    {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <button type="submit">{% trans "Sign Up" %}</button>
+                </form>
                 <div class="googleAuthContainer">
                     <button class="googleAuthButton">
                         <img class="googleLogo" src="{% static 'home/media/google_icon.png' %}" />
@@ -31,30 +53,6 @@
                         </form>
                     </button>
                 </div>
-                <div class="seperator">or use your email for registration</div>
-                <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-                    {% csrf_token %}
-                    {% for field in form %}
-                    <p>
-                        {{ field.errors }}
-                        {{ field.label_tag }}
-                        {{ field }}
-                        {% if field.name == "terms_and_privacy" %}
-                        <label class="container">I agree to the <a href="{% url 'support:terms-of-service' %}">Terms</a>
-                            and
-                            <a href="{% url 'support:privacy-policy' %}">Privacy Policy</a>.
-                        </label>
-                        {% endif %}
-                    </p>
-                    {% endfor %}
-                    {% if redirect_field_value %}
-                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                    {% endif %}
-                    <div class="actionButtonsContainer">
-                        <button type="submit">{% trans "Sign Up" %}</button>
-                        <a href="{{ login_url }}" class="signInButton">Sign In</a>
-                    </div>
-                </form>
             </div>
         </div>
     </main>

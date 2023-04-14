@@ -1,6 +1,6 @@
 .keywordCreationWrapper {
     display: none;
-    z-index: 998;
+    z-index: 1002;
     position: absolute;
     max-width: 1250px;
     width: 100%;
@@ -14,7 +14,9 @@
     transform: translate(-50%, -50%);
     width: 500px;
     max-width: 95%;
-    max-height: 100%;
+    max-height: 95%;
+    overflow-y: auto;
+    box-shadow: var(--box-shadowScheme);
 }
 
 .keywordCreationWrapper .createKeywordNotificationModal {
@@ -22,7 +24,6 @@
     flex-direction: column;
     position: sticky;
     bottom: 9rem;
-    box-shadow: var(--box-shadowScheme);
     background: white;
     padding: 2rem;
     z-index: 10;
@@ -40,7 +41,7 @@
     margin: 1rem 0 2rem;
     font-size: 1.6rem;
     width: 100%;
-    border: 0.1rem solid rgb(226, 230, 234);
+    border: 0.2rem solid var(--border-fontColor);
     border-radius: 0.45rem;
     padding: 1.25rem 3rem 1.25rem 1.5rem;
 }
@@ -52,7 +53,7 @@
 .keywordCreationWrapper .createKeywordNotificationModal button {
     background: var(--primary-fontColor);
     color: white;
-    border: 0.1rem solid #e2e6ea;
+    border: 0.2rem solid var(--border-fontColor);
     cursor: pointer;
     font-size: 1.8rem;
     transition: background 0.2s, box-shadow 0.2s, color 0.2s;
@@ -67,8 +68,8 @@
 }
 
 .keywordCreationWrapper .createKeywordNotificationModal .saveButton:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    background: #1a73e8 !important;
+    box-shadow: var(--box-shadowHoverSchme);
+    background: var(--hover-color) !important;
 }
 
 .keywordCreationWrapper .createKeywordNotificationModal .discardButton:hover {
@@ -90,7 +91,7 @@
 
 .contentColumnWrapper form input[name='keyword'] {
     padding: 0.75rem 1.5rem 0.75rem 0.75rem;
-    border: 0.1rem solid rgb(226, 230, 234);
+    border: 0.2rem solid var(--border-fontColor);
     margin-left: 0.5rem;
 }
 
@@ -99,7 +100,7 @@
     padding: 0.75rem 1.5rem;
     color: white;
     background: var(--primary-fontColor);
-    border: 0.2rem solid rgb(226, 230, 234);
+    border: 0.2rem solid var(--border-fontColor);
     cursor: pointer;
 }
 
@@ -110,15 +111,8 @@
 }
 
 .addKeywordsButton {
-    background: var(--primary-fontColor);
-    color: white;
-    border: 0.1rem solid #e2e6ea;
-    cursor: pointer;
-    font-size: 1.85rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    border-radius: 0.45rem;
-    padding: 1.36rem 2.72rem;
-    box-shadow: var(--box-shadowScheme);
+    margin-left: auto;
+    min-width: 200px;
 }
 
 .addKeywordsButton i {
@@ -126,21 +120,13 @@
 }
 
 .addKeywordsButton:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    background: #1a73e8;
+    color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
+    border: 0.2rem solid var(--primary-fontColor);
 }
 
 .pageWrapper .tabsContent {
     width: 100%;
-}
-
-.pageWrapper .noNotificationsAvailable {
-    font-size: 3rem;
-    text-align: center;
-    background: #fff;
-    padding: 2rem 4rem;
-    border-radius: 0.45rem;
-    box-shadow: var(--box-shadowScheme);
 }
 
 @media (max-width: 1125px) {

@@ -2,90 +2,77 @@
     height: calc(100vh - 8.5rem);
 }
 
-.formContainer {
+.supportForm {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90%;
-    max-width: 625px;
+    width: 625px;
+    max-width: 100%;
     margin: 0 auto;
-    background: white;
-    box-shadow: var(--box-shadowScheme);
     position: relative;
     top: 50%;
     transform: translateY(-50%);
     border-radius: 0.45rem;
-    padding: 2rem;
+    min-width: 25rem;
+    max-height: calc(100vh - 22rem);
+    overflow-y: auto;
+    padding: 1rem;
 }
 
-.formContainer .header {
+.supportForm .header {
     position: relative;
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
-    border-bottom: 0.1rem solid #e2e6ea;
+    border-bottom: 0.2rem solid var(--border-fontColor);
     padding-bottom: 1rem;
     width: 100%;
 }
 
-.formContainer .header h2 {
+.supportForm .header h2 {
     font-size: 2.5rem;
+    font-family: var(--site-Font);
 }
 
-.formContainer form {
+.supportForm form {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-height: calc(100vh - 22rem);
-    overflow-y: auto;
 }
 
-.formContainer input,
-.formContainer textarea,
-.formContainer select {
-    padding: 1rem !important;
-    border: 0.2rem solid rgb(226, 230, 234) !important;
-    border-radius: 0.45rem !important;
-    margin: 0 0 1.5rem !important;
-    font-size: 1.6rem;
+.supportForm input[type='text'],
+.supportForm textarea,
+.supportForm select {
+    border: 0.2rem solid var(--border-secondaryFontColor);
+    border-radius: 0.6rem;
+    font-size: 1.8rem;
+    padding: 1.3rem 1.2rem 1.3rem 1.2rem;
+    transition: border-color 250ms ease-in-out;
+    background: white;
+    margin-bottom: 1.5rem;
 }
 
-.formContainer textarea {
+.supportForm textarea {
     outline-color: var(--primary-fontColor);
 }
 
-.formContainer textarea {
-    padding: 2rem !important;
-    font-size: 1.8rem !important;
+.supportForm textarea {
+    padding: 2rem;
+    font-size: 2rem;
     min-height: 40rem;
 }
 
-.formContainer label {
+.supportForm label {
     font-size: 2rem;
     margin-bottom: 0.5rem;
 }
 
-.formContainer .formSubmitButton {
-    color: white;
-    background: var(--primary-fontColor);
-    border: 0.1rem solid #e2e6ea;
-    cursor: pointer;
-    font-size: 1.85rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    text-decoration: none;
-    border-radius: 0.45rem;
-    padding: 1.36rem 2.72rem;
-    margin-bottom: 0 !important;
-    box-shadow: none;
-}
-
-.formContainer .formSubmitButton:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    background: #1a73e8;
+.supportForm .formSubmitButton {
+    margin-bottom: 0;
 }
 
 @media (max-width: 600px) {
-    .formContainer {
+    .supportForm {
         width: 95%;
     }
 }

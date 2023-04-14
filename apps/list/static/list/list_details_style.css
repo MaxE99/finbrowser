@@ -38,7 +38,7 @@
 .firstRow .nameContainer .listOptionsContainer .listOption {
     position: relative;
     padding: 1rem 1rem 1rem 1.5rem;
-    border-bottom: 0.1rem solid #e2e6ea;
+    border-bottom: 0.2rem solid var(--border-fontColor);
     overflow: hidden;
 }
 
@@ -56,14 +56,7 @@
 }
 
 .firstRow .nameContainer .listOptionsContainer .createListButton {
-    color: white;
-    background: var(--primary-fontColor);
-    border: 0.1rem solid #e2e6ea;
-    cursor: pointer;
     font-size: 1.8rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    text-decoration: none;
-    border-radius: 0.45rem;
     padding: 1rem;
     width: 95%;
     margin: 1rem 2.5%;
@@ -73,83 +66,14 @@
     margin-right: 1rem;
 }
 
-/* .firstRow .nameContainer .listOptionsContainer {
-  z-index: 5;
-  display: none;
-  position: absolute;
-  top: 5rem;
-  left: 0;
-  background: white;
-  font-size: 1.8rem;
-  width: 100%;
-  box-shadow: var(--box-shadowScheme);
-}
-
-.firstRow .nameContainer .listOptionsContainer .listsContainer {
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: 38.5rem;
-}
-
-.firstRow .nameContainer .listOptionsContainer .listOption {
-  position: relative;
-  padding: 1rem 1rem 1rem 1.5rem;
-  border-top: 0.1rem solid #e2e6ea;
-  overflow: hidden;
-}
-
-.firstRow .nameContainer .listOptionsContainer .listOption:hover {
-  background: var(--primary-fontColor);
-  color: white;
-}
-
-.firstRow .nameContainer .listOptionsContainer .listOption a {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.firstRow .nameContainer .listOptionsContainer .createListButton {
-  color: white !important;
-  background: var(--primary-fontColor);
-  border: 0.1rem solid #e2e6ea;
-  cursor: pointer;
-  font-size: 1.8rem;
-  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-  text-decoration: none;
-  border-radius: 0.45rem;
-  padding: 1rem;
-  box-shadow: var(--box-shadowScheme);
-  width: 90%;
-  margin: 1rem 2.5%;
-} */
-
 .firstRow h2 {
     color: var(--secondary-fontColor);
     margin-right: 1rem;
+    font-family: var(--site-Font);
 }
 
 .firstRow .actionButtonContainer button {
-    color: white;
-    background: var(--primary-fontColor);
-    border: 0.1rem solid #e2e6ea;
-    cursor: pointer;
-    font-size: 1.85rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    text-decoration: none;
-    border-radius: 0.45rem;
-    padding: 1.36rem 2.72rem;
-    opacity: unset;
-    box-shadow: var(--box-shadowScheme);
     margin-left: 1rem;
-}
-
-.firstRow .actionButtonContainer button:hover,
-.firstRow .nameContainer .listOptionsContainer .createListButton:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    background: #1a73e8;
 }
 
 .firstRow .actionButtonContainer button i {
@@ -253,69 +177,8 @@
     color: var(--primary-fontColor);
 }
 
-.subscribeButton,
-.editButton,
-.cancelButton,
-.buttonContainer input,
-.deleteListButton {
-    color: var(--primary-fontColor);
-    background: white;
-    border: 0.1rem solid #e2e6ea;
-    cursor: pointer;
-    font-size: 1.85rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    text-decoration: none;
-    border-radius: 0.45rem;
-    padding: 1.36rem 2.72rem;
-    opacity: unset;
-    box-shadow: var(--box-shadowScheme);
-}
-
-.subscribeButton:hover,
-.editButton,
-.subscribed,
-.cancelButton:hover,
-.buttonContainer input {
-    color: white !important;
-    background: var(--primary-fontColor) !important;
-}
-
-.editButton:hover,
-.subscribeButton:hover,
-.cancelButton:hover,
-.buttonContainer input:hover,
-.deleteListButton:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-}
-
-.editButton:hover,
-.buttonContainer input:hover {
-    background: #1a73e8 !important;
-}
-
-.subscribed:hover {
-    color: var(--primary-fontColor) !important;
-    background: white !important;
-}
-
 .editButton i {
     margin-right: 0.3rem;
-}
-
-.buttonContainer {
-    display: none;
-    margin-left: auto;
-}
-
-.cancelButton {
-    background: white !important;
-    color: var(--primary-fontColor) !important;
-}
-
-.deleteListButton {
-    background: red;
-    width: unset;
-    color: white;
 }
 
 .creatorContainer {
@@ -365,7 +228,7 @@
     font-size: 1.6rem;
     padding: 0.4rem 1rem;
     color: #000;
-    border: 0.2rem solid #e2e6ea;
+    border: 0.2rem solid var(--border-fontColor);
     border-radius: 0.8rem;
     width: 90%;
     margin: 1rem 0;
@@ -401,7 +264,7 @@
     display: flex;
     align-items: center;
     padding: 0.5rem;
-    border-bottom: 0.1rem solid rgb(226, 230, 234);
+    border-bottom: 0.2rem solid var(--border-fontColor);
     text-decoration: none;
     color: var(--secondary-fontColor);
     white-space: nowrap;
@@ -461,10 +324,21 @@
     margin: 2rem auto 0;
 }
 
-.sliderWrapper .slider .removeFromListButton,
-.sliderWrapper .slider .removeFromListButton:hover {
+.sliderWrapper .slider .removeFromListButton {
     background: red;
     color: white;
+    border: 0.2rem solid #e2e6ea;
+    font-size: 1.8rem;
+    border-radius: 0.45rem;
+    padding: 1.36rem 2.72rem;
+    margin: 1rem;
+    cursor: pointer;
+    z-index: 10;
+    text-align: center;
+}
+
+.sliderWrapper .slider .removeFromListButton:hover {
+    box-shadow: var(--box-shadowHoverSchme);
 }
 
 .contentColumnWrapper .contentColumnContainer {
@@ -473,7 +347,7 @@
 
 .listMenuWrapper {
     display: none;
-    z-index: 998;
+    z-index: 1002;
     position: absolute;
     max-width: 1250px;
     width: 100%;
@@ -487,7 +361,7 @@
     transform: translate(-50%, -50%);
     width: 500px;
     max-width: 95%;
-    max-height: 100%;
+    max-height: 95%;
 }
 
 .listMenuWrapper .editMenu,
@@ -509,7 +383,7 @@
 .listMenuWrapper .editMenu .listNameContainer input {
     font-size: 1.6rem;
     width: 100%;
-    border: 0.1rem solid rgb(226, 230, 234);
+    border: 0.2rem solid var(--border-fontColor);
     border-radius: 0.45rem;
     margin: 1rem auto 0;
     padding: 1.25rem 3rem 1.25rem 1.5rem;
@@ -529,34 +403,30 @@
     cursor: pointer;
 }
 
-.listMenuWrapper .editMenu button {
-    color: white;
-    background: var(--primary-fontColor);
-    border: 0.2rem solid;
-    cursor: pointer;
-    font-size: 1.6rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    border-radius: 0.45rem;
-    padding: 1rem;
-    box-shadow: var(--box-shadowScheme);
-    width: 100%;
+.listMenuWrapper .editMenu .saveEditsButton {
     margin-top: 1rem;
 }
 
-.listMenuWrapper .editMenu button:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    background: #1a73e8;
+.listMenuWrapper .editMenu button {
+    font-size: 1.8rem;
+    padding: 1rem;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 .listMenuWrapper .editMenu button:last-of-type {
     color: red;
     background: white;
-    border: 0.3rem solid;
+    border: 0.2rem solid;
+    margin-bottom: 0;
+    border-radius: 0.45rem;
+    cursor: pointer;
 }
 
 .listMenuWrapper .editMenu button:last-of-type:hover {
     background: red;
     color: white;
+    box-shadow: var(--box-shadowHoverSchme);
 }
 
 .listMenuWrapper .addSourceContainer .header,
@@ -565,7 +435,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
-    border-bottom: 0.1rem solid #e2e6ea;
+    border-bottom: 0.2rem solid var(--border-fontColor);
     padding-bottom: 1rem;
 }
 
@@ -591,16 +461,31 @@
 
 .listMenuWrapper .addSourceContainer .header .fa-times:hover,
 .listMenuWrapper .editMenu .header .fa-times:hover {
-    background: #f5f5f5;
+    background: var(--hover-secondaryColor);
+}
+
+.listMenuWrapper .addSourceContainer .searchWrapper {
+    position: relative;
+    margin: 2rem auto 0;
+}
+
+.listMenuWrapper .addSourceContainer .searchWrapper .fa-search {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.6rem;
+    color: var(--primary-fontColor);
+    cursor: pointer;
+    right: 1.6rem;
+    margin-left: 1rem;
 }
 
 .listMenuWrapper .addSourceContainer input {
     font-size: 1.6rem;
     width: 100%;
-    border: 0.1rem solid rgb(226, 230, 234);
+    border: 0.2rem solid var(--border-fontColor);
     border-radius: 0.45rem;
-    margin: 1rem auto 0;
-    padding: 1.25rem 3rem 1.25rem 1.5rem;
+    padding: 1.25rem 4rem 1.25rem 1.5rem;
 }
 
 .listMenuWrapper .addSourceContainer .searchResultWrapper {
@@ -620,22 +505,19 @@
     padding: 0.6rem 0.75rem;
 }
 
-.listMenuWrapper .addSourceContainer .addSourceButton {
-    border: 0.1rem solid #e2e6ea;
-    cursor: pointer;
-    font-size: 1.8rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    border-radius: 0.45rem;
-    padding: 1rem;
-    width: 100%;
-    margin: 2rem 0 0;
-    background: var(--primary-fontColor);
-    color: white;
+.listMenuWrapper .addSourceContainer .buttonContainer {
+    margin: 2rem auto 0;
+    display: flex;
+    justify-content: flex-end;
 }
 
-.listMenuWrapper .addSourceContainer .addSourceButton:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    background: #1a73e8;
+.listMenuWrapper .addSourceContainer .buttonContainer button {
+    font-size: 1.8rem;
+    padding: 1rem 4rem;
+}
+
+.listMenuWrapper .addSourceContainer .buttonContainer .addSourceButton {
+    margin-left: 2rem;
 }
 
 @media (max-width: 1000px) {
@@ -735,82 +617,6 @@
     }
 }
 
-/* @media (max-width: 750px) {
-
-  .listPictureContainer {
-    height: 10rem;
-    width: 10rem;
-  }
-
-  .listPictureContainer i {
-    left: 50%;
-  }
-
-  .rightInnerContainer .rightFirstRowContainer {
-    font-size: 2.2rem;
-    flex-direction: column;
-    align-items: unset;
-  }
-
-  .nameChangeContainer {
-    width: unset;
-  }
-
-  .nameChangeContainer input {
-    font-size: 2.3rem;
-  }
-
-  .rightFirstRowContainer .creatorContainerSmartphonePositioning {
-    display: block;
-  }
-
-  .creatorContainer {
-    display: none;
-    margin-top: unset;
-  }
-
-  .notificationAndSubscribtionContainer {
-    width: 100%;
-    margin: 1rem 0;
-  }
-
-  .buttonContainer {
-    margin-left: 0;
-  }
-
-  .cancelButton,
-  .buttonContainer input,
-  .deleteListButton {
-    font-size: 1.6rem;
-    padding: 0.75rem 1.5rem;
-    margin-left: 0.5rem;
-    width: unset;
-  }
-
-
-  .notificationAndSubscribtionContainer .fa-bell {
-    padding-left: unset;
-  }
-
-  .ratingsWrapper {
-    margin-top: unset;
-  }
-
-  .rate-form {
-    display: flex;
-    justify-content: center;
-  }
-
-  .rankingStar,
-  .ratedStar {
-    font-size: 3.5rem;
-  }
-
-  .addSourcesButton {
-    font-size: 10rem;
-  }
-} */
-
 .warningMessageContainer {
     align-items: center;
     background: #fff;
@@ -854,7 +660,7 @@
 
 .warningMessageContainer .buttonContainer button {
     background: #fff;
-    border: 0.1rem solid #e2e6ea;
+    border: 0.1rem solid var(--bordar-fontColor);
     border-radius: 0.45rem;
     cursor: pointer;
     font-size: 2rem;
@@ -871,35 +677,7 @@
 }
 
 .warningMessageContainer .buttonContainer button:last-of-type:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-}
-
-.infoLink {
-    position: absolute;
-    right: 0;
-    width: 4rem;
-    height: 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-}
-
-.infoLink:hover {
-    background: #f5f5f5;
-}
-
-.infoLink .fa-info {
-    border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 1.3rem;
-    color: gray;
-    border: 0.2rem solid;
+    box-shadow: var(--box-shadowHoverSchme);
 }
 
 .addSourceContainer #searchResultsContainer .searchResult:hover {
@@ -916,7 +694,7 @@
     cursor: pointer;
     font-size: 2rem;
     position: absolute;
-    right: 0;
+    right: 1rem;
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
@@ -927,45 +705,53 @@
 }
 
 .addSourceContainer .searchResultWrapper .selectionContainer .fa-times:hover {
-    background: #f5f5f5;
+    background: var(--hover-secondaryColor);
+}
+
+.firstRow .nameContainer .noOverflowHeader {
+    max-width: unset;
+    overflow: unset;
 }
 
 .landingSection {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4.7rem 0;
+    padding: 5rem 0;
     overflow-x: hidden;
     min-height: calc(100vh - 17rem);
+    max-width: 90%;
+    margin: 0 auto;
 }
 
 .landingSection .landingSectionContainer {
-    min-width: 55rem;
+    width: 65rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-right: 2rem;
+    max-width: 90%;
 }
 
-.landingSection .landingSectionContainer h1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+.landingSection .landingSectionContainer img {
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+.landingSection .landingSectionContainer h2 {
     font-size: 7.5rem;
     line-height: 1.15;
     text-align: center;
-}
-
-.landingSection .landingSectionContainer h1 span {
     color: var(--primary-fontColor);
+    margin-top: -1.5rem;
 }
 
 .landingSection .landingSectionContainer p {
     font-size: 2.3rem;
     margin: 1rem 0 1.5rem;
-    max-width: 69rem;
-    text-align: center;
-    line-height: 1.7;
+    line-height: 1.6;
+    text-align: justify;
+    font-family: var(--site-Font);
 }
 
 .main p {
@@ -973,66 +759,34 @@
 }
 
 .signUpButton {
-    display: inline-block;
-    color: var(--primary-fontColor);
-    background-color: white;
-    text-transform: capitalize;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    border-radius: 100px;
-    transition: 0.3s;
-    font-size: 2.3rem;
-    box-shadow: var(--box-shadowScheme);
-    padding: 1.6rem 4.8rem;
-    color: white;
-    background-color: var(--primary-fontColor);
-    text-decoration: none;
-}
-
-.signUpButton:hover {
-    transform: scale(1.05);
-}
-
-.landingSection .landingSectionImage {
-    position: relative;
-}
-
-.featuresContainer {
-    margin-top: 11.35rem;
-    background-color: #eff0f5;
-}
-
-.featureSubContainer {
-    position: relative;
-    width: 80%;
-    margin: 0 auto;
-}
-
-.sectionText {
-    text-align: center;
-    margin-bottom: 5.6rem;
-}
-
-.sectionText h2 {
-    margin-top: 5rem;
-    font-size: 7.5rem;
-}
-
-.sectionText p {
-    width: 65%;
-    margin: 0.8rem auto 0;
-    font-size: 2.3rem;
-}
-
-.firstRow .nameContainer .noOverflowHeader{
-    max-width: unset;
-    overflow: unset;
+    width: 100%;
 }
 
 @media (max-width: 1000px) {
-    .firstRow h2 {
-        font-size: 3.5rem;
+    .landingSection {
+        flex-direction: column-reverse;
+    }
+    .landingSection .landingSectionImage {
+        margin-bottom: 4rem;
+    }
+}
+
+@media (max-width: 550px) {
+    .landingSection .landingSectionContainer h2 {
+        font-size: 6.5rem;
+    }
+}
+
+@media (max-width: 450px) {
+    .landingSection .landingSectionContainer h2 {
+        font-size: 5.5rem;
+        margin-top: -1rem;
+    }
+}
+
+@media (max-width: 450px) {
+    .landingSection .landingSectionContainer h2 {
+        font-size: 4.5rem;
     }
 }
 
@@ -1059,7 +813,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        box-shadow: var(--box-shadowScheme);
         cursor: pointer;
         font-size: 2.5rem;
         padding: unset;
@@ -1067,6 +820,7 @@
     .firstRow .actionButtonContainer button:last-of-type {
         background: var(--primary-fontColor);
         color: white;
+        border: 0.2rem solid var(--primary-fontColor);
     }
     .firstRow .actionButtonContainer button span {
         display: none;
@@ -1091,128 +845,3 @@
 }
 
 /* unregistered */
-
-@media (max-width: 1250px) {
-    .featureSubContainer {
-        width: 90%;
-    }
-}
-
-@media (max-width: 1000px) {
-    .landingSection {
-        display: flex;
-        flex-direction: column;
-        margin: 0 5%;
-        padding: 2.3rem 0;
-        min-height: unset;
-    }
-
-    .landingSection .landingSectionContainer h1,
-    .sectionText h2 {
-        font-size: 6.5rem;
-        text-align: center;
-    }
-
-    .landingSectionImage {
-        margin-top: 4rem;
-    }
-
-    .featuresContainer {
-        margin-top: unset;
-    }
-
-    .sectionText p {
-        width: 100%;
-    }
-
-    .featureWrapper > div:nth-child(2) {
-        margin-top: unset;
-    }
-
-    .featureWrapper .feature:before,
-    .featureWrapper .feature::after {
-        display: none;
-    }
-
-    .featureSubContainer {
-        width: 90%;
-    }
-
-    .featureWrapper {
-        align-items: unset;
-        display: unset;
-        grid-template-columns: unset;
-        gap: unset;
-    }
-
-    .feature .featureDescription {
-        margin-bottom: 2.5rem;
-    }
-
-    .featureWrapper > div:nth-child(3) {
-        margin-top: unset;
-    }
-
-    .popupContainer .createListPopup,
-    .popupContainer .addListsPopup,
-    .popupContainer .addSourcesPopup {
-        width: 60%;
-    }
-}
-
-@media (max-width: 700px) {
-    .popupContainer .createListPopup,
-    .popupContainer .addListsPopup,
-    .popupContainer .addSourcesPopup {
-        width: 80%;
-    }
-}
-
-@media (max-width: 500px) {
-    .landingSection .landingSectionContainer {
-        min-width: unset;
-    }
-
-    .landingSection .landingSectionContainer h1,
-    .sectionText h2 {
-        font-size: 3.2rem;
-    }
-
-    .landingSection {
-        padding: 2.3rem 0;
-        margin: unset;
-    }
-
-    .sectionText p,
-    .landingSection .landingSectionContainer p {
-        text-align: justify;
-        font-size: 2rem;
-    }
-
-    .landingSection .landingSectionContainer p {
-        max-width: 90%;
-    }
-
-    .landingSectionContainer .signUpButton {
-        font-size: 2rem;
-        padding: 1.2rem 3.6rem;
-    }
-
-    .landingSectionImage {
-        margin-top: 3.4rem;
-    }
-
-    .sectionText h2 {
-        margin-top: 2rem;
-    }
-
-    .popupContainer .createListPopup,
-    .popupContainer .addListsPopup,
-    .popupContainer .addSourcesPopup {
-        width: 100%;
-        position: relative;
-        top: 0;
-        transform: unset;
-        left: 0;
-    }
-}

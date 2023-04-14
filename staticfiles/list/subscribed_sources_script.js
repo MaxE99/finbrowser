@@ -116,28 +116,30 @@ if (document.querySelector('.addSourceContainer #textInput')) {
 
 // add/confirm sources to list
 let activatedButton = false;
-document.querySelector('.addSourceContainer button').addEventListener('click', async () => {
-    if (selected_sources.length && !activatedButton) {
-        activatedButton = true;
-        for (let i = 0, j = selected_sources.length; i < j; i++) {
-            try {
-                const res = await fetch(
-                    `../../api/sources/${selected_sources[i]}/`,
-                    get_fetch_settings('PATCH')
-                );
-                if (!res.ok) {
-                    showMessage('Error: Network request failed unexpectedly!', 'Error');
+document
+    .querySelector('.addSourceContainer .addSourceButton')
+    .addEventListener('click', async () => {
+        if (selected_sources.length && !activatedButton) {
+            activatedButton = true;
+            for (let i = 0, j = selected_sources.length; i < j; i++) {
+                try {
+                    const res = await fetch(
+                        `../../api/sources/${selected_sources[i]}/`,
+                        get_fetch_settings('PATCH')
+                    );
+                    if (!res.ok) {
+                        showMessage('Error: Network request failed unexpectedly!', 'Error');
+                    }
+                } catch (e) {
+                    // showMessage("Error: Unexpected error has occurred!", "Error");
                 }
-            } catch (e) {
-                // showMessage("Error: Unexpected error has occurred!", "Error");
             }
+            showMessage((context = 'Subscribed sources have been updated!'), 'Success');
+            window.location.reload();
+        } else {
+            showMessage('You need to select sources!', 'Error');
         }
-        showMessage((context = 'Subscribed sources have been updated!'), 'Success');
-        window.location.reload();
-    } else {
-        showMessage('You need to select sources!', 'Error');
-    }
-});
+    });
 
 // open add source menu
 document.querySelectorAll('.emptyInformationContainer button').forEach((addSourcesButton) =>
@@ -150,9 +152,13 @@ document.querySelectorAll('.emptyInformationContainer button').forEach((addSourc
 
 // close add source menu
 document
-    .querySelector('.addSourceContainer .closeAddSourceContainer')
-    .addEventListener('click', () => {
-        document.querySelector('.listMenuWrapper').style.display = 'none';
-        document.querySelector('.addSourceContainer').style.display = 'none';
-        removeModalStyle();
+    .querySelectorAll(
+        '.addSourceContainer .closeAddSourceContainer, .addSourceContainer .cancelButton'
+    )
+    .forEach((cancelButton) => {
+        cancelButton.addEventListener('click', () => {
+            document.querySelector('.listMenuWrapper').style.display = 'none';
+            document.querySelector('.addSourceContainer').style.display = 'none';
+            removeModalStyle();
+        });
     });

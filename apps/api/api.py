@@ -234,8 +234,6 @@ class PortfolioStockViewSet(viewsets.ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         obj = queryset.get(pk=self.kwargs["pk"])
         return obj
-        # print(obj.keywords.all())
-        # return PortfolioKeywordSerializer(obj.keywords.all(), many=True)
 
     def create(self, request, *args, **kwargs):
         if request.data.get("portfolios"):

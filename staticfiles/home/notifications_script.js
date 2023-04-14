@@ -71,7 +71,7 @@ document
         document.querySelector(
             '.fullScreenPlaceholder .explanationContainer .explanation'
         ).innerText =
-            'If you want to be notified when new content is published on a specific topic, add a keyword and you will receive an alert when any of the sources publish content containing that keyword on FinBrowser.';
+            "If you want to stay up-to-date on a particular topic, just add a keyword and I'll make sure you're notified as soon as any of your sources publish content containing that keyword on FinBrowser.";
         const closeExplanationButton = document.querySelector(
             '.fullScreenPlaceholder .fullScreenWrapper .explanationContainer .fa-times'
         );

@@ -8,6 +8,24 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'NotoSerif';
+    font-weight: 400;
+    src: url('../home/fonts/noto-serif/NotoSerif-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto Mono';
+    font-weight: 400;
+    src: url('../home/fonts/roboto-mono/RobotoMono-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto Mono';
+    font-weight: 600;
+    src: url('../home/fonts/roboto-mono/RobotoMono-Bold.ttf') format('truetype');
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -26,8 +44,15 @@
     --primary-color: #fff;
     --secondary-color: rgb(238, 238, 238);
     --primary-fontColor: rgb(0, 85, 212);
+    --hover-color: #1a73e8;
+    --hover-secondaryColor: rgba(0, 85, 212, 0.05);
     --secondary-fontColor: rgb(34, 45, 59);
+    --border-fontColor: #e2e6ea;
+    --border-secondaryFontColor: #ccc;
     --box-shadowScheme: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    --box-shadowHoverSchme: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+    --content-Font: 'NotoSerif', serif;
+    --site-Font: 'Roboto Mono', monospace;
     font-size: 55%;
 }
 
@@ -37,6 +62,11 @@ input {
 
 button {
     user-select: none;
+}
+
+h1,
+h2 {
+    font-size: 3.4rem;
 }
 
 body {
@@ -62,7 +92,7 @@ header {
     height: 8.5rem;
     background: var(--primary-color);
     box-shadow: 0 5px 5px -5px #333;
-    border-bottom: 0.1rem solid rgb(226, 230, 234);
+    border-bottom: 0.2rem solid var(--border-fontColor);
     width: 100%;
     margin: 0 auto;
 }
@@ -82,8 +112,9 @@ header {
     flex-direction: column;
     height: 100%;
     width: 17.5%;
+    min-width: 200px;
     max-width: 25rem;
-    border-right: 0.1rem solid rgb(226, 230, 234);
+    border-right: 0.2rem solid var(--border-fontColor);
     user-select: none;
 }
 
@@ -120,6 +151,7 @@ header {
     justify-content: space-around;
     list-style: none;
     margin-left: 2rem;
+    margin-top: 0.5rem;
 }
 
 .mainNavigationLink {
@@ -127,10 +159,22 @@ header {
     display: flex;
     align-items: center;
     font-size: 2rem;
-    padding: 1.5rem 2rem;
+    padding: 1.5rem;
     color: var(--secondary-fontColor);
     cursor: pointer;
-    border-radius: 2rem 3rem;
+    border-radius: 0.45rem;
+    border: 0.2rem solid transparent;
+    margin: 0 0.5rem;
+}
+
+.mainNavigationLink:first-of-type,
+.mainNavigationLink:last-of-type {
+    margin: 0;
+}
+
+.mainNavigationLink span {
+    font-family: var(--site-Font);
+    font-size: 1.8rem;
 }
 
 .mainNavigationLink a {
@@ -142,15 +186,19 @@ header {
     border-radius: 2rem 3rem;
 }
 
-.mainNavigationLink:hover,
-.mainNavigationLink:hover span {
-    color: white;
-    background: var(--primary-fontColor);
+.mainNavigationLink:hover {
+    color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
+    border: 0.2rem solid;
 }
 
 .mainSearchWrapper {
     position: relative;
     margin: 0 auto;
+}
+
+header .mainSearchWrapper {
+    margin-top: 0.5rem;
 }
 
 .mainSearchContainer,
@@ -169,7 +217,7 @@ header {
     height: 100%;
     width: 40rem;
     padding: 1.5rem 3em 1.5rem 1.5rem;
-    border: 0.1rem solid rgb(226, 230, 234);
+    border: 0.2rem solid var(--border-fontColor);
     border-radius: 0.45rem;
 }
 
@@ -219,6 +267,7 @@ header {
     padding: 1rem 1rem 0 1rem;
     background: #fff;
     color: gray;
+    margin-bottom: 0.25rem;
 }
 
 .searchResult {
@@ -226,7 +275,7 @@ header {
     display: flex;
     align-items: center;
     padding: 1rem 2rem;
-    border-bottom: 0.1rem solid rgb(226, 230, 234);
+    border-bottom: 0.2rem solid var(--border-fontColor);
     text-decoration: none;
     color: var(--secondary-fontColor);
     white-space: nowrap;
@@ -289,12 +338,12 @@ header {
     font-size: 2.5rem;
     padding: 0 2.5rem;
     color: #4c4a4a;
-    border-left: 0.1rem solid rgb(226, 230, 234);
+    border-left: 0.2rem solid var(--border-fontColor);
     cursor: pointer;
 }
 
 .userSpace .fa-bell {
-    border-right: 0.1rem solid rgb(226, 230, 234);
+    border-right: 0.2rem solid var(--border-fontColor);
 }
 
 .userSpace i a {
@@ -337,8 +386,13 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 2rem;
+    padding: 1rem 2rem 1rem 1rem;
     font-size: 2rem;
+}
+
+.notificationPopupWrapper .notificationHeader h3 {
+    font-family: var(--site-Font);
+    font-size: 2.2rem;
 }
 
 .notificationPopupWrapper .notificationHeader .fa-cog {
@@ -354,13 +408,16 @@ header {
 }
 
 .notificationPopupWrapper .notificationHeader .fa-cog:hover {
-    background: #f5f5f5;
+    background: var(--hover-secondaryColor);
 }
 
 .notificationPopupWrapper .noNotificationsAvailable {
     text-align: center;
     padding: 0.5rem;
     font-size: 2rem;
+    margin: 1rem auto;
+    font-family: var(--site-Font);
+    max-width: 95%;
 }
 
 .notificationPopupWrapper .createKeywordNotificationModal {
@@ -386,36 +443,18 @@ header {
     margin: 1rem 0 2rem;
     font-size: 1.6rem;
     width: 100%;
-    border: 0.1rem solid rgb(226, 230, 234);
+    border: 0.2rem solid var(--border-fontColor);
     border-radius: 0.45rem;
     padding: 1.25rem 3rem 1.25rem 1.5rem;
 }
 
 .notificationPopupWrapper .createKeywordNotificationModal button {
-    color: white;
-    background: var(--primary-fontColor);
-    border: 0.2rem solid;
-    cursor: pointer;
-    font-size: 1.6rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    border-radius: 0.45rem;
+    font-size: 1.8rem;
     padding: 1rem;
 }
 
 .notificationPopupWrapper .createKeywordNotificationModal .discardButton {
-    background: white;
-    color: var(--primary-fontColor);
     margin-top: 1rem;
-}
-
-.notificationPopupWrapper .createKeywordNotificationModal .saveButton:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    background: #1a73e8 !important;
-}
-
-.notificationPopupWrapper .createKeywordNotificationModal .discardButton:hover {
-    color: white;
-    background: var(--primary-fontColor);
 }
 
 .notificationPopupWrapper .notificationMessageContainer {
@@ -464,6 +503,7 @@ header {
 .notificationPopupWrapper .smallFormContentWrapper .rightContentSide,
 .smallScreenSearchContainer .smallFormContentWrapper .rightContentSide {
     padding-left: 1rem;
+    max-width: calc(100% - 6rem);
 }
 
 .notificationPopupWrapper .smallFormContentWrapper .contentInfoContainer,
@@ -480,14 +520,14 @@ header {
 .notificationPopupWrapper .smallFormContentWrapper .quoteText,
 .smallScreenSearchContainer .smallFormContentWrapper .contentBody p,
 .smallScreenSearchContainer .smallFormContentWrapper .quoteText {
-    font-size: 1.9rem;
+    font-size: 1.8rem;
 }
 
 .notificationPopupWrapper .smallFormContentWrapper .quoteDate,
 .notificationPopupWrapper .smallFormContentWrapper .timeContainer,
 .smallScreenSearchContainer .smallFormContentWrapper .quoteDate,
 .smallScreenSearchContainer .smallFormContentWrapper .timeContainer {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
 }
 
 .notificationPopupWrapper .smallFormContentWrapper .quoteUpperContainer,
@@ -505,6 +545,7 @@ header {
 .notificationPopupWrapper .smallFormContentWrapper .quoteWrapper,
 .smallScreenSearchContainer .smallFormContentWrapper .quoteWrapper {
     padding: 1rem;
+    max-width: 100%;
 }
 
 .profileWrapper {
@@ -520,7 +561,7 @@ header {
     height: 100%;
     padding: 0 2.5rem;
     cursor: pointer;
-    border-right: 0.1rem solid rgb(226, 230, 234);
+    border-right: 0.2rem solid var(--border-fontColor);
 }
 
 .userProfile img,
@@ -588,6 +629,8 @@ header {
     background: transparent;
     cursor: pointer;
     font-size: 2rem;
+    font-family: var(--site-Font);
+    color: var(--secondary-fontColor);
 }
 
 .profileMenu a {
@@ -601,7 +644,7 @@ header {
 .profileMenu .profileMenuInfoOption {
     display: flex;
     flex-direction: column;
-    border-bottom: 0.1rem solid rgb(226, 230, 234);
+    border-bottom: 0.2rem solid var(--border-fontColor);
     padding: 1rem;
     align-items: center;
 }
@@ -610,6 +653,7 @@ header {
     max-width: 100%;
     overflow: hidden;
     user-select: none;
+    font-family: var(--site-Font);
 }
 
 .profileMenu .profileMenuInfoOption span:first-of-type {
@@ -630,8 +674,12 @@ header {
     display: flex;
     cursor: pointer;
     align-items: center;
-    border-bottom: 0.1rem solid rgb(226, 230, 234);
+    border-bottom: 0.2rem solid var(--border-fontColor);
     user-select: none;
+}
+
+.profileMenu .profileMenuOption span {
+    font-family: var(--site-Font);
 }
 
 .profileMenu .profileMenuOption:last-of-type {
@@ -669,7 +717,7 @@ header {
 
 .headerButtonContainer a {
     background: #fff;
-    border: 0.1rem solid #e2e6ea;
+    border: 0.2rem solid var(--border-fontColor);
     color: var(--primary-fontColor);
     cursor: pointer;
     font-size: 1.85rem;
@@ -686,7 +734,7 @@ header {
 }
 
 .headerButtonContainer a:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+    box-shadow: var(--box-shadowHoverSchme);
 }
 
 .headerButtonContainer a:last-of-type {
@@ -695,7 +743,7 @@ header {
 }
 
 .headerButtonContainer a:last-of-type:hover {
-    background: #1a73e8 !important;
+    background: var(--hover-color) !important;
 }
 
 .headerContainer .fa-bars {
@@ -711,7 +759,7 @@ header {
     font-size: 3.5rem;
     padding: 0 2.5rem;
     color: #4c4a4a;
-    border-left: 0.1rem solid rgb(226, 230, 234);
+    border-left: 0.2rem solid var(--border-fontColor);
     cursor: pointer;
     height: 100%;
 }
@@ -745,17 +793,25 @@ main {
 
 footer {
     position: relative;
-    background: var(--primary-color);
-    color: var(--secondary-fontColor);
     z-index: 998;
-    padding: 2rem 5rem;
+    padding: 4rem 5rem;
     width: 100%;
     margin: 0 auto;
-    border-top: 0.1rem solid rgb(226, 230, 234);
-    /* box-shadow: 0 -4px 5px -5px #333; */
+    border-top: 0.2rem solid var(--border-fontColor);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: var(--site-Font);
+    background: var(--primary-color);
+}
+
+footer .logoLarge {
+    width: 25rem;
+    max-width: 95%;
 }
 
 footer ul {
+    margin: 3rem 0;
     display: flex;
     justify-content: center;
     list-style: none;
@@ -763,16 +819,46 @@ footer ul {
 
 footer ul li {
     margin-right: 4rem;
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 footer ul a {
     text-decoration: none;
     color: var(--secondary-fontColor);
+    font-family: var(--site-Font);
 }
 
 footer ul a:hover {
     text-decoration: underline;
+}
+
+footer .twitterFollowContainer {
+    position: relative;
+    font-size: 2rem;
+    border: 0.2rem solid var(--border-fontColor);
+    padding: 1.36rem 2.72rem;
+    border-radius: 0.45rem;
+    cursor: pointer;
+    font-family: var(--site-Font);
+    color: var(--primary-fontColor);
+}
+
+footer .twitterFollowContainer:hover {
+    color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
+    border: 0.2rem solid;
+}
+
+footer .twitterFollowContainer a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+footer .twitterFollowContainer i {
+    margin-right: 1rem;
 }
 
 .messages {
@@ -843,10 +929,10 @@ footer ul a:hover {
     background: white;
     height: 5rem;
     border-radius: 0.45rem;
-    box-shadow: var(--box-shadowScheme);
     display: flex;
     align-items: center;
     padding: 0 2rem;
+    border: 0.2rem solid var(--border-fontColor);
 }
 
 .pagination .currOffset span {
@@ -865,7 +951,6 @@ footer ul a:hover {
 
 .pagination .backButton,
 .pagination .nextButton {
-    box-shadow: var(--box-shadowScheme);
     background: white;
     border-radius: 50%;
 }
@@ -877,33 +962,13 @@ footer ul a:hover {
     align-items: center;
     width: 5rem;
     height: 5rem;
-    font-size: 2rem;
     margin: 0.5rem;
-    border-radius: 0.45rem;
-    cursor: pointer;
-    text-decoration: none;
-    color: var(--primary-fontColor);
-    background: white;
-    box-shadow: var(--box-shadowScheme);
-    border: 0.1rem solid #e2e6ea;
+    padding: unset;
 }
 
 .pagination .notClickable {
     opacity: 0.5;
     cursor: not-allowed;
-}
-
-.pagination .notClickable:hover {
-    color: var(--primary-fontColor);
-    background: white;
-}
-
-.pagination button:hover,
-.currentPagination,
-.pagination a:hover,
-.currentPagination {
-    background: var(--primary-fontColor) !important;
-    color: var(--primary-color) !important;
 }
 
 /* ####################################################*/
@@ -971,8 +1036,8 @@ footer ul a:hover {
     flex-direction: column;
     background: white;
     border-radius: 0.45rem;
-    box-shadow: var(--box-shadowScheme);
     overflow: hidden;
+    border: 0.2rem solid var(--border-fontColor);
 }
 
 .sliderWrapper .sliderContentContainer .slider .contentWrapper img {
@@ -1007,42 +1072,18 @@ footer ul a:hover {
 
 .sliderWrapper .sliderContentContainer button,
 .sliderWrapper .sliderContentContainer .loginRedirectButton {
-    border: 0.1rem solid #e2e6ea;
-    font-size: 1.85rem;
-    text-decoration: none;
-    border-radius: 0.45rem;
-    padding: 1.36rem 0.5rem;
-    opacity: unset;
     margin: 1rem;
-    color: var(--primary-fontColor);
-    background: white;
-    cursor: pointer;
     z-index: 10;
-    text-align: center;
 }
 
 .sliderWrapper .sliderContentContainer button:first-of-type {
     margin-bottom: 0;
 }
 
-.sliderWrapper .sliderContentContainer button:hover,
-.sliderWrapper .sliderContentContainer .subscribed,
-.sliderWrapper .sliderContentContainer .unsubscribed:hover,
-.sliderWrapper .sliderContentContainer .notificationActivated,
-.sliderWrapper .sliderContentContainer .loginRedirectButton:hover {
-    color: white;
-    background: var(--primary-fontColor);
-}
-
-.sliderWrapper .sliderContentContainer .unsubscribed,
-.sliderWrapper .sliderContentContainer .subscribed:hover,
-.sliderWrapper .sliderContentContainer .notificationActivated:hover {
-    color: var(--primary-fontColor);
+.sliderWrapper .sliderContentContainer .finButtonBlue:first-of-type:hover {
     background: white;
-}
-
-.sliderWrapper .slider button:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+    color: var(--primary-fontColor);
+    box-shadow: none;
 }
 
 .sliderWrapper .sliderContentContainer .contentLink {
@@ -1085,8 +1126,10 @@ footer ul a:hover {
 
 .contentColumnWrapper .smallFormContentWrapper,
 .contentColumnWrapper .twitterContainerPlaceholder {
-    box-shadow: var(--box-shadowScheme);
     background: white;
+    border: 0.2rem solid var(--border-fontColor);
+    border-top: none;
+    border-radius: 0.45rem;
 }
 
 .notificationsContainer .addKeywordsContainer {
@@ -1096,18 +1139,11 @@ footer ul a:hover {
     background: white;
     padding: 2rem 0;
     box-shadow: var(--box-shadowScheme);
-    border-top: 0.1rem solid #e2e6ea;
+    border-top: 0.2rem solid var(--border-fontColor);
 }
 
 .notificationsContainer .addKeywordsContainer button {
-    background: var(--primary-fontColor);
-    color: white;
-    border: 0.1rem solid #e2e6ea;
-    cursor: pointer;
-    font-size: 1.85rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    border-radius: 0.45rem;
-    padding: 1.36rem 2.72rem;
+    font-size: 1.8rem;
     width: 95%;
     margin: 0 2.5%;
 }
@@ -1116,21 +1152,17 @@ footer ul a:hover {
     margin-right: 1rem;
 }
 
-.notificationsContainer .addKeywordsContainer button:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    background: #1a73e8;
-}
-
 .smallFormContentWrapper .articleContainer {
     position: relative;
     display: flex;
     padding: 2rem;
-    /* box-shadow: 0 5px 5px -5px #333; */
-    border-bottom: 0.2rem solid #e2e6ea;
+    border-top: 0.2rem solid var(--border-fontColor);
 }
 
 .smallFormContentWrapper .articleContainer:hover {
-    box-shadow: var(--box-shadowScheme);
+    background: var(--hover-secondaryColor);
+    border-top: 0.2rem solid var(--primary-fontColor);
+    /* border-bottom: 0.2rem solid var(--primary-fontColor); */
 }
 
 .smallFormContentWrapper .leftContentSide .profileImageContainer {
@@ -1212,7 +1244,7 @@ footer ul a:hover {
     border-radius: 0.45rem;
     background: white;
     top: 2.3rem;
-    z-index: 2;
+    z-index: 3;
     cursor: pointer;
     font-size: 1.8rem;
     user-select: none;
@@ -1244,15 +1276,6 @@ footer ul a:hover {
     padding: 0.5rem 1rem;
 }
 
-.notificationsContainer .articleOptionsContainer {
-    font-size: 1.3rem;
-}
-
-.notificationsContainer .articleOptionsContainer i {
-    margin-right: 0.5rem;
-    width: 1.3rem;
-}
-
 /* Add to list form - start */
 
 .addToListForm {
@@ -1270,7 +1293,7 @@ footer ul a:hover {
 }
 
 .addToListForm .listContainer {
-    border-bottom: 0.1rem solid #e2e6ea;
+    border-bottom: 0.2rem solid var(--border-fontColor);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1307,30 +1330,12 @@ footer ul a:hover {
 }
 
 .addToListForm button {
-    color: var(--primary-fontColor);
-    background: white;
-    border: 0.1rem solid #e2e6ea;
-    cursor: pointer;
     font-size: 1.8rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    border-radius: 0.45rem;
     padding: 1rem 4rem;
 }
 
 .addToListForm button:last-of-type {
-    background: var(--primary-fontColor);
-    color: white;
     margin-left: 2rem;
-}
-
-.addToListForm button:first-of-type:hover {
-    background: var(--primary-fontColor);
-    color: white;
-}
-
-.addToListForm button:last-of-type:hover {
-    background: #1a73e8 !important;
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
 }
 
 .addToListForm .createFirstList {
@@ -1369,8 +1374,8 @@ footer ul a:hover {
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
-    border-bottom: 0.1rem solid #e2e6ea;
-    padding: 0 0 2rem 1rem;
+    border-bottom: 0.2rem solid var(--border-fontColor);
+    padding: 0 0 1rem 1rem;
 }
 
 .addToListForm .descContainer {
@@ -1410,7 +1415,7 @@ footer ul a:hover {
 }
 
 .addToListForm .formHeaderContainer .fa-times:hover {
-    background: #f5f5f5;
+    background: var(--hover-secondaryColor);
 }
 
 .formContainer .formHeaderContainer .closeFormContainerButton,
@@ -1436,7 +1441,7 @@ footer ul a:hover {
     font-size: 1.6rem;
     padding: 0.4rem 1rem;
     color: var(--secondary-fontColor);
-    border: 0.2rem solid rgb(226, 230, 234);
+    border: 0.2rem solid var(--border-fontColor);
     border-radius: 0.45rem;
 }
 
@@ -1459,21 +1464,21 @@ footer ul a:hover {
     border-radius: 0.45rem;
     cursor: pointer;
     background: var(--primary-fontColor);
-    border: 0.1rem solid #e2e6ea;
+    border: 0.2rem solid var(--border-fontColor);
     width: 100%;
     margin: 1rem 0;
 }
 
 .formContainer .formSubmitButton:hover {
-    background: #1a73e8;
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+    background: var(--hover-color);
+    box-shadow: var(--box-shadowHoverSchme);
 }
 
 .smallFormContentWrapper .replyWrapper,
 .smallFormContentWrapper .retweetWrapper {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     text-align: justify;
-    font-family: serif;
+    font-family: var(--content-Font);
     font-weight: 400;
     margin-top: 0.75rem;
 }
@@ -1493,10 +1498,12 @@ footer ul a:hover {
 
 .smallFormContentWrapper .contentBody p,
 .smallFormContentWrapper .quoteText {
-    font-size: 2.2rem;
+    font-size: 2rem;
     text-align: justify;
-    font-family: serif;
+    font-family: var(--content-Font);
     font-weight: 400;
+    line-height: 1.6;
+    word-wrap: break-word;
 }
 
 .smallFormContentWrapper .tweetImage {
@@ -1507,7 +1514,7 @@ footer ul a:hover {
     border-radius: 0.45rem;
     margin-bottom: 0.75rem;
     max-height: 300px;
-    border: 0.2rem solid #e2e6ea;
+    border: 0.2rem solid var(--border-fontColor);
 }
 
 .smallFormContentWrapper .quoteWrapper .tweetImage {
@@ -1516,7 +1523,7 @@ footer ul a:hover {
 
 .smallFormContentWrapper .quoteWrapper {
     margin-bottom: 0.75rem;
-    border: 0.2rem solid #e2e6ea;
+    border: 0.2rem solid var(--border-fontColor);
     border-radius: 0.45rem;
     width: fit-content;
     padding: 1rem 2rem;
@@ -1525,7 +1532,7 @@ footer ul a:hover {
 .smallFormContentWrapper .quoteUpperContainer {
     display: flex;
     align-items: center;
-    font-size: 2.2rem;
+    font-size: 2rem;
 }
 
 .smallFormContentWrapper .quoteDate {
@@ -1535,12 +1542,12 @@ footer ul a:hover {
 .smallFormContentWrapper .timeContainer,
 .smallFormContentWrapper .quoteDate {
     color: gray;
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     margin-top: 0.25rem;
 }
 
 .smallFormContentWrapper .quoteText {
-    font-size: 2rem;
+    font-size: 1.8rem;
     padding: 0.75rem 0 0;
 }
 
@@ -1623,7 +1630,7 @@ footer ul a:hover {
     width: calc(100% - 2rem);
     white-space: nowrap;
     overflow: auto;
-    border-bottom: 0.3rem solid rgb(226, 230, 234);
+    border-bottom: 0.3rem solid var(--border-fontColor);
     margin: 2rem 1rem;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -1646,6 +1653,7 @@ footer ul a:hover {
     cursor: pointer;
     padding-right: 4rem;
     margin-bottom: 1.5rem;
+    font-family: var(--site-Font);
 }
 
 .notificationHeadersContainer button {
@@ -1682,16 +1690,13 @@ footer ul a:hover {
     background: white;
     width: fit-content;
     border-radius: 0.45rem;
-    box-shadow: var(--box-shadowScheme);
     font-size: 2rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
     max-width: 400px;
-    text-align: center;
     margin-right: auto;
     user-select: none;
-    margin-top: 2rem;
+    border: 0.2rem solid var(--border-fontColor);
 }
 
 .emptyInformationContainer h3 {
@@ -1705,24 +1710,18 @@ footer ul a:hover {
 
 .emptyInformationContainer div {
     margin-top: 1rem;
+    text-align: justify;
+    line-height: 1.6;
+    font-family: var(--site-Font);
+    font-weight: 400;
 }
 
-.emptyInformationContainer button {
-    color: white;
-    background: var(--primary-fontColor);
-    border: 0.1rem solid #e2e6ea;
-    cursor: pointer;
-    font-size: 1.8rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    border-radius: 0.45rem;
-    padding: 1rem;
+.emptyInformationContainer button,
+.emptyInformationContainer a {
     width: 100%;
     margin-top: 1rem;
-}
-
-.emptyInformationContainer button:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    background: #1a73e8;
+    font-size: 1.8rem;
+    padding: 1rem;
 }
 
 .emptyInformationContainer button i {
@@ -1741,7 +1740,7 @@ footer ul a:hover {
 }
 
 .infoLink:hover {
-    background: #f5f5f5;
+    background: var(--hover-secondaryColor);
 }
 
 .infoLink .fa-info {
@@ -1759,10 +1758,11 @@ footer ul a:hover {
 
 .fullScreenPlaceholder {
     display: none;
-    z-index: 999;
+    z-index: 1001;
     position: absolute;
     width: 100%;
     height: 100%;
+    background: #0000009c;
 }
 
 .fullScreenPlaceholder .fullScreenWrapper,
@@ -1773,7 +1773,9 @@ footer ul a:hover {
     transform: translate(-50%, -50%);
     width: 500px;
     max-width: 95%;
-    max-height: 100%;
+    max-height: 95%;
+    overflow-y: auto;
+    box-shadow: var(--box-shadowScheme);
 }
 
 .fullScreenPlaceholder .closeImageButton {
@@ -1820,7 +1822,7 @@ footer ul a:hover {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
-    border-bottom: 0.1rem solid #e2e6ea;
+    border-bottom: 0.2rem solid var(--border-fontColor);
     padding-bottom: 1rem;
 }
 
@@ -1839,74 +1841,51 @@ footer ul a:hover {
     color: grey;
 }
 
+.fullScreenPlaceholder .fullScreenWrapper .authPromptContainer .fa-times {
+    top: 0.75rem;
+    right: 1.5rem;
+}
+
 .fullScreenPlaceholder .fullScreenWrapper .authPromptContainer .fa-times:hover,
 .fullScreenPlaceholder .fullScreenWrapper .explanationContainer .fa-times:hover {
-    background: #f5f5f5;
+    background: var(--hover-secondaryColor);
 }
 
 .fullScreenPlaceholder .fullScreenWrapper .explanationContainer .explanation {
     text-align: justify;
     font-size: 2rem;
-    line-height: 1.4;
+    line-height: 1.6;
+    font-family: var(--site-Font);
+    font-weight: 400;
 }
 
 .fullScreenPlaceholder .fullScreenWrapper .authPromptContainer img {
-    width: 80%;
-    margin: 0 10%;
-}
-
-.fullScreenPlaceholder .fullScreenWrapper .authPromptContainer h3,
-.fullScreenPlaceholder .fullScreenWrapper .authPromptContainer .desc {
-    width: 80%;
-    text-align: justify;
+    width: 70%;
+    margin: 0 15%;
 }
 
 .fullScreenPlaceholder .fullScreenWrapper .authPromptContainer h3 {
     font-size: 2.5rem;
-    margin: 1rem 10% 0;
-    color: var(--primary-fontColor);
-}
-
-.fullScreenPlaceholder .fullScreenWrapper .authPromptContainer .desc {
-    margin: 0 auto;
-    font-size: 2rem;
-}
-
-.fullScreenPlaceholder .fullScreenWrapper .authPromptContainer .buttonContainer {
-    display: flex;
-    flex-direction: column;
-    margin-top: 2rem;
-}
-
-.fullScreenPlaceholder .fullScreenWrapper .authPromptContainer a {
-    color: white;
-    background: var(--primary-fontColor);
-    border: 0.2rem solid;
-    cursor: pointer;
-    font-size: 1.6rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    border-radius: 0.45rem;
-    padding: 1rem;
-    width: 100%;
-    text-align: center;
-    user-select: none;
-    text-decoration: none;
-}
-
-.fullScreenPlaceholder .fullScreenWrapper .authPromptContainer .registerButton {
-    background: white;
     color: var(--primary-fontColor);
     margin-top: 1rem;
 }
 
-.fullScreenPlaceholder .fullScreenWrapper .authPromptContainer .loginButton:hover {
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    background: #1a73e8 !important;
+.fullScreenPlaceholder .fullScreenWrapper .authPromptContainer .desc {
+    font-size: 2rem;
+    font-family: var(--site-Font);
+    text-align: justify;
+    line-height: 1.6;
+    margin: 0.25rem auto 1.5rem;
+    font-weight: 400;
 }
 
-.fullScreenPlaceholder .fullScreenWrapper .authPromptContainer .registerButton:hover {
-    color: white;
-    background: var(--primary-fontColor);
+.fullScreenPlaceholder .fullScreenWrapper .authPromptContainer .buttonContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fullScreenPlaceholder .fullScreenWrapper .authPromptContainer .buttonContainer a {
+    width: 47.5%;
 }
 
 .fullScreenPlaceholder .smallScreenSearchContainer .mainInputSearch {
@@ -1914,7 +1893,7 @@ footer ul a:hover {
 }
 
 .fullScreenPlaceholder .smallScreenSearchContainer h3 {
-    margin-top: 2rem;
+    margin: 2rem 0 1rem;
     font-size: 2rem;
 }
 
@@ -1961,6 +1940,42 @@ footer ul a:hover {
 }
 
 /* ####################################################*/
+/* buttons */
+/* ####################################################*/
+.finButtonBlue,
+.finButtonWhite {
+    font-size: 2rem;
+    border: 0.2rem solid var(--border-fontColor);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+    text-decoration: none;
+    border-radius: 0.45rem;
+    padding: 1.36rem 2.72rem;
+    text-align: center;
+}
+
+.finButtonBlue {
+    color: white;
+    background: var(--primary-fontColor);
+}
+
+.finButtonBlue:hover {
+    background: var(--hover-color);
+    box-shadow: var(--box-shadowHoverSchme);
+}
+
+.finButtonWhite {
+    background: white;
+    color: var(--primary-fontColor);
+}
+
+.finButtonWhite:hover {
+    color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
+    border: 0.2rem solid var(--primary-fontColor);
+}
+
+/* ####################################################*/
 /* Media Queries - Start */
 /* ####################################################*/
 
@@ -1995,34 +2010,38 @@ footer ul a:hover {
     .sliderWrapper .sliderContentContainer .slider {
         --items-per-screen: 5;
     }
+    .mainNavigationLink {
+        padding: 1rem;
+    }
 }
 
 @media (max-width: 1200px) {
-    .mainNavigationLink {
-        padding: 1.5rem;
-    }
     .sliderWrapper .sliderContentContainer .handle {
         opacity: 1;
+    }
+    .headerButtonContainer a {
+        font-size: 1.8rem;
+        padding: 1.25rem 2.5rem;
+    }
+}
+
+@media (max-width: 1150px) {
+    header .mainInputSearch {
+        width: 35rem;
+    }
+    header .searchResult .stockContainer .stockTicker {
+        width: 20%;
+    }
+    header .searchResult .stockContainer .companyName {
+        width: 80%;
     }
 }
 
 @media (max-width: 1100px) {
-    .headerContainer .mainInputSearch {
-        width: 37.5rem;
-    }
-    .searchResult .stockContainer .stockTicker {
-        width: 20%;
-    }
-    .searchResult .stockContainer .companyName {
-        width: 80%;
-    }
-
     .sliderWrapper .sliderContentContainer .slider {
         --items-per-screen: 4;
     }
-}
 
-@media (max-width: 1075px) {
     .headerContainer .mainInputSearch {
         width: 32.5rem;
     }
@@ -2032,29 +2051,47 @@ footer ul a:hover {
     }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1075px) {
     .horizontalNavigation .mainNavigationLink {
         display: flex;
         justify-content: space-between;
         margin-top: 2rem;
         padding: 2rem;
         border-radius: 0.45rem;
-        border: 0.1rem solid rgb(226, 230, 234);
+        border: 0.2rem solid var(--border-fontColor);
         cursor: pointer;
     }
 
-    .outerHeaderContainer .mainSearchWrapper {
+    header .outerHeaderContainer .mainSearchWrapper {
         display: none;
     }
 
-    .headerContainer .smallScreenSearchIcon {
+    header .headerContainer .smallScreenSearchIcon {
         display: flex;
     }
 
-    .logoContainer {
-        width: 20%;
+    header .searchResult .stockContainer .stockTicker {
+        width: 15%;
     }
 
+    header .searchResult .stockContainer .companyName {
+        width: 85%;
+    }
+
+    header .searchResult span {
+        max-width: 100%;
+    }
+
+    .mainNavigationLink {
+        padding: 1.5rem;
+    }
+
+    .headerButtonContainer {
+        margin-right: 2rem;
+    }
+}
+
+@media (max-width: 1000px) {
     .articlesWrapper {
         height: unset;
     }
@@ -2086,35 +2123,15 @@ footer ul a:hover {
     .sliderWrapper .sliderContentContainer .handle {
         display: none;
     }
-
-    .searchResult .stockContainer .stockTicker {
-        width: 15%;
-    }
-    .searchResult .stockContainer .companyName {
-        width: 85%;
-    }
-
-    .searchResult span {
-        max-width: 100%;
-    }
 }
 
 @media (max-width: 900px) {
-    .logoContainer {
-        width: 25%;
+    .mainNavigationLink {
+        padding: 1rem;
     }
 }
 
-@media (max-width: 800px) {
-    .sliderWrapper .sliderContentContainer .slider {
-        --items-per-screen: 3;
-    }
-    .fullScreenPlaceholder .closeImageButton {
-        top: 1rem;
-    }
-}
-
-@media (max-width: 750px) {
+@media (max-width: 850px) {
     .mainNavigation,
     .userSpace,
     .headerButtonContainer {
@@ -2127,6 +2144,7 @@ footer ul a:hover {
 
     .horizontalNavigation form {
         background: var(--primary-fontColor);
+        margin-top: 2rem;
     }
 
     .horizontalNavigation form button {
@@ -2149,7 +2167,7 @@ footer ul a:hover {
         width: 47.5%;
         text-align: center;
         font-size: 2rem;
-        padding: 2rem;
+        padding: 1.36rem 2.72rem;
     }
 
     .logoContainer {
@@ -2166,26 +2184,33 @@ footer ul a:hover {
     .headerContainer {
         height: 6.5rem;
     }
-
 }
 
-@media (max-width: 700px) {
-    .logoContainer {
-        width: 30%;
+@media (max-width: 800px) {
+    .sliderWrapper .sliderContentContainer .slider {
+        --items-per-screen: 3;
     }
+    .fullScreenPlaceholder .closeImageButton {
+        top: 1rem;
+    }
+}
+
+@media (max-width: 750px) {
+    footer {
+        padding: 4rem 2rem;
+    }
+
     footer ul {
-        flex-direction: column;
-        align-items: center;
+        justify-content: space-around;
+        width: 100%;
     }
 
     footer ul li {
-        margin-bottom: 1rem;
+        margin-right: 0;
     }
+}
 
-    footer ul li:last-child {
-        margin-bottom: unset;
-    }
-
+@media (max-width: 700px) {
     .pagination {
         flex-direction: column-reverse;
     }
@@ -2197,10 +2222,10 @@ footer ul a:hover {
 
 @media (max-width: 600px) {
     .logoContainer {
-        width: unset;
+        /* width: unset; */
         margin: 0 auto;
-        height: 80%;
-        aspect-ratio: 4/1;
+        /* height: 80%;
+        aspect-ratio: 4/1; */
     }
 
     .pageWrapper .smallFormContentWrapper .leftContentSide .profileImageContainer {
@@ -2249,6 +2274,19 @@ footer ul a:hover {
     .headerContainer .smallScreenSearchIcon {
         margin-left: unset;
     }
+
+    footer ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    footer ul li {
+        margin-bottom: 2rem;
+    }
+
+    footer ul li:last-of-type {
+        margin-bottom: 0;
+    }
 }
 
 @media (max-width: 575px) {
@@ -2265,7 +2303,7 @@ footer ul a:hover {
         margin: 2rem;
     }
     .emptyInformationContainer {
-        margin: 2rem;
+        margin: 0 2rem 2rem;
     }
 }
 
@@ -2355,9 +2393,6 @@ footer ul a:hover {
         width: 4rem;
         height: 4rem;
     }
-    .emptyInformationContainer {
-        margin: 2rem;
-    }
 }
 
 @media (max-width: 425px) {
@@ -2370,14 +2405,15 @@ footer ul a:hover {
 }
 
 @media (max-width: 400px) {
-    .logoSpace .logoSmall {
-        height: 70%;
-    }
-
     .pagination button,
     .pagination a {
         width: 4rem;
         height: 4rem;
+    }
+    header .fa-bars,
+    .headerContainer .smallScreenSearchIcon,
+    .headerContainer .closeNavMenuButton {
+        padding: 0 1.5rem;
     }
 }
 

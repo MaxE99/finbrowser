@@ -1,7 +1,3 @@
-h2 {
-    color: var(--secondary-fontColor);
-}
-
 .companyNameAndNotificationHeader {
     display: flex;
     align-items: center;
@@ -20,10 +16,10 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: var(--box-shadowScheme);
     cursor: pointer;
     font-size: 2.5rem;
     padding: unset;
+    border: 0.2rem solid var(--border-fontColor);
 }
 
 .companyNameAndNotificationHeader .fa-bell:hover,
@@ -31,11 +27,13 @@ h2 {
 .companyNameAndNotificationHeader .fa-ellipsis-h:hover {
     color: white;
     background: var(--primary-fontColor);
+    border: 0.2rem solid var(--primary-fontColor);
 }
 
 .companyNameAndNotificationHeader .notificationActivated:hover {
     color: var(--primary-fontColor);
     background: white;
+    border: 0.2rem solid var(--border-fontColor);
 }
 
 .stockActionContainer {
@@ -59,7 +57,8 @@ h2 {
 }
 
 .stockHeader h2 {
-    font-size: 3.5rem;
+    color: var(--secondary-fontColor);
+    font-family: var(--site-Font);
 }
 
 .stockHeader .seperator {
@@ -112,7 +111,7 @@ h2 {
 
 .stockMenuWrapper {
     display: none;
-    z-index: 998;
+    z-index: 1002;
     position: absolute;
     max-width: 1250px;
     width: 100%;
@@ -126,7 +125,9 @@ h2 {
     transform: translate(-50%, -50%);
     width: 500px;
     max-width: 95%;
-    max-height: 100%;
+    max-height: 95%;
+    overflow-y: auto;
+    box-shadow: var(--box-shadowHoverSchme);
 }
 
 .stockMenuWrapper .addStockContainer {
@@ -142,13 +143,15 @@ h2 {
     position: relative;
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
-    border-bottom: 0.1rem solid #e2e6ea;
-    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 0.2rem solid var(--border-fontColor);
+    padding: 0 0 1rem 1rem;
 }
 
 .stockMenuWrapper .addStockContainer .formHeaderContainer h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    max-width: 90%;
+    text-align: justify;
 }
 
 .stockMenuWrapper .addStockContainer .formHeaderContainer h2 span {
@@ -170,7 +173,7 @@ h2 {
 }
 
 .stockMenuWrapper .addStockContainer .formHeaderContainer .fa-times:hover {
-    background: #f5f5f5;
+    background: var(--hover-secondaryColor);
 }
 
 .stockMenuWrapper .addStockContainer .descContainer {
@@ -189,7 +192,7 @@ h2 {
 }
 
 .stockMenuWrapper .addStockContainer .portfolioContainer {
-    border-bottom: 0.1rem solid #e2e6ea;
+    border-bottom: 0.2rem solid var(--border-fontColor);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -226,31 +229,12 @@ h2 {
 }
 
 .stockMenuWrapper .addStockContainer button {
-    color: var(--primary-fontColor);
-    background: white;
-    border: 0.1rem solid #e2e6ea;
-    cursor: pointer;
     font-size: 1.8rem;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-    border-radius: 0.45rem;
-    padding: 1rem 2rem;
-    width: 25%;
+    padding: 1rem 4rem;
 }
 
 .stockMenuWrapper .addStockContainer button:last-of-type {
-    background: var(--primary-fontColor);
-    color: white;
     margin-left: 2rem;
-}
-
-.stockMenuWrapper .addStockContainer button:first-of-type:hover {
-    background: var(--primary-fontColor);
-    color: white;
-}
-
-.stockMenuWrapper .addStockContainer button:last-of-type:hover {
-    background: #1a73e8 !important;
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
 }
 
 @media (max-width: 550px) {

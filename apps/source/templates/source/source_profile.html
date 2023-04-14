@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'source/min_source_profile_style_v7.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'source/min_source_profile_style_v8.css' %}" />
 <title>{{ source.name }} | FinBrowser</title>
 <meta name="description" content="Discover the latest content from {{ source.name }}">
 {% endblock %} {% block content %}
@@ -14,18 +14,21 @@
       </div>
       <span>How would you rate this source in terms of content quality?</span>
       <div class="ratingsButtonContainer">
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button>10</button>
+        <button class="{% if user_rating == 1 %}selectedRating{% endif %}">1</button>
+        <button class="{% if user_rating == 2 %}selectedRating{% endif %}">2</button>
+        <button class="{% if user_rating == 3 %}selectedRating{% endif %}">3</button>
+        <button class="{% if user_rating == 4 %}selectedRating{% endif %}">4</button>
+        <button class="{% if user_rating == 5 %}selectedRating{% endif %}">5</button>
+        <button class="{% if user_rating == 6 %}selectedRating{% endif %}">6</button>
+        <button class="{% if user_rating == 7 %}selectedRating{% endif %}">7</button>
+        <button class="{% if user_rating == 8 %}selectedRating{% endif %}">8</button>
+        <button class="{% if user_rating == 9 %}selectedRating{% endif %}">9</button>
+        <button class="{% if user_rating == 10 %}selectedRating{% endif %}">10</button>
       </div>
-      <button class="rateSourceButton">Rate</button>
+      <div class="buttonsContainer">
+        <button class="cancelButton finButtonWhite">Cancel</button>
+        <button class="rateSourceButton finButtonBlue">Rate</button>
+      </div>
     </div>
   </div>
 </div>
@@ -46,16 +49,16 @@
       <i role="button" aria-label="Deactive Notification" class="fas fa-bell notificationButton"></i>
       {% endif %}
       {% if subscribed %}
-      <button class="subscribeButton subscribed">Subscribed</button>
+      <button class="subscribeButton subscribed finButtonBlue">Subscribed</button>
       {% else %}
-      <button class="subscribeButton unsubscribed">Subscribe</button>
+      <button class="subscribeButton unsubscribed finButtonWhite">Subscribe</button>
       {% endif %}
       {% else %}
       <button aria-label="Add Source To Lists" class="addSourceToListButton openAuthPrompt ap1"><i
-          class="fas fa-ellipsis-h openAuthPrompt ap1"></i></button>
+          class="fas fa-ellipsis-h openAuthPrompt ap1 finButtonBlue"></i></button>
       <i role="button" aria-label="Deactivate Notifications"
         class="fas fa-bell notificationButton openAuthPrompt ap3"></i>
-      <button class="subscribeButton unsubscribed openAuthPrompt ap2">Subscribe</button>
+      <button class="subscribeButton unsubscribed openAuthPrompt ap2 finButtonWhite">Subscribe</button>
       {% endif %}
     </div>
   </div>
@@ -82,8 +85,8 @@
           <div class="simSourceInfoContainer">
             <span class="sourceName">{{ sim_source.name }}</span>
             <div class="innerRatingContainer">
-              <span>{{ sim_source.sector }} - {{ sim_source.content_type }} - <i
-                  class="fas fa-star"></i>{{ sim_source.average_rating }}</span>
+              {{ sim_source.sector }} - {{ sim_source.content_type }} <i
+                class="fas fa-star"></i>{{ sim_source.average_rating }}
             </div>
           </div>
           <i class="fa-solid fa-chevron-right"></i>
@@ -94,8 +97,8 @@
     </div>
     <div class="rightSideContainer">
       <div class="tabsContainer" id="content" role="navigation" aria-label="Stock Content Navigation">
-        <button class="activatedTab" data-for-tab="0">Recommended Content</button>
-        <button data-for-tab="1">Recommended Tweets</button>
+        <button class="activatedTab" data-for-tab="0">Summary</button>
+        <button data-for-tab="1">Ratings</button>
       </div>
       <h3 class="summaryHeader">Summary</h3>
       <div class="infoWrapper tabsContent tabsContentActive">
@@ -111,7 +114,8 @@
         <div class="infoContainer websiteInfoContainer">
           <span>Website</span>
           <a href="{{ source.url }}" target="_blank"
-            aria-label="Open External Profile Of {{ source.name }}">{{ source.website }}</a>
+            aria-label="Open External Profile Of {{ source.name }}">{{ source.website }} <i
+              class="fa-solid fa-arrow-up-right-from-square"></i></a>
         </div>
         <div class="infoContainer">
           <span>Paywall</span>
@@ -158,5 +162,5 @@
   </div>
 </div>
 
-<script src="{% static 'source/min_source_profile_script_v8.js' %}"></script>
+<script src="{% static 'source/min_source_profile_script_v9.js' %}"></script>
 {% endblock content %}

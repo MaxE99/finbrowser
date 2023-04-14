@@ -70,12 +70,16 @@ document.querySelectorAll('.emptyInformationContainer button').forEach((addStock
 
 // close add stock menu
 document
-    .querySelector('.addStocksContainer .closeAddStockContainer')
-    .addEventListener('click', () => {
-        document.querySelector('.portfolioMenuWrapper').style.display = 'none';
-        document.querySelector('.addStocksContainer').style.display = 'none';
-        removeModalStyle();
-    });
+    .querySelectorAll(
+        '.addStocksContainer .closeAddStockContainer, .portfolioMenuWrapper .addStocksContainer .buttonContainer .cancelButton'
+    )
+    .forEach((element) =>
+        element.addEventListener('click', () => {
+            document.querySelector('.portfolioMenuWrapper').style.display = 'none';
+            document.querySelector('.addStocksContainer').style.display = 'none';
+            removeModalStyle();
+        })
+    );
 
 // open edit menu
 document.querySelector('.editPortfolioButton').addEventListener('click', () => {
@@ -204,6 +208,7 @@ document
                 if (!res.ok) {
                     showMessage('Error: Network request failed unexpectedly!', 'Error');
                 } else {
+                    showMessage('Portfolio has been updated!', 'Success');
                     window.location.reload();
                 }
             } catch (e) {
@@ -245,6 +250,7 @@ document.querySelector('.editMenu .deletePortfolioButton').addEventListener('cli
                         if (!res.ok) {
                             showMessage('Error: Network request failed unexpectedly!', 'Error');
                         } else {
+                            showMessage('Portfolio has been deleted!', 'Remove');
                             document
                                 .querySelectorAll('.portfolioOptionsContainer .portfolioOption')
                                 .forEach((portfolioOption) => {
@@ -279,7 +285,11 @@ document.querySelectorAll('.stockContainer .fa-trash-can').forEach((removeButton
             if (!res.ok) {
                 showMessage('Error: Network request failed unexpectedly!', 'Error');
             } else {
+                showMessage('Stock has been removed!', 'Remove');
                 e.target.closest('.stockContainer').remove();
+                if (!document.querySelector('table .stockContainer')) {
+                    window.location.reload();
+                }
             }
         } catch (e) {
             // showMessage("Error: Unexpected error has occurred!", "Error");
@@ -312,6 +322,7 @@ document.querySelector('.menuContainer .editMenu .saveEditsButton').addEventList
                 if (!res.ok) {
                     showMessage('Error: Network request failed unexpectedly!', 'Error');
                 } else {
+                    showMessage('Portfolio has been updated!', 'Success');
                     window.location.reload();
                 }
             } catch (e) {
@@ -496,7 +507,7 @@ document
         document.querySelector(
             '.fullScreenPlaceholder .explanationContainer .explanation'
         ).innerText =
-            'In the content section of the portfolio you get shown all content related to the stocks and the associated keywords in your portfolio. If the content that is displayed to you contains a source that you do not find helpful, then add it to blacklisted sources and you will no longer see content from this source.';
+            "If you're seeing content from sources that you don't find helpful or relevant, you can easily remove them from your feed by adding them to your blacklisted sources. By doing so, you'll no longer see content from those sources and can focus on the ones that are most helpful to you.";
         const closeExplanationButton = document.querySelector(
             '.fullScreenPlaceholder .fullScreenWrapper .explanationContainer .fa-times'
         );
@@ -523,7 +534,7 @@ document
         document.querySelector(
             '.fullScreenPlaceholder .explanationContainer .explanation'
         ).innerText =
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+            "Your main portfolio is the one that opens up whenever you click on the Portfolio button in the header. It's important to note that you always need to have at least one main portfolio. If you only have one portfolio, then you won't be able to delete it as it is your main one. But, if you have multiple portfolios and you delete your main one, then the next portfolio in alphabetical order will become your new main portfolio. Don't worry though, you can easily change your main portfolio by opening the edit menu of a portfolio that is currently not your main one and setting it as your new main portfolio. It's as simple as that!";
         const closeExplanationButton = document.querySelector(
             '.fullScreenPlaceholder .fullScreenWrapper .explanationContainer .fa-times'
         );
@@ -548,9 +559,19 @@ async function deleteKeywords(e, keywordButton = false) {
             showMessage('Error: Network request failed unexpectedly!', 'Error');
         } else {
             e.target.closest('.keywordContainer').remove();
-            showMessage('Keyword has been removed!', 'Success');
+            showMessage('Keyword has been removed!', 'Remove');
             if (keywordButton) {
                 keywordButton.innerText -= 1;
+            } else {
+                const pstock_id = document
+                    .querySelector('.keywordModal .keywordHeader span')
+                    .id.replace('psi', '');
+                document.querySelectorAll('table tr').forEach((tr) => {
+                    if (tr.id == `pstock${pstock_id}`) {
+                        tr.querySelector('td .keywordButton').innerText =
+                            parseInt(tr.querySelector('td .keywordButton').innerText) - 1;
+                    }
+                });
             }
         }
     } catch (e) {
@@ -650,6 +671,12 @@ async function save_portfolio_keyword(element) {
                 element.closest('.keywordModal').querySelector('.inputContainer input').value = '';
                 keywordIsBeingCreated = false;
                 showMessage('Keyword has been added!', 'Success');
+                document.querySelectorAll('table tr').forEach((tr) => {
+                    if (tr.id == `pstock${pstock_id}`) {
+                        tr.querySelector('td .keywordButton').innerText =
+                            parseInt(tr.querySelector('td .keywordButton').innerText) + 1;
+                    }
+                });
             }
         } catch (e) {
             // showMessage("Error: Unexpected error has occurred!", "Error");
@@ -695,7 +722,7 @@ document
         document.querySelector(
             '.fullScreenPlaceholder .explanationContainer .explanation'
         ).innerText =
-            "FinBrowser finds content about the stocks in your portfolio based on the ticker symbol and company name. If you want to see content that relates to a company's product or a segment within the company, for example, you can enter a keyword here and the results for this keyword will also be displayed. Example: Stock: Amazon, Keyword: AWS";
+            "FinBrowser finds content related to the stocks in your portfolio based on their ticker symbol and company name. If you want to see content that focuses on a specific product or segment within a company, you can enter a keyword here and the results for that keyword will be displayed as well. For instance, let's say you hold Amazon stock and you want to see more information about their cloud computing platform, AWS. Simply enter AWS as your keyword and you'll get all the relevant results. It's that easy!";
         const closeExplanationButton = document.querySelector(
             '.fullScreenPlaceholder .fullScreenWrapper .explanationContainer .fa-times'
         );

@@ -145,7 +145,7 @@
     width: auto;
 }
 
-#djDebug #djDebugToolbar input[type="checkbox"] {
+#djDebug #djDebugToolbar input[type='checkbox'] {
     float: right;
     margin: 10px;
 }
@@ -175,7 +175,7 @@
 }
 
 #djDebug #djDebugToolbar li.djdt-active:before {
-    content: "▶";
+    content: '▶';
     position: absolute;
     left: 0;
     top: 50%;
@@ -239,8 +239,7 @@
 
 #djDebug code {
     display: block;
-    font-family: Consolas, Monaco, "Bitstream Vera Sans Mono", "Lucida Console",
-        monospace;
+    font-family: Consolas, Monaco, 'Bitstream Vera Sans Mono', 'Lucida Console', monospace;
     font-size: 12px;
     white-space: pre;
     overflow: auto;
@@ -336,7 +335,7 @@
     overflow: auto;
 }
 #djDebug .djdt-panelContent tbody > tr:nth-child(odd) {
-    background-color: #f5f5f5;
+    background-color: var(--hover-secondaryColor);
 }
 #djDebug .djdt-panelContent tbody td,
 #djDebug .djdt-panelContent tbody th {
@@ -542,7 +541,7 @@
     white-space: nowrap;
 }
 #djDebug .djdt-color:after {
-    content: "\00a0";
+    content: '\00a0';
 }
 #djDebug .djToggleSwitch {
     box-sizing: content-box;
@@ -572,8 +571,7 @@
     overflow: auto;
     padding: 2px 3px;
     margin-bottom: 3px;
-    font-family: Consolas, Monaco, "Bitstream Vera Sans Mono", "Lucida Console",
-        monospace;
+    font-family: Consolas, Monaco, 'Bitstream Vera Sans Mono', 'Lucida Console', monospace;
 }
 #djDebug .djdt-stack span {
     color: #000;

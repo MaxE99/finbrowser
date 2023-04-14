@@ -141,9 +141,25 @@ class TestSourceViewSet(CreateTestInstances, APITestCase):
     def test_illegal_patches(self):
         self.client.login(username="TestUser1", password="testpw99")
         source = get_object_or_404(Source, source_id=1)
-        print(source.url)
         data = {"url": "https://www.google.com/"}
         response = self.client.patch("/api/sources/1/", data, format="json")
         self.assertEqual(response.status_code, 200)
         source.refresh_from_db()
         self.assertNotEqual(source.url, "https://www.google.com/")
+
+    def test_get_subs_search_anon(self):
+        response = self.client.get("/api/sources/?subs_search=Test")
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(
+            response.data["detail"],
+            ErrorDetail(
+                string="Authentication credentials were not provided.",
+                code="not_authenticated",
+            ),
+        )
+
+    def test_get_subs_search_registered(self):
+        self.client.login(username="TestUser1", password="testpw99")
+        response = self.client.get("/api/sources/?subs_search=Test")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 8)

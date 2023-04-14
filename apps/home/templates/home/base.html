@@ -15,7 +15,9 @@
     <link rel="prefetch" as="font" href="{% static 'home/fonts/lato-v23-latin/lato-v23-latin-900.woff' %}"
         type="font/woff" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/fontawesome/css/all.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v34.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v35.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script nonce="{{request.csp_nonce}}" async src="https://www.googletagmanager.com/gtag/js?id=G-JNS80QXCXR"></script>
     <script nonce="{{request.csp_nonce}}">
         window.dataLayer = window.dataLayer || [];
@@ -33,7 +35,7 @@
         <div class="fullScreenWrapper">
             <div role="form" class="addToListForm addSourceToListForm">
                 <div class="formHeaderContainer">
-                    <h2>Add <span></span> To Your Lists</h2>
+                    <h2>Add <span></span> to your lists</h2>
                     <i class="fas fa-times closeFormContainerButton"></i>
                 </div>
                 {% if user_lists %}
@@ -53,8 +55,8 @@
                     {% endfor %}
                 </div>
                 <div class="buttonsContainer">
-                    <button class="cancelButton">Cancel</button>
-                    <button class="saveButton">Save</button>
+                    <button class="cancelButton finButtonWhite">Cancel</button>
+                    <button class="saveButton finButtonBlue">Save</button>
                 </div>
                 {% endif %}
             </div>
@@ -62,11 +64,12 @@
                 <i class="fas fa-times"></i>
                 <img src="{% static 'home/media/finbrowser-logo.png' %}">
                 <h3></h3>
-                <div class="desc">Hey there! If you haven't already, you'll need to log in or create a new account in
-                    order to continue. Don't worry, it's quick and easy!</div>
+                <div class="desc">Welcome! In order to carry out this action, you must be signed in with your FinBrowser
+                    account. No account yet? No problem! Creating a new one is a breeze and will only take a minute of
+                    your time.</div>
                 <div class="buttonContainer">
-                    <a class="loginButton" href="{% url 'account_login' %}">Login</a>
-                    <a class="registerButton" href="{% url 'account_signup' %}">Register</a>
+                    <a class="registerButton finButtonWhite" href="{% url 'account_signup' %}">Register</a>
+                    <a class="loginButton finButtonBlue" href="{% url 'account_login' %}">Login</a>
                 </div>
             </div>
             <div class="explanationContainer">
@@ -79,7 +82,7 @@
             <div class="smallScreenSearchContainer">
                 <div class="mainSearchWrapper">
                     <div class="mainSearchContainer">
-                        <input aria-label="Search" id="mainAutocomplete" type="text" class="mainInputSearch"
+                        <input aria-label="Search" id="mainAutocomplete" type="search" class="mainInputSearch"
                             placeholder="Search" autocomplete="off" spellcheck="false">
                         <i class="fas fa-search"></i>
                         <i class="fas fa-times closeSearchButton"></i>
@@ -115,7 +118,6 @@
                     <div class="logoSpace">
                         <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}"
                             alt="Finbrowser logo large">
-                        <img class="logoSmall" src="{% static 'home/media/favicon.png' %}" alt="Finbrowser logo small">
                         <a aria-label="Open Main Page" href="{% url 'home:feed' %}"></a>
                     </div>
                 </div>
@@ -157,8 +159,7 @@
                         {% if user.profile.profile_pic %}
                         <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
                         {% else %}
-                        <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">
-                            {{ user.username.0 }}</div>
+                        <img src="{% static 'home/media/favicon.png' %}" alt="Profile Picture">
                         {% endif %}
                     </div>
                     <div class="profileMenu">
@@ -166,8 +167,7 @@
                             {% if user.profile.profile_pic %}
                             <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
                             {% else %}
-                            <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">
-                                {{ user.username.0 }}</div>
+                            <img src="{% static 'home/media/favicon.png' %}" alt="Profile Picture">
                             {% endif %}
                             <span class="userNameSpan">{{ user.username }}</span>
                             <span class="userEmailSpan">{{ user.email }}</span>
@@ -258,49 +258,6 @@
                                                     class="fas fa-highlighter"></i><span>Highlight
                                                     article</span></a>
                                             {% endif %}
-                                        </div>
-                                        <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
-                                            <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
-                                                    class="fas fa-times closeFormContainerButton"></i>
-                                            </div>
-                                            {% if user_lists %}
-                                            <div class="listSelectionContainer">
-                                                {% for list in user_lists %}
-                                                <div class="listContainer">
-                                                    <label
-                                                        for="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
-                                                        {% if notification.article in list.articles.all %}
-                                                        <input
-                                                            id="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                            type="checkbox" name="lists" checked="True"> {{ list }}
-                                                        {% else %}
-                                                        <input
-                                                            id="bsoni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                            type="checkbox" name="lists">
-                                                        {{ list }}
-                                                        {% endif %}
-                                                    </label>
-                                                </div>
-                                                {% endfor %}
-                                            </div>
-                                            <div class="buttonsContainer">
-                                                <button class="saveButton">Save</button>
-                                            </div>
-                                            {% else %}
-                                            <div class="listContainer">You haven't created any lists!</div>
-                                            <button class="createNewListButton createFirstList">Create First
-                                                List</button>
-                                            {% endif %}
-                                        </div>
-                                        <div class="createListMenu articleCreateListMenu formContainer">
-                                            <div class="formHeaderContainer">Create A New List<i
-                                                    class="fas fa-times closeFormContainerButton"></i>
-                                            </div>
-                                            <form enctype="multipart/form-data" method="POST" class="createListForm">
-                                                {% csrf_token %} {{ add_list_form }}
-                                                <input name="createListForm" type="submit" class="formSubmitButton"
-                                                    value="Save" />
-                                            </form>
                                         </div>
                                     </div>
                                     {% if notification.article.tweet_type.type == "Retweet" %}
@@ -407,49 +364,6 @@
                                                     article</span></a>
                                             {% endif %}
                                         </div>
-                                        <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
-                                            <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
-                                                    class="fas fa-times closeFormContainerButton"></i>
-                                            </div>
-                                            {% if user_lists %}
-                                            <div class="listSelectionContainer">
-                                                {% for list in user_lists %}
-                                                <div class="listContainer">
-                                                    <label
-                                                        for="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
-                                                        {% if notification.article in list.articles.all %}
-                                                        <input
-                                                            id="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                            type="checkbox" name="lists" checked="True"> {{ list }}
-                                                        {% else %}
-                                                        <input
-                                                            id="bstni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                            type="checkbox" name="lists">
-                                                        {{ list }}
-                                                        {% endif %}
-                                                    </label>
-                                                </div>
-                                                {% endfor %}
-                                            </div>
-                                            <div class="buttonsContainer">
-                                                <button class="saveButton">Save</button>
-                                            </div>
-                                            {% else %}
-                                            <div class="listContainer">You haven't created any lists!</div>
-                                            <button class="createNewListButton createFirstList">Create First
-                                                List</button>
-                                            {% endif %}
-                                        </div>
-                                        <div class="createListMenu articleCreateListMenu formContainer">
-                                            <div class="formHeaderContainer">Create A New List<i
-                                                    class="fas fa-times closeFormContainerButton"></i>
-                                            </div>
-                                            <form enctype="multipart/form-data" method="POST" class="createListForm">
-                                                {% csrf_token %} {{ add_list_form }}
-                                                <input name="createListForm" type="submit" class="formSubmitButton"
-                                                    value="Save" />
-                                            </form>
-                                        </div>
                                     </div>
                                     {% if notification.article.tweet_type.type == "Retweet" %}
                                     <div class="retweetWrapper">Retweeted post by
@@ -543,60 +457,7 @@
                                                     class="fas fa-highlighter"></i><span>Highlight
                                                     article</span></div>
                                             {% endif %}
-                                            {% else %}
-                                            <a href="{% url 'account_login' %}" class="addToListButton registrationLink"
-                                                aria-label="Login To Articles Add To Lists"><i
-                                                    class="fas fa-list"></i>Add
-                                                to list</a>
-                                            <a href="{% url 'account_login' %}"
-                                                class="addToHighlightedButton registrationLink"
-                                                aria-label="Login To Highlight Articles"><i
-                                                    class="fas fa-highlighter"></i><span>Highlight
-                                                    article</span></a>
                                             {% endif %}
-                                        </div>
-                                        <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
-                                            <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
-                                                    class="fas fa-times closeFormContainerButton"></i>
-                                            </div>
-                                            {% if user_lists %}
-                                            <div class="listSelectionContainer">
-                                                {% for list in user_lists %}
-                                                <div class="listContainer">
-                                                    <label
-                                                        for="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
-                                                        {% if notification.article in list.articles.all %}
-                                                        <input
-                                                            id="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                            type="checkbox" name="lists" checked="True"> {{ list }}
-                                                        {% else %}
-                                                        <input
-                                                            id="bkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                            type="checkbox" name="lists">
-                                                        {{ list }}
-                                                        {% endif %}
-                                                    </label>
-                                                </div>
-                                                {% endfor %}
-                                            </div>
-                                            <div class="buttonsContainer">
-                                                <button class="saveButton">Save</button>
-                                            </div>
-                                            {% else %}
-                                            <div class="listContainer">You haven't created any lists!</div>
-                                            <button class="createNewListButton createFirstList">Create First
-                                                List</button>
-                                            {% endif %}
-                                        </div>
-                                        <div class="createListMenu articleCreateListMenu formContainer">
-                                            <div class="formHeaderContainer">Create A New List<i
-                                                    class="fas fa-times closeFormContainerButton"></i>
-                                            </div>
-                                            <form enctype="multipart/form-data" method="POST" class="createListForm">
-                                                {% csrf_token %} {{ add_list_form }}
-                                                <input name="createListForm" type="submit" class="formSubmitButton"
-                                                    value="Save" />
-                                            </form>
                                         </div>
                                     </div>
                                     {% if notification.article.tweet_type.type == "Retweet" %}
@@ -645,10 +506,11 @@
                             <div class="createKeywordNotificationModal">
                                 <div>Keyword:<span class="infoLink"><i class="fas fa-info"></i></span></div>
                                 <input minlength="3" maxlength="30" type="text" autocomplete="off" spellcheck="false">
-                                <button class="saveButton">Add</button>
-                                <button class="discardButton">Discard</button>
+                                <button class="saveButton finButtonBlue">Add</button>
+                                <button class="discardButton finButtonWhite">Discard</button>
                             </div>
-                            <div class="addKeywordsContainer"><button><i class="fas fa-plus"></i>Add Keywords</button>
+                            <div class="addKeywordsContainer"><button class="finButtonBlue"><i
+                                        class="fas fa-plus"></i>Add Keywords</button>
                             </div>
                         </div>
                     </div>
@@ -697,12 +559,12 @@
                     <i class="fa-solid fa-chevron-right"></i>
                     <a aria-label="Open Notifications" href="{% url 'home:notifications' %}"></a>
                 </div>
-                <form class="mainNavigationLink" method="post" action="{% url 'account_logout' %}">
+                <form method="post" action="{% url 'account_logout' %}">
                     {% csrf_token %}
                     {% if redirect_field_value %}
                     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                     {% endif %}
-                    <button type="submit">{% trans 'Logout' %}</button>
+                    <button class="finButtonBlue" type="submit">{% trans 'Logout' %}</button>
                 </form>
                 {% else %}
                 <div class="headerButtonContainer">
@@ -714,7 +576,7 @@
 
             {% block content %}
             {% endblock %}
-            <script src="{% static 'home/min_base_script_v21.js' %}"></script>
+            <script src="{% static 'home/min_base_script_v22.js' %}"></script>
         </div>
 
     </main>
@@ -723,12 +585,15 @@
 
 
 <footer>
+    <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}">
     <ul>
         <li><a aria-label="Open Contact" href="{% url 'support:contact' %}">Contact</a></li>
         <li><a aria-label="Open Cookie Statement" href="{% url 'support:cookie-statement' %}">Cookie Statement</a></li>
         <li><a aria-label="Open Privacy Policy" href="{% url 'support:privacy-policy' %}">Privacy Policy</a></li>
         <li><a aria-label="Open Terms Of Service" href="{% url 'support:terms-of-service' %}">Terms Of Service</a></li>
     </ul>
+    <div class="twitterFollowContainer"><i class="fa-brands fa-twitter"></i>Follow me on Twitter<a
+            href="https://twitter.com/ebirdmax99" target="_blank" aria-label="Open my twitter account"></a></div>
 </footer>
 
 

@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_notifications_style_v5.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_notifications_style_v6.css' %}">
 <title>Notifications | FinBrowser</title>
 {% endblock %}
 {% block content %}
@@ -36,7 +36,12 @@
                 {% create_fk_content_container source_notifications request highlighted_content_ids "source_notifications" %}
             </div>
             {% else %}
-            <div class="noNotificationsAvailable">No Source Notifications Available</div>
+            <div class="emptyInformationContainer">
+                <h3>No Source Notifications Available!</h3>
+                <div>At the moment, there are no new source notifications for you. If you want to stay up-to-date
+                    with your favorite sources, consider adding notifications to more of them. That way, you'll be the
+                    first to know as soon as new content is posted.</div>
+            </div>
             {% endif %}
         </div>
         <div class="tabsContent" data-tab="1">
@@ -45,12 +50,17 @@
                 {% create_fk_content_container stock_notifications request highlighted_content_ids "stock_notifications" %}
             </div>
             {% else %}
-            <div class="noNotificationsAvailable">No Stock Notifications Available</div>
+            <div class="emptyInformationContainer">
+                <h3>No Stock Notifications Available!</h3>
+                <div>At the moment, there are no new stock notifications for you. If you want to stay up-to-date
+                    with your favorite stocks, consider adding notifications to more of them. That way, you'll be the
+                    first to know as soon as new content is posted.</div>
+            </div>
             {% endif %}
         </div>
         <div class="tabsContent" data-tab="2">
             <div class="addKeywordsContainer">
-                <button class="addKeywordsButton"><i class="fas fa-plus"></i>Add Keywords</button>
+                <button class="addKeywordsButton finButtonWhite"><i class="fas fa-plus"></i>Add Keywords</button>
             </div>
             <div
                 class="contentColumnContainer {% if not source_notifications or not stock_notifications %}halfPageContainer{% endif %}">
@@ -105,49 +115,6 @@
                                             class="fas fa-highlighter"></i><span>Highlight article</span></a>
                                     {% endif %}
                                 </div>
-                                <div class="addToListForm" role="form" aria-labelledby="addToListsForm">
-                                    <div id="addToListsForm" class="formHeaderContainer">Add To Lists<i
-                                            class="fas fa-times closeFormContainerButton"></i>
-                                    </div>
-                                    {% if user_lists %}
-                                    <div class="listSelectionContainer">
-                                        {% for list in user_lists %}
-                                        <div class="listContainer">
-                                            <label
-                                                for="nkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}">
-                                                {% if notification in list.articles.all %}
-                                                <input
-                                                    id="nkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                    type="checkbox" name="lists" checked="True"> {{ list }}
-                                                {% else %}
-                                                <input
-                                                    id="nkni?ai{{ notification.article.article_id }}?li#{{ list.list_id }}"
-                                                    type="checkbox" name="lists">
-                                                {{ list }}
-                                                {% endif %}
-                                            </label>
-                                        </div>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="buttonsContainer">
-                                        <button class="saveButton">Save</button>
-                                        <button class="createNewListButton">Create</button>
-                                    </div>
-                                    {% else %}
-                                    <div class="listContainer">You haven't created any lists!</div>
-                                    <button class="createNewListButton createFirstList">Create First List</button>
-                                    {% endif %}
-                                </div>
-                                <div class="createListMenu articleCreateListMenu formContainer">
-                                    <div class="formHeaderContainer">Create A New List<i
-                                            class="fas fa-times closeFormContainerButton"></i>
-                                    </div>
-                                    <form enctype="multipart/form-data" method="POST" class="createListForm">
-                                        {% csrf_token %} {{ add_list_form }}
-                                        <input name="createListForm" type="submit" class="formSubmitButton"
-                                            value="Save" />
-                                    </form>
-                                </div>
                             </div>
                             {% if notification.article.tweet_type.type == "Retweet" %}
                             <div class="retweetWrapper">Retweeted post by
@@ -195,5 +162,5 @@
         </div>
     </div>
 </div>
-<script src="{% static 'home/min_notifications_script_v1.js' %}"></script>
+<script src="{% static 'home/min_notifications_script_v2.js' %}"></script>
 {% endblock content %}

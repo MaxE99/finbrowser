@@ -1,7 +1,7 @@
 .pageWrapper h2 {
-    font-size: 3.5rem;
     margin: 2rem 0;
     color: var(--secondary-fontColor);
+    font-family: var(--site-Font);
 }
 
 .tabsContent .smallFormContentWrapper {

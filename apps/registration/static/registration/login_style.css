@@ -1,473 +1,500 @@
 @font-face {
-  font-family: "Lato";
-  font-style: normal;
-  font-weight: 900;
-  src: local(""),
-    url("../home/fonts/lato-v23-latin/lato-v23-latin-900.woff2") format("woff2"),
-    url("../home/fonts/lato-v23-latin/lato-v23-latin-900.woff") format("woff");
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 900;
+    src: local(''), url('../home/fonts/lato-v23-latin/lato-v23-latin-900.woff2') format('woff2'),
+        url('../home/fonts/lato-v23-latin/lato-v23-latin-900.woff') format('woff');
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Lato, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Lato, sans-serif;
 }
 
 *,
 ::after,
 ::before {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 :root {
-  --primary-color: #fff;
-  --secondary-color: rgb(238, 238, 238);
-  --primary-fontColor: rgb(0, 85, 212);
-  --secondary-fontColor: rgb(34, 45, 59);
-  --box-shadowScheme: rgba(0, 0, 0, 0.24) 0px 0.3rem 0.8rem;
-  font-size: 55%;
+    --primary-color: #fff;
+    --secondary-color: rgb(238, 238, 238);
+    --primary-fontColor: rgb(0, 85, 212);
+    --hover-color: #1a73e8;
+    --hover-secondaryColor: rgba(0, 85, 212, 0.05);
+    --secondary-fontColor: rgb(34, 45, 59);
+    --border-fontColor: #e2e6ea;
+    --border-secondaryFontColor: #ccc;
+    --box-shadowScheme: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    --box-shadowHoverSchme: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+    --content-Font: serif;
+    --site-Font: monospace;
+    font-size: 55%;
 }
 
 body {
-  position: relative;
-  min-height: 100vh;
-  color: var(--secondary-fontColor);
-  background-color: #b8c6db;
-  background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
+    position: relative;
+    min-height: 100vh;
+    color: var(--secondary-fontColor);
+    background-color: #b8c6db;
+    background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
 }
 
 .loginUserForm {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
-  background-color: #fff;
-  border-radius: 0.8rem;
-  display: flex;
-  box-shadow: rgba(74, 79, 97, 0.25) 0px 13px 27px -5px,
-    rgba(74, 79, 97, 0.3) 0px 8px 16px -8px;
-  overflow: hidden;
-  height: 55rem;
-  width: 75rem;
-  max-height: 90%;
-  max-width: 90%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    height: fit-content;
+    width: 75rem;
+    max-height: 90%;
+    max-width: 100%;
+    padding: 1rem;
+}
+
+.form-wrapper label,
+[for='id_password'],
+[for='id_username'],
+label[for='id_login'] {
+    display: none;
 }
 
 .loginUserForm #form-wrapper {
-  padding: 2rem 3.5rem;
-}
-
-.loginUserForm #form-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  font-size: 2rem;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-size: 2rem;
+    width: 100%;
 }
 
 .loginUserForm i {
-  color: #fff;
-  font-size: 3rem;
-  transition: color 250ms ease-in;
+    color: #fff;
+    font-size: 3rem;
+    transition: color 250ms ease-in;
 }
 
 .loginUserForm div.input-wrapper {
-  margin-bottom: 2rem;
-  position: relative;
-  width: 48rem;
+    margin-bottom: 2rem;
+    position: relative;
+    width: 48rem;
 }
 
 .loginUserForm div.input-wrapper:last-of-type {
-  margin-bottom: 3rem;
+    margin-bottom: 3rem;
 }
 
 .loginUserForm div.input-wrapper i {
-  color: var(--input-icon-color);
-  position: absolute;
-  opacity: 0.85;
-  right: 1.3rem;
-  top: 50%;
-  transform: translateY(-50%);
+    color: var(--input-icon-color);
+    position: absolute;
+    opacity: 0.85;
+    right: 1.3rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .loginUserForm h1 {
-  margin-top: 1.5rem;
-  color: var(--primary-fontColor);
-  letter-spacing: 0;
-  font-size: 3rem;
+    margin-top: 1.5rem;
+    color: var(--primary-fontColor);
+    letter-spacing: 0;
+    font-size: 3rem;
 }
 
 .loginUserForm p {
-  width: 100%;
-  display: flex;
-  align-items: center;
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    flex-direction: column;
+    margin: 2rem 0;
+}
+
+.loginUserForm p:last-of-type {
+    flex-direction: row-reverse;
+    align-items: center;
 }
 
 .loginUserForm .forgotPassword {
-  display: flex;
-  justify-content: end;
-  cursor: pointer;
-  margin-top: -2.6rem;
-  margin-left: auto;
-  width: fit-content;
+    display: flex;
+    justify-content: end;
+    cursor: pointer;
+    margin-top: -2.6rem;
+    margin-left: auto;
+    width: fit-content;
 }
 
 .loginUserForm a {
-  color: var(--primary-fontColor);
-  text-decoration: none;
+    color: var(--primary-fontColor);
+    text-decoration: none;
 }
 
-.loginUserForm input[type="text"],
-.loginUserForm input[type="password"] {
-  border: 0.1rem solid rgb(226, 230, 234);
-  border-radius: 0.6rem;
-  font-size: 2rem;
-  padding: 1.3rem 1.2rem;
-  transition: border-color 250ms ease-in-out;
-  background: rgb(226, 230, 234);
-  opacity: 0.6;
+.loginUserForm input[type='text'],
+.loginUserForm input[type='password'] {
+    border: 0.2rem solid var(--border-fontColor);
+    border-radius: 0.45rem;
+    font-size: 2rem;
+    padding: 1.3rem 1.2rem;
+    transition: border-color 250ms ease-in-out;
+    background: white;
+    margin-top: 0.5rem;
 }
 
-#id_password {
-  margin: 1.5rem 0;
+label[for='id_remember'] {
+    margin-left: 1rem;
 }
 
-.loginUserForm input[type="text"]:focus,
-.loginUserForm input[type="password"]:focus {
-  border-color: var(--active-input-border-color);
-  outline: none;
+.loginUserForm input[type='text']:focus,
+.loginUserForm input[type='password']:focus {
+    border-color: var(--active-input-border-color);
+    outline: none;
 }
 
-.loginUserForm input[type="text"]:focus + i,
-.loginUserForm input[type="password"]:focus + i {
-  color: var(--active-input-border-color);
+.loginUserForm input[type='text']:focus + i,
+.loginUserForm input[type='password']:focus + i {
+    color: var(--active-input-border-color);
 }
 
 .loginUserForm input {
-  width: 100%;
+    width: 100%;
 }
 
 .loginUserForm ::placeholder {
-  color: var(--placeholder-text-color);
-  font-size: 1.7rem;
-  opacity: 1;
+    color: var(--placeholder-text-color);
+    font-size: 1.7rem;
+    opacity: 1;
 }
 
-.loginUserForm button[type="submit"],
+.loginUserForm button[type='submit'],
 .signInButton {
-  background: var(--primary-fontColor);
-  border: 0.1rem solid #e2e6ea;
-  color: white;
-  cursor: pointer;
-  font-size: 1.85rem;
-  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-  text-decoration: none;
-  border-radius: 0.45rem;
-  padding: 1.36rem 2.72rem;
-  width: 100%;
-  margin-top: 1.5rem;
+    background: var(--primary-fontColor);
+    border: 0.2rem solid var(--border-fontColor);
+    color: white;
+    cursor: pointer;
+    font-size: 2rem;
+    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+    border-radius: 0.45rem;
+    padding: 1.36rem 2.72rem;
+    width: 100%;
 }
 
-.loginUserForm button[type="submit"]:hover {
-  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-  background: #1a73e8 !important;
+.loginUserForm button[type='submit']:hover {
+    box-shadow: var(--box-shadowHoverSchme);
+    background: var(--hover-color) !important;
 }
 
-.loginUserForm button[type="submit"] i {
-  margin-left: 0.5rem;
+.loginUserForm button[type='submit'] i {
+    margin-left: 0.5rem;
 }
 
 .loginUserForm .brand {
-  position: relative;
-  background: white;
-  border-radius: 1rem;
-  color: var(--secondary-fontColor);
-  display: flex;
-  font-size: 2.8rem;
-  font-weight: 600;
-  margin-bottom: 5rem;
-  justify-content: center;
-  align-items: center;
-  height: 5rem;
-  opacity: 0.9;
-  width: 5rem;
+    position: relative;
+    background: white;
+    border-radius: 1rem;
+    color: var(--secondary-fontColor);
+    display: flex;
+    font-size: 2.8rem;
+    font-weight: 600;
+    margin-bottom: 5rem;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+    opacity: 0.9;
+    width: 5rem;
 }
 
 .ui.button.google-auth__button.disabled,
 .ui.button.google-auth__button:disabled {
-  background: #eee;
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+    background: #eee;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
 }
 
 .googleAuthContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1.5rem;
+    border: 0.2rem solid var(--border-fontColor);
+    border-radius: 0.45rem;
 }
 
 .googleAuthButton {
-  position: relative;
-  padding: 1.2rem 1.6rem;
-  background: #fff;
-  border-radius: 0.45rem;
-  font-size: 1.6rem;
-  line-height: 1.5em;
-  letter-spacing: 0.022rem;
-  border: 0.1rem solid;
-  width: 100%;
-  cursor: pointer;
+    position: relative;
+    padding: 1.36rem 2.72rem;
+    background: #fff;
+    font-size: 2rem;
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    border-radius: 0.45rem;
 }
 
-.googleAuthButton:hover {
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+.googleAuthContainer:hover {
+    border: 0.2rem solid var(--primary-fontColor);
+}
+
+.googleAuthContainer:hover .googleAuthButton {
+    color: var(--primary-fontColor);
 }
 
 .googleAuthButton a {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .googleLogo {
-  display: inline-block;
-  margin-right: 1.6rem;
-  height: 2.4rem;
-  width: 2.4rem;
-  line-height: 2.4rem;
-  vertical-align: top;
+    display: inline-block;
+    margin-right: 1.6rem;
+    height: 2.4rem;
+    width: 2.4rem;
+    line-height: 2.4rem;
+    vertical-align: top;
 }
 
 .seperator {
-  margin: 2rem 0;
+    margin: 2rem 0;
 }
 
 .login {
-  width: 100%;
+    width: 100%;
 }
 
 .rememberAndPwrecovery {
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5rem;
 }
 
 .rememberAndPwrecovery a {
-  color: var(--primary-fontColor);
-  cursor: pointer;
+    color: var(--primary-fontColor);
+    cursor: pointer;
 }
 
 .container {
-  display: block;
-  position: relative;
-  padding-left: 2rem;
-  margin-bottom: 1.2rem;
-  user-select: none;
+    display: block;
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 1.2rem;
+    user-select: none;
 }
 
 .container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
 }
 
 .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 1.5rem;
-  width: 1.5rem;
-  background-color: #eee;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1.5rem;
+    width: 1.5rem;
+    background-color: #eee;
 }
 
 .container:hover input ~ .checkmark {
-  background-color: #ccc;
+    background-color: #ccc;
 }
 
 .container input:checked ~ .checkmark {
-  background-color: var(--primary-fontColor);
+    background-color: var(--primary-fontColor);
 }
 
 .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
+    content: '';
+    position: absolute;
+    display: none;
 }
 
 .container input:checked ~ .checkmark:after {
-  display: block;
+    display: block;
 }
 
 .container .checkmark:after {
-  left: 0.6rem;
-  top: 0.2rem;
-  width: 0.5rem;
-  height: 1rem;
-  border: solid white;
-  border-width: 0 0.3rem 0.3rem 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
+    left: 0.6rem;
+    top: 0.2rem;
+    width: 0.5rem;
+    height: 1rem;
+    border: solid white;
+    border-width: 0 0.3rem 0.3rem 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .createAccount {
-  margin-top: 2rem;
-  margin-right: auto;
+    margin: 1rem auto 0;
+    font-size: 2rem;
 }
 
 .createAccount a {
-  color: var(--primary-fontColor);
-  cursor: pointer;
+    color: var(--primary-fontColor);
+    cursor: pointer;
 }
 
 .createAccount a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .errorlist {
-  background: red;
-  position: absolute;
-  opacity: 1;
-  color: white;
-  font-size: 1.8rem;
-  border-radius: 2rem;
-  padding: 1rem 2rem;
-  list-style: none;
-  text-align: center;
-  text-transform: uppercase;
-  box-shadow: rgb(0 0 0 / 35%) 0px -50px 36px -28px inset;
-  letter-spacing: 0.12rem;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  -moz-animation: cssAnimation 0s ease-in 4s forwards;
-  -webkit-animation: cssAnimation 0s ease-in 4s forwards;
-  -o-animation: cssAnimation 0s ease-in 4s forwards;
-  animation: cssAnimation 0s ease-in 4s forwards;
-  animation-fill-mode: forwards;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-  z-index: 10;
+    background: red;
+    position: absolute;
+    opacity: 1;
+    color: white;
+    font-size: 1.8rem;
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    list-style: none;
+    text-align: center;
+    text-transform: uppercase;
+    box-shadow: rgb(0 0 0 / 35%) 0px -50px 36px -28px inset;
+    letter-spacing: 0.12rem;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    -moz-animation: cssAnimation 0s ease-in 4s forwards;
+    -webkit-animation: cssAnimation 0s ease-in 4s forwards;
+    -o-animation: cssAnimation 0s ease-in 4s forwards;
+    animation: cssAnimation 0s ease-in 4s forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    z-index: 10;
 }
 
 .messages {
-  position: fixed;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  -moz-animation: cssAnimation 0s ease-in 4s forwards;
-  -webkit-animation: cssAnimation 0s ease-in 4s forwards;
-  -o-animation: cssAnimation 0s ease-in 4s forwards;
-  animation: cssAnimation 0s ease-in 4s forwards;
-  animation-fill-mode: forwards;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-  z-index: 10;
-  margin-left: 8.75%;
+    position: fixed;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    -moz-animation: cssAnimation 0s ease-in 4s forwards;
+    -webkit-animation: cssAnimation 0s ease-in 4s forwards;
+    -o-animation: cssAnimation 0s ease-in 4s forwards;
+    animation: cssAnimation 0s ease-in 4s forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    z-index: 10;
+    margin-left: 8.75%;
 }
 
 .messages li {
-  color: white;
-  font-size: 1.8rem;
-  border-radius: 2rem;
-  padding: 1rem 2rem;
-  list-style: none;
-  text-align: center;
-  text-transform: uppercase;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
-  letter-spacing: 0.12rem;
+    color: white;
+    font-size: 1.8rem;
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    list-style: none;
+    text-align: center;
+    text-transform: uppercase;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+    letter-spacing: 0.12rem;
 }
 
 .messages .success {
-  background: green;
+    background: green;
 }
 
 .messages .error {
-  background: red;
+    background: red;
 }
 
 @keyframes cssAnimation {
-  to {
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-  }
+    to {
+        width: 0;
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+    }
 }
 
-.form-wrapper label {
-  display: none;
+/* .form-wrapper label {
+    display: none;
 }
 
-[for="id_username"],
-[for="id_password"] {
-  display: none;
-}
+[for='id_username'],
+[for='id_password'] {
+    display: none;
+} */
 
 .enterCredentialsSeperator {
-  margin: 1rem auto;
+    margin: 1rem auto;
 }
 
 #id_remember {
-  margin-right: auto;
-  margin-left: 0.5rem;
-  width: 1.5rem;
-  height: 1.5rem;
+    width: 2rem;
+    height: 2rem;
 }
 
-label[for="id_login"] {
-  display: none;
-}
+/* label[for='id_login'] {
+    display: none;
+} */
 
 .googleSignButton input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 0.45rem;
-  opacity: 0;
-  cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.45rem;
+    opacity: 0;
+    cursor: pointer;
 }
 
 .fa-home {
-  color: var(--primary-fontColor) !important;
+    color: var(--primary-fontColor) !important;
 }
 
 .brand a {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .sourcePic {
-  width: 100%;
+    width: 100%;
+}
+
+.logoLarge {
+    height: 7rem;
+}
+
+@media (max-width: 750px) {
+    .loginUserForm {
+        position: relative;
+        margin-top: 2rem;
+        padding: 2rem;
+    }
 }
 
 @media (max-width: 500px) {
-  .loginUserForm {
-    height: 60rem;
-  }
+    .loginUserForm .forgotPassword {
+        margin: 1.5rem auto 0;
+    }
 
-  .loginUserForm .forgotPassword {
-    margin: 1.5rem auto 0;
-  }
+    .messages {
+        white-space: unset;
+        width: 90%;
+    }
 
-  .messages {
-    white-space: unset;
-    width: 90%;
-  }
+    .logoLarge {
+        height: unset;
+        max-width: 100%;
+    }
 }

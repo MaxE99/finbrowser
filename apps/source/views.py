@@ -59,7 +59,6 @@ class SourceRankingView(ListView, BaseMixin):
             context["user_ratings"] = SourceRating.objects.get_user_ratings_dict(
                 self.request.user
             )
-        print(len(filter_sources(self.request.GET)))
         context["sources"] = paginator_create(
             self.request,
             filter_sources(self.request.GET),

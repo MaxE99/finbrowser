@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v12.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v13.css' %}" />
 {% if request.user.is_authenticated %}
 <title>{{ list.name }} | FinBrowser</title>
 {% else %}
@@ -17,12 +17,18 @@
                 <h2>Add Sources</h2><i class="fas fa-times closeAddSourceContainer"></i>
             </div>
             <div class="actionWrapper">
-                <input id="textInput" type="search" autocomplete="off" spellcheck="false">
+                <div class="searchWrapper">
+                    <i class="fas fa-search"></i>
+                    <input id="textInput" type="search" autocomplete="off" spellcheck="false">
+                </div>
                 <div class="searchResultWrapper">
                     <div id="searchResultsContainer"></div>
                     <div class="selectionContainer"></div>
                 </div>
-                <button class="addSourceButton">Add</button>
+                <div class="buttonContainer">
+                    <button class="cancelButton finButtonWhite">Cancel</button>
+                    <button class="addSourceButton finButtonBlue">Save</button>
+                </div>
             </div>
         </div>
         <div class="editMenu">
@@ -42,7 +48,7 @@
                 {% endif %}
                 <span class="infoLink"><i class="fas fa-info"></i></span>
             </div>
-            <button class="saveEditsButton">Save</button>
+            <button class="saveEditsButton finButtonBlue">Save</button>
             <button class="deleteListButton">Delete List</button>
         </div>
         <div class="warningMessageContainer">
@@ -78,19 +84,19 @@
                         <a href="{% url 'list:list-highlighted_content' %}" aria-label="Open highlighted content"></a>
                     </div>
                 </div>
-                <button class="createListButton"><i class="fas fa-plus"></i>Create New List</button>
+                <button class="createListButton finButtonWhite"><i class="fas fa-plus"></i>Create New List</button>
             </div>
         </div>
         <div class="actionButtonContainer">
-            <button class="editListButton"><i class="fas fa-edit"></i><span>Edit</span></button>
-            <button class="addSourceButton"><i class="fas fa-plus"></i><span>Add</span></button>
+            <button class="editListButton finButtonBlue"><i class="fas fa-edit"></i><span>Edit</span></button>
+            <button class="addSourceButton finButtonWhite"><i class="fas fa-plus"></i><span>Add</span></button>
         </div>
     </div>
 
     {% if list.sources.all.count > 0 %}
     <div class="sliderWrapper">
         <div class="sliderContentContainer">
-            <button aria-label="Slide Left" class="handle leftHandle">
+            <button aria-label="Slide Left" class="handle leftHandle finButtonWhite">
                 <i class="fas fa-chevron-left"></i>
             </button>
             <div class="slider">
@@ -105,9 +111,9 @@
                         <span>{{source.name}}</span>
                     </div>
                     {% if source in subscribed_sources %}
-                    <button class="subscribeButton subscribed">Subscribed</button>
+                    <button class="subscribeButton subscribed finButtonBlue">Subscribed</button>
                     {% else %}
-                    <button class="subscribeButton">Subscribe</button>
+                    <button class="subscribeButton finButtonWhite">Subscribe</button>
                     {% endif %}
                     <button class="removeFromListButton">Remove</button>
                     <a class="contentLink" href="{{ source.get_absolute_url }}"
@@ -115,7 +121,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <button aria-label="Slide right" class="handle rightHandle">
+            <button aria-label="Slide right" class="handle rightHandle finButtonWhite">
                 <i class="fas fa-chevron-right"></i>
             </button>
         </div>
@@ -134,9 +140,12 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <h3>No analytical content found!</h3>
-                <div>Consider adding more sources to this list!</div>
-                <button><i class="fas fa-plus"></i>Add</button>
+                <h3>No Analysis Found!</h3>
+                <div>It looks like you could benefit from adding more sources to your list that match the theme you're
+                    interested in. That way, you can stay up-to-date with all the latest news and information on the
+                    topics you care about. Don't be afraid to explore and add new sources to your list to keep your
+                    content fresh and interesting.</div>
+                <button class="finButtonWhite"><i class="fas fa-plus"></i>Add</button>
             </div>
             {% endif %}
         </div>
@@ -150,9 +159,12 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <h3>No commentary found!</h3>
-                <div>Consider adding more sources to this list!</div>
-                <button><i class="fas fa-plus"></i>Add</button>
+                <h3>No Commentary Found!</h3>
+                <div>It looks like you could benefit from adding more sources to your list that match the theme you're
+                    interested in. That way, you can stay up-to-date with all the latest news and information on the
+                    topics you care about. Don't be afraid to explore and add new sources to your list to keep your
+                    content fresh and interesting.</div>
+                <button class="finButtonWhite"><i class="fas fa-plus"></i>Add</button>
             </div>
             {% endif %}
         </div>
@@ -165,9 +177,12 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <h3>No news content found!</h3>
-                <div>Consider adding more sources to this list!</div>
-                <button><i class="fas fa-plus"></i>Add</button>
+                <h3>No News Found!</h3>
+                <div>It looks like you could benefit from adding more sources to your list that match the theme you're
+                    interested in. That way, you can stay up-to-date with all the latest news and information on the
+                    topics you care about. Don't be afraid to explore and add new sources to your list to keep your
+                    content fresh and interesting.</div>
+                <button class="finButtonWhite"><i class="fas fa-plus"></i>Add</button>
             </div>
             {% endif %}
         </div>
@@ -180,36 +195,40 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <h3>No saved content found!</h3>
-                <div>You can add content to this list by opening the individual content options menu!</div>
+                <h3>No Saved Content Found!</h3>
+                <div>To add content to this list, you can simply click on the ellipsis button of a content container
+                    and select the "Add To List" option. It's a simple and effective way to gather all the content
+                    related to a specific theme in one place.</div>
             </div>
             {% endif %}
         </div>
     </div>
     {% else %}
     <div class="emptyInformationContainer">
-        <h3>This list is empty!</h3>
-        <div>Add sources to this list to get the latest information from your favorite content creators.</div>
-        <button><i class="fas fa-plus"></i>Add</button>
+        <h3>This List Is Empty!</h3>
+        <div>It looks like your list is currently empty. Don't worry though, you can easily add your favorite content
+            creators to this list to get the latest information from them. By adding sources, you'll be able to stay
+            up-to-date with the content that matters to you the most. So go ahead and add those sources to your list to
+            get started!</div>
+        <button class="finButtonWhite"><i class="fas fa-plus"></i>Add</button>
     </div>
     {% endif %}
 </div>
 
-<script src="{% static 'list/min_list_details_script_v12.js' %}"></script>
+<script src="{% static 'list/min_list_details_script_v13.js' %}"></script>
 
 {% else %}
 
 <main class="main">
     <section class="landingSection">
         <div class="landingSectionContainer">
-            <h1>FinBrowser
-                <span>Lists</span>
-            </h1>
+            <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}">
+            <h2>Lists</h2>
             <p>
-                Save interesting content, create lists on specific topics, and always stay up to date when one of your
-                favorite stock market content creators publishes new content.
+                Capture intriguing content, curate lists based on your interests, and stay in the know whenever your
+                favorite stock market content creators release fresh material.
             </p>
-            <a href="{% url 'account_login' %}" class="signUpButton" aria-label="Sign Up">Get Started</a>
+            <a href="{% url 'account_login' %}" class="signUpButton finButtonBlue" aria-label="Sign Up">Get Started</a>
         </div>
         <div class="landingSectionImage">
             <img src="{% static 'home/media/landing-page.svg' %}" alt="landing-page-logo">

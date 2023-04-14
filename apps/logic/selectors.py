@@ -40,7 +40,7 @@ def filter_sources(get_request):
     )
 
 
-def article_components_get(item):
+def article_components_get(item, substack=False):
     """Goes through xml item and returns title, link and publishing date of article."""
 
     # some titles in the xml files have been escaped twice which makes it necesseary to ecape the titles more than once
@@ -57,9 +57,7 @@ def article_components_get(item):
         pub_date.replace(" -", "").replace(" +", ""), "%a, %d %b %Y %X"
     )
     title = double_escaped_string_unescape(item.find(".//title").text)
-    if (
-        str(item.find(".//description")) != "None"
-    ):  # if item.find(".//description") always returns false
+    if substack:
         description = double_escaped_string_unescape(item.find(".//description").text)
         substack_title = f"{title}: {description}"
         return substack_title, link, pub_date, title

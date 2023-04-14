@@ -1,1 +1,256 @@
-.keywordContainer,.settingsHeader{position:relative;text-align:center}.notificationTab h2:first-of-type,h2{margin-bottom:2rem}.overlay{width:75%;margin:0 auto}.settingsHeader{margin:2rem 0;padding:.75rem 0;font-size:2rem;color:#fff;border:.3rem solid #fff;width:100%;background:var(--primary-fontColor);box-shadow:var(--box-shadowScheme)}.settingSidebar h3{margin:0 auto 2rem;font-size:2.5rem;color:var(--primary-fontColor)}h2{font-size:2.5rem}.changePasswordForm,.changePrivacySettingsForm,.editSection{display:flex;flex-direction:column}.usernameAndEmailContainer{display:flex;justify-content:space-between}.emailContainer,.usernameContainer{display:flex;flex-direction:column;width:47.5%}.changePasswordForm label,.editSection label{font-size:2rem;margin-bottom:.5rem}#id_email,#id_new_password1,#id_new_password2,#id_old_password,#id_username,.linkInput{border:.1rem solid #e2e6ea;border-radius:.6rem;font-size:1.8rem;padding:1.3rem 1.2rem;transition:border-color 250ms ease-in-out;background:#fff;opacity:.6;margin-bottom:1.5rem;box-shadow:var(--box-shadowScheme)}.profilePicContainer{width:47.5%;margin:1.5rem 0 2rem}.profilePicInnerContainer{display:flex;align-items:center;margin-top:.5rem}.existingSocialContainer img,.profilePicContainer img{width:4.5rem;height:4.5rem;border-radius:50%;box-shadow:var(--box-shadowScheme)}.linkInput,.sliderWrapper{width:100%}.changeProfilePicButton{position:relative;background:#fff;margin-left:1rem}.buttonContainer input,.cancelButton,.changeProfilePicButton,.passwordChangeSubmit,.privacySettingsChangeSubmit,.profilePicInnerContainer button{color:#fff;background:var(--primary-fontColor);border:.1rem solid #e2e6ea;cursor:pointer;font-size:1.85rem;transition:background .2s,box-shadow .2s,color .2s;text-decoration:none;border-radius:.45rem;padding:1.36rem 2.72rem;box-shadow:var(--box-shadowScheme)}.buttonContainer input:hover,.passwordChangeSubmit:hover,.privacySettingsChangeSubmit:hover{background:#1a73e8!important}.cancelButton:hover{background:var(--primary-fontColor)!important;color:#fff!important}.buttonContainer input:hover,.cancelButton:hover,.changeProfilePicButton:hover,.passwordChangeSubmit:hover,.privacySettingsChangeSubmit:hover,.profilePicInnerContainer button:hover{box-shadow:0 1px 2px 0 rgb(60 64 67 / 30%),0 1px 3px 1px rgb(60 64 67 / 15%)}.changeProfilePicButton input{position:absolute;width:100%;height:100%;opacity:0;top:0;left:0;cursor:pointer}.profilePicInnerContainer button{background:red;color:#fff;margin-left:1rem}.linkInput{margin:0 0 0 .5rem}.buttonContainer{margin-left:auto;margin-top:1.5rem;margin-bottom:.5rem}.cancelButton{background:#fff!important;margin-right:1rem;color:var(--primary-fontColor)!important}.sliderHeader:first-of-type{margin-top:2rem}.sliderHeader{padding:2rem 4rem}.notificationContainer{display:flex;flex-wrap:wrap}.iconContainer .fa-times{position:absolute;top:1rem;right:1rem;font-size:2.8rem;color:red;cursor:pointer;z-index:100}.keywordContainer{font-size:2rem;margin:1rem 1rem 0 0;border-radius:20rem;box-shadow:var(--box-shadowScheme);padding:.75rem 1.5rem;background:#fff;display:flex;align-items:center}.keywordContainer:hover{background:var(--primary-fontColor);color:#fff}.keywordContainer:hover .fa-check{background:#fff;color:var(--primary-fontColor)}.keywordContainer .fa-check{border-radius:50%;border:.3rem solid gray;margin-right:1rem;padding:.2rem;font-size:12px}.keywordContainer .fa-times{margin-left:1rem;cursor:pointer}.noNotificationsActivated{margin-top:3rem;font-size:3rem;text-align:center}.sliderWrapper .sliderContentContainer .slider{--items-per-screen:4}.notificationTab h2{margin:2rem 0 1rem}.notificationTab h2:last-of-type{margin-top:4rem}@media (max-width:1200px){.overlay{width:90%}}@media (max-width:1000px){.overlay{width:100%}}@media (max-width:900px){.sliderWrapper .sliderContentContainer .slider{--items-per-screen:3}}@media (max-width:650px){.sliderWrapper .sliderContentContainer .slider{--items-per-screen:2}}@media (max-width:600px){.usernameAndEmailContainer{flex-direction:column}.usernameAndEmailContainer .emailContainer,.usernameAndEmailContainer .usernameContainer{width:100%}}@media (max-width:500px){.overlay{width:95%;margin:0 2.5%}}@media (max-width:450px){.sliderWrapper .sliderContentContainer .slider{--items-per-screen:1}}
+.keywordContainer,
+.settingsHeader {
+    position: relative;
+    text-align: center;
+}
+.notificationTab h2:first-of-type,
+h2 {
+    margin-bottom: 2rem;
+}
+.overlay {
+    width: 75%;
+    margin: 0 auto;
+}
+.settingsHeader {
+    margin: 2rem 0;
+    padding: 0.75rem 0;
+    font-size: 2rem;
+    color: #fff;
+    border: 0.3rem solid #fff;
+    width: 100%;
+    background: var(--primary-fontColor);
+    box-shadow: var(--box-shadowScheme);
+}
+.settingSidebar h3 {
+    margin: 0 auto 2rem;
+    font-size: 2.5rem;
+    color: var(--primary-fontColor);
+}
+h2 {
+    font-size: 2.5rem;
+}
+.changePasswordForm,
+.changePrivacySettingsForm,
+.editSection {
+    display: flex;
+    flex-direction: column;
+}
+.usernameAndEmailContainer {
+    display: flex;
+    justify-content: space-between;
+}
+.emailContainer,
+.usernameContainer {
+    display: flex;
+    flex-direction: column;
+    width: 47.5%;
+}
+.changePasswordForm label,
+.editSection label {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+#id_email,
+#id_new_password1,
+#id_new_password2,
+#id_old_password,
+#id_username,
+.linkInput {
+    border: 0.2rem solid var(--border-fontColor);
+    border-radius: 0.6rem;
+    font-size: 1.8rem;
+    padding: 1.3rem 1.2rem;
+    transition: border-color 250ms ease-in-out;
+    background: #fff;
+    opacity: 0.6;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--box-shadowScheme);
+}
+.profilePicContainer {
+    width: 47.5%;
+    margin: 1.5rem 0 2rem;
+}
+.profilePicInnerContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+.existingSocialContainer img,
+.profilePicContainer img {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    box-shadow: var(--box-shadowScheme);
+}
+.linkInput,
+.sliderWrapper {
+    width: 100%;
+}
+.changeProfilePicButton {
+    position: relative;
+    background: #fff;
+    margin-left: 1rem;
+}
+.buttonContainer input,
+.cancelButton,
+.changeProfilePicButton,
+.passwordChangeSubmit,
+.privacySettingsChangeSubmit,
+.profilePicInnerContainer button {
+    color: #fff;
+    background: var(--primary-fontColor);
+    border: 0.2rem solid var(--border-fontColor);
+    cursor: pointer;
+    font-size: 1.85rem;
+    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+    text-decoration: none;
+    border-radius: 0.45rem;
+    padding: 1.36rem 2.72rem;
+    box-shadow: var(--box-shadowScheme);
+}
+.buttonContainer input:hover,
+.passwordChangeSubmit:hover,
+.privacySettingsChangeSubmit:hover {
+    background: #1a73e8 !important;
+}
+.cancelButton:hover {
+    background: var(--primary-fontColor) !important;
+    color: #fff !important;
+}
+.buttonContainer input:hover,
+.cancelButton:hover,
+.changeProfilePicButton:hover,
+.passwordChangeSubmit:hover,
+.privacySettingsChangeSubmit:hover,
+.profilePicInnerContainer button:hover {
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+}
+.changeProfilePicButton input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+.profilePicInnerContainer button {
+    background: red;
+    color: #fff;
+    margin-left: 1rem;
+}
+.linkInput {
+    margin: 0 0 0 0.5rem;
+}
+.buttonContainer {
+    margin-left: auto;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+.cancelButton {
+    background: #fff !important;
+    margin-right: 1rem;
+    color: var(--primary-fontColor) !important;
+}
+.sliderHeader:first-of-type {
+    margin-top: 2rem;
+}
+.sliderHeader {
+    padding: 2rem 4rem;
+}
+.notificationContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+.iconContainer .fa-times {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2.8rem;
+    color: red;
+    cursor: pointer;
+    z-index: 100;
+}
+.keywordContainer {
+    font-size: 2rem;
+    margin: 1rem 1rem 0 0;
+    border-radius: 20rem;
+    box-shadow: var(--box-shadowScheme);
+    padding: 0.75rem 1.5rem;
+    background: #fff;
+    display: flex;
+    align-items: center;
+}
+.keywordContainer:hover {
+    background: var(--primary-fontColor);
+    color: #fff;
+}
+.keywordContainer:hover .fa-check {
+    background: #fff;
+    color: var(--primary-fontColor);
+}
+.keywordContainer .fa-check {
+    border-radius: 50%;
+    border: 0.3rem solid gray;
+    margin-right: 1rem;
+    padding: 0.2rem;
+    font-size: 12px;
+}
+.keywordContainer .fa-times {
+    margin-left: 1rem;
+    cursor: pointer;
+}
+.noNotificationsActivated {
+    margin-top: 3rem;
+    font-size: 3rem;
+    text-align: center;
+}
+.sliderWrapper .sliderContentContainer .slider {
+    --items-per-screen: 4;
+}
+.notificationTab h2 {
+    margin: 2rem 0 1rem;
+}
+.notificationTab h2:last-of-type {
+    margin-top: 4rem;
+}
+@media (max-width: 1200px) {
+    .overlay {
+        width: 90%;
+    }
+}
+@media (max-width: 1000px) {
+    .overlay {
+        width: 100%;
+    }
+}
+@media (max-width: 900px) {
+    .sliderWrapper .sliderContentContainer .slider {
+        --items-per-screen: 3;
+    }
+}
+@media (max-width: 650px) {
+    .sliderWrapper .sliderContentContainer .slider {
+        --items-per-screen: 2;
+    }
+}
+@media (max-width: 600px) {
+    .usernameAndEmailContainer {
+        flex-direction: column;
+    }
+    .usernameAndEmailContainer .emailContainer,
+    .usernameAndEmailContainer .usernameContainer {
+        width: 100%;
+    }
+}
+@media (max-width: 500px) {
+    .overlay {
+        width: 95%;
+        margin: 0 2.5%;
+    }
+}
+@media (max-width: 450px) {
+    .sliderWrapper .sliderContentContainer .slider {
+        --items-per-screen: 1;
+    }
+}

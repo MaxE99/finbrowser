@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'stock/min_portfolio_style_v1.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'stock/min_portfolio_style_v2.css' %}">
 {% if request.user.is_authenticated %}
 <title>{{ selected_portfolio.name }} | FinBrowser</title>
 {% else %}
@@ -20,12 +20,18 @@
                 <h2>Add Stocks</h2><i class="fas fa-times closeAddStockContainer"></i>
             </div>
             <div class="actionWrapper">
-                <input id="textInput" type="search" autocomplete="off" spellcheck="false">
+                <div class="searchWrapper">
+                    <i class="fas fa-search"></i>
+                    <input id="textInput" type="search" autocomplete="off" spellcheck="false">
+                </div>
                 <div class="searchResultWrapper">
                     <div id="searchResultsContainer"></div>
                     <div class="selectionContainer"></div>
                 </div>
-                <button class="addStocksButton">Add</button>
+                <div class="buttonContainer">
+                    <button class="cancelButton finButtonWhite">Cancel</button>
+                    <button class="addStocksButton finButtonBlue">Save</button>
+                </div>
             </div>
         </div>
         <div class="editMenu">
@@ -41,7 +47,10 @@
             <div class="blacklistSourceContainer">
                 <div class="header">Blacklist Sources<span class="infoLink"><i class="fas fa-info"></i></span></div>
                 <div class="actionWrapper">
-                    <input id="textInput" type="search" autocomplete="off" spellcheck="false">
+                    <div class="searchWrapper">
+                        <i class="fas fa-search"></i>
+                        <input id="textInput" type="search" autocomplete="off" spellcheck="false">
+                    </div>
                     <div class="searchResultWrapper">
                         <div id="searchResultsContainer"></div>
                         <div class="selectionContainer">
@@ -65,7 +74,7 @@
                 {% endif %}
                 <span class="infoLink"><i class="fas fa-info"></i></span>
             </div>
-            <button class="saveEditsButton">Save</button>
+            <button class="saveEditsButton finButtonBlue">Save</button>
             <button class="deletePortfolioButton">Delete Portfolio</button>
         </div>
         <div class="keywordModal">
@@ -87,7 +96,7 @@
                 </div>
                 {% endfor %}
             </div>
-            <button class="addButton">Add</button>
+            <button class="addButton finButtonBlue">Add</button>
         </div>
         <div class="warningMessageContainer">
             <div class="faTimesContainer">!</div>
@@ -113,12 +122,13 @@
                     </div>
                     {% endfor %}
                 </div>
-                <button class="createPortfolioButton"><i class="fas fa-plus"></i>Create New Portfolio</button>
+                <button class="createPortfolioButton finButtonWhite"><i class="fas fa-plus"></i>Create New
+                    Portfolio</button>
             </div>
         </div>
         <div class="actionButtonContainer">
-            <button class="editPortfolioButton"><i class="fas fa-edit"></i><span>Edit</span></button>
-            <button class="addStocksButton"><i class="fas fa-plus"></i><span>Add</span></button>
+            <button class="editPortfolioButton finButtonBlue"><i class="fas fa-edit"></i><span>Edit</span></button>
+            <button class="addStocksButton finButtonWhite"><i class="fas fa-plus"></i><span>Add</span></button>
         </div>
     </div>
     {% if stocks|length %}
@@ -169,7 +179,7 @@
                             aria-label="Open Profile Of {{ stock.stock.full_company_name }}"></a>
                     </td>
                     <td class="actionContainer">
-                        <a href="{{ stock.absolute_path }}" class="openStockButton">Open</a>
+                        <a href="{{ stock.absolute_path }}" class="openStockButton finButtonWhite">Open</a>
                         <i class="fa-regular fa-trash-can"></i>
                     </td>
 
@@ -191,9 +201,15 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <h3>No analytical content found!</h3>
-                <div>Consider adding more stocks or keywords to the portfolio!</div>
-                <button><i class="fas fa-plus"></i>Add</button>
+                <h3>No Analysis Found!</h3>
+                <div>Hello there! It appears that we couldn't find any analysis related to the stocks in your
+                    portfolio.
+                    But, no need to worry, there are a few things you can do to stay on top of your investments. One
+                    option is to consider broadening your portfolio by adding more stocks. Alternatively, you could try
+                    adding some relevant keywords to your current holdings. By doing this, FinBrowser can provide you
+                    with the most recent updates on various aspects such as the company's products or the actions of its
+                    executives.</div>
+                <button class="finButtonWhite"><i class="fas fa-plus"></i>Add</button>
             </div>
             {% endif %}
         </div>
@@ -207,9 +223,15 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <h3>No commentary found!</h3>
-                <div>Consider adding more stocks or keywords to the portfolio!</div>
-                <button><i class="fas fa-plus"></i>Add</button>
+                <h3>No Commentary Found!</h3>
+                <div>Hello there! It appears that we couldn't find any commentary related to the stocks in your
+                    portfolio.
+                    But, no need to worry, there are a few things you can do to stay on top of your investments. One
+                    option is to consider broadening your portfolio by adding more stocks. Alternatively, you could try
+                    adding some relevant keywords to your current holdings. By doing this, FinBrowser can provide you
+                    with the most recent updates on various aspects such as the company's products or the actions of its
+                    executives.</div>
+                <button class="finButtonWhite"><i class="fas fa-plus"></i>Add</button>
             </div>
             {% endif %}
         </div>
@@ -222,35 +244,48 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <h3>No news content found!</h3>
-                <div>Consider adding more stocks or keywords to the portfolio!</div>
-                <button><i class="fas fa-plus"></i>Add</button>
+                <h3>No News Found!</h3>
+                <div>Hello there! It appears that we couldn't find any news related to the stocks in your
+                    portfolio.
+                    But, no need to worry, there are a few things you can do to stay on top of your investments. One
+                    option is to consider broadening your portfolio by adding more stocks. Alternatively, you could try
+                    adding some relevant keywords to your current holdings. By doing this, FinBrowser can provide you
+                    with the most recent updates on various aspects such as the company's products or the actions of its
+                    executives.</div>
+                <button class="finButtonWhite"><i class="fas fa-plus"></i>Add</button>
             </div>
             {% endif %}
         </div>
     </div>
     {% else %}
-    <div class="emptyInformationContainer">
-        <h3>This portfolio is empty!</h3>
-        <div>Add stocks to this portfolio for analysis, commentary and news on your favorite companies.</div>
-        <button><i class="fas fa-plus"></i>Add</button>
+    <div class="emptyInformationContainer emptyPortfolioContainer">
+        <h3>This Portfolio Is Empty!</h3>
+        <div>It looks like your portfolio is currently empty. Don't worry though, you can easily add your favorite
+            stocks to this portfolio to get access to analysis, commentary, and news about those companies. By adding
+            stocks, you'll be able to stay up-to-date with the latest information and make informed decisions about your
+            investments. So go ahead and add those stocks to your portfolio to get started!</div>
+        <button class="finButtonWhite"><i class="fas fa-plus"></i>Add</button>
     </div>
     {% endif %}
 </div>
-<script src="{% static 'stock/min_portfolio_script_v2.js' %}"></script>
+<script src="{% static 'stock/min_portfolio_script_v3.js' %}"></script>
 
 {% else %}
 
 <main class="main">
     <section class="landingSection">
         <div class="landingSectionContainer">
-            <h1>FinBrowser
-                <span>Portfolio</span>
-            </h1>
+            <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}">
+            <h2>Portfolio</h2>
             <p>
-                get the latest analysis, commentary and news on the stocks in your portfolio.
+                Are you tired of feeling like you're in the dark when it comes to the stocks in your portfolio? Let
+                FinBrowser
+                shed some light on the latest analysis, commentary, and breaking news to keep you informed and
+                up-to-date. FinBrowser provides you with the most current and relevant information, so you can make
+                informed decisions about your investments. Trust FinBrowser to be your go-to source for all things
+                stock-related.
             </p>
-            <a href="{% url 'account_login' %}" class="signUpButton" aria-label="Sign Up">Get Started</a>
+            <a href="{% url 'account_login' %}" class="signUpButton finButtonBlue" aria-label="Sign Up">Get Started</a>
         </div>
         <div class="landingSectionImage">
             <img src="{% static 'home/media/landing-page.svg' %}" alt="landing-page-logo">
