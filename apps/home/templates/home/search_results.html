@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v7.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v8.css' %}">
 <title>{{ search_term }} - Search Results | FinBrowser</title>
 {% endblock %}
 {% block content %}
@@ -32,8 +32,11 @@
                 </div>
                 {% else %}
                 <div class="emptyInformationContainer">
-                    <h3>No Results Found!</h3>
-                    <div>Try a different search.</div>
+                    <h3>No Analysis Found!</h3>
+                    <div>Unfortunately, I couldn't find any analysis related to your search. However, if you happen to
+                        know about any great sources that cover this topic, please don't hesitate to use the contact
+                        form to let me know. I always appreciate your input and feedback!</div>
+                    <a class="finButtonWhite" href="{% url 'support:contact' %}">Contact Form</a>
                 </div>
                 {% endif %}
             </div>
@@ -46,8 +49,12 @@
                 </div>
                 {% else %}
                 <div class="emptyInformationContainer">
-                    <h3>No Results Found!</h3>
-                    <div>Try a different search.</div>
+                    <h3>No Commentary Found!</h3>
+                    <div>Unfortunately, I couldn't find any commentary related to your search. However, if you happen
+                        to
+                        know about any great sources that cover this topic, please don't hesitate to use the contact
+                        form to let me know. I always appreciate your input and feedback!</div>
+                    <a class="finButtonWhite" href="{% url 'support:contact' %}">Contact Form</a>
                 </div>
                 {% endif %}
             </div>
@@ -60,8 +67,11 @@
                 </div>
                 {% else %}
                 <div class="emptyInformationContainer">
-                    <h3>No Results Found!</h3>
-                    <div>Try a different search.</div>
+                    <h3>No Analysis Found!</h3>
+                    <div>Unfortunately, I couldn't find any news related to your search. However, if you happen to
+                        know about any great sources that cover this topic, please don't hesitate to use the contact
+                        form to let me know. I always appreciate your input and feedback!</div>
+                    <a class="finButtonWhite" href="{% url 'support:contact' %}">Contact Form</a>
                 </div>
                 {% endif %}
             </div>
@@ -71,8 +81,11 @@
             {% create_source_container filtered_sources subscribed_sources request %}
             {% else %}
             <div class="emptyInformationContainer">
-                <h3>No Results Found!</h3>
-                <div>Try a different search.</div>
+                <h3>No Sources Found!</h3>
+                <div>I didn't come across any sources that match your search term. If you know of a fantastic source
+                    that FinBrowser has overlooked, please don't hesitate to use the contact form to let me know.
+                    I am always open to suggestions from users.</div>
+                <a class="finButtonWhite" href="{% url 'support:contact' %}">Contact Form</a>
             </div>
             {% endif %}
         </div>
@@ -91,8 +104,11 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <h3>No Results Found!</h3>
-                <div>Try a different search.</div>
+                <h3>No Stock Found!</h3>
+                <div>I couldn't find any stocks matching your search term. However, if you know of any stocks that I
+                    might have missed, please let me know using the contact form. I
+                    value your input and am always open to suggestions from users.</div>
+                <a class="finButtonWhite" href="{% url 'support:contact' %}">Contact Form</a>
             </div>
             {% endif %}
         </div>
@@ -101,50 +117,50 @@
     <div class="searchSidebar">
         <h2>Search On Other Websites</h2>
         <div class="websiteSearchWrapper">
-            <div class="websiteSearchContainer">
+            <div class="websiteSearchContainer finButtonWhite">
                 <img src="{% static 'home/media/bloomberg_icon.png' %}" alt="Bloomberg Logo">Search on Bloomberg
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://www.bloomberg.com/search?query={{ search_term }}" target="_blank"
                     aria-label="Redirect Search To Bloomberg"></a>
             </div>
-            <div class="websiteSearchContainer">
+            <div class="websiteSearchContainer finButtonWhite">
                 <img src="{% static 'home/media/google_icon.png' %}" alt="SeekingAlpha Logo">Search on Google
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://www.google.com/search?q={{ search_term }}" target="_blank"
                     aria-label="Redirect Search To Google"></a>
             </div>
-            <div class="websiteSearchContainer">
+            <div class="websiteSearchContainer finButtonWhite">
                 <img src="{% static 'home/media/reuters_icon.png' %}" alt="Bloomberg Logo">Search on Reuters
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://www.reuters.com/site-search/?query={{ search_term }}" target="_blank"
                     aria-label="Redirect Search To Reuters"></a>
             </div>
-            <div class="websiteSearchContainer">
+            <div class="websiteSearchContainer finButtonWhite">
                 <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">Search on Seeking
                 Alpha
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://seekingalpha.com/search?q={{ search_term }}&tab=headlines" target="_blank"
                     aria-label="Redirect Search To SeekingAlpha"></a>
             </div>
-            <div class="websiteSearchContainer">
+            <div class="websiteSearchContainer finButtonWhite">
                 <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">Search on Spotify
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://open.spotify.com/search/{{ search_term }}" target="_blank"
                     aria-label="Redirect Search To Spotify"></a>
             </div>
-            <div class="websiteSearchContainer">
+            <div class="websiteSearchContainer finButtonWhite">
                 <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">Search on Substack
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://substack.com/search/{{ search_term }}" target="_blank"
                     aria-label="Redirect Search To Substack"></a>
             </div>
-            <div class="websiteSearchContainer">
+            <div class="websiteSearchContainer finButtonWhite">
                 <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">Search on Twitter
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://twitter.com/search?q={{ search_term }}" target="_blank"
                     aria-label="Redirect Search To Twitter"></a>
             </div>
-            <div class="websiteSearchContainer">
+            <div class="websiteSearchContainer finButtonWhite">
                 <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">Search on YouTube
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://www.youtube.com/results?search_query={{ search_term }}" target="_blank"
@@ -155,5 +171,5 @@
 </div>
 
 
-<script src="{% static 'home/min_search_results_script_v6.js' %}"></script>
+<script src="{% static 'home/min_search_results_script_v7.js' %}"></script>
 {% endblock content %}

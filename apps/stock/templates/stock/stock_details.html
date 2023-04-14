@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'stock/min_stock_details_style_v6.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'stock/min_stock_details_style_v7.css' %}" />
 <title>{{ stock.full_company_name }} | FinBrowser</title>
 <meta name="description" content="Discover the latest content from {{ sstock.full_company_name }}">
 {% endblock %} {% block content %}
@@ -9,7 +9,7 @@
     <div class="menuContainer">
         <div role="form" class="addStockContainer">
             <div class="formHeaderContainer">
-                <h2>Add <span>{{ stock.full_company_name }}</span> To Your Portfolios</h2>
+                <h2>Add <span>{{ stock.ticker }}</span> to your portfolios</h2>
                 <i class="fas fa-times closeFormContainerButton"></i>
             </div>
             {% if portfolios %}
@@ -32,8 +32,8 @@
                 {% endfor %}
             </div>
             <div class="buttonsContainer">
-                <button class="cancelButton">Cancel</button>
-                <button class="saveButton">Save</button>
+                <button class="cancelButton finButtonWhite">Cancel</button>
+                <button class="saveButton finButtonBlue">Save</button>
             </div>
             {% endif %}
         </div>
@@ -43,7 +43,7 @@
 
 <div class="pageWrapper">
     <div class="companyNameAndNotificationHeader">
-        <div class="stockHeader" id="sti#{{ stock.stock_id }}"">
+        <div class="stockHeader" id="sti#{{ stock.stock_id }}">
             <h2>{{ stock.ticker }}</h2>
             <h2 class=" seperator"> - </h2>
             <h2>{{ stock.full_company_name }}</h2>
@@ -100,7 +100,11 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <span>No analytical content found!</span>
+                <h3>No Analysis Found!</h3>
+                <div>Unfortunately, I couldn't find any analysis for this stock. However, if you happen to know about
+                    any great sources that cover this stock, please don't hesitate to use the contact form to let me
+                    know. I always appreciate your input and feedback!</div>
+                <a class="finButtonWhite" href="{% url 'support:contact' %}">Contact Form</a>
             </div>
             {% endif %}
         </div>
@@ -115,7 +119,11 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <span>No commentary found!</span>
+                <h3>No Commentary Found!</h3>
+                <div>Unfortunately, I couldn't find any commentary for this stock. However, if you happen to know about
+                    any great sources that cover this stock, please don't hesitate to use the contact form to let me
+                    know. I always appreciate your input and feedback!</div>
+                <a class="finButtonWhite" href="{% url 'support:contact' %}">Contact Form</a>
             </div>
             {% endif %}
         </div>
@@ -129,12 +137,16 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <span>No news content found!</span>
+                <h3>No News Found!</h3>
+                <div>Unfortunately, I couldn't find any news for this stock. However, if you happen to know about
+                    any great sources that cover this stock, please don't hesitate to use the contact form to let me
+                    know. I always appreciate your input and feedback!</div>
+                <a class="finButtonWhite" href="{% url 'support:contact' %}">Contact Form</a>
             </div>
             {% endif %}
         </div>
     </div>
 </div>
 
-<script src="{% static 'stock/min_stock_details_script_v4.js' %}"></script>
+<script src="{% static 'stock/min_stock_details_script_v5.js' %}"></script>
 {% endblock content %}

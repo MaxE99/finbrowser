@@ -50,6 +50,9 @@ document
                 } else {
                     showMessage((context = 'Source has been removed!'), 'Remove');
                     deleteButton.closest('.contentWrapper').remove();
+                    if (!document.querySelector('.slider .contentWrapper')) {
+                        window.location.reload();
+                    }
                 }
             } catch (e) {
                 // showMessage("Error: Unexpected error has occurred!", "Error");
@@ -146,30 +149,34 @@ if (document.querySelector('.addSourceContainer #textInput')) {
 
 // add/confirm sources to list
 let activatedButton = false;
-document.querySelector('.addSourceContainer button').addEventListener('click', async () => {
-    const list_id = document.querySelector('.firstRow .nameContainer h2').id;
-    if (selected_sources.length && !activatedButton) {
-        activatedButton = true;
-        for (let i = 0, j = selected_sources.length; i < j; i++) {
-            try {
-                const data = { source_id: selected_sources[i] };
-                const res = await fetch(
-                    `../../api/lists/${list_id}/`,
-                    get_fetch_settings('PATCH', data)
-                );
-                if (!res.ok) {
-                    showMessage('Error: Network request failed unexpectedly!', 'Error');
+document
+    .querySelector('.addSourceContainer .addSourceButton')
+    .addEventListener('click', async () => {
+        const list_id = document.querySelector('.firstRow .nameContainer h2').id;
+        if (selected_sources.length && !activatedButton) {
+            activatedButton = true;
+            for (let i = 0, j = selected_sources.length; i < j; i++) {
+                try {
+                    const data = { source_id: selected_sources[i] };
+                    const res = await fetch(
+                        `../../api/lists/${list_id}/`,
+                        get_fetch_settings('PATCH', data)
+                    );
+                    if (!res.ok) {
+                        showMessage('Error: Network request failed unexpectedly!', 'Error');
+                    } else {
+                        showMessage('List has been updated!', 'Success');
+                    }
+                } catch (e) {
+                    // showMessage("Error: Unexpected error has occurred!", "Error");
                 }
-            } catch (e) {
-                // showMessage("Error: Unexpected error has occurred!", "Error");
             }
+            showMessage((context = 'List has been updated!'), 'Success');
+            window.location.reload();
+        } else {
+            showMessage('You need to select sources!', 'Error');
         }
-        showMessage((context = 'List has been updated!'), 'Success');
-        window.location.reload();
-    } else {
-        showMessage('You need to select sources!', 'Error');
-    }
-});
+    });
 
 // switch list
 document.querySelector('.firstRow .nameContainer').addEventListener('click', () => {
@@ -234,6 +241,7 @@ document.querySelector('.editMenu .deleteListButton').addEventListener('click', 
                         if (!res.ok) {
                             showMessage('Error: Network request failed unexpectedly!', 'Error');
                         } else {
+                            showMessage('List has been deleted!', 'Remove');
                             document
                                 .querySelectorAll('.listOptionsContainer .listOption')
                                 .forEach((listOption) => {
@@ -268,12 +276,16 @@ document.querySelectorAll('.emptyInformationContainer button').forEach((addSourc
 
 // close add source menu
 document
-    .querySelector('.addSourceContainer .closeAddSourceContainer')
-    .addEventListener('click', () => {
-        document.querySelector('.listMenuWrapper').style.display = 'none';
-        document.querySelector('.addSourceContainer').style.display = 'none';
-        removeModalStyle();
-    });
+    .querySelectorAll(
+        '.listMenuWrapper .addSourceContainer .closeAddSourceContainer, .listMenuWrapper .addSourceContainer .buttonContainer .cancelButton'
+    )
+    .forEach((element) =>
+        element.addEventListener('click', () => {
+            document.querySelector('.listMenuWrapper').style.display = 'none';
+            document.querySelector('.addSourceContainer').style.display = 'none';
+            removeModalStyle();
+        })
+    );
 
 // open edit menu
 document.querySelector('.editListButton').addEventListener('click', () => {
@@ -312,6 +324,7 @@ document.querySelector('.menuContainer .editMenu .saveEditsButton').addEventList
                 if (!res.ok) {
                     showMessage('Error: Network request failed unexpectedly!', 'Error');
                 } else {
+                    showMessage('List has been updated!', 'Success');
                     window.location.reload();
                 }
             } catch (e) {
@@ -338,7 +351,7 @@ document
         document.querySelector(
             '.fullScreenPlaceholder .explanationContainer .explanation'
         ).innerText =
-            "Your main portfolio is opened whenever you click on the portfolio button in the header. You always have to have atleast one main portfolio. If you don't have more than one portfolio you can't delete your main portfolio. If you have more than one portfolio and delete your main the next portfolio alphabetically will become your new main portfolio. You can change your main portfolio by opening the edit menu of a portfolio which currently is not your main portfolio and set it to your new main portfolio.";
+            "Your main list is the one that opens up whenever you click on the Lists button in the header. It's important to note that you always need to have at least one main list. If you only have one list, then you won't be able to delete it as it is your main one. But, if you have multiple lists and you delete your main one, then the next list in alphabetical order will become your new main list. Don't worry though, you can easily change your main list by opening the edit menu of a list that is currently not your main one and setting it as your new main list. It's as simple as that!";
         document
             .querySelector(
                 '.fullScreenPlaceholder .fullScreenWrapper .explanationContainer .fa-times'

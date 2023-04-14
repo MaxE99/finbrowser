@@ -1,17 +1,19 @@
 function setModalStyle() {
-    document.querySelector('body').style.overflow = 'hidden';
-    document.querySelector('.pageWrapper').style.opacity = '0.1';
-    document.querySelector('header').style.opacity = 0.1;
+    // document.querySelector('body').style.overflow = 'hidden';
+    // document.querySelector('.pageWrapper').style.opacity = '0.1';
+    // document.querySelector('header').style.opacity = 0.1;
     document.querySelector('header').style.pointerEvents = 'none';
-    document.querySelector('header .outerHeaderContainer').style.zIndex = 0;
+    document.querySelector('.fullScreenPlaceholder').style.display = 'block';
+    // document.querySelector('header .outerHeaderContainer').style.zIndex = 0;
 }
 
 function removeModalStyle() {
-    document.querySelector('body').style.removeProperty('overflow');
-    document.querySelector('.pageWrapper').style.removeProperty('opacity');
-    document.querySelector('header').style.removeProperty('opacity');
+    // document.querySelector('body').style.removeProperty('overflow');
+    // document.querySelector('.pageWrapper').style.removeProperty('opacity');
+    // document.querySelector('header').style.removeProperty('opacity');
     document.querySelector('header').style.removeProperty('pointer-events');
-    document.querySelector('header .outerHeaderContainer').style.zIndex = 1000;
+    document.querySelector('.fullScreenPlaceholder').style.display = 'none';
+    // document.querySelector('header .outerHeaderContainer').style.zIndex = 1000;
 }
 
 // open hamburger menu
@@ -194,6 +196,12 @@ function closeAllPotentialOpenPopups() {
     }
     if (document.querySelector('.sourceRatingsWrapper')) {
         document.querySelector('.sourceRatingsWrapper').style.display = 'none';
+    }
+    if (document.querySelector('.horizontalNavigation').style.display == 'flex') {
+        document.querySelector('.horizontalNavigation').style.display = 'none';
+        const hamburgerSwitch = document.querySelector('.headerContainer .closeNavMenuButton');
+        hamburgerSwitch.classList.replace('fa-times', 'fa-bars');
+        hamburgerSwitch.classList.remove('closeNavMenuButton');
     }
 }
 
@@ -465,10 +473,12 @@ document.querySelectorAll('.sliderWrapper .slider .subscribeButton').forEach((su
                 } else {
                     if (action == 'Subscribe') {
                         subscribeButton.classList.add('subscribed');
+                        subscribeButton.classList.replace('finButtonWhite', 'finButtonBlue');
                         subscribeButton.innerText = 'Subscribed';
                         showMessage((context = 'SOURCE HAS BEEN SUBSCRIBED!'), 'Success');
                     } else {
                         subscribeButton.classList.remove('subscribed');
+                        subscribeButton.classList.replace('finButtonBlue', 'finButtonWhite');
                         subscribeButton.innerText = 'Subscribe';
                         showMessage((context = 'SOURCE HAS BEEN UNSUBSCRIBED!'), 'Remove');
                     }
@@ -562,19 +572,21 @@ document
 // auth prompt msg mapping
 function getAuthPromptMsg(button) {
     if (button.classList.contains('ap1')) {
-        return 'Add this source to your lists to stay up to date with the latest content';
+        return 'Add Sources To Your Lists';
     } else if (button.classList.contains('ap2')) {
-        return 'Subscribe to this source to your lists to stay up to date with the latest content';
+        return 'Subscribe To Sources';
     } else if (button.classList.contains('ap3')) {
-        return 'Get instant notifications when new content is available';
+        return 'Create Notifications';
     } else if (button.classList.contains('ap4')) {
-        return 'Add this stock to your portfolios to stay up to date with the latest analysis and news';
-    } else if (button.classList.contains('ap5')) {
-        return 'Add this stock to your lists';
-    } else if (button.classList.contains('ap6')) {
-        return 'Add content to your lists';
+        return 'Add Stocks To Your Portfolios';
+    }
+    // else if (button.classList.contains('ap5')) {
+    //     return 'Add this stock to your lists';
+    // }
+    else if (button.classList.contains('ap6')) {
+        return 'Add Content To Your Lists';
     } else if (button.classList.contains('ap7')) {
-        return 'Rate this source';
+        return 'Rate This Source';
     }
 }
 
@@ -854,7 +866,7 @@ document
         document.querySelector(
             '.fullScreenPlaceholder .explanationContainer .explanation'
         ).innerText =
-            'If you want to be notified when new content is published on a specific topic, add a keyword and you will receive an alert when any of the sources publish content containing that keyword on FinBrowser.';
+            "If you want to stay up-to-date on a particular topic, just add a keyword and I'll make sure you're notified as soon as any of your sources publish content containing that keyword on FinBrowser.";
         const closeExplanationButton = document.querySelector(
             '.fullScreenPlaceholder .fullScreenWrapper .explanationContainer .fa-times'
         );
@@ -865,6 +877,16 @@ document
                 'none';
         });
     });
+
+// close image Container
+function closeFullScreenImage() {
+    removeModalStyle();
+    document.querySelector('.fullScreenPlaceholder').style.display = 'none';
+    document.querySelector('.fullScreenPlaceholder .smallScreenSearchContainer').style.display =
+        'none';
+    document.querySelector('.fullScreenPlaceholder .fullScreenImage')?.remove();
+    document.querySelector('.fullScreenPlaceholder .closeImageButton').style.display = 'none';
+}
 
 // image on click fullscreen
 document.querySelectorAll('.tweetImage').forEach((tweetImage) => {
@@ -877,15 +899,14 @@ document.querySelectorAll('.tweetImage').forEach((tweetImage) => {
         img.src = tweetImage.src;
         fullScreenPlaceholder.appendChild(img);
         fullScreenPlaceholder.querySelector('.closeImageButton').style.display = 'flex';
+        document.onclick = function (e) {
+            if (e.target.nodeName !== 'IMG') {
+                closeFullScreenImage();
+            }
+        };
     });
 });
 
-// close image Container
 document.querySelector('.fullScreenPlaceholder .closeImageButton').addEventListener('click', () => {
-    removeModalStyle();
-    document.querySelector('.fullScreenPlaceholder').style.display = 'none';
-    document.querySelector('.fullScreenPlaceholder .smallScreenSearchContainer').style.display =
-        'none';
-    document.querySelector('.fullScreenPlaceholder .fullScreenImage')?.remove();
-    document.querySelector('.fullScreenPlaceholder .closeImageButton').style.display = 'none';
+    closeFullScreenImage();
 });

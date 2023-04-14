@@ -18,10 +18,12 @@ subscribeButtons.forEach((subscribeButton) => {
                 } else {
                     if (action == 'Subscribe') {
                         subscribeButton.classList.replace('unsubscribed', 'subscribed');
+                        subscribeButton.classList.replace('finButtonWhite', 'finButtonBlue');
                         subscribeButton.innerText = 'Subscribed';
                         showMessage((context = 'SOURCE HAS BEEN SUBSCRIBED!'), 'Success');
                     } else {
                         subscribeButton.classList.replace('subscribed', 'unsubscribed');
+                        subscribeButton.classList.replace('finButtonBlue', 'finButtonWhite');
                         subscribeButton.innerText = 'Subscribe';
                         showMessage((context = 'SOURCE HAS BEEN UNSUBSCRIBED!'), 'Remove');
                     }
@@ -95,8 +97,9 @@ document
             rateSpan.addEventListener('click', () => {
                 const sourceName = document.querySelector('.pageWrapper .firstRow h2').innerText;
                 document.querySelector('.sourceRatingsWrapper').style.display = 'flex';
-                document.querySelector('.sourceRatingsWrapper .header h3').innerText =
-                    'Rate ' + sourceName;
+                document.querySelector(
+                    '.sourceRatingsWrapper .header h3'
+                ).innerHTML = `Rate <span>${sourceName}</span>`;
                 setModalStyle();
             });
         }
@@ -104,10 +107,14 @@ document
 
 // close source ratings modal
 document
-    .querySelector('.sourceRatingsWrapper .ratingsContainer .header .fa-times')
-    .addEventListener('click', () => {
-        document.querySelector('.sourceRatingsWrapper').style.display = 'none';
-        removeModalStyle();
+    .querySelectorAll(
+        '.sourceRatingsWrapper .ratingsContainer .header .fa-times, .sourceRatingsWrapper .ratingsContainer .cancelButton'
+    )
+    .forEach((element) => {
+        element.addEventListener('click', () => {
+            document.querySelector('.sourceRatingsWrapper').style.display = 'none';
+            removeModalStyle();
+        });
     });
 
 // select source rating

@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'source/min_source_ranking_style_v2.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'source/min_source_ranking_style_v3.css' %}" />
 <title>Source Ranking | FinBrowser</title>
 {% endblock %}
 {% block content %}
@@ -24,7 +24,10 @@
                 <button>9</button>
                 <button>10</button>
             </div>
-            <button class="rateSourceButton">Rate</button>
+            <div class="buttonsContainer">
+                <button class="cancelButton finButtonWhite">Cancel</button>
+                <button class="rateSourceButton finButtonBlue">Rate</button>
+            </div>
         </div>
     </div>
 </div>
@@ -94,8 +97,8 @@
             <label>Tag</label>
             <div class="tagSearchWrapper">
                 <div class="tagSearchContainer">
-                    <input aria-label="Search" id="tagAutocomplete" class="tagInputSearch" placeholder="Search"
-                        autocomplete="off" spellcheck="false">
+                    <input aria-label="Search" type="search" id="tagAutocomplete" class="tagInputSearch"
+                        placeholder="Search" autocomplete="off" spellcheck="false">
                     <i class="fas fa-search"></i>
                 </div>
                 <div id="tagAutocomplete_result">
@@ -156,15 +159,15 @@
             <span class="infoLink"><i class="fas fa-info"></i></span>
         </div>
         <div class="actionButtonsContainer">
-            <button type="button" class="discardButton">Discard</button>
-            <button type="submit" class="applyFilterButton">Apply Filter</button>
+            <button type="button" class="discardButton finButtonWhite">Discard</button>
+            <button type="submit" class="applyFilterButton finButtonBlue">Apply Filter</button>
         </div>
     </form>
 </div>
 
 <div class="pageWrapper">
     <div class="horizontalFilterWrapper">
-        <button class="openFiltersButton"><i class="fa-solid fa-filter"></i>Open Filters</button>
+        <button class="openFiltersButton finButtonWhite"><i class="fa-solid fa-sliders"></i>Filter</button>
     </div>
     <div class="sourceRankingWrapper">
         {% if sources %}
@@ -200,7 +203,8 @@
                         <div class="infoContainer websiteInfoContainer">
                             <span>Website</span>
                             <a href="{{ source.url }}" target="_blank"
-                                aria-label="Open External Profile Of {{ source.name }}">{{ source.website }}</a>
+                                aria-label="Open External Profile Of {{ source.name }}">{{ source.website }} <i
+                                    class="fa-solid fa-arrow-up-right-from-square"></i></a>
                         </div>
                         <div class="infoContainer">
                             <span>Paywall</span>
@@ -228,21 +232,21 @@
                 <div class="thirdRow">
                     {% if source.tags %}
                     {% for tag in source.tags.all %}
-                    <div class="tag">{{ tag.name }}</div>
+                    <div class="tag finButtonWhite">{{ tag.name }}</div>
                     {% endfor %}
                     {% endif %}
                 </div>
                 <div class="fourthRow">
                     {% if request.user.is_authenticated %}
                     {% if source in subscribed_sources %}
-                    <button class="subscribeButton subscribed">Subscribed</button>
+                    <button class="subscribeButton subscribed finButtonBlue">Subscribed</button>
                     {% else %}
-                    <button class="subscribeButton">Subscribe</button>
+                    <button class="subscribeButton finButtonWhite">Subscribe</button>
                     {% endif %}
-                    <button class="sourceAddToListButton">Add To List</button>
+                    <button class="sourceAddToListButton finButtonBlue">Add To List</button>
                     {% else %}
-                    <button class="subscribeButton openAuthPrompt ap2">Subscribe</button>
-                    <button class="sourceAddToListButton openAuthPrompt ap1">Add To List</button>
+                    <button class="subscribeButton openAuthPrompt ap2 finButtonWhite">Subscribe</button>
+                    <button class="sourceAddToListButton openAuthPrompt ap1 finButtonBlue">Add To List</button>
                     {% endif %}
                 </div>
             </div>
@@ -278,8 +282,9 @@
         {% endif %}
         {% else %}
         <div class="emptyInformationContainer">
-            <h3>No results found!</h3>
-            <div>Change your filters to get more results.</div>
+            <h3>No Results Found!</h3>
+            <div>It looks like I couldn't find any results for your filters. Don't worry though, I'm here to help!
+                Consider adjusting your filters to broaden your search and find what you're looking for.</div>
         </div>
         {% endif %}
     </div>
@@ -349,8 +354,8 @@
                 <label>Tag</label>
                 <div class="tagSearchWrapper">
                     <div class="tagSearchContainer">
-                        <input aria-label="Search" id="tagAutocomplete" class="tagInputSearch" placeholder="Search"
-                            autocomplete="off" spellcheck="false">
+                        <input aria-label="Search" type="search" id="tagAutocomplete" class="tagInputSearch"
+                            placeholder="Search" autocomplete="off" spellcheck="false">
                         <i class="fas fa-search"></i>
                     </div>
                     <div id="tagAutocomplete_result">
@@ -408,10 +413,10 @@
                 <label for="top_sources">Only Top Sources</label>
                 <span class="infoLink"><i class="fas fa-info"></i></span>
             </div>
-            <button type="submit" class="applyFilterButton">Apply Filter</button>
+            <button type="submit" class="applyFilterButton finButtonBlue">Apply Filter</button>
         </form>
     </div>
 </div>
 
-<script src="{% static 'source/min_source_ranking_script_v1.js' %}"></script>
+<script src="{% static 'source/min_source_ranking_script_v2.js' %}"></script>
 {% endblock content %}

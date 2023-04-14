@@ -2,7 +2,7 @@
 {% load tz %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v14.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v15.css' %}">
 <title>Settings | FinBrowser</title>
 {% endblock %}
 
@@ -34,18 +34,22 @@
                         {% if user.profile.profile_pic %}
                         <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
                         {% else %}
-                        <div role="img" aria-label="Profile Picture Placeholder" class="logoPlaceholder">
-                            {{ user.username.0 }}</div>
+                        <img src="{% static 'home/media/favicon.png' %}" alt="Profile Picture">
                         {% endif %}
                         <input hidden="true" type="file" accept="image/*" />
-                        <button type="button" class="changeProfilePicButton">Change</button>
-                        <button type="button" class="removeProfilePicButton">Remove</button>
+                        <button type="button" class="changeProfilePicButton finButtonWhite">Change</button>
+                        {% if user.profile.profile_pic %}
+                        <button type="button" class="removeProfilePicButton finButtonBlue">Remove</button>
+                        {% else %}
+                        <button type="button" disabled class="removeProfilePicButton disabledRemove">Remove</button>
+                        {% endif %}
                     </div>
                 </div>
                 {{ change_timezone_form }}
                 <div class="buttonContainer">
-                    <button type="submit" href="{% url 'accounts:settings' %}" class="cancelButton">Cancel</button>
-                    <input class="saveButton" name="changeProfileForm" type="submit" value="Save">
+                    <button type="submit" href="{% url 'accounts:settings' %}"
+                        class="cancelButton finButtonWhite">Cancel</button>
+                    <input class="saveButton finButtonBlue" name="changeProfileForm" type="submit" value="Save">
                 </div>
             </form>
         </div>
@@ -53,7 +57,8 @@
             <h2>Change Password</h2>
             <form class="changePasswordForm" method="POST">
                 {% csrf_token %} {{ change_password_form }}
-                <input name="changePasswordForm" type="submit" class="passwordChangeSubmit" value="Save" />
+                <input name="changePasswordForm" type="submit" class="passwordChangeSubmit finButtonBlue"
+                    value="Save" />
             </form>
         </div>
         <div class="tabsContent notificationTab" data-tab="2">
@@ -63,7 +68,7 @@
             <div class="notificationContainer">
                 <div class="sliderWrapper">
                     <div class="sliderContentContainer">
-                        <button aria-label="Slide Left" class="handle leftHandle">
+                        <button aria-label="Slide Left" class="handle leftHandle finButtonWhite">
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <div class="slider">
@@ -78,18 +83,19 @@
                                     <span>{{notification.source.name}}</span>
                                 </div>
                                 {% if notification.source in subscribed_sources %}
-                                <button class="subscribeButton subscribed">Subscribed</button>
+                                <button class="subscribeButton subscribed finButtonBlue">Subscribed</button>
                                 {% else %}
-                                <button class="subscribeButton">Subscribe</button>
+                                <button class="subscribeButton finButtonWhite">Subscribe</button>
                                 {% endif %}
                                 <button id="nid#{{notification.notification_id}}"
-                                    class="notificationButton notificationActivated">Notification Off</button>
+                                    class="notificationButton notificationActivated finButtonBlue">Notification
+                                    Off</button>
                                 <a class="contentLink" href="{{ notification.source.get_absolute_url }}"
                                     aria-label="Open Profile Of {{ notification.source.name }}"></a>
                             </div>
                             {% endfor %}
                         </div>
-                        <button aria-label="Slide right" class="handle rightHandle">
+                        <button aria-label="Slide right" class="handle rightHandle finButtonWhite">
                             <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
@@ -130,7 +136,7 @@
         </div>
     </div>
 
-    <script src="{% static 'accounts/min_settings_script_v8.js' %}"></script>
+    <script src="{% static 'accounts/min_settings_script_v9.js' %}"></script>
 
 </div>
 {% endblock content %}

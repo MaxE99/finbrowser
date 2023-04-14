@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v12.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v13.css' %}" />
 <title>Highlighted Content | FinBrowser</title>
 <meta name="description" content="FinBrowser list created by {{ list.creator.username }}">
 {% endblock %} {% block content %}
@@ -26,7 +26,7 @@
                         <a href="{% url 'list:list-highlighted_content' %}" aria-label="Open highlighted content"></a>
                     </div>
                 </div>
-                <button class="createListButton"><i class="fas fa-plus"></i>Create New List</button>
+                <button class="createListButton finButtonWhite"><i class="fas fa-plus"></i>Create New List</button>
             </div>
         </div>
     </div>
@@ -37,9 +37,12 @@
             {% create_fk_content_container highlighted_content request highlighted_content_ids "page" %}
         </div>
         {% else %}
-        <div class="emptyInformationContainer">
-            <h3>No saved content found!</h3>
-            <div>You can add content to this list by opening the individual content options menu!</div>
+        <div class="emptyInformationContainer highlightedListEmpyContainer">
+            <h3>No Highlighted Content Found!</h3>
+            <div>Hey, did you know that you can highlight content on FinBrowser? It's easy! Just click on the ellipsis
+                buttons of the content container and select the "Highlight Article" option. This will add the content to
+                this list. Give it a try and see how it can help you stay organized!
+            </div>
         </div>
         {% endif %}
     </div>

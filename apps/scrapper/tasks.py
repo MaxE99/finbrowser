@@ -151,6 +151,8 @@ def scrape_twitter():
                 twitter_user_id = status.user.id
                 if sources.filter(external_id=twitter_user_id).exists():
                     title = re_sub(r"http\S+", "", unescape(status.full_text))
+                    if not title.strip():
+                        continue
                     link = f"https://twitter.com/{status.user.screen_name}/status/{tweet_external_id}"
                     pub_date = status.created_at
                     # title, tweet_type = tweet_type_create(status, twitter_user_id, api)
@@ -196,7 +198,7 @@ def scrape_substack():
     )
     for source in substack_sources:
         feed_url = f"{source.url}feed"
-        create_articles_from_feed(source, feed_url, articles)
+        create_articles_from_feed(source, feed_url, articles, True)
         sleep(30)
 
 
@@ -537,7 +539,6 @@ def stocks_create_all_companies_json():
 
 @shared_task
 def stocks_create_models_from_json():
-
     with open("all_companies_01042023.json", "r") as f:
         company_data = json.load(f)
     for item in company_data:

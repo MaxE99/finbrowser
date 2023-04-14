@@ -1,17 +1,17 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'support/min_support_style_v4.css' %}">
+<link rel="stylesheet" href="{% static 'support/min_support_style_v5.css' %}">
 <title>Contact | FinBrowser</title>
 {% endblock %}
 {% block content %}
-<div class="formContainer supportForm">
+<div class="supportForm">
     <div class="header">
         <h2>Contact</h2>
     </div>
     <form enctype="multipart/form-data" method="POST" class="createContactForm">
         {% csrf_token %} {{ form }}
-        <input name="createContactForm" type="submit" class="formSubmitButton" value="Save" />
+        <input name="createContactForm" type="submit" class="formSubmitButton finButtonBlue" value="Send" />
     </form>
 </div>
 {% endblock content %}

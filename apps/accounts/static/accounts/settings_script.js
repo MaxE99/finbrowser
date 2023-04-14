@@ -56,13 +56,11 @@ document.querySelectorAll('.notificationContainer .fa-times').forEach((deleteBut
 });
 
 // change profile pic
-document.querySelector('.profilePicInnerContainer .changeProfilePicButton').addEventListener(
-    'click',
-    (e) => {
+document
+    .querySelector('.profilePicInnerContainer .changeProfilePicButton')
+    .addEventListener('click', (e) => {
         e.target.closest('.profilePicInnerContainer').querySelector('input').click();
-    },
-    { once: true }
-);
+    });
 
 document.querySelector('.profilePicInnerContainer input').addEventListener('change', async (e) => {
     const profile_id = document.querySelector('.emailContainer').id.split('#')[1];
@@ -115,6 +113,7 @@ document
                         notificationButton.id = 'nid#' + context.notification_id;
                         notificationButton.classList.add('notificationActivated');
                         notificationButton.classList.replace('fa-bell', 'fa-bell-slash');
+                        notificationButton.classList.replace('finButtonWhite', 'finButtonBlue');
                         showMessage('Notification has been added!', 'Success');
                     }
                 } catch (e) {
@@ -132,6 +131,7 @@ document
                     } else {
                         notificationButton.classList.remove('notificationActivated');
                         notificationButton.classList.replace('fa-bell-slash', 'fa-bell');
+                        notificationButton.classList.replace('finButtonBlue', 'finButtonWhite');
                         showMessage((context = 'Notification has been removed!'), 'Remove');
                     }
                 } catch (e) {

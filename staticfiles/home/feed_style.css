@@ -2,6 +2,10 @@
     display: flex;
 }
 
+.pageWrapper h3 {
+    font-family: var(--site-Font);
+}
+
 .pageWrapper .longFormContentContainer {
     width: 67.5%;
 }
@@ -41,21 +45,25 @@
     width: 49%;
     font-size: 1.4rem;
     background: white;
-    box-shadow: var(--box-shadowScheme);
     border-radius: 0.45rem;
     padding: 1rem;
+    border: 0.2rem solid var(--border-fontColor);
+    border-radius: 0.45rem;
 }
 
 .pageWrapper .smallFormContentWrapper {
     background: white;
-    box-shadow: var(--box-shadowScheme);
+    border: 0.2rem solid var(--border-fontColor);
+    border-top: none;
+    border-radius: 0.45rem;
 }
 
 .pageWrapper .longFormContentContainer .firstRow .smallLatestContainer h3 {
     font-size: 2rem;
-    border-bottom: 0.2rem solid #e2e6ea;
+    border-bottom: 0.2rem solid var(--border-fontColor);
     padding-bottom: 0.5rem;
     margin: 0;
+    font-family: 'LATO';
 }
 
 .pageWrapper .longFormContentContainer .firstRow .smallLatestContainer .smallContentContainer {
@@ -63,7 +71,7 @@
     display: flex;
     align-items: center;
     padding: 0.75rem 1rem;
-    border-bottom: 0.1rem solid #e2e6ea;
+    border-bottom: 0.2rem solid var(--border-fontColor);
     overflow: hidden;
     white-space: nowrap;
 }
@@ -127,7 +135,7 @@
 
 .pageWrapper .smallFormContentWrapper .contentBody p,
 .pageWrapper .smallFormContentWrapper .quoteText {
-    font-size: 1.9rem;
+    font-size: 1.8rem;
 }
 
 .pageWrapper .smallFormContentWrapper .quoteDate,

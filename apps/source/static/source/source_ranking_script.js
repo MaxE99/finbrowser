@@ -15,10 +15,12 @@ document.querySelectorAll('.sourceRankingContainer .subscribeButton').forEach((s
                 } else {
                     if (action == 'Subscribe') {
                         subscribeButton.classList.add('subscribed');
+                        subscribeButton.classList.replace('finButtonWhite', 'finButtonBlue');
                         subscribeButton.innerText = 'Subscribed';
                         showMessage((context = 'SOURCE HAS BEEN SUBSCRIBED!'), 'Success');
                     } else {
                         subscribeButton.classList.remove('subscribed');
+                        subscribeButton.classList.replace('finButtonBlue', 'finButtonWhite');
                         subscribeButton.innerText = 'Subscribe';
                         showMessage((context = 'SOURCE HAS BEEN UNSUBSCRIBED!'), 'Remove');
                     }
@@ -264,14 +266,24 @@ document
     .forEach((ratingButton) => {
         if (!ratingButton.classList.contains('openAuthPrompt')) {
             ratingButton.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('notRated')) {
+                    document
+                        .querySelectorAll('.sourceRatingsContainer .ratingsButtonContainer button')
+                        .forEach((button) => {
+                            if (button.innerText == e.target.innerText) {
+                                button.classList.add('selectedRating');
+                            }
+                        });
+                }
                 const sourceName = e.target
                     .closest('.sourceRankingContainer')
                     .querySelector('.firstRow a span:last-of-type').innerText;
                 const sourceId = e.target.closest('.sourceRankingContainer').id.split('#')[1];
                 document.querySelector('.sourceRatingsWrapper').id = sourceId;
                 document.querySelector('.sourceRatingsWrapper').style.display = 'flex';
-                document.querySelector('.sourceRatingsWrapper .header h3').innerText =
-                    'Rate ' + sourceName;
+                document.querySelector(
+                    '.sourceRatingsWrapper .header h3'
+                ).innerHTML = `Rate <span>${sourceName}</span>`;
                 setModalStyle();
             });
         }
@@ -279,10 +291,25 @@ document
 
 // close source ratings modal
 document
-    .querySelector('.sourceRatingsWrapper .ratingsContainer .header .fa-times')
-    .addEventListener('click', () => {
-        document.querySelector('.sourceRatingsWrapper').style.display = 'none';
-        removeModalStyle();
+    .querySelectorAll(
+        '.sourceRatingsWrapper .ratingsContainer .header .fa-times, .sourceRatingsWrapper .ratingsContainer .cancelButton'
+    )
+    .forEach((element) => {
+        element.addEventListener('click', () => {
+            if (
+                document.querySelector(
+                    '.sourceRatingsContainer .ratingsButtonContainer .selectedRating'
+                )
+            ) {
+                document
+                    .querySelector(
+                        '.sourceRatingsContainer .ratingsButtonContainer .selectedRating'
+                    )
+                    .classList.remove('selectedRating');
+            }
+            document.querySelector('.sourceRatingsWrapper').style.display = 'none';
+            removeModalStyle();
+        });
     });
 
 // select source rating
@@ -334,4 +361,31 @@ document
         } else {
             showMessage('Select a rating!', 'Error');
         }
+    });
+
+// top sources explanation
+document
+    .querySelector('.filterSidebar .selectContainer .infoLink i')
+    .addEventListener('click', () => {
+        setModalStyle();
+        document.querySelector('.fullScreenPlaceholder').style.display = 'flex';
+        document.querySelector('.fullScreenPlaceholder .explanationContainer').style.display =
+            'block';
+        document.querySelector('.fullScreenPlaceholder .explanationContainer h3').innerText =
+            'Top Sources';
+        document.querySelector(
+            '.fullScreenPlaceholder .explanationContainer .explanation'
+        ).innerText =
+            'I personally select Top Sources based on their outstanding analysis, insightful perspectives, and engaging content. These sources are my go-to for staying informed and entertained, and I highly recommend them.';
+        document
+            .querySelector(
+                '.fullScreenPlaceholder .fullScreenWrapper .explanationContainer .fa-times'
+            )
+            .addEventListener('click', () => {
+                removeModalStyle();
+                document.querySelector('.fullScreenPlaceholder').style.display = 'none';
+                document.querySelector(
+                    '.fullScreenPlaceholder .explanationContainer'
+                ).style.display = 'none';
+            });
     });

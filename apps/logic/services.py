@@ -44,7 +44,7 @@ def handle_settings_actions(request):
         if email_and_name_change_form.is_valid():
             request.user.save()
             request.user.profile.save()
-            messages.success(request, "Data has been updated!")
+            messages.success(request, "Profile has been updated!")
         else:
             messages.error(request, "Error: Username or email already exists!")
     elif "changePasswordForm" in request.POST:
@@ -143,7 +143,7 @@ def bulk_create_articles_and_notifications(creation_list):
         notifications_create(articles)
 
 
-def create_articles_from_feed(source, feed_url, articles):
+def create_articles_from_feed_substack(source, feed_url, articles):
     create_article_list = []
     try:
         req = Request(
@@ -162,6 +162,56 @@ def create_articles_from_feed(source, feed_url, articles):
                 if source.website == "Substack":
                     title, link, pub_date, originial_title = article_components_get(
                         item
+                    )
+                    if articles.filter(
+                        title=originial_title, pub_date=pub_date, source=source
+                    ).exists():
+                        substack_article_exists = True
+                else:
+                    title, link, pub_date = article_components_get_substack(item)
+                title = html.unescape(title)
+                if (
+                    articles.filter(
+                        title=title, pub_date=pub_date, source=source
+                    ).exists()
+                    or substack_article_exists
+                ):
+                    break
+                else:
+                    create_article_list.append(
+                        {
+                            "title": title,
+                            "link": link,
+                            "pub_date": pub_date,
+                            "source": source,
+                        }
+                    )
+            except:
+                continue
+    except:
+        pass
+    bulk_create_articles_and_notifications(create_article_list)
+
+
+def create_articles_from_feed(source, feed_url, articles, substack=False):
+    create_article_list = []
+    try:
+        req = Request(
+            feed_url,
+            headers={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0"
+            },
+        )
+        website_data = urlopen(req)
+        website_xml = website_data.read()
+        website_data.close()
+        items = ET.fromstring(website_xml).findall(".//item")
+        for item in items:
+            try:
+                substack_article_exists = False
+                if substack:
+                    title, link, pub_date, originial_title = article_components_get(
+                        item, True
                     )
                     if articles.filter(
                         title=originial_title, pub_date=pub_date, source=source

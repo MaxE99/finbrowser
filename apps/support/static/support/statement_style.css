@@ -1,57 +1,56 @@
 .supportWrapper {
-  margin: 17.5rem auto 2rem;
-  font-size: 1.6rem;
-  background: white;
-  box-shadow: var(--box-shadowScheme);
-  width: 100%;
-  padding: 2rem 4rem;
-  border-radius: 0.45rem;
+    margin: 12.5rem auto 2rem;
+    font-size: 1.6rem;
+    background: white;
+    width: 100%;
+    padding: 2rem 4rem;
+    border-radius: 0.45rem;
+    border: 0.2rem solid var(--border-fontColor);
 }
 
 h1 {
-  font-size: 3rem;
-  color: var(--secondary-fontColor);
-  padding: 5rem 0;
-  display: flex;
-  justify-content: center;
-  background: #edf2f7;
-  position: absolute;
-  width: 100%;
-  left: 0;
+    color: var(--secondary-fontColor);
+    padding: 5rem 0;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    font-family: var(--site-Font);
 }
 
 h2 {
-  font-size: 2.4rem;
-  margin: 2rem 0 1rem;
+    font-size: 2.4rem;
+    margin: 2rem 0 1rem;
 }
 
 ul,
 p {
-  padding: 1rem 0;
+    padding: 1rem 0;
 }
 
 li {
-  margin-left: 4rem;
+    margin-left: 4rem;
 }
 
 p,
 li {
-  font-size: 1.9rem;
-  line-height: 1.6;
-  text-align: justify;
-  font-family: serif;
-  font-weight: 400;
+    font-size: 2.1rem;
+    line-height: 1.8;
+    text-align: justify;
+    font-family: var(--site-Font);
+    font-weight: 400;
 }
 
 .overlay a:link,
 .overlay a:visited,
 .overlay a:hover {
-  text-decoration: none;
-  color: var(--primary-fontColor);
+    text-decoration: none;
+    color: var(--primary-fontColor);
 }
 
 @media (max-width: 500px) {
-  .supportWrapper {
-    padding: 2rem;
-  }
+    .supportWrapper {
+        padding: 2rem;
+    }
 }

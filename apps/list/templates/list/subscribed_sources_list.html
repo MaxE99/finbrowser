@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v12.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v13.css' %}" />
 <title>Subscribed Sources | FinBrowser</title>
 <meta name="description" content="FinBrowser list created by {{ list.creator.username }}">
 {% endblock %} {% block content %}
@@ -11,12 +11,18 @@
                 <h2>Add Subscriptions</h2><i class="fas fa-times closeAddSourceContainer"></i>
             </div>
             <div class="actionWrapper">
-                <input id="textInput" type="search" autocomplete="off" spellcheck="false">
+                <div class="searchWrapper">
+                    <i class="fas fa-search"></i>
+                    <input id="textInput" type="search" autocomplete="off" spellcheck="false">
+                </div>
                 <div class="searchResultWrapper">
                     <div id="searchResultsContainer"></div>
                     <div class="selectionContainer"></div>
                 </div>
-                <button class="addSourceButton">Add</button>
+                <div class="buttonContainer">
+                    <button class="cancelButton finButtonWhite">Cancel</button>
+                    <button class="addSourceButton finButtonBlue">Save</button>
+                </div>
             </div>
         </div>
     </div>
@@ -45,7 +51,7 @@
                         <a href="{% url 'list:list-highlighted_content' %}" aria-label="Open highlighted content"></a>
                     </div>
                 </div>
-                <button class="createListButton"><i class="fas fa-plus"></i>Create New List</button>
+                <button class="createListButton finButtonWhite"><i class="fas fa-plus"></i>Create New List</button>
             </div>
         </div>
     </div>
@@ -65,9 +71,12 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <h3>No analytical content found!</h3>
-                <div>Consider adding more sources to this list!</div>
-                <button><i class="fas fa-plus"></i>Add</button>
+                <h3>No Analysis Found!</h3>
+                <div>It looks like you could benefit from adding more sources to your list that match the theme you're
+                    interested in. That way, you can stay up-to-date with all the latest news and information on the
+                    topics you care about. Don't be afraid to explore and subscribe to new sources to keep your
+                    content fresh and interesting.</div>
+                <button class="finButtonWhite"><i class="fas fa-plus"></i>Add</button>
             </div>
             {% endif %}
         </div>
@@ -82,9 +91,12 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <h3>No commentary found!</h3>
-                <div>Consider adding more sources to this list!</div>
-                <button><i class="fas fa-plus"></i>Add</button>
+                <h3>No Commentary Found!</h3>
+                <div>It looks like you could benefit from adding more sources to your list that match the theme you're
+                    interested in. That way, you can stay up-to-date with all the latest news and information on the
+                    topics you care about. Don't be afraid to explore and subscribe to new sources to keep your
+                    content fresh and interesting.</div>
+                <button class="finButtonWhite"><i class="fas fa-plus"></i>Add</button>
             </div>
             {% endif %}
         </div>
@@ -98,22 +110,28 @@
             </div>
             {% else %}
             <div class="emptyInformationContainer">
-                <h3>No news content found!</h3>
-                <div>Consider adding more sources to this list!</div>
-                <button><i class="fas fa-plus"></i>Add</button>
+                <h3>No News Found!</h3>
+                <div>It looks like you could benefit from adding more sources to your list that match the theme you're
+                    interested in. That way, you can stay up-to-date with all the latest news and information on the
+                    topics you care about. Don't be afraid to explore and subscribe to new sources to keep your
+                    content fresh and interesting.</div>
+                <button class="finButtonWhite"><i class="fas fa-plus"></i>Add</button>
             </div>
             {% endif %}
         </div>
     </div>
     {% else %}
     <div class="emptyInformationContainer">
-        <h3>This list is empty!</h3>
-        <div>Add sources to this list to get the latest information from your favorite content creators.</div>
-        <button><i class="fas fa-plus"></i>Add</button>
+        <h3>No Subscribed Sources Found!</h3>
+        <div>Want to stay up-to-date with your favorite content creators? You can easily do that by subscribing! This
+            way, you'll always see when they post new content. It's a great way to make sure you
+            never miss a thing from your favorite sources. So go ahead and subscribe to your favorite sources today!
+        </div>
+        <button class="finButtonWhite"><i class="fas fa-plus"></i>Add</button>
     </div>
     {% endif %}
 </div>
 
 
-<script src="{% static 'list/min_subscribed_sources_script_v1.js' %}"></script>
+<script src="{% static 'list/min_subscribed_sources_script_v2.js' %}"></script>
 {% endblock content %}

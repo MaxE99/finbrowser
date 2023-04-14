@@ -14,6 +14,8 @@ class SourceManager(models.Manager):
                 score = 0
                 if sim_source.sector == source.sector:
                     score += 5
+                if sim_source.sector in source.sector.sim_sectors.all():
+                    score += 3
                 if sim_source.content_type == source.content_type:
                     score += 3
                 if source.top_source and sim_source.top_source == source.top_source:
