@@ -620,3 +620,26 @@ def stocks_create_models_from_json():
 #     for article in articles:
 #         if article.source is None:
 #             article.delete()
+
+
+# @shared_task
+# def find_english_words():
+#     # Load the words from the text file
+#     with open("words.txt", "r") as f:
+#         words = set(line.strip() for line in f)
+
+#     # Create an empty list to store the matching words
+#     english_words = []
+
+#     # Loop through all instances of the Stock model
+#     for stock in Stock.objects.all():
+#         # Check if the ticker is in the words set
+#         if stock.ticker.lower() in words:
+#             english_words.append(stock.ticker.lower())
+#         # Check if the short_company_name is in the words set
+#         if stock.short_company_name.lower() in words:
+#             english_words.append(stock.short_company_name.lower())
+
+#     # Write the English words to a new Python file
+#     with open("english_words.py", "w") as f:
+#         f.write("english_words = {}\n".format(english_words))

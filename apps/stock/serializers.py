@@ -5,6 +5,7 @@ from datetime import timedelta
 from django.utils import timezone
 
 # Local imports
+from apps.scrapper.english_words import english_words
 from apps.stock.models import Stock, PortfolioKeyword, PortfolioStock, Portfolio
 from apps.article.models import Article
 
@@ -44,7 +45,7 @@ class PortfolioStockSerializer(serializers.ModelSerializer):
 
     def get_articles(self, obj):
         q_objects = Q()
-        if len(obj.stock.ticker) > 1:
+        if len(obj.stock.ticker) > 1 and obj.stock.ticker.lower() not in english_words:
             q_objects.add(Q(search_vector=obj.stock.ticker), Q.OR)
         else:
             q_objects.add(Q(title__contains=f"${obj.stock.ticker} "), Q.OR)

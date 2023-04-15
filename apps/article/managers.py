@@ -2,6 +2,9 @@
 from django.db import models
 from django.db.models import Q
 
+# Local imports
+from apps.scrapper.english_words import english_words
+
 
 class ArticleManager(models.Manager):
     def get_list_content_by_content_type(self, list_sources):
@@ -43,7 +46,7 @@ class ArticleManager(models.Manager):
         )
 
     def get_content_about_stock(self, stock):
-        if len(stock.ticker) > 1:
+        if len(stock.ticker) > 1 and stock.ticker.lower() not in english_words:
             return self.filter(
                 Q(search_vector=stock.ticker)
                 | Q(search_vector=stock.short_company_name)
