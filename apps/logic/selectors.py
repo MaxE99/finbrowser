@@ -35,7 +35,7 @@ def filter_sources(get_request):
         Source.objects.select_related("website", "sector")
         .prefetch_related("tags")
         .filter(q_objects)
-        .order_by("-average_rating")
+        .order_by("-average_rating", "-ammount_of_ratings")
         .distinct()
     )
 

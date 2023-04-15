@@ -178,12 +178,11 @@
 
 .stockMenuWrapper .addStockContainer .descContainer {
     font-size: 1.8rem;
-    padding-bottom: 1rem;
     border-bottom: 0.2rem solid gray;
     display: flex;
     justify-content: space-between;
     color: gray;
-    margin: 0 1rem 1rem;
+    padding: 0 1rem 1rem;
 }
 
 .stockMenuWrapper .addStockContainer .portfolioSelectionContainer {
@@ -201,8 +200,9 @@
 }
 
 .stockMenuWrapper .addStockContainer .portfolioContainer:hover {
-    color: white;
-    background: var(--primary-fontColor);
+    color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
+    outline: 0.2rem solid var(--primary-fontColor);
 }
 
 .stockMenuWrapper .addStockContainer .portfolioSelectionContainer label {

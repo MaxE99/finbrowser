@@ -43,8 +43,9 @@
 }
 
 .firstRow .nameContainer .listOptionsContainer .listOption:hover {
-    background: var(--primary-fontColor);
-    color: white;
+    color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
+    outline: 0.2rem solid var(--primary-fontColor);
 }
 
 .firstRow .nameContainer .listOptionsContainer .listOption a {
@@ -520,6 +521,10 @@
     margin-left: 2rem;
 }
 
+.listMenuWrapper .addSourceContainer .searchResultWrapper .resultHeader {
+    margin-bottom: 0.5rem;
+}
+
 @media (max-width: 1000px) {
     .leftInnerContainer {
         width: unset;
@@ -725,12 +730,17 @@
 }
 
 .landingSection .landingSectionContainer {
-    width: 65rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 2rem;
-    max-width: 90%;
+    justify-content: center;
+    width: 50%;
+}
+
+.landingSection .landingSectionImage {
+    display: flex;
+    justify-content: center;
+    width: 50%;
 }
 
 .landingSection .landingSectionContainer img {
@@ -768,6 +778,19 @@
     }
     .landingSection .landingSectionImage {
         margin-bottom: 4rem;
+        width: 70%;
+    }
+    .landingSection .landingSectionContainer {
+        width: 70%;
+    }
+}
+
+@media (max-width: 750px) {
+    .landingSection .landingSectionImage {
+        width: 90%;
+    }
+    .landingSection .landingSectionContainer {
+        width: 90%;
     }
 }
 
@@ -779,14 +802,17 @@
 
 @media (max-width: 450px) {
     .landingSection .landingSectionContainer h2 {
-        font-size: 5.5rem;
+        font-size: 4.5rem;
         margin-top: -1rem;
     }
 }
 
-@media (max-width: 450px) {
-    .landingSection .landingSectionContainer h2 {
-        font-size: 4.5rem;
+@media (max-width: 400px) {
+    .landingSection .landingSectionImage {
+        width: 100%;
+    }
+    .landingSection .landingSectionContainer {
+        width: 100%;
     }
 }
 

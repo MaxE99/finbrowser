@@ -236,6 +236,11 @@
     border: 0.2rem solid var(--border-fontColor);
 }
 
+.secondRow .simSourceInfoContainer {
+    max-width: calc(100% - 8.5rem);
+    overflow: hidden;
+}
+
 .secondRow .simSourceContainer {
     padding: 1rem 2rem;
 }
@@ -266,6 +271,7 @@
 
 .secondRow .simSourceContainer:hover {
     color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
     border: 0.2rem solid var(--primary-fontColor);
 }
 
