@@ -53,11 +53,117 @@ document.querySelector('.createPortfolioButton').addEventListener(
     { once: true }
 );
 
+let selectedStocks = [];
 // open add stocks menu
 document.querySelector('.actionButtonContainer .addStocksButton').addEventListener('click', () => {
     document.querySelector('.portfolioMenuWrapper').style.display = 'block';
     document.querySelector('.addStocksContainer').style.display = 'block';
     setModalStyle();
+    // add stocks -- selection process
+    document
+        .querySelector('.addStocksContainer #textInput')
+        .addEventListener('keyup', async function (e) {
+            const portfolioStocks = [];
+            const tickerContainer = document.querySelectorAll('table tr .ticker');
+            for (let i = 0, j = tickerContainer.length; i < j; i++) {
+                portfolioStocks.push(tickerContainer[i].innerText);
+            }
+            const textInput = document.querySelector('.addStocksContainer #textInput');
+            let search_term = textInput.value;
+            let results_list = e.target
+                .closest('.addStocksContainer')
+                .querySelector('#searchResultsContainer');
+            let selected_list = e.target
+                .closest('.addStocksContainer')
+                .querySelector('.selectionContainer');
+            // cancel/reset add stocks to portfolio form
+            document
+                .querySelector('.addStocksContainer .buttonContainer .cancelButton')
+                .addEventListener('click', () => {
+                    selectedStocks = [];
+                    selected_list.innerHTML = '';
+                });
+            if (search_term && search_term.replaceAll(/\s/g, '') != '') {
+                results_list.style.display = 'block';
+                selected_list.style.display = 'none';
+                try {
+                    const res = await fetch(
+                        `../../api/stocks/?search_term=${search_term}`,
+                        get_fetch_settings('GET')
+                    );
+                    if (!res.ok) {
+                        showMessage('Error: Network request failed unexpectedly!', 'Error');
+                    } else {
+                        const context = await res.json();
+                        results_list.innerHTML = '';
+                        const resultHeader = document.createElement('div');
+                        resultHeader.classList.add('resultHeader');
+                        resultHeader.innerText = 'Results:';
+                        results_list.append(resultHeader);
+                        if (context.length > 0) {
+                            context.forEach((stock) => {
+                                if (
+                                    !selectedStocks.includes(stock.stock_id) &&
+                                    !portfolioStocks.includes(stock.ticker)
+                                ) {
+                                    const searchResult = document.createElement('div');
+                                    searchResult.classList.add('searchResult');
+                                    const stockContainer = document.createElement('div');
+                                    stockContainer.classList.add('stockContainer');
+                                    const ticker = document.createElement('div');
+                                    ticker.innerText = stock.ticker;
+                                    ticker.id = 'pssi#' + stock.stock_id;
+                                    ticker.classList.add('stockTicker');
+                                    const companyName = document.createElement('div');
+                                    companyName.innerText = stock.full_company_name;
+                                    companyName.classList.add('companyName');
+                                    stockContainer.append(ticker, companyName);
+                                    searchResult.appendChild(stockContainer);
+                                    results_list.appendChild(searchResult);
+                                    searchResult.addEventListener(
+                                        'click',
+                                        function addSelectedStock() {
+                                            // Remove the listener from the element the first time the listener is run:
+                                            searchResult.removeEventListener(
+                                                'click',
+                                                addSelectedStock
+                                            );
+                                            selectedStocks.push(stock.stock_id);
+                                            const removeStockButton = document.createElement('i');
+                                            removeStockButton.classList.add('fas', 'fa-times');
+                                            removeStockButton.addEventListener('click', () => {
+                                                removeStockButton.parentElement.remove();
+                                                selectedStocks = selectedStocks.filter(function (
+                                                    e
+                                                ) {
+                                                    return (
+                                                        e.toString() !==
+                                                        removeStockButton
+                                                            .closest('.searchResult')
+                                                            .querySelector('.stockTicker')
+                                                            .id.split('#')[1]
+                                                    );
+                                                });
+                                            });
+                                            searchResult.appendChild(removeStockButton);
+                                            selected_list.appendChild(searchResult);
+                                            results_list.style.display = 'none';
+                                            selected_list.style.display = 'block';
+                                            textInput.value = '';
+                                        }
+                                    );
+                                }
+                            });
+                        }
+                    }
+                } catch (e) {
+                    // showMessage("Error: Unexpected error has occurred!", "Error");
+                }
+            } else {
+                results_list.style.display = 'none';
+                selected_list.style.display = 'block';
+            }
+        });
 });
 
 document.querySelectorAll('.emptyInformationContainer button').forEach((addStocksButton) =>
@@ -70,16 +176,12 @@ document.querySelectorAll('.emptyInformationContainer button').forEach((addStock
 
 // close add stock menu
 document
-    .querySelectorAll(
-        '.addStocksContainer .closeAddStockContainer, .portfolioMenuWrapper .addStocksContainer .buttonContainer .cancelButton'
-    )
-    .forEach((element) =>
-        element.addEventListener('click', () => {
-            document.querySelector('.portfolioMenuWrapper').style.display = 'none';
-            document.querySelector('.addStocksContainer').style.display = 'none';
-            removeModalStyle();
-        })
-    );
+    .querySelector('.addStocksContainer .closeAddStockContainer')
+    .addEventListener('click', () => {
+        document.querySelector('.portfolioMenuWrapper').style.display = 'none';
+        document.querySelector('.addStocksContainer').style.display = 'none';
+        removeModalStyle();
+    });
 
 // open edit menu
 document.querySelector('.editPortfolioButton').addEventListener('click', () => {
@@ -95,102 +197,14 @@ document.querySelector('.editMenu .fa-times').addEventListener('click', () => {
     removeModalStyle();
 });
 
-// add stocks -- selection process
-let selectedStocks = [];
-document
-    .querySelector('.addStocksContainer #textInput')
-    .addEventListener('keyup', async function (e) {
-        const portfolioStocks = [];
-        const tickerContainer = document.querySelectorAll('table tr .ticker');
-        for (let i = 0, j = tickerContainer.length; i < j; i++) {
-            portfolioStocks.push(tickerContainer[i].innerText);
-        }
-        const textInput = document.querySelector('.addStocksContainer #textInput');
-        let search_term = textInput.value;
-        let results_list = e.target
-            .closest('.addStocksContainer')
-            .querySelector('#searchResultsContainer');
-        let selected_list = e.target
-            .closest('.addStocksContainer')
-            .querySelector('.selectionContainer');
-        if (search_term && search_term.replaceAll(/\s/g, '') != '') {
-            results_list.style.display = 'block';
-            selected_list.style.display = 'none';
-            try {
-                const res = await fetch(
-                    `../../api/stocks/?search_term=${search_term}`,
-                    get_fetch_settings('GET')
-                );
-                if (!res.ok) {
-                    showMessage('Error: Network request failed unexpectedly!', 'Error');
-                } else {
-                    const context = await res.json();
-                    results_list.innerHTML = '';
-                    const resultHeader = document.createElement('div');
-                    resultHeader.classList.add('resultHeader');
-                    resultHeader.innerText = 'Results:';
-                    results_list.append(resultHeader);
-                    if (context.length > 0) {
-                        context.forEach((stock) => {
-                            if (
-                                !selectedStocks.includes(stock.stock_id) &&
-                                !portfolioStocks.includes(stock.ticker)
-                            ) {
-                                const searchResult = document.createElement('div');
-                                searchResult.classList.add('searchResult');
-                                const stockContainer = document.createElement('div');
-                                stockContainer.classList.add('stockContainer');
-                                const ticker = document.createElement('div');
-                                ticker.innerText = stock.ticker;
-                                ticker.classList.add('stockTicker');
-                                const companyName = document.createElement('div');
-                                companyName.innerText = stock.full_company_name;
-                                companyName.classList.add('companyName');
-                                stockContainer.append(ticker, companyName);
-                                searchResult.appendChild(stockContainer);
-                                results_list.appendChild(searchResult);
-                                searchResult.addEventListener('click', function addSelectedStock() {
-                                    // Remove the listener from the element the first time the listener is run:
-                                    searchResult.removeEventListener('click', addSelectedStock);
-                                    selectedStocks.push(stock.stock_id);
-                                    const removeStockButton = document.createElement('i');
-                                    removeStockButton.classList.add('fas', 'fa-times');
-                                    removeStockButton.addEventListener('click', () => {
-                                        removeStockButton.parentElement.remove();
-                                        selectedStocks = selectedStocks.filter(function (e) {
-                                            return (
-                                                e.toString() !==
-                                                removeStockButton
-                                                    .closest('.searchResult')
-                                                    .querySelector('span')
-                                                    .id.split('#')[1]
-                                            );
-                                        });
-                                    });
-                                    searchResult.appendChild(removeStockButton);
-                                    selected_list.appendChild(searchResult);
-                                    results_list.style.display = 'none';
-                                    selected_list.style.display = 'block';
-                                    textInput.value = '';
-                                });
-                            }
-                        });
-                    }
-                }
-            } catch (e) {
-                // showMessage("Error: Unexpected error has occurred!", "Error");
-            }
-        } else {
-            results_list.style.display = 'none';
-            selected_list.style.display = 'block';
-        }
-    });
-
 // add stocks -- api request
 let activatedButton = false;
 document
     .querySelector('.portfolioMenuWrapper .addStocksContainer .addStocksButton')
     .addEventListener('click', async () => {
+        if (!selectedStocks.length) {
+            showMessage('You Need To Select Stocks!', 'Error');
+        }
         if (selectedStocks.length && !activatedButton) {
             activatedButton = true;
             try {

@@ -877,7 +877,7 @@ footer .twitterFollowContainer i {
     animation-fill-mode: forwards;
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
-    z-index: 1000;
+    z-index: 1003;
 }
 
 .messages li {

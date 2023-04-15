@@ -1,19 +1,11 @@
 function setModalStyle() {
-    // document.querySelector('body').style.overflow = 'hidden';
-    // document.querySelector('.pageWrapper').style.opacity = '0.1';
-    // document.querySelector('header').style.opacity = 0.1;
     document.querySelector('header').style.pointerEvents = 'none';
     document.querySelector('.fullScreenPlaceholder').style.display = 'block';
-    // document.querySelector('header .outerHeaderContainer').style.zIndex = 0;
 }
 
 function removeModalStyle() {
-    // document.querySelector('body').style.removeProperty('overflow');
-    // document.querySelector('.pageWrapper').style.removeProperty('opacity');
-    // document.querySelector('header').style.removeProperty('opacity');
     document.querySelector('header').style.removeProperty('pointer-events');
     document.querySelector('.fullScreenPlaceholder').style.display = 'none';
-    // document.querySelector('header .outerHeaderContainer').style.zIndex = 1000;
 }
 
 // open hamburger menu
@@ -397,7 +389,7 @@ if (document.querySelector('.userSpace .notificationBell')) {
         const notificationPopup = document.querySelector('.notificationPopupWrapper');
         if (notificationPopup.style.display == 'block') {
             notificationPopup.style.display = 'none';
-            document.querySelector('.unseenNotifications').remove();
+            document.querySelector('.unseenNotifications')?.remove();
             document.querySelectorAll('.unseenNotification').forEach((notification) => {
                 notification.classList.remove('unseenNotification');
             });
@@ -648,6 +640,21 @@ document.querySelectorAll('.sourceAddToListButton').forEach((addSourceButton) =>
                     checkbox.checked = false;
                 }
             });
+            // cancel/reset add to sources form
+            document
+                .querySelector('.fullScreenPlaceholder .addSourceToListForm .cancelButton')
+                ?.addEventListener('click', () => {
+                    checkboxes.forEach((checkbox) => {
+                        const sourcesInList = checkbox
+                            .closest('.listContainer')
+                            .querySelector('.sourcesInList').value;
+                        if (JSON.parse(sourcesInList).includes(parseInt(sourceId))) {
+                            checkbox.checked = true;
+                        } else {
+                            checkbox.checked = false;
+                        }
+                    });
+                });
         });
     }
 });
@@ -661,15 +668,6 @@ document
             document.querySelector('.addSourceToListForm').style.display = 'none';
             document.querySelector('.fullScreenPlaceholder').style.display = 'none';
         });
-    });
-
-//cancel button
-document
-    .querySelector('.fullScreenPlaceholder .addSourceToListForm .cancelButton')
-    ?.addEventListener('click', () => {
-        removeModalStyle();
-        document.querySelector('.addSourceToListForm').style.display = 'none';
-        document.querySelector('.fullScreenPlaceholder').style.display = 'none';
     });
 
 // // add sources to lists
@@ -773,7 +771,7 @@ function openAddToListMenu(e) {
     document.querySelector('.fullScreenPlaceholder .smallScreenSearchContainer').style.display =
         'none';
     document.querySelector('.fullScreenPlaceholder .closeImageButton').style.display = 'none';
-    const article_id = e.target.closest('.articleContainer').id.split('cc#')[1];
+    const article_id = e.target.closest('.articleContainer').id.split('#')[1];
     const checkboxes = document.querySelectorAll(
         '.fullScreenPlaceholder .listContainer input:first-of-type'
     );
@@ -834,6 +832,21 @@ function openAddToListMenu(e) {
         },
         { once: true }
     );
+    // cancel/reset add article to list form
+    document
+        .querySelector('.fullScreenPlaceholder .addSourceToListForm .cancelButton')
+        ?.addEventListener('click', () => {
+            checkboxes.forEach((checkbox) => {
+                const articlesInList = checkbox
+                    .closest('.listContainer')
+                    .querySelector('.articlesInList').value;
+                if (JSON.parse(articlesInList).includes(parseInt(article_id))) {
+                    checkbox.checked = true;
+                } else {
+                    checkbox.checked = false;
+                }
+            });
+        });
 }
 
 document.querySelectorAll('.addToListButton').forEach((element) => {

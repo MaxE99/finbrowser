@@ -101,20 +101,34 @@ document
                     '.sourceRatingsWrapper .header h3'
                 ).innerHTML = `Rate <span>${sourceName}</span>`;
                 setModalStyle();
+                const initialUserRating = document.querySelector(
+                    '.sourceRatingsContainer .ratingsButtonContainer .selectedRating'
+                )?.innerText;
+                // cancel/reset source rating form
+                document
+                    .querySelector('.sourceRatingsWrapper .ratingsContainer .cancelButton')
+                    ?.addEventListener('click', () => {
+                        document
+                            .querySelectorAll(
+                                '.sourceRatingsContainer .ratingsButtonContainer button'
+                            )
+                            .forEach((button) => {
+                                button.classList.remove('selectedRating');
+                                if (button.innerText == initialUserRating) {
+                                    button.classList.add('selectedRating');
+                                }
+                            });
+                    });
             });
         }
     });
 
 // close source ratings modal
 document
-    .querySelectorAll(
-        '.sourceRatingsWrapper .ratingsContainer .header .fa-times, .sourceRatingsWrapper .ratingsContainer .cancelButton'
-    )
-    .forEach((element) => {
-        element.addEventListener('click', () => {
-            document.querySelector('.sourceRatingsWrapper').style.display = 'none';
-            removeModalStyle();
-        });
+    .querySelector('.sourceRatingsWrapper .ratingsContainer .header .fa-times')
+    .addEventListener('click', () => {
+        document.querySelector('.sourceRatingsWrapper').style.display = 'none';
+        removeModalStyle();
     });
 
 // select source rating
@@ -196,5 +210,20 @@ document
                     checkbox.checked = false;
                 }
             });
+            // cancel/reset add to sources form
+            document
+                .querySelector('.fullScreenPlaceholder .addSourceToListForm .cancelButton')
+                ?.addEventListener('click', () => {
+                    checkboxes.forEach((checkbox) => {
+                        const sourcesInList = checkbox
+                            .closest('.listContainer')
+                            .querySelector('.sourcesInList').value;
+                        if (JSON.parse(sourcesInList).includes(parseInt(sourceId))) {
+                            checkbox.checked = true;
+                        } else {
+                            checkbox.checked = false;
+                        }
+                    });
+                });
         }
     });
