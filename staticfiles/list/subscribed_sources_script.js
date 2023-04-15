@@ -53,6 +53,7 @@ if (document.querySelector('.addSourceContainer #textInput')) {
                         const context = await res.json();
                         results_list.innerHTML = '';
                         const resultHeader = document.createElement('div');
+                        resultHeader.classList.add('resultHeader');
                         resultHeader.innerText = 'Results:';
                         results_list.append(resultHeader);
                         if (context.length > 0) {

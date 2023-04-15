@@ -19,22 +19,22 @@ h1 {
     font-family: var(--site-Font);
 }
 
-h2 {
+.supportWrapper h2 {
     font-size: 2.4rem;
     margin: 2rem 0 1rem;
 }
 
-ul,
-p {
+.supportWrapper ul,
+.supportWrapper p {
     padding: 1rem 0;
 }
 
-li {
+.supportWrapper li {
     margin-left: 4rem;
 }
 
-p,
-li {
+.supportWrapper p,
+.supportWrapper li {
     font-size: 2.1rem;
     line-height: 1.8;
     text-align: justify;
@@ -42,9 +42,9 @@ li {
     font-weight: 400;
 }
 
-.overlay a:link,
-.overlay a:visited,
-.overlay a:hover {
+.supportWrapper a:link,
+.supportWrapper a:visited,
+.supportWrapper a:hover {
     text-decoration: none;
     color: var(--primary-fontColor);
 }

@@ -70,6 +70,7 @@ h2 {
 }
 
 body {
+    overflow-y: scroll;
     position: relative;
     color: var(--secondary-fontColor);
     /* background-color: #b8c6db;
@@ -267,7 +268,7 @@ header .mainSearchWrapper {
     padding: 1rem 1rem 0 1rem;
     background: #fff;
     color: gray;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
 }
 
 .searchResult {
@@ -302,10 +303,14 @@ header .mainSearchWrapper {
     left: 0;
 }
 
-.searchResult:hover,
+.searchResult:hover {
+    color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
+    outline: 0.2rem solid var(--primary-fontColor);
+}
+
 .searchResult:hover .stockContainer .stockTicker {
-    background: var(--primary-fontColor);
-    color: white;
+    color: var(--primary-fontColor);
 }
 
 .searchResult .stockContainer {
@@ -698,11 +703,10 @@ header .mainSearchWrapper {
     padding: 0 1rem 0 0;
 }
 
-.profileMenu .profileMenuOption:hover,
-.profileMenu .profileMenuOption:hover i,
-.profileMenu .profileMenuOption:hover button {
-    background: var(--primary-fontColor);
-    color: white !important;
+.profileMenu .profileMenuOption:hover {
+    color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
+    outline: 0.2rem solid var(--primary-fontColor);
 }
 
 .profileMenu .profileMenuOption:last-of-type:hover {
@@ -727,23 +731,22 @@ header .mainSearchWrapper {
     padding: 1.36rem 2.72rem;
 }
 
-.headerButtonContainer a:last-of-type,
-.headerButtonContainer a:hover {
-    background: var(--primary-fontColor);
-    color: white;
+.headerButtonContainer a:first-of-type:hover {
+    color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
+    border: 0.2rem solid var(--primary-fontColor);
 }
 
-.headerButtonContainer a:hover {
+.headerButtonContainer a:last-of-type:hover {
     box-shadow: var(--box-shadowHoverSchme);
+    background: var(--hover-color) !important;
 }
 
 .headerButtonContainer a:last-of-type {
     white-space: nowrap;
     margin-left: 2rem;
-}
-
-.headerButtonContainer a:last-of-type:hover {
-    background: var(--hover-color) !important;
+    background: var(--primary-fontColor);
+    color: white;
 }
 
 .headerContainer .fa-bars {
@@ -1156,13 +1159,16 @@ footer .twitterFollowContainer i {
     position: relative;
     display: flex;
     padding: 2rem;
-    border-top: 0.2rem solid var(--border-fontColor);
+    border-bottom: 0.2rem solid var(--border-fontColor);
 }
 
 .smallFormContentWrapper .articleContainer:hover {
     background: var(--hover-secondaryColor);
-    border-top: 0.2rem solid var(--primary-fontColor);
-    /* border-bottom: 0.2rem solid var(--primary-fontColor); */
+    outline: 0.2rem solid var(--primary-fontColor);
+}
+
+.smallFormContentWrapper .articleContainer:hover .fa-ellipsis-h {
+    color: var(--primary-fontColor);
 }
 
 .smallFormContentWrapper .leftContentSide .profileImageContainer {
@@ -1267,8 +1273,8 @@ footer .twitterFollowContainer i {
 
 .articleOptionsContainer div:hover,
 .articleOptionsContainer a:hover {
-    background: var(--primary-fontColor);
-    color: white;
+    color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
 }
 
 .articleOptionsContainer .addToHighlightedButton,
@@ -1302,8 +1308,9 @@ footer .twitterFollowContainer i {
 }
 
 .addToListForm .listContainer:hover {
-    color: white;
-    background: var(--primary-fontColor);
+    color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
+    outline: 0.2rem solid var(--primary-fontColor);
 }
 
 .addToListForm label {
@@ -1380,12 +1387,11 @@ footer .twitterFollowContainer i {
 
 .addToListForm .descContainer {
     font-size: 1.8rem;
-    padding-bottom: 1rem;
     border-bottom: 0.2rem solid gray;
     display: flex;
     justify-content: space-between;
     color: gray;
-    margin: 0 1rem 1rem;
+    padding: 0 1rem 1rem;
 }
 
 .formContainer .formHeaderContainer h2,

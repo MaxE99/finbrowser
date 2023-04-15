@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'stock/min_portfolio_style_v2.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'stock/min_portfolio_style_v3.css' %}">
 {% if request.user.is_authenticated %}
 <title>{{ selected_portfolio.name }} | FinBrowser</title>
 {% else %}
@@ -165,9 +165,9 @@
                     <td>
                         {% if stock.articles_last_7d < 5 %}
                         <span class="low">Low</span>
-                        {% elif stock.articles_last_7d > 5 and stock.articles_last_7d < 10 %}
+                        {% elif stock.articles_last_7d > 4 and stock.articles_last_7d < 10 %}
                         <span class="mid">Mid</span>
-                        {% elif stock.articles_last_7d > 10 %}
+                        {% elif stock.articles_last_7d > 9 %}
                         <span class="high">High</span>
                         {% endif %}
                         <a href="{{ stock.absolute_path }}"
@@ -268,7 +268,7 @@
     </div>
     {% endif %}
 </div>
-<script src="{% static 'stock/min_portfolio_script_v3.js' %}"></script>
+<script src="{% static 'stock/min_portfolio_script_v4.js' %}"></script>
 
 {% else %}
 
