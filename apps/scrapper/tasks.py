@@ -233,7 +233,9 @@ def scrape_other_websites():
 
 @shared_task
 def scrape_news():
-    news_sources = Source.objects.filter(news=True).only("source_id", "url", "website")
+    news_sources = Source.objects.filter(content_type="News").only(
+        "source_id", "url", "website"
+    )
     articles = Article.objects.filter(source__in=news_sources).only(
         "title", "pub_date", "source"
     )

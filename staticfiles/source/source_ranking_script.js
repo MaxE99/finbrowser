@@ -244,6 +244,21 @@ document.querySelectorAll('.sourceAddToListButton').forEach((button) => {
                     checkbox.checked = false;
                 }
             });
+            // cancel/reset add to sources form
+            document
+                .querySelector('.fullScreenPlaceholder .addSourceToListForm .cancelButton')
+                ?.addEventListener('click', () => {
+                    checkboxes.forEach((checkbox) => {
+                        const sourcesInList = checkbox
+                            .closest('.listContainer')
+                            .querySelector('.sourcesInList').value;
+                        if (JSON.parse(sourcesInList).includes(parseInt(sourceId))) {
+                            checkbox.checked = true;
+                        } else {
+                            checkbox.checked = false;
+                        }
+                    });
+                });
         }
     });
 });
@@ -266,15 +281,32 @@ document
     .forEach((ratingButton) => {
         if (!ratingButton.classList.contains('openAuthPrompt')) {
             ratingButton.addEventListener('click', (e) => {
+                let initialUserRating = null;
                 if (!e.target.classList.contains('notRated')) {
                     document
                         .querySelectorAll('.sourceRatingsContainer .ratingsButtonContainer button')
                         .forEach((button) => {
                             if (button.innerText == e.target.innerText) {
                                 button.classList.add('selectedRating');
+                                initialUserRating = e.target.innerText;
                             }
                         });
                 }
+                // cancel/reset source rating form
+                document
+                    .querySelector('.sourceRatingsWrapper .ratingsContainer .cancelButton')
+                    ?.addEventListener('click', () => {
+                        document
+                            .querySelectorAll(
+                                '.sourceRatingsContainer .ratingsButtonContainer button'
+                            )
+                            .forEach((button) => {
+                                button.classList.remove('selectedRating');
+                                if (button.innerText == initialUserRating) {
+                                    button.classList.add('selectedRating');
+                                }
+                            });
+                    });
                 const sourceName = e.target
                     .closest('.sourceRankingContainer')
                     .querySelector('.firstRow a span:last-of-type').innerText;
@@ -291,25 +323,19 @@ document
 
 // close source ratings modal
 document
-    .querySelectorAll(
-        '.sourceRatingsWrapper .ratingsContainer .header .fa-times, .sourceRatingsWrapper .ratingsContainer .cancelButton'
-    )
-    .forEach((element) => {
-        element.addEventListener('click', () => {
-            if (
-                document.querySelector(
-                    '.sourceRatingsContainer .ratingsButtonContainer .selectedRating'
-                )
-            ) {
-                document
-                    .querySelector(
-                        '.sourceRatingsContainer .ratingsButtonContainer .selectedRating'
-                    )
-                    .classList.remove('selectedRating');
-            }
-            document.querySelector('.sourceRatingsWrapper').style.display = 'none';
-            removeModalStyle();
-        });
+    .querySelector('.sourceRatingsWrapper .ratingsContainer .header .fa-times')
+    .addEventListener('click', () => {
+        if (
+            document.querySelector(
+                '.sourceRatingsContainer .ratingsButtonContainer .selectedRating'
+            )
+        ) {
+            document
+                .querySelector('.sourceRatingsContainer .ratingsButtonContainer .selectedRating')
+                .classList.remove('selectedRating');
+        }
+        document.querySelector('.sourceRatingsWrapper').style.display = 'none';
+        removeModalStyle();
     });
 
 // select source rating
