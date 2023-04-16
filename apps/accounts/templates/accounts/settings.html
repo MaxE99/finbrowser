@@ -2,7 +2,7 @@
 {% load tz %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v15.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/min_settings_style_v16.css' %}">
 <title>Settings | FinBrowser</title>
 {% endblock %}
 
@@ -61,8 +61,8 @@
                     value="Save" />
             </form>
         </div>
+        {% if user_source_notifications or user_stock_notifications or user_keyword_notifications %}
         <div class="tabsContent notificationTab" data-tab="2">
-            {% if user_source_notifications or user_stock_notifications or user_keyword_notifications %}
             {% if user_source_notifications.count > 0 %}
             <h2>Source Notifications</h2>
             <div class="notificationContainer">
@@ -130,10 +130,23 @@
                 {% endfor %}
             </div>
             {% endif %}
-            {% else %}
-            <div class="noNotificationsActivated">You haven't activated any notifications!</div>
-            {% endif %}
         </div>
+        {% else %}
+        <div class="tabsContent notificationTab noNotificationsFoundTab" data-tab="2">
+            <div class="emptyInformationContainer highlightedListEmpyContainer">
+                <h3>No Notifications Activated!</h3>
+                <div>Hey, I've got a neat little tip for you! On FinBrowser, you have the ability to set up
+                    notifications for stocks, sources, and specific keywords that matter to you in the stock market.
+                    This means you'll always be in the loop whenever new information becomes available. And the best
+                    part? It's a breeze to set up. All you have to do is head over to the page of your favorite source
+                    or stock and click on the notification button. And if you want to add keyword notifications, simply
+                    open up the notifications menu and head over to the keyword tab. From there, you can easily add any
+                    relevant keywords to your list. Easy, right? So why not give it a shot and see how this
+                    feature can help keep you on top of your investing game?
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 
     <script src="{% static 'accounts/min_settings_script_v9.js' %}"></script>

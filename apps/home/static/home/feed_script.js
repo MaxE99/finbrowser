@@ -244,28 +244,6 @@ async function createTweets() {
     }
 }
 
-function contentScroll() {
-    if (
-        Math.ceil(scrollableContentContainer.scrollTop + scrollableContentContainer.clientHeight) >=
-            scrollableContentContainer.scrollHeight &&
-        !contentIsLoading
-    ) {
-        const loader = document.createElement('div');
-        loader.classList.add('loader');
-        document
-            .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
-            .appendChild(loader);
-        createTweets();
-        contentIsLoading = true;
-    } else {
-        document
-            .querySelector('.pageWrapper .longFormContentContainer .recommendedContentContainer')
-            .appendChild(loader);
-        createContent();
-        contentIsLoading = true;
-    }
-}
-
 function twitterScroll() {
     if (
         Math.ceil(scrollableTweetContainer.scrollTop + scrollableTweetContainer.clientHeight) >=
@@ -282,18 +260,44 @@ function twitterScroll() {
     }
 }
 
-scrollableContentContainer.addEventListener('scroll', () => {
-    contentScroll();
-});
+function contentScroll() {
+    const activeTab = document.querySelector(
+        '.pageWrapper .longFormContentContainer .activatedTab'
+    )?.innerText;
+    const loader = document.createElement('div');
+    loader.classList.add('loader');
+    if (!contentIsLoading) {
+        if (activeTab === 'Recommended Tweets') {
+            contentIsLoading = true;
+            document
+                .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
+                .appendChild(loader);
+            createTweets();
+        } else {
+            contentIsLoading = true;
+            document
+                .querySelector(
+                    '.pageWrapper .longFormContentContainer .recommendedContentContainer'
+                )
+                .appendChild(loader);
+            createContent();
+        }
+    }
+}
 
-scrollableContentContainer.addEventListener('touchmove', () => {
-    contentScroll();
+document.addEventListener('DOMContentLoaded', function () {
+    const footer = document.querySelector('footer');
+    const observer = new IntersectionObserver(
+        function (entries) {
+            if (entries[0].isIntersecting) {
+                contentScroll();
+            }
+        },
+        { threshold: 0, rootMargin: '0px 0px 30px 0px' }
+    );
+    observer.observe(footer);
 });
 
 scrollableTweetContainer.addEventListener('scroll', function () {
-    twitterScroll();
-});
-
-scrollableTweetContainer.addEventListener('touchmove', () => {
     twitterScroll();
 });

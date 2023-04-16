@@ -64,9 +64,9 @@
     max-width: 95%;
 }
 
-.tabsContainer {
+/* .tabsContainer {
     margin: 2rem auto;
-}
+} */
 
 .articlesWrapper {
     height: unset;
@@ -175,6 +175,10 @@
     border-bottom: 0.2rem solid var(--primary-fontColor);
 }
 
+.stocksWrapper .stockContainer:last-of-type:hover {
+    border-bottom: none;
+}
+
 .stocksWrapper .stockContainer .stockTicker {
     width: 12.5%;
     padding-left: 2rem;
@@ -262,6 +266,12 @@
     .searchSidebar {
         margin: 2rem 2rem 0;
         width: unset;
+    }
+
+    .stocksWrapper,
+    .stocksWrapper .stockContainer:first-of-type,
+    .stocksWrapper .stockContainer:last-of-type {
+        border-radius: 0;
     }
 
     .stocksWrapper .stockContainer .stockTicker {

@@ -423,8 +423,9 @@
 .horizontalFilterMenu .dropdown ul li:hover,
 .filterSidebar #tagAutocomplete_result ul li:hover,
 .horizontalFilterMenu #tagAutocomplete_result ul li:hover {
-    background: var(--primary-fontColor);
-    color: white;
+    color: var(--primary-fontColor);
+    background: var(--hover-secondaryColor);
+    outline: 0.2rem solid var(--primary-fontColor);
 }
 
 .filterSidebar .dropdown ul li img,

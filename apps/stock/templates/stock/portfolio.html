@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'stock/min_portfolio_style_v3.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'stock/min_portfolio_style_v4.css' %}">
 {% if request.user.is_authenticated %}
 <title>{{ selected_portfolio.name }} | FinBrowser</title>
 {% else %}
@@ -276,7 +276,6 @@
     <section class="landingSection">
         <div class="landingSectionContainer">
             <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}">
-            <h2>Portfolio</h2>
             <p>
                 Are you tired of feeling like you're in the dark when it comes to the stocks in your portfolio? Let
                 FinBrowser

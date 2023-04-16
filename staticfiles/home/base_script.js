@@ -1,11 +1,36 @@
+function getScrollbarWidth() {
+    // Creating invisible container
+    const outer = document.createElement('div');
+    outer.style.visibility = 'hidden';
+    outer.style.overflow = 'scroll'; // forcing scrollbar to appear
+    outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+    document.body.appendChild(outer);
+    // Creating inner element and placing it in the container
+    const inner = document.createElement('div');
+    outer.appendChild(inner);
+    // Calculating difference between container's full width and the child width
+    const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+    // Removing temporary elements from the DOM
+    outer.parentNode.removeChild(outer);
+    return scrollbarWidth;
+}
+
 function setModalStyle() {
+    const scrollbarWidth = getScrollbarWidth();
     document.querySelector('header').style.pointerEvents = 'none';
+    document.querySelector('body').style.overflow = 'hidden';
+    // prevents layout shift
+    document.querySelector('body').style.paddingRight = scrollbarWidth + 'px';
+    document.querySelector('.outerHeaderContainer').style.paddingRight = scrollbarWidth + 'px';
     document.querySelector('.fullScreenPlaceholder').style.display = 'block';
 }
 
 function removeModalStyle() {
     document.querySelector('header').style.removeProperty('pointer-events');
+    document.querySelector('body').style.removeProperty('overflow');
     document.querySelector('.fullScreenPlaceholder').style.display = 'none';
+    document.querySelector('body').style.removeProperty('padding-right');
+    document.querySelector('.outerHeaderContainer').style.removeProperty('padding-right');
 }
 
 // open hamburger menu
