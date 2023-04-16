@@ -7,11 +7,6 @@ h1 {
     font-family: var(--site-Font);
 }
 
-.tabsContainer .activatedTab,
-.tabsContainer button:hover {
-    text-underline-offset: 1.53rem;
-}
-
 h2 {
     font-size: 2.5rem;
     margin-bottom: 2rem;
@@ -22,7 +17,7 @@ h2 {
     padding: 2rem 4rem;
     border-radius: 0.45rem;
     width: 75%;
-    box-shadow: var(--box-shadowScheme);
+    border: 0.2rem solid var(--border-fontColor);
 }
 
 .tabsContent:last-of-type {
@@ -274,6 +269,12 @@ form .profilePicInnerContainer .disabledRemove:hover {
     box-shadow: none;
     color: var(--primary-fontColor);
     background: white;
+}
+
+.contentSection .noNotificationsFoundTab {
+    background: none;
+    border: none;
+    padding: 0;
 }
 
 @media (max-width: 1150px) {

@@ -184,13 +184,12 @@ header {
     height: 100%;
     left: 0;
     top: 0;
-    border-radius: 2rem 3rem;
 }
 
 .mainNavigationLink:hover {
     color: var(--primary-fontColor);
     background: var(--hover-secondaryColor);
-    border: 0.2rem solid;
+    border: 0.2rem solid !important;
 }
 
 .mainSearchWrapper {
@@ -779,10 +778,6 @@ header .mainSearchWrapper {
     padding: 2rem 5%;
     height: 100%;
     overflow-y: auto;
-}
-
-.horizontalNavigation .mainNavigationLink {
-    border-radius: unset;
 }
 
 main {
@@ -1673,14 +1668,14 @@ footer .twitterFollowContainer i {
 .notificationHeadersContainer .activeNotificationCategory,
 .notificationHeadersContainer button:hover {
     text-decoration-line: underline;
-    text-underline-offset: 1.5rem;
+    text-underline-offset: 1.6rem;
     text-decoration-thickness: 0.4rem;
     text-decoration-color: var(--primary-fontColor);
 }
 
 .notificationHeadersContainer .activeNotificationCategory,
 .notificationHeadersContainer button:hover {
-    text-underline-offset: 1rem;
+    text-underline-offset: 1.1rem;
 }
 
 .tabsContent {
@@ -2413,9 +2408,14 @@ footer .twitterFollowContainer i {
 @media (max-width: 400px) {
     .pagination button,
     .pagination a {
-        width: 4rem;
-        height: 4rem;
+        width: 4.5rem;
+        height: 4.5rem;
     }
+
+    .pagination .paginationButtonsContainer {
+        margin: 0;
+    }
+
     header .fa-bars,
     .headerContainer .smallScreenSearchIcon,
     .headerContainer .closeNavMenuButton {
@@ -2432,6 +2432,11 @@ footer .twitterFollowContainer i {
     }
     .searchResult .stockContainer .companyName {
         width: 70%;
+    }
+    .pagination button,
+    .pagination a {
+        width: 4rem;
+        height: 4rem;
     }
 }
 

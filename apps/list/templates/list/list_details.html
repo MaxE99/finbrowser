@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v14.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v15.css' %}" />
 {% if request.user.is_authenticated %}
 <title>{{ list.name }} | FinBrowser</title>
 {% else %}
@@ -223,7 +223,6 @@
     <section class="landingSection">
         <div class="landingSectionContainer">
             <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}">
-            <h2>Lists</h2>
             <p>
                 Capture intriguing content, curate lists based on your interests, and stay in the know whenever your
                 favorite stock market content creators release fresh material.
