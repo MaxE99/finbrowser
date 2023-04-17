@@ -87,14 +87,18 @@ const websiteDropdown = document
         websiteDropdown.addEventListener('click', (e) => {
             websiteDropdown.closest('form').querySelector('.sectorList').style.display = 'none';
             websiteDropdown.closest('form').querySelector('.selectionList').style.display = 'none';
-            e.target.querySelector('ul').style.display !== 'block'
-                ? (e.target.querySelector('ul').style.display = 'block')
-                : (e.target.querySelector('ul').style.display = 'none');
-            document.onclick = function (e) {
-                if (!e.target.closest('.websiteList') && e.target !== websiteDropdown) {
-                    websiteDropdown.querySelector('ul').style.display = 'none';
-                }
-            };
+            // this eventListener is also triggered when an li or input inside the dropdown is clicked, this prevents an error
+            const tagName = e.target.tagName.toUpperCase();
+            if (tagName !== 'LI' && tagName !== 'INPUT') {
+                e.target.querySelector('ul').style.display !== 'block'
+                    ? (e.target.querySelector('ul').style.display = 'block')
+                    : (e.target.querySelector('ul').style.display = 'none');
+                document.onclick = function (e) {
+                    if (!e.target.closest('.websiteList') && e.target !== websiteDropdown) {
+                        websiteDropdown.querySelector('ul').style.display = 'none';
+                    }
+                };
+            }
         })
     );
 
@@ -106,14 +110,18 @@ const sectorDropdown = document
         sectorDropdown.addEventListener('click', (e) => {
             sectorDropdown.closest('form').querySelector('.websiteList').style.display = 'none';
             sectorDropdown.closest('form').querySelector('.selectionList').style.display = 'none';
-            e.target.querySelector('ul').style.display !== 'block'
-                ? (e.target.querySelector('ul').style.display = 'block')
-                : (e.target.querySelector('ul').style.display = 'none');
-            document.onclick = function (e) {
-                if (!e.target.closest('.sectorList') && e.target !== sectorDropdown) {
-                    sectorDropdown.querySelector('ul').style.display = 'none';
-                }
-            };
+            // this eventListener is also triggered when an li inside the dropdown is clicked, this prevents an error
+            const tagName = e.target.tagName.toUpperCase();
+            if (tagName !== 'LI' && tagName !== 'INPUT') {
+                e.target.querySelector('ul').style.display !== 'block'
+                    ? (e.target.querySelector('ul').style.display = 'block')
+                    : (e.target.querySelector('ul').style.display = 'none');
+                document.onclick = function (e) {
+                    if (!e.target.closest('.sectorList') && e.target !== sectorDropdown) {
+                        sectorDropdown.querySelector('ul').style.display = 'none';
+                    }
+                };
+            }
         })
     );
 
@@ -200,18 +208,23 @@ document.querySelectorAll('.selectionList li').forEach((selection) => {
 // select dropdown
 document.querySelectorAll('form .selectContainer .dropdown li').forEach((option) =>
     option.addEventListener('click', (e) => {
-        e.target.querySelector('input').checked
-            ? (e.target.querySelector('input').checked = false)
-            : (e.target.querySelector('input').checked = true);
+        // wird manchmal auch bei click auf input getriggered
+        if (e.target.tagName.toUpperCase() !== 'INPUT') {
+            e.target.querySelector('input').checked
+                ? (e.target.querySelector('input').checked = false)
+                : (e.target.querySelector('input').checked = true);
+        }
     })
 );
 
 // choice container input auswählen --- needs refactoring
 document.querySelectorAll('form .choiceContainer').forEach((choiceContainer) =>
     choiceContainer.addEventListener('click', (e) => {
-        e.target.querySelector('input').checked
-            ? (e.target.querySelector('input').checked = false)
-            : (e.target.querySelector('input').checked = true);
+        if (e.target.querySelector('input')) {
+            e.target.querySelector('input').checked
+                ? (e.target.querySelector('input').checked = false)
+                : (e.target.querySelector('input').checked = true);
+        }
     })
 );
 

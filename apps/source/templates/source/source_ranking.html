@@ -1,6 +1,8 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'source/min_source_ranking_style_v4.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'source/min_source_ranking_style_v5.css' %}" />
 <title>Source Ranking | FinBrowser</title>
+<meta name="description"
+    content="Discover the top-rated stock market resources available on the open web with our rankings">
 {% endblock %}
 {% block content %}
 
@@ -97,7 +99,7 @@
             <label>Tag</label>
             <div class="tagSearchWrapper">
                 <div class="tagSearchContainer">
-                    <input aria-label="Search" type="search" id="tagAutocomplete" class="tagInputSearch"
+                    <input aria-label="Search" type="search" id="tagAutocompleteHorizontal" class="tagInputSearch"
                         placeholder="Search" autocomplete="off" spellcheck="false">
                     <i class="fas fa-search"></i>
                 </div>
@@ -118,44 +120,44 @@
             <label for="content_type">Content Type</label>
             <div class="choiceContainer">
                 <input type="checkbox" {% if search_parameters|check_param_selected:"content,Analysis" %} checked
-                    {% endif %} name="content" value="Analysis">
-                <label>Analysis</label>
+                    {% endif %} name="content" value="Analysis" id="select_analysis">
+                <label for="select_analysis">Analysis</label>
             </div>
             <div class="choiceContainer">
                 <input type="checkbox" {% if search_parameters|check_param_selected:"content,Commentary" %} checked
-                    {% endif %} name="content" value="Commentary">
-                <label>Commentary</label>
+                    {% endif %} name="content" value="Commentary" id="select_commentary">
+                <label for="select_commentary">Commentary</label>
             </div>
             <div class="choiceContainer">
                 <input type="checkbox" {% if search_parameters|check_param_selected:"content,News" %} checked
-                    {% endif %} name="content" value="News">
-                <label>News</label>
+                    {% endif %} name="content" value="News" id="select_news">
+                <label for="select_news">News</label>
             </div>
         </div>
         <div class="selectContainer">
             <label for="paywall">Paywall</label>
             <div class="choiceContainer">
                 <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Yes" %} checked {% endif %}
-                    name="paywall" value="Yes">
-                <label>Yes</label>
+                    name="paywall" value="Yes" id="select_yes">
+                <label for="select_yes">Yes</label>
             </div>
             <div class="choiceContainer">
                 <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Semi" %} checked
-                    {% endif %} name="paywall" value="Semi">
-                <label>Semi</label>
+                    {% endif %} name="paywall" value="Semi" id="select_semi">
+                <label for="select_semi">Semi</label>
             </div>
             <div class="choiceContainer">
                 <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,No" %} checked {% endif %}
-                    name="paywall" value="No">
-                <label>No</label>
+                    name="paywall" value="No" id="select_no">
+                <label for="select_no">No</label>
             </div>
         </div>
 
 
         <div class="selectContainer topSourcesOnlyContainer">
             <input name="top_sources_only" {% if search_parameters|check_param_selected:"top_sources_only,on" %} checked
-                {% endif %} type="checkbox">
-            <label for="top_sources">Only Top Sources</label>
+                {% endif %} type="checkbox" id="top_sources_only">
+            <label for="top_sources_only">Only Top Sources</label>
             <span class="infoLink"><i class="fas fa-info"></i></span>
         </div>
         <div class="actionButtonsContainer">
@@ -259,25 +261,29 @@
                 {{ sources.paginator.count }} Results</div>
             <span class="step-links">
                 {% if sources.number == 1 %}
-                <button class="backButton notClickable finButtonWhite"><i class="fas fa-chevron-left"></i></button>
+                <button aria-label="no previous page" class="backButton notClickable finButtonWhite"><i
+                        class="fas fa-chevron-left"></i></button>
                 {% else %}
-                <a class="backButton finButtonWhite" href="?page={{ sources.number|add:'-1' }}"><i
-                        class="fas fa-chevron-left"></i></a>
+                <a role="button" aria-label="go to previous page" class="backButton finButtonWhite"
+                    href="?page={{ sources.number|add:'-1' }}"><i class="fas fa-chevron-left"></i></a>
                 {% endif %}
                 <div class="paginationButtonsContainer">
                     {% for i in sources.paginator.page_range %}
                     {% if sources.number == i %}
-                    <button class="currentPagination finButtonBlue">{{ sources.number }}</button>
+                    <button aria-label="current page"
+                        class="currentPagination finButtonBlue">{{ sources.number }}</button>
                     {% elif i > sources.number|add:'-3' and i < sources.number|add:'3' %}
-                    <a class="finButtonWhite" href="?{% query_transform page=i %}">{{ i }}</a>
+                    <a role="button" aria-label="go to page {{ i }}" class="finButtonWhite"
+                        href="?{% query_transform page=i %}">{{ i }}</a>
                     {% endif %}
                     {% endfor %}
                 </div>
                 {% if sources.number == sources.paginator.num_pages %}
-                <button class="nextButton notClickable finButtonWhite"><i class="fas fa-chevron-right"></i></button>
+                <button aria-label="no next page" class="nextButton notClickable finButtonWhite"><i
+                        class="fas fa-chevron-right"></i></button>
                 {% else %}
-                <a class="nextButton finButtonWhite" href="?page={{ sources.number|add:'1' }}"><i
-                        class="fas fa-chevron-right"></i></a>
+                <a role="button" aria-label="go to next page" class="nextButton finButtonWhite"
+                    href="?page={{ sources.number|add:'1' }}"><i class="fas fa-chevron-right"></i></a>
                 {% endif %}
             </span>
         </div>
@@ -377,42 +383,42 @@
                 <label for="content_type">Content Type</label>
                 <div class="choiceContainer">
                     <input type="checkbox" {% if search_parameters|check_param_selected:"content,Analysis" %} checked
-                        {% endif %} name="content" value="Analysis">
-                    <label>Analysis</label>
+                        {% endif %} name="content" value="Analysis" id="select_analysis_horizontal">
+                    <label for="select_analysis_horizontal">Analysis</label>
                 </div>
                 <div class="choiceContainer">
                     <input type="checkbox" {% if search_parameters|check_param_selected:"content,Commentary" %} checked
-                        {% endif %} name="content" value="Commentary">
-                    <label>Commentary</label>
+                        {% endif %} name="content" value="Commentary" id="select_commentary_horizontal">
+                    <label for="select_commentary_horizontal">Commentary</label>
                 </div>
                 <div class="choiceContainer">
                     <input type="checkbox" {% if search_parameters|check_param_selected:"content,News" %} checked
-                        {% endif %} name="content" value="News">
-                    <label>News</label>
+                        {% endif %} name="content" value="News" id="select_news_horizontal">
+                    <label for="select_news_horizontal">News</label>
                 </div>
             </div>
             <div class="selectContainer">
                 <label for="paywall">Paywall</label>
                 <div class="choiceContainer">
                     <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Yes" %} checked
-                        {% endif %} name="paywall" value="Yes">
-                    <label>Yes</label>
+                        {% endif %} name="paywall" value="Yes" id="select_yes_horizontal">
+                    <label for="select_yes_horizontal">Yes</label>
                 </div>
                 <div class="choiceContainer">
                     <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Semi" %} checked
-                        {% endif %} name="paywall" value="Semi">
-                    <label>Semi</label>
+                        {% endif %} name="paywall" value="Semi" id="select_semi_horizontal">
+                    <label for="select_semi_horizontal">Semi</label>
                 </div>
                 <div class="choiceContainer">
                     <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,No" %} checked
-                        {% endif %} name="paywall" value="No">
-                    <label>No</label>
+                        {% endif %} name="paywall" value="No" id="select_no_horizontal">
+                    <label for="select_no_horizontal">No</label>
                 </div>
             </div>
             <div class="selectContainer">
                 <input name="top_sources_only" {% if search_parameters|check_param_selected:"top_sources_only,on" %}
-                    checked {% endif %} type="checkbox">
-                <label for="top_sources">Only Top Sources</label>
+                    checked {% endif %} type="checkbox" id="top_sources_only_horizontal">
+                <label for="top_sources_only_horizontal">Only Top Sources</label>
                 <span class="infoLink"><i class="fas fa-info"></i></span>
             </div>
             <button type="submit" class="applyFilterButton finButtonBlue">Apply Filter</button>
@@ -420,5 +426,5 @@
     </div>
 </div>
 
-<script src="{% static 'source/min_source_ranking_script_v3.js' %}"></script>
+<script src="{% static 'source/min_source_ranking_script_v4.js' %}"></script>
 {% endblock content %}

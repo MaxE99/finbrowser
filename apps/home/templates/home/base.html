@@ -15,7 +15,7 @@
     <link rel="prefetch" as="font" href="{% static 'home/fonts/lato-v23-latin/lato-v23-latin-900.woff' %}"
         type="font/woff" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/fontawesome/css/all.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v38.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v39.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script nonce="{{request.csp_nonce}}" async src="https://www.googletagmanager.com/gtag/js?id=G-JNS80QXCXR"></script>
@@ -36,7 +36,7 @@
             <div role="form" class="addToListForm addSourceToListForm">
                 <div class="formHeaderContainer">
                     <h2>Add <span></span> to your lists</h2>
-                    <i class="fas fa-times closeFormContainerButton"></i>
+                    <i role="button" aria-label="close form" class="fas fa-times closeFormContainerButton"></i>
                 </div>
                 {% if user_lists %}
                 <div class="descContainer">
@@ -46,7 +46,7 @@
                 <div class="listSelectionContainer">
                     {% for list in user_lists %}
                     <div class="listContainer">
-                        <label>{{ list.name }}</label>
+                        <label for="lists">{{ list.name }}</label>
                         <input id="id_list_{{ list.list_id }}" class="sourceNotInList" type="checkbox" name="lists"
                             value="{{ list.list_id }}">
                         <input class="sourcesInList" value="{{ list.sources.all|get_source_ids_in_list }}" hidden />
@@ -55,37 +55,39 @@
                     {% endfor %}
                 </div>
                 <div class="buttonsContainer">
-                    <button class="cancelButton finButtonWhite">Reset</button>
-                    <button class="saveButton finButtonBlue">Save</button>
+                    <button aria-label="reset form" class="cancelButton finButtonWhite">Reset</button>
+                    <button aria-label="save form" class="saveButton finButtonBlue">Save</button>
                 </div>
                 {% endif %}
             </div>
-            <div class="authPromptContainer">
-                <i class="fas fa-times"></i>
-                <img src="{% static 'home/media/finbrowser-logo.png' %}">
+            <div role="alert" class="authPromptContainer">
+                <i role="button" aria-label="close form" class="fas fa-times"></i>
+                <img src="{% static 'home/media/finbrowser-logo.png' %}" alt="FinBrowser Logo">
                 <h3></h3>
                 <div class="desc">Welcome! In order to carry out this action, you must be signed in with your FinBrowser
                     account. No account yet? No problem! Creating a new one is a breeze and will only take a minute of
                     your time.</div>
                 <div class="buttonContainer">
-                    <a class="registerButton finButtonWhite" href="{% url 'account_signup' %}">Register</a>
-                    <a class="loginButton finButtonBlue" href="{% url 'account_login' %}">Login</a>
+                    <a aria-label="open register page" class="registerButton finButtonWhite"
+                        href="{% url 'account_signup' %}">Register</a>
+                    <a aria-label="open login page" class="loginButton finButtonBlue"
+                        href="{% url 'account_login' %}">Login</a>
                 </div>
             </div>
-            <div class="explanationContainer">
+            <div role="definition" class="explanationContainer">
                 <div class="formHeaderContainer">
                     <h3></h3>
-                    <i class="fas fa-times closeFormContainerButton"></i>
+                    <i role="button" aria-label="close explanation container"
+                        class="fas fa-times closeFormContainerButton"></i>
                 </div>
                 <div class="explanation"></div>
             </div>
             <div class="smallScreenSearchContainer">
                 <div class="mainSearchWrapper">
                     <div class="mainSearchContainer">
-                        <input aria-label="Search" id="mainAutocomplete" type="search" class="mainInputSearch"
-                            placeholder="Search" autocomplete="off" spellcheck="false">
-                        <i class="fas fa-search"></i>
-                        <i class="fas fa-times closeSearchButton"></i>
+                        <input aria-label="Search" id="mainAutocompleteSmallScreen" type="search"
+                            class="mainInputSearch" placeholder="Search" autocomplete="off" spellcheck="false">
+                        <i role="search" class="fas fa-search"></i>
                     </div>
                 </div>
                 <div class="smallFormContentWrapper">
@@ -101,7 +103,7 @@
 
             </div>
         </div>
-        <i class="fas fa-times closeImageButton"></i>
+        <i role="button" aria-label="close open image/container" class="fas fa-times outerCloseButton"></i>
     </div>
     {% if messages %}
     <ul class="messages">
@@ -117,21 +119,21 @@
                 <div class="logoContainer">
                     <div class="logoSpace">
                         <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}"
-                            alt="Finbrowser logo large">
+                            alt="Large FinBrowser Logo">
                         <a aria-label="Open Main Page" href="{% url 'home:feed' %}"></a>
                     </div>
                 </div>
                 <nav class="mainNavigation" aria-label="Main">
-                    <div class="mainNavigationLink"><span>Portfolio</span><a aria-label="Open Sectors"
+                    <div class="mainNavigationLink"><span>Portfolio</span><a aria-label="Open Portfolio"
                             href="{% url 'stock:portfolio' %}"></a>
                     </div>
-                    <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Content"
+                    <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Lists"
                             href="{% url 'list:lists' %}"></a>
                     </div>
-                    <div class="mainNavigationLink"><span>Sources</span><a aria-label="Open Lists"
+                    <div class="mainNavigationLink"><span>Sources</span><a aria-label="Open Sources"
                             href="{% url 'source:source_ranking' %}"></a>
                     </div>
-                    <div class="mainNavigationLink"><span>Guide</span><a aria-label="Open Content"
+                    <div class="mainNavigationLink"><span>Guide</span><a aria-label="Open Guide"
                             href="{% url 'home:guide' %}"></a>
                     </div>
                 </nav>
@@ -139,23 +141,23 @@
                     <div class="mainSearchContainer">
                         <input aria-label="Search" id="mainAutocomplete" type="search" class="mainInputSearch"
                             placeholder="Search" autocomplete="off" spellcheck="false">
-                        <i class="fas fa-search"></i>
-                        <i class="fas fa-times closeSearchButton"></i>
+                        <i role="search" class="fas fa-search"></i>
                     </div>
                     <div id="mainAutocomplete_result"></div>
                 </div>
-                <i class="fas fa-search smallScreenSearchIcon"></i>
+                <i role="button" aria-label="open search popup" class="fas fa-search smallScreenSearchIcon"></i>
                 {% if request.user.is_authenticated %}
                 <div class="userSpace">
                     {% if request.user.is_authenticated %}
-                    <i class="far fa-bell {% if request.user.is_authenticated %}notificationBell{% endif %}">
+                    <i role="button" aria-label="open notification menu"
+                        class="far fa-bell {% if request.user.is_authenticated %}notificationBell{% endif %}">
                         {% if unseen_notifications %}
                         <span class="unseenNotifications">{{ unseen_notifications }}</span>
                         {% endif %}
                     </i>
                     {% endif %}
                     {% if request.user.is_authenticated %}
-                    <div class="userProfile">
+                    <div class="userProfile" role="button" aria-label="open settings link and logout option">
                         {% if user.profile.profile_pic %}
                         <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
                         {% else %}
@@ -237,26 +239,20 @@
                                             aria-label="Open Article Interactions"></i>
                                         <div class="articleOptionsContainer">
                                             {% if request.user.is_authenticated %}
-                                            <div class="addToListButton"><i class="fas fa-list"></i>Add to list
+                                            <div role="button" aria-label="open add to list popup"
+                                                class="addToListButton"><i class="fas fa-list"></i>Add to list
                                             </div>
                                             {% if notification.article.article_id in highlighted_content_ids %}
-                                            <div class="addToHighlightedButton" role="button"><i
+                                            <div class="addToHighlightedButton" role="button"
+                                                aria-label="highlight/unhighlight article"><i
                                                     class="fas fa-times"></i><span>Unhighlight
                                                     article</span></div>
                                             {% else %}
-                                            <div class="addToHighlightedButton" role="button"><i
+                                            <div class="addToHighlightedButton" role="button"
+                                                aria-label="highlight/unhighlight article"><i
                                                     class="fas fa-highlighter"></i><span>Highlight
                                                     article</span></div>
                                             {% endif %}
-                                            {% else %}
-                                            <a aria-label="Login To Articles Add To Lists"
-                                                href="{% url 'account_login' %}"
-                                                class="addToListButton registrationLink"><i class="fas fa-list"></i>Add
-                                                to list</a>
-                                            <a aria-label="Login To Highlight Articles" href="{% url 'account_login' %}"
-                                                class="addToHighlightedButton registrationLink"><i
-                                                    class="fas fa-highlighter"></i><span>Highlight
-                                                    article</span></a>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -400,7 +396,8 @@
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
                                     </div>
-                                    <a class="contentLink" href="{{ notification.article.link }}" target="_blank"></a>
+                                    <a class="contentLink" aria-label="open content"
+                                        href="{{ notification.article.link }}" target="_blank"></a>
                                 </div>
                             </div>
                             {% endfor %}
@@ -445,15 +442,18 @@
                                             aria-label="Open Article Interactions"></i>
                                         <div class="articleOptionsContainer">
                                             {% if request.user.is_authenticated %}
-                                            <div class="addToListButton" role="button"><i class="fas fa-list"></i>Add to
+                                            <div class="addToListButton" role="button"
+                                                aria-label="open add to list menu"><i class="fas fa-list"></i>Add to
                                                 list
                                             </div>
                                             {% if notification.article.article_id in highlighted_content_ids %}
-                                            <div class="addToHighlightedButton" role="button"><i
+                                            <div class="addToHighlightedButton" role="button"
+                                                aria-label="highlight/unhighlight content"><i
                                                     class="fas fa-times"></i><span>Unhighlight
                                                     article</span></div>
                                             {% else %}
-                                            <div class="addToHighlightedButton" role="button"><i
+                                            <div class="addToHighlightedButton" role="button"
+                                                aria-label="highlight/unhighlight content"><i
                                                     class="fas fa-highlighter"></i><span>Highlight
                                                     article</span></div>
                                             {% endif %}
@@ -504,7 +504,8 @@
                             <div class="noNotificationsAvailable">No Keyword Notifications Available</div>
                             {% endif %}
                             <div class="createKeywordNotificationModal">
-                                <div>Keyword:<span class="infoLink"><i class="fas fa-info"></i></span></div>
+                                <div>Keyword:<span class="infoLink"><i role="button"
+                                            aria-label="open keyword explanation" class="fas fa-info"></i></span></div>
                                 <input minlength="3" maxlength="30" type="text" autocomplete="off" spellcheck="false">
                                 <button class="saveButton finButtonBlue">Add</button>
                                 <button class="discardButton finButtonWhite">Discard</button>
@@ -531,22 +532,22 @@
                 <div class="mainNavigationLink">
                     <span>Portfolio</span>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a aria-label="Open Sectors" href="{% url 'stock:portfolio' %}"></a>
+                    <a aria-label="Open Portfolio" href="{% url 'stock:portfolio' %}"></a>
                 </div>
                 <div class="mainNavigationLink">
                     <span>Lists</span>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a aria-label="Open Content" href="{% url 'list:lists' %}"></a>
+                    <a aria-label="Open Lists" href="{% url 'list:lists' %}"></a>
                 </div>
                 <div class="mainNavigationLink">
                     <span>Sources</span>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a aria-label="Open Lists" href="{% url 'source:source_ranking' %}"></a>
+                    <a aria-label="Open Sources" href="{% url 'source:source_ranking' %}"></a>
                 </div>
                 <div class="mainNavigationLink">
                     <span>Guide</span>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a aria-label="Open Content" href="{% url 'home:guide' %}"></a>
+                    <a aria-label="Open Guid" href="{% url 'home:guide' %}"></a>
                 </div>
                 {% if request.user.is_authenticated %}
                 <div class="mainNavigationLink">
@@ -576,7 +577,7 @@
 
             {% block content %}
             {% endblock %}
-            <script src="{% static 'home/min_base_script_v24.js' %}"></script>
+            <script src="{% static 'home/min_base_script_v25.js' %}"></script>
         </div>
 
     </main>
@@ -585,7 +586,7 @@
 
 
 <footer>
-    <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}">
+    <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}" alt="Large FinBrowser Logo">
     <ul>
         <li><a aria-label="Open Contact" href="{% url 'support:contact' %}">Contact</a></li>
         <li><a aria-label="Open Cookie Statement" href="{% url 'support:cookie-statement' %}">Cookie Statement</a></li>

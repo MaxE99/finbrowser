@@ -216,7 +216,7 @@ header .mainSearchWrapper {
     font-size: 1.4rem;
     height: 100%;
     width: 40rem;
-    padding: 1.5rem 3em 1.5rem 1.5rem;
+    padding: 1.5rem 4rem 1.5rem 1.5rem;
     border: 0.2rem solid var(--border-fontColor);
     border-radius: 0.45rem;
 }
@@ -245,10 +245,6 @@ header .mainSearchWrapper {
     cursor: pointer;
     margin-left: auto;
     padding: 0 2.5rem;
-}
-
-.mainSearchContainer .closeSearchButton {
-    display: none;
 }
 
 #mainAutocomplete_result {
@@ -1779,7 +1775,7 @@ footer .twitterFollowContainer i {
     box-shadow: var(--box-shadowScheme);
 }
 
-.fullScreenPlaceholder .closeImageButton {
+.fullScreenPlaceholder .outerCloseButton {
     display: none;
     border-radius: 50%;
     background: var(--primary-fontColor);
@@ -1797,7 +1793,7 @@ footer .twitterFollowContainer i {
     color: white;
 }
 
-.fullScreenPlaceholder .closeImageButton:hover {
+.fullScreenPlaceholder .outerCloseButton:hover {
     background: #fff;
     color: var(--primary-fontColor);
 }
@@ -2191,7 +2187,7 @@ footer .twitterFollowContainer i {
     .sliderWrapper .sliderContentContainer .slider {
         --items-per-screen: 3;
     }
-    .fullScreenPlaceholder .closeImageButton {
+    .fullScreenPlaceholder .outerCloseButton {
         top: 1rem;
     }
 }

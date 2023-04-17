@@ -88,25 +88,28 @@
         {{ qs.paginator.count }} Results</div>
     <span class="step-links">
         {% if qs.number == 1 %}
-        <button class="backButton notClickable finButtonWhite"><i class="fas fa-chevron-left"></i></button>
+        <button aria-label="no previous page" class="backButton notClickable finButtonWhite"><i
+                class="fas fa-chevron-left"></i></button>
         {% else %}
-        <a class="backButton finButtonWhite" href="?{{qs_name}}={{ qs.number|add:'-1' }}#content"><i
-                class="fas fa-chevron-left"></i></a>
+        <a role="button" aria-label="go to previous page" class="backButton finButtonWhite"
+            href="?{{qs_name}}={{ qs.number|add:'-1' }}#content"><i class="fas fa-chevron-left"></i></a>
         {% endif %}
         <div class="paginationButtonsContainer">
             {% for i in qs.paginator.page_range %}
             {% if qs.number == i %}
-            <button class="currentPagination finButtonBlue">{{ qs.number }}</button>
+            <button aria-label="current page" class="currentPagination finButtonBlue">{{ qs.number }}</button>
             {% elif i > qs.number|add:'-3' and i < qs.number|add:'3' %}
-            <a class="finButtonWhite" href="?{{qs_name}}={{ i }}#content">{{ i }}</a>
+            <a role="button" aria-label="go to page {{ i }}" class="finButtonWhite"
+                href="?{{qs_name}}={{ i }}#content">{{ i }}</a>
             {% endif %}
             {% endfor %}
         </div>
         {% if qs.number == qs.paginator.num_pages %}
-        <button class="nextButton notClickable finButtonWhite"><i class="fas fa-chevron-right"></i></button>
+        <button aria-label="no next page" class="nextButton notClickable finButtonWhite"><i
+                class="fas fa-chevron-right"></i></button>
         {% else %}
-        <a class="nextButton finButtonWhite" href="?{{qs_name}}={{ qs.number|add:'1' }}#content"><i
-                class="fas fa-chevron-right"></i></a>
+        <a role="button" aria-label="go to next page" class="nextButton finButtonWhite"
+            href="?{{qs_name}}={{ qs.number|add:'1' }}#content"><i class="fas fa-chevron-right"></i></a>
         {% endif %}
     </span>
 </div>
