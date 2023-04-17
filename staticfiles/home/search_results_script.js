@@ -23,9 +23,9 @@ if (location.href.includes('?news=')) {
 
 // main search with autocomplete
 document
-    .querySelector('.searchWrapper #mainAutocomplete')
+    .querySelector('.searchWrapper #searchResultsAutocomplete')
     .addEventListener('keyup', async function (e) {
-        let search_term = document.querySelector('.searchWrapper #mainAutocomplete').value;
+        let search_term = document.querySelector('.searchWrapper #searchResultsAutocomplete').value;
         if (e.key == 'Enter' && search_term.replaceAll(/\s/g, '') != '') {
             window.location.href = `../../search_results/${search_term}`;
         } else {

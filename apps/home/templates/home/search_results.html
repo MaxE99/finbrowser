@@ -4,6 +4,8 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'home/min_search_results_style_v10.css' %}">
 <title>{{ search_term }} - Search Results | FinBrowser</title>
+<meta name="description"
+    content="Find what you're looking for with FinBrowser's powerful search tool. Discover content, stocks, sources and more.">
 {% endblock %}
 {% block content %}
 
@@ -11,7 +13,7 @@
     <div class="mainContent">
         <div class="mainSearchWrapper searchWrapper">
             <div class="mainSearchContainer">
-                <input aria-label="Search" id="mainAutocomplete" type="search" class="mainInputSearch"
+                <input aria-label="Search" id="searchResultsAutocomplete" type="search" class="mainInputSearch"
                     value="{{ search_term }}" placeholder="Search" autocomplete="off" spellcheck="false">
                 <i class="fas fa-search"></i>
             </div>
@@ -171,5 +173,5 @@
 </div>
 
 
-<script src="{% static 'home/min_search_results_script_v7.js' %}"></script>
+<script src="{% static 'home/min_search_results_script_v8.js' %}"></script>
 {% endblock content %}

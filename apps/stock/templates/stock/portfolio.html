@@ -5,8 +5,11 @@
 <link rel="stylesheet" type="text/css" href="{% static 'stock/min_portfolio_style_v4.css' %}">
 {% if request.user.is_authenticated %}
 <title>{{ selected_portfolio.name }} | FinBrowser</title>
+<meta name="description" content="FinBrowser portfolio created by {{ request.user.username }}">
 {% else %}
 <title>Portfolio | FinBrowser</title>
+<meta name="description"
+    content="Stay informed on the latest analysis, commentary, and breaking news for the stocks in your portfolio with FinBrowser Portfolio.">
 {% endif %}
 {% endblock %}
 {% block content %}

@@ -344,7 +344,8 @@
     border: 0.2rem solid var(--primary-fontColor);
 }
 
-.filterSidebar .choiceContainer label {
+.filterSidebar .choiceContainer label,
+.horizontalFilterMenu .choiceContainer label {
     cursor: pointer;
     user-select: none;
     pointer-events: none;
@@ -554,7 +555,7 @@
     border: 0.2rem solid var(--border-fontColor);
     border-radius: 0.45rem;
     margin: 0 auto;
-    padding: 1.25rem 3rem 1.25rem 1.5rem;
+    padding: 1.25rem 4rem 1.25rem 1.5rem;
 }
 
 .filterSidebar .tagSearchWrapper .fa-search,

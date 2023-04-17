@@ -229,14 +229,14 @@ document.querySelector('header .smallScreenSearchIcon').addEventListener('click'
     document.querySelector('.fullScreenPlaceholder').style.display = 'flex';
     document.querySelector('.fullScreenPlaceholder .smallScreenSearchContainer').style.display =
         'block';
-    document.querySelector('.fullScreenPlaceholder .closeImageButton').style.display = 'flex';
+    document.querySelector('.fullScreenPlaceholder .outerCloseButton').style.display = 'flex';
 });
 
 document
-    .querySelector('.smallScreenSearchContainer #mainAutocomplete')
+    .querySelector('.smallScreenSearchContainer #mainAutocompleteSmallScreen')
     .addEventListener('keyup', async function (e) {
         let search_term = document.querySelector(
-            '.smallScreenSearchContainer #mainAutocomplete'
+            '.smallScreenSearchContainer #mainAutocompleteSmallScreen'
         ).value;
         if (e.key == 'Enter' && search_term.replaceAll(/\s/g, '') != '') {
             window.location.href = `../../../../../../search_results/${search_term}`;
@@ -407,7 +407,7 @@ if (document.querySelector('.userSpace .notificationBell')) {
             document.querySelector(
                 '.fullScreenPlaceholder .smallScreenSearchContainer'
             ).style.display = 'none';
-            document.querySelector('.fullScreenPlaceholder .closeImageButton').style.display =
+            document.querySelector('.fullScreenPlaceholder .outerCloseButton').style.display =
                 'none';
             removeModalStyle();
         }
@@ -795,7 +795,7 @@ async function update_articles_in_list(list_id, article_id) {
 function openAddToListMenu(e) {
     document.querySelector('.fullScreenPlaceholder .smallScreenSearchContainer').style.display =
         'none';
-    document.querySelector('.fullScreenPlaceholder .closeImageButton').style.display = 'none';
+    document.querySelector('.fullScreenPlaceholder .outerCloseButton').style.display = 'none';
     const article_id = e.target.closest('.articleContainer').id.split('#')[1];
     const checkboxes = document.querySelectorAll(
         '.fullScreenPlaceholder .listContainer input:first-of-type'
@@ -923,7 +923,7 @@ function closeFullScreenImage() {
     document.querySelector('.fullScreenPlaceholder .smallScreenSearchContainer').style.display =
         'none';
     document.querySelector('.fullScreenPlaceholder .fullScreenImage')?.remove();
-    document.querySelector('.fullScreenPlaceholder .closeImageButton').style.display = 'none';
+    document.querySelector('.fullScreenPlaceholder .outerCloseButton').style.display = 'none';
 }
 
 // image on click fullscreen
@@ -936,7 +936,7 @@ document.querySelectorAll('.tweetImage').forEach((tweetImage) => {
         img.classList.add('fullScreenImage');
         img.src = tweetImage.src;
         fullScreenPlaceholder.appendChild(img);
-        fullScreenPlaceholder.querySelector('.closeImageButton').style.display = 'flex';
+        fullScreenPlaceholder.querySelector('.outerCloseButton').style.display = 'flex';
         document.onclick = function (e) {
             if (e.target.nodeName !== 'IMG') {
                 closeFullScreenImage();
@@ -945,6 +945,6 @@ document.querySelectorAll('.tweetImage').forEach((tweetImage) => {
     });
 });
 
-document.querySelector('.fullScreenPlaceholder .closeImageButton').addEventListener('click', () => {
+document.querySelector('.fullScreenPlaceholder .outerCloseButton').addEventListener('click', () => {
     closeFullScreenImage();
 });
