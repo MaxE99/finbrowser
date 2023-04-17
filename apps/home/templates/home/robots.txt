@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /static/
+Disallow: /media/
+Disallow: /search_results/
+Sitemap: https://www.finbrowser.io/sitemap.xml
