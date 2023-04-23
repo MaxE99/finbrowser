@@ -3,4 +3,5 @@ Disallow: /admin/
 Disallow: /static/
 Disallow: /media/
 Disallow: /search_results/
+Disallow: /api/
 Sitemap: https://www.finbrowser.io/sitemap.xml
