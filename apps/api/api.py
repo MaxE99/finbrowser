@@ -237,34 +237,15 @@ class PortfolioStockViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         if request.data.get("portfolios"):
-            print("if")
-            for portfolio_id in request.data.get("portfolios"):
-                print("portfolio_id")
-                print(portfolio_id)
-                print("user")
-                print(request.user)
-                print("portfolio")
-                print(
-                    get_object_or_404(
-                        Portfolio, portfolio_id=portfolio_id, user=request.user
-                    )
-                )
-                print(request.data.get("stock_id"))
-                print("stock")
-                print(
-                    stock=get_object_or_404(
-                        Stock, stock_id=request.data.get("stock_id")
-                    )
-                )
-                selected_portfolio = get_object_or_404(
-                    Portfolio, portfolio_id=portfolio_id, user=request.user
-                )
-                PortfolioStock.objects.create(
-                    portfolio=selected_portfolio,
-                    stock=get_object_or_404(
-                        Stock, stock_id=request.data.get("stock_id")
-                    ),
-                )
+            selected_portfolio = get_object_or_404(
+                Portfolio,
+                portfolio_id=request.data.get("portfolios"),
+                user=request.user,
+            )
+            PortfolioStock.objects.create(
+                portfolio=selected_portfolio,
+                stock=get_object_or_404(Stock, stock_id=request.data.get("stock_id")),
+            )
         else:
             for stock_id in request.data.get("stocks"):
                 PortfolioStock.objects.create(
