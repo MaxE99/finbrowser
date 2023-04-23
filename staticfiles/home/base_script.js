@@ -167,11 +167,11 @@ async function getSearchResults(search_term, results_list, smallScreen = false) 
 // main search with autocomplete
 document.querySelector('header #mainAutocomplete').addEventListener('keyup', async function (e) {
     let search_term = document.querySelector('header #mainAutocomplete').value;
-    if (e.key == 'Enter' && search_term.replaceAll(/\s/g, '') != '') {
+    if (e.key == 'Enter' && search_term.split(/\s+/).join('') != '') {
         window.location.href = `../../../../../../search_results/${search_term}`;
     } else {
         let results_list = document.querySelector('header #mainAutocomplete_result');
-        if (search_term && search_term.replaceAll(/\s/g, '') != '') {
+        if (search_term && search_term.split(/\s+/).join('') != '') {
             getSearchResults(search_term, results_list);
             document.onclick = function (e) {
                 if (e.target.id !== 'autocomplete_list_results') {
@@ -238,7 +238,7 @@ document
         let search_term = document.querySelector(
             '.smallScreenSearchContainer #mainAutocompleteSmallScreen'
         ).value;
-        if (e.key == 'Enter' && search_term.replaceAll(/\s/g, '') != '') {
+        if (e.key == 'Enter' && search_term.split(/\s+/).join('') != '') {
             window.location.href = `../../../../../../search_results/${search_term}`;
         } else {
             const recommendedContainer = document.querySelector(
@@ -247,7 +247,7 @@ document
             let results_list = document.querySelector(
                 '.smallScreenSearchContainer .smallFormContentWrapper #mainAutocomplete_result'
             );
-            if (search_term && search_term.replaceAll(/\s/g, '') != '') {
+            if (search_term && search_term.split(/\s+/).join('') != '') {
                 getSearchResults(search_term, results_list, true);
                 document.querySelector(
                     '.smallScreenSearchContainer .noResultsFound'
@@ -265,7 +265,7 @@ document
 //get search results
 document.querySelector('.mainSearchContainer i').addEventListener('click', () => {
     search_term = document.querySelector('.mainInputSearch').value;
-    if (search_term.replaceAll(/\s/g, '') != '') {
+    if (search_term.split(/\s+/).join('') != '') {
         window.location.href = `../../../../../../search_results/${search_term}`;
     }
 });

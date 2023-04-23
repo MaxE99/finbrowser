@@ -26,11 +26,11 @@ document
     .querySelector('.searchWrapper #searchResultsAutocomplete')
     .addEventListener('keyup', async function (e) {
         let search_term = document.querySelector('.searchWrapper #searchResultsAutocomplete').value;
-        if (e.key == 'Enter' && search_term.replaceAll(/\s/g, '') != '') {
+        if (e.key == 'Enter' && search_term.split(/\s+/).join('') != '') {
             window.location.href = `../../search_results/${search_term}`;
         } else {
             let results_list = document.querySelector('.searchWrapper #autocomplete_list_results');
-            if (search_term && search_term.replaceAll(/\s/g, '') != '') {
+            if (search_term && search_term.split(/\s+/).join('') != '') {
                 try {
                     const res = await fetch(
                         `../../api/search_site/${search_term}`,
@@ -84,7 +84,7 @@ document
 //get search results
 document.querySelector('.searchWrapper .mainSearchContainer i').addEventListener('click', () => {
     search_term = document.querySelector('.searchWrapper .mainInputSearch').value;
-    if (search_term.replaceAll(/\s/g, '') != '') {
+    if (search_term.split(/\s+/).join('') != '') {
         window.location.href = `../../search_results/${search_term}`;
     }
 });
