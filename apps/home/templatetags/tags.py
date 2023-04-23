@@ -95,6 +95,9 @@ def get_time_since_last_content_published(params):
         return None
     diff = timezone.now() - params
     if diff < timedelta(hours=1):
+        # some (chinese) website give the date not in UTC
+        if diff.seconds < 0:
+            return "5 minutes ago"
         return f"{diff.seconds // 60} minutes ago"
     elif diff < timedelta(days=1):
         return f"{diff.seconds // 3600} hours ago"
