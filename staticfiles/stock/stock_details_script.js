@@ -103,7 +103,6 @@ async function add_stock_to_portfolio(list_ids, stock_id) {
     for (let i = 0; i < list_ids.length; i++) {
         try {
             const data = { stock_id: stock_id, portfolios: list_ids[i] };
-            console.log(data);
             const res = await fetch(`../../api/portfolio_stocks/`, {
                 method: 'POST',
                 headers: {
@@ -115,19 +114,9 @@ async function add_stock_to_portfolio(list_ids, stock_id) {
                 body: JSON.stringify(data),
             });
             if (!res.ok) {
-                console.log(res);
-                console.log('response not okay');
-                setTimeout(function () {
-                    console.log('Resuming application after 30 seconds...');
-                }, 30000); // 30 seconds in milliseconds
                 showMessage('Error: Network request failed unexpectedly!', 'Error');
             }
         } catch (e) {
-            console.log(res);
-            console.log('catch');
-            setTimeout(function () {
-                console.log('Resuming application after 30 seconds...');
-            }, 30000); // 30 seconds in milliseconds
             // showMessage("Error: Unexpected error has occurred!", "Error");
         }
     }
