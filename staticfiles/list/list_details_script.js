@@ -198,7 +198,7 @@ document.querySelector('.actionButtonContainer .addSourceButton').addEventListen
                         selected_sources = [];
                         selected_list.innerHTML = '';
                     });
-                if (search_term && search_term.replaceAll(/\s/g, '') != '') {
+                if (search_term && search_term.split(/\s+/).join('') != '') {
                     results_list.style.display = 'block';
                     selected_list.style.display = 'none';
                     try {

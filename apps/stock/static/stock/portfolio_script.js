@@ -83,7 +83,7 @@ document.querySelector('.actionButtonContainer .addStocksButton').addEventListen
                     selectedStocks = [];
                     selected_list.innerHTML = '';
                 });
-            if (search_term && search_term.replaceAll(/\s/g, '') != '') {
+            if (search_term && search_term.split(/\s+/).join('') != '') {
                 results_list.style.display = 'block';
                 selected_list.style.display = 'none';
                 try {
@@ -405,7 +405,7 @@ if (document.querySelector('.blacklistSourceContainer #textInput')) {
             let selected_list = document.querySelector(
                 '.blacklistSourceContainer .selectionContainer'
             );
-            if (search_term && search_term.replaceAll(/\s/g, '') != '') {
+            if (search_term && search_term.split(/\s+/).join('') != '') {
                 results_list.style.display = 'block';
                 selected_list.style.display = 'none';
                 try {

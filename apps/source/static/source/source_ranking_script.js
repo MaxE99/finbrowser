@@ -152,7 +152,7 @@ document.querySelectorAll('form .tagInputSearch').forEach((searchInput) =>
     searchInput.addEventListener('keyup', async function () {
         let search_term = searchInput.value;
         let results_list = searchInput.closest('form').querySelector('#tagAutocomplete_result ul');
-        if (search_term && search_term.replaceAll(/\s/g, '') != '') {
+        if (search_term && search_term.split(/\s+/).join('') != '') {
             try {
                 const res = await fetch(
                     `../../../../../../api/source_tags/?search_term=${search_term}`,
