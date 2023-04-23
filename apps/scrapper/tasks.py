@@ -232,19 +232,6 @@ def scrape_other_websites():
 
 
 @shared_task
-def scrape_news():
-    news_sources = Source.objects.filter(content_type="News").only(
-        "source_id", "url", "website"
-    )
-    articles = Article.objects.filter(source__in=news_sources).only(
-        "title", "pub_date", "source"
-    )
-    for source in news_sources:
-        feed_url = f"{source.url}feed"
-        create_articles_from_feed(source, feed_url, articles)
-
-
-@shared_task
 def crawl_websites():
     crawl_sources = (
         Source.objects.filter(name="The Generalist")

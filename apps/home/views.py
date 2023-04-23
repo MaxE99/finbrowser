@@ -70,7 +70,7 @@ class GuideView(TemplateView, BaseMixin):
         energy = [
             "Giovanni Staunovo🛢🇮🇹",
             "Doomberg",
-            "Portfolio Matters",
+            "Aaron Goldberg",
             "Stephen Stapczynski",
             "Super-Spiked",
             "Javier Blas",
@@ -117,9 +117,11 @@ class NotFoundView(
         context["top_tweets"] = top_tweets[0:25]
         context["latest_analysis"] = Article.objects.get_latest_analysis()
         context["latest_news"] = Article.objects.get_latest_news()
-        context["trending_topics"] = TrendingTopicContent.objects.all().select_related(
-            "article__source", "article__source__website"
-        )[0:10]
+        context["trending_topics"] = (
+            TrendingTopicContent.objects.all()
+            .order_by("-article__pub_date")
+            .select_related("article__source", "article__source__website")[0:10]
+        )
         context["recommended_sources"] = Source.objects.get_random_top_sources()
         context["recommended_content"] = recommended_content
         context["error_page"] = True
@@ -140,9 +142,11 @@ class FeedView(TemplateView, BaseMixin):
         context["top_tweets"] = top_tweets[0:25]
         context["latest_analysis"] = Article.objects.get_latest_analysis()
         context["latest_news"] = Article.objects.get_latest_news()
-        context["trending_topics"] = TrendingTopicContent.objects.all().select_related(
-            "article__source", "article__source__website"
-        )[0:10]
+        context["trending_topics"] = (
+            TrendingTopicContent.objects.all()
+            .order_by("-article__pub_date")
+            .select_related("article__source", "article__source__website")[0:10]
+        )
         context["recommended_sources"] = Source.objects.get_random_top_sources()
         context["recommended_content"] = recommended_content
         return context
