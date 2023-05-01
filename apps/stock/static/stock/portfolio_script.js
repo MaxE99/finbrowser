@@ -53,9 +53,7 @@ document.querySelector('.createPortfolioButton').addEventListener(
     { once: true }
 );
 
-let selectedStocks = [];
-// open add stocks menu
-document.querySelector('.actionButtonContainer .addStocksButton').addEventListener('click', () => {
+function openAddStocksMenu() {
     document.querySelector('.portfolioMenuWrapper').style.display = 'block';
     document.querySelector('.addStocksContainer').style.display = 'block';
     setModalStyle();
@@ -164,13 +162,17 @@ document.querySelector('.actionButtonContainer .addStocksButton').addEventListen
                 selected_list.style.display = 'block';
             }
         });
+}
+
+let selectedStocks = [];
+// open add stocks menu
+document.querySelector('.actionButtonContainer .addStocksButton').addEventListener('click', () => {
+    openAddStocksMenu();
 });
 
 document.querySelectorAll('.emptyInformationContainer button').forEach((addStocksButton) =>
     addStocksButton.addEventListener('click', () => {
-        document.querySelector('.portfolioMenuWrapper').style.display = 'block';
-        document.querySelector('.addStocksContainer').style.display = 'block';
-        setModalStyle();
+        openAddStocksMenu();
     })
 );
 
