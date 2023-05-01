@@ -59,6 +59,6 @@ def article_components_get(item, substack=False):
     title = double_escaped_string_unescape(item.find(".//title").text)
     if substack:
         description = double_escaped_string_unescape(item.find(".//description").text)
-        substack_title = f"{title}: {description}"
+        substack_title = f"{title}: {description}"[0:500]
         return substack_title, link, pub_date, title
     return title, link, pub_date
