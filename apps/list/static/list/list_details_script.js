@@ -172,9 +172,7 @@ document.querySelector('.editMenu .deleteListButton').addEventListener('click', 
     }
 });
 
-let selected_sources = [];
-// open add source menu
-document.querySelector('.actionButtonContainer .addSourceButton').addEventListener('click', () => {
+function openAddSourceToListMenu() {
     document.querySelector('.listMenuWrapper').style.display = 'block';
     document.querySelector('.addSourceContainer').style.display = 'block';
     setModalStyle();
@@ -275,13 +273,17 @@ document.querySelector('.actionButtonContainer .addSourceButton').addEventListen
                 }
             });
     }
+}
+
+let selected_sources = [];
+// open add source menu
+document.querySelector('.actionButtonContainer .addSourceButton').addEventListener('click', () => {
+    openAddSourceToListMenu();
 });
 
 document.querySelectorAll('.emptyInformationContainer button').forEach((addSourcesButton) =>
     addSourcesButton.addEventListener('click', () => {
-        document.querySelector('.listMenuWrapper').style.display = 'block';
-        document.querySelector('.addSourceContainer').style.display = 'block';
-        setModalStyle();
+        openAddSourceToListMenu();
     })
 );
 
