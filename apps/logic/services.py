@@ -1,3 +1,16 @@
+# Python import
+import html
+import os
+import re
+from urllib.request import Request, urlopen
+import urllib.request
+
+import xml.etree.ElementTree as ET
+from io import BytesIO
+from PIL import Image
+import boto3
+import tweepy
+
 # Django import
 from django.utils import timezone
 from django.conf import settings
@@ -5,17 +18,6 @@ from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 
-# Python import
-import tweepy
-from urllib.request import Request, urlopen
-import xml.etree.cElementTree as ET
-import html
-from io import BytesIO
-from PIL import Image
-import urllib.request
-import os
-import boto3
-import re
 
 # Local import
 from apps.logic.selectors import article_components_get
@@ -24,6 +26,37 @@ from apps.accounts.forms import (
     PasswordChangingForm,
     TimezoneChangeForm,
 )
+
+
+def article_creation_check(
+    creation_list, articles, title, source, link, pub_date=timezone.now()
+):
+    """Checks if article already exists and if so if changed need to be made. Otherwise appends to creation list"""
+    article_exists = False
+    if articles.filter(link=link, source=source).exists():
+        article = articles.filter(link=link, source=source).first()
+        if article.title != title:
+            article.title = title
+            article.pub_date = pub_date
+            article.save()
+        article_exists = True
+    elif articles.filter(title=title, source=source).exists():
+        article = articles.filter(title=title, source=source).first()
+        if article.link != link:
+            article.link = link
+            article.pub_date = pub_date
+            article.save()
+        article_exists = True
+    if article_exists is False:
+        creation_list.append(
+            {
+                "title": title,
+                "link": link,
+                "pub_date": pub_date,
+                "source": source,
+            }
+        )
+    return creation_list
 
 
 def handle_settings_actions(request):
@@ -111,10 +144,10 @@ def notifications_create(created_articles):
             )
     existing_dicts = set()
     filtered_list = []
-    for d in notifications_creation_list:
-        if (d["article"], d["user"]) not in existing_dicts:
-            existing_dicts.add((d["article"], d["user"]))
-            filtered_list.append(d)
+    for ncl_dict in notifications_creation_list:
+        if (ncl_dict["article"], ncl_dict["user"]) not in existing_dicts:
+            existing_dicts.add((ncl_dict["article"], ncl_dict["user"]))
+            filtered_list.append(ncl_dict)
     new_notification_messages = [
         NotificationMessage(
             notification=new_notification["notification"],
@@ -129,7 +162,7 @@ def notifications_create(created_articles):
 def bulk_create_articles_and_notifications(creation_list):
     from apps.article.models import Article
 
-    if len(creation_list) > 0:
+    if len(creation_list):
         new_articles = [
             Article(
                 title=article_new["title"][:500],
@@ -143,7 +176,7 @@ def bulk_create_articles_and_notifications(creation_list):
         notifications_create(articles)
 
 
-def create_articles_from_feed_substack(source, feed_url, articles):
+def create_articles_from_feed(source, feed_url, articles):
     create_article_list = []
     try:
         req = Request(
@@ -158,87 +191,29 @@ def create_articles_from_feed_substack(source, feed_url, articles):
         items = ET.fromstring(website_xml).findall(".//item")
         for item in items:
             try:
-                substack_article_exists = False  # in previous versions I didn't include the description in the title
                 if source.website == "Substack":
-                    title, link, pub_date, originial_title = article_components_get(
-                        item
-                    )
-                    if articles.filter(
-                        title=originial_title, pub_date=pub_date, source=source
-                    ).exists():
-                        substack_article_exists = True
-                else:
-                    title, link, pub_date = article_components_get_substack(item)
-                title = html.unescape(title)
-                if (
-                    articles.filter(
-                        title=title, pub_date=pub_date, source=source
-                    ).exists()
-                    or substack_article_exists
-                ):
-                    break
-                else:
-                    create_article_list.append(
-                        {
-                            "title": title,
-                            "link": link,
-                            "pub_date": pub_date,
-                            "source": source,
-                        }
-                    )
-            except:
-                continue
-    except:
-        pass
-    bulk_create_articles_and_notifications(create_article_list)
-
-
-def create_articles_from_feed(source, feed_url, articles, substack=False):
-    create_article_list = []
-    try:
-        req = Request(
-            feed_url,
-            headers={
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0"
-            },
-        )
-        website_data = urlopen(req)
-        website_xml = website_data.read()
-        website_data.close()
-        items = ET.fromstring(website_xml).findall(".//item")
-        for item in items:
-            try:
-                substack_article_exists = False
-                if substack:
-                    title, link, pub_date, originial_title = article_components_get(
+                    title, originial_title, link, pub_date = article_components_get(
                         item, True
                     )
+                    # in previous versions I didn't include the description in the title
                     if articles.filter(
                         title=originial_title, pub_date=pub_date, source=source
                     ).exists():
-                        substack_article_exists = True
+                        break
                 else:
-                    title, link, pub_date = article_components_get(item)
+                    _, title, link, pub_date = article_components_get(item)
                 title = html.unescape(title)
-                if (
-                    articles.filter(
-                        title=title, pub_date=pub_date, source=source
-                    ).exists()
-                    or substack_article_exists
-                ):
-                    break
-                else:
-                    create_article_list.append(
-                        {
-                            "title": title,
-                            "link": link,
-                            "pub_date": pub_date,
-                            "source": source,
-                        }
-                    )
-            except:
+                create_article_list = article_creation_check(
+                    create_article_list,
+                    articles,
+                    title,
+                    source,
+                    link,
+                    pub_date=pub_date,
+                )
+            except Exception as _:
                 continue
-    except:
+    except Exception as _:
         pass
     bulk_create_articles_and_notifications(create_article_list)
 
@@ -248,10 +223,10 @@ s3 = boto3.client("s3")
 
 def source_profile_img_create(source, file_url):
     urllib.request.urlretrieve(file_url, "temp_file.png")
-    im = Image.open("temp_file.png")
+    image = Image.open("temp_file.png")
     output = BytesIO()
-    im = im.resize((175, 175))
-    im.save(output, format="WEBP", quality=99)
+    image = image.resize((175, 175))
+    image.save(output, format="WEBP", quality=99)
     output.seek(0)
     s3.upload_fileobj(
         output,
@@ -264,9 +239,9 @@ def source_profile_img_create(source, file_url):
 
 def tweet_img_upload(tweet_type, file_url):
     urllib.request.urlretrieve(file_url, "temp_file.png")
-    im = Image.open("temp_file.png")
+    image = Image.open("temp_file.png")
     output = BytesIO()
-    im.save(output, format="WEBP", quality=99)
+    image.save(output, format="WEBP", quality=99)
     output.seek(0)
     s3.upload_fileobj(
         output,
@@ -283,9 +258,9 @@ def tweet_img_upload(tweet_type, file_url):
 
 def initial_tweet_img_path_upload(tweet_type, file_url):
     urllib.request.urlretrieve(file_url, "temp_file.png")
-    im = Image.open("temp_file.png")
+    image = Image.open("temp_file.png")
     output = BytesIO()
-    im.save(output, format="WEBP", quality=99)
+    image.save(output, format="WEBP", quality=99)
     output.seek(0)
     s3.upload_fileobj(
         output,
@@ -346,7 +321,7 @@ def tweet_type_create(status, twitter_user_id, api):
                     ],
                 )
         tweet_type.type = "Retweet"
-    elif in_reply_to_user_id != None and in_reply_to_user_id != twitter_user_id:
+    elif in_reply_to_user_id is not None and in_reply_to_user_id != twitter_user_id:
         tweet_reply_id = status.in_reply_to_status_id
         tweet_reply_info = api.get_status(id=tweet_reply_id, tweet_mode="extended")
         tweet_type.pub_date = tweet_reply_info.created_at
@@ -360,7 +335,7 @@ def tweet_type_create(status, twitter_user_id, api):
                     tweet_type, tweet_reply_info.entities["media"][0]["media_url_https"]
                 )
         tweet_type.type = "Reply"
-    elif status.is_quote_status == True:
+    elif status.is_quote_status:
         tweet_type.pub_date = status.quoted_status.created_at
         tweet_type.text = re.sub(
             r"http\S+", "", html.unescape(status.quoted_status.full_text)
@@ -379,6 +354,10 @@ def tweet_type_create(status, twitter_user_id, api):
     return tweet_type
     # return title, tweet_type
 
+
+# =================================================================================
+# Functions that need to be used from time to time
+# =================================================================================
 
 # def change_format_of_pngs_and_upload_them_as_wepbs_from_dev():
 #     images = glob.glob("test_imgs/*.png")
