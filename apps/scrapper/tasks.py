@@ -443,33 +443,36 @@ def delete_article_duplicates():
     sources = Source.objects.exclude(website__name="Twitter")
     ids_of_duplicate_articles = []
     for source in sources:
-        print(source)
-        articles_from_source = Article.objects.filter(source=source).order_by(
-            "pub_date"
-        )
-        for article in articles_from_source:
-            title_duplicates = articles_from_source.filter(title=article.title)
-            duplicates = title_duplicates.count()
-            while duplicates > 1:
-                if (
-                    title_duplicates[duplicates - 1].article_id
-                    not in ids_of_duplicate_articles
-                ):
-                    ids_of_duplicate_articles.append(
+        try:
+            articles_from_source = Article.objects.filter(source=source).order_by(
+                "pub_date"
+            )
+            for article in articles_from_source:
+                title_duplicates = articles_from_source.filter(title=article.title)
+                duplicates = title_duplicates.count()
+                while duplicates > 1:
+                    if (
                         title_duplicates[duplicates - 1].article_id
-                    )
-                duplicates -= 1
-            link_duplicates = articles_from_source.filter(link=article.link)
-            duplicates = link_duplicates.count()
-            while duplicates > 1:
-                if (
-                    link_duplicates[duplicates - 1].article_id
-                    not in ids_of_duplicate_articles
-                ):
-                    ids_of_duplicate_articles.append(
+                        not in ids_of_duplicate_articles
+                    ):
+                        ids_of_duplicate_articles.append(
+                            title_duplicates[duplicates - 1].article_id
+                        )
+                    duplicates -= 1
+                link_duplicates = articles_from_source.filter(link=article.link)
+                duplicates = link_duplicates.count()
+                while duplicates > 1:
+                    if (
                         link_duplicates[duplicates - 1].article_id
-                    )
-                duplicates -= 1
+                        not in ids_of_duplicate_articles
+                    ):
+                        ids_of_duplicate_articles.append(
+                            link_duplicates[duplicates - 1].article_id
+                        )
+                    duplicates -= 1
+        except Exception as error:
+            print(error)
+            continue
     print(len(ids_of_duplicate_articles))
     Article.objects.filter(article_id__in=ids_of_duplicate_articles).delete()
 
