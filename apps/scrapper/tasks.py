@@ -262,9 +262,11 @@ def scrape_spotify():
             for episode_item in episode_items:
                 title = unescape(episode_item["name"])
                 link = episode_item["external_urls"]["spotify"]
-                spotify_creation_list = article_creation_check(
+                spotify_creation_list, article_exists = article_creation_check(
                     spotify_creation_list, articles, title, source, link
                 )
+                if article_exists:
+                    break
         except Exception as _:
             continue
     bulk_create_articles_and_notifications(spotify_creation_list)
@@ -297,7 +299,7 @@ def scrape_youtube():
                 title = unescape(item["snippet"]["title"])
                 link = f"https://www.youtube.com/watch?v={item['snippet']['resourceId']['videoId']}"
                 pub_date = item["snippet"]["publishedAt"]
-                youtube_creation_list = article_creation_check(
+                youtube_creation_list, article_exists = article_creation_check(
                     youtube_creation_list,
                     articles,
                     title,
@@ -305,6 +307,8 @@ def scrape_youtube():
                     link,
                     pub_date=pub_date,
                 )
+                if article_exists:
+                    break
         except Exception as _:
             continue
     bulk_create_articles_and_notifications(youtube_creation_list)
@@ -440,6 +444,8 @@ def youtube_delete_innacurate_articles():
 @shared_task
 def delete_article_duplicates():
     sources = Source.objects.exclude(website__name="Twitter")
+    print("last_source: ")
+    print(sources.last())
     ids_of_duplicate_articles = []
     for source in sources:
         print(source)
@@ -471,6 +477,7 @@ def delete_article_duplicates():
                         )
                     duplicates -= 1
         except Exception as error:
+            print("We have reached an error!")
             print(error)
             continue
     print(len(ids_of_duplicate_articles))

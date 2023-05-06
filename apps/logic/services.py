@@ -56,7 +56,7 @@ def article_creation_check(
                 "source": source,
             }
         )
-    return creation_list
+    return creation_list, article_exists
 
 
 def handle_settings_actions(request):
@@ -203,7 +203,7 @@ def create_articles_from_feed(source, feed_url, articles):
                 else:
                     _, title, link, pub_date = article_components_get(item)
                 title = html.unescape(title)
-                create_article_list = article_creation_check(
+                create_article_list, article_exists = article_creation_check(
                     create_article_list,
                     articles,
                     title,
@@ -211,6 +211,8 @@ def create_articles_from_feed(source, feed_url, articles):
                     link,
                     pub_date=pub_date,
                 )
+                if article_exists:
+                    break
             except Exception as _:
                 continue
     except Exception as _:
