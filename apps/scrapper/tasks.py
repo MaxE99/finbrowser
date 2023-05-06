@@ -225,23 +225,22 @@ def scrape_other_websites():
         create_articles_from_feed(source, feed_url, articles)
 
 
-@shared_task
-def crawl_websites():
-    crawl_sources = (
-        Source.objects.filter(name="The Generalist")
-        .filter(name="Benedict Evans")
-        .filter(name="Meritech Capital")
-        .filter(name="Stock Market Nerd")
-        .filter(name="Palladium")
-    )
-    articles = Article.objects.filter(source__in=crawl_sources).only(
-        "title", "pub_date", "source"
-    )
-    crawl_thegeneralist(articles)
-    crawl_ben_evans(articles)
-    crawl_meritechcapital(articles)
-    crawl_stockmarketnerd(articles)
-    # crawl_palladium(get_object_or_404(Source, name="Palladium"), "https://www.palladiummag.com/feed/", articles)
+# @shared_task
+# def crawl_websites():
+#     crawl_sources = (
+#         Source.objects.filter(name="The Generalist")
+#         .filter(name="Benedict Evans")
+#         .filter(name="Meritech Capital")
+#         .filter(name="Stock Market Nerd")
+#         .filter(name="Palladium")
+#     )
+#     articles = Article.objects.filter(source__in=crawl_sources).only(
+#         "title", "pub_date", "source"
+#     )
+#     crawl_thegeneralist(articles)
+#     crawl_ben_evans(articles)
+#     crawl_meritechcapital(articles)
+#     crawl_stockmarketnerd(articles)
 
 
 @shared_task
@@ -443,6 +442,7 @@ def delete_article_duplicates():
     sources = Source.objects.exclude(website__name="Twitter")
     ids_of_duplicate_articles = []
     for source in sources:
+        print(source)
         try:
             articles_from_source = Article.objects.filter(source=source).order_by(
                 "pub_date"
