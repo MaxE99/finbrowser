@@ -446,8 +446,8 @@ def delete_article_duplicates():
     sources = Source.objects.exclude(website__name="Twitter")
     print("last_source: ")
     print(sources.last())
-    ids_of_duplicate_articles = []
     for source in sources:
+        ids_of_duplicate_articles = []
         print(source)
         try:
             articles_from_source = Article.objects.filter(source=source).order_by(
@@ -480,8 +480,8 @@ def delete_article_duplicates():
             print("We have reached an error!")
             print(error)
             continue
-    print(len(ids_of_duplicate_articles))
-    Article.objects.filter(article_id__in=ids_of_duplicate_articles).delete()
+        print(len(ids_of_duplicate_articles))
+        Article.objects.filter(article_id__in=ids_of_duplicate_articles).delete()
 
 
 @shared_task
