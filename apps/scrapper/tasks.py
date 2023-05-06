@@ -1,25 +1,24 @@
 from __future__ import absolute_import, unicode_literals
 
-# Django imports
-from django.core.cache import cache
-from celery import shared_task
-from django.shortcuts import get_object_or_404
-from django.utils import timezone
-from django.template.defaultfilters import slugify
-
-
 # Python imports
 from datetime import timedelta
-import json
-import requests
 from html import unescape
 from time import sleep
-from requests import post as request_post
-from requests import get as request_get
 from base64 import b64encode
 from os import environ
-from boto3 import client
 from re import sub as re_sub
+from celery import shared_task
+from requests import post as request_post
+from requests import get as request_get
+from boto3 import client
+
+
+# Django imports
+from django.core.cache import cache
+from django.utils import timezone
+from django.template.defaultfilters import slugify
+from django.shortcuts import get_object_or_404
+
 
 # Local imports
 from apps.logic.services import (
@@ -29,6 +28,7 @@ from apps.logic.services import (
     source_profile_img_create,
     twitter_create_api_settings,
     tweet_type_create,
+    article_creation_check,
 )
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
@@ -40,15 +40,6 @@ from apps.scrapper.web_crawler import (
     crawl_meritechcapital,
     crawl_stockmarketnerd,
 )
-from apps.scrapper.filler_words import full_fillerwords, short_fillerwords
-
-# temporary imports
-from django.contrib.auth import get_user_model
-from apps.list.models import List
-from apps.stock.models import Portfolio, Stock
-from apps.source.models import SourceRating
-
-User = get_user_model()
 
 
 s3 = client("s3")
@@ -70,7 +61,7 @@ class SpotifyAPI(object):
     def get_client_credientals(self):
         client_id = self.client_id
         client_secret = self.client_secret
-        if client_id == None or client_secret == None:
+        if client_id is None or client_secret is None:
             raise Exception("You must set client_id and client_secret")
         client_creds = f"{client_id}:{client_secret}"
         client_creds_b64 = b64encode(client_creds.encode())
@@ -84,12 +75,15 @@ class SpotifyAPI(object):
         return {"grant_type": "client_credentials"}
 
     def perform_auth(self):
-        r = request_post(
-            self.token_url, data=self.get_token_data(), headers=self.get_token_headers()
+        request = request_post(
+            self.token_url,
+            data=self.get_token_data(),
+            headers=self.get_token_headers(),
+            timeout=10,
         )
-        if r.status_code not in range(200, 299):
+        if request.status_code not in range(200, 299):
             raise Exception("Could not authenticate client.")
-        data = r.json()
+        data = request.json()
         expires_in = data["expires_in"]
         expires = timezone.now() + timedelta(seconds=expires_in)
         self.access_token = data["access_token"]
@@ -103,7 +97,7 @@ class SpotifyAPI(object):
         if expires < timezone.now():
             self.perform_auth()
             return self.get_access_token()
-        elif token == None:
+        if token is None:
             self.perform_auth()
             return self.get_access_token()
         return token
@@ -112,16 +106,16 @@ class SpotifyAPI(object):
         access_token = self.get_access_token()
         headers = {"Authorization": f"Bearer {access_token}"}
         lookup_url = f"https://api.spotify.com/v1/shows/{id}/episodes?market=US"
-        r = request_get(lookup_url, headers=headers)
-        if r.status_code not in range(200, 299):
+        request = request_get(lookup_url, headers=headers, timeout=10)
+        if request.status_code not in range(200, 299):
             return {}
-        return r.json()
+        return request.json()
 
     def get_podcaster(self, id):
         access_token = self.get_access_token()
         headers = {"Authorization": f"Bearer {access_token}"}
         lookup_url = f"https://api.spotify.com/v1/shows/{id}?market=US"
-        r = request_get(lookup_url, headers=headers)
+        r = request_get(lookup_url, headers=headers, timeout=10)
         if r.status_code not in range(200, 299):
             return {}
         return r.json()
@@ -170,7 +164,7 @@ def scrape_twitter():
             else:
                 break
             last_id = tweet_external_id
-        except:
+        except Exception as _:
             continue
     cache.set("last_id", last_id)
     new_articles = [
@@ -194,12 +188,12 @@ def scrape_substack():
         website=get_object_or_404(Website, name="Substack")
     ).only("source_id", "url", "website")
     articles = Article.objects.filter(source__in=substack_sources).only(
-        "title", "pub_date", "source"
+        "title", "pub_date", "source", "link"
     )
     for source in substack_sources:
         feed_url = f"{source.url}feed"
-        create_articles_from_feed(source, feed_url, articles, True)
-        sleep(30)
+        create_articles_from_feed(source, feed_url, articles)
+        sleep(15)
 
 
 @shared_task
@@ -208,12 +202,12 @@ def scrape_seekingalpha():
         website=get_object_or_404(Website, name="SeekingAlpha")
     ).only("source_id", "url", "website")
     articles = Article.objects.filter(source__in=seekingalpha_sources).only(
-        "title", "pub_date", "source"
+        "title", "pub_date", "source", "link"
     )
     for source in seekingalpha_sources:
         feed_url = f"{source.url}.xml"
         create_articles_from_feed(source, feed_url, articles)
-        sleep(30)
+        sleep(15)
 
 
 @shared_task
@@ -224,7 +218,7 @@ def scrape_other_websites():
         .only("source_id", "url", "website")
     )
     articles = Article.objects.filter(source__in=other_sources).only(
-        "title", "pub_date", "source"
+        "title", "pub_date", "source", "link"
     )
     for source in other_sources:
         feed_url = f"{source.url}feed"
@@ -269,17 +263,10 @@ def scrape_spotify():
             for episode_item in episode_items:
                 title = unescape(episode_item["name"])
                 link = episode_item["external_urls"]["spotify"]
-                if articles.filter(title=title, link=link, source=source).exists():
-                    break
-                spotify_creation_list.append(
-                    {
-                        "title": title,
-                        "link": link,
-                        "pub_date": timezone.now(),
-                        "source": source,
-                    }
+                spotify_creation_list = article_creation_check(
+                    spotify_creation_list, articles, title, source, link
                 )
-        except:
+        except Exception as _:
             continue
     bulk_create_articles_and_notifications(spotify_creation_list)
 
@@ -296,39 +283,30 @@ def scrape_youtube():
     youtube_creation_list = []
     for source in youtube_sources:
         channel_data = request_get(
-            f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails"
+            f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails",
+            timeout=10,
         ).json()
         upload_id = channel_data["items"][0]["contentDetails"]["relatedPlaylists"][
             "uploads"
         ]
         url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=50"
-        r = request_get(url)
-        data = r.json()
+        request = request_get(url, timeout=10)
+        data = request.json()
         try:
             items = data["items"]
             for item in items:
                 title = unescape(item["snippet"]["title"])
                 link = f"https://www.youtube.com/watch?v={item['snippet']['resourceId']['videoId']}"
                 pub_date = item["snippet"]["publishedAt"]
-                if articles.filter(
-                    title=title, pub_date=pub_date, link=link, source=source
-                ).exists():
-                    break
-                elif articles.filter(title=title, source=source).count() == 1:
-                    article = articles.get(title=title, source=source)
-                    article.pub_date = pub_date
-                    article.link = link
-                    article.save()
-                else:
-                    youtube_creation_list.append(
-                        {
-                            "title": title,
-                            "link": link,
-                            "pub_date": pub_date,
-                            "source": source,
-                        }
-                    )
-        except:
+                youtube_creation_list = article_creation_check(
+                    youtube_creation_list,
+                    articles,
+                    title,
+                    source,
+                    link,
+                    pub_date=pub_date,
+                )
+        except Exception as _:
             continue
     bulk_create_articles_and_notifications(youtube_creation_list)
 
@@ -341,7 +319,7 @@ def twitter_scrape_followings():
         name = follow.name
         if Source.objects.filter(external_id=follow.id).exists():
             continue
-        elif (
+        if (
             Source.objects.filter(name=follow.name).exists()
             or Source.objects.filter(slug=slugify(name)).exists()
         ):
@@ -372,12 +350,12 @@ def youtube_get_profile_images():
     for source in youtube_sources:
         try:
             url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={source.external_id}&key={api_key}"
-            r = request_get(url)
-            data = r.json()
+            request = request_get(url, timeout=10)
+            data = request.json()
             source_profile_img_create(
                 source, data["items"][0]["snippet"]["thumbnails"]["medium"]["url"]
             )
-        except:
+        except Exception as _:
             continue
 
 
@@ -396,7 +374,7 @@ def spotify_get_profile_images():
                 source_profile_img_create(source, podcaster["images"][0]["url"])
             else:
                 continue
-        except:
+        except Exception as _:
             continue
 
 
@@ -417,25 +395,26 @@ def youtube_delete_innacurate_articles():
     for source in youtube_sources:
         saved_articles_from_source = Article.objects.filter(source=source)
         channel_data = request_get(
-            f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails"
+            f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails",
+            timeout=10,
         ).json()
         upload_id = channel_data["items"][0]["contentDetails"]["relatedPlaylists"][
             "uploads"
         ]
         url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=1000"
-        r = request_get(url)
+        request = request_get(url, timeout=10)
         item_list = []
         next_item = True
         iterations = 0
         while next_item and iterations < 20:
-            data = r.json()
+            data = request.json()
             items = data["items"]
             item_list.append(items)
             if "nextPageToken" in data.keys():
-                nextPageToken = data["nextPageToken"]
+                next_page_token = data["nextPageToken"]
                 iterations += 1
-                url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=1000&pageToken={nextPageToken}"
-                r = request_get(url)
+                url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=1000&pageToken={next_page_token}"
+                request = request_get(url, timeout=10)
             else:
                 next_item = False
                 break
@@ -448,7 +427,7 @@ def youtube_delete_innacurate_articles():
                     youtube_videos.append(
                         {"title": title, "link": link, "pub_date": pub_date}
                     )
-            except:
+            except Exception as _:
                 continue
         for article in saved_articles_from_source:
             if not any(d["title"] == article.title for d in youtube_videos) or not any(
@@ -464,149 +443,103 @@ def delete_article_duplicates():
     sources = Source.objects.exclude(website__name="Twitter")
     ids_of_duplicate_articles = []
     for source in sources:
-        articles_from_source = Article.objects.filter(source=source)
+        print(source)
+        articles_from_source = Article.objects.filter(source=source).order_by(
+            "pub_date"
+        )
         for article in articles_from_source:
-            article_duplicate = articles_from_source.filter(
-                title=article.title, pub_date=article.pub_date
-            )
-            if article_duplicate.count() > 1:
-                if article_duplicate.last().article_id not in ids_of_duplicate_articles:
+            title_duplicates = articles_from_source.filter(title=article.title)
+            duplicates = title_duplicates.count()
+            while duplicates > 1:
+                if (
+                    title_duplicates[duplicates - 1].article_id
+                    not in ids_of_duplicate_articles
+                ):
                     ids_of_duplicate_articles.append(
-                        article_duplicate.last().article_id
+                        title_duplicates[duplicates - 1].article_id
                     )
+                duplicates -= 1
+            link_duplicates = articles_from_source.filter(link=article.link)
+            duplicates = link_duplicates.count()
+            while duplicates > 1:
+                if (
+                    link_duplicates[duplicates - 1].article_id
+                    not in ids_of_duplicate_articles
+                ):
+                    ids_of_duplicate_articles.append(
+                        link_duplicates[duplicates - 1].article_id
+                    )
+                duplicates -= 1
+    print(len(ids_of_duplicate_articles))
     Article.objects.filter(article_id__in=ids_of_duplicate_articles).delete()
 
 
 @shared_task
 def delete_tweet_types_empty():
     tweet_types = TweetType.objects.all()
-    for type in tweet_types:
-        if not type.tweet.all():
-            type.delete()
+    for tweet_type in tweet_types:
+        if not tweet_type.tweet.all():
+            tweet_type.delete()
 
 
-@shared_task
-def calc_sim_sources():
-    Source.objects.calc_similiar_sources()
-    # for source in Source.objects.all():
-    #     source.sim_sources.clear()
-    #     Source.objects.calc_similiar_sources(source)
+# =================================================================================
+# Tasks that need to be used from time to time
+# =================================================================================
 
+# @shared_task
+# def calc_sim_sources():
+#     Source.objects.calc_similiar_sources()
 
-@shared_task
-def finbrowser_v2_migration():
-    for user in User.objects.all():
-        if List.objects.filter(creator=user).exists():
-            main_list = List.objects.filter(creator=user).first()
-            main_list.main = True
-            main_list.save()
-        else:
-            List.objects.create(creator=user, name="Main List", main=True)
-        for rating in SourceRating.objects.filter(user=user):
-            rating.rating = rating.rating * 2
-            rating.save()
-        Portfolio.objects.create(user=user, name="Main List", main=True)
-
-
-@shared_task
-def stocks_create_all_companies_json():
-    api_key = environ.get("FMP_API_KEY")
-    url = f"https://financialmodelingprep.com/api/v3/stock/list?apikey={api_key}"
-    response = requests.get(url, stream=True)
-    if response.status_code == 200:
-        with open("data_next.json", "w") as f:
-            for chunk in response.iter_content(chunk_size=1024):
-                try:
-                    chunk_str = chunk.decode("utf-8", errors="ignore")
-                    f.write(chunk_str)
-                except UnicodeDecodeError as e:
-                    print("UnicodeDecodeError:", e)
-    else:
-        # handle the error
-        print("API call failed with status code:", response.status_code)
-
-
-@shared_task
-def stocks_create_models_from_json():
-    with open("all_companies_01042023.json", "r") as f:
-        company_data = json.load(f)
-    for item in company_data:
-        symbol = item["symbol"]
-        if (
-            item["type"] == "stock"
-            and all(char not in symbol for char in ("."))
-            and len(symbol) < 7
-        ):
-            if "-" in symbol:
-                symbol = symbol.replace("-", ".")
-            full_name = item["name"]
-            short_name = full_name
-            for word in full_fillerwords:
-                short_name = short_name.replace(word, "")
-            for word in short_fillerwords:
-                short_name = short_name.replace(word, "")
-            stock_instance = Stock.objects.filter(ticker=symbol).first()
-            try:
-                if stock_instance:
-                    stock_instance.full_company_name = full_name[:100]
-                    stock_instance.short_company_name = short_name[:100]
-                    stock_instance.save()
-                elif Stock.objects.filter(full_company_name=full_name[:100]).exists():
-                    continue
-                else:
-                    Stock.objects.create(
-                        ticker=symbol,
-                        full_company_name=full_name[:100],
-                        short_company_name=short_name[:100],
-                    )
-            except Exception as e:
-                print(e)
-                continue
+# @shared_task
+# def stocks_create_all_companies_json():
+#     api_key = environ.get("FMP_API_KEY")
+#     url = f"https://financialmodelingprep.com/api/v3/stock/list?apikey={api_key}"
+#     response = request_get(url, stream=True, timeout=10)
+#     if response.status_code == 200:
+#         with open("data_next.json", "w") as f:
+#             for chunk in response.iter_content(chunk_size=1024):
+#                 try:
+#                     chunk_str = chunk.decode("utf-8", errors="ignore")
+#                     f.write(chunk_str)
+#                 except UnicodeDecodeError as err:
+#                     print("UnicodeDecodeError:", err)
 
 
 # @shared_task
-# def stocks_create():
-#     filename = 'stocks.csv'
-#     with open(filename, 'r') as csvfile:
-#         fillerwords = [" Inc.", " Corporation", "  & Co.", " Group", " Holding", " Holdings", " Ltd", " plc", " inc", " S.A.B. de C.V.", " S.A. de C.V.", ".com", " Technology", " Corp", " (The)", " International", " Limited", " N.A.", " Technologies", " L.P.", " Co.", " Incoperated", " S.A.", " (NJ)", " p.l.c.", " ,", ",", "."]
-#         datareader = csv.reader(csvfile)
-#         for row in datareader:
-#             if "." in row[0] or "^" in row[0] or Stock.objects.filter(full_company_name=html.unescape(row[1])).exists():
+# def stocks_create_models_from_json():
+#     with open("all_companies_01042023.json", "r") as f:
+#         company_data = json.load(f)
+#     for item in company_data:
+#         symbol = item["symbol"]
+#         if (
+#             item["type"] == "stock"
+#             and all(char not in symbol for char in ("."))
+#             and len(symbol) < 7
+#         ):
+#             if "-" in symbol:
+#                 symbol = symbol.replace("-", ".")
+#             full_name = item["name"]
+#             short_name = full_name
+#             for word in full_fillerwords:
+#                 short_name = short_name.replace(word, "")
+#             for word in short_fillerwords:
+#                 short_name = short_name.replace(word, "")
+#             stock_instance = Stock.objects.filter(ticker=symbol).first()
+#             try:
+#                 if stock_instance:
+#                     stock_instance.full_company_name = full_name[:100]
+#                     stock_instance.short_company_name = short_name[:100]
+#                     stock_instance.save()
+#                 elif Stock.objects.filter(full_company_name=full_name[:100]).exists():
+#                     continue
+#                 else:
+#                     Stock.objects.create(
+#                         ticker=symbol,
+#                         full_company_name=full_name[:100],
+#                         short_company_name=short_name[:100],
+#                     )
+#             except Exception as e:
 #                 continue
-#             ticker = row[0]
-#             short_company_name = full_company_name = html.unescape(row[1])
-#             for fil in fillerwords:
-#                 short_company_name = short_company_name.replace(fil, "")
-#             Stock.objects.create(ticker=ticker, full_company_name=full_company_name, short_company_name=short_company_name)
-
-
-# @shared_task
-# def stocks_create_with_nasdaq():
-#     filename = 'nasdaq.csv'
-#     with open(filename, 'r') as csvfile:
-#         full_fillerwords = [" Class D", " American Depositary Shares each representing one-fifth of an Ordinary Share", " common stock", " Warrants", " Ordinary Shares", " ordinary share", " each representing 1/1000th interest in a share of Series I Non-CumulativePreferred Stock","Dep Shs Repstg 1/40th Perp Pfd Ser G", " Fixed-to-Floating Rate Non-Cumulative Perpetual Preferred Stock Series D", " 1 Unit", " Unit", " each representing one", " Ordinary Share", " Class A", " Voting Common Stock", " New Switzerland Registered Shares", " Series D Cumulative Preferred Stock", " Class B Preferred Stock", " Ordinary Shares"," American Depositary Shares",  " American Depositary Share", " Depositary Shares", " Common Shares", " of Beneficial Interest", " Warrant", " Warrants", " Common stock", " Common Shares", " Common Stock", " Series A", " Corp.s", " N.V.s", " American depositary shares each representing two ordinary shares", " AGs-fifth of an", " Redeemable Preferred Stock", " expiring", " and Class B Variable Voting Shares", " Right", ". 1s"]
-#         short_fillerwords = [" & Co.", " Company", " Inc.", " Inc", " Corporation", "  & Co.", " Group", " Holdings", " Holding", " Ltd", " plc", " inc", " S.A.B. de C.V.", " S.A. de C.V.", ".com", " Technology", " Corp", " (The)", " International", " Limited", " N.A.", " N.V.", " Technologies", " L.P.", " Co.", " Incoperated", " S.A.", " (NJ)", " p.l.c.", " .s", " Public Companys", " Companys", " S.p.A.s", " S.p.A.",  " B.V.s"]
-#         datareader = csv.reader(csvfile)
-#         for row in datareader:
-#             ticker = row[0]
-#             full_company_name = html.unescape(row[1])
-#             for fil in full_fillerwords:
-#                 full_company_name = full_company_name.replace(fil, "")
-#             short_company_name = full_company_name
-#             for fil in short_fillerwords:
-#                 short_company_name = short_company_name.replace(fil, "")
-#                 " ,", ",", "."
-#             if "," in short_company_name or "." in short_company_name or "   " in row[1] or "/" in row[1] or "$" in row[1] or "(" in row[1] or "%" in row[1] or "." in row[0] or "^" in row[0] or Stock.objects.filter(full_company_name=full_company_name).exists() or Stock.objects.filter(ticker=ticker).exists() or len(full_company_name) > 45 or len(short_company_name) > 35:
-#                 continue
-#             Stock.objects.create(ticker=ticker, full_company_name=full_company_name, short_company_name=short_company_name)
-
-
-# @shared_task
-# def delete_articles_without_source():
-#     articles = Article.objects.all()
-#     for article in articles:
-#         if article.source is None:
-#             article.delete()
 
 
 # @shared_task
