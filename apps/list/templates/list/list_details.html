@@ -94,6 +94,7 @@
         </div>
     </div>
 
+    {% if list.sources.all.count > 0 or saved_content|length > 0 %}
     {% if list.sources.all.count > 0 %}
     <div class="sliderWrapper">
         <div class="sliderContentContainer">
@@ -127,6 +128,7 @@
             </button>
         </div>
     </div>
+    {% endif %}
     <div class="tabsContainer" id="content" role="navigation" aria-label="Stock Content Navigation">
         <button class="activatedTab" data-for-tab="0">Analysis</button>
         <button data-for-tab="1">Commentary</button>

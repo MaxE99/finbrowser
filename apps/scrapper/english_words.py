@@ -162,6 +162,7 @@ english_words = [
     "booking",
     "blab",
     "blin",
+    "block",
     "blue",
     "bionomics",
     "boral",

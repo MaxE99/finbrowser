@@ -262,6 +262,7 @@ def scrape_spotify():
             for episode_item in episode_items:
                 title = unescape(episode_item["name"])
                 link = episode_item["external_urls"]["spotify"]
+                # SpotifyAPI release_date only has date precision, so it always shows midnight => therefore better to use current time of scrapping
                 spotify_creation_list, article_exists = article_creation_check(
                     spotify_creation_list, articles, title, source, link
                 )

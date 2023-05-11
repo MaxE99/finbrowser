@@ -24,7 +24,9 @@ class BasicInfoMixin(ContextMixin):
         context["highlighted_content_ids"] = highlighted_content_ids
         context["user_lists"] = user_lists
         context["subscribed_sources"] = subscribed_sources
-        context["trending_topics_search"] = TrendingTopicContent.objects.all()[:5]
+        context["trending_topics_search"] = TrendingTopicContent.objects.order_by(
+            "-article__pub_date"
+        )[:5]
         return context
 
 
