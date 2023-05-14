@@ -3,8 +3,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
 # Local imports
-from apps.api.serializers import SourceSerializer, ArticleSerializer, StockSerializer
 from apps.scrapper.english_words import english_words
+from apps.stock.models import PortfolioStock
 
 
 def paginator_create(request, queryset, objects_per_site, page_name="page"):
@@ -43,6 +43,12 @@ def stocks_get_experts(filtered_content):
 
 
 def balance_search_results(filtered_stocks, filtered_sources, filtered_articles):
+    from apps.api.serializers import (
+        SourceSerializer,
+        ArticleSerializer,
+        StockSerializer,
+    )
+
     len_filtered_stocks = filtered_stocks.count()
     len_filtered_sources = filtered_sources.count()
     len_filtered_articles = filtered_articles.count()
@@ -94,3 +100,10 @@ def create_portfolio_search_object(stocks):
         for keyword in stock.keywords.all():
             q_objects.add(Q(search_vector=keyword.keyword), Q.OR)
     return q_objects
+
+
+def get_amount_portfolio_search_terms(portfolio):
+    search_terms = 0
+    for stock in PortfolioStock.objects.filter(portfolio=portfolio):
+        search_terms += stock.keywords.all().count() + 1
+    return search_terms
