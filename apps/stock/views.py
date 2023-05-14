@@ -2,9 +2,11 @@
 from django.views.generic import TemplateView, DetailView
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 
 
 # Local import
+from apps.scrapper.english_words import english_words
 from apps.logic.pure_logic import paginator_create, stocks_get_experts
 from apps.home.views import BaseMixin
 from apps.stock.models import Stock, Portfolio, PortfolioStock
@@ -79,8 +81,24 @@ class PortfolioView(TemplateView, BaseMixin):
             .prefetch_related("keywords")
             .order_by("stock__ticker")
         )
-        portfolio_stocks = PortfolioStockSerializer(stocks, many=True).data
-        filtered_content = Article.objects.get_portfolio_content(portfolio_stocks)
+        q_objects = Q()
+        for stock in stocks:
+            if (
+                len(stock.stock.ticker) > 1
+                and stock.stock.ticker.lower() not in english_words
+            ):
+                q_objects.add(Q(search_vector=stock.stock.ticker), Q.OR)
+            else:
+                q_objects.add(Q(search_vector=f"${stock.stock.ticker}"), Q.OR)
+            q_objects.add(Q(search_vector=stock.stock.short_company_name), Q.OR)
+            for keyword in stock.keywords.all():
+                q_objects.add(Q(search_vector=keyword.keyword), Q.OR)
+        filtered_content = Article.objects.filter(q_objects).exclude(
+            source__in=selected_portfolio.blacklisted_sources.all()
+        )
+        portfolio_stocks = PortfolioStockSerializer(
+            stocks, many=True, context={"filtered_content": filtered_content}
+        ).data
         context["stocks"] = portfolio_stocks
         context["selected_portfolio"] = selected_portfolio
         context["user_portfolios"] = Portfolio.objects.filter(user=self.request.user)
