@@ -91,14 +91,7 @@
                 </div>
                 <span class="infoLink"><i class="fas fa-info"></i></span>
             </div>
-            <div class="keywordsContainer">
-                {% for keyword in stock.keywords %}
-                <div id="wkw{{keyword.pkeyword_id }}" class="keywordContainer">
-                    <span>{{ keyword.keyword }}</span>
-                    <i class="fas fa-times"></i>
-                </div>
-                {% endfor %}
-            </div>
+            <div class="keywordsContainer"></div>
             <button class="addButton finButtonBlue">Add</button>
         </div>
         <div class="warningMessageContainer">
@@ -271,7 +264,7 @@
     </div>
     {% endif %}
 </div>
-<script src="{% static 'stock/min_portfolio_script_v7.js' %}"></script>
+<script src="{% static 'stock/min_portfolio_script_v8.js' %}"></script>
 
 {% else %}
 
