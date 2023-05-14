@@ -1,8 +1,10 @@
 # Django imports
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 # Local imports
 from apps.api.serializers import SourceSerializer, ArticleSerializer, StockSerializer
+from apps.scrapper.english_words import english_words
 
 
 def paginator_create(request, queryset, objects_per_site, page_name="page"):
@@ -76,3 +78,19 @@ def balance_search_results(filtered_stocks, filtered_sources, filtered_articles)
         sources_serializer,
         articles_serializer,
     )
+
+
+def create_portfolio_search_object(stocks):
+    q_objects = Q()
+    for stock in stocks:
+        if (
+            len(stock.stock.ticker) > 1
+            and stock.stock.ticker.lower() not in english_words
+        ):
+            q_objects.add(Q(search_vector=stock.stock.ticker), Q.OR)
+        else:
+            q_objects.add(Q(search_vector=f"${stock.stock.ticker}"), Q.OR)
+        q_objects.add(Q(search_vector=stock.stock.short_company_name), Q.OR)
+        for keyword in stock.keywords.all():
+            q_objects.add(Q(search_vector=keyword.keyword), Q.OR)
+    return q_objects
