@@ -596,6 +596,21 @@ async function deleteKeywords(e, keywordButton = false) {
     }
 }
 
+function sortKeywords(arr) {
+    arr.sort(function (a, b) {
+        var keywordA = a.keyword.toUpperCase();
+        var keywordB = b.keyword.toUpperCase();
+        if (keywordA < keywordB) {
+            return -1;
+        }
+        if (keywordA > keywordB) {
+            return 1;
+        }
+        return 0;
+    });
+    return arr;
+}
+
 async function getKeywords(pstock_id, keywordButton) {
     try {
         const res = await fetch(
@@ -606,7 +621,7 @@ async function getKeywords(pstock_id, keywordButton) {
             showMessage('Error: Network request failed unexpectedly!', 'Error');
         } else {
             const context = await res.json();
-            const portfolioKeywords = context.keywords;
+            const portfolioKeywords = sortKeywords(context.keywords);
             const keywordsContainer = document.querySelector(
                 '.portfolioMenuWrapper .keywordModal .keywordsContainer'
             );
