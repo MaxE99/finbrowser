@@ -45,7 +45,10 @@ from apps.article.models import HighlightedArticle, Article
 from apps.source.models import Source, SourceRating, SourceTag
 from apps.list.models import List
 from apps.stock.models import Stock, Portfolio, PortfolioStock, PortfolioKeyword
-from apps.logic.pure_logic import balance_search_results
+from apps.logic.pure_logic import (
+    balance_search_results,
+    get_amount_portfolio_search_terms,
+)
 
 
 class ListViewSet(viewsets.ModelViewSet):
@@ -237,16 +240,29 @@ class PortfolioStockViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         if request.data.get("portfolios"):
-            selected_portfolio = get_object_or_404(
-                Portfolio,
-                portfolio_id=request.data.get("portfolios"),
-                user=request.user,
-            )
+            portfolio_id = request.data.get("portfolios")
+        else:
+            portfolio_id = request.data.get("portfolio")
+        selected_portfolio = get_object_or_404(
+            Portfolio, portfolio_id=portfolio_id, user=request.user
+        )
+        search_terms = get_amount_portfolio_search_terms(selected_portfolio)
+        if request.data.get("portfolios"):
+            if search_terms > 99:
+                return HttpResponse(
+                    status=403,
+                    content="You have already created the maximum number of objects allowed.",
+                )
             PortfolioStock.objects.create(
                 portfolio=selected_portfolio,
                 stock=get_object_or_404(Stock, stock_id=request.data.get("stock_id")),
             )
         else:
+            if search_terms + len(request.data.get("stocks")) > 100:
+                return HttpResponse(
+                    status=403,
+                    content="You have already created the maximum number of objects allowed.",
+                )
             for stock_id in request.data.get("stocks"):
                 PortfolioStock.objects.create(
                     stock=get_object_or_404(Stock, stock_id=stock_id),

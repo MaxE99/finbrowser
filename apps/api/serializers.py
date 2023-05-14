@@ -2,6 +2,7 @@
 from rest_framework import serializers
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import localtime
+from rest_framework.exceptions import PermissionDenied
 
 # Local imports
 from apps.accounts.models import Profile, Website
@@ -10,6 +11,7 @@ from apps.article.models import Article, HighlightedArticle, TweetType
 from apps.list.models import List
 from apps.home.models import Notification
 from apps.stock.models import Stock, Portfolio, PortfolioStock, PortfolioKeyword
+from apps.logic.pure_logic import get_amount_portfolio_search_terms
 
 
 class ListSerializer(serializers.ModelSerializer):
@@ -215,12 +217,17 @@ class PortfolioKeywordSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def create(self, validated_data):
-        keyword = PortfolioKeyword.objects.create(keyword=validated_data.get("keyword"))
         pstock = get_object_or_404(
             PortfolioStock,
             pstock_id=validated_data.get("pstock_id"),
             portfolio__user=validated_data.get("user"),  # validation
         )
+        search_terms = get_amount_portfolio_search_terms(pstock.portfolio)
+        if search_terms > 99:
+            raise PermissionDenied(
+                "You have already created the maximum number of objects allowed."
+            )
+        keyword = PortfolioKeyword.objects.create(keyword=validated_data.get("keyword"))
         pstock.keywords.add(keyword)
         return keyword
 

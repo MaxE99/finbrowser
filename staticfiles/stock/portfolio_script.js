@@ -223,7 +223,15 @@ document
                     body: JSON.stringify(data),
                 });
                 if (!res.ok) {
-                    showMessage('Error: Network request failed unexpectedly!', 'Error');
+                    if (res.status === 403) {
+                        showMessage(
+                            'Maximum limit of 100 stocks and keywords per portfolio has been reached.',
+                            'Error'
+                        );
+                        activatedButton = false;
+                    } else {
+                        showMessage('Error: Network request failed unexpectedly!', 'Error');
+                    }
                 } else {
                     showMessage('Portfolio has been updated!', 'Success');
                     window.location.reload();
@@ -684,7 +692,15 @@ async function save_portfolio_keyword(element) {
                 body: JSON.stringify(data),
             });
             if (!res.ok) {
-                showMessage('Error: Network request failed unexpectedly!', 'Error');
+                if (res.status === 403) {
+                    showMessage(
+                        'Maximum limit of 100 stocks and keywords per portfolio has been reached.',
+                        'Error'
+                    );
+                    keywordIsBeingCreated = false;
+                } else {
+                    showMessage('Error: Network request failed unexpectedly!', 'Error');
+                }
             } else {
                 const context = await res.json();
                 const keywordContainer = document.createElement('div');
