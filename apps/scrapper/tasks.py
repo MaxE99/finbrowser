@@ -225,24 +225,6 @@ def scrape_other_websites():
         create_articles_from_feed(source, feed_url, articles)
 
 
-# @shared_task
-# def crawl_websites():
-#     crawl_sources = (
-#         Source.objects.filter(name="The Generalist")
-#         .filter(name="Benedict Evans")
-#         .filter(name="Meritech Capital")
-#         .filter(name="Stock Market Nerd")
-#         .filter(name="Palladium")
-#     )
-#     articles = Article.objects.filter(source__in=crawl_sources).only(
-#         "title", "pub_date", "source"
-#     )
-#     crawl_thegeneralist(articles)
-#     crawl_ben_evans(articles)
-#     crawl_meritechcapital(articles)
-#     crawl_stockmarketnerd(articles)
-
-
 @shared_task
 def scrape_spotify():
     client_id = environ.get("SPOTIFY_CLIENT_ID")
@@ -443,49 +425,6 @@ def youtube_delete_innacurate_articles():
 
 
 @shared_task
-def delete_article_duplicates():
-    sources = Source.objects.exclude(website__name="Twitter")
-    print("last_source: ")
-    print(sources.last())
-    for source in sources:
-        ids_of_duplicate_articles = []
-        print(source)
-        try:
-            articles_from_source = Article.objects.filter(source=source).order_by(
-                "pub_date"
-            )
-            for article in articles_from_source:
-                title_duplicates = articles_from_source.filter(title=article.title)
-                duplicates = title_duplicates.count()
-                while duplicates > 1:
-                    if (
-                        title_duplicates[duplicates - 1].article_id
-                        not in ids_of_duplicate_articles
-                    ):
-                        ids_of_duplicate_articles.append(
-                            title_duplicates[duplicates - 1].article_id
-                        )
-                    duplicates -= 1
-                link_duplicates = articles_from_source.filter(link=article.link)
-                duplicates = link_duplicates.count()
-                while duplicates > 1:
-                    if (
-                        link_duplicates[duplicates - 1].article_id
-                        not in ids_of_duplicate_articles
-                    ):
-                        ids_of_duplicate_articles.append(
-                            link_duplicates[duplicates - 1].article_id
-                        )
-                    duplicates -= 1
-        except Exception as error:
-            print("We have reached an error!")
-            print(error)
-            continue
-        print(len(ids_of_duplicate_articles))
-        Article.objects.filter(article_id__in=ids_of_duplicate_articles).delete()
-
-
-@shared_task
 def delete_tweet_types_empty():
     tweet_types = TweetType.objects.all()
     for tweet_type in tweet_types:
@@ -574,3 +513,40 @@ def delete_tweet_types_empty():
 #     # Write the English words to a new Python file
 #     with open("english_words.py", "w") as f:
 #         f.write("english_words = {}\n".format(english_words))
+
+
+# @shared_task
+# def delete_article_duplicates():
+#     sources = Source.objects.exclude(website__name="Twitter")
+#     for source in sources:
+#         ids_of_duplicate_articles = []
+#         try:
+#             articles_from_source = Article.objects.filter(source=source).order_by(
+#                 "pub_date"
+#             )
+#             for article in articles_from_source:
+#                 title_duplicates = articles_from_source.filter(title=article.title)
+#                 duplicates = title_duplicates.count()
+#                 while duplicates > 1:
+#                     if (
+#                         title_duplicates[duplicates - 1].article_id
+#                         not in ids_of_duplicate_articles
+#                     ):
+#                         ids_of_duplicate_articles.append(
+#                             title_duplicates[duplicates - 1].article_id
+#                         )
+#                     duplicates -= 1
+#                 link_duplicates = articles_from_source.filter(link=article.link)
+#                 duplicates = link_duplicates.count()
+#                 while duplicates > 1:
+#                     if (
+#                         link_duplicates[duplicates - 1].article_id
+#                         not in ids_of_duplicate_articles
+#                     ):
+#                         ids_of_duplicate_articles.append(
+#                             link_duplicates[duplicates - 1].article_id
+#                         )
+#                     duplicates -= 1
+#         except Exception as error:
+#             print(error)
+#         Article.objects.filter(article_id__in=ids_of_duplicate_articles).delete()

@@ -218,11 +218,7 @@ class StockViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.request.GET.get("search_term"):
             search_term = self.request.GET.get("search_term")
-            return Stock.objects.filter(
-                Q(ticker__istartswith=search_term)
-                | Q(search_vector=search_term)
-                | Q(short_company_name__istartswith=search_term)
-            )[:25]
+            return Stock.objects.filter_by_search_term_search(search_term, 25)
         return super().get_queryset()
 
 
@@ -302,11 +298,11 @@ class FilteredSite(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, search_term):
-        filtered_stocks = Stock.objects.filter_by_search_term(search_term)
-        filtered_sources = Source.objects.filter_by_search_term(search_term)
+        filtered_stocks = Stock.objects.filter_by_search_term_search(search_term, 9)
+        filtered_sources = Source.objects.filter_by_search_term(search_term)[:9]
         filtered_articles = Article.objects.filter(
             search_vector=search_term
-        ).select_related("source")
+        ).select_related("source")[:9]
         (
             stock_serializer,
             sources_serializer,
