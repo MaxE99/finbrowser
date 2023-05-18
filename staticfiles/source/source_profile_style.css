@@ -425,6 +425,10 @@
     display: none;
 }
 
+.rightSideContainer .emptyInformationContainer {
+    max-width: 100%;
+}
+
 @media (max-width: 1000px) {
     .secondRow .leftSideContainer {
         width: 35%;
