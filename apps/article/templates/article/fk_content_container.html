@@ -75,6 +75,22 @@
             {% endif %}
             <div class="timeContainer">
                 <p>{{ content.article.pub_date|localtime }}</p>
+                {% if content.article.source.paywall == "No" %}
+                <div class="tooltipContainer noPaywallTooltip">
+                    <i class="fa-solid fa-lock noPaywall"></i>
+                    <span class="tooltiptext">No Paywall</span>
+                </div>
+                {% elif content.article.source.paywall == "Semi" %}
+                <div class="tooltipContainer semiPaywallTooltip">
+                    <i class="fa-solid fa-lock semiPaywall"></i>
+                    <span class="tooltiptext">Some Paywall</span>
+                </div>
+                {% else %}
+                <div class="tooltipContainer yesPaywallTooltip">
+                    <i class="fa-solid fa-lock yesPaywall"></i>
+                    <span class="tooltiptext">Paywall</span>
+                </div>
+                {% endif %}
             </div>
             <a class="contentLink" href="{{ content.article.link }}" target="_blank" aria-label="Open Content"></a>
         </div>

@@ -397,7 +397,7 @@ document
             } catch (e) {
                 // showMessage("Error: Unexpected error has occurred!", "Error");
             }
-        } else {
+        } else if(!rating && !activatedButton) {
             showMessage('Select a rating!', 'Error');
         }
     });

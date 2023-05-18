@@ -161,9 +161,31 @@ function addNewContentToContainer(article, tweet = false) {
     contentBody.appendChild(pTag1);
     const timeContainer = document.createElement('div');
     timeContainer.classList.add('timeContainer');
-    const pTag2 = document.createElement('p');
-    pTag2.innerText = article.pub_date;
-    timeContainer.appendChild(pTag2);
+    const pubDate = document.createElement('p');
+    pubDate.innerText = article.pub_date;
+    timeContainer.appendChild(pubDate);
+    const tooltipContainer = document.createElement('div');
+    tooltipContainer.classList.add('tooltipContainer');
+    const paywallIcon = document.createElement('i');
+    paywallIcon.classList.add('fa-solid', 'fa-lock');
+    const paywallText = document.createElement('span');
+    paywallText.classList.add('tooltiptext');
+    if (article.source.paywall === 'No') {
+        paywallIcon.classList.add('noPaywall');
+        paywallText.innerText = 'No Paywall';
+        tooltipContainer.classList.add('noPaywallTooltip');
+    } else if (article.source.paywall === 'Semi') {
+        paywallIcon.classList.add('semiPaywall');
+        paywallText.innerText = 'Some Paywall';
+        tooltipContainer.classList.add('semiPaywallTooltip');
+    } else {
+        paywallIcon.classList.add('yesPaywall');
+        paywallText.innerText = 'Paywall';
+        tooltipContainer.classList.add('yesPaywallTooltip');
+    }
+    tooltipContainer.appendChild(paywallIcon);
+    tooltipContainer.appendChild(paywallText);
+    timeContainer.appendChild(tooltipContainer);
     contentLink = document.createElement('a');
     contentLink.classList.add('contentLink');
     contentLink.href = article.link;
