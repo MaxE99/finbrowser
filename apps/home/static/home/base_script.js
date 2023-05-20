@@ -165,14 +165,41 @@ async function getSearchResults(search_term, results_list, smallScreen = false) 
 }
 
 // main search with autocomplete
-document.querySelector('header #mainAutocomplete').addEventListener('keyup', async function (e) {
+// document.querySelector('header #mainAutocomplete').addEventListener('keyup', async function (e) {
+//     let search_term = document.querySelector('header #mainAutocomplete').value;
+//     if (e.key == 'Enter' && search_term.split(/\s+/).join('') != '') {
+//         window.location.href = `../../../../../../search_results/${search_term}`;
+//     } else {
+//         let results_list = document.querySelector('header #mainAutocomplete_result');
+//         if (search_term && search_term.split(/\s+/).join('') != '') {
+//             getSearchResults(search_term, results_list);
+//             document.onclick = function (e) {
+//                 if (e.target.id !== 'autocomplete_list_results') {
+//                     results_list.style.display = 'none';
+//                 }
+//             };
+//         } else {
+//             results_list.style.display = 'none';
+//         }
+//     }
+// });
+
+// main search with autocomplete
+let delayTimer;
+document.querySelector('header #mainAutocomplete').addEventListener('keyup', function (e) {
     let search_term = document.querySelector('header #mainAutocomplete').value;
     if (e.key == 'Enter' && search_term.split(/\s+/).join('') != '') {
         window.location.href = `../../../../../../search_results/${search_term}`;
     } else {
         let results_list = document.querySelector('header #mainAutocomplete_result');
         if (search_term && search_term.split(/\s+/).join('') != '') {
-            getSearchResults(search_term, results_list);
+            clearTimeout(delayTimer);
+            delayTimer = setTimeout(function () {
+                // extra check necesseary to prevent deletion to trigger a search with last letter + search_term has value from 350msec ago
+                if (document.querySelector('header #mainAutocomplete').value) {
+                    getSearchResults(search_term, results_list);
+                }
+            }, 350); // Set a 350ms delay before sending the request
             document.onclick = function (e) {
                 if (e.target.id !== 'autocomplete_list_results') {
                     results_list.style.display = 'none';
