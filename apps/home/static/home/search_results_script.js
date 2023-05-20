@@ -21,7 +21,8 @@ if (location.href.includes('?news=')) {
     tabsContent[2].classList.add('tabsContentActive');
 }
 
-// main search with autocomplete
+// large search with autocomplete
+let largeSearchDelayTimer;
 document
     .querySelector('.searchWrapper #searchResultsAutocomplete')
     .addEventListener('keyup', async function (e) {
@@ -31,45 +32,54 @@ document
         } else {
             let results_list = document.querySelector('.searchWrapper #autocomplete_list_results');
             if (search_term && search_term.split(/\s+/).join('') != '') {
-                try {
-                    const res = await fetch(
-                        `../../api/search_site/${search_term}`,
-                        get_fetch_settings('GET')
-                    );
-                    if (!res.ok) {
-                        showMessage('Error: Network request failed unexpectedly!!', 'Error');
-                    } else {
-                        const context = await res.json();
-                        results_list.style.display = 'flex';
-                        results_list.innerHTML = '';
-                        if (context[0].length > 0) {
-                            results_list.innerHTML += `<div class="searchResultHeader">Stocks</div>`;
-                            context[0].forEach((stock) => {
-                                const sourceRes = `<div class="searchResult"><div class="stockContainer"><div class="stockTicker">${stock.ticker}</div><div class="companyName">${stock.full_company_name}</div><a href="../../../../../../stock/${stock.ticker}"></a></div></div>`;
-                                results_list.innerHTML += sourceRes;
-                            });
-                        }
-                        if (context[1].length > 0) {
-                            results_list.innerHTML += `<div class="searchResultHeader">Sources</div>`;
-                            context[1].forEach((source) => {
-                                const sourceRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}"><span>${source.name}</span><a href="../../source/${source.slug}"></a></div>`;
-                                results_list.innerHTML += sourceRes;
-                            });
-                        }
-                        if (context[2].length > 0) {
-                            results_list.innerHTML += `<div class="searchResultHeader">Articles</div>`;
-                            for (let i = 0, j = context[2].length; i < j; i++) {
-                                let xfavicon = context[2][i].source.favicon_path;
-                                let xtitle = context[2][i].title;
-                                let xlink = context[2][i].link;
-                                const articleRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${xfavicon}"><span>${xtitle}</span><a href="${xlink}" target="_blank"></a></div>`;
-                                results_list.innerHTML += articleRes;
+                clearTimeout(largeSearchDelayTimer);
+                largeSearchDelayTimer = setTimeout(async function () {
+                    // extra check necesseary to prevent deletion to trigger a search with last letter + search_term has value from 350msec ago
+                    if (document.querySelector('.searchWrapper #searchResultsAutocomplete').value) {
+                        try {
+                            const res = await fetch(
+                                `../../api/search_site/${search_term}`,
+                                get_fetch_settings('GET')
+                            );
+                            if (!res.ok) {
+                                showMessage(
+                                    'Error: Network request failed unexpectedly!!',
+                                    'Error'
+                                );
+                            } else {
+                                const context = await res.json();
+                                results_list.style.display = 'flex';
+                                results_list.innerHTML = '';
+                                if (context[0].length > 0) {
+                                    results_list.innerHTML += `<div class="searchResultHeader">Stocks</div>`;
+                                    context[0].forEach((stock) => {
+                                        const sourceRes = `<div class="searchResult"><div class="stockContainer"><div class="stockTicker">${stock.ticker}</div><div class="companyName">${stock.full_company_name}</div><a href="../../../../../../stock/${stock.ticker}"></a></div></div>`;
+                                        results_list.innerHTML += sourceRes;
+                                    });
+                                }
+                                if (context[1].length > 0) {
+                                    results_list.innerHTML += `<div class="searchResultHeader">Sources</div>`;
+                                    context[1].forEach((source) => {
+                                        const sourceRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}"><span>${source.name}</span><a href="../../source/${source.slug}"></a></div>`;
+                                        results_list.innerHTML += sourceRes;
+                                    });
+                                }
+                                if (context[2].length > 0) {
+                                    results_list.innerHTML += `<div class="searchResultHeader">Articles</div>`;
+                                    for (let i = 0, j = context[2].length; i < j; i++) {
+                                        let xfavicon = context[2][i].source.favicon_path;
+                                        let xtitle = context[2][i].title;
+                                        let xlink = context[2][i].link;
+                                        const articleRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${xfavicon}"><span>${xtitle}</span><a href="${xlink}" target="_blank"></a></div>`;
+                                        results_list.innerHTML += articleRes;
+                                    }
+                                }
                             }
+                        } catch (e) {
+                            // showMessage("Error: Unexpected error has occurred!", "Error");
                         }
                     }
-                } catch (e) {
-                    // showMessage("Error: Unexpected error has occurred!", "Error");
-                }
+                }, 350); // Set a 350ms delay before sending the request
                 document.onclick = function (e) {
                     if (e.target.id !== 'autocomplete_list_results') {
                         results_list.style.display = 'none';
