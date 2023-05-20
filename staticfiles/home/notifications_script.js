@@ -77,7 +77,6 @@ document
         );
         closeExplanationButton.addEventListener('click', () => {
             document.querySelector('.overlay .keywordCreationWrapper').style.display = 'flex';
-            document.querySelector('.fullScreenPlaceholder').style.display = 'none';
             document.querySelector('.fullScreenPlaceholder .explanationContainer').style.display =
                 'none';
         });

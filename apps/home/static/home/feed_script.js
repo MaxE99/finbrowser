@@ -29,6 +29,22 @@ function createTwitterPart(content, rightContentSide) {
             'https://finbrowser.s3.us-east-2.amazonaws.com/static/' + content.tweet_type.image_path
         );
         tweetImage.setAttribute('alt', 'Tweet Image');
+        // open image functionality
+        tweetImage.addEventListener('click', () => {
+            setModalStyle();
+            const fullScreenPlaceholder = document.querySelector('.fullScreenPlaceholder');
+            fullScreenPlaceholder.style.display = 'flex';
+            const img = document.createElement('img');
+            img.classList.add('fullScreenImage');
+            img.src = tweetImage.src;
+            fullScreenPlaceholder.appendChild(img);
+            fullScreenPlaceholder.querySelector('.outerCloseButton').style.display = 'flex';
+            document.onclick = function (e) {
+                if (e.target.nodeName !== 'IMG') {
+                    closeFullScreenImage();
+                }
+            };
+        });
         rightContentSide.appendChild(tweetImage);
     }
 
@@ -64,6 +80,22 @@ function createTwitterPart(content, rightContentSide) {
                     content.tweet_type.initial_tweet_img_path
             );
             tweetImage.setAttribute('alt', 'Tweet Reply Image');
+            // open image functionality
+            tweetImage.addEventListener('click', () => {
+                setModalStyle();
+                const fullScreenPlaceholder = document.querySelector('.fullScreenPlaceholder');
+                fullScreenPlaceholder.style.display = 'flex';
+                const img = document.createElement('img');
+                img.classList.add('fullScreenImage');
+                img.src = tweetImage.src;
+                fullScreenPlaceholder.appendChild(img);
+                fullScreenPlaceholder.querySelector('.outerCloseButton').style.display = 'flex';
+                document.onclick = function (e) {
+                    if (e.target.nodeName !== 'IMG') {
+                        closeFullScreenImage();
+                    }
+                };
+            });
             quoteWrapper.appendChild(tweetImage);
         }
 

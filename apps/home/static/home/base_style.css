@@ -1241,7 +1241,7 @@ footer .twitterFollowContainer i {
     border-radius: 0.45rem;
     background: white;
     top: 2.3rem;
-    z-index: 3;
+    z-index: 4;
     cursor: pointer;
     font-size: 1.8rem;
     user-select: none;
@@ -1869,9 +1869,13 @@ footer .twitterFollowContainer i {
     color: white;
 }
 
-.fullScreenPlaceholder .outerCloseButton:hover {
-    background: #fff;
-    color: var(--primary-fontColor);
+.fullScreenPlaceholder .specialCloseButton {
+    top: 0;
+    background: var(--primary-fontColor);
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .fullScreenPlaceholder .fullScreenWrapper .authPromptContainer,
