@@ -183,5 +183,9 @@ class SearchResultView(TemplateView, BaseMixin):
         return context
 
 
-def error_view(request, exception=None):
+def error_view_500(request):
     return render(request, "server_error.html", status=500)
+
+
+def error_view_503(request):
+    return render(request, "server_error.html", status=503)

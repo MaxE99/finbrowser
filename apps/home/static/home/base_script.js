@@ -165,26 +165,6 @@ async function getSearchResults(search_term, results_list, smallScreen = false) 
 }
 
 // main search with autocomplete
-// document.querySelector('header #mainAutocomplete').addEventListener('keyup', async function (e) {
-//     let search_term = document.querySelector('header #mainAutocomplete').value;
-//     if (e.key == 'Enter' && search_term.split(/\s+/).join('') != '') {
-//         window.location.href = `../../../../../../search_results/${search_term}`;
-//     } else {
-//         let results_list = document.querySelector('header #mainAutocomplete_result');
-//         if (search_term && search_term.split(/\s+/).join('') != '') {
-//             getSearchResults(search_term, results_list);
-//             document.onclick = function (e) {
-//                 if (e.target.id !== 'autocomplete_list_results') {
-//                     results_list.style.display = 'none';
-//                 }
-//             };
-//         } else {
-//             results_list.style.display = 'none';
-//         }
-//     }
-// });
-
-// main search with autocomplete
 let delayTimer;
 document.querySelector('header #mainAutocomplete').addEventListener('keyup', function (e) {
     let search_term = document.querySelector('header #mainAutocomplete').value;
@@ -256,7 +236,10 @@ document.querySelector('header .smallScreenSearchIcon').addEventListener('click'
     document.querySelector('.fullScreenPlaceholder').style.display = 'flex';
     document.querySelector('.fullScreenPlaceholder .smallScreenSearchContainer').style.display =
         'block';
-    document.querySelector('.fullScreenPlaceholder .outerCloseButton').style.display = 'flex';
+    const outerCloseButton = document.querySelector('.fullScreenPlaceholder .outerCloseButton');
+    // without custom design close button would be overlapping
+    outerCloseButton.classList.add('specialCloseButton');
+    outerCloseButton.style.display = 'flex';
 });
 
 document
@@ -972,6 +955,11 @@ document.querySelectorAll('.tweetImage').forEach((tweetImage) => {
     });
 });
 
-document.querySelector('.fullScreenPlaceholder .outerCloseButton').addEventListener('click', () => {
-    closeFullScreenImage();
-});
+document
+    .querySelector('.fullScreenPlaceholder .outerCloseButton')
+    .addEventListener('click', (e) => {
+        if (e.target.classList.contains('specialCloseButton')) {
+            e.target.classList.remove('specialCloseButton');
+        }
+        closeFullScreenImage();
+    });

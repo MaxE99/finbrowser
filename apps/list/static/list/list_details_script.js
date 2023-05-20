@@ -366,7 +366,6 @@ document
                 '.fullScreenPlaceholder .fullScreenWrapper .explanationContainer .fa-times'
             )
             .addEventListener('click', () => {
-                document.querySelector('.fullScreenPlaceholder').style.display = 'none';
                 document.querySelector(
                     '.fullScreenPlaceholder .explanationContainer'
                 ).style.display = 'none';

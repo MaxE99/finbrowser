@@ -465,6 +465,9 @@ if (document.querySelector('.blacklistSourceContainer #textInput')) {
                                                     'Error'
                                                 );
                                             } else {
+                                                document.querySelector(
+                                                    '.blacklistSourceContainer #textInput'
+                                                ).value = '';
                                                 results_list.style.display = 'none';
                                                 selected_list.style.display = 'block';
                                                 blacklisted_sources.push(source.source_id);
@@ -512,7 +515,6 @@ if (document.querySelector('.blacklistSourceContainer #textInput')) {
 
 // blacklist source explanation close button
 function closeBlacklistExplanation() {
-    document.querySelector('.fullScreenPlaceholder').style.display = 'none';
     document.querySelector('.fullScreenPlaceholder .explanationContainer').style.display = 'none';
     document.querySelector('.portfolioMenuWrapper').style.display = 'flex';
     document.querySelector('.portfolioMenuWrapper .editMenu').style.display = 'block';
@@ -761,6 +763,7 @@ document
 document
     .querySelector('.portfolioMenuWrapper .keywordModal .createKeywordsContainer .infoLink i')
     .addEventListener('click', (e) => {
+        document.querySelector('.portfolioMenuWrapper').style.display = 'none';
         e.target.closest('.keywordModal').style.display = 'none';
         document.querySelector('.fullScreenPlaceholder').style.display = 'flex';
         document.querySelector('.fullScreenPlaceholder .explanationContainer').style.display =
@@ -777,8 +780,8 @@ document
         closeExplanationButton.addEventListener(
             'click',
             () => {
+                document.querySelector('.portfolioMenuWrapper').style.display = 'block';
                 e.target.closest('.keywordModal').style.display = 'block';
-                document.querySelector('.fullScreenPlaceholder').style.display = 'none';
                 document.querySelector(
                     '.fullScreenPlaceholder .explanationContainer'
                 ).style.display = 'none';
