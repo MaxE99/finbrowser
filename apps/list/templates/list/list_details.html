@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v15.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v16.css' %}" />
 {% if request.user.is_authenticated %}
 <title>{{ list.name }} | FinBrowser</title>
 <meta name="description" content="Easily create themed lists on your favorite stock market topics">
@@ -226,14 +226,30 @@
     <section class="landingSection">
         <div class="landingSectionContainer">
             <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}">
-            <p>
-                Capture intriguing content, curate lists based on your interests, and stay in the know whenever your
-                favorite stock market content creators release fresh material.
-            </p>
-            <a href="{% url 'account_login' %}" class="signUpButton finButtonBlue" aria-label="Sign Up">Get Started</a>
-        </div>
-        <div class="landingSectionImage">
-            <img src="{% static 'home/media/landing-page.svg' %}" alt="landing-page-logo">
+            <p>FinBrowser's List feature is the ultimate tool for effortlessly organizing and accessing a vast array of
+                stock market content. With Lists, you can bring together the expertise of your favorite content
+                creators in one centralized hub. No more wasting time and effort navigating through various platforms
+                and
+                sources. Whether you follow financial analysts, hedge funds, research services, individual blogs, or
+                listen to podcasts from sector specialists, FinBrowser's Lists feature consolidates all their valuable
+                insights into a single, user-friendly interface.</p>
+
+            <p>Staying organized is crucial, especially when conducting in-depth research on specific topics.
+                FinBrowser's
+                Lists feature allows you to create personalized collections tailored to your current areas of interest.
+                Now,
+                you can easily compile articles, analyses, research reports, and more, ensuring that you have all the
+                information you need at your fingertips. Say goodbye to scattered notes and fragmented bookmarks - with
+                FinBrowser, your research process becomes streamlined and efficient.</p>
+
+            <p>The best part? It's completely
+                free! Simply enter your email, choose a new username and password, and
+                you'll
+                gain instant access to a wealth of knowledge. Don't miss out on this incredible opportunity — sign up
+                with
+                FinBrowser today!</p>
+            <a href="{% url 'account_login' %}" class="signUpButton finButtonBlue" aria-label="Sign Up"><i
+                    class="fa-solid fa-right-to-bracket"></i> Get Started</a>
         </div>
     </section>
 </main>

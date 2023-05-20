@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'stock/min_portfolio_style_v4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'stock/min_portfolio_style_v5.css' %}">
 {% if request.user.is_authenticated %}
 <title>{{ selected_portfolio.name }} | FinBrowser</title>
 <meta name="description" content="FinBrowser portfolio created by {{ request.user.username }}">
@@ -273,17 +273,29 @@
         <div class="landingSectionContainer">
             <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}">
             <p>
-                Are you tired of feeling like you're in the dark when it comes to the stocks in your portfolio? Let
-                FinBrowser
-                shed some light on the latest analysis, commentary, and breaking news to keep you informed and
-                up-to-date. FinBrowser provides you with the most current and relevant information, so you can make
-                informed decisions about your investments. Trust FinBrowser to be your go-to source for all things
-                stock-related.
+                Are you tired of feeling like you're missing out on crucial information about the stocks in your
+                portfolio? Have you ever experienced sudden shifts in the businesses of your invested companies, leaving
+                you wondering if the market had insider knowledge? Or perhaps you simply crave a reliable hub where you
+                can access comprehensive information about the companies that captivate your interest. Look no further,
+                because FinBrowser is the solution you've been searching for!
             </p>
-            <a href="{% url 'account_login' %}" class="signUpButton finButtonBlue" aria-label="Sign Up">Get Started</a>
-        </div>
-        <div class="landingSectionImage">
-            <img src="{% static 'home/media/landing-page.svg' %}" alt="landing-page-logo">
+
+            <p>
+                FinBrowser has curated an exceptional collection of stock market content from the web's top producers.
+                From real-time insights shared by financial analysts to the strategic viewpoints provided by hedge
+                funds, in-depth research reports from reputable research services, captivating blog posts written by
+                seasoned professionals, enlightening podcasts hosted by industry experts, and breaking news from trusted
+                industry sources, you'll find it all within this platform.
+            </p>
+
+            <p>
+                Now is the time to join FinBrowser and unlock the secrets surrounding the stocks that pique your
+                curiosity. The best part? It's completely free! Simply enter your email, choose a new username and
+                password, and you'll gain instant access to a wealth of knowledge. Don't miss out on this incredible
+                opportunity — sign up with FinBrowser today!
+            </p>
+            <a href="{% url 'account_login' %}" class="signUpButton finButtonBlue" aria-label="Sign Up"><i
+                    class="fa-solid fa-right-to-bracket"></i> Get Started</a>
         </div>
     </section>
 </main>
