@@ -478,7 +478,7 @@ if (document.querySelector('.blacklistSourceContainer #textInput')) {
                                                 );
                                                 blacklistedSourceContainer.id = `blsid#${source.source_id}`;
                                                 const img = document.createElement('img');
-                                                img.src = `/static/${source.favicon_path}`;
+                                                img.src = `https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}`;
                                                 const span = document.createElement('span');
                                                 span.innerText = source.name;
                                                 const timesButton = document.createElement('i');
