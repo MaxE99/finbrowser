@@ -15,7 +15,7 @@ from researchbrowserproject.sitemaps import (
     StockSitemap,
 )
 
-from apps.home.views import NotFoundView
+from apps.home.views import NotFoundView, error_view
 
 sitemaps = {
     "sources": SourceSitemap,
@@ -53,3 +53,4 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = NotFoundView.as_view()
+handler500 = error_view
