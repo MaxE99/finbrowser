@@ -680,10 +680,9 @@ tbody tr td:first-of-type span {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5rem 0;
+    padding-top: 4rem;
     overflow-x: hidden;
     min-height: calc(100vh - 17rem);
-    max-width: 90%;
     margin: 0 auto;
 }
 
@@ -692,52 +691,42 @@ tbody tr td:first-of-type span {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 50%;
-}
-
-.landingSection .landingSectionImage {
-    display: flex;
-    justify-content: center;
-    width: 50%;
+    width: 70%;
 }
 
 .landingSection .landingSectionContainer img {
     max-width: 95%;
     margin: 0 auto;
+    margin-bottom: 2rem;
+    max-height: 8rem;
 }
 
 .landingSection .landingSectionContainer p {
-    font-size: 2.3rem;
-    margin: 2rem 0 2.5rem;
-    line-height: 1.6;
     text-align: justify;
+    margin: 1rem 0;
+    line-height: 1.8;
+    font-size: 2.1rem;
+    font-weight: 400;
     font-family: var(--site-Font);
 }
 
-.main p {
-    color: #9e9aa7;
+.signUpButton {
+    margin: 2rem 0 0 auto;
 }
 
-.signUpButton {
-    width: 100%;
+.signUpButton .fa-right-to-bracket {
+    margin-right: 1rem;
 }
 
 @media (max-width: 1000px) {
-    .landingSection {
-        flex-direction: column-reverse;
-    }
-    .landingSection .landingSectionImage {
-        margin-bottom: 4rem;
-        width: 70%;
-    }
     .landingSection .landingSectionContainer {
-        width: 70%;
+        width: 85%;
     }
 }
 
 @media (max-width: 750px) {
-    .landingSection .landingSectionImage {
-        width: 90%;
+    .landingSection {
+        padding-top: 3rem;
     }
     .landingSection .landingSectionContainer {
         width: 90%;
@@ -745,17 +734,16 @@ tbody tr td:first-of-type span {
 }
 
 @media (max-width: 500px) {
-    .landingSection .landingSectionContainer p {
-        margin: 1.5rem 0 2rem;
+    .signUpButton {
+        margin: 1rem auto 0;
     }
-}
 
-@media (max-width: 400px) {
-    .landingSection .landingSectionImage {
-        width: 100%;
+    .landingSection .landingSectionContainer img {
+        margin-bottom: 1rem;
     }
+
     .landingSection .landingSectionContainer {
-        width: 100%;
+        width: 85%;
     }
 }
 
