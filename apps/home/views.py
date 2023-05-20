@@ -1,6 +1,8 @@
 # Django imports
 from django.contrib.auth import get_user_model
 from django.views.generic import TemplateView
+from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Local imports
 from apps.logic.pure_logic import paginator_create
@@ -9,7 +11,6 @@ from apps.source.models import Source
 from apps.article.models import Article, TrendingTopicContent
 from apps.stock.models import Stock
 from apps.home.models import NotificationMessage
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 User = get_user_model()
 
@@ -180,3 +181,7 @@ class SearchResultView(TemplateView, BaseMixin):
             "news",
         )
         return context
+
+
+def error_view(request, exception=None):
+    return render(request, "server_error.html", status=500)
