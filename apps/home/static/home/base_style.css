@@ -1856,18 +1856,16 @@ footer .twitterFollowContainer i {
 .fullScreenPlaceholder .outerCloseButton {
     display: none;
     border-radius: 50%;
-    background: var(--primary-fontColor);
     cursor: pointer;
     font-size: 3rem;
     position: fixed;
-    left: 0;
-    top: 10.5rem;
+    left: 1rem;
+    top: 1rem;
     z-index: 1;
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
     align-items: center;
     justify-content: center;
-    border-radius: 0 25px 25px 0;
     color: white;
 }
 
