@@ -1,4 +1,5 @@
 # Django import
+import time
 from django.views.generic import TemplateView, DetailView
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -130,13 +131,20 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
             .prefetch_related("keywords", "portfolio")
             .order_by("stock__ticker")
         )
+        print(f"Start: {selected_portfolio}")
+        start_time = time.time()
         q_objects = create_portfolio_search_object(stocks)
         filtered_content = Article.objects.filter(q_objects).exclude(
             source__in=selected_portfolio.blacklisted_sources.all()
         )
+        print(filtered_content.count())
+        print(f"Filtering cost: {time.time()-start_time}")
+        start_time = time.time()
         portfolio_stocks = PortfolioStockSerializer(
             stocks, many=True, context={"filtered_content": filtered_content}
         ).data
+        print(f"Serializing cost: {time.time()-start_time}")
+        print("---------------------------------------------------------")
         context["stocks"] = portfolio_stocks
         context["selected_portfolio"] = selected_portfolio
         context["user_portfolios"] = Portfolio.objects.filter(user=self.request.user)
