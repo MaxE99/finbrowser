@@ -144,10 +144,11 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
             stocks, many=True, context={"filtered_content": filtered_content}
         ).data
         print(f"Serializing cost: {time.time()-start_time}")
-        print("---------------------------------------------------------")
+        start_time = time.time()
         context["stocks"] = portfolio_stocks
         context["selected_portfolio"] = selected_portfolio
         context["user_portfolios"] = Portfolio.objects.filter(user=self.request.user)
+        pagination_time = time.time()
         context["analysis"] = paginator_create(
             self.request,
             filtered_content.filter(source__content_type="Analysis"),
@@ -166,4 +167,7 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
             25,
             "news",
         )
+        print(f"Pagination time: {time.time() - pagination_time}")
+        print(f"Rest cost: {time.time()-start_time}")
+        print("---------------------------------------------------------")
         return context
