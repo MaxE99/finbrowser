@@ -95,11 +95,26 @@ def create_portfolio_search_object(stocks):
         ):
             q_objects.add(Q(search_vector=stock.stock.ticker), Q.OR)
         else:
+            # important to use $ + instead of as f-string because $ has special meaning in f-string
             q_objects.add(Q(search_vector="$" + stock.stock.ticker), Q.OR)
         q_objects.add(Q(search_vector=stock.stock.short_company_name), Q.OR)
         for keyword in stock.keywords.all():
             q_objects.add(Q(search_vector=keyword.keyword), Q.OR)
     return q_objects
+
+
+def create_content_lists(content_list):
+    analysis_content = []
+    commentary_content = []
+    news_content = []
+    for article in content_list:
+        if article.source.content_type == "Analysis":
+            analysis_content.append(article)
+        elif article.source.content_type == "Commentary":
+            commentary_content.append(article)
+        else:
+            news_content.append(article)
+    return analysis_content, commentary_content, news_content
 
 
 def get_amount_portfolio_search_terms(portfolio):

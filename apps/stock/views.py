@@ -1,5 +1,4 @@
 # Django import
-import time
 from django.views.generic import TemplateView, DetailView
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +8,7 @@ from apps.logic.pure_logic import (
     paginator_create,
     stocks_get_experts,
     create_portfolio_search_object,
+    create_content_lists,
 )
 from apps.home.views import BaseMixin
 from apps.stock.models import Stock, Portfolio, PortfolioStock
@@ -94,35 +94,28 @@ class PortfolioView(TemplateView, BaseMixin):
         ).data
         context["stocks"] = portfolio_stocks
         context["selected_portfolio"] = selected_portfolio
-        context["user_portfolios"] = Portfolio.objects.filter(user=self.request.user)
+        context["user_portfolios"] = Portfolio.objects.filter(
+            user=self.request.user
+        ).order_by("name")
         filtered_content_list = list(filtered_content)
+        analysis_content, commentary_content, news_content = create_content_lists(
+            filtered_content_list
+        )
         context["analysis"] = paginator_create(
             self.request,
-            [
-                article
-                for article in filtered_content_list
-                if article.source.content_type == "Analysis"
-            ],
+            analysis_content,
             25,
             "analysis",
         )
         context["commentary"] = paginator_create(
             self.request,
-            [
-                article
-                for article in filtered_content_list
-                if article.source.content_type == "Commentary"
-            ],
+            commentary_content,
             25,
             "commentary",
         )
         context["news"] = paginator_create(
             self.request,
-            [
-                article
-                for article in filtered_content_list
-                if article.source.content_type == "News"
-            ],
+            news_content,
             25,
             "news",
         )
@@ -145,39 +138,24 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
             .prefetch_related("keywords", "portfolio")
             .order_by("stock__ticker")
         )
-        print(f"Start: {selected_portfolio}")
-        start_time = time.time()
         q_objects = create_portfolio_search_object(stocks)
         filtered_content = (
             Article.objects.filter(q_objects)
             .select_related("source")
             .exclude(source__in=selected_portfolio.blacklisted_sources.all())
         )
-        print(f"Filtering cost: {time.time()-start_time}")
-        start_time = time.time()
         portfolio_stocks = PortfolioStockSerializer(
             stocks, many=True, context={"filtered_content": filtered_content}
         ).data
-        print(f"Serializing cost: {time.time()-start_time}")
         context["stocks"] = portfolio_stocks
         context["selected_portfolio"] = selected_portfolio
-        context["user_portfolios"] = Portfolio.objects.filter(user=self.request.user)
-        list_time = time.time()
+        context["user_portfolios"] = Portfolio.objects.filter(
+            user=self.request.user
+        ).order_by("name")
         filtered_content_list = list(filtered_content)
-        print(f"List cost: {time.time()-list_time}")
-        list_filtering_time = time.time()
-        analysis_content = []
-        commentary_content = []
-        news_content = []
-        for article in filtered_content_list:
-            if article.source.content_type == "Analysis":
-                analysis_content.append(article)
-            elif article.source.content_type == "Commentary":
-                commentary_content.append(article)
-            else:
-                news_content.append(article)
-        print(f"list filtering cost: {time.time()-list_filtering_time}")
-        pagination_time = time.time()
+        analysis_content, commentary_content, news_content = create_content_lists(
+            filtered_content_list
+        )
         context["analysis"] = paginator_create(
             self.request,
             analysis_content,
@@ -196,6 +174,4 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
             25,
             "news",
         )
-        print(f"Pagination time: {time.time() - pagination_time}")
-        print("---------------------------------------------------------")
         return context
