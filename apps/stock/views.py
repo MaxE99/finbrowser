@@ -158,37 +158,43 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
         context["stocks"] = portfolio_stocks
         context["selected_portfolio"] = selected_portfolio
         context["user_portfolios"] = Portfolio.objects.filter(user=self.request.user)
-        pagination_time = time.time()
         list_time = time.time()
         filtered_content_list = list(filtered_content)
         print(f"List cost: {time.time()-list_time}")
+        list_filtering_time = time.time()
+        analysis_content = [
+            article
+            for article in filtered_content_list
+            if article.source.content_type == "Analysis"
+        ]
+        commentary_content = [
+            article
+            for article in filtered_content_list
+            if article.source.content_type == "Commentary"
+        ]
+
+        news_content = [
+            article
+            for article in filtered_content_list
+            if article.source.content_type == "News"
+        ]
+        print(f"list filtering cost: {time.time()-list_filtering_time}")
+        pagination_time = time.time()
         context["analysis"] = paginator_create(
             self.request,
-            [
-                article
-                for article in filtered_content_list
-                if article.source.content_type == "Analysis"
-            ],
+            analysis_content,
             25,
             "analysis",
         )
         context["commentary"] = paginator_create(
             self.request,
-            [
-                article
-                for article in filtered_content_list
-                if article.source.content_type == "Commentary"
-            ],
+            commentary_content,
             25,
             "commentary",
         )
         context["news"] = paginator_create(
             self.request,
-            [
-                article
-                for article in filtered_content_list
-                if article.source.content_type == "News"
-            ],
+            news_content,
             25,
             "news",
         )
