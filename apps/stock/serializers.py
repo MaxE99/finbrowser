@@ -1,12 +1,8 @@
 # Django imports
-import time
 from rest_framework import serializers
 from django.db.models import Q
 from datetime import timedelta
 from django.utils import timezone
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
-import re
-
 
 # Local imports
 from apps.scrapper.english_words import english_words
@@ -55,30 +51,25 @@ class PortfolioStockSerializer(serializers.ModelSerializer):
         return obj.stock.get_absolute_url
 
     def get_articles(self, obj):
-        start_time = time.time()
         q_objects = Q()
         if len(obj.stock.ticker) > 1 and obj.stock.ticker.lower() not in english_words:
             q_objects.add(Q(search_vector=obj.stock.ticker), Q.OR)
         else:
-            q_objects.add(Q(search_vector=f"${obj.stock.ticker}"), Q.OR)
+            # important to use $ + instead of as f-string because $ has special meaning in f-string
+            q_objects.add(Q(search_vector="$" + obj.stock.ticker), Q.OR)
         q_objects.add(Q(search_vector=obj.stock.short_company_name), Q.OR)
         for keyword in obj.keywords.all():
             q_objects.add(Q(search_vector=keyword.keyword), Q.OR)
         self.articles = list(self.filtered_content.filter(q_objects))
-        print(f"get_articles: {time.time()-start_time}")
         return self.articles
 
     def get_last_article(self, obj):
-        start_time = time.time()
         last_article = self.articles[0] if self.articles else None
         if last_article:
-            print(f"get_last_article: {time.time()-start_time}")
             return last_article.pub_date
-        print(f"get_last_article: {time.time()-start_time}")
         return None
 
     def get_articles_last_7d(self, obj):
-        start_time = time.time()
         date_from = timezone.now() - timedelta(days=7)
         articles = self.articles
         if articles:
@@ -86,9 +77,7 @@ class PortfolioStockSerializer(serializers.ModelSerializer):
                 article for article in articles if article.pub_date >= date_from
             ]
             count = len(filtered_articles)
-            print(f"get_articles_last_7d: {time.time()-start_time}")
             return count
-        print(f"get_articles_last_7d: {time.time()-start_time}")
         return 0
 
     class Meta:
