@@ -4,6 +4,9 @@ from rest_framework import serializers
 from django.db.models import Q
 from datetime import timedelta
 from django.utils import timezone
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+import re
+
 
 # Local imports
 from apps.scrapper.english_words import english_words
@@ -45,9 +48,7 @@ class PortfolioStockSerializer(serializers.ModelSerializer):
     articles_last_7d = serializers.SerializerMethodField()
 
     def get_filtered_content(self, obj):
-        start_time = time.time()
         self.filtered_content = self.context.get("filtered_content", None)
-        print(f"get_filtered_content: {time.time()-start_time}")
         return self.filtered_content
 
     def get_absolute_path(self, obj):
@@ -63,13 +64,13 @@ class PortfolioStockSerializer(serializers.ModelSerializer):
         q_objects.add(Q(search_vector=obj.stock.short_company_name), Q.OR)
         for keyword in obj.keywords.all():
             q_objects.add(Q(search_vector=keyword.keyword), Q.OR)
-        self.articles = self.filtered_content.filter(q_objects)
+        self.articles = list(self.filtered_content.filter(q_objects))
         print(f"get_articles: {time.time()-start_time}")
         return self.articles
 
     def get_last_article(self, obj):
         start_time = time.time()
-        last_article = self.articles.first()
+        last_article = self.articles[0] if self.articles else None
         if last_article:
             print(f"get_last_article: {time.time()-start_time}")
             return last_article.pub_date
@@ -81,8 +82,12 @@ class PortfolioStockSerializer(serializers.ModelSerializer):
         date_from = timezone.now() - timedelta(days=7)
         articles = self.articles
         if articles:
+            filtered_articles = [
+                article for article in articles if article.pub_date >= date_from
+            ]
+            count = len(filtered_articles)
             print(f"get_articles_last_7d: {time.time()-start_time}")
-            return articles.filter(pub_date__gte=date_from).count()
+            return count
         print(f"get_articles_last_7d: {time.time()-start_time}")
         return 0
 
