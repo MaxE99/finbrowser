@@ -93,12 +93,12 @@ class PortfolioView(TemplateView, BaseMixin):
         context["stocks"] = portfolio_stocks
         context["selected_portfolio"] = selected_portfolio
         context["user_portfolios"] = Portfolio.objects.filter(user=self.request.user)
-        filtered_content = list(filtered_content)
+        filtered_content_list = list(filtered_content)
         context["analysis"] = paginator_create(
             self.request,
             [
                 article
-                for article in filtered_content
+                for article in filtered_content_list
                 if article.source.content_type == "Analysis"
             ],
             25,
@@ -108,7 +108,7 @@ class PortfolioView(TemplateView, BaseMixin):
             self.request,
             [
                 article
-                for article in filtered_content
+                for article in filtered_content_list
                 if article.source.content_type == "Commentary"
             ],
             25,
@@ -118,7 +118,7 @@ class PortfolioView(TemplateView, BaseMixin):
             self.request,
             [
                 article
-                for article in filtered_content
+                for article in filtered_content_list
                 if article.source.content_type == "News"
             ],
             25,
@@ -159,12 +159,14 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
         context["selected_portfolio"] = selected_portfolio
         context["user_portfolios"] = Portfolio.objects.filter(user=self.request.user)
         pagination_time = time.time()
-        filtered_content = list(filtered_content)
+        list_time = time.time()
+        filtered_content_list = list(filtered_content)
+        print(f"List cost: {time.time()-list_time}")
         context["analysis"] = paginator_create(
             self.request,
             [
                 article
-                for article in filtered_content
+                for article in filtered_content_list
                 if article.source.content_type == "Analysis"
             ],
             25,
@@ -174,7 +176,7 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
             self.request,
             [
                 article
-                for article in filtered_content
+                for article in filtered_content_list
                 if article.source.content_type == "Commentary"
             ],
             25,
@@ -184,7 +186,7 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
             self.request,
             [
                 article
-                for article in filtered_content
+                for article in filtered_content_list
                 if article.source.content_type == "News"
             ],
             25,
