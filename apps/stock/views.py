@@ -84,8 +84,10 @@ class PortfolioView(TemplateView, BaseMixin):
             .order_by("stock__ticker")
         )
         q_objects = create_portfolio_search_object(stocks)
-        filtered_content = Article.objects.filter(q_objects).exclude(
-            source__in=selected_portfolio.blacklisted_sources.all()
+        filtered_content = (
+            Article.objects.filter(q_objects)
+            .select_related("source")
+            .exclude(source__in=selected_portfolio.blacklisted_sources.all())
         )
         portfolio_stocks = PortfolioStockSerializer(
             stocks, many=True, context={"filtered_content": filtered_content}
@@ -146,8 +148,10 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
         print(f"Start: {selected_portfolio}")
         start_time = time.time()
         q_objects = create_portfolio_search_object(stocks)
-        filtered_content = Article.objects.filter(q_objects).exclude(
-            source__in=selected_portfolio.blacklisted_sources.all()
+        filtered_content = (
+            Article.objects.filter(q_objects)
+            .select_related("source")
+            .exclude(source__in=selected_portfolio.blacklisted_sources.all())
         )
         print(f"Filtering cost: {time.time()-start_time}")
         start_time = time.time()
@@ -162,22 +166,16 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
         filtered_content_list = list(filtered_content)
         print(f"List cost: {time.time()-list_time}")
         list_filtering_time = time.time()
-        analysis_content = [
-            article
-            for article in filtered_content_list
-            if article.source.content_type == "Analysis"
-        ]
-        commentary_content = [
-            article
-            for article in filtered_content_list
-            if article.source.content_type == "Commentary"
-        ]
-
-        news_content = [
-            article
-            for article in filtered_content_list
-            if article.source.content_type == "News"
-        ]
+        analysis_content = []
+        commentary_content = []
+        news_content = []
+        for article in filtered_content_list:
+            if article.source.content_type == "Analysis":
+                analysis_content.append(article)
+            elif article.source.content_type == "Commentary":
+                commentary_content.append(article)
+            else:
+                news_content.append(article)
         print(f"list filtering cost: {time.time()-list_filtering_time}")
         pagination_time = time.time()
         context["analysis"] = paginator_create(
