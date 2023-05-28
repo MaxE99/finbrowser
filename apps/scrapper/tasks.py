@@ -34,12 +34,6 @@ from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
 from apps.source.models import Source
-from apps.scrapper.web_crawler import (
-    crawl_thegeneralist,
-    crawl_ben_evans,
-    crawl_meritechcapital,
-    crawl_stockmarketnerd,
-)
 
 
 s3 = client("s3")
@@ -222,6 +216,7 @@ def scrape_other_websites():
     )
     for source in other_sources:
         feed_url = f"{source.url}feed"
+        print(feed_url)
         create_articles_from_feed(source, feed_url, articles)
 
 
@@ -432,13 +427,15 @@ def delete_tweet_types_empty():
             tweet_type.delete()
 
 
+@shared_task
+def calc_sim_sources():
+    Source.objects.calc_similiar_sources()
+
+
 # =================================================================================
 # Tasks that need to be used from time to time
 # =================================================================================
 
-# @shared_task
-# def calc_sim_sources():
-#     Source.objects.calc_similiar_sources()
 
 # @shared_task
 # def stocks_create_all_companies_json():
