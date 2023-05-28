@@ -212,7 +212,6 @@ def create_articles_from_feed(source, feed_url, articles):
                     pub_date=pub_date,
                 )
                 if article_exists:
-                    print(article_exists)
                     break
             except Exception as _:
                 continue
