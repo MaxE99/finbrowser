@@ -206,11 +206,16 @@ def scrape_seekingalpha():
 
 @shared_task
 def scrape_other_websites():
+    print("scrape_other_websites")
+    print(
+        Source.objects.filter(website=get_object_or_404(Website, name="Other")).count()
+    )
     other_sources = (
         Source.objects.filter(website=get_object_or_404(Website, name="Other"))
         .exclude(external_id__isnull=False)
         .only("source_id", "url", "website")
     )
+    print(other_sources.count())
     articles = Article.objects.filter(source__in=other_sources).only(
         "title", "pub_date", "source", "link"
     )
