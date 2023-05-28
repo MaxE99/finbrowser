@@ -14,8 +14,6 @@ class SourceManager(models.Manager):
                 score = 0
                 if sim_source.sector == source.sector:
                     score += 5
-                if sim_source.sector in source.sector.sim_sectors.all():
-                    score += 3
                 if sim_source.content_type == source.content_type:
                     score += 3
                 if source.top_source and sim_source.top_source == source.top_source:
@@ -34,7 +32,7 @@ class SourceManager(models.Manager):
                         score += 1
                 for tag in sim_source.tags.all():
                     if tag in source.tags.all():
-                        score += 5
+                        score += 3
                 sim_dict[sim_source.source_id] = score
             similiar_sources = {
                 k: v
@@ -46,42 +44,6 @@ class SourceManager(models.Manager):
             for k, v in similiar_sources.items():
                 calc_sources.append(k)
             self.filter(pk=source.source_id).first().sim_sources.set(calc_sources)
-
-    # def calc_similiar_sources(self, source):
-    #     sim_dict = {}
-    #     for sim_source in self.all().exclude(source_id=source.source_id):
-    #         score = 0
-    #         if sim_source.sector == source.sector:
-    #             score += 5
-    #         if sim_source.content_type == source.content_type:
-    #             score += 3
-    #         if source.top_source and sim_source.top_source == source.top_source:
-    #             score += 3
-    #         if sim_source.website == source.website:
-    #             score += 2
-    #         if sim_source.paywall == source.paywall:
-    #             score += 2
-    #         if source.ammount_of_ratings > 5:
-    #             if abs(source.average_rating - sim_source.average_rating) < 0.5:
-    #                 score += 1
-    #             if (
-    #                 abs(source.ammount_of_ratings - sim_source.ammount_of_ratings)
-    #                 < source.ammount_of_ratings / 10
-    #             ):
-    #                 score += 1
-    #         for tag in sim_source.tags.all():
-    #             if tag in source.tags.all():
-    #                 score += 5
-    #         sim_dict[sim_source] = score
-    #     similiar_sources = {
-    #         k: v
-    #         for k, v in sorted(
-    #             sim_dict.items(), key=lambda item: item[1], reverse=True
-    #         )[0:10]
-    #     }
-    #     for k, v in similiar_sources.items():
-    #         source.sim_sources.add(k)
-    #     source.save()
 
     def filter_subscribed_sources_by_content_type(self, user):
         subscribed_sources = self.filter_by_subscription(user)

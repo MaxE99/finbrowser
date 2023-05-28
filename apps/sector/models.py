@@ -8,9 +8,6 @@ class Sector(models.Model):
     sector_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(unique=True)
-    sim_sectors = models.ManyToManyField(
-        "self", symmetrical=False, related_name="similiar_to", blank=True
-    )
 
     class Meta:
         ordering = ("name",)

@@ -20,6 +20,9 @@ class SourceTag(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    class Meta:
+        ordering = ("name",)
+
 
 class Source(models.Model):
     PAYWALL_CHOICES = [("Yes", "Yes"), ("Semi", "Semi"), ("No", "No")]
