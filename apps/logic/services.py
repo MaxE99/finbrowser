@@ -166,7 +166,7 @@ def bulk_create_articles_and_notifications(creation_list):
         new_articles = [
             Article(
                 title=article_new["title"][:500],
-                link=article_new["link"],
+                link=article_new["link"][:500],
                 pub_date=article_new["pub_date"],
                 source=article_new["source"],
             )
