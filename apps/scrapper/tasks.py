@@ -18,6 +18,7 @@ from django.core.cache import cache
 from django.utils import timezone
 from django.template.defaultfilters import slugify
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 
 
 # Local imports
@@ -29,12 +30,15 @@ from apps.logic.services import (
     twitter_create_api_settings,
     tweet_type_create,
     article_creation_check,
+    get_substack_info,
 )
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
-from apps.source.models import Source
+from apps.source.models import Source, SourceRating
 
+
+User = get_user_model()
 
 s3 = client("s3")
 
@@ -187,7 +191,7 @@ def scrape_substack():
     for source in substack_sources:
         feed_url = f"{source.url}feed"
         create_articles_from_feed(source, feed_url, articles)
-        sleep(15)
+        sleep(6)
 
 
 @shared_task
@@ -206,22 +210,16 @@ def scrape_seekingalpha():
 
 @shared_task
 def scrape_other_websites():
-    print("scrape_other_websites")
-    print(
-        Source.objects.filter(website=get_object_or_404(Website, name="Other")).count()
-    )
     other_sources = (
         Source.objects.filter(website=get_object_or_404(Website, name="Other"))
         .exclude(external_id__isnull=False)
         .only("source_id", "url", "website")
     )
-    print(other_sources.count())
     articles = Article.objects.filter(source__in=other_sources).only(
         "title", "pub_date", "source", "link"
     )
     for source in other_sources:
         feed_url = f"{source.url}feed"
-        print(feed_url)
         create_articles_from_feed(source, feed_url, articles)
 
 
@@ -435,6 +433,265 @@ def delete_tweet_types_empty():
 @shared_task
 def calc_sim_sources():
     Source.objects.calc_similiar_sources()
+
+
+@shared_task
+def substack_scrape_accounts():
+    new_substack_sources = [
+        "https://outliers.substack.com/",
+        "https://theglobalinvestor.substack.com/",
+        "https://wtirealist.substack.com/",
+        "https://thechipletter.substack.com/",
+        "https://europeantech.substack.com/",
+        "https://augustusville.substack.com/",
+        "https://fivepoint.substack.com/",
+        "https://locuza.substack.com/",
+        "https://genuineimpact.substack.com/",
+        "https://hfir.substack.com/",
+        "https://indrastocks.substack.com/",
+        "https://mattbiotech.substack.com/",
+        "https://underfollowedstocks.substack.com/",
+        "https://moderngrowthinvesting.substack.com/",
+        "https://borlaug.substack.com/",
+        "https://pantherresearch.substack.com/",
+        "https://cgcholdings.substack.com/",
+        "https://exploresemis.substack.com/",
+        "https://d2d.substack.com/",
+        "https://newsletter.pragmaticengineer.com/",
+        "https://www.platformaeronaut.com/",
+        "https://retailbull.substack.com/",
+        "https://grizzleresearch.substack.com/",
+        "https://equitysearch.substack.com/",
+        "https://picoliniecapital.substack.com/",
+        "https://clouddb.substack.com/",
+        "https://ninetofiveinvesting.substack.com/",
+        "https://toohardpile.substack.com/",
+        "https://dirtybubblemedia.substack.com/",
+        "https://johndizard.substack.com/",
+        "https://robertbryce.substack.com/",
+        "https://www.alphaletter.co/",
+        "https://www.onlycfo.io/",
+        "https://toffcap.substack.com/",
+        "https://mwangocapital.substack.com/",
+        "https://chitchatmoney.substack.com/",
+        "https://beachman.substack.com/",
+        "https://www.fairwayresearch.com/",
+        "https://icemancapital.substack.com/",
+        "https://scuttleblurb.substack.com/",
+        "https://the10thman.substack.com/",
+        "https://sleepwell.substack.com/",
+        "https://www.business-breakdowns.com/",
+        "https://www.bestanchorstocks.com/",
+        "https://lukewolgram.substack.com/",
+        "https://calvinfroedge.substack.com/",
+        "https://getbenchmark.substack.com/",
+        "https://www.asiancenturystocks.com/",
+        "https://edfin.substack.com/",
+        "https://latamstocks.substack.com/",
+        "https://irvingsoh.substack.com/",
+        "https://ianbezek.substack.com/",
+        "https://www.canadiandividendinvesting.com/",
+        "https://insiderideas.substack.com/",
+        "https://ideabrunch.substack.com/",
+        "https://gordianknot.substack.com/",
+        "https://8percentpa.substack.com/",
+        "https://aisupremacy.substack.com/",
+        "https://alaric.substack.com/",
+        "https://breeleycapital.substack.com/",
+        "https://iggyoninvesting.substack.com/",
+        "https://moderninvesting.substack.com/",
+        "https://aletteraday.substack.com/",
+        "https://speedwellsnippets.substack.com/",
+        "https://hurdlerate.substack.com/",
+        "https://microcapnewsletter.substack.com/",
+        "https://tinystockninja.substack.com/",
+        "https://zippycapital.substack.com/",
+        "https://www.capitalemployed.com/",
+        "https://thedailyuncover.substack.com/",
+        "https://investing501.substack.com/",
+        "https://pettycash.substack.com/",
+        "https://leftfieldinvesting.substack.com/",
+        "https://canadianvaluestocks.substack.com/",
+        "https://valueinthewild.substack.com/",
+        "https://www.multibaggernuggets.com/",
+        "https://moram.substack.com/",
+        "https://altaycap.substack.com/",
+        "https://undervaluedjapan.substack.com/",
+        "https://www.sinification.com/",
+        "https://twebs.substack.com/",
+        "https://canuckanalyst.substack.com/",
+        "https://bondblogger.substack.com/",
+        "https://www.fxmacro.info/",
+        "https://librariancapital.substack.com/",
+        "https://johanlunau.substack.com/",
+        "https://conservalue.substack.com/",
+        "https://compoundingcuriosity.substack.com/",
+        "https://www.clarksquarecapital.com/",
+        "https://citrini.substack.com/",
+        "https://thedatasource.substack.com/",
+        "https://pingwest.substack.com/",
+        "https://www.blueflag.io/",
+        "https://www.realchinacharts.com/",
+        "https://dataobservatory.substack.com/",
+        "https://qiwang.substack.com/",
+        "https://contrarianpod.substack.com/",
+        "https://ironsidesmacro.substack.com/",
+        "https://www.consumeyourowntechinvesting.com/",
+        "https://frenchhiddenchampions.substack.com/",
+        "https://stocksafari.substack.com/",
+        "https://findingmoatsinternational.substack.com/",
+        "https://emergingmarketskeptic.substack.com/",
+        "https://eloyfernandez.substack.com/",
+        "https://dantescapital.substack.com/",
+        "https://www.stockduediligence.com/",
+        "https://thegeneralist.substack.com/",
+        "https://holdco.substack.com/",
+        "https://www.readthehypothesis.com/",
+        "https://guastywinds.substack.com/",
+        "https://erictopol.substack.com/",
+        "https://partnershipinvesting.substack.com/",
+        "https://www.konichivalue.com/",
+        "https://smidcapdeepdives.substack.com/",
+        "https://largecapdeepdives.substack.com/",
+        "https://japanoptimist.substack.com/",
+        "https://investingwithwes.substack.com/",
+        "https://investmentmarathon.substack.com/",
+        "https://bradmunchen.substack.com/",
+        "https://philo.substack.com/",
+        "https://www.maxfieldonbanks.com/",
+        "https://maverickequityresearch.substack.com/",
+        "https://mathnotmagic.substack.com/",
+        "https://martinshkreli.substack.com/",
+        "https://mazwoodcap.substack.com/",
+        "https://stockpicking.substack.com/",
+        "https://natevalue.substack.com/",
+        "https://newmooncap.substack.com/",
+        "https://thelastbearstanding.substack.com/",
+        "https://blog.variantperception.com/",
+        "https://klementoninvesting.substack.com/",
+        "https://porchester.substack.com/",
+        "https://vanck.substack.com/",
+        "https://patchesakf.substack.com/",
+        "https://theovershoot.co/",
+        "https://oscar100.substack.com/",
+        "https://kairoscapeng.substack.com/",
+        "https://orientalvalue.substack.com/",
+        "https://openinsights.substack.com/",
+        "https://onefootbars.substack.com/",
+        "https://sleepwellinvestments.substack.com/",
+        "https://semiconalpha.substack.com/",
+        "https://quiddityadvisors.substack.com/",
+        "https://morethanmoore.substack.com/",
+        "https://enterprisinginvestor.substack.com/",
+        "https://rationalwalk.substack.com/",
+        "https://stoicvestor.substack.com/",
+        "https://superfluousvalue.substack.com/",
+        "https://tachytelic.substack.com/",
+        "https://www.tker.co/",
+        "https://treasurehunting.substack.com/",
+        "https://turningroughstones.substack.com/",
+        "https://valueinvest.substack.com/",
+        "https://kingswell.substack.com/",
+        "https://valueteddy.substack.com/",
+        "https://wangxiangwei.substack.com/",
+        "https://www.thewolfofharcourtstreet.com/",
+        "https://luisepazmino.substack.com/",
+        "https://marcelvanoost.substack.com/",
+        "https://apac1connectingthedotsinfintech.substack.com/",
+        "https://marcelvanoostfintechlatam.substack.com/",
+        "https://financialskeptic.substack.com/",
+        "https://wintergems.substack.com/",
+        "https://eaglepointcapital.substack.com/",
+        "https://www.marginofsafetyinvesting.com/",
+        "https://specialsituationinvesting.substack.com/",
+        "https://thecoaltrader.substack.com/",
+        "https://investacus.substack.com/",
+        "https://valuevultures.substack.com/",
+        "https://acidinvestments.substack.com/",
+        "https://unfairadvantagecapital.substack.com/",
+        "https://emilb.substack.com/",
+        "https://sxcoal.substack.com/",
+        "https://concoda.substack.com/",
+        "https://systvest.substack.com/",
+        "https://blackopalfunds.substack.com/",
+        "https://dough.substack.com/",
+        "https://heavymoatinvestments.substack.com/",
+        "https://www.0to1stockmarket.com/",
+        "https://brightideas44.substack.com/",
+        "https://www.stockmarketnerd.com/",
+        "https://jaycurrie.substack.com/",
+        "https://roussinfinancial.substack.com/",
+        "https://www.mostlymetrics.com/",
+        "https://marketsentiment.substack.com/",
+        "https://www.appeconomyinsights.com/",
+        "https://www.from100kto1m.com/",
+        "https://stockaugur.substack.com/",
+        "https://pillarsandprofits.substack.com/",
+        "https://pricetowealth.substack.com/",
+        "https://unconventionalvalue.substack.com/",
+        "https://eithersquare.substack.com/",
+        "https://www.palantirbullets.com/",
+        "https://newsletter.tidalwaveresearch.com/",
+        "https://sacks.substack.com/",
+        "https://dailypalantir.substack.com/",
+        "https://breakingsaas.substack.com/",
+        "https://specialsituationsglobalequities.substack.com/",
+        "https://microinvestor.substack.com/",
+        "https://www.pyramidsandpagodas.com/",
+        "https://whiteatlas.substack.com/",
+        "https://altaycap.substack.com/",
+        "https://nicoper.substack.com/",
+        "https://taurustrader.substack.com/",
+        "https://roiss.substack.com/",
+        "https://themikrokap.substack.com/",
+        "https://jimmystone.substack.com/",
+        "https://superjoost.substack.com/",
+        "https://gamedevreports.substack.com/",
+        "https://platformpapers.substack.com/",
+        "https://hitpoints.substack.com/",
+        "https://newsletter.gamediscover.co/",
+        "https://gamemakers.substack.com/",
+        "https://luweiming.substack.com/",
+        "https://www.fintechfusion.io/",
+        "https://simplestockreport.substack.com/",
+        "https://bensparham.substack.com/",
+        "https://mattstoller.substack.com/",
+        "https://ericthomson.substack.com/",
+        "https://valueinvestingonepagers.substack.com/",
+        "https://philbak.substack.com/",
+        "https://bonnerprivateresearch.substack.com/",
+        "https://mcdinvestments.substack.com/",
+        "https://briefthoughts.substack.com/",
+        "https://www.acutecondition.com/",
+        "https://lex.substack.com/",
+        "https://aika.substack.com/",
+        "https://cardsftw.substack.com/",
+    ]
+    for source_url in new_substack_sources:
+        try:
+            print(source_url)
+            # get name and url to profile image
+            name, img_url = get_substack_info(source_url)
+            source = Source.objects.create(
+                url=source_url,
+                slug=slugify(name),
+                name=name,
+                favicon_path=f"home/favicons/{slugify(name)}.png",
+                paywall="Yes",
+                website=get_object_or_404(Website, name="Substack"),
+            )
+            source_profile_img_create(source, img_url)
+            # add source_rating otherwise 500 error when opening source profile
+            SourceRating.objects.create(
+                user=get_object_or_404(User, email="me-99@live.de"),
+                source=source,
+                rating=7,
+            )
+            sleep(5)
+        except Exception as error:
+            print(f"Scrapping {source_url} has caused this error: ")
+            print(error)
+            continue
 
 
 # =================================================================================

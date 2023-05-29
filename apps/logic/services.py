@@ -2,8 +2,9 @@
 import html
 import os
 import re
-from urllib.request import Request, urlopen
-import urllib.request
+from urllib.request import Request, urlopen, urlretrieve
+import requests
+from bs4 import BeautifulSoup
 
 import xml.etree.ElementTree as ET
 from io import BytesIO
@@ -224,7 +225,7 @@ s3 = boto3.client("s3")
 
 
 def source_profile_img_create(source, file_url):
-    urllib.request.urlretrieve(file_url, "temp_file.png")
+    urlretrieve(file_url, "temp_file.png")
     image = Image.open("temp_file.png")
     output = BytesIO()
     image = image.resize((175, 175))
@@ -240,7 +241,7 @@ def source_profile_img_create(source, file_url):
 
 
 def tweet_img_upload(tweet_type, file_url):
-    urllib.request.urlretrieve(file_url, "temp_file.png")
+    urlretrieve(file_url, "temp_file.png")
     image = Image.open("temp_file.png")
     output = BytesIO()
     image.save(output, format="WEBP", quality=99)
@@ -259,7 +260,7 @@ def tweet_img_upload(tweet_type, file_url):
 
 
 def initial_tweet_img_path_upload(tweet_type, file_url):
-    urllib.request.urlretrieve(file_url, "temp_file.png")
+    urlretrieve(file_url, "temp_file.png")
     image = Image.open("temp_file.png")
     output = BytesIO()
     image.save(output, format="WEBP", quality=99)
@@ -355,6 +356,58 @@ def tweet_type_create(status, twitter_user_id, api):
     tweet_type.save()
     return tweet_type
     # return title, tweet_type
+
+
+def get_largest_icon(icons):
+    largest_size = 0
+    largest_icon_url = None
+
+    for icon in icons:
+        icon_url = icon["href"]
+        sizes = icon.get("sizes")
+
+        if sizes:
+            # Extract the icon size from the 'sizes' attribute
+            icon_size = max(int(size.split("x")[0]) for size in sizes.split())
+
+            if icon_size > largest_size:
+                largest_size = icon_size
+                largest_icon_url = icon_url
+
+    return largest_icon_url
+
+
+def get_substack_info(substack_link):
+    # Send a GET request to the substack page
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
+    }
+    response = requests.get(
+        substack_link,
+        headers=headers,
+        timeout=10,
+    )
+
+    # Create a BeautifulSoup object to parse the HTML content
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    # Find the substack name
+    substack_name = soup.find("title").text.split("|")[0].strip()
+
+    # Find the largest profile image
+    profile_image_url = None
+
+    # Try to get the largest apple-touch-icon
+    apple_touch_icons = soup.find_all("link", rel="apple-touch-icon")
+    if apple_touch_icons:
+        profile_image_url = get_largest_icon(apple_touch_icons)
+    else:
+        # If no apple-touch-icon, try to get the largest normal icon
+        icons = soup.find_all("link", rel="icon")
+        if icons:
+            profile_image_url = get_largest_icon(icons)
+
+    return substack_name, profile_image_url
 
 
 # =================================================================================
