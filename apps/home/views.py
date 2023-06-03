@@ -37,7 +37,7 @@ class GuideView(TemplateView, BaseMixin):
             "Acquired",
             "Business Breakdowns",
             "Portfolio Matters",
-            "Stratechery",
+            "Stratechery - Spotify",
             "The Town with Matthew Belloni",
             "Yet Another Value Channel",
             "The Razor's Edge",
@@ -46,13 +46,13 @@ class GuideView(TemplateView, BaseMixin):
         ]
         twitter = [
             "Rihard Jarc",
-            "Internal Tech Emails.",
+            "Internal Tech Emails",
             "Stream by AlphaSense",
             "Aswath Damodaran",
             "Francis - Analyst 🚢",
             "Forward Cap",
             "In Practise",
-            "*Walter Bloomberg",
+            "Walter Bloomberg",
             "Eric Seufert",
             "Holger Zschaepitz",
         ]
