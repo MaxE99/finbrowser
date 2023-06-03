@@ -21,7 +21,6 @@ class RegistrationSitemaps(Sitemap):
 
 
 class SourceSitemap(Sitemap):
-
     changefreq = "hourly"
     priority = 1.0
     protocol = "https"
@@ -46,7 +45,6 @@ class StockSitemap(Sitemap):
 
 
 class SectorSitemap(Sitemap):
-
     changefreq = "hourly"
     priority = 0.8
     protocol = "https"
@@ -59,7 +57,6 @@ class SectorSitemap(Sitemap):
 
 
 class ContentSitemaps(Sitemap):
-
     changefreq = "hourly"
     priority = 0.9
     protocol = "https"

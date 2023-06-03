@@ -52,7 +52,7 @@ class ArticleManager(models.Manager):
                 | Q(search_vector=stock.short_company_name)
             ).select_related("source", "tweet_type", "source__website")
         return self.filter(
-            Q(title__contains=f"${stock.ticker} ")
+            Q(title__icontains=f"${stock.ticker} ")
             | Q(search_vector=stock.short_company_name)
         ).select_related("source", "tweet_type", "source__website")
 
