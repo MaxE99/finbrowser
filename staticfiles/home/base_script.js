@@ -517,18 +517,34 @@ document.querySelectorAll('.sliderWrapper .slider .subscribeButton').forEach((su
     });
 });
 
+function modifyURLAfterTabSwitch(content_type) {
+    let currentURL = window.location.href;
+    // Check if the URL contains a question mark
+    if (currentURL.includes('?')) {
+        // Remove everything after the question mark
+        currentURL = currentURL.split('?')[0];
+    }
+    // Add the desired query string and hash
+    currentURL += `?${content_type}=1#content`;
+    // Replace the current URL with the modified URL
+    window.history.replaceState({}, document.title, currentURL);
+}
+
 //change tabs
 const tabs = document.querySelectorAll('.tabsContainer button');
 const tabsContent = document.querySelectorAll('.tabsContent');
 
 tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
+    tab.addEventListener('click', (e) => {
         for (let i = 0, j = tabs.length; i < j; i++) {
             tabs[i].classList.remove('activatedTab');
             tabsContent[i].classList.remove('tabsContentActive');
         }
         tabs[tab.dataset.forTab].classList.add('activatedTab');
         tabsContent[tab.dataset.forTab].classList.add('tabsContentActive');
+        if (!['Sources', 'Stocks'].includes(e.target.innerText)) {
+            modifyURLAfterTabSwitch(e.target.innerText.toLowerCase());
+        }
     });
 });
 

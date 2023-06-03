@@ -17,6 +17,17 @@
     font-family: var(--site-Font);
 }
 
+.pageWrapper .desc a {
+    color: var(--primary-fontColor);
+    text-decoration: none;
+}
+
+.pageWrapper .desc img {
+    height: 24px;
+    width: 24px;
+    margin-right: 1rem;
+}
+
 .pageWrapper .sliderHeader {
     display: flex;
     align-items: center;
