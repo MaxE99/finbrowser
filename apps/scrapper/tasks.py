@@ -228,6 +228,7 @@ def scrape_forbes():
     forbes_sources = Source.objects.filter(
         website=get_object_or_404(Website, name="Forbes")
     ).only("source_id", "url", "website")
+    print(forbes_sources)
     articles = Article.objects.filter(source__in=forbes_sources).only(
         "title", "pub_date", "source", "link"
     )
