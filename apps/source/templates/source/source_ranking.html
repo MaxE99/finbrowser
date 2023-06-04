@@ -42,6 +42,12 @@
             <div class="dropdown websiteDropdown">Select Websites
                 <i class="fa-solid fa-chevron-down"></i>
                 <ul class="websiteList">
+                    <li value="Forbes">
+                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,Forbes" %} checked
+                            {% endif %} name="website" value="Forbes"></input>
+                        <img src="{% static 'home/media/forbes_logo.png' %}" alt="Forbes Logo">
+                        Forbes
+                    </li>
                     <li value="SeekingAlpha">
                         <input type="checkbox" {% if search_parameters|check_param_selected:"website,SeekingAlpha" %}
                             checked {% endif %} name="website" value="SeekingAlpha"></input>

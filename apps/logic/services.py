@@ -183,7 +183,7 @@ def create_articles_from_feed(source, feed_url, articles):
         req = Request(
             feed_url,
             headers={
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0"
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
             },
         )
         website_data = urlopen(req)
@@ -214,10 +214,13 @@ def create_articles_from_feed(source, feed_url, articles):
                 )
                 if article_exists:
                     break
-            except Exception as _:
+            except Exception as error:
+                print(error)
                 continue
-    except Exception as _:
+    except Exception as error:
+        print(error)
         pass
+    print(create_article_list)
     bulk_create_articles_and_notifications(create_article_list)
 
 
