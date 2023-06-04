@@ -192,9 +192,9 @@ def create_articles_from_feed(source, feed_url, articles):
         items = ET.fromstring(website_xml).findall(".//item")
         for item in items:
             try:
-                if str(source.website) == "Substack":
+                if str(source.website) in ["Substack", "Forbes"]:
                     title, originial_title, link, pub_date = article_components_get(
-                        item, substack=True
+                        item, description=True
                     )
                     # in previous versions I didn't include the description in the title
                     if articles.filter(

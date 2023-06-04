@@ -224,6 +224,19 @@ def scrape_other_websites():
 
 
 @shared_task
+def scrape_forbes():
+    forbes_sources = Source.objects.filter(
+        website=get_object_or_404(Website, name="Forbes")
+    ).only("source_id", "url", "website")
+    articles = Article.objects.filter(source__in=forbes_sources).only(
+        "title", "pub_date", "source", "link"
+    )
+    for source in forbes_sources:
+        feed_url = f"{source.url}feed"
+        create_articles_from_feed(source, feed_url, articles)
+
+
+@shared_task
 def scrape_spotify():
     client_id = environ.get("SPOTIFY_CLIENT_ID")
     client_secret = environ.get("SPOTIFY_CLIENT_SECRET")

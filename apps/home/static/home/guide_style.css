@@ -22,6 +22,10 @@
     text-decoration: none;
 }
 
+.pageWrapper .desc a:hover {
+    text-decoration: underline;
+}
+
 .pageWrapper .desc img {
     height: 22px;
     width: 22px;
