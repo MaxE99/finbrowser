@@ -412,8 +412,7 @@ def get_substack_info(substack_link):
     return substack_name, profile_image_url
 
 
-def get_forbes_info(forbes_link):
-    # Send a GET request to the substack page
+def get_forbes_profile_img(forbes_link):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
     }
@@ -422,27 +421,14 @@ def get_forbes_info(forbes_link):
         headers=headers,
         timeout=10,
     )
-
-    # Create a BeautifulSoup object to parse the HTML content
     soup = BeautifulSoup(response.text, "html.parser")
-
-    # Find the name
-    name = soup.find("title").text
-
-    # Find the largest profile image
-    profile_image_url = None
-
-    # Try to get the largest apple-touch-icon
-    apple_touch_icons = soup.find_all("link", rel="apple-touch-icon")
-    if apple_touch_icons:
-        profile_image_url = get_largest_icon(apple_touch_icons)
-    else:
-        # If no apple-touch-icon, try to get the largest normal icon
-        icons = soup.find_all("link", rel="icon")
-        if icons:
-            profile_image_url = get_largest_icon(icons)
-
-    return name, profile_image_url
+    profile_img_div = soup.select(".contributor-details__image")
+    # Access the first element in the ResultSet and retrieve the style attribute
+    profile_img_style = profile_img_div[0].get("style")
+    # Extracting the URL without regular expressions
+    start_index = profile_img_style.index("url(") + len("url(")
+    end_index = profile_img_style.index(")")
+    return profile_img_style[start_index:end_index]
 
 
 # =================================================================================
@@ -460,3 +446,36 @@ def get_forbes_info(forbes_link):
 #                 im.save(output, format='WEBP', quality=99)
 #                 output.seek(0)
 #                 s3.upload_fileobj(output, 'finbrowser', os.path.join(settings.FAVICON_FILE_DIRECTORY, f'{image.replace(".png", "").replace("test_imgs/", "")}.webp'))
+
+
+# def get_forbes_info(forbes_link):
+#     # Send a GET request to the substack page
+#     headers = {
+#         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
+#     }
+#     response = requests.get(
+#         forbes_link,
+#         headers=headers,
+#         timeout=10,
+#     )
+
+#     # Create a BeautifulSoup object to parse the HTML content
+#     soup = BeautifulSoup(response.text, "html.parser")
+
+#     # Find the name
+#     name = soup.find("title").text
+
+#     # Find the largest profile image
+#     profile_image_url = None
+
+#     # Try to get the largest apple-touch-icon
+#     apple_touch_icons = soup.find_all("link", rel="apple-touch-icon")
+#     if apple_touch_icons:
+#         profile_image_url = get_largest_icon(apple_touch_icons)
+#     else:
+#         # If no apple-touch-icon, try to get the largest normal icon
+#         icons = soup.find_all("link", rel="icon")
+#         if icons:
+#             profile_image_url = get_largest_icon(icons)
+
+#     return name, profile_image_url

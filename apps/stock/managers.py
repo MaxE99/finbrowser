@@ -9,8 +9,8 @@ class StockManager(models.Manager):
         if len(search_term) > 2:
             return self.filter(
                 Q(ticker__istartswith=search_term)
-                | Q(search_vector=search_term)
                 | Q(short_company_name__istartswith=search_term)
+                | Q(search_vector=search_term)
             ).order_by("ticker")
         return self.filter(ticker__istartswith=search_term).order_by("ticker")
 
