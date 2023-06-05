@@ -31,7 +31,7 @@ from apps.logic.services import (
     tweet_type_create,
     article_creation_check,
     get_substack_info,
-    get_forbes_info,
+    get_forbes_profile_img,
 )
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
@@ -451,13 +451,7 @@ def calc_sim_sources():
 
 @shared_task
 def substack_scrape_accounts():
-    new_substack_sources = [
-        "https://hfir.substack.com/",
-        "https://newsletter.pragmaticengineer.com/",
-        "https://chitchatmoney.substack.com/",
-        "https://thegeneralist.substack.com/",
-        "https://www.stockmarketnerd.com/",
-    ]
+    new_substack_sources = []
     for source_url in new_substack_sources:
         try:
             print(source_url)
@@ -490,127 +484,17 @@ def substack_scrape_accounts():
 
 
 @shared_task
-def forbes_scrape_accounts():
-    new_forbes_sources = [
-        "https://www.forbes.com/sites/davidbirch",
-        "https://www.forbes.com/sites/ronshevlin",
-        "https://www.forbes.com/sites/jeffkauflin",
-        "https://www.forbes.com/sites/ardianwibisono/",
-        "https://www.forbes.com/sites/emilymason",
-        "https://www.forbes.com/sites/boblegters",
-        "https://www.forbes.com/sites/jordanmckee/",
-        "https://www.forbes.com/sites/alexlazarow/",
-        "https://www.forbes.com/sites/phoebeliu-2/",
-        "https://www.forbes.com/sites/danielwebber/",
-        "https://www.forbes.com/sites/stevebanker/",
-        "https://www.forbes.com/sites/jimgorzelany/",
-        "https://www.forbes.com/sites/jamesmorris/",
-        "https://www.forbes.com/sites/bradtempleton/",
-        "https://www.forbes.com/sites/alanohnsman/",
-        "https://www.forbes.com/sites/richardbishop1/",
-        "https://www.forbes.com/sites/deandonovan/",
-        "https://www.forbes.com/sites/alexknapp/",
-        "https://www.forbes.com/sites/benbaldanza/",
-        "https://www.forbes.com/sites/samabuelsamid/",
-        "https://www.forbes.com/sites/stevetengler/",
-        "https://www.forbes.com/sites/edgarsten/",
-        "https://www.forbes.com/sites/russellflannery/",
-        "https://www.forbes.com/sites/neilwinton/",
-        "https://www.forbes.com/sites/jenniferdungs/",
-        "https://www.forbes.com/sites/willyshih/",
-        "https://www.forbes.com/sites/sabbirrangwala/",
-        "https://www.forbes.com/sites/sharonedelson/",
-        "https://www.forbes.com/sites/walterloeb/",
-        "https://www.forbes.com/sites/kevinrozario/",
-        "https://www.forbes.com/sites/shelleykohan/",
-        "https://www.forbes.com/sites/brucejapsen/",
-        "https://www.forbes.com/sites/johnkoetsier/",
-        "https://www.forbes.com/sites/pamdanziger/",
-        "https://www.forbes.com/sites/joanverdon/",
-        "https://www.forbes.com/sites/retailwire/people/matthewstern/",
-        "https://www.forbes.com/sites/markfaithfull/",
-        "https://www.forbes.com/sites/kirimasters/",
-        "https://www.forbes.com/sites/gregpetro/",
-        "https://www.forbes.com/sites/irisdorbian/",
-        "https://www.forbes.com/sites/tiffanylung/",
-        "https://www.forbes.com/sites/patrickbousquet-chavanne/",
-        "https://www.forbes.com/sites/retailwire/people/georgeanderson/",
-        "https://www.forbes.com/sites/laurendebter/",
-        "https://www.forbes.com/sites/randywatts/",
-        "https://www.forbes.com/sites/dennismitzner/",
-        "https://www.forbes.com/sites/rickhelfenbein/",
-        "https://www.forbes.com/sites/christopherwalton/",
-        "https://www.forbes.com/sites/robsalkowitz/",
-        "https://www.forbes.com/sites/jimvinoski/",
-        "https://www.forbes.com/sites/carolynschwaar/",
-        "https://www.forbes.com/sites/paulnoble/",
-        "https://www.forbes.com/sites/amyfeldman/",
-        "https://www.forbes.com/sites/tiriasresearch/people/kevinkrewell/",
-        "https://www.forbes.com/sites/douglasyu/",
-        "https://www.forbes.com/sites/benbaldanza/",
-        "https://www.forbes.com/sites/tedreed/",
-        "https://www.forbes.com/sites/pauliddon/",
-        "https://www.forbes.com/sites/craighooper/",
-        "https://www.forbes.com/sites/harrisonwolf/",
-        "https://www.forbes.com/sites/alexkonrad/",
-        "https://www.forbes.com/sites/charlesbeames/",
-        "https://www.forbes.com/sites/lorenthompson/",
-        "https://www.forbes.com/sites/sverrealvik/",
-        "https://www.forbes.com/sites/robertbryce/",
-        "https://www.forbes.com/sites/kensilverstein/",
-        "https://www.forbes.com/sites/rrapier/",
-        "https://www.forbes.com/sites/davidblackmon/",
-        "https://www.forbes.com/sites/ianpalmer/",
-        "https://www.forbes.com/sites/simonconstable/",
-        "https://www.forbes.com/sites/arielcohen/",
-        "https://www.forbes.com/sites/erikkobayashisolomon/",
-        "https://www.forbes.com/sites/danielmarkind/",
-        "https://www.forbes.com/sites/robday/",
-        "https://www.forbes.com/sites/uhenergy/people/uhenergy/",
-        "https://www.forbes.com/sites/kenrapoza/",
-        "https://www.forbes.com/sites/llewellynking/",
-        "https://www.forbes.com/sites/thebakersinstitute/",
-        "https://www.forbes.com/sites/tilakdoshi/",
-        "https://www.forbes.com/sites/dominicdudley/",
-        "https://www.forbes.com/sites/judeclemente/",
-        "https://www.forbes.com/sites/davidundercoffler/",
-        "https://www.forbes.com/sites/maneetahuja/",
-    ]
-    failed_scrapping = []
-    for source_url in new_forbes_sources:
+def forbes_scrape_profile_img():
+    for source in Source.objects.filter(website__name="Forbes"):
+        print(source)
         try:
-            print(source_url)
-            name, img_url = get_forbes_info(source_url)
-            if (
-                Source.objects.filter(name=name).exists()
-                or Source.objects.filter(slug=slugify(name)).exists()
-            ):
-                name = name + " - Forbes"
-            source = Source.objects.create(
-                url=source_url,
-                slug=slugify(name),
-                name=name,
-                favicon_path=f"home/favicons/{slugify(name)}.png",
-                paywall="Semi",
-                website=get_object_or_404(Website, name="Forbes"),
-                content_type="News",
-            )
+            img_url = get_forbes_profile_img(source.url)
             source_profile_img_create(source, img_url)
-            # add source_rating otherwise 500 error when opening source profile
-            SourceRating.objects.create(
-                user=get_object_or_404(User, email="me-99@live.de"),
-                source=source,
-                rating=7,
-            )
             sleep(5)
         except Exception as error:
-            failed_scrapping.append(source_url)
-            print(f"Scrapping {source_url} has caused this error: ")
+            print(f"Scrapping {source} has caused this error: ")
             print(error)
             continue
-    print("The following sources could not be scrapped: ")
-    for source in failed_scrapping:
-        print(source)
 
 
 # =================================================================================
@@ -728,3 +612,43 @@ def forbes_scrape_accounts():
 #         except Exception as error:
 #             print(error)
 #         Article.objects.filter(article_id__in=ids_of_duplicate_articles).delete()
+
+
+# @shared_task
+# def forbes_scrape_accounts():
+#     new_forbes_sources = []
+#     failed_scrapping = []
+#     for source_url in new_forbes_sources:
+#         try:
+#             print(source_url)
+#             name, img_url = get_forbes_info(source_url)
+#             if (
+#                 Source.objects.filter(name=name).exists()
+#                 or Source.objects.filter(slug=slugify(name)).exists()
+#             ):
+#                 name = name + " - Forbes"
+#             source = Source.objects.create(
+#                 url=source_url,
+#                 slug=slugify(name),
+#                 name=name,
+#                 favicon_path=f"home/favicons/{slugify(name)}.png",
+#                 paywall="Semi",
+#                 website=get_object_or_404(Website, name="Forbes"),
+#                 content_type="News",
+#             )
+#             source_profile_img_create(source, img_url)
+#             # add source_rating otherwise 500 error when opening source profile
+#             SourceRating.objects.create(
+#                 user=get_object_or_404(User, email="me-99@live.de"),
+#                 source=source,
+#                 rating=7,
+#             )
+#             sleep(5)
+#         except Exception as error:
+#             failed_scrapping.append(source_url)
+#             print(f"Scrapping {source_url} has caused this error: ")
+#             print(error)
+#             continue
+#     print("The following sources could not be scrapped: ")
+#     for source in failed_scrapping:
+#         print(source)

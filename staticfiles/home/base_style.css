@@ -1558,15 +1558,15 @@ footer .twitterFollowContainer i {
 
 .smallFormContentWrapper .timeContainer .tooltipContainer .tooltiptext {
     visibility: hidden;
-    width: 12rem;
+    width: 13rem;
     color: #fff;
     text-align: center;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 1rem;
     border-radius: 0.45rem;
     position: absolute;
     top: -3.75rem;
     left: 50%;
-    margin-left: -6rem; /* Use half of the width */
+    margin-left: -6.5rem;
 }
 
 .smallFormContentWrapper .timeContainer .tooltipContainer .tooltiptext::after {
