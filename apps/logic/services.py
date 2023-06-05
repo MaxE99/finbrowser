@@ -412,25 +412,6 @@ def get_substack_info(substack_link):
     return substack_name, profile_image_url
 
 
-def get_forbes_profile_img(forbes_link):
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
-    }
-    response = requests.get(
-        forbes_link,
-        headers=headers,
-        timeout=10,
-    )
-    soup = BeautifulSoup(response.text, "html.parser")
-    profile_img_div = soup.select(".contributor-details__image")
-    # Access the first element in the ResultSet and retrieve the style attribute
-    profile_img_style = profile_img_div[0].get("style")
-    # Extracting the URL without regular expressions
-    start_index = profile_img_style.index("url(") + len("url(")
-    end_index = profile_img_style.index(")")
-    return profile_img_style[start_index:end_index]
-
-
 # =================================================================================
 # Functions that need to be used from time to time
 # =================================================================================
