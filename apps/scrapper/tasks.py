@@ -235,6 +235,7 @@ def scrape_forbes():
     for source in forbes_sources:
         feed_url = f"{source.url}feed"
         create_articles_from_feed(source, feed_url, articles)
+        sleep(5)
 
 
 @shared_task
@@ -479,20 +480,6 @@ def substack_scrape_accounts():
             sleep(5)
         except Exception as error:
             print(f"Scrapping {source_url} has caused this error: ")
-            print(error)
-            continue
-
-
-@shared_task
-def forbes_scrape_profile_img():
-    for source in Source.objects.filter(website__name="Forbes"):
-        print(source)
-        try:
-            img_url = get_forbes_profile_img(source.url)
-            source_profile_img_create(source, img_url)
-            sleep(5)
-        except Exception as error:
-            print(f"Scrapping {source} has caused this error: ")
             print(error)
             continue
 
