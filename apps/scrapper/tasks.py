@@ -30,12 +30,11 @@ from apps.logic.services import (
     twitter_create_api_settings,
     tweet_type_create,
     article_creation_check,
-    get_substack_info,
 )
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
 from apps.accounts.models import Website
-from apps.source.models import Source, SourceRating, Sector, SourceTag
+from apps.source.models import Source
 
 
 User = get_user_model()
@@ -450,725 +449,139 @@ def calc_sim_sources():
 
 
 @shared_task
-def substack_scrape_accounts():
-    new_substack_sources = []
-    for source_url in new_substack_sources:
+def create_spotify_sources():
+    from apps.source.models import Sector, SourceRating
+
+    client_id = environ.get("SPOTIFY_CLIENT_ID")
+    client_secret = environ.get("SPOTIFY_CLIENT_SECRET")
+    spotify_sources = [
+        "https://open.spotify.com/show/16iCltJIbl8tB8sBi6SEP3",
+        "https://open.spotify.com/show/5br8q17fDMJx6mmpuTw9SX",
+        "https://open.spotify.com/show/3C0iP88KSoGZk5KNWmuyF1",
+        "https://open.spotify.com/show/0mAhl79iQO2e12j5qdD38d",
+        "https://open.spotify.com/show/7u9GPSNRk2B7vQcjyTrKiV",
+        "https://open.spotify.com/show/7JhOkXo6DKXhmKZh4F7MP4",
+        "https://open.spotify.com/show/2r75HRXpsJraJ3Akyo8kSg",
+        "https://open.spotify.com/show/6E709HRH7XaiZrMfgtNCun",
+        "https://open.spotify.com/show/6AVgt0Cx1Rnzrg2CBbEygM",
+        "https://open.spotify.com/show/4zk8cAxOQFKXJWTxpdMr4C",
+        "https://open.spotify.com/show/6Y1STt6SGDnPc8AdDzGMzn",
+        "https://open.spotify.com/show/3Qbcrw84MDaJ3CZUNuqOxu",
+        "https://open.spotify.com/show/7sLINDEeMqJyxs3h1Cp4Ub",
+        "https://open.spotify.com/show/3q6PrjHVfRzpD2lN1g2XRU",
+        "https://open.spotify.com/show/6Azh5lcMWsfvvMWRMVS9od",
+        "https://open.spotify.com/show/7cRZcoh8fO0uJ9lwruKf4b",
+        "https://open.spotify.com/show/4nrTAYb6qym9HZ1MO84ipz",
+        "https://open.spotify.com/show/0sebfAmGcpda8OsQidlu3L",
+        "https://open.spotify.com/show/3aqGbrhA31njZpzlFt1HyT",
+        "https://open.spotify.com/show/00X0l59Bw9RMRMyKdsLk0H",
+        "https://open.spotify.com/show/7the6Gr79b0W5SMczrAXOC",
+        "https://open.spotify.com/show/5OXBdcyxYWOEcN8Y2aO6v9",
+        "https://open.spotify.com/show/29duM2DReMHe1VjCTFP5S2",
+        "https://open.spotify.com/show/0na7AKJGLDTJYcCDLAvqNQ",
+        "https://open.spotify.com/show/1hBfrTaP5TwpsIvx51fTN9",
+        "https://open.spotify.com/show/4EMek07KPxJYKdGOYiiHDv",
+        "https://open.spotify.com/show/3GiTlGlvvDjmFctw4naowq",
+        "https://open.spotify.com/show/4nzvXIY5HPuJpXPGeEUvkl",
+        "https://open.spotify.com/show/3LGyb7VLIhcCP27ajT0JKQ",
+        "https://open.spotify.com/show/2aqzxxFMfCT7pd52rXXrcZ",
+        "https://open.spotify.com/show/1BdXQH894DNJnI1cTj5X86",
+        "https://open.spotify.com/show/7mXQYIIWfhh2GWjDGxSx3H",
+        "https://open.spotify.com/show/7yMLsm5s8tLtrCQr7bG8wD",
+        "https://open.spotify.com/show/0TYNFdGwFOoBOluuAhSRc0",
+        "https://open.spotify.com/show/7LYeomavBzwgQhJos7qrms",
+        "https://open.spotify.com/show/4a3idqDVFpfOPdNH9fO8nG",
+        "https://open.spotify.com/show/7gzvAJxpeAWLdUjdxunLIu",
+        "https://open.spotify.com/show/3xdVf8ToW0R4nRfcNgwfyC",
+        "https://open.spotify.com/show/2EXhvCQW0IEIDdCWik66tA",
+        "https://open.spotify.com/show/57wZcoxW8oNs5Mq7WZfTs7",
+        "https://open.spotify.com/show/2Uu2IFxc4DdjbTGHsCWLT8",
+        "https://open.spotify.com/show/2LU5CNGlh7vGy1OYW83qco",
+        "https://open.spotify.com/show/1dPPc2EX0MbSwuAaPeXqf3",
+        "https://open.spotify.com/show/7vsf2QkL0P9Ac7dp3HyUg3",
+        "https://open.spotify.com/show/507UG1K6xglIHxuRYjlI1n",
+        "https://open.spotify.com/show/2qrjQTO7wFlkAs6juz1w1W",
+        "https://open.spotify.com/show/4vk2MfVMEAuOnTWUOz6lnE",
+        "https://open.spotify.com/show/1do6Oa0fxKFyw1Yt1IlBIk",
+        "https://open.spotify.com/show/4fjb8YTzHDuPBgDXc3ElkR",
+        "https://open.spotify.com/show/2OkpUUTl7dafPaS0DP0p5Q",
+        "https://open.spotify.com/show/36gVeeoYns1RBASPLhAYeJ",
+        "https://open.spotify.com/show/4QSHBYlMjTwwy1qK2mlM1F",
+        "https://open.spotify.com/show/40JCARVTHpPOq4CmZuDaUN",
+        "https://open.spotify.com/show/1lqdT5BMGiupKpC3j2iUEq",
+        "https://open.spotify.com/show/7fud1Dmg6ZHMPl4aPgkon0",
+        "https://open.spotify.com/show/23H0tOX63xMChV2SErQKnZ",
+        "https://open.spotify.com/show/6o7el5KJdU4HnFI7zg2szp",
+        "https://open.spotify.com/show/7tV2EIrKXXUPxO0jpUaLlX",
+        "https://open.spotify.com/show/2rFbJfhplU2vifyhW00vHx",
+        "https://open.spotify.com/show/7cPWOxfkyb1i8uffx13GDz",
+        "https://open.spotify.com/show/6PNr3ml8nEQotWWavE9kQz",
+        "https://open.spotify.com/show/5gHl65x4AikFNqeEeLowGw",
+        "https://open.spotify.com/show/6zwovuEpg7Q7mDHZMw6UJC",
+        "https://open.spotify.com/show/1sQB9P6FjNTn90rUHZciaT",
+        "https://open.spotify.com/show/7fud1Dmg6ZHMPl4aPgkon0",
+        "https://open.spotify.com/show/4wCAfhgUdspxeMqyi6KZkb",
+        "https://open.spotify.com/show/62eiFvmcWsSPwZQhq2VvMD",
+        "https://open.spotify.com/show/7wv1GJCQHcggXDdMHbhRlY",
+        "https://open.spotify.com/show/0353WGU7UGrRBdqdHNm3K2",
+        "https://open.spotify.com/show/1taxW9jHXvLCu6YCUxliIz",
+        "https://open.spotify.com/show/7eAVfvaAVz7uiXSSQ9HPcQ",
+        "https://open.spotify.com/show/1kYiUtgDcaUoMQjUko7toT",
+        "https://open.spotify.com/show/4TWOlf80GM1Pml8fGUO8KK",
+        "https://open.spotify.com/show/3xoeD59yjQ6R26wONtdQKB",
+        "https://open.spotify.com/show/514P0q3t3AqW38aSCfTUoB",
+        "https://open.spotify.com/show/23pjgFtojffb9ATqmOWoSG",
+        "https://open.spotify.com/show/5NhjpDeHzVlXPVqT9ezKwA",
+        "https://open.spotify.com/show/5qk8RnfIkb3peJJp4dsmvB",
+        "https://open.spotify.com/show/3bh608DbMRZXHaBSjvhvHZ",
+        "https://open.spotify.com/show/4vNumoS1tv284WNs6N8irH",
+        "https://open.spotify.com/show/3qsBrXPv7IxyVdHvalT0zK",
+        "https://open.spotify.com/show/5kmaGwX0xXwLl4ozXvW6jP",
+        "https://open.spotify.com/show/2Y8gp7izc5VcNS7OJKD8QN",
+        "https://open.spotify.com/show/7xF1lww4OCT34x7lK9iW52",
+        "https://open.spotify.com/show/2jjxMaf00TlgajwqOd9wH5",
+        "https://open.spotify.com/show/75qCFpgMCZeL1h1bLOaDUF",
+        "https://open.spotify.com/show/5LWZLmUqnK2A9QKHKrkDWI",
+        "https://open.spotify.com/show/3rdqvzvAvXv0LxnR8c93AK",
+        "https://open.spotify.com/show/2NG24rv3Mv09EMsIc6rVfs",
+        "https://open.spotify.com/show/30Uj92DHhMF2hP0uXyFt3l",
+        "https://open.spotify.com/show/6RhitW2pBXlhKnXPVFF5Ok",
+        "https://open.spotify.com/show/5mWMlenq9TcEZlgXey2qKY",
+        "https://open.spotify.com/show/5IPy0HvQpAgu0kMjCqqUXS",
+        "https://open.spotify.com/show/6w7pyZbdmMfKVqIn17HQPQ",
+    ]
+    failed_sources = []
+    for source_url in spotify_sources:
         try:
-            print(source_url)
-            name, img_url = get_substack_info(source_url)
-            if (
-                Source.objects.filter(name=name).exists()
-                or Source.objects.filter(slug=slugify(name)).exists()
-            ):
-                name = name + " - Substack"
+            external_id = source_url.split("https://open.spotify.com/show/")[1]
+            spotify = SpotifyAPI(client_id, client_secret)
+            podcaster = spotify.get_podcaster(external_id)
+            name = podcaster["name"]
             source = Source.objects.create(
                 url=source_url,
                 slug=slugify(name),
                 name=name,
-                favicon_path=f"home/favicons/{slugify(name)}.png",
-                paywall="Yes",
-                website=get_object_or_404(Website, name="Substack"),
+                favicon_path=f"home/favicons/{slugify(name)}.webp",
+                paywall="No",
+                website=get_object_or_404(Website, name="Spotify"),
+                content_type="Analysis",
+                sector=get_object_or_404(Sector, name="Generalists"),
             )
-            source_profile_img_create(source, img_url)
+            if "images" in podcaster.keys():
+                source_profile_img_create(source, podcaster["images"][0]["url"])
             # add source_rating otherwise 500 error when opening source profile
             SourceRating.objects.create(
                 user=get_object_or_404(User, email="me-99@live.de"),
                 source=source,
                 rating=7,
             )
-            sleep(5)
         except Exception as error:
-            print(f"Scrapping {source_url} has caused this error: ")
-            print(error)
+            failed_sources.append(source_url)
+            print(f"Scrapping {source_url} failed due to {error}")
             continue
-
-
-@shared_task
-def seeking_alpha_scrape_accounts():
-    new_sources = [
-        {
-            "url": "https://seekingalpha.com/author/best-anchor-stocks",
-            "name": "Best Anchor Stocks",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/055/205/028/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Tech",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/riyado-sofian",
-            "name": "Riyado Sofian",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/050/787/769/extra_large_pic.png",
-            "rating": 9,
-            "sector": "Tech",
-            "tags": ["Deep-Dives", "Business Breakdowns"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/busted-ipo-forum",
-            "name": "Busted IPO Forum",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/048/630/172/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/carles-diaz-caron",
-            "name": "Carles Diaz Caron",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/049/210/517/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Dividend Investor"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/jonquil-capital",
-            "name": "Carles Diaz Caron",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/047/512/389/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/danil-sereda",
-            "name": "Danil Sereda",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/049/513/514/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/out-of-ignorance",
-            "name": "Out of Ignorance",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/003/024/641/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Biotech",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/stephen-tobin",
-            "name": "Stephen Tobin",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/047/437/728/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/philip-eriksson",
-            "name": "Philip Eriksson",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/051/580/423/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/galzus-research",
-            "name": "Galzus Research",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/055/330/420/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Biotech",
-            "tags": ["Industry Insider"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/biotechvalley-insights",
-            "name": "BiotechValley Insights",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/049/426/560/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Biotech",
-            "tags": ["Industry Insider"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/david-zanoni",
-            "name": "David Zanoni",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/000/371/238/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/vision-and-value",
-            "name": "Vision and Value",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/047/560/554/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/michigan-value-investor",
-            "name": "Michigan Value Investor",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/000/213/542/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/d-s-leach-c-e-leach",
-            "name": "D.S. Leach & C.E. Leach",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/022/419/601/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/welbeck-ash-research",
-            "name": "Welbeck Ash Research",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/055/358/919/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/gs-analytics",
-            "name": "GS Analytics",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/015/666/062/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/the-profit-detective",
-            "name": "The Profit Detective",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/058/425/273/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/gold-panda",
-            "name": "Gold Panda",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/036/303/466/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/double-dividend-stocks",
-            "name": "Double Dividend Stocks",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/000/418/011/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Dividend Investor"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/zach-bristow",
-            "name": "Zach Bristow",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/051/411/522/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/more-ideas-than-money",
-            "name": "More Ideas Than Money",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/018/013/272/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/courage-conviction-investing",
-            "name": "Courage & Conviction Investing",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/001/099/377/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Small Cap",
-            "tags": ["Financial Analyst"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/stephen-ayers",
-            "name": "Stephen Ayers",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/048/050/289/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Biotech",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/patrik-mackovych",
-            "name": "Patrik Mackovych",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/050/644/761/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Financial Analyst"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/deep-tech-insights",
-            "name": "Deep Tech Insights",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/055/230/498/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Tech",
-            "tags": ["Financial Analyst"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/cameron-fen",
-            "name": "Cameron Fen",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/004/043/931/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/malak-investment-ideas",
-            "name": "Malak Investment Ideas",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/057/791/104/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Former Finance Career"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/stratos-capital-partners",
-            "name": "Stratos Capital Partners",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/025/338/263/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Research Service", "Senior Finance Role"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/ahan-analytics",
-            "name": "Ahan Analytics",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/000/029/389/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/ian-bezek",
-            "name": "Ian Bezek",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/000/171/953/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Former Finance Career"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/raul-shah",
-            "name": "Raul Shah",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/034/511/865/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/fernando-batista-costa",
-            "name": "Fernando Batista Costa",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/053/529/963/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/daan-rijnberk",
-            "name": "Daan Rijnberk",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/055/767/760/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/elliott-gue",
-            "name": "Elliott Gue",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/000/470/666/extra_large_pic.png",
-            "rating": 9,
-            "sector": "Energy",
-            "tags": ["Deep-Dives", "Business Breakdowns"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/jim-sloan",
-            "name": "Jim Sloan",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/000/546/142/extra_large_pic.png",
-            "rating": 9,
-            "sector": "Generalists",
-            "tags": ["Company Specialist"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/goldstreetbets-research",
-            "name": "GoldStreetBets Research",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/056/953/874/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Materials",
-            "tags": ["Former Finance Career"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/istj-investor",
-            "name": "ISTJ Investor",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/008/082/481/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/lane-simonian",
-            "name": "Lane Simonian",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/023/872/453/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Biotech",
-            "tags": ["Industry Insider"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/from-growth-to-value",
-            "name": "From Growth to Value",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/038/067/716/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Tech",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/column-research",
-            "name": "Column Research",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/051/776/427/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/cook-capital-management",
-            "name": "Cook Capital Management",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/031/633/755/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Special Situations"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/the-energy-realist",
-            "name": "The Energy Realist",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/052/907/151/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Energy",
-            "tags": ["Chartered Financial Analyst (CFA)"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/john-overstreet",
-            "name": "John Overstreet",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/001/066/978/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/oyat",
-            "name": "Oyat",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/019/065/331/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Investment Fund"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/r-paul-drake",
-            "name": "R. Paul Drake",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/049/965/383/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Housing & REITs",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/deep-value-ideas",
-            "name": "Deep Value Ideas",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/049/694/823/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Dividend Investor", "Value Investor"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/eugenio-catone",
-            "name": "Eugenio Catone",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/056/207/090/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/inversiones-apartado",
-            "name": "Inversiones Apartado",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/049/792/172/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Energy",
-            "tags": ["LATAM Expert"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/ip-banking-research",
-            "name": "IP Banking Research",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/032/904/585/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Financials",
-            "tags": ["Special Situations"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/damon-judd",
-            "name": "Damon Judd",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/000/329/016/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/rob-barnett",
-            "name": "Rob Barnett",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/006/691/401/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/sarel-oberholster",
-            "name": "Sarel Oberholster",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/000/488/424/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Deep-Dives"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/the-affluent-tortoise",
-            "name": "The Affluent Tortoise",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/007/506/841/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Value Investor"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/siyu-li",
-            "name": "Siyu Li",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/000/034/047/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/tian-li",
-            "name": "Tian Li",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/055/453/340/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/tomas-andrade-campanini",
-            "name": "Tomas Andrade Campanini",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/051/700/268/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Small Cap",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/the-wealth-wizard",
-            "name": "The Wealth Wizard",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/058/065/543/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Biotech",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/jeremy-lakosh",
-            "name": "Jeremy Lakosh",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/020/858/741/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Dividend Investor"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/ivo-kolchev",
-            "name": "Ivo Kolchev",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/044/733/396/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/derek-pitman-betsy-yang",
-            "name": "Derek Pitman & Betsy Yang",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/049/482/691/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/ufd-capital",
-            "name": "UFD Capital",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/057/844/100/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Investment Advisory"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/oakoff-investments",
-            "name": "Oakoff Investments",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/053/838/465/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Financial Analyst"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/herding-value",
-            "name": "Herding Value",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/048/469/061/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/david-ksir",
-            "name": "David Ksir",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/057/823/937/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Housing & REITs",
-            "tags": ["Former Finance Career"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/rational-expectations",
-            "name": "Rational Expectations",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/000/434/482/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/zmk-capital",
-            "name": "ZMK Capital",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/037/078/886/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/nexus-research",
-            "name": "Nexus Research",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/049/821/292/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Tech",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/the-pineapple-investor",
-            "name": "The Pineapple Investor",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/048/157/999/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/simple-digressions",
-            "name": "Simple Digressions",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/000/243/441/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Materials",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/bellasooa-research",
-            "name": "Bellasooa Research",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/056/362/683/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["EU Expert"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/kgr-ventures",
-            "name": "KGR Ventures",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/005/135/241/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["China Expert"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/c-c-abbott",
-            "name": "C.C. Abbott",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/047/985/150/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Biotech",
-            "tags": ["Industry Insider"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/david-alton-clark",
-            "name": "David Alton Clark",
-            "profile_pic": "https://static.seekingalpha.com/images/users_profile/000/790/828/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/bang-for-the-buck",
-            "name": "Bang for the Buck",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/048/701/869/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Materials",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/joseph-l-shaefer",
-            "name": "Joseph L. Shaefer",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/000/142/982/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Materials",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/christoph-liu",
-            "name": "Christoph Liu",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/049/419/486/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["EU Expert"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/looking-for-diogenes",
-            "name": "Looking For Diogenes",
-            "profile_pic": "https://static3.seekingalpha.com/images/users_profile/003/561/631/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/edward-zhang",
-            "name": "Edward Zhang",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/048/023/073/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Biotech",
-            "tags": [],
-        },
-        {
-            "url": "https://seekingalpha.com/author/labutes-ir",
-            "name": "Labutes IR",
-            "profile_pic": "https://static1.seekingalpha.com/images/users_profile/001/104/021/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["EU Expert", "Former Finance Career"],
-        },
-        {
-            "url": "https://seekingalpha.com/author/liang-zhao-cfa",
-            "name": "Liang Zhao, CFA",
-            "profile_pic": "https://static2.seekingalpha.com/images/users_profile/044/109/686/extra_large_pic.png",
-            "rating": 8,
-            "sector": "Tech",
-            "tags": ["China Expert", "Chartered Financial Analyst (CFA)"],
-        },
-    ]
-
-    failed_scrapping = []
-    for source in new_sources:
-        try:
-            print(source)
-            name_of_new_source = source["name"]
-            created_source = Source.objects.create(
-                url=source["url"],
-                slug=slugify(name_of_new_source),
-                name=name_of_new_source,
-                favicon_path=f"home/favicons/{slugify(name_of_new_source)}.png",
-                paywall="Yes",
-                website=get_object_or_404(Website, name="SeekingAlpha"),
-                content_type="Analysis",
-                sector=get_object_or_404(Sector, name=source["sector"]),
-            )
-            if len(source["tags"]):
-                for tag in source["tags"]:
-                    created_source.tags.add(get_object_or_404(SourceTag, name=tag))
-            source_profile_img_create(created_source, source["profile_pic"])
-            # add source_rating otherwise 500 error when opening source profile
-            SourceRating.objects.create(
-                user=get_object_or_404(User, email="me-99@live.de"),
-                source=created_source,
-                rating=source["rating"],
-            )
-            sleep(5)
-        except Exception as error:
-            failed_scrapping.append(name_of_new_source)
-            print(f"Scrapping {name_of_new_source} has caused this error: ")
-            print(error)
-            continue
-    print("The following sources could not be scrapped: ")
-    for source in failed_scrapping:
+        sleep(3)
+    print("Scrapping failed for these sources")
+    for source in failed_sources:
         print(source)
 
 
@@ -1327,3 +740,86 @@ def seeking_alpha_scrape_accounts():
 #     print("The following sources could not be scrapped: ")
 #     for source in failed_scrapping:
 #         print(source)
+
+
+# @shared_task
+# def seeking_alpha_scrape_accounts():
+#     new_sources = [
+#         # {
+#         #     "url": "https://seekingalpha.com/author/best-anchor-stocks",
+#         #     "name": "Best Anchor Stocks",
+#         #     "profile_pic": "https://static.seekingalpha.com/images/users_profile/055/205/028/extra_large_pic.png",
+#         #     "rating": 8,
+#         #     "sector": "Tech",
+#         #     "tags": [],
+#         # },
+#     ]
+
+#     failed_scrapping = []
+#     for source in new_sources:
+#         try:
+#             print(source)
+#             name_of_new_source = source["name"]
+#             created_source = Source.objects.create(
+#                 url=source["url"],
+#                 slug=slugify(name_of_new_source),
+#                 name=name_of_new_source,
+#                 favicon_path=f"home/favicons/{slugify(name_of_new_source)}.png",
+#                 paywall="Yes",
+#                 website=get_object_or_404(Website, name="SeekingAlpha"),
+#                 content_type="Analysis",
+#                 sector=get_object_or_404(Sector, name=source["sector"]),
+#             )
+#             if len(source["tags"]):
+#                 for tag in source["tags"]:
+#                     created_source.tags.add(get_object_or_404(SourceTag, name=tag))
+#             source_profile_img_create(created_source, source["profile_pic"])
+#             # add source_rating otherwise 500 error when opening source profile
+#             SourceRating.objects.create(
+#                 user=get_object_or_404(User, email="me-99@live.de"),
+#                 source=created_source,
+#                 rating=source["rating"],
+#             )
+#             sleep(5)
+#         except Exception as error:
+#             failed_scrapping.append(name_of_new_source)
+#             print(f"Scrapping {name_of_new_source} has caused this error: ")
+#             print(error)
+#             continue
+#     print("The following sources could not be scrapped: ")
+#     for source in failed_scrapping:
+#         print(source)
+
+
+# @shared_task
+# def substack_scrape_accounts():
+#     new_substack_sources = []
+#     for source_url in new_substack_sources:
+#         try:
+#             print(source_url)
+#             name, img_url = get_substack_info(source_url)
+#             if (
+#                 Source.objects.filter(name=name).exists()
+#                 or Source.objects.filter(slug=slugify(name)).exists()
+#             ):
+#                 name = name + " - Substack"
+#             source = Source.objects.create(
+#                 url=source_url,
+#                 slug=slugify(name),
+#                 name=name,
+#                 favicon_path=f"home/favicons/{slugify(name)}.png",
+#                 paywall="Yes",
+#                 website=get_object_or_404(Website, name="Substack"),
+#             )
+#             source_profile_img_create(source, img_url)
+#             # add source_rating otherwise 500 error when opening source profile
+#             SourceRating.objects.create(
+#                 user=get_object_or_404(User, email="me-99@live.de"),
+#                 source=source,
+#                 rating=7,
+#             )
+#             sleep(5)
+#         except Exception as error:
+#             print(f"Scrapping {source_url} has caused this error: ")
+#             print(error)
+#             continue
