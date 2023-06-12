@@ -379,39 +379,6 @@ def get_largest_icon(icons):
     return largest_icon_url
 
 
-def get_substack_info(substack_link):
-    # Send a GET request to the substack page
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
-    }
-    response = requests.get(
-        substack_link,
-        headers=headers,
-        timeout=10,
-    )
-
-    # Create a BeautifulSoup object to parse the HTML content
-    soup = BeautifulSoup(response.text, "html.parser")
-
-    # Find the substack name
-    substack_name = soup.find("title").text.split("|")[0].strip()
-
-    # Find the largest profile image
-    profile_image_url = None
-
-    # Try to get the largest apple-touch-icon
-    apple_touch_icons = soup.find_all("link", rel="apple-touch-icon")
-    if apple_touch_icons:
-        profile_image_url = get_largest_icon(apple_touch_icons)
-    else:
-        # If no apple-touch-icon, try to get the largest normal icon
-        icons = soup.find_all("link", rel="icon")
-        if icons:
-            profile_image_url = get_largest_icon(icons)
-
-    return substack_name, profile_image_url
-
-
 # =================================================================================
 # Functions that need to be used from time to time
 # =================================================================================
@@ -460,3 +427,36 @@ def get_substack_info(substack_link):
 #             profile_image_url = get_largest_icon(icons)
 
 #     return name, profile_image_url
+
+
+# def get_substack_info(substack_link):
+#     # Send a GET request to the substack page
+#     headers = {
+#         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
+#     }
+#     response = requests.get(
+#         substack_link,
+#         headers=headers,
+#         timeout=10,
+#     )
+
+#     # Create a BeautifulSoup object to parse the HTML content
+#     soup = BeautifulSoup(response.text, "html.parser")
+
+#     # Find the substack name
+#     substack_name = soup.find("title").text.split("|")[0].strip()
+
+#     # Find the largest profile image
+#     profile_image_url = None
+
+#     # Try to get the largest apple-touch-icon
+#     apple_touch_icons = soup.find_all("link", rel="apple-touch-icon")
+#     if apple_touch_icons:
+#         profile_image_url = get_largest_icon(apple_touch_icons)
+#     else:
+#         # If no apple-touch-icon, try to get the largest normal icon
+#         icons = soup.find_all("link", rel="icon")
+#         if icons:
+#             profile_image_url = get_largest_icon(icons)
+
+#     return substack_name, profile_image_url
