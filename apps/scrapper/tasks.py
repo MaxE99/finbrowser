@@ -227,16 +227,19 @@ def scrape_forbes():
     forbes_sources = Source.objects.filter(
         website=get_object_or_404(Website, name="Forbes")
     ).only("source_id", "url", "website")
+    print(forbes_sources.count())
     articles = Article.objects.filter(source__in=forbes_sources).only(
         "title", "pub_date", "source", "link"
     )
     for source in forbes_sources:
+        print(source)
         try:
             feed_url = f"{source.url}feed"
             create_articles_from_feed(source, feed_url, articles)
             sleep(5)
         except Exception as error:
             print(error)
+            print(f"Scrapping of {source} caused the following error: {error}")
             continue
 
 
