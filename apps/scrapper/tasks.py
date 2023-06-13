@@ -231,9 +231,13 @@ def scrape_forbes():
         "title", "pub_date", "source", "link"
     )
     for source in forbes_sources:
-        feed_url = f"{source.url}feed"
-        create_articles_from_feed(source, feed_url, articles)
-        sleep(5)
+        try:
+            feed_url = f"{source.url}feed"
+            create_articles_from_feed(source, feed_url, articles)
+            sleep(5)
+        except Exception as error:
+            print(error)
+            continue
 
 
 @shared_task
@@ -449,140 +453,12 @@ def calc_sim_sources():
 
 
 @shared_task
-def create_spotify_sources():
-    from apps.source.models import Sector, SourceRating
-
-    client_id = environ.get("SPOTIFY_CLIENT_ID")
-    client_secret = environ.get("SPOTIFY_CLIENT_SECRET")
-    spotify_sources = [
-        "https://open.spotify.com/show/16iCltJIbl8tB8sBi6SEP3",
-        "https://open.spotify.com/show/5br8q17fDMJx6mmpuTw9SX",
-        "https://open.spotify.com/show/3C0iP88KSoGZk5KNWmuyF1",
-        "https://open.spotify.com/show/0mAhl79iQO2e12j5qdD38d",
-        "https://open.spotify.com/show/7u9GPSNRk2B7vQcjyTrKiV",
-        "https://open.spotify.com/show/7JhOkXo6DKXhmKZh4F7MP4",
-        "https://open.spotify.com/show/2r75HRXpsJraJ3Akyo8kSg",
-        "https://open.spotify.com/show/6E709HRH7XaiZrMfgtNCun",
-        "https://open.spotify.com/show/6AVgt0Cx1Rnzrg2CBbEygM",
-        "https://open.spotify.com/show/4zk8cAxOQFKXJWTxpdMr4C",
-        "https://open.spotify.com/show/6Y1STt6SGDnPc8AdDzGMzn",
-        "https://open.spotify.com/show/3Qbcrw84MDaJ3CZUNuqOxu",
-        "https://open.spotify.com/show/7sLINDEeMqJyxs3h1Cp4Ub",
-        "https://open.spotify.com/show/3q6PrjHVfRzpD2lN1g2XRU",
-        "https://open.spotify.com/show/6Azh5lcMWsfvvMWRMVS9od",
-        "https://open.spotify.com/show/7cRZcoh8fO0uJ9lwruKf4b",
-        "https://open.spotify.com/show/4nrTAYb6qym9HZ1MO84ipz",
-        "https://open.spotify.com/show/0sebfAmGcpda8OsQidlu3L",
-        "https://open.spotify.com/show/3aqGbrhA31njZpzlFt1HyT",
-        "https://open.spotify.com/show/00X0l59Bw9RMRMyKdsLk0H",
-        "https://open.spotify.com/show/7the6Gr79b0W5SMczrAXOC",
-        "https://open.spotify.com/show/5OXBdcyxYWOEcN8Y2aO6v9",
-        "https://open.spotify.com/show/29duM2DReMHe1VjCTFP5S2",
-        "https://open.spotify.com/show/0na7AKJGLDTJYcCDLAvqNQ",
-        "https://open.spotify.com/show/1hBfrTaP5TwpsIvx51fTN9",
-        "https://open.spotify.com/show/4EMek07KPxJYKdGOYiiHDv",
-        "https://open.spotify.com/show/3GiTlGlvvDjmFctw4naowq",
-        "https://open.spotify.com/show/4nzvXIY5HPuJpXPGeEUvkl",
-        "https://open.spotify.com/show/3LGyb7VLIhcCP27ajT0JKQ",
-        "https://open.spotify.com/show/2aqzxxFMfCT7pd52rXXrcZ",
-        "https://open.spotify.com/show/1BdXQH894DNJnI1cTj5X86",
-        "https://open.spotify.com/show/7mXQYIIWfhh2GWjDGxSx3H",
-        "https://open.spotify.com/show/7yMLsm5s8tLtrCQr7bG8wD",
-        "https://open.spotify.com/show/0TYNFdGwFOoBOluuAhSRc0",
-        "https://open.spotify.com/show/7LYeomavBzwgQhJos7qrms",
-        "https://open.spotify.com/show/4a3idqDVFpfOPdNH9fO8nG",
-        "https://open.spotify.com/show/7gzvAJxpeAWLdUjdxunLIu",
-        "https://open.spotify.com/show/3xdVf8ToW0R4nRfcNgwfyC",
-        "https://open.spotify.com/show/2EXhvCQW0IEIDdCWik66tA",
-        "https://open.spotify.com/show/57wZcoxW8oNs5Mq7WZfTs7",
-        "https://open.spotify.com/show/2Uu2IFxc4DdjbTGHsCWLT8",
-        "https://open.spotify.com/show/2LU5CNGlh7vGy1OYW83qco",
-        "https://open.spotify.com/show/1dPPc2EX0MbSwuAaPeXqf3",
-        "https://open.spotify.com/show/7vsf2QkL0P9Ac7dp3HyUg3",
-        "https://open.spotify.com/show/507UG1K6xglIHxuRYjlI1n",
-        "https://open.spotify.com/show/2qrjQTO7wFlkAs6juz1w1W",
-        "https://open.spotify.com/show/4vk2MfVMEAuOnTWUOz6lnE",
-        "https://open.spotify.com/show/1do6Oa0fxKFyw1Yt1IlBIk",
-        "https://open.spotify.com/show/4fjb8YTzHDuPBgDXc3ElkR",
-        "https://open.spotify.com/show/2OkpUUTl7dafPaS0DP0p5Q",
-        "https://open.spotify.com/show/36gVeeoYns1RBASPLhAYeJ",
-        "https://open.spotify.com/show/4QSHBYlMjTwwy1qK2mlM1F",
-        "https://open.spotify.com/show/40JCARVTHpPOq4CmZuDaUN",
-        "https://open.spotify.com/show/1lqdT5BMGiupKpC3j2iUEq",
-        "https://open.spotify.com/show/7fud1Dmg6ZHMPl4aPgkon0",
-        "https://open.spotify.com/show/23H0tOX63xMChV2SErQKnZ",
-        "https://open.spotify.com/show/6o7el5KJdU4HnFI7zg2szp",
-        "https://open.spotify.com/show/7tV2EIrKXXUPxO0jpUaLlX",
-        "https://open.spotify.com/show/2rFbJfhplU2vifyhW00vHx",
-        "https://open.spotify.com/show/7cPWOxfkyb1i8uffx13GDz",
-        "https://open.spotify.com/show/6PNr3ml8nEQotWWavE9kQz",
-        "https://open.spotify.com/show/5gHl65x4AikFNqeEeLowGw",
-        "https://open.spotify.com/show/6zwovuEpg7Q7mDHZMw6UJC",
-        "https://open.spotify.com/show/1sQB9P6FjNTn90rUHZciaT",
-        "https://open.spotify.com/show/7fud1Dmg6ZHMPl4aPgkon0",
-        "https://open.spotify.com/show/4wCAfhgUdspxeMqyi6KZkb",
-        "https://open.spotify.com/show/62eiFvmcWsSPwZQhq2VvMD",
-        "https://open.spotify.com/show/7wv1GJCQHcggXDdMHbhRlY",
-        "https://open.spotify.com/show/0353WGU7UGrRBdqdHNm3K2",
-        "https://open.spotify.com/show/1taxW9jHXvLCu6YCUxliIz",
-        "https://open.spotify.com/show/7eAVfvaAVz7uiXSSQ9HPcQ",
-        "https://open.spotify.com/show/1kYiUtgDcaUoMQjUko7toT",
-        "https://open.spotify.com/show/4TWOlf80GM1Pml8fGUO8KK",
-        "https://open.spotify.com/show/3xoeD59yjQ6R26wONtdQKB",
-        "https://open.spotify.com/show/514P0q3t3AqW38aSCfTUoB",
-        "https://open.spotify.com/show/23pjgFtojffb9ATqmOWoSG",
-        "https://open.spotify.com/show/5NhjpDeHzVlXPVqT9ezKwA",
-        "https://open.spotify.com/show/5qk8RnfIkb3peJJp4dsmvB",
-        "https://open.spotify.com/show/3bh608DbMRZXHaBSjvhvHZ",
-        "https://open.spotify.com/show/4vNumoS1tv284WNs6N8irH",
-        "https://open.spotify.com/show/3qsBrXPv7IxyVdHvalT0zK",
-        "https://open.spotify.com/show/5kmaGwX0xXwLl4ozXvW6jP",
-        "https://open.spotify.com/show/2Y8gp7izc5VcNS7OJKD8QN",
-        "https://open.spotify.com/show/7xF1lww4OCT34x7lK9iW52",
-        "https://open.spotify.com/show/2jjxMaf00TlgajwqOd9wH5",
-        "https://open.spotify.com/show/75qCFpgMCZeL1h1bLOaDUF",
-        "https://open.spotify.com/show/5LWZLmUqnK2A9QKHKrkDWI",
-        "https://open.spotify.com/show/3rdqvzvAvXv0LxnR8c93AK",
-        "https://open.spotify.com/show/2NG24rv3Mv09EMsIc6rVfs",
-        "https://open.spotify.com/show/30Uj92DHhMF2hP0uXyFt3l",
-        "https://open.spotify.com/show/6RhitW2pBXlhKnXPVFF5Ok",
-        "https://open.spotify.com/show/5mWMlenq9TcEZlgXey2qKY",
-        "https://open.spotify.com/show/5IPy0HvQpAgu0kMjCqqUXS",
-        "https://open.spotify.com/show/6w7pyZbdmMfKVqIn17HQPQ",
-    ]
-    failed_sources = []
-    for source_url in spotify_sources:
-        try:
-            external_id = source_url.split("https://open.spotify.com/show/")[1]
-            spotify = SpotifyAPI(client_id, client_secret)
-            podcaster = spotify.get_podcaster(external_id)
-            name = podcaster["name"]
-            source = Source.objects.create(
-                url=source_url,
-                slug=slugify(name),
-                name=name,
-                favicon_path=f"home/favicons/{slugify(name)}.webp",
-                paywall="No",
-                website=get_object_or_404(Website, name="Spotify"),
-                content_type="Analysis",
-                sector=get_object_or_404(Sector, name="Generalists"),
-            )
-            if "images" in podcaster.keys():
-                source_profile_img_create(source, podcaster["images"][0]["url"])
-            # add source_rating otherwise 500 error when opening source profile
-            SourceRating.objects.create(
-                user=get_object_or_404(User, email="me-99@live.de"),
-                source=source,
-                rating=7,
-            )
-        except Exception as error:
-            failed_sources.append(source_url)
-            print(f"Scrapping {source_url} failed due to {error}")
-            continue
-        sleep(3)
-    print("Scrapping failed for these sources")
-    for source in failed_sources:
-        print(source)
+def addSpotifyId():
+    for source in Source.objects.filter(
+        website__name="Spotify", external_id__isnull=True
+    ):
+        source.external_id = source.url.split("https://open.spotify.com/show/")[1]
+        source.save()
 
 
 # =================================================================================
@@ -823,3 +699,43 @@ def create_spotify_sources():
 #             print(f"Scrapping {source_url} has caused this error: ")
 #             print(error)
 #             continue
+
+
+# @shared_task
+# def create_spotify_sources():
+#     client_id = environ.get("SPOTIFY_CLIENT_ID")
+#     client_secret = environ.get("SPOTIFY_CLIENT_SECRET")
+#     spotify_sources = []
+#     failed_sources = []
+#     for source_url in spotify_sources:
+#         try:
+#             external_id = source_url.split("https://open.spotify.com/show/")[1]
+#             spotify = SpotifyAPI(client_id, client_secret)
+#             podcaster = spotify.get_podcaster(external_id)
+#             name = podcaster["name"]
+#             source = Source.objects.create(
+#                 url=source_url,
+#                 slug=slugify(name),
+#                 name=name,
+#                 favicon_path=f"home/favicons/{slugify(name)}.webp",
+#                 paywall="No",
+#                 website=get_object_or_404(Website, name="Spotify"),
+#                 content_type="Analysis",
+#                 sector=get_object_or_404(Sector, name="Generalists"),
+#             )
+#             if "images" in podcaster.keys():
+#                 source_profile_img_create(source, podcaster["images"][0]["url"])
+#             # add source_rating otherwise 500 error when opening source profile
+#             SourceRating.objects.create(
+#                 user=get_object_or_404(User, email="me-99@live.de"),
+#                 source=source,
+#                 rating=7,
+#             )
+#         except Exception as error:
+#             failed_sources.append(source_url)
+#             print(f"Scrapping {source_url} failed due to {error}")
+#             continue
+#         sleep(3)
+#     print("Scrapping failed for these sources")
+#     for source in failed_sources:
+#         print(source)
