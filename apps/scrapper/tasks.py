@@ -30,6 +30,8 @@ from apps.logic.services import (
     twitter_create_api_settings,
     tweet_type_create,
     article_creation_check,
+    extract_forbes_base_url,
+    get_new_sources_info,
 )
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
@@ -227,14 +229,14 @@ def scrape_forbes():
     forbes_sources = Source.objects.filter(
         website=get_object_or_404(Website, name="Forbes")
     ).only("source_id", "url", "website")
-    print(forbes_sources.count())
     articles = Article.objects.filter(source__in=forbes_sources).only(
         "title", "pub_date", "source", "link"
     )
     for source in forbes_sources:
         print(source)
         try:
-            feed_url = f"{source.url}feed"
+            source_url = extract_forbes_base_url(source.url)
+            feed_url = f"{source_url}feed"
             create_articles_from_feed(source, feed_url, articles)
             sleep(5)
         except Exception as error:
@@ -462,6 +464,316 @@ def addSpotifyId():
     ):
         source.external_id = source.url.split("https://open.spotify.com/show/")[1]
         source.save()
+
+
+@shared_task
+def scrape_new_mixed_sources():
+    from apps.source.models import Sector, SourceRating
+
+    new_sources = [
+        "https://www.upslopecapital.com/",
+        "https://www.jpmorgan.com/",
+        "https://www.oaktreecapital.com/",
+        "https://rhg.com/research/",
+        "https://www.spglobal.com/",
+        "https://mishtalk.com/",
+        "https://www.coppolacomment.com/",
+        "https://www.nzscapital.com/",
+        "https://www.altafoxcapital.com/",
+        "https://www.greystonevalue.com/",
+        "https://www.merionroadcapital.com/",
+        "https://marancapital.com/",
+        "https://valueinvestorsclub.com/",
+        "https://watt-logic.com/",
+        "https://www.batterymaterialsreview.com/",
+        "https://www.acquirers.com/",
+        "https://www.fairlightcapital.com/",
+        "https://newsletter.cardealershipguy.org/",
+        "https://whoisnnamdi.com/",
+        "https://www.bonitasresearch.com/",
+        "https://carlicahn.com/",
+        "https://carnegieendowment.org/",
+        "https://culperresearch.com/",
+        "https://epbresearch.com/",
+        "https://www.fairlightcapital.com/",
+        "https://research.contrary.com/",
+        "https://fuzzypandaresearch.com/",
+        "https://www.glasshouseresearch.com/",
+        "https://grizzlyreports.com/",
+        "https://hindenburgresearch.com/",
+        "https://microcapclub.com/",
+        "https://www.jaguaranalytics.com/",
+        "https://www.jcapitalresearch.com/",
+        "https://jehoshaphatresearch.com/",
+        "https://www.sohrapeakcapital.com/",
+        "https://bisoninterests.com/",
+        "https://www.kerrisdalecap.com/",
+        "https://www.patient-capital.de/",
+        "https://eurospace.org/",
+        "https://www.presciencepoint.com/",
+        "https://www.renaissancecapital.com/",
+        "https://www.sprucepointcap.com/",
+        "https://the-daily-lithium-report.beehiiv.com/",
+        "https://scorpioncapital.com/",
+        "https://tomtunguz.com/",
+        "https://whitediamondresearch.com/",
+        "https://jehoshaphatresearch.com/",
+        "https://ningiresearch.com/",
+        "https://www.jcapitalresearch.com/company-reports.html",
+        "https://www.icemancapital.com/",
+        "https://wolfpackresearch.com/",
+        "https://grizzlyreports.com/",
+        "https://www.smoakcapital.com/",
+        "https://www.archcapitalfund.com/",
+        "https://microcapclub.com/",
+        "https://www.tidefallcapital.com/",
+        "https://viceroyresearch.org/",
+        "https://whitediamondresearch.com/",
+        "https://findell.us/",
+        "https://hiddenvaluegems.com/",
+        "https://moram.eu/",
+        "https://www.bleeckerstreetresearch.com/",
+        "https://www.wagnerroadcm.com/",
+        "https://thoughtful-investing.beehiiv.com/",
+        "https://www.ftserussell.com/",
+        "https://meketa.com/",
+        "https://bpsandpieces.com/",
+        "https://www.hl.co.uk/",
+        "https://hotcopper.com.au/",
+        "https://www.crescat.net/",
+        "https://www.arpinvestments.com/",
+        "https://www.imf.org/",
+        "https://www.niesr.ac.uk/",
+        "https://www.chathamhouse.org/",
+        "https://www.cfr.org/",
+        "https://www.understandingwar.org/",
+        "https://www.iiss.org/",
+        "https://www.csis.org/",
+        "https://www.fxcintel.com/",
+        "https://www.bakerinstitute.org/",
+        "https://www.lazardassetmanagement.com/",
+        "https://www.iea.org/",
+        "https://www.thedrum.com/",
+        "https://www.marketingdive.com/",
+        "https://www.scmp.com/",
+        "https://rbnenergy.com/",
+        "https://oilprice.com/",
+        "https://www.lngindustry.com/",
+        "https://ieefa.org/",
+        "https://www.finextra.com/",
+        "https://www.kitco.com/",
+        "https://siliconsemiconductor.net/",
+        "https://compoundsemiconductor.net/",
+        "https://www.theverge.com/",
+        "https://www.engadget.com/",
+        "https://sifted.eu/",
+        "https://bisoninterests.com/",
+        "https://www.valueinvestorsclub.com/",
+        "https://www.kedglobal.com/",
+        "https://sharedresearch.jp/en",
+        "https://www.bloomberglinea.com/english/",
+        "https://iupana.com/",
+        "https://www.investorinsights.asia/",
+        "https://www.wormcapital.com/",
+        "https://blog.starpointllp.com/",
+        "https://www.retaildive.com/",
+        "https://arichlife.com.au/",
+        "https://equicompound.com/",
+        "https://newsletter.spacedotbiz.com/",
+        "https://www.miningnews.net/",
+        "https://www.kerrisdalecap.com/",
+        "https://www.presciencepoint.com/",
+        "https://www.shippinginsider.com/",
+        "https://news.ycombinator.com/",
+        "https://www.fiercebiotech.com/",
+        "https://www.breakwaveadvisors.com/",
+        "https://www.tradewindsnews.com/",
+        "https://www.techmeme.com/",
+        "https://www.biospace.com/",
+        "https://www.socialmediatoday.com/",
+        "https://www.theregister.com/",
+        "https://www.fierceelectronics.com/",
+        "https://www.datacenterdynamics.com/",
+        "https://www.digitalinformationworld.com/",
+        "https://www.crn.com/",
+        "https://www.apmdigest.com/",
+        "https://www.biopharmadive.com/",
+        "https://www.biospace.com/",
+        "https://www.retail-week.com/",
+        "https://www.fibre2fashion.com/",
+        "https://fashionunited.com/",
+        "https://us.fashionnetwork.com/",
+        "https://www.themiddlemarket.com/",
+        "https://www.globalcapital.com/",
+        "https://www.bankingdive.com/",
+        "https://www.reit.com/",
+        "https://www.supplychaindive.com/",
+        "https://www.defenseone.com/",
+        "https://www.steelorbis.com/",
+        "https://news.metal.com/",
+        "https://www.venturecapitaljournal.com/",
+        "https://www.metalsdaily.com/",
+        "https://vcnewsdaily.com/",
+        "https://www.vccircle.com/",
+        "https://zolmax.com/",
+        "https://www.naturalgasworld.com/",
+        "https://www.crn.com/",
+        "https://www.yicaiglobal.com/",
+        "https://www.evaluate.com/",
+        "https://agmetalminer.com/",
+        "https://www.cnas.org/",
+        "https://www.defenseone.com/",
+        "https://mwi.usma.edu/",
+        "https://www.autonews.com/",
+        "https://www.theregister.com/",
+        "https://europe.autonews.com/",
+        "https://www.fiercebiotech.com/",
+        "https://www.biospace.com/news/",
+        "https://www.pionline.com/",
+        "https://www.lngindustry.com/",
+        "https://lngjournal.com/",
+        "https://www.upstreamonline.com/",
+        "https://www.mining-journal.com/",
+        "https://www.worldcoal.com/",
+        "https://www.flightglobal.com/",
+        "https://tobaccoreporter.com/",
+        "https://us.fashionnetwork.com/",
+        "https://www.voguebusiness.com/",
+        "https://fashionunited.com/",
+        "https://skift.com/",
+        "https://www.genengnews.com/",
+        "https://www.nextplatform.com/",
+        "https://accelerationeconomy.com/",
+        "https://www.retail-insight-network.com/",
+        "https://semiengineering.com/",
+        "https://www.biopharmadive.com/",
+        "https://www.retailgazette.co.uk/",
+        "https://www.retaildetail.eu/",
+        "https://retailwire.com/",
+        "https://ecommercenews.eu/",
+        "https://theloadstar.com/",
+        "https://www.defensenews.com/",
+        "https://breakingdefense.com/",
+        "https://www.thedefensepost.com/",
+        "https://www.defenseindustrydaily.com/",
+        "https://www.japantimes.co.jp/",
+        "https://steelnews.biz/",
+        "https://www.pymnts.com/",
+        "https://www.protocol.com/",
+        "https://console.kr-asia.com/",
+        "https://www.marketingdive.com/",
+        "https://labsnews.com/en/",
+        "https://thelowdown.momentum.asia/",
+        "https://www.marijuanamoment.net/",
+        "https://www.thisweekinfintech.com/",
+        "https://www.americanbanker.com/",
+        "https://electrek.co/",
+        "https://thediplomat.com/",
+        "https://www.defensenews.com/",
+        "https://www.whichev.net/",
+        "https://omnitalk.blog/",
+        "https://www.theinformation.com/",
+        "https://www.wired.com/",
+        "https://www.digitalinformationworld.com/",
+        "https://www.tickerreport.com/",
+        "https://arstechnica.com/",
+        "https://siliconangle.com/",
+        "https://www.labiotech.eu/",
+        "https://www.healthcaredive.com/",
+        "https://healthcareweekly.com/",
+        "https://www.healthcarefinancenews.com/",
+        "https://www.gamesindustry.biz/",
+        "https://steelnews.biz/",
+        "https://airlinegeeks.com/",
+        "https://simpleflying.com/",
+        "https://airlineweekly.com/",
+        "https://www.aviationbusinessnews.com/",
+        "https://tobaccoatlas.org/",
+        "https://www.medtechdive.com/",
+        "https://intrinsicinvesting.com/",
+        "https://thegarpinvestor.com/",
+        "https://blog.roundhillinvestments.com/",
+        "https://www.avory.xyz/",
+        "https://blog.starpointllp.com/",
+        "https://vektoresearch.id/",
+        "https://blog.thomvest.com/",
+        "https://topcornerinvesting.com/",
+        "https://www.firmreturns.com/",
+        "https://www.valuewala.com/",
+        "https://valueandopportunity.com/",
+        "https://deepvalueinvestments.wordpress.com/",
+        "https://stockspinoffinvesting.com/",
+        "https://noordermeercapital.wordpress.com/",
+        "https://www.kenkyoinvesting.com/",
+        "https://valueofstocks.com/",
+        "https://www.investorinsights.asia/",
+        "https://thefinanser.com/",
+        "https://medium.com/@laurengreerbalik",
+        "https://maynardpaton.com/",
+        "https://www.ukdividendstocks.com/",
+        "https://www.twocenturies.com/",
+        "https://ritholtz.com/",
+        "https://ofdollarsanddata.com/",
+        "https://alphaarchitect.com/",
+        "https://www.undervalued-shares.com/",
+        "https://greatvalleyadvisors.com/",
+        "https://marketshare.blog/",
+        "https://www.cato.org/",
+        "https://ecfr.eu/",
+        "https://logisticsviewpoints.com/",
+        "https://wheelbearings.media/",
+        "https://www.wintonsworld.com/",
+        "https://awealthofcommonsense.com/",
+        "https://abnormalreturns.com/",
+    ]
+    failed_scrapping = []
+    for source_url in new_sources:
+        print(source_url)
+        try:
+            name, img_url = get_new_sources_info(source_url)
+            if img_url:
+                if (
+                    Source.objects.filter(name=name).exists()
+                    or Source.objects.filter(slug=slugify(name)).exists()
+                ):
+                    name = name + " - New"
+                created_source = Source.objects.create(
+                    url=source_url,
+                    slug=slugify(name),
+                    name=name,
+                    favicon_path=f"home/favicons/{slugify(name)}.webp",
+                    paywall="Yes",
+                    website=get_object_or_404(Website, name="Not Selected"),
+                    content_type="News",
+                    sector=get_object_or_404(Sector, name="Generalists"),
+                )
+                try:
+                    source_profile_img_create(created_source, img_url)
+                    feed_url = f"{source_url}feed"
+                    create_articles_from_feed(
+                        created_source, feed_url, Article.objects.none()
+                    )
+                    rating = 8
+                except Exception as _:
+                    rating = 7
+                # add source_rating otherwise 500 error when opening source profile
+                SourceRating.objects.create(
+                    user=get_object_or_404(User, email="me-99@live.de"),
+                    source=created_source,
+                    rating=rating,
+                )
+            else:
+                failed_scrapping.append(source_url)
+                print(f"No image was found on source: {source_url}")
+            sleep(3)
+        except Exception as error:
+            failed_scrapping.append(source_url)
+            print(f"Scrapping {source_url} has caused this error: ")
+            print(error)
+            continue
+    print("The following sources could not be scrapped: ")
+    for source in failed_scrapping:
+        print(source)
 
 
 # =================================================================================
