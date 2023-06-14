@@ -426,7 +426,7 @@ def get_new_sources_info(link):
             profile_image_url = profile_image_url["href"]
 
     # Check if the favicon URL is absolute or relative
-    if not profile_image_url.startswith("https"):
+    if profile_image_url and not profile_image_url.startswith("https"):
         base_domain = get_base_domain(link)
         profile_image_url = urljoin(link, profile_image_url, allow_fragments=True)
         profile_image_url = profile_image_url.replace(base_domain, "", 1)
