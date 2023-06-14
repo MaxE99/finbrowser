@@ -379,6 +379,69 @@ def get_largest_icon(icons):
     return largest_icon_url
 
 
+def get_new_sources_info(link):
+    from urllib.parse import urljoin, urlparse
+
+    def get_base_domain(url):
+        parsed_url = urlparse(url)
+        base_domain = parsed_url.netloc
+        if parsed_url.scheme == "www":
+            base_domain = "www." + base_domain
+        return base_domain
+
+    # Send a GET request to the substack page
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
+    }
+    response = requests.get(
+        link,
+        headers=headers,
+        timeout=10,
+    )
+
+    # Create a BeautifulSoup object to parse the HTML content
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    # Find the name
+    name = soup.find("title").text[:90]
+
+    # Find the largest profile image
+    profile_image_url = None
+
+    # Try to get the largest apple-touch-icon
+    apple_touch_icons = soup.find_all("link", rel="apple-touch-icon")
+    if apple_touch_icons:
+        profile_image_url = get_largest_icon(apple_touch_icons)
+    else:
+        # If no apple-touch-icon, try to get the largest normal icon
+        icons = soup.find_all("link", rel="icon")
+        if icons:
+            profile_image_url = get_largest_icon(icons)
+
+    if not profile_image_url:
+        # Find the <link> tag with "shortcut icon" or "icon" attribute
+        profile_image_url = soup.find("link", rel=["shortcut icon", "icon"])
+
+        if profile_image_url:
+            profile_image_url = profile_image_url["href"]
+
+    # Check if the favicon URL is absolute or relative
+    if not profile_image_url.startswith("https"):
+        base_domain = get_base_domain(link)
+        profile_image_url = urljoin(link, profile_image_url, allow_fragments=True)
+        profile_image_url = profile_image_url.replace(base_domain, "", 1)
+
+    return name, profile_image_url
+
+
+def extract_forbes_base_url(url):
+    people_index = url.find("/people/")
+    if people_index != -1:
+        base_url = url[:people_index]
+        return base_url
+    return url
+
+
 # =================================================================================
 # Functions that need to be used from time to time
 # =================================================================================
