@@ -434,14 +434,6 @@ def get_new_sources_info(link):
     return name, profile_image_url
 
 
-def extract_forbes_base_url(url):
-    people_index = url.find("/people/")
-    if people_index != -1:
-        base_url = url[:people_index]
-        return base_url
-    return url
-
-
 # =================================================================================
 # Functions that need to be used from time to time
 # =================================================================================
