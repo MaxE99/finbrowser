@@ -30,7 +30,6 @@ from apps.logic.services import (
     twitter_create_api_settings,
     tweet_type_create,
     article_creation_check,
-    extract_forbes_base_url,
     get_new_sources_info,
 )
 from apps.article.models import Article, TweetType
@@ -233,15 +232,12 @@ def scrape_forbes():
         "title", "pub_date", "source", "link"
     )
     for source in forbes_sources:
-        print(source)
         try:
-            source_url = extract_forbes_base_url(source.url)
-            feed_url = f"{source_url}feed"
+            feed_url = f"{source.url}feed"
             create_articles_from_feed(source, feed_url, articles)
             sleep(5)
         except Exception as error:
             print(error)
-            print(f"Scrapping of {source} caused the following error: {error}")
             continue
 
 
