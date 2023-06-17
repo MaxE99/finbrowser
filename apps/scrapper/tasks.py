@@ -30,8 +30,6 @@ from apps.logic.services import (
     twitter_create_api_settings,
     tweet_type_create,
     article_creation_check,
-    get_new_sources_info,
-    find_rss_feed,
 )
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
@@ -220,8 +218,13 @@ def scrape_other_websites():
         "title", "pub_date", "source", "link"
     )
     for source in other_sources:
-        feed_url = f"{source.url}feed"
-        create_articles_from_feed(source, feed_url, articles)
+        try:
+            print(source)
+            feed_url = f"{source.url}feed"
+            create_articles_from_feed(source, feed_url, articles)
+        except Exception as error:
+            print(f"Scrapping {source} failed because of {error}")
+            continue
 
 
 @shared_task
@@ -455,100 +458,17 @@ def calc_sim_sources():
 
 
 @shared_task
-def addSpotifyId():
-    for source in Source.objects.filter(
-        website__name="Spotify", external_id__isnull=True
-    ):
-        source.external_id = source.url.split("https://open.spotify.com/show/")[1]
-        source.save()
-
-
-@shared_task
-def scrape_new_mixed_sources():
-    from apps.source.models import Sector, SourceRating
-
-    new_sources = []
-    failed_scrapping = []
-    for source_url in new_sources:
-        print(source_url)
-        try:
-            name, img_url = get_new_sources_info(source_url)
-            if (
-                Source.objects.filter(name=name).exists()
-                or Source.objects.filter(slug=slugify(name)).exists()
-                or Source.objects.filter(slug=slugify(name[:49])).exists()
-            ):
-                name = name + " - New"
-            created_source = Source.objects.create(
-                url=source_url,
-                slug=slugify(name[:49]),
-                name=name[:49],
-                favicon_path=f"home/favicons/{slugify(name[:49])}.webp",
-                paywall="Yes",
-                website=get_object_or_404(Website, name="Not Selected"),
-                content_type="News",
-                sector=get_object_or_404(Sector, name="Generalists"),
-            )
-            try:
-                source_profile_img_create(created_source, img_url)
-                feed_url = f"{source_url}feed"
-                create_articles_from_feed(
-                    created_source, feed_url, Article.objects.none()
-                )
-                rating = 8
-            except Exception as _:
-                rating = 7
-            # add source_rating otherwise 500 error when opening source profile
-            SourceRating.objects.create(
-                user=get_object_or_404(User, email="me-99@live.de"),
-                source=created_source,
-                rating=rating,
-            )
-        except Exception as error:
-            failed_scrapping.append(source_url)
-            print(f"Scrapping {source_url} has caused this error: ")
-            print(error)
-            continue
-    print("The following sources could not be scrapped: ")
-    for source in failed_scrapping:
-        print(source)
-
-
-@shared_task
-def find_other_sources_without_feed_first_run():
-    for source in Source.objects.filter(website__name="Other"):
-        try:
-            print("------------------------------------------------")
-            print(source)
-            if not Article.objects.filter(source=source).exists():
-                rss_feed = find_rss_feed(source.url)
-                print(rss_feed)
-                if rss_feed:
-                    source.alt_feed = rss_feed
-                else:
-                    source.alt_feed = "none"
-                source.save()
-        except Exception as error:
-            print(f"Error: {error} has occured while scrapping {source}")
-
-
-@shared_task
-def find_other_sources_without_feed_second_run():
-    for source in Source.objects.filter(website__name="Other"):
-        if not Article.objects.filter(source=source).exists():
-            source.alt_feed = "none"
-            source.save()
-
-
-@shared_task
 def scrape_alt_feeds():
     sources = Source.objects.filter(website__name="Other", alt_feed__isnull=False)
     articles = Article.objects.filter(source__in=sources).only(
         "title", "pub_date", "source", "link"
     )
     for source in sources:
-        if source.alt_feed != "none":
-            create_articles_from_feed(source, source.alt_feed, articles)
+        try:
+            if source.alt_feed != "none":
+                create_articles_from_feed(source, source.alt_feed, articles)
+        except Exception as error:
+            continue
 
 
 # =================================================================================
@@ -828,4 +748,82 @@ def scrape_alt_feeds():
 #         sleep(3)
 #     print("Scrapping failed for these sources")
 #     for source in failed_sources:
+#         print(source)
+
+
+# @shared_task
+# def find_other_sources_without_feed_first_run():
+#     for source in Source.objects.filter(website__name="Other"):
+#         try:
+#             print("------------------------------------------------")
+#             print(source)
+#             if not Article.objects.filter(source=source).exists():
+#                 rss_feed = find_rss_feed(source.url)
+#                 print(rss_feed)
+#                 if rss_feed:
+#                     source.alt_feed = rss_feed
+#                 else:
+#                     source.alt_feed = "none"
+#                 source.save()
+#         except Exception as error:
+#             print(f"Error: {error} has occured while scrapping {source}")
+
+
+# @shared_task
+# def addSpotifyId():
+#     for source in Source.objects.filter(
+#         website__name="Spotify", external_id__isnull=True
+#     ):
+#         source.external_id = source.url.split("https://open.spotify.com/show/")[1]
+#         source.save()
+
+
+# @shared_task
+# def scrape_new_mixed_sources():
+#     from apps.source.models import Sector, SourceRating
+
+#     new_sources = []
+#     failed_scrapping = []
+#     for source_url in new_sources:
+#         print(source_url)
+#         try:
+#             name, img_url = get_new_sources_info(source_url)
+#             if (
+#                 Source.objects.filter(name=name).exists()
+#                 or Source.objects.filter(slug=slugify(name)).exists()
+#                 or Source.objects.filter(slug=slugify(name[:49])).exists()
+#             ):
+#                 name = name + " - New"
+#             created_source = Source.objects.create(
+#                 url=source_url,
+#                 slug=slugify(name[:49]),
+#                 name=name[:49],
+#                 favicon_path=f"home/favicons/{slugify(name[:49])}.webp",
+#                 paywall="Yes",
+#                 website=get_object_or_404(Website, name="Not Selected"),
+#                 content_type="News",
+#                 sector=get_object_or_404(Sector, name="Generalists"),
+#             )
+#             try:
+#                 source_profile_img_create(created_source, img_url)
+#                 feed_url = f"{source_url}feed"
+#                 create_articles_from_feed(
+#                     created_source, feed_url, Article.objects.none()
+#                 )
+#                 rating = 8
+#             except Exception as _:
+#                 rating = 7
+#             # add source_rating otherwise 500 error when opening source profile
+#             SourceRating.objects.create(
+#                 user=get_object_or_404(User, email="me-99@live.de"),
+#                 source=created_source,
+#                 rating=rating,
+#             )
+#         except Exception as error:
+#             failed_scrapping.append(source_url)
+#             print(f"Scrapping {source_url} has caused this error: ")
+#             print(error)
+#             continue
+#     print("The following sources could not be scrapped: ")
+#     for source in failed_scrapping:
 #         print(source)
