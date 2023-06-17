@@ -55,6 +55,7 @@ class Source(models.Model):
         max_length=15, choices=CONTENT_TYPE_CHOICES, default="Commentary"
     )
     tags = models.ManyToManyField(SourceTag, related_name="source_tags", blank=True)
+    alt_feed = models.CharField(null=True, blank=True, max_length=200)
 
     class Meta:
         ordering = ("name",)
