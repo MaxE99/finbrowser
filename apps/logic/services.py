@@ -180,13 +180,16 @@ def bulk_create_articles_and_notifications(creation_list):
 def create_articles_from_feed(source, feed_url, articles):
     create_article_list = []
     try:
+        print(feed_url)
         req = Request(
             feed_url,
             headers={
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
             },
         )
+        print(req)
         website_data = urlopen(req)
+        print(website_data)
         website_xml = website_data.read()
         website_data.close()
         items = ET.fromstring(website_xml).findall(".//item")
@@ -432,6 +435,65 @@ def get_new_sources_info(link):
         profile_image_url = profile_image_url.replace(base_domain, "", 1)
 
     return name, profile_image_url
+
+
+def find_rss_feed(url):
+    # Send a GET request to the URL
+    response = requests.get(url, timeout=10)
+
+    # Parse the HTML content using Beautiful Soup
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    # Check if any variations of RSS feed reference exist in the head tag
+    rss_feed = None
+
+    # Variation 1: <link> tag with type="application/rss+xml"
+    rss_feed = soup.find("link", type="application/rss+xml")
+
+    # Variation 2: <link> tag with type="application/atom+xml"
+    if not rss_feed:
+        rss_feed = soup.find("link", type="application/atom+xml")
+
+    # Variation 3: <link> tag with type="text/xml"
+    if not rss_feed:
+        rss_feed = soup.find("link", type="text/xml")
+
+    # Variation 4: <link> tag with rel="alternate" and type="application/rss+xml"
+    if not rss_feed:
+        rss_feed = soup.find("link", rel="alternate", type="application/rss+xml")
+
+    # Variation 5: <link> tag with rel="alternate" and type="application/atom+xml"
+    if not rss_feed:
+        rss_feed = soup.find("link", rel="alternate", type="application/atom+xml")
+
+    # Variation 6: <link> tag with rel="alternate" and type="text/xml"
+    if not rss_feed:
+        rss_feed = soup.find("link", rel="alternate", type="text/xml")
+
+    # Variation 7: <a> tag with type="application/rss+xml"
+    if not rss_feed:
+        rss_feed = soup.find("a", type="application/rss+xml")
+
+    # Variation 8: <a> tag with type="application/atom+xml"
+    if not rss_feed:
+        rss_feed = soup.find("a", type="application/atom+xml")
+
+    # Variation 9: <a> tag with type="text/xml"
+    if not rss_feed:
+        rss_feed = soup.find("a", type="text/xml")
+
+    # Variation 10: <a> tag with href="*.rss" or "*/rss.xml" or "*/feed"
+    if not rss_feed:
+        rss_feed = soup.find(
+            "a",
+            href=lambda href: href
+            and (".rss" in href or "rss.xml" in href or "feed" in href),
+        )
+
+    # Check if an RSS feed reference was found
+    if rss_feed:
+        return rss_feed.get("href")
+    return None
 
 
 # =================================================================================

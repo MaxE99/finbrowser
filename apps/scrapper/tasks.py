@@ -31,6 +31,7 @@ from apps.logic.services import (
     tweet_type_create,
     article_creation_check,
     get_new_sources_info,
+    find_rss_feed,
 )
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
@@ -466,125 +467,7 @@ def addSpotifyId():
 def scrape_new_mixed_sources():
     from apps.source.models import Sector, SourceRating
 
-    new_sources = [
-        "https://mishtalk.com/",
-        "https://valueinvestorsclub.com/",
-        "https://www.batterymaterialsreview.com/",
-        "https://www.acquirers.com/",
-        "https://whoisnnamdi.com/",
-        "https://www.bonitasresearch.com/",
-        "https://carlicahn.com/",
-        "https://research.contrary.com/",
-        "https://www.glasshouseresearch.com/",
-        "https://hindenburgresearch.com/",
-        "https://www.jcapitalresearch.com/",
-        "https://jehoshaphatresearch.com/",
-        "https://bisoninterests.com/",
-        "https://www.renaissancecapital.com/",
-        "https://www.sprucepointcap.com/",
-        "https://scorpioncapital.com/",
-        "https://tomtunguz.com/",
-        "https://whitediamondresearch.com/",
-        "https://jehoshaphatresearch.com/",
-        "https://ningiresearch.com/",
-        "https://grizzlyreports.com/",
-        "https://microcapclub.com/",
-        "https://viceroyresearch.org/",
-        "https://whitediamondresearch.com/",
-        "https://hiddenvaluegems.com/",
-        "https://moram.eu/",
-        "https://meketa.com/",
-        "https://bpsandpieces.com/",
-        "https://hotcopper.com.au/",
-        "https://www.crescat.net/",
-        "https://www.imf.org/",
-        "https://www.chathamhouse.org/",
-        "https://www.iiss.org/",
-        "https://www.csis.org/",
-        "https://www.fxcintel.com/",
-        "https://www.lazardassetmanagement.com/",
-        "https://www.scmp.com/",
-        "https://rbnenergy.com/",
-        "https://www.lngindustry.com/",
-        "https://ieefa.org/",
-        "https://www.finextra.com/",
-        "https://www.kitco.com/",
-        "https://sifted.eu/",
-        "https://bisoninterests.com/",
-        "https://www.valueinvestorsclub.com/",
-        "https://www.kedglobal.com/",
-        "https://iupana.com/",
-        "https://blog.starpointllp.com/",
-        "https://www.kerrisdalecap.com/",
-        "https://www.presciencepoint.com/",
-        "https://www.techmeme.com/",
-        "https://www.biospace.com/",
-        "https://www.theregister.com/",
-        "https://www.crn.com/",
-        "https://www.biospace.com/",
-        "https://www.fibre2fashion.com/",
-        "https://www.themiddlemarket.com/",
-        "https://www.globalcapital.com/",
-        "https://www.reit.com/",
-        "https://www.steelorbis.com/",
-        "https://news.metal.com/",
-        "https://www.venturecapitaljournal.com/",
-        "https://www.metalsdaily.com/",
-        "https://vcnewsdaily.com/",
-        "https://www.vccircle.com/",
-        "https://www.crn.com/",
-        "https://www.evaluate.com/",
-        "https://agmetalminer.com/",
-        "https://www.defenseone.com/",
-        "https://www.theregister.com/",
-        "https://europe.autonews.com/",
-        "https://www.fiercebiotech.com/",
-        "https://www.biospace.com/news/",
-        "https://www.pionline.com/",
-        "https://www.lngindustry.com/",
-        "https://www.mining-journal.com/",
-        "https://www.worldcoal.com/",
-        "https://us.fashionnetwork.com/",
-        "https://www.voguebusiness.com/",
-        "https://fashionunited.com/",
-        "https://accelerationeconomy.com/",
-        "https://semiengineering.com/",
-        "https://www.biopharmadive.com/",
-        "https://retailwire.com/",
-        "https://www.defensenews.com/",
-        "https://breakingdefense.com/",
-        "https://www.thedefensepost.com/",
-        "https://www.defenseindustrydaily.com/",
-        "https://www.japantimes.co.jp/",
-        "https://www.marketingdive.com/",
-        "https://www.marijuanamoment.net/",
-        "https://electrek.co/",
-        "https://thediplomat.com/",
-        "https://www.defensenews.com/",
-        "https://omnitalk.blog/",
-        "https://www.wired.com/",
-        "https://www.digitalinformationworld.com/",
-        "https://steelnews.biz/",
-        "https://airlinegeeks.com/",
-        "https://airlineweekly.com/",
-        "https://www.aviationbusinessnews.com/",
-        "https://tobaccoatlas.org/",
-        "https://intrinsicinvesting.com/",
-        "https://blog.starpointllp.com/",
-        "https://www.valuewala.com/",
-        "https://valueandopportunity.com/",
-        "https://deepvalueinvestments.wordpress.com/",
-        "https://stockspinoffinvesting.com/",
-        "https://www.investorinsights.asia/",
-        "https://ritholtz.com/",
-        "https://greatvalleyadvisors.com/",
-        "https://marketshare.blog/",
-        "https://www.cato.org/",
-        "https://wheelbearings.media/",
-        "https://www.wintonsworld.com/",
-        "https://awealthofcommonsense.com/",
-        "https://www.jcapitalresearch.com/",
-    ]
+    new_sources = []
     failed_scrapping = []
     for source_url in new_sources:
         print(source_url)
@@ -629,6 +512,32 @@ def scrape_new_mixed_sources():
     print("The following sources could not be scrapped: ")
     for source in failed_scrapping:
         print(source)
+
+
+@shared_task
+def find_other_sources_without_feed_first_run():
+    for source in Source.objects.filter(website__name="Other"):
+        try:
+            print("------------------------------------------------")
+            print(source)
+            if not Article.objects.filter(source=source).exists():
+                rss_feed = find_rss_feed(source.url)
+                print(rss_feed)
+                if rss_feed:
+                    source.alt_feed = rss_feed
+                else:
+                    source.alt_feed = "none"
+                source.save()
+        except Exception as error:
+            print(f"Error: {error} has occured while scrapping {source}")
+
+
+@shared_task
+def find_other_sources_without_feed_second_run():
+    for source in Source.objects.filter(website__name="Other"):
+        if not Article.objects.filter(source=source).exists():
+            source.alt_feed = "none"
+            source.save()
 
 
 # =================================================================================
