@@ -540,6 +540,17 @@ def find_other_sources_without_feed_second_run():
             source.save()
 
 
+@shared_task
+def scrape_alt_feeds():
+    sources = Source.objects.filter(website__name="Other", alt_feed__isnull=False)
+    articles = Article.objects.filter(source__in=sources).only(
+        "title", "pub_date", "source", "link"
+    )
+    for source in sources:
+        if source.alt_feed != "none":
+            create_articles_from_feed(source, source.alt_feed, articles)
+
+
 # =================================================================================
 # Tasks that need to be used from time to time
 # =================================================================================
