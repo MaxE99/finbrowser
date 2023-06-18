@@ -477,9 +477,11 @@ def recalc_average_rating():
 
     for source in Source.objects.all():
         agg_ratings = 0
+        amount_of_ratings = 
         for rating in SourceRating.objects.filter(source=source):
-            agg_ratings += rating.rating
-        source.average_rating = agg_ratings / source.ammount_of_ratings
+            agg_ratings += rating.
+            amount_of_ratings += 1
+        source.average_rating = agg_ratings / amount_of_ratings
         source.save()
 
 
