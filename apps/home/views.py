@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.logic.pure_logic import paginator_create
 from apps.mixins import BaseMixin
 from apps.source.models import Source
-from apps.article.models import Article, TrendingTopicContent
+from apps.article.models import Article, TrendingTopicContent, StockPitch
 from apps.stock.models import Stock
 from apps.home.models import NotificationMessage
 
@@ -251,13 +251,6 @@ class NotFoundView(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # if self.request.user.is_authenticated:
-        #     top_tweets = Article.objects.get_best_tweets_anon()
-        #     recommended_content = Article.objects.get_top_content_anon()[0:10]
-        # else:
-        top_tweets = Article.objects.get_best_tweets_anon()
-        recommended_content = Article.objects.get_top_content_anon()[0:25]
-        context["top_tweets"] = top_tweets[0:25]
         context["latest_analysis"] = Article.objects.get_latest_analysis()
         context["latest_news"] = Article.objects.get_latest_news()
         context["trending_topics"] = (
@@ -265,9 +258,13 @@ class NotFoundView(
             .order_by("-article__pub_date")
             .select_related("article__source", "article__source__website")[0:10]
         )
+        context["stock_pitches"] = (
+            StockPitch.objects.all()
+            .order_by("-article__pub_date")
+            .select_related("article__source", "article__source__website")[0:10]
+        )
         context["recommended_sources"] = Source.objects.get_random_top_sources()
-        context["recommended_content"] = recommended_content
-        context["error_page"] = True
+        context["recommended_content"] = Article.objects.get_top_content_anon()[0:25]
         return context
 
 
@@ -276,13 +273,6 @@ class FeedView(TemplateView, BaseMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # if self.request.user.is_authenticated:
-        #     top_tweets = Article.objects.get_best_tweets_anon()
-        #     recommended_content = Article.objects.get_top_content_anon()[0:10]
-        # else:
-        top_tweets = Article.objects.get_best_tweets_anon()
-        recommended_content = Article.objects.get_top_content_anon()[0:25]
-        context["top_tweets"] = top_tweets[0:25]
         context["latest_analysis"] = Article.objects.get_latest_analysis()
         context["latest_news"] = Article.objects.get_latest_news()
         context["trending_topics"] = (
@@ -290,8 +280,13 @@ class FeedView(TemplateView, BaseMixin):
             .order_by("-article__pub_date")
             .select_related("article__source", "article__source__website")[0:10]
         )
+        context["stock_pitches"] = (
+            StockPitch.objects.all()
+            .order_by("-article__pub_date")
+            .select_related("article__source", "article__source__website")[0:10]
+        )
         context["recommended_sources"] = Source.objects.get_random_top_sources()
-        context["recommended_content"] = recommended_content
+        context["recommended_content"] = Article.objects.get_top_content_anon()[0:25]
         return context
 
 

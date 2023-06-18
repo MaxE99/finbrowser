@@ -1,111 +1,111 @@
 let contentIsLoading = false;
 
-function createTwitterPart(content, rightContentSide) {
-    if (content.tweet_type.type === 'Retweet') {
-        const retweetWrapper = document.createElement('div');
-        retweetWrapper.className = 'retweetWrapper';
-        const author = document.createElement('span');
-        author.textContent = `@${content.tweet_type.author}`;
-        retweetWrapper.appendChild(document.createTextNode('Retweeted post by '));
-        retweetWrapper.appendChild(author);
-        rightContentSide.appendChild(retweetWrapper);
-    }
+// function createTwitterPart(content, rightContentSide) {
+//     if (content.tweet_type.type === 'Retweet') {
+//         const retweetWrapper = document.createElement('div');
+//         retweetWrapper.className = 'retweetWrapper';
+//         const author = document.createElement('span');
+//         author.textContent = `@${content.tweet_type.author}`;
+//         retweetWrapper.appendChild(document.createTextNode('Retweeted post by '));
+//         retweetWrapper.appendChild(author);
+//         rightContentSide.appendChild(retweetWrapper);
+//     }
 
-    if (content.tweet_type.type === 'Reply') {
-        const replyWrapper = document.createElement('div');
-        replyWrapper.className = 'replyWrapper';
-        const author = document.createElement('span');
-        author.textContent = `@${content.tweet_type.author}`;
-        replyWrapper.appendChild(document.createTextNode('Replying to '));
-        replyWrapper.appendChild(author);
-        rightContentSide.appendChild(replyWrapper);
-    }
+//     if (content.tweet_type.type === 'Reply') {
+//         const replyWrapper = document.createElement('div');
+//         replyWrapper.className = 'replyWrapper';
+//         const author = document.createElement('span');
+//         author.textContent = `@${content.tweet_type.author}`;
+//         replyWrapper.appendChild(document.createTextNode('Replying to '));
+//         replyWrapper.appendChild(author);
+//         rightContentSide.appendChild(replyWrapper);
+//     }
 
-    if (content.tweet_type.image_path) {
-        const tweetImage = document.createElement('img');
-        tweetImage.className = 'tweetImage';
-        tweetImage.setAttribute(
-            'src',
-            'https://finbrowser.s3.us-east-2.amazonaws.com/static/' + content.tweet_type.image_path
-        );
-        tweetImage.setAttribute('alt', 'Tweet Image');
-        // open image functionality
-        tweetImage.addEventListener('click', () => {
-            setModalStyle();
-            const fullScreenPlaceholder = document.querySelector('.fullScreenPlaceholder');
-            fullScreenPlaceholder.style.display = 'flex';
-            const img = document.createElement('img');
-            img.classList.add('fullScreenImage');
-            img.src = tweetImage.src;
-            fullScreenPlaceholder.appendChild(img);
-            fullScreenPlaceholder.querySelector('.outerCloseButton').style.display = 'flex';
-            document.onclick = function (e) {
-                if (e.target.nodeName !== 'IMG') {
-                    closeFullScreenImage();
-                }
-            };
-        });
-        rightContentSide.appendChild(tweetImage);
-    }
+//     if (content.tweet_type.image_path) {
+//         const tweetImage = document.createElement('img');
+//         tweetImage.className = 'tweetImage';
+//         tweetImage.setAttribute(
+//             'src',
+//             'https://finbrowser.s3.us-east-2.amazonaws.com/static/' + content.tweet_type.image_path
+//         );
+//         tweetImage.setAttribute('alt', 'Tweet Image');
+//         // open image functionality
+//         tweetImage.addEventListener('click', () => {
+//             setModalStyle();
+//             const fullScreenPlaceholder = document.querySelector('.fullScreenPlaceholder');
+//             fullScreenPlaceholder.style.display = 'flex';
+//             const img = document.createElement('img');
+//             img.classList.add('fullScreenImage');
+//             img.src = tweetImage.src;
+//             fullScreenPlaceholder.appendChild(img);
+//             fullScreenPlaceholder.querySelector('.outerCloseButton').style.display = 'flex';
+//             document.onclick = function (e) {
+//                 if (e.target.nodeName !== 'IMG') {
+//                     closeFullScreenImage();
+//                 }
+//             };
+//         });
+//         rightContentSide.appendChild(tweetImage);
+//     }
 
-    if (
-        content.tweet_type.type === 'Quote' ||
-        content.tweet_type.type === 'Retweet' ||
-        content.tweet_type.type === 'Reply'
-    ) {
-        const quoteWrapper = document.createElement('div');
-        quoteWrapper.className = 'quoteWrapper';
+//     if (
+//         content.tweet_type.type === 'Quote' ||
+//         content.tweet_type.type === 'Retweet' ||
+//         content.tweet_type.type === 'Reply'
+//     ) {
+//         const quoteWrapper = document.createElement('div');
+//         quoteWrapper.className = 'quoteWrapper';
 
-        const quoteUpperContainer = document.createElement('div');
-        quoteUpperContainer.className = 'quoteUpperContainer';
+//         const quoteUpperContainer = document.createElement('div');
+//         quoteUpperContainer.className = 'quoteUpperContainer';
 
-        const quoteAuthor = document.createElement('div');
-        quoteAuthor.className = 'quoteAuthor';
-        quoteAuthor.textContent = content.tweet_type.author;
+//         const quoteAuthor = document.createElement('div');
+//         quoteAuthor.className = 'quoteAuthor';
+//         quoteAuthor.textContent = content.tweet_type.author;
 
-        quoteUpperContainer.appendChild(quoteAuthor);
-        quoteWrapper.appendChild(quoteUpperContainer);
+//         quoteUpperContainer.appendChild(quoteAuthor);
+//         quoteWrapper.appendChild(quoteUpperContainer);
 
-        const quoteText = document.createElement('div');
-        quoteText.className = 'quoteText';
-        quoteText.textContent = content.tweet_type.text;
-        quoteWrapper.appendChild(quoteText);
+//         const quoteText = document.createElement('div');
+//         quoteText.className = 'quoteText';
+//         quoteText.textContent = content.tweet_type.text;
+//         quoteWrapper.appendChild(quoteText);
 
-        if (content.tweet_type.initial_tweet_img_path) {
-            const tweetImage = document.createElement('img');
-            tweetImage.className = 'tweetImage';
-            tweetImage.setAttribute(
-                'src',
-                'https://finbrowser.s3.us-east-2.amazonaws.com/static/' +
-                    content.tweet_type.initial_tweet_img_path
-            );
-            tweetImage.setAttribute('alt', 'Tweet Reply Image');
-            // open image functionality
-            tweetImage.addEventListener('click', () => {
-                setModalStyle();
-                const fullScreenPlaceholder = document.querySelector('.fullScreenPlaceholder');
-                fullScreenPlaceholder.style.display = 'flex';
-                const img = document.createElement('img');
-                img.classList.add('fullScreenImage');
-                img.src = tweetImage.src;
-                fullScreenPlaceholder.appendChild(img);
-                fullScreenPlaceholder.querySelector('.outerCloseButton').style.display = 'flex';
-                document.onclick = function (e) {
-                    if (e.target.nodeName !== 'IMG') {
-                        closeFullScreenImage();
-                    }
-                };
-            });
-            quoteWrapper.appendChild(tweetImage);
-        }
+//         if (content.tweet_type.initial_tweet_img_path) {
+//             const tweetImage = document.createElement('img');
+//             tweetImage.className = 'tweetImage';
+//             tweetImage.setAttribute(
+//                 'src',
+//                 'https://finbrowser.s3.us-east-2.amazonaws.com/static/' +
+//                     content.tweet_type.initial_tweet_img_path
+//             );
+//             tweetImage.setAttribute('alt', 'Tweet Reply Image');
+//             // open image functionality
+//             tweetImage.addEventListener('click', () => {
+//                 setModalStyle();
+//                 const fullScreenPlaceholder = document.querySelector('.fullScreenPlaceholder');
+//                 fullScreenPlaceholder.style.display = 'flex';
+//                 const img = document.createElement('img');
+//                 img.classList.add('fullScreenImage');
+//                 img.src = tweetImage.src;
+//                 fullScreenPlaceholder.appendChild(img);
+//                 fullScreenPlaceholder.querySelector('.outerCloseButton').style.display = 'flex';
+//                 document.onclick = function (e) {
+//                     if (e.target.nodeName !== 'IMG') {
+//                         closeFullScreenImage();
+//                     }
+//                 };
+//             });
+//             quoteWrapper.appendChild(tweetImage);
+//         }
 
-        rightContentSide.appendChild(quoteWrapper);
+//         rightContentSide.appendChild(quoteWrapper);
 
-        rightContentSide.appendChild(contentLink);
-    }
-}
+//         rightContentSide.appendChild(contentLink);
+//     }
+// }
 
-function addNewContentToContainer(article, tweet = false) {
+function addNewContentToContainer(article, stock_pitch = false) {
     const articleContainer = document.createElement('div');
     articleContainer.classList.add('articleContainer');
     articleContainer.id = 'cc#' + article.article_id;
@@ -222,16 +222,13 @@ function addNewContentToContainer(article, tweet = false) {
     contentLink.classList.add('contentLink');
     contentLink.href = article.link;
     rightContentSide.append(contentInfoContainer, contentBody, contentLink);
-    if (tweet) {
-        createTwitterPart(article, rightContentSide);
-        rightContentSide.appendChild(timeContainer);
-        articleContainer.appendChild(rightContentSide);
+    rightContentSide.appendChild(timeContainer);
+    articleContainer.appendChild(rightContentSide);
+    if (stock_pitch) {
         document
             .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
             .appendChild(articleContainer);
     } else {
-        rightContentSide.appendChild(timeContainer);
-        articleContainer.appendChild(rightContentSide);
         document
             .querySelector(
                 '.pageWrapper .longFormContentContainer .recommendedContentContainer .smallFormContentWrapper'
@@ -272,13 +269,13 @@ async function createContent() {
     }
 }
 
-async function createTweets() {
+async function createStockPitches() {
     try {
         const position = document.querySelectorAll(
             '.pageWrapper .tweetsContainer .smallFormContentWrapper .articleContainer'
         ).length;
         const res = await fetch(
-            `../../api/articles/?best_tweets=${position}`,
+            `../../api/articles/?stock_pitches=${position}`,
             get_fetch_settings('GET')
         );
         if (!res.ok) {
@@ -298,7 +295,49 @@ async function createTweets() {
     }
 }
 
-function twitterScroll() {
+// async function createTweets() {
+//     try {
+//         const position = document.querySelectorAll(
+//             '.pageWrapper .tweetsContainer .smallFormContentWrapper .articleContainer'
+//         ).length;
+//         const res = await fetch(
+//             `../../api/articles/?best_tweets=${position}`,
+//             get_fetch_settings('GET')
+//         );
+//         if (!res.ok) {
+//             showMessage('Error: Network request failed unexpectedly!', 'Error');
+//         } else {
+//             const context = await res.json();
+//             context.forEach((article) => {
+//                 addNewContentToContainer(article, true);
+//             });
+//             document
+//                 .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper .loader')
+//                 .remove();
+//             contentIsLoading = false;
+//         }
+//     } catch (e) {
+//         // showMessage("Error: Unexpected error has occurred!", "Error");
+//     }
+// }
+
+// function twitterScroll() {
+//     if (
+//         Math.ceil(scrollableTweetContainer.scrollTop + scrollableTweetContainer.clientHeight) >=
+//             scrollableTweetContainer.scrollHeight &&
+//         !contentIsLoading
+//     ) {
+//         const loader = document.createElement('div');
+//         loader.classList.add('loader');
+//         document
+//             .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
+//             .appendChild(loader);
+//         createTweets();
+//         contentIsLoading = true;
+//     }
+// }
+
+function stockPitchesScroll() {
     if (
         Math.ceil(scrollableTweetContainer.scrollTop + scrollableTweetContainer.clientHeight) >=
             scrollableTweetContainer.scrollHeight &&
@@ -309,7 +348,7 @@ function twitterScroll() {
         document
             .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
             .appendChild(loader);
-        createTweets();
+        createStockPitches();
         contentIsLoading = true;
     }
 }
@@ -321,12 +360,12 @@ function contentScroll() {
     const loader = document.createElement('div');
     loader.classList.add('loader');
     if (!contentIsLoading) {
-        if (activeTab === 'Recommended Tweets') {
+        if (activeTab === 'Stock Pitches') {
             contentIsLoading = true;
             document
                 .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
                 .appendChild(loader);
-            createTweets();
+            createStockPitches();
         } else {
             contentIsLoading = true;
             document
@@ -353,5 +392,5 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 scrollableTweetContainer.addEventListener('scroll', function () {
-    twitterScroll();
+    stockPitchesScroll();
 });

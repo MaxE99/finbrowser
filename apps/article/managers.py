@@ -88,6 +88,14 @@ class ArticleManager(models.Manager):
             .select_related("source", "source__website")
         )
 
+    def get_stock_pitches(self):
+        from apps.article.models import StockPitch
+
+        stock_pitches = StockPitch.objects.all().values_list("article")
+        return self.filter(article_id__in=stock_pitches).select_related(
+            "source", "source__website"
+        )
+
 
 class HighlightedArticlesManager(models.Manager):
     def get_ids_by_user(self, user):
