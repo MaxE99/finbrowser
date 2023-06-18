@@ -79,28 +79,35 @@ class PortfolioView(TemplateView, BaseMixin):
         )
         stocks = (
             PortfolioStock.objects.filter(portfolio=selected_portfolio)
-            .select_related("stock", "portfolio")
-            .prefetch_related("keywords")
+            .select_related("stock")
+            .prefetch_related("keywords", "portfolio")
             .order_by("stock__ticker")
         )
-        q_objects = create_portfolio_search_object(stocks)
-        filtered_content = (
-            Article.objects.filter(q_objects)
-            .select_related("source")
-            .exclude(source__in=selected_portfolio.blacklisted_sources.all())
-        )
-        portfolio_stocks = PortfolioStockSerializer(
-            stocks, many=True, context={"filtered_content": filtered_content}
-        ).data
+        # import to check if no stocks in portfolio q_objects cause timeout error
+        if stocks.exists():
+            q_objects = create_portfolio_search_object(stocks)
+            filtered_content = (
+                Article.objects.filter(q_objects)
+                .select_related("source")
+                .exclude(source__in=selected_portfolio.blacklisted_sources.all())
+            )
+            portfolio_stocks = PortfolioStockSerializer(
+                stocks, many=True, context={"filtered_content": filtered_content}
+            ).data
+            filtered_content_list = list(filtered_content)
+            analysis_content, commentary_content, news_content = create_content_lists(
+                filtered_content_list
+            )
+        else:
+            analysis_content = (
+                commentary_content
+            ) = news_content = Article.objects.none()
+            portfolio_stocks = None
         context["stocks"] = portfolio_stocks
         context["selected_portfolio"] = selected_portfolio
         context["user_portfolios"] = Portfolio.objects.filter(
             user=self.request.user
         ).order_by("name")
-        filtered_content_list = list(filtered_content)
-        analysis_content, commentary_content, news_content = create_content_lists(
-            filtered_content_list
-        )
         context["analysis"] = paginator_create(
             self.request,
             analysis_content,
@@ -138,24 +145,31 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
             .prefetch_related("keywords", "portfolio")
             .order_by("stock__ticker")
         )
-        q_objects = create_portfolio_search_object(stocks)
-        filtered_content = (
-            Article.objects.filter(q_objects)
-            .select_related("source")
-            .exclude(source__in=selected_portfolio.blacklisted_sources.all())
-        )
-        portfolio_stocks = PortfolioStockSerializer(
-            stocks, many=True, context={"filtered_content": filtered_content}
-        ).data
+        # import to check if no stocks in portfolio q_objects cause timeout error
+        if stocks.exists():
+            q_objects = create_portfolio_search_object(stocks)
+            filtered_content = (
+                Article.objects.filter(q_objects)
+                .select_related("source")
+                .exclude(source__in=selected_portfolio.blacklisted_sources.all())
+            )
+            portfolio_stocks = PortfolioStockSerializer(
+                stocks, many=True, context={"filtered_content": filtered_content}
+            ).data
+            filtered_content_list = list(filtered_content)
+            analysis_content, commentary_content, news_content = create_content_lists(
+                filtered_content_list
+            )
+        else:
+            analysis_content = (
+                commentary_content
+            ) = news_content = Article.objects.none()
+            portfolio_stocks = None
         context["stocks"] = portfolio_stocks
         context["selected_portfolio"] = selected_portfolio
         context["user_portfolios"] = Portfolio.objects.filter(
             user=self.request.user
         ).order_by("name")
-        filtered_content_list = list(filtered_content)
-        analysis_content, commentary_content, news_content = create_content_lists(
-            filtered_content_list
-        )
         context["analysis"] = paginator_create(
             self.request,
             analysis_content,
