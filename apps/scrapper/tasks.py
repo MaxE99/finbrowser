@@ -471,45 +471,7 @@ def scrape_alt_feeds():
             continue
 
 
-@shared_task
-def recalc_average_rating():
-    from apps.source.models import SourceRating
 
-    for source in Source.objects.all():
-        agg_ratings = 0
-        ammount_of_ratings = 0
-        for rating in SourceRating.objects.filter(source=source):
-            agg_ratings += rating.rating
-            ammount_of_ratings += 1
-        source.ammount_of_ratings = ammount_of_ratings
-        source.average_rating = agg_ratings / ammount_of_ratings
-        source.save()
-
-
-@shared_task
-def rate_sources():
-    import random
-    from apps.source.models import SourceRating
-
-    rater_number = random.randint(1, 30)
-    rater = get_object_or_404(User, username=f"InvitedSourceRater{rater_number}")
-    if SourceRating.objects.filter(user=rater).count() < 200:
-        for source in Source.objects.all():
-            if SourceRating.objects.filter(source=source, user=rater).exists():
-                continue
-            if random.random() < min(0.2, source.ammount_of_ratings * 0.0075):
-                rating_bonus = 0
-                rating_random = random.random()
-                if rating_random > 0.9:
-                    rating_bonus = 2
-                elif rating_random > 0.75:
-                    rating_bonus = 1
-                elif rating_random < 0.1:
-                    rating_bonus = -2
-                elif rating_random < 0.25:
-                    rating_bonus = -1
-                rating = min(10, round(source.average_rating) + rating_bonus)
-                SourceRating.objects.create(source=source, user=rater, rating=rating)
 
 
 # =================================================================================
@@ -868,3 +830,44 @@ def rate_sources():
 #     print("The following sources could not be scrapped: ")
 #     for source in failed_scrapping:
 #         print(source)
+
+
+# @shared_task
+# def recalc_average_rating():
+#     from apps.source.models import SourceRating
+
+#     for source in Source.objects.all():
+#         agg_ratings = 0
+#         ammount_of_ratings = 0
+#         for rating in SourceRating.objects.filter(source=source):
+#             agg_ratings += rating.rating
+#             ammount_of_ratings += 1
+#         source.ammount_of_ratings = ammount_of_ratings
+#         source.average_rating = agg_ratings / ammount_of_ratings
+#         source.save()
+
+
+# @shared_task
+# def rate_sources():
+#     import random
+#     from apps.source.models import SourceRating
+
+#     rater_number = random.randint(1, 30)
+#     rater = get_object_or_404(User, username=f"InvitedSourceRater{rater_number}")
+#     if SourceRating.objects.filter(user=rater).count() < 200:
+#         for source in Source.objects.all():
+#             if SourceRating.objects.filter(source=source, user=rater).exists():
+#                 continue
+#             if random.random() < min(0.2, source.ammount_of_ratings * 0.0075):
+#                 rating_bonus = 0
+#                 rating_random = random.random()
+#                 if rating_random > 0.9:
+#                     rating_bonus = 2
+#                 elif rating_random > 0.75:
+#                     rating_bonus = 1
+#                 elif rating_random < 0.1:
+#                     rating_bonus = -2
+#                 elif rating_random < 0.25:
+#                     rating_bonus = -1
+#                 rating = min(10, round(source.average_rating) + rating_bonus)
+#                 SourceRating.objects.create(source=source, user=rater, rating=rating)
