@@ -471,6 +471,40 @@ def scrape_alt_feeds():
             continue
 
 
+@shared_task
+def create_rater_accounts():
+    for i in range(1, 30):
+        User.objects.create(
+            username=f"InvitedSourceRater{i}",
+            email=f"xyz_invitedsourcerater{i}@nomail.com",
+        )
+
+
+@shared_task
+def rate_sources():
+    import random
+    from apps.source.models import SourceRating
+
+    rater_number = random.randint(1, 30)
+    rater = get_object_or_404(User, username=f"InvitedSourceRater{rater_number}")
+    for source in Source.objects.all():
+        if SourceRating.objects.filter(source=source, user=rater).exists():
+            continue
+        if random.random() < max(0.33, source.ammount_of_ratings * 0.02):
+            rating_bonus = 0
+            rating_random = random.random()
+            if rating_random > 0.9:
+                rating_bonus = 2
+            elif rating_random > 0.75:
+                rating_bonus = 1
+            elif rating_random < 0.1:
+                rating_bonus = -2
+            elif rating_random < 0.25:
+                rating_bonus = -1
+            rating = round(source.average_rating) + rating_bonus
+            SourceRating.objects.create(source=source, user=rater, rating=rating)
+
+
 # =================================================================================
 # Tasks that need to be used from time to time
 # =================================================================================
