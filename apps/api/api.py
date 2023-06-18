@@ -332,4 +332,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
         if self.request.GET.get("best_tweets"):
             position = int(self.request.GET.get("best_tweets"))
             return Article.objects.get_best_tweets_anon()[position : position + 25]
+        if self.request.GET.get("stock_pitches"):
+            position = int(self.request.GET.get("stock_pitches"))
+            return Article.objects.get_stock_pitches()[position : position + 25]
         return super().get_queryset()
