@@ -497,7 +497,7 @@ def rate_sources():
         for source in Source.objects.all():
             if SourceRating.objects.filter(source=source, user=rater).exists():
                 continue
-            if random.random() < max(0.15, source.ammount_of_ratings * 0.005):
+            if random.random() < min(0.2, source.ammount_of_ratings * 0.0075):
                 rating_bonus = 0
                 rating_random = random.random()
                 if rating_random > 0.9:
@@ -508,7 +508,7 @@ def rate_sources():
                     rating_bonus = -2
                 elif rating_random < 0.25:
                     rating_bonus = -1
-                rating = max(10, round(source.average_rating) + rating_bonus)
+                rating = min(10, round(source.average_rating) + rating_bonus)
                 SourceRating.objects.create(source=source, user=rater, rating=rating)
 
 
