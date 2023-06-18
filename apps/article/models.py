@@ -7,6 +7,7 @@ from django.contrib.postgres.search import SearchVectorField
 # Local imports
 from apps.article.managers import ArticleManager, HighlightedArticlesManager
 from apps.source.models import Source
+from apps.stock.models import Stock
 
 User = get_user_model()
 
@@ -83,3 +84,12 @@ class TrendingTopicContent(models.Model):
 
     def __str__(self):
         return f"{self.ttopic_id} - {self.article}"
+
+
+class StockPitch(models.Model):
+    stock_pitch_id = models.AutoField(primary_key=True)
+    article = models.OneToOneField(Article, on_delete=models.CASCADE)
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.stock_pitch_id} - {self.article}"
