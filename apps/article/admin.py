@@ -7,6 +7,7 @@ from apps.article.models import (
     HighlightedArticle,
     TweetType,
     TrendingTopicContent,
+    StockPitch,
 )
 
 
@@ -25,7 +26,12 @@ class SearchInsteadOfDropdown(admin.ModelAdmin):
     ]
 
 
+class StockPitchDropdown(admin.ModelAdmin):
+    autocomplete_fields = ["article", "stock"]
+
+
 admin.site.register(HighlightedArticle, SearchInsteadOfDropdown)
 admin.site.register(Article, ArticleSearch)
 admin.site.register(TweetType)
 admin.site.register(TrendingTopicContent, SearchInsteadOfDropdown)
+admin.site.register(StockPitch, StockPitchDropdown)
