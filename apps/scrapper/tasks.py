@@ -211,7 +211,7 @@ def scrape_seekingalpha():
 def scrape_other_websites():
     other_sources = (
         Source.objects.filter(website=get_object_or_404(Website, name="Other"))
-        .exclude(external_id__isnull=False)
+        .exclude(alt_feed__isnull=False)
         .only("source_id", "url", "website")
     )
     articles = Article.objects.filter(source__in=other_sources).only(
@@ -219,7 +219,6 @@ def scrape_other_websites():
     )
     for source in other_sources:
         try:
-            print(source)
             feed_url = f"{source.url}feed"
             create_articles_from_feed(source, feed_url, articles)
         except Exception as error:
@@ -460,7 +459,12 @@ def calc_sim_sources():
 
 @shared_task
 def scrape_alt_feeds():
-    sources = Source.objects.filter(website__name="Other", alt_feed__isnull=False)
+    sources = (
+        Source.objects.filter(website__name="Other", alt_feed__isnull=False)
+        .exclude(alt_feed="none")
+        .only("source_id", "alt_feed", "website")
+    )
+
     articles = Article.objects.filter(source__in=sources).only(
         "title", "pub_date", "source", "link"
     )
@@ -469,6 +473,7 @@ def scrape_alt_feeds():
             if source.alt_feed != "none":
                 create_articles_from_feed(source, source.alt_feed, articles)
         except Exception as error:
+            print(f"Scrapping {source} has caused this error: {error}")
             continue
 
 
