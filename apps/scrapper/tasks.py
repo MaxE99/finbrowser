@@ -286,17 +286,17 @@ def scrape_youtube():
     )
     youtube_creation_list = []
     for source in youtube_sources:
-        channel_data = request_get(
-            f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails",
-            timeout=10,
-        ).json()
-        upload_id = channel_data["items"][0]["contentDetails"]["relatedPlaylists"][
-            "uploads"
-        ]
-        url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=50"
-        request = request_get(url, timeout=10)
-        data = request.json()
         try:
+            channel_data = request_get(
+                f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails",
+                timeout=10,
+            ).json()
+            upload_id = channel_data["items"][0]["contentDetails"]["relatedPlaylists"][
+                "uploads"
+            ]
+            url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=50"
+            request = request_get(url, timeout=10)
+            data = request.json()
             items = data["items"]
             for item in items:
                 title = unescape(item["snippet"]["title"])
@@ -312,7 +312,8 @@ def scrape_youtube():
                 )
                 if article_exists:
                     break
-        except Exception as _:
+        except Exception as error:
+            print(f"Scrapping {source} has caused this error: {error}")
             continue
     bulk_create_articles_and_notifications(youtube_creation_list)
 
@@ -469,9 +470,6 @@ def scrape_alt_feeds():
                 create_articles_from_feed(source, source.alt_feed, articles)
         except Exception as error:
             continue
-
-
-
 
 
 # =================================================================================
