@@ -97,7 +97,7 @@ def create_portfolio_search_object(stocks):
         # else:
         # important to use $ + instead of as f-string because $ has special meaning in f-string
         # q_objects.add(Q(search_vector="$" + stock.stock.ticker), Q.OR)
-        if stock.stock.short_company_name not in english_words:
+        if stock.stock.short_company_name.lower() not in english_words:
             q_objects.add(Q(search_vector=stock.stock.short_company_name), Q.OR)
         for keyword in stock.keywords.all():
             if keyword.keyword not in english_words:
