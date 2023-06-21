@@ -12,7 +12,7 @@ FAVICON_FILE_DIRECTORY = "static/home/favicons"
 TWEET_IMG_FILE_DIRECTORY = "static/home/tweet_imgs"
 INITIAL_TWEET_IMG_FILE_DIRECTORY = "static/home/initial_tweet_imgs"
 
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     ALLOWED_HOSTS = []

@@ -159,11 +159,11 @@
                             aria-label="Open Profile Of {{ stock.stock.full_company_name }}"></a>
                     </td>
                     <td>
-                        {% if stock.articles_last_7d < 5 %}
+                        {% if stock.articles_last_7d < 3 %}
                         <span class="low">Low</span>
-                        {% elif stock.articles_last_7d > 4 and stock.articles_last_7d < 10 %}
+                        {% elif stock.articles_last_7d > 2 and stock.articles_last_7d < 5 %}
                         <span class="mid">Mid</span>
-                        {% elif stock.articles_last_7d > 9 %}
+                        {% elif stock.articles_last_7d > 4 %}
                         <span class="high">High</span>
                         {% endif %}
                         <a href="{{ stock.absolute_path }}"
