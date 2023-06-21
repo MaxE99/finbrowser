@@ -51,7 +51,7 @@ class ArticleManager(models.Manager):
             q_objects.add(Q(search_vector=stock.ticker), Q.OR)
         else:
             q_objects.add(Q(title__icontains=f"${stock.ticker} "), Q.OR)
-        if stock.short_company_name not in english_words:
+        if stock.short_company_name.lower() not in english_words:
             q_objects.add(Q(search_vector=stock.short_company_name), Q.OR)
         return self.filter(q_objects).select_related(
             "source", "tweet_type", "source__website"
