@@ -86,18 +86,26 @@ class PortfolioView(TemplateView, BaseMixin):
         # import to check if no stocks in portfolio q_objects cause timeout error
         if stocks.exists():
             q_objects = create_portfolio_search_object(stocks)
-            filtered_content = (
-                Article.objects.filter(q_objects)
-                .select_related("source")
-                .exclude(source__in=selected_portfolio.blacklisted_sources.all())
-            )
-            portfolio_stocks = PortfolioStockSerializer(
-                stocks, many=True, context={"filtered_content": filtered_content}
-            ).data
-            filtered_content_list = list(filtered_content)
-            analysis_content, commentary_content, news_content = create_content_lists(
-                filtered_content_list
-            )
+            # potential edge case only stock in portfolio = Bill which will lead to no english words because of english word in ticker and short company name
+            if q_objects:
+                filtered_content = (
+                    Article.objects.filter(q_objects)
+                    .select_related("source")
+                    .exclude(source__in=selected_portfolio.blacklisted_sources.all())
+                )
+                portfolio_stocks = PortfolioStockSerializer(
+                    stocks, many=True, context={"filtered_content": filtered_content}
+                ).data
+                filtered_content_list = list(filtered_content)
+                (
+                    analysis_content,
+                    commentary_content,
+                    news_content,
+                ) = create_content_lists(filtered_content_list)
+            else:
+                analysis_content = (
+                    commentary_content
+                ) = news_content = Article.objects.none()
         else:
             analysis_content = (
                 commentary_content
@@ -148,18 +156,26 @@ class PortfolioDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
         # import to check if no stocks in portfolio q_objects cause timeout error
         if stocks.exists():
             q_objects = create_portfolio_search_object(stocks)
-            filtered_content = (
-                Article.objects.filter(q_objects)
-                .select_related("source")
-                .exclude(source__in=selected_portfolio.blacklisted_sources.all())
-            )
-            portfolio_stocks = PortfolioStockSerializer(
-                stocks, many=True, context={"filtered_content": filtered_content}
-            ).data
-            filtered_content_list = list(filtered_content)
-            analysis_content, commentary_content, news_content = create_content_lists(
-                filtered_content_list
-            )
+            # potential edge case only stock in portfolio = Bill which will lead to no english words because of english word in ticker and short company name
+            if q_objects:
+                filtered_content = (
+                    Article.objects.filter(q_objects)
+                    .select_related("source")
+                    .exclude(source__in=selected_portfolio.blacklisted_sources.all())
+                )
+                portfolio_stocks = PortfolioStockSerializer(
+                    stocks, many=True, context={"filtered_content": filtered_content}
+                ).data
+                filtered_content_list = list(filtered_content)
+                (
+                    analysis_content,
+                    commentary_content,
+                    news_content,
+                ) = create_content_lists(filtered_content_list)
+            else:
+                analysis_content = (
+                    commentary_content
+                ) = news_content = Article.objects.none()
         else:
             analysis_content = (
                 commentary_content
