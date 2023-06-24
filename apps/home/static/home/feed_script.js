@@ -221,6 +221,7 @@ function addNewContentToContainer(article, stock_pitch = false) {
     contentLink = document.createElement('a');
     contentLink.classList.add('contentLink');
     contentLink.href = article.link;
+    contentLink.target = '_blank';
     rightContentSide.append(contentInfoContainer, contentBody, contentLink);
     rightContentSide.appendChild(timeContainer);
     articleContainer.appendChild(rightContentSide);
