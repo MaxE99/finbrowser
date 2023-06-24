@@ -30,6 +30,7 @@ from apps.logic.services import (
     twitter_create_api_settings,
     tweet_type_create,
     article_creation_check,
+    get_substack_info,
 )
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
@@ -477,6 +478,121 @@ def scrape_alt_feeds():
             continue
 
 
+@shared_task
+def substack_scrape_accounts():
+    from apps.source.models import SourceRating
+
+    new_substack_sources = [
+        "https://datadriveninvesting.substack.com/",
+        "https://buckonsoftware.substack.com/",
+        "https://linesonachart.substack.com/",
+        "https://www.realisticoptimist.io/",
+        "https://www.nongaap.com/",
+        "https://www.techfund.one/",
+        "https://www.moneylemma.com/",
+        "https://99tech.alexlazarow.com/",
+        "https://stretchfour.substack.com/",
+        "https://theovershoot.co/",
+        "https://www.dotmacro.io/",
+        "https://aspiicpc.substack.com/",
+        "https://www.dailychartbook.com/",
+        "https://thisweekinafrica.substack.com/",
+        "https://news.futuresoutheastasia.com/",
+        "https://richardkatz.substack.com/",
+        "https://rohanvenkat.substack.com/",
+        "https://kenopalo.substack.com/",
+        "https://www.distilled.earth/",
+        "https://www.exponentialview.co/",
+        "https://verticaltech.substack.com/",
+        "https://www.fallacyalarm.com/",
+        "https://alternativealpha.substack.com/",
+        "https://harkster.substack.com/",
+        "https://capitalnotes.substack.com/",
+        "https://stayathomemacro.substack.com/",
+        "https://bondangle.substack.com/",
+        "https://manleymacro.substack.com/",
+        "https://prometheus-research.net/",
+        "https://www.campbellramble.ai/",
+        "https://commodityreport.substack.com/",
+        "https://mideastspace.substack.com/",
+        "https://chinaspacemonitor.substack.com/",
+        "https://europeanspaceflight.substack.com/",
+        "https://tedcross.substack.com/",
+        "https://jameslavish.substack.com/",
+        "https://newsletter.tuttleventures.com/",
+        "https://businesswave.substack.com/",
+        "https://pivotal.substack.com/",
+        "https://emergingmarketskeptic.substack.com/",
+        "https://www.thespl.it/",
+        "https://coppolacomment.substack.com/",
+        "https://stjic.substack.com/",
+        "https://bizalmanac.substack.com/",
+        "https://exploringcontext.substack.com/",
+        "https://gambitcap.substack.com/",
+        "https://www.scuttlebutt.co/",
+        "https://smallcaplab.substack.com/",
+        "https://investmentideas.substack.com/",
+        "https://toomuchtv.substack.com/",
+        "https://o8cap.substack.com/",
+        "https://softwaremusings.substack.com/",
+        "https://capitalwars.substack.com/",
+        "https://concentratedcompounding.substack.com/",
+        "https://www.wahdycapital.com/",
+    ]
+    scraping_failed = []
+    for source_url in new_substack_sources:
+        try:
+            print(source_url)
+            name, img_url = get_substack_info(source_url)
+            if (
+                Source.objects.filter(name=name).exists()
+                or Source.objects.filter(slug=slugify(name)).exists()
+            ):
+                name = name + " - Substack"
+            source = Source.objects.create(
+                url=source_url,
+                slug=slugify(name),
+                name=name,
+                favicon_path=f"home/favicons/{slugify(name)}.png",
+                paywall="Yes",
+                website=get_object_or_404(Website, name="Substack"),
+            )
+            source_profile_img_create(source, img_url)
+            # add source_rating otherwise 500 error when opening source profile
+            SourceRating.objects.create(
+                user=get_object_or_404(User, email="me-99@live.de"),
+                source=source,
+                rating=7,
+            )
+            sleep(5)
+        except Exception as error:
+            scraping_failed.append(source_url)
+            print(f"Scrapping {source_url} has caused this error: ")
+            print(error)
+            continue
+    print("Scrapping has failed for these sources: ")
+    for source in scraping_failed:
+        print(source)
+
+
+@shared_task
+def fix_broken_short_company_names():
+    from apps.scrapper.filler_words import new_fillerwords
+    from apps.stock.models import Stock
+
+    for stock in Stock.objects.all():
+        short_name = stock.short_company_name
+        for word in new_fillerwords:
+            short_name = short_name.replace(word, "")
+        if short_name.endswith(" and"):
+            short_name = short_name.replace(" and", "")
+        if short_name.endswith("orporated"):
+            short_name = short_name.replace("orporated", "")
+        if short_name != stock.short_company_name:
+            stock.short_company_name = short_name
+            stock.save()
+
+
 # =================================================================================
 # Tasks that need to be used from time to time
 # =================================================================================
@@ -681,40 +797,6 @@ def scrape_alt_feeds():
 #     print("The following sources could not be scrapped: ")
 #     for source in failed_scrapping:
 #         print(source)
-
-
-# @shared_task
-# def substack_scrape_accounts():
-#     new_substack_sources = []
-#     for source_url in new_substack_sources:
-#         try:
-#             print(source_url)
-#             name, img_url = get_substack_info(source_url)
-#             if (
-#                 Source.objects.filter(name=name).exists()
-#                 or Source.objects.filter(slug=slugify(name)).exists()
-#             ):
-#                 name = name + " - Substack"
-#             source = Source.objects.create(
-#                 url=source_url,
-#                 slug=slugify(name),
-#                 name=name,
-#                 favicon_path=f"home/favicons/{slugify(name)}.png",
-#                 paywall="Yes",
-#                 website=get_object_or_404(Website, name="Substack"),
-#             )
-#             source_profile_img_create(source, img_url)
-#             # add source_rating otherwise 500 error when opening source profile
-#             SourceRating.objects.create(
-#                 user=get_object_or_404(User, email="me-99@live.de"),
-#                 source=source,
-#                 rating=7,
-#             )
-#             sleep(5)
-#         except Exception as error:
-#             print(f"Scrapping {source_url} has caused this error: ")
-#             print(error)
-#             continue
 
 
 # @shared_task
