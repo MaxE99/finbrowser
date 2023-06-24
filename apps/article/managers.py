@@ -47,7 +47,7 @@ class ArticleManager(models.Manager):
 
     def get_content_about_stock(self, stock):
         q_objects = Q()
-        if len(stock.ticker) < 3 or stock.ticker.lower() not in english_words:
+        if len(stock.ticker) == 2 or stock.ticker.lower() not in english_words:
             q_objects.add(Q(search_vector=f"${stock.ticker} "), Q.OR)
         if len(stock.ticker) > 2 and stock.ticker.lower() not in english_words:
             q_objects.add(Q(search_vector=stock.ticker), Q.OR)
