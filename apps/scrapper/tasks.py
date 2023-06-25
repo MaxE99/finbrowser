@@ -359,9 +359,12 @@ def youtube_get_profile_images():
             url = f"https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id={source.external_id}&key={api_key}"
             request = request_get(url, timeout=10)
             data = request.json()
-            source_profile_img_create(
-                source, data["items"][0]["snippet"]["thumbnails"]["medium"]["url"]
-            )
+            if "items" in data:
+                source_profile_img_create(
+                    source, data["items"][0]["snippet"]["thumbnails"]["medium"]["url"]
+                )
+            else:
+                print(f"{source} has no key items!")
         except Exception as error:
             print(f"Scrapping {source} has caused this error: {error}")
             print(data)
@@ -493,95 +496,237 @@ def scrape_alt_feeds():
 
 
 @shared_task
-def create_spotify_sources():
-    from apps.source.models import Sector, SourceRating
-
-    client_id = environ.get("SPOTIFY_CLIENT_ID")
-    client_secret = environ.get("SPOTIFY_CLIENT_SECRET")
-    spotify_sources = [
-        "https://open.spotify.com/show/7JhOkXo6DKXhmKZh4F7MP4",
-        "https://open.spotify.com/show/3q6PrjHVfRzpD2lN1g2XRU",
-        "https://open.spotify.com/show/6Azh5lcMWsfvvMWRMVS9od",
-        "https://open.spotify.com/show/7yMLsm5s8tLtrCQr7bG8wD",
-        "https://open.spotify.com/show/0TYNFdGwFOoBOluuAhSRc0",
-        "https://open.spotify.com/show/7cPWOxfkyb1i8uffx13GDz",
-        "https://open.spotify.com/show/1kYiUtgDcaUoMQjUko7toT",
-        "https://open.spotify.com/show/5qk8RnfIkb3peJJp4dsmvB",
-        "https://open.spotify.com/show/4vNumoS1tv284WNs6N8irH",
-        "https://open.spotify.com/show/7xF1lww4OCT34x7lK9iW52",
-        "https://open.spotify.com/show/2jjxMaf00TlgajwqOd9wH5",
-        "https://open.spotify.com/show/4vfgncsWqqVEmRzomWeAyE",
-        "https://open.spotify.com/show/5PCntXM9L8GDzaZr2Yf7FT",
-        "https://open.spotify.com/show/5j0BepJk2cQOud04zhAMem",
-        "https://open.spotify.com/show/4mhqSxyBCHZ1wTQwXlAvCG",
-        "https://open.spotify.com/show/5RrcotTb2l3nO9ZZeUovYd",
-        "https://open.spotify.com/show/3ebb4j277CjzdftIF77pL5",
-        "https://open.spotify.com/show/40ZQt65jlpa7RFBTLizOZj",
-        "https://open.spotify.com/show/2rm72xDiRG8H3aEgJi95aK",
-        "https://open.spotify.com/show/54wcTJS0kYranEJYHjF0Du",
-        "https://open.spotify.com/show/5v6uPn6w2ztjqTtCFld1CD",
-        "https://open.spotify.com/show/3KaB7t4XM6gLzME2IsD86D",
-        "https://open.spotify.com/show/4TPlJsnx3OSpiCooVAcx8Z",
-        "https://open.spotify.com/show/5Edc7DbMycGa8woSWvDwjg",
-        "https://open.spotify.com/show/3X7SToMTDDsB2Jvt9Nj021",
-        "https://open.spotify.com/show/2X3sfVd0zKk9Yr2VBpeehp",
-        "https://open.spotify.com/show/6R2J2ms0VJaYqBgFfh50m9",
-        "https://open.spotify.com/show/1DrWdAAWStVh8pffGvtWXg",
-        "https://open.spotify.com/show/7lZSVArSu9zErPpmouqIey",
-        "https://open.spotify.com/show/5itkatjzw3r3Jga3EQCZAW",
-        "https://open.spotify.com/show/0y8sstUImmoaCYgygiJ8ct",
-        "https://open.spotify.com/show/25j6aGcaN8uj1SydSGM8ty",
-        "https://open.spotify.com/show/0jg1Zy3a5QVFBBCe0TWNKd",
-        "https://open.spotify.com/show/7arvSbk8IkjhClRuvzxxrJ",
-        "https://open.spotify.com/show/0uT0iw8BkDIvFH12Z3GJKR",
-        "https://open.spotify.com/show/6DX9sYVSZq4YqbpGuxRg6f",
-        "https://open.spotify.com/show/2ZK1l4Y1yNC7CGJmJkt8Eq",
-    ]
-    failed_sources = []
-    for source_url in spotify_sources:
-        if not Source.objects.filter(url=source_url).exists():
-            try:
-                external_id = source_url.split("https://open.spotify.com/show/")[1]
-                spotify = SpotifyAPI(client_id, client_secret)
-                podcaster = spotify.get_podcaster(external_id)
-                name = podcaster["name"][:49]
-                if Source.objects.filter(name=name).exists():
-                    name = podcaster["name"][:40] + "- Spotify"
-                slug = slugify(name)[:49]
-                source = Source.objects.create(
-                    url=source_url,
-                    slug=slug,
-                    name=name,
-                    favicon_path=f"home/favicons/{slug}.webp",
-                    paywall="No",
-                    website=get_object_or_404(Website, name="Spotify"),
-                    content_type="Analysis",
-                    sector=get_object_or_404(Sector, name="Generalists"),
-                    external_id=external_id,
-                )
-                if "images" in podcaster.keys():
-                    source_profile_img_create(source, podcaster["images"][0]["url"])
-                # add source_rating otherwise 500 error when opening source profile
-                SourceRating.objects.create(
-                    user=get_object_or_404(User, email="me-99@live.de"),
-                    source=source,
-                    rating=7,
-                )
-            except Exception as error:
-                failed_sources.append(source_url)
-                print(f"Scrapping {source_url} failed due to {error}")
-                continue
-        sleep(3)
-    print("Scrapping failed for these sources")
-    for source in failed_sources:
-        print(source)
-
-
-@shared_task
 def create_news_sources():
     from apps.source.models import Sector, SourceRating
 
-    new_sources = []
+    new_sources = [
+        "https://www.coalage.com/",
+        "https://www.sharecafe.com.au/",
+        "https://www.morgans.com.au/Blog",
+        "https://themarketherald.com.au/",
+        "https://www.bicmagazine.com/",
+        "https://www.gamedeveloper.com/",
+        "https://famousaspect.com/",
+        "https://gameanalytics.com/resources",
+        "https://spaceflightnow.com/",
+        "https://parabolicarc.com/",
+        "https://spacewatch.global/",
+        "https://www.spaceflightinsider.com/",
+        "https://www.spacemart.com/",
+        "https://cosmiclog.com/",
+        "https://www.aiaa.org/",
+        "https://www.aviationtoday.com/",
+        "https://smallcaps.com.au/",
+        "https://smallcapdiscoveries.com/",
+        "https://investingcaffeine.com/",
+        "https://thefelderreport.com/blog/",
+        "https://www.royceinvest.com/",
+        "https://microcapdaily.com/",
+        "https://smallcapsdaily.com/",
+        "https://smallcaps.ca/",
+        "https://www.semiconductor-today.com/",
+        "https://www.semiconductors.org/news-events/latest-news/",
+        "https://www.embedded.com/",
+        "https://www.thomasnet.com/insights/",
+        "https://anysilicon.com/",
+        "https://edacafe.com/",
+        "https://evertiq.com/",
+        "https://www.theaureport.com/",
+        "https://www.miningmagazine.com/",
+        "https://www.geologyforinvestors.com/",
+        "https://republicofmining.com/",
+        "https://www.juniorminingnetwork.com/",
+        "https://www.e-mj.com/",
+        "https://me.smenet.org/",
+        "https://www.australianmining.com.au/",
+        "https://im-mining.com/",
+        "https://www.caesarsreport.com/",
+        "https://www.northernminer.com/",
+        "https://www.canadianminingjournal.com/",
+        "https://www.pitandquarry.com/",
+        "https://www.miningwatch.ca/",
+        "https://copper.org/",
+        "https://www.shalemarkets.com/",
+        "https://energynow.ca/",
+        "https://osuwheat.com/",
+        "https://www.ft.com/mining",
+        "https://www.world-grain.com/",
+        "https://www.argusmedia.com/",
+        "https://www.nerdsofsteel.com/",
+        "https://container-news.com/",
+        "https://www.hellenicshippingnews.com/",
+        "https://www.ship-technology.com/",
+        "https://www.marinelog.com/",
+        "https://lloydslist.maritimeintelligence.informa.com/",
+        "https://www.maritime-executive.com/",
+        "https://www.seatrade-maritime.com/",
+        "https://www.marinelink.com/",
+        "https://www.maritimeprofessional.com/",
+        "https://safety4sea.com/",
+        "https://www.marineinsight.com/",
+        "https://www.fleetequipmentmag.com/",
+        "https://www.rtands.com/",
+        "https://tandlonline.com/",
+        "https://shipandbunker.com/",
+        "https://smartmaritimenetwork.com/",
+        "https://www.ajot.com/",
+        "https://railway-news.com/",
+        "https://aircargonext.com/",
+        "https://www.shippingherald.com/",
+        "https://www.tiretechnologyinternational.com/",
+        "https://nerej.com/",
+        "https://rejournals.com/",
+        "https://www.multihousingnews.com/",
+        "https://crenews.com/",
+        "https://www.attomdata.com/",
+        "https://www.globest.com/",
+        "https://www.trepp.com/trepptalk",
+        "https://alpacainvestments.blogspot.com/",
+        "https://www.reit-tirement.com/",
+        "https://www.reitsweek.com/",
+        "https://www.mobihealthnews.com/",
+        "https://www.fiercehealthcare.com/",
+        "https://www.healthpopuli.com/",
+        "https://www.beckershospitalreview.com/",
+        "https://healthexec.com/",
+        "https://electronichealthreporter.com/",
+        "https://fintech-alliance.com/",
+        "https://www.altfi.com/",
+        "https://fintech.global/",
+        "https://thepaypers.com/",
+        "https://finovate.com/",
+        "https://fintechranking.com/",
+        "https://www.fintechfutures.com/",
+        "https://www.paymentscardsandmobile.com/",
+        "https://thefinancialbrand.com/",
+        "https://bankingblog.accenture.com/",
+        "https://www.atmmarketplace.com/",
+        "https://bankautomationnews.com/",
+        "https://fashionretail.blog/",
+        "https://www.broadbandtvnews.com/",
+        "https://www.telecompetitor.com/",
+        "https://www.telecomstechnews.com/",
+        "https://www.digitaltvnews.net/",
+        "https://www.rapidtvnews.com/",
+        "https://www.rcrwireless.com/",
+        "https://www.fiercewireless.com/",
+        "https://totaltele.com/",
+        "https://www.telecompaper.com/",
+        "https://www.csimagazine.com/",
+        "https://telecoms.com/",
+        "https://connectivitybusiness.com/",
+        "https://www.fiercetelecom.com/",
+        "https://www.lightreading.com/",
+        "https://www.ft.com/telecoms",
+        "https://telcommunicator.blogspot.com/",
+        "https://www.digitaltveurope.com/",
+        "https://www.commscope.com/",
+        "https://www.telecomtv.com/",
+        "https://www.commsupdate.com/",
+        "https://www.thefastmode.com/",
+        "https://shalegasreporter.com/",
+        "https://peakoil.com/",
+        "https://fuelcellsworks.com/",
+        "https://naturalgasnow.org/",
+        "https://www.naturalgasintel.com/",
+        "https://www.offshore-technology.com/",
+        "https://www.rigzone.com/",
+        "https://www.oilandgas360.com/",
+        "https://www.eia.gov/petroleum/weekly/",
+        "https://www.dailyoilbulletin.com/",
+        "https://www.smart-energy.com/",
+        "https://www.thinkgeoenergy.com/",
+        "https://www.energyglobal.com/",
+        "https://www.energyindepth.org/",
+        "https://www.enverus.com/blog/",
+        "https://www.utilitydive.com/",
+        "https://marcellusdrilling.com/",
+        "https://www.energy-pedia.com/",
+        "https://thefuse.org/",
+        "https://boereport.com/",
+        "https://atomicinsights.com/",
+        "https://www.world-nuclear-news.org/",
+        "https://theenergyst.com/",
+        "https://www.power-technology.com/",
+        "https://www.evwind.es/",
+        "https://gwec.net/",
+        "https://renews.biz/",
+        "https://www.pv-magazine.com/",
+        "https://energycentral.com/",
+        "https://nawindpower.com/",
+        "https://www.altenergymag.com/",
+        "https://www.renewableenergymagazine.com/",
+        "https://www.offshorewind.biz/",
+        "https://www.energy-storage.news/",
+        "https://drillingcontractor.org/",
+        "https://www.offshore-technology.com/",
+        "https://www.globalunderwaterhub.com/",
+        "https://pboilandgasmagazine.com/",
+        "https://www.nsenergybusiness.com/",
+        "https://www.jodidata.org/",
+        "https://novilabs.com/shale-oil-and-gas-insights-blog/",
+        "https://newconsumer.com/",
+        "https://www.retail-insight-network.com/",
+        "https://www.mytotalretail.com/",
+        "https://retailbum.com/",
+        "https://insideretail.com.au/",
+        "https://risnews.com/",
+        "https://multichannelmerchant.com/",
+        "https://www.esmmagazine.com/",
+        "https://www.modernretail.co/",
+        "https://insideretail.asia/",
+        "https://retail-focus.co.uk/",
+        "https://www.retailnews.asia/",
+        "https://channelx.world/",
+        "https://www.brickmeetsclick.com/",
+        "https://www.retailtechnology.co.uk/",
+        "https://www.retailcustomerexperience.com/",
+        "https://risnews.com/",
+        "https://cross-border-magazine.com/",
+        "https://www.thecannabist.co/",
+        "https://420intel.com/",
+        "https://cannabisindustryjournal.com/",
+        "https://www.marijuanatimes.org/",
+        "https://www.newcannabisventures.com/",
+        "https://www.pharmatimes.com/",
+        "https://www.drugs.com/new-drug-applications.html#",
+        "https://www.cafepharma.com/",
+        "https://www.thepharmaletter.com/",
+        "https://www.biopharma-reporter.com/",
+        "https://www.drugdeliverybusiness.com/",
+        "https://medcitynews.com/",
+        "https://www.breakingtravelnews.com/",
+        "https://www.futuretravelexperience.com/",
+        "https://runwaygirlnetwork.com/",
+        "https://www.aircargoweek.com/",
+        "https://www.iab.com/",
+        "https://www.mediapost.com/",
+        "https://www.fiercevideo.com/",
+        "https://www.mediaplaynews.com/",
+        "https://www.med-technews.com/",
+        "https://www.mddionline.com/",
+        "https://www.foodmanufacturing.com/",
+        "https://www.canadianmanufacturing.com/",
+        "https://www.australianmanufacturing.com.au/",
+        "https://www.foodbusinessnews.net/",
+        "https://www.preparedfoods.com/",
+        "https://www.meatpoultry.com/",
+        "https://www.grocerydive.com/",
+        "https://www.winsightgrocerybusiness.com/",
+        "https://www.restaurantdive.com/",
+        "https://medcitynews.com/tag/medical-devices/",
+        "https://pharmafile.com/",
+        "https://www.medicaldevice-network.com/",
+        "https://brazilian.report/",
+        "https://www.fleeteurope.com/",
+        "https://insideevs.com/",
+        "https://electriccarsreport.com/",
+        "https://www.pharmalive.com/",
+        "https://rew-online.com/",
+        "https://waste-management-world.com/",
+        "https://www.chemistryworld.com/section/business",
+        "https://arcticstartup.com/",
+    ]
     failed_scrapping = []
     for source_url in new_sources:
         print(source_url)
@@ -1056,3 +1201,50 @@ def create_news_sources():
 #         if short_name != stock.short_company_name:
 #             stock.short_company_name = short_name
 #             stock.save()
+
+
+# @shared_task
+# def create_spotify_sources():
+#     from apps.source.models import Sector, SourceRating
+
+#     client_id = environ.get("SPOTIFY_CLIENT_ID")
+#     client_secret = environ.get("SPOTIFY_CLIENT_SECRET")
+#     spotify_sources = []
+#     failed_sources = []
+#     for source_url in spotify_sources:
+#         if not Source.objects.filter(url=source_url).exists():
+#             try:
+#                 external_id = source_url.split("https://open.spotify.com/show/")[1]
+#                 spotify = SpotifyAPI(client_id, client_secret)
+#                 podcaster = spotify.get_podcaster(external_id)
+#                 name = podcaster["name"][:49]
+#                 if Source.objects.filter(name=name).exists():
+#                     name = podcaster["name"][:40] + "- Spotify"
+#                 slug = slugify(name)[:49]
+#                 source = Source.objects.create(
+#                     url=source_url,
+#                     slug=slug,
+#                     name=name,
+#                     favicon_path=f"home/favicons/{slug}.webp",
+#                     paywall="No",
+#                     website=get_object_or_404(Website, name="Spotify"),
+#                     content_type="Analysis",
+#                     sector=get_object_or_404(Sector, name="Generalists"),
+#                     external_id=external_id,
+#                 )
+#                 if "images" in podcaster.keys():
+#                     source_profile_img_create(source, podcaster["images"][0]["url"])
+#                 # add source_rating otherwise 500 error when opening source profile
+#                 SourceRating.objects.create(
+#                     user=get_object_or_404(User, email="me-99@live.de"),
+#                     source=source,
+#                     rating=7,
+#                 )
+#             except Exception as error:
+#                 failed_sources.append(source_url)
+#                 print(f"Scrapping {source_url} failed due to {error}")
+#                 continue
+#         sleep(3)
+#     print("Scrapping failed for these sources")
+#     for source in failed_sources:
+#         print(source)
