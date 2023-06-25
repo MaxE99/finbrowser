@@ -30,7 +30,7 @@ from apps.logic.services import (
     twitter_create_api_settings,
     tweet_type_create,
     article_creation_check,
-    get_substack_info,
+    get_new_sources_info,
 )
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
@@ -363,7 +363,20 @@ def youtube_get_profile_images():
                 source, data["items"][0]["snippet"]["thumbnails"]["medium"]["url"]
             )
         except Exception as error:
-            print(error)
+            print(f"Scrapping {source} has caused this error: {error}")
+            print(data)
+            print("First")
+            print(data["items"])
+            print("Second")
+            print(data["items"][0])
+            print("Third")
+            print(data["items"][0]["snippet"])
+            print("Fourth")
+            print(data["items"][0]["snippet"]["thumbnails"])
+            print("Fifth")
+            print(data["items"][0]["snippet"]["thumbnails"]["medium"])
+            print("Sixth")
+            print(data["items"][0]["snippet"]["thumbnails"]["medium"]["url"])
             continue
 
 
@@ -526,17 +539,19 @@ def create_spotify_sources():
     ]
     failed_sources = []
     for source_url in spotify_sources:
-        try:
-            external_id = source_url.split("https://open.spotify.com/show/")[1]
-            spotify = SpotifyAPI(client_id, client_secret)
-            podcaster = spotify.get_podcaster(external_id)
-            name = podcaster["name"]
-            slug = slugify(name)[:49]
-            if not Source.objects.filter(name=name).exists():
+        if not Source.objects.filter(url=source_url).exists():
+            try:
+                external_id = source_url.split("https://open.spotify.com/show/")[1]
+                spotify = SpotifyAPI(client_id, client_secret)
+                podcaster = spotify.get_podcaster(external_id)
+                name = podcaster["name"][:49]
+                if Source.objects.filter(name=name).exists():
+                    name = podcaster["name"][:40] + "- Spotify"
+                slug = slugify(name)[:49]
                 source = Source.objects.create(
                     url=source_url,
                     slug=slug,
-                    name=name[:99],
+                    name=name,
                     favicon_path=f"home/favicons/{slug}.webp",
                     paywall="No",
                     website=get_object_or_404(Website, name="Spotify"),
@@ -552,13 +567,68 @@ def create_spotify_sources():
                     source=source,
                     rating=7,
                 )
-        except Exception as error:
-            failed_sources.append(source_url)
-            print(f"Scrapping {source_url} failed due to {error}")
-            continue
+            except Exception as error:
+                failed_sources.append(source_url)
+                print(f"Scrapping {source_url} failed due to {error}")
+                continue
         sleep(3)
     print("Scrapping failed for these sources")
     for source in failed_sources:
+        print(source)
+
+
+@shared_task
+def create_news_sources():
+    from apps.source.models import Sector, SourceRating
+
+    new_sources = []
+    failed_scrapping = []
+    for source_url in new_sources:
+        print(source_url)
+        try:
+            name, img_url = get_new_sources_info(source_url)
+            if (
+                Source.objects.filter(name=name).exists()
+                or Source.objects.filter(slug=slugify(name)).exists()
+                or Source.objects.filter(slug=slugify(name[:49])).exists()
+            ):
+                name = name + " - New"
+            created_source = Source.objects.create(
+                url=source_url,
+                slug=slugify(name[:49]),
+                name=name[:49],
+                favicon_path=f"home/favicons/{slugify(name[:49])}.webp",
+                paywall="No",
+                website=get_object_or_404(Website, name="Other"),
+                content_type="News",
+                sector=get_object_or_404(Sector, name="Generalists"),
+            )
+            try:
+                source_profile_img_create(created_source, img_url)
+                feed_url = f"{source_url}feed"
+                try:
+                    create_articles_from_feed(
+                        created_source, feed_url, Article.objects.none()
+                    )
+                except Exception as _:
+                    created_source.alt_feed = "not found"
+                    created_source.save()
+                rating = 8
+            except Exception as _:
+                rating = 7
+            # add source_rating otherwise 500 error when opening source profile
+            SourceRating.objects.create(
+                user=get_object_or_404(User, email="me-99@live.de"),
+                source=created_source,
+                rating=rating,
+            )
+        except Exception as error:
+            failed_scrapping.append(source_url)
+            print(f"Scrapping {source_url} has caused this error: ")
+            print(error)
+            continue
+    print("The following sources could not be scrapped: ")
+    for source in failed_scrapping:
         print(source)
 
 
