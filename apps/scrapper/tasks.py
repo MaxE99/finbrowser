@@ -362,7 +362,8 @@ def youtube_get_profile_images():
             source_profile_img_create(
                 source, data["items"][0]["snippet"]["thumbnails"]["medium"]["url"]
             )
-        except Exception as _:
+        except Exception as error:
+            print(error)
             continue
 
 
@@ -479,84 +480,6 @@ def scrape_alt_feeds():
 
 
 @shared_task
-def substack_scrape_accounts():
-    from apps.source.models import SourceRating, Sector
-
-    new_substack_sources = [
-        "https://thebondbeat.substack.com/",
-        "https://thegryningtimes.substack.com/",
-        "https://thelastbearstanding.substack.com/",
-        "https://srikonomics.substack.com/",
-        "https://ashenden.substack.com/",
-        "https://bondeconomics.substack.com/",
-        "https://stephenkirchner.substack.com/",
-        "https://timothyash.substack.com/",
-        "https://tracyshuchart.substack.com/",
-        "https://gordianknot.substack.com/",
-        "https://blog.variantperception.com/",
-        "https://stayvigilant.substack.com/",
-        "https://heisenbergmacro.substack.com/",
-        "https://openinsights.substack.com/",
-        "https://duncanweldon.substack.com/",
-        "https://moneyinsideout.exantedata.com/",
-    ]
-    scraping_failed = []
-    for source_url in new_substack_sources:
-        try:
-            print(source_url)
-            name, img_url = get_substack_info(source_url)
-            if (
-                Source.objects.filter(name=name).exists()
-                or Source.objects.filter(slug=slugify(name)).exists()
-            ):
-                name = name + " - Substack"
-            source = Source.objects.create(
-                url=source_url,
-                slug=slugify(name),
-                name=name,
-                favicon_path=f"home/favicons/{slugify(name)}.png",
-                paywall="No",
-                website=get_object_or_404(Website, name="Substack"),
-                content_type="Analysis",
-                sector=get_object_or_404(Sector, name="Generalists"),
-            )
-            source_profile_img_create(source, img_url)
-            # add source_rating otherwise 500 error when opening source profile
-            SourceRating.objects.create(
-                user=get_object_or_404(User, email="me-99@live.de"),
-                source=source,
-                rating=7,
-            )
-            sleep(5)
-        except Exception as error:
-            scraping_failed.append(source_url)
-            print(f"Scrapping {source_url} has caused this error: ")
-            print(error)
-            continue
-    print("Scrapping has failed for these sources: ")
-    for source in scraping_failed:
-        print(source)
-
-
-@shared_task
-def fix_broken_short_company_names():
-    from apps.scrapper.filler_words import new_fillerwords
-    from apps.stock.models import Stock
-
-    for stock in Stock.objects.all():
-        short_name = stock.short_company_name
-        for word in new_fillerwords:
-            short_name = short_name.replace(word, "")
-        if short_name.endswith(" and"):
-            short_name = short_name.replace(" and", "")
-        if short_name.endswith("orporated"):
-            short_name = short_name.replace("orporated", "")
-        if short_name != stock.short_company_name:
-            stock.short_company_name = short_name
-            stock.save()
-
-
-@shared_task
 def create_spotify_sources():
     from apps.source.models import Sector, SourceRating
 
@@ -609,25 +532,26 @@ def create_spotify_sources():
             podcaster = spotify.get_podcaster(external_id)
             name = podcaster["name"]
             slug = slugify(name)[:49]
-            source = Source.objects.create(
-                url=source_url,
-                slug=slug,
-                name=name,
-                favicon_path=f"home/favicons/{slug}.webp",
-                paywall="No",
-                website=get_object_or_404(Website, name="Spotify"),
-                content_type="Analysis",
-                sector=get_object_or_404(Sector, name="Generalists"),
-                external_id=external_id,
-            )
-            if "images" in podcaster.keys():
-                source_profile_img_create(source, podcaster["images"][0]["url"])
-            # add source_rating otherwise 500 error when opening source profile
-            SourceRating.objects.create(
-                user=get_object_or_404(User, email="me-99@live.de"),
-                source=source,
-                rating=7,
-            )
+            if not Source.objects.filter(name=name).exists()
+                source = Source.objects.create(
+                    url=source_url,
+                    slug=slug,
+                    name=name[:99],
+                    favicon_path=f"home/favicons/{slug}.webp",
+                    paywall="No",
+                    website=get_object_or_404(Website, name="Spotify"),
+                    content_type="Analysis",
+                    sector=get_object_or_404(Sector, name="Generalists"),
+                    external_id=external_id,
+                )
+                if "images" in podcaster.keys():
+                    source_profile_img_create(source, podcaster["images"][0]["url"])
+                # add source_rating otherwise 500 error when opening source profile
+                SourceRating.objects.create(
+                    user=get_object_or_404(User, email="me-99@live.de"),
+                    source=source,
+                    rating=7,
+                )
         except Exception as error:
             failed_sources.append(source_url)
             print(f"Scrapping {source_url} failed due to {error}")
@@ -635,400 +559,6 @@ def create_spotify_sources():
         sleep(3)
     print("Scrapping failed for these sources")
     for source in failed_sources:
-        print(source)
-
-
-@shared_task
-def create_youtube_sources():
-    from apps.source.models import SourceRating, Sector, SourceTag
-
-    new_sources = [
-        {
-            "url": "https://www.youtube.com/@entreprenuership_opportunities",
-            "name": "EO",
-            "rating": 9,
-            "sector": "Venture Capital",
-            "tags": ["Great Storyteller"],
-            "external_id": "UCUFLZTlEPJNr04bQeCKr0PQ",
-        },
-        {
-            "url": "https://www.youtube.com/channel/UC3qrPyGIWzS0oVOSQLTO6hg",
-            "name": "Super-Spiked by Arjun Murti",
-            "rating": 8,
-            "sector": "Energy",
-            "tags": ["Former Finance Career"],
-            "external_id": "UC3qrPyGIWzS0oVOSQLTO6hg",
-        },
-        {
-            "url": "https://www.youtube.com/@PerunAU",
-            "name": "Perun",
-            "rating": 9,
-            "sector": "Aerospace & Defense",
-            "tags": ["Deep-Dives", "Tech Explained"],
-            "external_id": "UCC3ehuUksTyQ7bbjGntmx3Q",
-        },
-        {
-            "url": "https://www.youtube.com/@mohnishpabrai",
-            "name": "Mohnish Pabrai",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Famous Investor", "Value Investor"],
-            "external_id": "UCw-OcYmKtk7ut-Ay7hIBaWg",
-        },
-        {
-            "url": "https://www.youtube.com/@mayhem4markets",
-            "name": "Mayhem4Markets",
-            "rating": 8,
-            "sector": "Macroeconomics",
-            "tags": [],
-            "external_id": "UCCK5qifdvryt3OfIO82qQjg",
-        },
-        {
-            "url": "https://www.youtube.com/@oscar100_x",
-            "name": "Oscar 100%",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCy_5LukQLRKBUFEwIDHHv5Q",
-        },
-        {
-            "url": "https://www.youtube.com/@JonahLupton",
-            "name": "Jonah Lupton",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Investment Fund", "Interviews"],
-            "external_id": "UCnNV58dwf5X7dkrvCE18Djw",
-        },
-        {
-            "url": "https://www.youtube.com/@Value-Investing",
-            "name": "Value Investing with Sven Carlin, Ph.D.",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Value Investor"],
-            "external_id": "UCrTTBSUr0zhPU56UQljag5A",
-        },
-        {
-            "url": "https://www.youtube.com/@TDAmeritradeNetwork",
-            "name": "TD Ameritrade Network",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCqoSrYgusd8ZddtMoWhjHYA",
-        },
-        {
-            "url": "https://www.youtube.com/@CNBCtelevision",
-            "name": "CNBC Television",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCrp_UI8XtuYfpiqluWLD7Lw",
-        },
-        {
-            "url": "https://www.youtube.com/@CNBC",
-            "name": "CNBC",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCvJJ_dzjViJCoLf5uKUTwoA",
-        },
-        {
-            "url": "https://www.youtube.com/@ColdFusion",
-            "name": "ColdFusion",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Great Storyteller"],
-            "external_id": "UC4QZ_LsYcvcq7qOsOhpAX4A",
-        },
-        {
-            "url": "https://www.youtube.com/@Wendoverproductions",
-            "name": "Wendover Productions",
-            "rating": 8,
-            "sector": "Logistics",
-            "tags": ["Great Storyteller"],
-            "external_id": "UC9RM-iSvTu1uPJb8X5yp3EQ",
-        },
-        {
-            "url": "https://www.youtube.com/@markets",
-            "name": "Bloomberg Television",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCIALMKvObZNtJ6AmdCLP7Lg",
-        },
-        {
-            "url": "https://www.youtube.com/bloombergtech",
-            "name": "Bloomberg Tech",
-            "rating": 8,
-            "sector": "Tech",
-            "tags": [],
-            "external_id": "UCrM7B7SL_g1edFOnmj-SDKg",
-        },
-        {
-            "url": "https://www.youtube.com/@JohnCooganPlus",
-            "name": "John Coogan",
-            "rating": 8,
-            "sector": "Tech",
-            "tags": ["Great Storyteller"],
-            "external_id": "UC3_BakzLfadvFrsnClMFWmQ",
-        },
-        {
-            "url": "https://www.youtube.com/@GreylockVC",
-            "name": "Greylock VC",
-            "rating": 8,
-            "sector": "Venture Capital",
-            "tags": ["Venture Capital Fund", "Interviews"],
-            "external_id": "UCZ7x7yDBbEFCGztD8BYvRhA",
-        },
-        {
-            "url": "https://www.youtube.com/@YahooFinance",
-            "name": "Yahoo Finance",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCEAZeUIeJs0IjQiqTCdVSIg",
-        },
-        {
-            "url": "https://www.youtube.com/@TheIntelligentInvestor",
-            "name": "The Intelligent Investor",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCb3zOkjynOBpDgRMdakEE6w",
-        },
-        {
-            "url": "https://www.youtube.com/@DavidHong-Investment",
-            "name": "David Hong - Hedge Fund Manager",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCe5iSAytokOLfuu0r3X__6w",
-        },
-        {
-            "url": "https://www.youtube.com/@AswathDamodaranonValuation",
-            "name": "Aswath Damodaran on Valuation",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Famous Investor", "Financial Educator"],
-            "external_id": "UCLvnJL8htRR1T9cbSccaoVw",
-        },
-        {
-            "url": "https://www.youtube.com/@midasinvesting",
-            "name": "Midas Investing",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCatSwCHVd7hhEVOoQnODfVg",
-        },
-        {
-            "url": "https://www.youtube.com/@MooresLawIsDead",
-            "name": "Moore's Law Is Dead",
-            "rating": 8,
-            "sector": "Semiconductor",
-            "tags": ["Tech Explained"],
-            "external_id": "UCRPdsCVuH53rcbTcEkuY4uQ",
-        },
-        {
-            "url": "https://www.youtube.com/@wallstreetmillennial",
-            "name": "Wall Street Millennial",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCUyH4QfXX-5NOT0bULqG6lQ",
-        },
-        {
-            "url": "https://www.youtube.com/@electricviking",
-            "name": "Electric Viking",
-            "rating": 8,
-            "sector": "Automotive",
-            "tags": [],
-            "external_id": "UCjzi56cxvmEDwjo1Bd2Yxpg",
-        },
-        {
-            "url": "https://www.youtube.com/@financemark",
-            "name": "Finance Mark",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCLsxig776JHYJzF3vkI7hXg",
-        },
-        {
-            "url": "https://www.youtube.com/@CommSecTV",
-            "name": "CommSec TV",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Australia Expert"],
-            "external_id": "UC8Jc66lwfOT1CeXaEy3zEMw",
-        },
-        {
-            "url": "https://www.youtube.com/@Livewiremarkets",
-            "name": "Livewire Markets",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Australia Expert"],
-            "external_id": "UCdLzNzag8APY4tx6GHYN2Lg",
-        },
-        {
-            "url": "https://www.youtube.com/@BNNBloomberg",
-            "name": "BNN Bloomberg",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Canada Expert"],
-            "external_id": "UC5aNPmKYwbudeNngDMTY3lw",
-        },
-        {
-            "url": "https://www.youtube.com/@canadianminingreport",
-            "name": "Canadian Mining Report",
-            "rating": 8,
-            "sector": "Materials",
-            "tags": ["Canada Expert"],
-            "external_id": "UCsw1AMdauBHg8ZS-UGIczkA",
-        },
-        {
-            "url": "https://www.youtube.com/@BloorStreetCapital",
-            "name": "Bloor Street Capital",
-            "rating": 8,
-            "sector": "Materials",
-            "tags": ["Interviews"],
-            "external_id": "UCPe8ibo8PyIzfVNqDWXFo9w",
-        },
-        {
-            "url": "https://www.youtube.com/@vricconference",
-            "name": "VRIC Conference",
-            "rating": 8,
-            "sector": "Materials",
-            "tags": [],
-            "external_id": "UCGLDCnyMUXwKulTgnY8jFIg",
-        },
-        {
-            "url": "https://www.youtube.com/@sprottmoneyltd",
-            "name": "Sprott Money Ltd.",
-            "rating": 8,
-            "sector": "Materials",
-            "tags": [],
-            "external_id": "UCE6enLH6PYuI17Dsx0pfGaQ",
-        },
-        {
-            "url": "https://www.youtube.com/user/trevtrew",
-            "name": "Smallcap Discoveries",
-            "rating": 8,
-            "sector": "Small Cap",
-            "tags": ["Interviews"],
-            "external_id": "UCwNqaXGAi7t2xtcBIgcTP-A",
-        },
-        {
-            "url": "https://www.youtube.com/@FCIRMedia",
-            "name": "FCIR Media",
-            "rating": 8,
-            "sector": "Materials",
-            "tags": ["Interviews"],
-            "external_id": "UCOGYis0XZ3o52sKI0gHq8hg",
-        },
-        {
-            "url": "https://www.youtube.com/@wsj",
-            "name": "Wall Street Journal",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCK7tptUDHh-RYDsdxO1-5QQ",
-        },
-        {
-            "url": "https://www.youtube.com/@ValinClub",
-            "name": "Value Investors Club",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Value Investor"],
-            "external_id": "UC-pt4-kT6btoB8noYkVF_dg",
-        },
-        {
-            "url": "https://www.youtube.com/@WillowOakAssetManagement",
-            "name": "Willow Oak Asset Management",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Investment Fund"],
-            "external_id": "UCRKAtD-R10WaH3RqAmk7FjA",
-        },
-        {
-            "url": "https://www.youtube.com/@Bridgewater",
-            "name": " Bridgewater Associates",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Interviews", "Investment Fund"],
-            "external_id": "UC-hKNOj4P-Y8hR9QEHpZPig",
-        },
-        {
-            "url": "https://www.youtube.com/@SALTTube",
-            "name": "SALT",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Interviews"],
-            "external_id": "UCCnhrPnlIOHxr9kviPgqq-g",
-        },
-        {
-            "url": "https://www.youtube.com/@iSelectFund",
-            "name": "iSelect Fund",
-            "rating": 8,
-            "sector": "Venture Capital",
-            "tags": ["Venture Capital Fund"],
-            "external_id": "UCO8lXo5DYw2GJh6LR68L_OA",
-        },
-        {
-            "url": "https://www.youtube.com/@DIYInvesting",
-            "name": "DIY Investing",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UCD0lzw3BdPwhx6jwrIofI0g",
-        },
-        {
-            "url": "https://www.youtube.com/@Bloomberg_Live",
-            "name": "Bloomberg Live",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": [],
-            "external_id": "UC7UFcUbAd8oyCBWCogVpJ6g",
-        },
-        {
-            "url": "https://www.youtube.com/@DavidRubenstein",
-            "name": "David Rubenstein",
-            "rating": 8,
-            "sector": "Generalists",
-            "tags": ["Interviews", "Famous Investor"],
-            "external_id": "UCqsN9MYiu1mKSAsYoF6ppTg",
-        },
-    ]
-
-    failed_scrapping = []
-    for source in new_sources:
-        try:
-            print(source)
-            name = source["name"]
-            created_source = Source.objects.create(
-                url=source["url"],
-                slug=slugify(name),
-                name=name,
-                favicon_path=f"home/favicons/{name}.webp",
-                paywall="No",
-                website=get_object_or_404(Website, name="YouTube"),
-                content_type="Analysis",
-                sector=get_object_or_404(Sector, name=source["sector"]),
-            )
-            if len(source["tags"]):
-                for tag in source["tags"]:
-                    created_source.tags.add(get_object_or_404(SourceTag, name=tag))
-            source_profile_img_create(created_source, source["profile_pic"])
-            # add source_rating otherwise 500 error when opening source profile
-            SourceRating.objects.create(
-                user=get_object_or_404(User, email="me-99@live.de"),
-                source=created_source,
-                rating=source["rating"],
-            )
-        except Exception as error:
-            failed_scrapping.append(name)
-            print(f"Scrapping {name} has caused this error: ")
-            print(error)
-            continue
-    print("The following sources could not be scrapped: ")
-    for source in failed_scrapping:
         print(source)
 
 
@@ -1346,3 +876,113 @@ def create_youtube_sources():
 #                     rating_bonus = -1
 #                 rating = min(10, round(source.average_rating) + rating_bonus)
 #                 SourceRating.objects.create(source=source, user=rater, rating=rating)
+
+
+# @shared_task
+# def create_youtube_sources():
+#     from apps.source.models import SourceRating, Sector, SourceTag
+
+#     new_sources = [
+#         {
+#             "url": "https://www.youtube.com/@entreprenuership_opportunities",
+#             "name": "EO",
+#             "rating": 9,
+#             "sector": "Venture Capital",
+#             "tags": ["Great Storyteller"],
+#             "external_id": "UCUFLZTlEPJNr04bQeCKr0PQ",
+#         }
+#     ]
+
+#     failed_scrapping = []
+#     for source in new_sources:
+#         try:
+#             print(source)
+#             name = source["name"]
+#             created_source = Source.objects.create(
+#                 url=source["url"],
+#                 slug=slugify(name),
+#                 name=name,
+#                 favicon_path=f"home/favicons/{slugify(name)}.webp",
+#                 paywall="No",
+#                 website=get_object_or_404(Website, name="YouTube"),
+#                 content_type="Analysis",
+#                 sector=get_object_or_404(Sector, name=source["sector"]),
+#             )
+#             if len(source["tags"]):
+#                 for tag in source["tags"]:
+#                     created_source.tags.add(get_object_or_404(SourceTag, name=tag))
+#             # add source_rating otherwise 500 error when opening source profile
+#             SourceRating.objects.create(
+#                 user=get_object_or_404(User, email="me-99@live.de"),
+#                 source=created_source,
+#                 rating=source["rating"],
+#             )
+#         except Exception as error:
+#             failed_scrapping.append(name)
+#             print(f"Scrapping {name} has caused this error: ")
+#             print(error)
+#             continue
+#     print("The following sources could not be scrapped: ")
+#     for source in failed_scrapping:
+#         print(source)
+
+
+# @shared_task
+# def substack_scrape_accounts():
+#     from apps.source.models import SourceRating, Sector
+
+#     new_substack_sources = []
+#     scraping_failed = []
+#     for source_url in new_substack_sources:
+#         try:
+#             print(source_url)
+#             name, img_url = get_substack_info(source_url)
+#             if (
+#                 Source.objects.filter(name=name).exists()
+#                 or Source.objects.filter(slug=slugify(name)).exists()
+#             ):
+#                 name = name + " - Substack"
+#             source = Source.objects.create(
+#                 url=source_url,
+#                 slug=slugify(name),
+#                 name=name,
+#                 favicon_path=f"home/favicons/{slugify(name)}.png",
+#                 paywall="No",
+#                 website=get_object_or_404(Website, name="Substack"),
+#                 content_type="Analysis",
+#                 sector=get_object_or_404(Sector, name="Generalists"),
+#             )
+#             source_profile_img_create(source, img_url)
+#             # add source_rating otherwise 500 error when opening source profile
+#             SourceRating.objects.create(
+#                 user=get_object_or_404(User, email="me-99@live.de"),
+#                 source=source,
+#                 rating=7,
+#             )
+#             sleep(5)
+#         except Exception as error:
+#             scraping_failed.append(source_url)
+#             print(f"Scrapping {source_url} has caused this error: ")
+#             print(error)
+#             continue
+#     print("Scrapping has failed for these sources: ")
+#     for source in scraping_failed:
+#         print(source)
+
+
+# @shared_task
+# def fix_broken_short_company_names():
+#     from apps.scrapper.filler_words import new_fillerwords
+#     from apps.stock.models import Stock
+
+#     for stock in Stock.objects.all():
+#         short_name = stock.short_company_name
+#         for word in new_fillerwords:
+#             short_name = short_name.replace(word, "")
+#         if short_name.endswith(" and"):
+#             short_name = short_name.replace(" and", "")
+#         if short_name.endswith("orporated"):
+#             short_name = short_name.replace("orporated", "")
+#         if short_name != stock.short_company_name:
+#             stock.short_company_name = short_name
+#             stock.save()
