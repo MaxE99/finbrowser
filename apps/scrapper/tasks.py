@@ -480,64 +480,25 @@ def scrape_alt_feeds():
 
 @shared_task
 def substack_scrape_accounts():
-    from apps.source.models import SourceRating
+    from apps.source.models import SourceRating, Sector
 
     new_substack_sources = [
-        "https://datadriveninvesting.substack.com/",
-        "https://buckonsoftware.substack.com/",
-        "https://linesonachart.substack.com/",
-        "https://www.realisticoptimist.io/",
-        "https://www.nongaap.com/",
-        "https://www.techfund.one/",
-        "https://www.moneylemma.com/",
-        "https://99tech.alexlazarow.com/",
-        "https://stretchfour.substack.com/",
-        "https://theovershoot.co/",
-        "https://www.dotmacro.io/",
-        "https://aspiicpc.substack.com/",
-        "https://www.dailychartbook.com/",
-        "https://thisweekinafrica.substack.com/",
-        "https://news.futuresoutheastasia.com/",
-        "https://richardkatz.substack.com/",
-        "https://rohanvenkat.substack.com/",
-        "https://kenopalo.substack.com/",
-        "https://www.distilled.earth/",
-        "https://www.exponentialview.co/",
-        "https://verticaltech.substack.com/",
-        "https://www.fallacyalarm.com/",
-        "https://alternativealpha.substack.com/",
-        "https://harkster.substack.com/",
-        "https://capitalnotes.substack.com/",
-        "https://stayathomemacro.substack.com/",
-        "https://bondangle.substack.com/",
-        "https://manleymacro.substack.com/",
-        "https://prometheus-research.net/",
-        "https://www.campbellramble.ai/",
-        "https://commodityreport.substack.com/",
-        "https://mideastspace.substack.com/",
-        "https://chinaspacemonitor.substack.com/",
-        "https://europeanspaceflight.substack.com/",
-        "https://tedcross.substack.com/",
-        "https://jameslavish.substack.com/",
-        "https://newsletter.tuttleventures.com/",
-        "https://businesswave.substack.com/",
-        "https://pivotal.substack.com/",
-        "https://emergingmarketskeptic.substack.com/",
-        "https://www.thespl.it/",
-        "https://coppolacomment.substack.com/",
-        "https://stjic.substack.com/",
-        "https://bizalmanac.substack.com/",
-        "https://exploringcontext.substack.com/",
-        "https://gambitcap.substack.com/",
-        "https://www.scuttlebutt.co/",
-        "https://smallcaplab.substack.com/",
-        "https://investmentideas.substack.com/",
-        "https://toomuchtv.substack.com/",
-        "https://o8cap.substack.com/",
-        "https://softwaremusings.substack.com/",
-        "https://capitalwars.substack.com/",
-        "https://concentratedcompounding.substack.com/",
-        "https://www.wahdycapital.com/",
+        "https://thebondbeat.substack.com/",
+        "https://thegryningtimes.substack.com/",
+        "https://thelastbearstanding.substack.com/",
+        "https://srikonomics.substack.com/",
+        "https://ashenden.substack.com/",
+        "https://bondeconomics.substack.com/",
+        "https://stephenkirchner.substack.com/",
+        "https://timothyash.substack.com/",
+        "https://tracyshuchart.substack.com/",
+        "https://gordianknot.substack.com/",
+        "https://blog.variantperception.com/",
+        "https://stayvigilant.substack.com/",
+        "https://heisenbergmacro.substack.com/",
+        "https://openinsights.substack.com/",
+        "https://duncanweldon.substack.com/",
+        "https://moneyinsideout.exantedata.com/",
     ]
     scraping_failed = []
     for source_url in new_substack_sources:
@@ -554,8 +515,10 @@ def substack_scrape_accounts():
                 slug=slugify(name),
                 name=name,
                 favicon_path=f"home/favicons/{slugify(name)}.png",
-                paywall="Yes",
+                paywall="No",
                 website=get_object_or_404(Website, name="Substack"),
+                content_type="Analysis",
+                sector=get_object_or_404(Sector, name="Generalists"),
             )
             source_profile_img_create(source, img_url)
             # add source_rating otherwise 500 error when opening source profile
@@ -591,6 +554,87 @@ def fix_broken_short_company_names():
         if short_name != stock.short_company_name:
             stock.short_company_name = short_name
             stock.save()
+
+
+@shared_task
+def create_spotify_sources():
+    from apps.source.models import Sector, SourceRating
+
+    client_id = environ.get("SPOTIFY_CLIENT_ID")
+    client_secret = environ.get("SPOTIFY_CLIENT_SECRET")
+    spotify_sources = [
+        "https://open.spotify.com/show/7JhOkXo6DKXhmKZh4F7MP4",
+        "https://open.spotify.com/show/3q6PrjHVfRzpD2lN1g2XRU",
+        "https://open.spotify.com/show/6Azh5lcMWsfvvMWRMVS9od",
+        "https://open.spotify.com/show/7yMLsm5s8tLtrCQr7bG8wD",
+        "https://open.spotify.com/show/0TYNFdGwFOoBOluuAhSRc0",
+        "https://open.spotify.com/show/7cPWOxfkyb1i8uffx13GDz",
+        "https://open.spotify.com/show/1kYiUtgDcaUoMQjUko7toT",
+        "https://open.spotify.com/show/5qk8RnfIkb3peJJp4dsmvB",
+        "https://open.spotify.com/show/4vNumoS1tv284WNs6N8irH",
+        "https://open.spotify.com/show/7xF1lww4OCT34x7lK9iW52",
+        "https://open.spotify.com/show/2jjxMaf00TlgajwqOd9wH5",
+        "https://open.spotify.com/show/4vfgncsWqqVEmRzomWeAyE",
+        "https://open.spotify.com/show/5PCntXM9L8GDzaZr2Yf7FT",
+        "https://open.spotify.com/show/5j0BepJk2cQOud04zhAMem",
+        "https://open.spotify.com/show/4mhqSxyBCHZ1wTQwXlAvCG",
+        "https://open.spotify.com/show/5RrcotTb2l3nO9ZZeUovYd",
+        "https://open.spotify.com/show/3ebb4j277CjzdftIF77pL5",
+        "https://open.spotify.com/show/40ZQt65jlpa7RFBTLizOZj",
+        "https://open.spotify.com/show/2rm72xDiRG8H3aEgJi95aK",
+        "https://open.spotify.com/show/54wcTJS0kYranEJYHjF0Du",
+        "https://open.spotify.com/show/5v6uPn6w2ztjqTtCFld1CD",
+        "https://open.spotify.com/show/3KaB7t4XM6gLzME2IsD86D",
+        "https://open.spotify.com/show/4TPlJsnx3OSpiCooVAcx8Z",
+        "https://open.spotify.com/show/5Edc7DbMycGa8woSWvDwjg",
+        "https://open.spotify.com/show/3X7SToMTDDsB2Jvt9Nj021",
+        "https://open.spotify.com/show/2X3sfVd0zKk9Yr2VBpeehp",
+        "https://open.spotify.com/show/6R2J2ms0VJaYqBgFfh50m9",
+        "https://open.spotify.com/show/1DrWdAAWStVh8pffGvtWXg",
+        "https://open.spotify.com/show/7lZSVArSu9zErPpmouqIey",
+        "https://open.spotify.com/show/5itkatjzw3r3Jga3EQCZAW",
+        "https://open.spotify.com/show/0y8sstUImmoaCYgygiJ8ct",
+        "https://open.spotify.com/show/25j6aGcaN8uj1SydSGM8ty",
+        "https://open.spotify.com/show/0jg1Zy3a5QVFBBCe0TWNKd",
+        "https://open.spotify.com/show/7arvSbk8IkjhClRuvzxxrJ",
+        "https://open.spotify.com/show/0uT0iw8BkDIvFH12Z3GJKR",
+        "https://open.spotify.com/show/6DX9sYVSZq4YqbpGuxRg6f",
+        "https://open.spotify.com/show/2ZK1l4Y1yNC7CGJmJkt8Eq",
+    ]
+    failed_sources = []
+    for source_url in spotify_sources:
+        try:
+            external_id = source_url.split("https://open.spotify.com/show/")[1]
+            spotify = SpotifyAPI(client_id, client_secret)
+            podcaster = spotify.get_podcaster(external_id)
+            name = podcaster["name"]
+            source = Source.objects.create(
+                url=source_url,
+                slug=slugify(name),
+                name=name,
+                favicon_path=f"home/favicons/{slugify(name)}.webp",
+                paywall="No",
+                website=get_object_or_404(Website, name="Spotify"),
+                content_type="Analysis",
+                sector=get_object_or_404(Sector, name="Generalists"),
+                external_id=external_id,
+            )
+            if "images" in podcaster.keys():
+                source_profile_img_create(source, podcaster["images"][0]["url"])
+            # add source_rating otherwise 500 error when opening source profile
+            SourceRating.objects.create(
+                user=get_object_or_404(User, email="me-99@live.de"),
+                source=source,
+                rating=7,
+            )
+        except Exception as error:
+            failed_sources.append(source_url)
+            print(f"Scrapping {source_url} failed due to {error}")
+            continue
+        sleep(3)
+    print("Scrapping failed for these sources")
+    for source in failed_sources:
+        print(source)
 
 
 # =================================================================================
@@ -800,46 +844,6 @@ def fix_broken_short_company_names():
 
 
 # @shared_task
-# def create_spotify_sources():
-#     client_id = environ.get("SPOTIFY_CLIENT_ID")
-#     client_secret = environ.get("SPOTIFY_CLIENT_SECRET")
-#     spotify_sources = []
-#     failed_sources = []
-#     for source_url in spotify_sources:
-#         try:
-#             external_id = source_url.split("https://open.spotify.com/show/")[1]
-#             spotify = SpotifyAPI(client_id, client_secret)
-#             podcaster = spotify.get_podcaster(external_id)
-#             name = podcaster["name"]
-#             source = Source.objects.create(
-#                 url=source_url,
-#                 slug=slugify(name),
-#                 name=name,
-#                 favicon_path=f"home/favicons/{slugify(name)}.webp",
-#                 paywall="No",
-#                 website=get_object_or_404(Website, name="Spotify"),
-#                 content_type="Analysis",
-#                 sector=get_object_or_404(Sector, name="Generalists"),
-#             )
-#             if "images" in podcaster.keys():
-#                 source_profile_img_create(source, podcaster["images"][0]["url"])
-#             # add source_rating otherwise 500 error when opening source profile
-#             SourceRating.objects.create(
-#                 user=get_object_or_404(User, email="me-99@live.de"),
-#                 source=source,
-#                 rating=7,
-#             )
-#         except Exception as error:
-#             failed_sources.append(source_url)
-#             print(f"Scrapping {source_url} failed due to {error}")
-#             continue
-#         sleep(3)
-#     print("Scrapping failed for these sources")
-#     for source in failed_sources:
-#         print(source)
-
-
-# @shared_task
 # def find_other_sources_without_feed_first_run():
 #     for source in Source.objects.filter(website__name="Other"):
 #         try:
@@ -855,15 +859,6 @@ def fix_broken_short_company_names():
 #                 source.save()
 #         except Exception as error:
 #             print(f"Error: {error} has occured while scrapping {source}")
-
-
-# @shared_task
-# def addSpotifyId():
-#     for source in Source.objects.filter(
-#         website__name="Spotify", external_id__isnull=True
-#     ):
-#         source.external_id = source.url.split("https://open.spotify.com/show/")[1]
-#         source.save()
 
 
 # @shared_task
