@@ -532,7 +532,7 @@ def create_spotify_sources():
             podcaster = spotify.get_podcaster(external_id)
             name = podcaster["name"]
             slug = slugify(name)[:49]
-            if not Source.objects.filter(name=name).exists()
+            if not Source.objects.filter(name=name).exists():
                 source = Source.objects.create(
                     url=source_url,
                     slug=slug,
