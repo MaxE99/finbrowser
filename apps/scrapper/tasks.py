@@ -367,19 +367,6 @@ def youtube_get_profile_images():
                 print(f"{source} has no key items!")
         except Exception as error:
             print(f"Scrapping {source} has caused this error: {error}")
-            print(data)
-            print("First")
-            print(data["items"])
-            print("Second")
-            print(data["items"][0])
-            print("Third")
-            print(data["items"][0]["snippet"])
-            print("Fourth")
-            print(data["items"][0]["snippet"]["thumbnails"])
-            print("Fifth")
-            print(data["items"][0]["snippet"]["thumbnails"]["medium"])
-            print("Sixth")
-            print(data["items"][0]["snippet"]["thumbnails"]["medium"]["url"])
             continue
 
 
@@ -496,236 +483,43 @@ def scrape_alt_feeds():
 
 
 @shared_task
-def create_news_sources():
-    from apps.source.models import Sector, SourceRating
+def create_bank_sources():
+    from apps.source.models import Sector, SourceRating, SourceTag
 
     new_sources = [
-        "https://www.coalage.com/",
-        "https://www.sharecafe.com.au/",
-        "https://www.morgans.com.au/Blog",
-        "https://themarketherald.com.au/",
-        "https://www.bicmagazine.com/",
-        "https://www.gamedeveloper.com/",
-        "https://famousaspect.com/",
-        "https://gameanalytics.com/resources",
-        "https://spaceflightnow.com/",
-        "https://parabolicarc.com/",
-        "https://spacewatch.global/",
-        "https://www.spaceflightinsider.com/",
-        "https://www.spacemart.com/",
-        "https://cosmiclog.com/",
-        "https://www.aiaa.org/",
-        "https://www.aviationtoday.com/",
-        "https://smallcaps.com.au/",
-        "https://smallcapdiscoveries.com/",
-        "https://investingcaffeine.com/",
-        "https://thefelderreport.com/blog/",
-        "https://www.royceinvest.com/",
-        "https://microcapdaily.com/",
-        "https://smallcapsdaily.com/",
-        "https://smallcaps.ca/",
-        "https://www.semiconductor-today.com/",
-        "https://www.semiconductors.org/news-events/latest-news/",
-        "https://www.embedded.com/",
-        "https://www.thomasnet.com/insights/",
-        "https://anysilicon.com/",
-        "https://edacafe.com/",
-        "https://evertiq.com/",
-        "https://www.theaureport.com/",
-        "https://www.miningmagazine.com/",
-        "https://www.geologyforinvestors.com/",
-        "https://republicofmining.com/",
-        "https://www.juniorminingnetwork.com/",
-        "https://www.e-mj.com/",
-        "https://me.smenet.org/",
-        "https://www.australianmining.com.au/",
-        "https://im-mining.com/",
-        "https://www.caesarsreport.com/",
-        "https://www.northernminer.com/",
-        "https://www.canadianminingjournal.com/",
-        "https://www.pitandquarry.com/",
-        "https://www.miningwatch.ca/",
-        "https://copper.org/",
-        "https://www.shalemarkets.com/",
-        "https://energynow.ca/",
-        "https://osuwheat.com/",
-        "https://www.ft.com/mining",
-        "https://www.world-grain.com/",
-        "https://www.argusmedia.com/",
-        "https://www.nerdsofsteel.com/",
-        "https://container-news.com/",
-        "https://www.hellenicshippingnews.com/",
-        "https://www.ship-technology.com/",
-        "https://www.marinelog.com/",
-        "https://lloydslist.maritimeintelligence.informa.com/",
-        "https://www.maritime-executive.com/",
-        "https://www.seatrade-maritime.com/",
-        "https://www.marinelink.com/",
-        "https://www.maritimeprofessional.com/",
-        "https://safety4sea.com/",
-        "https://www.marineinsight.com/",
-        "https://www.fleetequipmentmag.com/",
-        "https://www.rtands.com/",
-        "https://tandlonline.com/",
-        "https://shipandbunker.com/",
-        "https://smartmaritimenetwork.com/",
-        "https://www.ajot.com/",
-        "https://railway-news.com/",
-        "https://aircargonext.com/",
-        "https://www.shippingherald.com/",
-        "https://www.tiretechnologyinternational.com/",
-        "https://nerej.com/",
-        "https://rejournals.com/",
-        "https://www.multihousingnews.com/",
-        "https://crenews.com/",
-        "https://www.attomdata.com/",
-        "https://www.globest.com/",
-        "https://www.trepp.com/trepptalk",
-        "https://alpacainvestments.blogspot.com/",
-        "https://www.reit-tirement.com/",
-        "https://www.reitsweek.com/",
-        "https://www.mobihealthnews.com/",
-        "https://www.fiercehealthcare.com/",
-        "https://www.healthpopuli.com/",
-        "https://www.beckershospitalreview.com/",
-        "https://healthexec.com/",
-        "https://electronichealthreporter.com/",
-        "https://fintech-alliance.com/",
-        "https://www.altfi.com/",
-        "https://fintech.global/",
-        "https://thepaypers.com/",
-        "https://finovate.com/",
-        "https://fintechranking.com/",
-        "https://www.fintechfutures.com/",
-        "https://www.paymentscardsandmobile.com/",
-        "https://thefinancialbrand.com/",
-        "https://bankingblog.accenture.com/",
-        "https://www.atmmarketplace.com/",
-        "https://bankautomationnews.com/",
-        "https://fashionretail.blog/",
-        "https://www.broadbandtvnews.com/",
-        "https://www.telecompetitor.com/",
-        "https://www.telecomstechnews.com/",
-        "https://www.digitaltvnews.net/",
-        "https://www.rapidtvnews.com/",
-        "https://www.rcrwireless.com/",
-        "https://www.fiercewireless.com/",
-        "https://totaltele.com/",
-        "https://www.telecompaper.com/",
-        "https://www.csimagazine.com/",
-        "https://telecoms.com/",
-        "https://connectivitybusiness.com/",
-        "https://www.fiercetelecom.com/",
-        "https://www.lightreading.com/",
-        "https://www.ft.com/telecoms",
-        "https://telcommunicator.blogspot.com/",
-        "https://www.digitaltveurope.com/",
-        "https://www.commscope.com/",
-        "https://www.telecomtv.com/",
-        "https://www.commsupdate.com/",
-        "https://www.thefastmode.com/",
-        "https://shalegasreporter.com/",
-        "https://peakoil.com/",
-        "https://fuelcellsworks.com/",
-        "https://naturalgasnow.org/",
-        "https://www.naturalgasintel.com/",
-        "https://www.offshore-technology.com/",
-        "https://www.rigzone.com/",
-        "https://www.oilandgas360.com/",
-        "https://www.eia.gov/petroleum/weekly/",
-        "https://www.dailyoilbulletin.com/",
-        "https://www.smart-energy.com/",
-        "https://www.thinkgeoenergy.com/",
-        "https://www.energyglobal.com/",
-        "https://www.energyindepth.org/",
-        "https://www.enverus.com/blog/",
-        "https://www.utilitydive.com/",
-        "https://marcellusdrilling.com/",
-        "https://www.energy-pedia.com/",
-        "https://thefuse.org/",
-        "https://boereport.com/",
-        "https://atomicinsights.com/",
-        "https://www.world-nuclear-news.org/",
-        "https://theenergyst.com/",
-        "https://www.power-technology.com/",
-        "https://www.evwind.es/",
-        "https://gwec.net/",
-        "https://renews.biz/",
-        "https://www.pv-magazine.com/",
-        "https://energycentral.com/",
-        "https://nawindpower.com/",
-        "https://www.altenergymag.com/",
-        "https://www.renewableenergymagazine.com/",
-        "https://www.offshorewind.biz/",
-        "https://www.energy-storage.news/",
-        "https://drillingcontractor.org/",
-        "https://www.offshore-technology.com/",
-        "https://www.globalunderwaterhub.com/",
-        "https://pboilandgasmagazine.com/",
-        "https://www.nsenergybusiness.com/",
-        "https://www.jodidata.org/",
-        "https://novilabs.com/shale-oil-and-gas-insights-blog/",
-        "https://newconsumer.com/",
-        "https://www.retail-insight-network.com/",
-        "https://www.mytotalretail.com/",
-        "https://retailbum.com/",
-        "https://insideretail.com.au/",
-        "https://risnews.com/",
-        "https://multichannelmerchant.com/",
-        "https://www.esmmagazine.com/",
-        "https://www.modernretail.co/",
-        "https://insideretail.asia/",
-        "https://retail-focus.co.uk/",
-        "https://www.retailnews.asia/",
-        "https://channelx.world/",
-        "https://www.brickmeetsclick.com/",
-        "https://www.retailtechnology.co.uk/",
-        "https://www.retailcustomerexperience.com/",
-        "https://risnews.com/",
-        "https://cross-border-magazine.com/",
-        "https://www.thecannabist.co/",
-        "https://420intel.com/",
-        "https://cannabisindustryjournal.com/",
-        "https://www.marijuanatimes.org/",
-        "https://www.newcannabisventures.com/",
-        "https://www.pharmatimes.com/",
-        "https://www.drugs.com/new-drug-applications.html#",
-        "https://www.cafepharma.com/",
-        "https://www.thepharmaletter.com/",
-        "https://www.biopharma-reporter.com/",
-        "https://www.drugdeliverybusiness.com/",
-        "https://medcitynews.com/",
-        "https://www.breakingtravelnews.com/",
-        "https://www.futuretravelexperience.com/",
-        "https://runwaygirlnetwork.com/",
-        "https://www.aircargoweek.com/",
-        "https://www.iab.com/",
-        "https://www.mediapost.com/",
-        "https://www.fiercevideo.com/",
-        "https://www.mediaplaynews.com/",
-        "https://www.med-technews.com/",
-        "https://www.mddionline.com/",
-        "https://www.foodmanufacturing.com/",
-        "https://www.canadianmanufacturing.com/",
-        "https://www.australianmanufacturing.com.au/",
-        "https://www.foodbusinessnews.net/",
-        "https://www.preparedfoods.com/",
-        "https://www.meatpoultry.com/",
-        "https://www.grocerydive.com/",
-        "https://www.winsightgrocerybusiness.com/",
-        "https://www.restaurantdive.com/",
-        "https://medcitynews.com/tag/medical-devices/",
-        "https://pharmafile.com/",
-        "https://www.medicaldevice-network.com/",
-        "https://brazilian.report/",
-        "https://www.fleeteurope.com/",
-        "https://insideevs.com/",
-        "https://electriccarsreport.com/",
-        "https://www.pharmalive.com/",
-        "https://rew-online.com/",
-        "https://waste-management-world.com/",
-        "https://www.chemistryworld.com/section/business",
-        "https://arcticstartup.com/",
+        "https://www.home.saxo/insights",
+        "https://www.hsbc.co.uk/wealth/insights/macro-outlook/",
+        "https://www.wellsfargo.com/cib/insights/economics/",
+        "https://www.cib.barclays/research.html",
+        "https://www.santandercib.com/insights",
+        "https://www.societegenerale.com/en/economic-research",
+        "https://thoughtleadership.rbc.com/economics/economy-markets/",
+        "https://www.dbresearch.com/PROD/RPS_EN-PROD/Deutsche_Bank_Research__economic_cyclegrowth_trends_economic_policy/RPSHOME.alias",
+        "https://www.morganstanley.com/what-we-do/research",
+        "https://research.ing.com/portal/ING_Research.html",
+        "https://www.unicreditresearch.eu/index.php?id=home&referer=index.php%3Fid%3Dmacro",
+        "https://capitalmarkets.bmo.com/en/services/research-strategy/",
+        "https://corporate.nordea.com/research/series/181/macro-markets-strategy",
+        "https://research.danskebank.com/research/#/",
+        "https://www.pnc.com/en/about-pnc/media/economic-reports.html",
+        "https://www.westpac.com.au/about-westpac/media/reports/australian-economic-reports/",
+        "https://www.itau.com.br/itaubba-pt/macroeconomic-analysis",
+        "https://www.erstegroup.com/en/research",
+        "https://www.bok.or.kr/eng/singl/pblictn/list.do?searchOptn10=ECNMY&menuNo=400207",
+        "https://www.smbcgroup.com/what-we-do/macro-analysis",
+        "https://www.mizuhogroup.com/bank/insights",
+        "https://www.gbm.scotiabank.com/en/market-insights/economics.html",
+        "https://www.rabobank.com/knowledge?mmb-id_125-1119229_page-size=7",
+        "https://www.caixabankresearch.com/en",
+        "https://www.dbs.com.sg/corporate/aics/economics-and-strategy.page",
+        "https://www.truist.com/wealth/insights",
+        "https://business.bofa.com/en-us/content/market-strategies-insights.html",
+        "https://etudes-economiques.credit-agricole.com/en/Eco-decoding/Macroeconomic-Scenario",
+        "https://economic-research.bnpparibas.com/Home/en-US",
+        "https://research.sebgroup.com/macro-ficc/reports?nbRows=20&language=English",
+        "https://www.bnymellon.com/emea/en/insights/all-insights.html",
+        "https://www.raiffeisenresearch.com/client/login.jsp",
+        "https://www.scotiabank.com/ca/en/about/economics/economics-publications.html",
     ]
     failed_scrapping = []
     for source_url in new_sources:
@@ -745,7 +539,425 @@ def create_news_sources():
                 favicon_path=f"home/favicons/{slugify(name[:49])}.webp",
                 paywall="No",
                 website=get_object_or_404(Website, name="Other"),
-                content_type="News",
+                content_type="Analysis",
+                sector=get_object_or_404(Sector, name="Macroeconomics"),
+            )
+            created_source.tags.add(get_object_or_404(SourceTag, name="Bank"))
+            created_source.save()
+            try:
+                source_profile_img_create(created_source, img_url)
+                feed_url = f"{source_url}feed"
+                try:
+                    create_articles_from_feed(
+                        created_source, feed_url, Article.objects.none()
+                    )
+                except Exception as _:
+                    created_source.alt_feed = "not found"
+                    created_source.save()
+                rating = 8
+            except Exception as _:
+                rating = 7
+            # add source_rating otherwise 500 error when opening source profile
+            SourceRating.objects.create(
+                user=get_object_or_404(User, email="me-99@live.de"),
+                source=created_source,
+                rating=rating,
+            )
+        except Exception as error:
+            failed_scrapping.append(source_url)
+            print(f"Scrapping {source_url} has caused this error: ")
+            print(error)
+            continue
+    print("The following sources could not be scrapped: ")
+    for source in failed_scrapping:
+        print(source)
+
+
+@shared_task
+def create_fund_sources():
+    from apps.source.models import Sector, SourceRating, SourceTag
+
+    new_sources = [
+        "http://east72.com.au/investment-reports/",
+        "https://www.rgaia.com/commentary/",
+        "https://www.evermoreglobal.com/fund-commentary",
+        "http://gorozen.com/research/commentaries",
+        "https://180degreecapital.com/insights/",
+        "https://www.lrtcapital.com/investor-letters/",
+        "https://palmcapital.co.za/communications/",
+        "https://www.alphyncap.com/blog",
+        "https://www.baronfunds.com/quarterly-reports",
+        "https://www.gmo.com/americas/research-library/",
+        "https://www.riverparkfunds.com/funds/",
+        "https://gatorcapital.com/",
+        "https://dmzpartners.in/viewpoints.aspx",
+        "https://www.tweedy.com/research/quarterly.php",
+        "https://www.appleseedfund.com/perspectives/",
+        "https://tourlitecapital.com/documents",
+        "https://www.thirdpointlimited.com/resources/",
+        "https://saltlightcapital.com/investor_letters/",
+        "https://www.rondureglobal.com/news",
+        "https://vulcanvaluepartners.com/letters/",
+        "https://matrixassetadvisors.com/commentary/",
+        "https://www.deepsailcapital.com/investor-letters",
+        "https://www.laughingwatercapital.com/contact-1",
+        "https://www.mcjcapitalpartners.com/research-and-commentary",
+        "https://horosam.com/en/letters-to-our-co-investors/",
+        "https://www.okeefestevens.com/resources/",
+        "http://www.longcastadvisers.com/letters",
+        "https://avemariafunds.com/financial-insight/fund-commentaries.html",
+        "https://hoisington.com/economic_overview.html",
+        "https://www.brontecapital.com/partners-letters",
+        "https://spear-invest.com/research/",
+        "https://horizonkinetics.com/insights/",
+        "https://www.pluralinvesting.com/letters",
+        "https://distillatecapital.com/insights",
+        "https://southeasternasset.com/mutual-fund-commentaries/",
+        "https://headwaterscapmgmt.com/quarterly-letters/",
+        "https://silverbeechlp.com/communication",
+        "https://www.eriksencapitalmgmt.com/investor-letters",
+        "https://www.greenhavenroad.com/investor-letters",
+        "http://www.curreencapital.com/investor-letters",
+        "https://www.massifcap.com/investor-letters",
+        "https://www.whitefalconcap.com/letters",
+        "https://givernycapital.com/en/letters-to-our-partners/",
+        "https://mercatormutualfunds.com/",
+        "https://donvillekent.com/investing-resources/#fact-sheet",
+        "https://www.rowanstreet.com/blog",
+        "https://www.akrefund.com/documents-and-forms/",
+        "https://www.heartlandadvisors.com/Insights",
+        "https://wedgewoodpartners.com/investor-resources/",
+        "https://www.aoris.com.au/fund#Latest-reports",
+        "https://blog.crossingbridgefunds.com/blog",
+        "https://www.clearbridge.com/perspectives/commentaries/index",
+        "https://www.bluetowerasset.com/quarterly-factsheets-and-letters",
+        "https://covestreetfunds.com/commentary/",
+        "https://www.claret.ca/publications/category/quarterly-letter/",
+        "https://millervalue.com/current-thinking/",
+        "https://www.palmharbourcapital.com/en/our-fund",
+        "https://www.righttailcapital.com/reading",
+        "https://www.ataicap.com/letters",
+        "https://ararfund.com/#documentationENFUND",
+        "https://lvsadvisory.com/communications/",
+        "https://pernasresearch.com/stock-ideas/",
+        "https://millervalue.com/strategies/deep-value/",
+        "https://www.polencapital.com/perspectives?category_name=commentary",
+        "https://www.firsteagle.com/all-insights",
+        "https://hoskingpartners.com/library/",
+        "https://www.whitebrookcapital.com/quarterly-commentaries",
+        "https://octahedroncapital.com/",
+        "https://www.righttailcapital.com/reading",
+        "http://www.comusinvestment.com/letters",
+        "https://www.palmvalleycapital.com/fundcommentary",
+        "https://www.boyarassetmanagement.com/individual-investor/private-client-group/quarterly-letters/",
+        "https://www.vltavafund.com/dopisy-akcionarum",
+        "https://leavenpartners.wordpress.com/quarterly-letters/",
+        "https://sltresearch.wixsite.com/sltresearch/equity-research",
+        "https://richiecapital.com/insights/",
+        "https://www.myrmikan.com/port/",
+        "https://www.marbleharboric.com/commentary/",
+        "https://nitorcapitalmanagement.com/annual-letters",
+        "https://www.semperaugustus.com/clientletter",
+        "https://www.biremecapital.com/blog",
+        "https://srk-capital.com/partnership-letters/",
+        "https://www.pzena.com/institutional/insights/",
+        "https://www.rgaia.com/commentary/",
+        "https://marvistainvestments.com/articles-and-news/",
+        "https://www.mooncap.com/blog/",
+        "https://www.apam.com/",
+        "https://oakmark.com/news-insights/commentary/",
+        "https://www.fmimgt.com/historical-iso/",
+        "https://southernsunam.com/commentary/",
+        "https://www.tlcadvisory.com/strategies/",
+        "https://www.diamond-hill.com/investment-strategies/documents/separate-accounts/",
+        "https://fpa.com/funds/fpa-crescent-fund-quarterly-commentary-archive",
+        "https://weitzinvestments.com/perspectives/commentary/default.fs",
+        "https://investors.l1longshort.com/investor-centre/?page=Quarterly-Investor-Letters",
+        "https://www.aristotlecap.com/resources/?page=1",
+        "https://www.rjinvestmentmanagement.com/our-thinking",
+        "https://www.cooperinvestors.com/our-reports",
+        "https://www.bcafunds.com/fund-documents",
+        "https://smeadcap.com/advice/",
+        "https://www.ithakagroup.com/usgrowth",
+        "https://www.alger.com/",
+        "https://horosam.com/en/letters-to-our-co-investors/",
+        "https://www.kinsmanoakpartners.com/letters",
+        "https://dmzpartners.in/viewpoints.aspx",
+        "https://www.hardingloevner.com/insights/fundamental-thinking/",
+        "https://www.mairsandpower.com/insights/fund-commentary",
+        "https://choice-equities.com/blog-2/",
+        "https://bumbershootholdings.com/letters/",
+        "https://www.emethvaluecapital.com/letters-1",
+        "https://lyricalam.com/letters/",
+        "https://srk-capital.com/partnership-letters/",
+        "https://www.permanentequity.com/letters",
+        "https://www.sagapartners.com/investorletters",
+        "https://www.arielinvestments.com/news-insights/",
+        "https://aikya.co.uk/insights/",
+        "https://pinnacleinvestment.com/shareholders/#results-presentations",
+        "https://www.schroders.com/en-gb/uk/intermediary/insights/?topic=Quarterly+letters",
+        "https://www.canterburytg.com/posts",
+        "https://www.alpinumim.com/investment/blog/quarterly-investment-letters/",
+        "https://www.palmvalleycapital.com/fundcommentary",
+        "https://www.manolecapital.com/newsletters",
+        "https://orphanira.com/writings/",
+        "https://vulcanvaluepartners.com/letters/",
+        "https://www.thinknewfoundfunds.com/",
+        "https://www.cohopartners.com/insights/portfolio-insights/",
+        "https://www.oldwestim.com/press",
+        "https://andazprivate.com/#notes",
+        "https://vailshire.com/latest-news-insights/",
+        "https://www.fundsmith.co.uk/analysis/",
+        "https://www.mayarcapital.com/letters",
+        "https://www.ruffer.co.uk/en/thinking/articles/",
+        "https://www.mpecap.com/letters",
+        "https://www.gwinvestors.com/blog/",
+        "https://active.williamblair.com/",
+        "https://www.robeco.com/en-int/insights/latest-insights",
+        "https://www.thornburg.com/insights/?all",
+        "https://www.schroders.com/en-us/us/institutional/insights/markets/",
+        "https://www.northerntrust.com/united-states/insights-research/investment-management",
+        "https://www.diamond-hill.com/insights/all/",
+        "https://www.wellington.com/en/insights",
+        "https://www.worchcapital.com/investor-commentary",
+        "https://www.plcapitalllc.com/news-articles/",
+        "https://2point2capital.com/blog/",
+        "https://mi2partners.com/thoughts-from-the-divide-posts/",
+        "https://www.morgancreekcap.com/",
+        "https://ceritypartners.com/insights/",
+        "https://greenbackercapital.com/resources/#section-insights",
+        "https://buffalofunds.com/insights-news/white-papers-research/?et_open_tab=et_pb_tab_1",
+        "https://breachinletcap.com/insights/",
+        "https://www.asiafrontiercapital.com/newsletter/monthly-newsletter.html",
+        "https://cliffordcap.com/news-insights/",
+        "https://www.hwcm.com/news-insights/",
+        "https://www.barrowhanley.com/media-center",
+        "https://www.vcm.com/insights/market-insights",
+        "https://www.kennedycapital.com/category/insights/",
+        "https://www.splitrockcap.com/letters.html",
+        "https://www.blackmorecapital.com.au/blog",
+        "https://concisecapital.com/news/",
+        "https://www.hamiltonlane.com/en-us/insight",
+        "https://greenalphaadvisors.com/content-hub/",
+        "https://www.parnassus.com/insights/principles-and-performance",
+        "https://ssi-invest.com/index.php/resources/#thought-leadership",
+        "https://www.gluskinsheff.com/insights",
+        "https://riverwaterpartners.com/category/quarterly-letters/",
+        "https://www.jennison.com/perspectives-jennison",
+        "https://thirdave.com/shareholder-letters/",
+        "https://www.wisdomtree.com/investments/blog",
+        "https://www.maegcapital.com/news/",
+        "https://www.fieracapital.com/en/insights",
+        "https://www.valhalla.ventures/insights",
+        "https://reyndersmcveigh.com/insights/",
+        "https://institutional.virtus.com/our-thinking",
+        "https://www.conning.com/about-us/insights",
+        "https://institutional.voya.com/",
+        "https://altegris.com/insights/tag/white-paper",
+        "https://volsung.com/insight-and-updates",
+        "https://blog.investbcm.com/",
+        "https://sl-advisors.com/u-s-midstream-energy-infrastructure-blog",
+        "https://www.swanglobalinvestments.com/insights/",
+        "https://tortoiseecofin.com/resources/insights/?Insight%20Category=Commentary&Insight%20Category=Video",
+        "https://swspartners.com/?page_id=1728",
+    ]
+    failed_scrapping = []
+    for source_url in new_sources:
+        print(source_url)
+        try:
+            name, img_url = get_new_sources_info(source_url)
+            if (
+                Source.objects.filter(name=name).exists()
+                or Source.objects.filter(slug=slugify(name)).exists()
+                or Source.objects.filter(slug=slugify(name[:49])).exists()
+            ):
+                name = name + f" - Fund{name[:2]}"
+            created_source = Source.objects.create(
+                url=source_url,
+                slug=slugify(name[:49]),
+                name=name[:49],
+                favicon_path=f"home/favicons/{slugify(name[:49])}.webp",
+                paywall="No",
+                website=get_object_or_404(Website, name="Other"),
+                content_type="Analysis",
+                sector=get_object_or_404(Sector, name="Generalists"),
+            )
+            created_source.tags.add(
+                get_object_or_404(SourceTag, name="Investment Fund")
+            )
+            created_source.save()
+            try:
+                source_profile_img_create(created_source, img_url)
+                feed_url = f"{source_url}feed"
+                try:
+                    create_articles_from_feed(
+                        created_source, feed_url, Article.objects.none()
+                    )
+                except Exception as _:
+                    created_source.alt_feed = "not found"
+                    created_source.save()
+                rating = 8
+            except Exception as _:
+                rating = 7
+            # add source_rating otherwise 500 error when opening source profile
+            SourceRating.objects.create(
+                user=get_object_or_404(User, email="me-99@live.de"),
+                source=created_source,
+                rating=rating,
+            )
+        except Exception as error:
+            failed_scrapping.append(source_url)
+            print(f"Scrapping {source_url} has caused this error: ")
+            print(error)
+            continue
+    print("The following sources could not be scrapped: ")
+    for source in failed_scrapping:
+        print(source)
+
+
+@shared_task
+def create_other_other_sources():
+    from apps.source.models import Sector, SourceRating, SourceTag
+
+    new_sources = [
+        "https://www.institutionalinvestor.com/",
+        "https://medium.com/@monetarypolicyinstitute",
+        "https://daglifunds.com/",
+        "https://www.thecorpraider.com/",
+        "https://clarkstreetvalue.blogspot.com/",
+        "https://focusedcompounding.com/",
+        "https://www.elementaryvalue.com/",
+        "https://valuealert.blogspot.com/",
+        "https://www.platinum.com.au/Insights-Tools/The-Journal",
+        "https://governanceforstakeholders.com/category/articles/",
+        "https://dfinview.com/Ashmore/",
+        "https://www.sbhic.com/insight-category/institutions/",
+        "https://www.mesirow.com/insights",
+        "https://innovationdevelopment.org/blog",
+        "https://caia.org/blog",
+        "https://www.morganstanley.com/im/en-us/institutional-investor/insights/articles/monthly-market-monitor-june23.html",
+        "https://www.pgimquantitativesolutions.com/market-views",
+        "https://realinvestmentadvice.com/insights/real-investment-daily/",
+        "https://www.insightinvestment.com/united-states/perspectives/global-macro-research-hub/GMR-hub/?view=latest",
+        "https://www.carlyle.com/#our-insights",
+        "https://www.abrdn.com/en-us/investor/insights-and-research/insights",
+        "https://macro-ops.com/research/",
+        "https://www.mauldineconomics.com/",
+        "https://investingchannel.com/articles",
+        "https://finominal.com/",
+        "https://www.streetwisereports.com/",
+        "https://www.valens-research.com/the-institute/research/#",
+        "https://www.ipocandy.com/",
+        "https://www.boyarresearch.com/",
+        "https://www.dcadvisory.com/news-deals-insights/",
+        "https://www.ndr.com/",
+        "https://www.eastdaley.com/media-and-news",
+        "https://semiconductoradvisors.com/pages/articles/",
+        "https://www.bioshares.com.au/",
+        "http://www.pcsresearchgroup.com/",
+        "https://www.m-cam.com/",
+        "https://www.markmanadvisors.com/blog",
+        "https://www.mcalindenresearchpartners.com/",
+        "https://capitalistexploits.at/market-insights",
+        "https://www.usq.com/insights",
+        "https://www.researchfrc.com/category/reports/",
+        "https://hardassetsalliance.com/blog/",
+        "https://sumzero.com/",
+        "https://propthink.com/",
+        "https://www.cmegroup.com/videos.html#filters=market-commentary",
+        "https://www.corbinadvisors.com/research/",
+        "https://www.mhinvest.com/public/literature/quarterly-report/?cc=O",
+        "https://www.dbroot.com/resources/?newsCategorySlug=market-commentary",
+        "https://www.livianco.com/resources",
+        "https://appomattox.com/news-insights/",
+        "https://seabridge.com/commentary/",
+        "https://www.sitkapacific.com/memos-articles-letters/",
+        "https://kayne.com/insights/",
+        "https://arsinvestmentpartners.com/outlook-insights/",
+        "https://info.telemus.com/blog/tag/monthly-quarterly-commentary",
+        "https://www.usfunds.com/resource-listing/?resource-type=investor-alert",
+        "https://www.ftinstitutional.com/",
+        "https://www.avivainvestors.com/en-de/views/aiq-investment-thinking/economic-research/",
+        "https://www.alliancebernstein.com/corporate/en/insights-landing.html",
+        "https://www.nb.com/en/global/home",
+        "https://www.janushenderson.com/en-us/advisor/insights/",
+        "https://europe.pimco.com/en-eu/insights/economic-and-market-commentary",
+        "https://www.guggenheiminvestments.com/perspectives/sector-views",
+        "https://www.newyorklifeinvestments.com/insights",
+        "https://www.gweiss.com/insights",
+        "https://russellinvestments.com/us/insights",
+        "https://www.mellon.com/insights.html",
+        "https://www.amundi.com/usinvestors/Insights/Research-Insights",
+        "https://www.eatonvance.com/advisory-blog.php?since=2023-03-23&until=2023-06-23",
+        "https://www.matthewsasia.com/insights/",
+        "https://www.loomissayles.com/",
+        "https://kraneshares.com/",
+        "https://contrarianedge.com/",
+        "https://www.serenityalts.com/blog",
+        "https://www.crystalfunds.com/insights",
+        "https://www.kingstreet.com/Insights",
+        "https://www.fitchratings.com/",
+        "https://www.abnamro.com/en/research",
+        "https://research.sebgroup.com/macro-ficc",
+        "https://www.researchonline.se/macro/start",
+        "https://www.nbc.ca/about-us/news-media/financial-news/financial-analysis.html",
+        "https://www.qnb.com/sites/qnb/qnbqatar/page/en/enresearch.html",
+        "https://www2.deloitte.com/us/en/pages/outlooks/industry-outlooks.html",
+        "https://www.regions.com/wealth-management/asset-management/leadership",
+        "https://www.mckinsey.com/mgi/our-research/all-research",
+        "https://www.yolegroup.com/articles/?fwp_post_categories=technology-insights",
+        "https://valueinvestorsclub.com/",
+        "https://globalvaluehunter.com/investment-ideas/",
+        "https://www.thebeartrapsreport.com/blog/",
+        "https://www.brownstoneresearch.com/bleeding-edge/",
+        "https://www.visualcapitalist.com/",
+        "https://lplresearch.com/",
+        "https://insight.factset.com/",
+        "https://www.newyorkfed.org/research",
+        "https://www.econostream-media.com/",
+        "https://www.macrodesiac.com/",
+        "https://realinvestmentadvice.com/insights/real-investment-daily/",
+        "https://fwintersberger.substack.com/",
+        "https://morningporridge.com/blog/",
+        "https://www.nsenergybusiness.com/",
+        "https://www.globalcapital.com/",
+        "https://scottgrannis.blogspot.com/",
+        "https://macro-ops.com/research/",
+        "https://www.epi.org/blog/",
+        "https://www.dlacalle.com/en/",
+        "https://www.spectramarkets.com/am-fx-archive/",
+        "https://www.bankofengland.co.uk/news/publications",
+        "https://www.capitaleconomics.com/capital-views",
+        "https://hedgopia.com/",
+        "https://bondvigilantes.com/",
+        "https://inflationguy.blog/",
+        "https://www.hedgefundtelemetry.com/",
+        "https://www.man.com/maninstitute",
+        "https://www.oxfordeconomics.com/resource-hub/",
+        "https://www.christophe-barraud.com/blog/",
+        "https://blog.faisalkhan.com/",
+        "https://about.bnef.com/blog/?tactic-page=443258",
+        "https://www.semiconductors.org/",
+    ]
+    failed_scrapping = []
+    for source_url in new_sources:
+        print(source_url)
+        try:
+            name, img_url = get_new_sources_info(source_url)
+            if (
+                Source.objects.filter(name=name).exists()
+                or Source.objects.filter(slug=slugify(name)).exists()
+                or Source.objects.filter(slug=slugify(name[:49])).exists()
+            ):
+                name = name + f" - Other {name[:2]}"
+            created_source = Source.objects.create(
+                url=source_url,
+                slug=slugify(name[:49]),
+                name=name[:49],
+                favicon_path=f"home/favicons/{slugify(name[:49])}.webp",
+                paywall="No",
+                website=get_object_or_404(Website, name="Other"),
+                content_type="Analysis",
                 sector=get_object_or_404(Sector, name="Generalists"),
             )
             try:
@@ -775,6 +987,17 @@ def create_news_sources():
     print("The following sources could not be scrapped: ")
     for source in failed_scrapping:
         print(source)
+
+
+@shared_task
+def add_online_publication_tag():
+    from apps.source.models import SourceTag
+
+    for source in Source.objects.filter(
+        website__name="Other", content_type="News", sector__name="Generalists"
+    ):
+        source.tags.add(get_object_or_404(SourceTag, name="Online Publication"))
+        source.save()
 
 
 # =================================================================================
@@ -1247,4 +1470,59 @@ def create_news_sources():
 #         sleep(3)
 #     print("Scrapping failed for these sources")
 #     for source in failed_sources:
+#         print(source)
+
+
+# @shared_task
+# def create_news_sources():
+#     from apps.source.models import Sector, SourceRating
+
+#     new_sources = []
+#     failed_scrapping = []
+#     for source_url in new_sources:
+#         print(source_url)
+#         try:
+#             name, img_url = get_new_sources_info(source_url)
+#             if (
+#                 Source.objects.filter(name=name).exists()
+#                 or Source.objects.filter(slug=slugify(name)).exists()
+#                 or Source.objects.filter(slug=slugify(name[:49])).exists()
+#             ):
+#                 name = name + " - New"
+#             created_source = Source.objects.create(
+#                 url=source_url,
+#                 slug=slugify(name[:49]),
+#                 name=name[:49],
+#                 favicon_path=f"home/favicons/{slugify(name[:49])}.webp",
+#                 paywall="No",
+#                 website=get_object_or_404(Website, name="Other"),
+#                 content_type="News",
+#                 sector=get_object_or_404(Sector, name="Generalists"),
+#             )
+#             try:
+#                 source_profile_img_create(created_source, img_url)
+#                 feed_url = f"{source_url}feed"
+#                 try:
+#                     create_articles_from_feed(
+#                         created_source, feed_url, Article.objects.none()
+#                     )
+#                 except Exception as _:
+#                     created_source.alt_feed = "not found"
+#                     created_source.save()
+#                 rating = 8
+#             except Exception as _:
+#                 rating = 7
+#             # add source_rating otherwise 500 error when opening source profile
+#             SourceRating.objects.create(
+#                 user=get_object_or_404(User, email="me-99@live.de"),
+#                 source=created_source,
+#                 rating=rating,
+#             )
+#         except Exception as error:
+#             failed_scrapping.append(source_url)
+#             print(f"Scrapping {source_url} has caused this error: ")
+#             print(error)
+#             continue
+#     print("The following sources could not be scrapped: ")
+#     for source in failed_scrapping:
 #         print(source)
