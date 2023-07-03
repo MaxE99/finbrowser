@@ -251,6 +251,7 @@ class NotFoundView(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["error_page"] = True
         context["latest_analysis"] = Article.objects.get_latest_analysis()
         context["latest_news"] = Article.objects.get_latest_news()
         context["trending_topics"] = (

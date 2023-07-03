@@ -53,5 +53,5 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = NotFoundView.as_view()
-handler500 = error_view_500
-handler503 = error_view_503
+# handler500 = error_view_500
+# handler503 = error_view_503
