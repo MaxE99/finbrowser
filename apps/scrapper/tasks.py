@@ -30,7 +30,6 @@ from apps.logic.services import (
     twitter_create_api_settings,
     tweet_type_create,
     article_creation_check,
-    get_new_sources_info,
 )
 from apps.article.models import Article, TweetType
 from apps.home.models import NotificationMessage
@@ -190,8 +189,12 @@ def scrape_substack():
     )
     for source in substack_sources:
         feed_url = f"{source.url}feed"
-        create_articles_from_feed(source, feed_url, articles)
-        sleep(6)
+        try:
+            create_articles_from_feed(source, feed_url, articles)
+            sleep(6)
+        except Exception as error:
+            print(f"Scrapping {source} failed due to this error: {error}")
+            continue
 
 
 @shared_task
@@ -204,8 +207,12 @@ def scrape_seekingalpha():
     )
     for source in seekingalpha_sources:
         feed_url = f"{source.url}.xml"
-        create_articles_from_feed(source, feed_url, articles)
-        sleep(15)
+        try:
+            create_articles_from_feed(source, feed_url, articles)
+            sleep(15)
+        except Exception as error:
+            print(f"Scrapping {source} failed due to this error: {error}")
+            continue
 
 
 @shared_task
@@ -223,7 +230,7 @@ def scrape_other_websites():
             feed_url = f"{source.url}feed"
             create_articles_from_feed(source, feed_url, articles)
         except Exception as error:
-            print(f"Scrapping {source} failed because of {error}")
+            print(f"Scrapping {source} failed because of this error: {error}")
             continue
 
 
@@ -241,7 +248,7 @@ def scrape_forbes():
             create_articles_from_feed(source, feed_url, articles)
             sleep(5)
         except Exception as error:
-            print(error)
+            print(f"Scrapping {source} failed because of this error: {error}")
             continue
 
 
