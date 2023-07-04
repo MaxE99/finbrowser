@@ -94,8 +94,8 @@ class SourceRating(models.Model):
     def save(self, *args, **kwargs):
         super(SourceRating, self).save(*args, **kwargs)
         Source.objects.filter(source_id=self.source.source_id).update(
-            average_rating=SourceRating.objects.get_average_rating(
-                self.source.source_id
+            average_rating=round(
+                SourceRating.objects.get_average_rating(self.source.source_id), 1
             ),
             ammount_of_ratings=SourceRating.objects.get_ammount_of_ratings(
                 self.source.source_id
