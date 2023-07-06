@@ -695,10 +695,9 @@ async function save_portfolio_keyword(element) {
             });
             if (!res.ok) {
                 if (res.status === 403) {
-                    showMessage(
-                        'Maximum limit of 100 stocks and keywords per portfolio has been reached.',
-                        'Error'
-                    );
+                    res.json().then((json) => {
+                        showMessage(json.detail, 'Error');
+                    });
                     keywordIsBeingCreated = false;
                 } else {
                     showMessage('Error: Network request failed unexpectedly!', 'Error');

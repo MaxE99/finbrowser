@@ -27,7 +27,7 @@ class SearchInsteadOfDropdown(admin.ModelAdmin):
 
 
 class StockPitchDropdown(admin.ModelAdmin):
-    autocomplete_fields = ["article", "stock"]
+    autocomplete_fields = ["article"]
 
 
 admin.site.register(HighlightedArticle, SearchInsteadOfDropdown)

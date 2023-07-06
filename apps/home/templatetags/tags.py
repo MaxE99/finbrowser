@@ -62,21 +62,15 @@ def check_has_rated(source, user_ratings):
     return False
 
 
-@register.filter(name="check_param_selected")
-def check_param_selected(params, args):
-    if "," in args:
-        key, value = args.split(",")
-    else:
-        key = "sector"
-        value = args
-    if not params or key not in params or value not in params[key]:
-        return False
-    return True
-
-
-@register.filter(name="get_tags")
-def get_tags(params):
-    return params["tag"]
+@register.simple_tag
+def check_param_selected(search_parameters, search_type, name):
+    if (
+        not search_parameters
+        or search_type not in search_parameters
+        or name not in search_parameters[search_type]
+    ):
+        return ""
+    return "checked"
 
 
 @register.filter(name="get_source_ids_in_list")

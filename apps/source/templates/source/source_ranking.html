@@ -43,44 +43,44 @@
                 <i class="fa-solid fa-chevron-down"></i>
                 <ul class="websiteList">
                     <li value="Forbes">
-                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,Forbes" %} checked
-                            {% endif %} name="website" value="Forbes"></input>
+                        <input type="checkbox" {% check_param_selected search_parameters "website" "Forbes" %}
+                            name="website" value="Forbes"></input>
                         <img src="{% static 'home/media/forbes_logo.png' %}" alt="Forbes Logo">
                         Forbes
                     </li>
                     <li value="SeekingAlpha">
-                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,SeekingAlpha" %}
-                            checked {% endif %} name="website" value="SeekingAlpha"></input>
+                        <input type="checkbox" {% check_param_selected search_parameters "website" "SeekingAlpha" %}
+                            name="website" value="SeekingAlpha"></input>
                         <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">
                         SeekingAlpha
                     </li>
                     <li value="Spotify">
-                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,Spotify" %} checked
-                            {% endif %} name="website" value="Spotify"></input>
+                        <input type="checkbox" {% check_param_selected search_parameters "website" "Spotify" %}
+                            name="website" value="Spotify"></input>
                         <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">
                         Spotify
                     </li>
                     <li value="Substack">
-                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,Substack" %}
-                            checked {% endif %} name="website" value="Substack"></input>
+                        <input type="checkbox" {% check_param_selected search_parameters "website" "Substack" %}
+                            name="website" value="Substack"></input>
                         <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">
                         Substack
                     </li>
                     <li value="Twitter">
-                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,Twitter" %} checked
-                            {% endif %} name="website" value="Twitter"></input>
+                        <input type="checkbox" {% check_param_selected search_parameters "website" "Twitter" %}
+                            name="website" value="Twitter"></input>
                         <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">
                         Twitter
                     </li>
                     <li value="YouTube">
-                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,YouTube" %} checked
-                            {% endif %} name="website" value="YouTube"></input>
+                        <input type="checkbox" {% check_param_selected search_parameters "website" "YouTube" %}
+                            name="website" value="YouTube"></input>
                         <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">
                         YouTube
                     </li>
                     <li value="Other">
-                        <input type="checkbox" {% if search_parameters|check_param_selected:"website,Other" %} checked
-                            {% endif %} name="website" value="Other"></input>
+                        <input type="checkbox" {% check_param_selected search_parameters "website" "Other" %}
+                            name="website" value="Other"></input>
                         <img src="{% static 'home/media/default_favicon.png' %}" alt="Website Logo">
                         Other
                     </li>
@@ -94,75 +94,68 @@
                 <ul class="sectorList">
                     {% for sector in sectors %}
                     <li value="{{ sector.name }}">
-                        <input type="checkbox" {% if search_parameters|check_param_selected:sector.name  %} checked
-                            {% endif %} name="sector" value="{{ sector.name }}">{{ sector.name }}</input>
+                        <input type="checkbox" {% check_param_selected search_parameters "sector" sector.name  %}
+                            name="sector" value="{{ sector.name }}">{{ sector.name }}</input>
                     </li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
         <div class="selectContainer">
-            <label>Tag</label>
-            <div class="tagSearchWrapper">
-                <div class="tagSearchContainer">
-                    <input aria-label="Search" type="search" id="tagAutocompleteHorizontal" class="tagInputSearch"
-                        placeholder="Search" autocomplete="off" spellcheck="false">
-                    <i class="fas fa-search"></i>
-                </div>
-                <div id="tagAutocomplete_result">
-                    <ul class="selectionList"></ul>
-                </div>
+            <label for="tag">Tag</label>
+            <div class="dropdown tagDropdown">Select Tags
+                <i class="fa-solid fa-chevron-down"></i>
+                <ul class="tagList">
+                    {% for tag in tags %}
+                    <li value="{{ tag.name }}">
+                        <input type="checkbox" {% check_param_selected search_parameters "tag" tag.name  %} name="tag"
+                            value="{{ tag.name }}">{{ tag.name }}</input>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
-        </div>
-        <div class="selectedTagsContainer">
-            {% if search_parameters|get_tags != None %}
-            {% for selected_tag in search_parameters|get_tags %}
-            <li value="{{ selected_tag }}" class="selectedOption">{{ selected_tag }}<input hidden="true" name="tag"
-                    value="{{ selected_tag }}"><i class="fas fa-times"></i></li>
-            {% endfor %}
-            {% endif %}
         </div>
         <div class="selectContainer">
             <label for="content_type">Content Type</label>
             <div class="choiceContainer">
-                <input type="checkbox" {% if search_parameters|check_param_selected:"content,Analysis" %} checked
-                    {% endif %} name="content" value="Analysis" id="select_analysis">
+                <input type="checkbox" {% check_param_selected search_parameters "content" "Analysis" %} name="content"
+                    value="Analysis" id="select_analysis">
                 <label for="select_analysis">Analysis</label>
             </div>
             <div class="choiceContainer">
-                <input type="checkbox" {% if search_parameters|check_param_selected:"content,Commentary" %} checked
-                    {% endif %} name="content" value="Commentary" id="select_commentary">
+                <input type="checkbox" {% check_param_selected search_parameters "content" "Commentary" %}
+                    name="content" value="Commentary" id="select_commentary">
                 <label for="select_commentary">Commentary</label>
             </div>
             <div class="choiceContainer">
-                <input type="checkbox" {% if search_parameters|check_param_selected:"content,News" %} checked
-                    {% endif %} name="content" value="News" id="select_news">
+                <input type="checkbox" {% check_param_selected search_parameters "content" "News" %} name="content"
+                    value="News" id="select_news">
                 <label for="select_news">News</label>
             </div>
         </div>
         <div class="selectContainer">
             <label for="paywall">Paywall</label>
             <div class="choiceContainer">
-                <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Yes" %} checked {% endif %}
-                    name="paywall" value="Yes" id="select_yes">
+                <input type="checkbox" {% check_param_selected search_parameters "paywall" "Yes" %} name="paywall"
+                    value="Yes" id="select_yes">
                 <label for="select_yes">Yes</label>
             </div>
             <div class="choiceContainer">
-                <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Semi" %} checked
-                    {% endif %} name="paywall" value="Semi" id="select_semi">
+                <input type="checkbox" {% check_param_selected search_parameters "paywall" "Semi" %} name="paywall"
+                    value="Semi" id="select_semi">
                 <label for="select_semi">Semi</label>
             </div>
             <div class="choiceContainer">
-                <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,No" %} checked {% endif %}
-                    name="paywall" value="No" id="select_no">
+                <input type="checkbox" {% check_param_selected search_parameters "paywall" "No" %} name="paywall"
+                    value="No" id="select_no">
                 <label for="select_no">No</label>
             </div>
         </div>
 
 
         <div class="selectContainer topSourcesOnlyContainer">
-            <input name="top_sources_only" {% if search_parameters|check_param_selected:"top_sources_only,on" %} checked
-                {% endif %} type="checkbox" id="top_sources_only">
+            <input name="top_sources_only" {% check_param_selected search_parameters "top_sources_only" "on" %}
+                type="checkbox" id="top_sources_only">
             <label for="top_sources_only">Only Top Sources</label>
             <span class="infoLink"><i class="fas fa-info"></i></span>
         </div>
@@ -311,45 +304,44 @@
                     <i class="fa-solid fa-chevron-down"></i>
                     <ul class="websiteList">
                         <li value="Forbes">
-                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Forbes" %}
-                                checked {% endif %} name="website" value="Forbes"></input>
+                            <input type="checkbox" {% check_param_selected search_parameters "website" "Forbes" %}
+                                name="website" value="Forbes"></input>
                             <img src="{% static 'home/media/forbes_logo.png' %}" alt="Forbes Logo">
                             Forbes
                         </li>
                         <li value="SeekingAlpha">
-                            <input type="checkbox"
-                                {% if search_parameters|check_param_selected:"website,SeekingAlpha" %} checked
-                                {% endif %} name="website" value="SeekingAlpha"></input>
+                            <input type="checkbox" {% check_param_selected search_parameters "website" "SeekingAlpha" %}
+                                name="website" value="SeekingAlpha"></input>
                             <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">
                             SeekingAlpha
                         </li>
                         <li value="Spotify">
-                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Spotify" %}
-                                checked {% endif %} name="website" value="Spotify"></input>
+                            <input type="checkbox" {% check_param_selected search_parameters "website" "Spotify" %}
+                                name="website" value="Spotify"></input>
                             <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">
                             Spotify
                         </li>
                         <li value="Substack">
-                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Substack" %}
-                                checked {% endif %} name="website" value="Substack"></input>
+                            <input type="checkbox" {% check_param_selected search_parameters "website" "Substack" %}
+                                name="website" value="Substack"></input>
                             <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">
                             Substack
                         </li>
                         <li value="Twitter">
-                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Twitter" %}
-                                checked {% endif %} name="website" value="Twitter"></input>
+                            <input type="checkbox" {% check_param_selected search_parameters "website" "Twitter" %}
+                                name="website" value="Twitter"></input>
                             <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">
                             Twitter
                         </li>
                         <li value="YouTube">
-                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,YouTube" %}
-                                checked {% endif %} name="website" value="YouTube"></input>
+                            <input type="checkbox" {% check_param_selected search_parameters "website" "YouTube" %}
+                                name="website" value="YouTube"></input>
                             <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">
                             YouTube
                         </li>
                         <li value="Other">
-                            <input type="checkbox" {% if search_parameters|check_param_selected:"website,Other" %}
-                                checked {% endif %} name="website" value="Other"></input>
+                            <input type="checkbox" {% check_param_selected search_parameters "website" "Other" %}
+                                name="website" value="Other"></input>
                             <img src="{% static 'home/media/default_favicon.png' %}" alt="Website Logo">
                             Other
                         </li>
@@ -363,73 +355,66 @@
                     <ul class="sectorList">
                         {% for sector in sectors %}
                         <li value="{{ sector.name }}">
-                            <input type="checkbox" {% if search_parameters|check_param_selected:sector.name  %} checked
-                                {% endif %} name="sector" value="{{ sector.name }}">{{ sector.name }}</input>
+                            <input type="checkbox" {% check_param_selected search_parameters "sector" sector.name  %}
+                                name="sector" value="{{ sector.name }}">{{ sector.name }}</input>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
             </div>
             <div class="selectContainer">
-                <label>Tag</label>
-                <div class="tagSearchWrapper">
-                    <div class="tagSearchContainer">
-                        <input aria-label="Search" type="search" id="tagAutocomplete" class="tagInputSearch"
-                            placeholder="Search" autocomplete="off" spellcheck="false">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div id="tagAutocomplete_result">
-                        <ul class="selectionList"></ul>
-                    </div>
+                <label for="tag">Tag</label>
+                <div class="dropdown tagDropdown">Select Tags
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <ul class="tagList">
+                        {% for tag in tags %}
+                        <li value="{{ tag.name }}">
+                            <input type="checkbox" {% check_param_selected search_parameters "tag" tag.name  %}
+                                name="tag" value="{{ tag.name }}">{{ tag.name }}</input>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
-            </div>
-            <div class="selectedTagsContainer">
-                {% if search_parameters|get_tags != None %}
-                {% for selected_tag in search_parameters|get_tags %}
-                <li value="{{ selected_tag }}" class="selectedOption">{{ selected_tag }}<input hidden="true" name="tag"
-                        value="{{ selected_tag }}"><i class="fas fa-times"></i></li>
-                {% endfor %}
-                {% endif %}
             </div>
             <div class="selectContainer">
                 <label for="content_type">Content Type</label>
                 <div class="choiceContainer">
-                    <input type="checkbox" {% if search_parameters|check_param_selected:"content,Analysis" %} checked
-                        {% endif %} name="content" value="Analysis" id="select_analysis_horizontal">
+                    <input type="checkbox" {% check_param_selected search_parameters "content" "Analysis" %}
+                        name="content" value="Analysis" id="select_analysis_horizontal">
                     <label for="select_analysis_horizontal">Analysis</label>
                 </div>
                 <div class="choiceContainer">
-                    <input type="checkbox" {% if search_parameters|check_param_selected:"content,Commentary" %} checked
-                        {% endif %} name="content" value="Commentary" id="select_commentary_horizontal">
+                    <input type="checkbox" {% check_param_selected search_parameters "content" "Commentary" %}
+                        name="content" value="Commentary" id="select_commentary_horizontal">
                     <label for="select_commentary_horizontal">Commentary</label>
                 </div>
                 <div class="choiceContainer">
-                    <input type="checkbox" {% if search_parameters|check_param_selected:"content,News" %} checked
-                        {% endif %} name="content" value="News" id="select_news_horizontal">
+                    <input type="checkbox" {% check_param_selected search_parameters "content" "News" %} name="content"
+                        value="News" id="select_news_horizontal">
                     <label for="select_news_horizontal">News</label>
                 </div>
             </div>
             <div class="selectContainer">
                 <label for="paywall">Paywall</label>
                 <div class="choiceContainer">
-                    <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Yes" %} checked
-                        {% endif %} name="paywall" value="Yes" id="select_yes_horizontal">
+                    <input type="checkbox" {% check_param_selected search_parameters "paywall" "Yes" %} name="paywall"
+                        value="Yes" id="select_yes_horizontal">
                     <label for="select_yes_horizontal">Yes</label>
                 </div>
                 <div class="choiceContainer">
-                    <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,Semi" %} checked
-                        {% endif %} name="paywall" value="Semi" id="select_semi_horizontal">
+                    <input type="checkbox" {% check_param_selected search_parameters "paywall" "Semi" %} name="paywall"
+                        value="Semi" id="select_semi_horizontal">
                     <label for="select_semi_horizontal">Semi</label>
                 </div>
                 <div class="choiceContainer">
-                    <input type="checkbox" {% if search_parameters|check_param_selected:"paywall,No" %} checked
-                        {% endif %} name="paywall" value="No" id="select_no_horizontal">
+                    <input type="checkbox" {% check_param_selected search_parameters "paywall" "No" %} name="paywall"
+                        value="No" id="select_no_horizontal">
                     <label for="select_no_horizontal">No</label>
                 </div>
             </div>
             <div class="selectContainer">
-                <input name="top_sources_only" {% if search_parameters|check_param_selected:"top_sources_only,on" %}
-                    checked {% endif %} type="checkbox" id="top_sources_only_horizontal">
+                <input name="top_sources_only" {% check_param_selected search_parameters "top_sources_only" "on" %}
+                    type="checkbox" id="top_sources_only_horizontal">
                 <label for="top_sources_only_horizontal">Only Top Sources</label>
                 <span class="infoLink"><i class="fas fa-info"></i></span>
             </div>
@@ -438,5 +423,5 @@
     </div>
 </div>
 
-<script src="{% static 'source/min_source_ranking_script_v6.js' %}"></script>
+<script src="{% static 'source/min_source_ranking_script_v7.js' %}"></script>
 {% endblock content %}

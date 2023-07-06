@@ -575,7 +575,13 @@ async function save_keyword() {
                 body: JSON.stringify(data),
             });
             if (!res.ok) {
-                showMessage('Error: Network request failed unexpectedly!', 'Error');
+                if (res.status === 403) {
+                    res.json().then((json) => {
+                        showMessage(json.detail, 'Error');
+                    });
+                } else {
+                    showMessage('Error: Network request failed unexpectedly!', 'Error');
+                }
             } else {
                 input.value = '';
                 showMessage('A new keyword has been created!', 'Success');

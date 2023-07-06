@@ -32,52 +32,6 @@ document.querySelectorAll('.sourceRankingContainer .subscribeButton').forEach((s
     });
 });
 
-// select tags for filtering from source container
-document.querySelectorAll('.thirdRow .tag').forEach((tag) =>
-    tag.addEventListener('click', () => {
-        document.querySelectorAll('.selectedTagsContainer').forEach((selectedTagsContainer) => {
-            const selectedTags = [];
-            selectedTagsContainer.querySelectorAll('li').forEach((sTag) => {
-                selectedTags.push(sTag.innerText);
-            });
-            if (!selectedTags.includes(tag.innerText)) {
-                const li = document.createElement('li');
-                li.classList.add('selectedOption');
-                li.setAttribute('value', tag.innerText);
-                li.innerText = tag.innerText;
-                const input = document.createElement('input');
-                input.setAttribute('hidden', true);
-                input.setAttribute('name', 'tag');
-                input.setAttribute('value', tag.innerText);
-                const deleteButton = document.createElement('i');
-                li.appendChild(input);
-                li.appendChild(deleteButton);
-                deleteButton.classList.add('fas', 'fa-times');
-                deleteButton.addEventListener('click', () => {
-                    li.remove();
-                });
-                selectedTagsContainer.appendChild(li);
-            }
-        });
-    })
-);
-
-// remove selected tags on click
-document.querySelectorAll('.selectedTagsContainer li i').forEach((deleteButton) =>
-    deleteButton.addEventListener('click', () => {
-        deleteButton.closest('li').remove();
-    })
-);
-
-// prevent enter on search tags = enter form
-document.querySelectorAll('form .tagInputSearch').forEach((tagInputSearch) =>
-    tagInputSearch.addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-        }
-    })
-);
-
 // dropdowns
 const websiteDropdown = document
     .querySelectorAll(
@@ -86,7 +40,7 @@ const websiteDropdown = document
     .forEach((websiteDropdown) =>
         websiteDropdown.addEventListener('click', (e) => {
             websiteDropdown.closest('form').querySelector('.sectorList').style.display = 'none';
-            websiteDropdown.closest('form').querySelector('.selectionList').style.display = 'none';
+            websiteDropdown.closest('form').querySelector('.tagList').style.display = 'none';
             // this eventListener is also triggered when an li or input inside the dropdown is clicked, this prevents an error
             const tagName = e.target.tagName.toUpperCase();
             if (tagName !== 'LI' && tagName !== 'INPUT') {
@@ -109,7 +63,7 @@ const sectorDropdown = document
     .forEach((sectorDropdown) =>
         sectorDropdown.addEventListener('click', (e) => {
             sectorDropdown.closest('form').querySelector('.websiteList').style.display = 'none';
-            sectorDropdown.closest('form').querySelector('.selectionList').style.display = 'none';
+            sectorDropdown.closest('form').querySelector('.tagList').style.display = 'none';
             // this eventListener is also triggered when an li inside the dropdown is clicked, this prevents an error
             const tagName = e.target.tagName.toUpperCase();
             if (tagName !== 'LI' && tagName !== 'INPUT') {
@@ -125,85 +79,26 @@ const sectorDropdown = document
         })
     );
 
-function selectFilterOption(selection) {
-    const selectContainer = selection.closest('.selectContainer');
-    const selectedTagsContainer = selection.closest('form').querySelector('.selectedTagsContainer');
-    const clonedSelection = selection.cloneNode(true);
-    clonedSelection.classList.add('selectedOption');
-    const deleteSelectionButton = document.createElement('i');
-    deleteSelectionButton.classList.add('fas', 'fa-times');
-    deleteSelectionButton.addEventListener('click', () => {
-        clonedSelection.remove();
-    });
-    const hiddenInput = document.createElement('input');
-    hiddenInput.setAttribute('hidden', true);
-    hiddenInput.setAttribute('name', 'tag');
-    hiddenInput.setAttribute('value', clonedSelection.innerText);
-    clonedSelection.appendChild(hiddenInput);
-    clonedSelection.appendChild(deleteSelectionButton);
-    selection.style.display = 'none';
-    selectedTagsContainer.appendChild(clonedSelection);
-    selectedTagsContainer.style.display = 'flex';
-    selectContainer.querySelector('ul').style.display = 'none';
-}
-
-// search tags
-document.querySelectorAll('form .tagInputSearch').forEach((searchInput) =>
-    searchInput.addEventListener('keyup', async function () {
-        let search_term = searchInput.value;
-        let results_list = searchInput.closest('form').querySelector('#tagAutocomplete_result ul');
-        if (search_term && search_term.split(/\s+/).join('') != '') {
-            try {
-                const res = await fetch(
-                    `../../../../../../api/source_tags/?search_term=${search_term}`,
-                    get_fetch_settings('GET')
-                );
-                if (!res.ok) {
-                    showMessage('Error: Network request failed unexpectedly!', 'Error');
-                } else {
-                    const context = await res.json();
-                    let selectedTags = [];
-                    document
-                        .querySelectorAll('.selectedTagsContainer li')
-                        .forEach((result) => selectedTags.push(result.innerText));
-                    if (context.length > 0) {
-                        results_list.style.display = 'block';
-                        results_list.innerHTML = '';
-                        context.forEach((tag) => {
-                            if (!selectedTags.includes(tag.name)) {
-                                const tagOption = document.createElement('li');
-                                tagOption.setAttribute('value', tag.name);
-                                tagOption.innerText = tag.name;
-                                tagOption.addEventListener('click', () => {
-                                    selectFilterOption(tagOption);
-                                });
-                                results_list.appendChild(tagOption);
-                            }
-                        });
-                    } else {
-                        results_list.style.display = 'none';
+const tagDropdown = document
+    .querySelectorAll('.filterSidebar form .tagDropdown, .horizontalFilterMenu form .tagDropdown')
+    .forEach((tagDropdown) =>
+        tagDropdown.addEventListener('click', (e) => {
+            tagDropdown.closest('form').querySelector('.websiteList').style.display = 'none';
+            tagDropdown.closest('form').querySelector('.sectorList').style.display = 'none';
+            // this eventListener is also triggered when an li inside the dropdown is clicked, this prevents an error
+            const tagName = e.target.tagName.toUpperCase();
+            if (tagName !== 'LI' && tagName !== 'INPUT') {
+                e.target.querySelector('ul').style.display !== 'block'
+                    ? (e.target.querySelector('ul').style.display = 'block')
+                    : (e.target.querySelector('ul').style.display = 'none');
+                document.onclick = function (e) {
+                    if (!e.target.closest('.tagList') && e.target !== tagDropdown) {
+                        tagDropdown.querySelector('ul').style.display = 'none';
                     }
-                }
-            } catch (e) {
-                // showMessage("Error: Unexpected error has occurred!", "Error");
+                };
             }
-            document.onclick = function (e) {
-                if (e.target.id !== 'autocomplete_list_results') {
-                    results_list.style.display = 'none';
-                }
-            };
-        } else {
-            results_list.style.display = 'none';
-        }
-    })
-);
-
-// filter selection
-document.querySelectorAll('.selectionList li').forEach((selection) => {
-    selection.addEventListener('click', () => {
-        selectFilterOption(selection);
-    });
-});
+        })
+    );
 
 // select dropdown
 document.querySelectorAll('form .selectContainer .dropdown li').forEach((option) =>
@@ -397,7 +292,7 @@ document
             } catch (e) {
                 // showMessage("Error: Unexpected error has occurred!", "Error");
             }
-        } else if(!rating && !activatedButton) {
+        } else if (!rating && !activatedButton) {
             showMessage('Select a rating!', 'Error');
         }
     });
