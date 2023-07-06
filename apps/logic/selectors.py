@@ -1,7 +1,11 @@
+# Django imports
+from django.utils import timezone
+from django.db.models import Q
+
 # Python imports
 import html
 from datetime import datetime
-from django.db.models import Q
+from dateutil import parser
 
 # Local imports
 from apps.source.models import Source, SourceTag, Website
@@ -52,10 +56,19 @@ def article_components_get(item, description=False):
         return title
 
     link = item.find(".//link").text
-    pub_date = item.find(".//pubDate").text[:-4]
-    pub_date = datetime.strptime(
-        pub_date.replace(" -", "").replace(" +", ""), "%a, %d %b %Y %X"
-    )
+
+    date_string = item.find(".//pubDate").text
+    parsed_date = parser.parse(date_string)
+    if timezone.is_aware(parsed_date):
+        pub_date = parsed_date
+    else:
+        pub_date = timezone.make_aware(
+            parsed_date, timezone=timezone.get_default_timezone()
+        )
+    # pub_date = item.find(".//pubDate").text[:-4]
+    # pub_date = datetime.strptime(
+    #     pub_date.replace(" -", "").replace(" +", ""), "%a, %d %b %Y %X"
+    # )
     title = double_escaped_string_unescape(item.find(".//title").text)
     if description:
         description = double_escaped_string_unescape(item.find(".//description").text)

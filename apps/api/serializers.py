@@ -11,7 +11,6 @@ from apps.article.models import Article, HighlightedArticle, TweetType
 from apps.list.models import List
 from apps.home.models import Notification
 from apps.stock.models import Stock, Portfolio, PortfolioStock, PortfolioKeyword
-from apps.logic.pure_logic import get_amount_portfolio_search_terms
 
 
 class ListSerializer(serializers.ModelSerializer):
@@ -153,6 +152,17 @@ class NotificationSerializer(serializers.ModelSerializer):
         super().__init__(*args, **kwargs)
         self.context["request"].data["user"] = self.context["request"].user.pk
 
+    def create(self, validated_data):
+        if validated_data.get("keyword"):
+            user_keywords = Notification.objects.filter(
+                user=validated_data.get("user"), keyword__isnull=False
+            ).values_list("keyword", flat=True)
+            if validated_data.get("keyword") in user_keywords:
+                raise PermissionDenied(
+                    "You have already created a keyword with that name!"
+                )
+        return super().create(validated_data)
+
 
 class SourceTagSerializer(serializers.ModelSerializer):
     class Meta:
@@ -222,8 +232,14 @@ class PortfolioKeywordSerializer(serializers.ModelSerializer):
             pstock_id=validated_data.get("pstock_id"),
             portfolio__user=validated_data.get("user"),  # validation
         )
-        search_terms = get_amount_portfolio_search_terms(pstock.portfolio)
-        if search_terms > 99:
+        portfolio_keywords = PortfolioKeyword.objects.filter(
+            portfolio_stocks__portfolio=pstock.portfolio
+        ).values_list("keyword", flat=True)
+        if validated_data.get("keyword") in portfolio_keywords:
+            raise PermissionDenied(
+                "This portfolio already has a keyword with that name!"
+            )
+        if portfolio_keywords.count() > 99:
             raise PermissionDenied(
                 "You have already created the maximum number of objects allowed."
             )

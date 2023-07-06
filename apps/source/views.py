@@ -6,7 +6,7 @@ from django.views.generic.list import ListView
 from apps.logic.pure_logic import paginator_create
 from apps.logic.selectors import filter_sources
 from apps.home.views import BaseMixin
-from apps.source.models import Source, SourceRating
+from apps.source.models import Source, SourceRating, SourceTag
 from apps.article.models import Article
 from apps.home.models import Notification
 from apps.sector.models import Sector
@@ -66,5 +66,6 @@ class SourceRankingView(ListView, BaseMixin):
             "page",
         )
         context["sectors"] = Sector.objects.all()
+        context["tags"] = SourceTag.objects.all()
         context["search_parameters"] = dict(self.request.GET)
         return context
