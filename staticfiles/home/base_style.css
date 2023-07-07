@@ -1186,7 +1186,7 @@ footer .twitterFollowContainer i {
 
 .smallFormContentWrapper .rightContentSide {
     padding-left: 2rem;
-    max-width: calc(100% - 4rem);
+    width: 100%;
 }
 
 .smallFormContentWrapper .contentInfoContainer {
