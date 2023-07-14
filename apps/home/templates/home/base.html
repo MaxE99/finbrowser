@@ -15,7 +15,7 @@
     <link rel="prefetch" as="font" href="{% static 'home/fonts/lato-v23-latin/lato-v23-latin-900.woff' %}"
         type="font/woff" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/fontawesome/css/all.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v46.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/min_base_style_v47.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script nonce="{{request.csp_nonce}}" async src="https://www.googletagmanager.com/gtag/js?id=G-JNS80QXCXR"></script>
@@ -35,8 +35,8 @@
         <div class="fullScreenWrapper">
             <div role="form" class="addToListForm addSourceToListForm">
                 <div class="formHeaderContainer">
-                    <h2>Add <span></span> to your lists</h2>
-                    <i role="button" aria-label="close form" class="fas fa-times closeFormContainerButton"></i>
+                    <h3>Add <span></span> to your lists</h2>
+                        <i role="button" aria-label="Close form" class="fas fa-times closeFormContainerButton"></i>
                 </div>
                 {% if user_lists %}
                 <div class="descContainer">
@@ -46,39 +46,40 @@
                 <div class="listSelectionContainer">
                     {% for list in user_lists %}
                     <div class="listContainer">
-                        <label for="lists">{{ list.name }}</label>
+                        <label for="id_list_{{ list.list_id }}">{{ list.name }}</label>
                         <input id="id_list_{{ list.list_id }}" class="sourceNotInList" type="checkbox" name="lists"
                             value="{{ list.list_id }}">
-                        <input class="sourcesInList" value="{{ list.sources.all|get_source_ids_in_list }}" hidden />
-                        <input class="articlesInList" value="{{ list.articles.all|get_article_ids_in_list }}" hidden />
+                        <input id="sourcesInList{{ list.list_id }}" class="sourcesInList"
+                            value="{{ list.sources.all|get_source_ids_in_list }}" hidden />
+                        <input id="articlesInList{{ list.list_id }}" class="articlesInList"
+                            value="{{ list.articles.all|get_article_ids_in_list }}" hidden />
                     </div>
                     {% endfor %}
                 </div>
                 <div class="buttonsContainer">
-                    <button aria-label="reset form" class="cancelButton finButtonWhite">Reset</button>
-                    <button aria-label="save form" class="saveButton finButtonBlue">Save</button>
+                    <button aria-label="Reset form" class="cancelButton finButtonWhite">Reset</button>
+                    <button aria-label="Save selections" class="saveButton finButtonBlue">Save</button>
                 </div>
                 {% endif %}
             </div>
             <div role="alert" class="authPromptContainer">
-                <i role="button" aria-label="close form" class="fas fa-times"></i>
-                <img src="{% static 'home/media/finbrowser-logo.png' %}" alt="FinBrowser Logo">
+                <i role="button" aria-label="Close form" class="fas fa-times"></i>
+                <img src="{% static 'home/media/finbrowser-logo.png' %}" alt="FinBrowser logo">
                 <h3></h3>
                 <div class="desc">Welcome! In order to carry out this action, you must be signed in with your FinBrowser
                     account. No account yet? No problem! Creating a new one is a breeze and will only take a minute of
                     your time.</div>
                 <div class="buttonContainer">
-                    <a aria-label="open register page" class="registerButton finButtonWhite"
+                    <a aria-label="Open registration page" class="registerButton finButtonWhite"
                         href="{% url 'account_signup' %}">Register</a>
-                    <a aria-label="open login page" class="loginButton finButtonBlue"
+                    <a aria-label="Open login page" class="loginButton finButtonBlue"
                         href="{% url 'account_login' %}">Login</a>
                 </div>
             </div>
             <div role="definition" class="explanationContainer">
                 <div class="formHeaderContainer">
                     <h3></h3>
-                    <i role="button" aria-label="close explanation container"
-                        class="fas fa-times closeFormContainerButton"></i>
+                    <i role="button" aria-label="Close explanation" class="fas fa-times closeFormContainerButton"></i>
                 </div>
                 <div class="explanation"></div>
             </div>
@@ -103,7 +104,7 @@
 
             </div>
         </div>
-        <i role="button" aria-label="close open image/container" class="fas fa-times outerCloseButton"></i>
+        <i role="button" aria-label="Close image" class="fas fa-times outerCloseButton"></i>
     </div>
     {% if messages %}
     <ul class="messages">
@@ -115,25 +116,25 @@
     <header>
         <div class=" outerHeaderContainer">
             <div class="headerContainer">
-                <i role="button" aria-label="Open Dropdown Navigation" class="fa-solid fa-bars"></i>
+                <i role="button" aria-label="Open dropdown navigation" class="fa-solid fa-bars"></i>
                 <div class="logoContainer">
                     <div class="logoSpace">
                         <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}"
-                            alt="Large FinBrowser Logo">
-                        <a aria-label="Open Main Page" href="{% url 'home:feed' %}"></a>
+                            alt="FinBrowser logo">
+                        <a aria-label="Open feed" href="{% url 'home:feed' %}"></a>
                     </div>
                 </div>
                 <nav class="mainNavigation" aria-label="Main">
-                    <div class="mainNavigationLink"><span>Portfolio</span><a aria-label="Open Portfolio"
+                    <div class="mainNavigationLink"><span>Portfolio</span><a aria-label="Open portfolio"
                             href="{% url 'stock:portfolio' %}"></a>
                     </div>
-                    <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open Lists"
+                    <div class="mainNavigationLink"><span>Lists</span><a aria-label="Open lists"
                             href="{% url 'list:lists' %}"></a>
                     </div>
-                    <div class="mainNavigationLink"><span>Sources</span><a aria-label="Open Sources"
+                    <div class="mainNavigationLink"><span>Sources</span><a aria-label="Open sources"
                             href="{% url 'source:source_ranking' %}"></a>
                     </div>
-                    <div class="mainNavigationLink"><span>Guide</span><a aria-label="Open Guide"
+                    <div class="mainNavigationLink"><span>Guide</span><a aria-label="Open guide"
                             href="{% url 'home:guide' %}"></a>
                     </div>
                 </nav>
@@ -145,11 +146,11 @@
                     </div>
                     <div id="mainAutocomplete_result"></div>
                 </div>
-                <i role="button" aria-label="open search popup" class="fas fa-search smallScreenSearchIcon"></i>
+                <i role="button" aria-label="Open search modal" class="fas fa-search smallScreenSearchIcon"></i>
                 {% if request.user.is_authenticated %}
                 <div class="userSpace">
                     {% if request.user.is_authenticated %}
-                    <i role="button" aria-label="open notification menu"
+                    <i role="button" aria-label="Open notification sidebar"
                         class="far fa-bell {% if request.user.is_authenticated %}notificationBell{% endif %}">
                         {% if unseen_notifications %}
                         <span class="unseenNotifications">{{ unseen_notifications }}</span>
@@ -157,27 +158,27 @@
                     </i>
                     {% endif %}
                     {% if request.user.is_authenticated %}
-                    <div class="userProfile" role="button" aria-label="open settings link and logout option">
+                    <div class="userProfile" role="button" aria-label="Open settings link and logout option">
                         {% if user.profile.profile_pic %}
-                        <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
+                        <img src="{{ user.profile.profile_pic.url }}" alt="Your profile picture"">
                         {% else %}
-                        <img src="{% static 'home/media/favicon.png' %}" alt="Profile Picture">
+                        <img src=" {% static 'home/media/favicon.png' %}" alt="Your profile picture"">
                         {% endif %}
                     </div>
-                    <div class="profileMenu">
+                    <div class=" profileMenu">
                         <div class="profileMenuInfoOption">
                             {% if user.profile.profile_pic %}
-                            <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
+                            <img src="{{ user.profile.profile_pic.url }}" alt="Your profile picture">
                             {% else %}
-                            <img src="{% static 'home/media/favicon.png' %}" alt="Profile Picture">
+                            <img src="{% static 'home/media/favicon.png' %}" alt="Your profile picture"">
                             {% endif %}
-                            <span class="userNameSpan">{{ user.username }}</span>
+                            <span class=" userNameSpan">{{ user.username }}</span>
                             <span class="userEmailSpan">{{ user.email }}</span>
                         </div>
                         <div class="profileMenuOption">
-                            <i class="fas fa-cog"></i>
+                            <i role="button" class="fas fa-cog"></i>
                             <span>Settings</span>
-                            <a aria-label="Open Settings" href="{% url 'accounts:settings' %}"></a>
+                            <a aria-label="Open settings" href="{% url 'accounts:settings' %}"></a>
                         </div>
                         <div class="profileMenuOption">
                             <form method="post" action="{% url 'account_logout' %}">
@@ -196,7 +197,7 @@
                             <i class="fas fa-cog"><a href="{% url 'accounts:settings' %}#notifications"></a></i>
                         </div>
                         <div class="notificationHeadersContainer" role="navigation"
-                            aria-label="Notification Navigation">
+                            aria-label="Notification navigation">
                             <button class="activeNotificationCategory" data-for-tab="0">Sources</button>
                             <button data-for-tab="1">Stocks</button>
                             <button data-for-tab="2">Keywords</button>
@@ -211,7 +212,7 @@
                                     <div class="profileImageContainer">
                                         <img src="{% static notification.article.source.favicon_path %}"
                                             alt="Source Picture" />
-                                        <a aria-label="Open Profile Of {{ notification.article.source.name }}"
+                                        <a aria-label="Open profile of {{ notification.article.source.name }}"
                                             class="sourceProfile"
                                             href="{{ notification.article.source.get_absolute_url }}"></a>
                                     </div>
@@ -219,37 +220,37 @@
                                 <div class="rightContentSide">
                                     <div class="contentInfoContainer">
                                         <div class="sourceAndWebsiteContainer">
-                                            <a aria-label="Open Profile Of {{ notification.article.source.name }}"
+                                            <a aria-label="Open profile of {{ notification.article.source.name }}"
                                                 class="sourceProfile"
                                                 href="{{ notification.article.source.get_absolute_url }}">{{ notification.article.source.name }}</a>
                                             <div class="sourceWebsiteProfileContainer">
                                                 {% if notification.article.source.website.name == "YouTube" %}
                                                 <img class="youtubeLogo"
                                                     src="{% static notification.article.source.website.logo %}"
-                                                    alt="Website Logo" />
+                                                    alt="Website logo" />
                                                 {% else %}
                                                 <img src="{% static notification.article.source.website.logo %}"
-                                                    alt="Website Logo" />
+                                                    alt="Website logo" />
                                                 {% endif %}
-                                                <a aria-label="Open External Profile Of {{ notification.article.source.name }}"
+                                                <a aria-label="Open external website of {{ notification.article.source.name }}"
                                                     href="{{ notification.article.source.url }}" target="_blank"></a>
                                             </div>
                                         </div>
                                         <i class="fas fa-ellipsis-h" role="button"
-                                            aria-label="Open Article Interactions"></i>
+                                            aria-label="Open article interactions menu"></i>
                                         <div class="articleOptionsContainer">
                                             {% if request.user.is_authenticated %}
-                                            <div role="button" aria-label="open add to list popup"
+                                            <div role="button" aria-label="Open add to list modal"
                                                 class="addToListButton"><i class="fas fa-list"></i>Add to list
                                             </div>
                                             {% if notification.article.article_id in highlighted_content_ids %}
                                             <div class="addToHighlightedButton" role="button"
-                                                aria-label="highlight/unhighlight article"><i
+                                                aria-label="Unhighlight article"><i
                                                     class="fas fa-times"></i><span>Unhighlight
                                                     article</span></div>
                                             {% else %}
                                             <div class="addToHighlightedButton" role="button"
-                                                aria-label="highlight/unhighlight article"><i
+                                                aria-label="Highlight article"><i
                                                     class="fas fa-highlighter"></i><span>Highlight
                                                     article</span></div>
                                             {% endif %}
@@ -273,7 +274,7 @@
                                     {% endif %}
                                     {% if notification.article.tweet_type.image_path %}
                                     <img class="tweetImage"
-                                        src="{% static notification.article.tweet_type.image_path %}" alt="Tweet Image">
+                                        src="{% static notification.article.tweet_type.image_path %}" alt="Tweet image">
                                     {% endif %}
                                     {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
                                     <div class="quoteWrapper">
@@ -284,14 +285,14 @@
                                         {% if notification.article.tweet_type.initial_tweet_img_path %}
                                         <img class="tweetImage"
                                             src="{% static notification.article.tweet_type.initial_tweet_img_path %}"
-                                            alt="Tweet Reply Image">
+                                            alt="Tweet reply image">
                                         {% endif %}
                                     </div>
                                     {% endif %}
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
                                     </div>
-                                    <a aria-label="Open Content" class=" contentLink"
+                                    <a aria-label="Open link to content" class=" contentLink"
                                         href="{{ notification.article.link }}" target="_blank"></a>
                                 </div>
                             </div>
@@ -308,10 +309,10 @@
                                 <div class="leftContentSide">
                                     <div class="profileImageContainer">
                                         <img src="{% static notification.article.source.favicon_path %}"
-                                            alt="Source Picture" />
+                                            alt="Picture of {{ notification.article.source.name }}" />
                                         <a class="sourceProfile"
                                             href="{{ notification.article.source.get_absolute_url }}"
-                                            aria-label="Open Profile Of {{ notification.article.source.name }}"></a>
+                                            aria-label="Open profile of {{ notification.article.source.name }}"></a>
                                     </div>
                                 </div>
                                 <div class="rightContentSide">
@@ -319,7 +320,7 @@
                                         <div class="sourceAndWebsiteContainer">
                                             <a class="sourceProfile"
                                                 href="{{ notification.article.source.get_absolute_url }}"
-                                                aria-label="Open Profile Of {{ notification.article.source.name }}">{{ notification.article.source.name }}</a>
+                                                aria-label="Open profile of {{ notification.article.source.name }}">{{ notification.article.source.name }}</a>
                                             <div class="sourceWebsiteProfileContainer">
                                                 {% if notification.article.source.website.name == "YouTube" %}
                                                 <img class="youtubeLogo"
@@ -330,11 +331,11 @@
                                                     alt="Website Logo" />
                                                 {% endif %}
                                                 <a href="{{ notification.article.source.url }}" target="_blank"
-                                                    aria-label="Open External Profile Of {{ notification.article.source.name }}"></a>
+                                                    aria-label="Open external website of {{ notification.article.source.name }}"></a>
                                             </div>
                                         </div>
                                         <i class="fas fa-ellipsis-h" role="button"
-                                            aria-label="Open Article Interactions"></i>
+                                            aria-label="Open article interactions menu"></i>
                                         <div class="articleOptionsContainer">
                                             {% if request.user.is_authenticated %}
                                             <div class="addToListButton" role="button"><i class="fas fa-list"></i>Add to
@@ -378,7 +379,7 @@
                                     {% endif %}
                                     {% if notification.article.tweet_type.image_path %}
                                     <img class="tweetImage"
-                                        src="{% static notification.article.tweet_type.image_path %}" alt="Tweet Image">
+                                        src="{% static notification.article.tweet_type.image_path %}" alt="Tweet image">
                                     {% endif %}
                                     {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
                                     <div class="quoteWrapper">
@@ -389,14 +390,14 @@
                                         {% if notification.article.tweet_type.initial_tweet_img_path %}
                                         <img class="tweetImage"
                                             src="{% static notification.article.tweet_type.initial_tweet_img_path %}"
-                                            alt="Tweet Reply Image">
+                                            alt="Tweet reply image">
                                         {% endif %}
                                     </div>
                                     {% endif %}
                                     <div class="timeContainer">
                                         <p>{{ notification.article.pub_date }}</p>
                                     </div>
-                                    <a class="contentLink" aria-label="open content"
+                                    <a class="contentLink" aria-label="Open link to content"
                                         href="{{ notification.article.link }}" target="_blank"></a>
                                 </div>
                             </div>
@@ -413,10 +414,10 @@
                                 <div class="leftContentSide">
                                     <div class="profileImageContainer">
                                         <img src="{% static notification.article.source.favicon_path %}"
-                                            alt="Source Picture" />
+                                            alt="Picture of {{ notification.article.source.name }}" />
                                         <a class="sourceProfile"
                                             href="{{ notification.article.source.get_absolute_url }}"
-                                            aria-label="Open Profile Of {{ notification.article.source.name }}"></a>
+                                            aria-label="Open profile of {{ notification.article.source.name }}"></a>
                                     </div>
                                 </div>
                                 <div class="rightContentSide">
@@ -424,36 +425,36 @@
                                         <div class="sourceAndWebsiteContainer">
                                             <a class="sourceProfile"
                                                 href="{{ notification.article.source.get_absolute_url }}"
-                                                aria-label="Open Profile Of {{ notification.article.source.name }}">{{ notification.article.source.name }}</a>
+                                                aria-label="Open profile of {{ notification.article.source.name }}">{{ notification.article.source.name }}</a>
                                             <div class="sourceWebsiteProfileContainer">
                                                 {% if notification.article.source.website.name == "YouTube" %}
                                                 <img class="youtubeLogo"
                                                     src="{% static notification.article.source.website.logo %}"
-                                                    alt="Website Logo" />
+                                                    alt="Website logo" />
                                                 {% else %}
                                                 <img src="{% static notification.article.source.website.logo %}"
-                                                    alt="Website Logo" />
+                                                    alt="Website logo" />
                                                 {% endif %}
                                                 <a href="{{ notification.article.source.url }}" target="_blank"
-                                                    aria-label="Open External Profile Of {{ notification.article.source.name }}"></a>
+                                                    aria-label="Open external website of {{ notification.article.source.name }}"></a>
                                             </div>
                                         </div>
                                         <i class="fas fa-ellipsis-h" role="button"
-                                            aria-label="Open Article Interactions"></i>
+                                            aria-label="Open article interactions menu"></i>
                                         <div class="articleOptionsContainer">
                                             {% if request.user.is_authenticated %}
                                             <div class="addToListButton" role="button"
-                                                aria-label="open add to list menu"><i class="fas fa-list"></i>Add to
+                                                aria-label="Open add to list modal"><i class="fas fa-list"></i>Add to
                                                 list
                                             </div>
                                             {% if notification.article.article_id in highlighted_content_ids %}
                                             <div class="addToHighlightedButton" role="button"
-                                                aria-label="highlight/unhighlight content"><i
+                                                aria-label="Unhighlight content"><i
                                                     class="fas fa-times"></i><span>Unhighlight
                                                     article</span></div>
                                             {% else %}
                                             <div class="addToHighlightedButton" role="button"
-                                                aria-label="highlight/unhighlight content"><i
+                                                aria-label="Highlight content"><i
                                                     class="fas fa-highlighter"></i><span>Highlight
                                                     article</span></div>
                                             {% endif %}
@@ -477,7 +478,7 @@
                                     {% endif %}
                                     {% if notification.article.tweet_type.image_path %}
                                     <img class="tweetImage"
-                                        src="{% static notification.article.tweet_type.image_path %}" alt="Tweet Image">
+                                        src="{% static notification.article.tweet_type.image_path %}" alt="Tweet image">
                                     {% endif %}
                                     {% if notification.article.tweet_type.type == "Quote" or notification.article.tweet_type.type == "Retweet" or notification.article.tweet_type.type == "Reply" %}
                                     <div class="quoteWrapper">
@@ -488,7 +489,7 @@
                                         {% if notification.article.tweet_type.initial_tweet_img_path %}
                                         <img class="tweetImage"
                                             src="{% static notification.article.tweet_type.initial_tweet_img_path %}"
-                                            alt="Tweet Reply Image">
+                                            alt="Tweet reply image">
                                         {% endif %}
                                     </div>
                                     {% endif %}
@@ -496,7 +497,7 @@
                                         <p>{{ notification.article.pub_date }}</p>
                                     </div>
                                     <a class="contentLink" href="{{ notification.article.link }}" target="_blank"
-                                        aria-label="Open Content"></a>
+                                        aria-label="Open link to content"></a>
                                 </div>
                             </div>
                             {% endfor %}
@@ -505,8 +506,9 @@
                             {% endif %}
                             <div class="createKeywordNotificationModal">
                                 <div>Keyword:<span class="infoLink"><i role="button"
-                                            aria-label="open keyword explanation" class="fas fa-info"></i></span></div>
-                                <input minlength="3" maxlength="30" type="text" autocomplete="off" spellcheck="false">
+                                            aria-label="Open keyword explanation" class="fas fa-info"></i></span></div>
+                                <input id="keywordNotificationInput" minlength="3" maxlength="30" type="text"
+                                    autocomplete="off" spellcheck="false">
                                 <button class="saveButton finButtonBlue">Add</button>
                                 <button class="discardButton finButtonWhite">Discard</button>
                             </div>
@@ -528,37 +530,37 @@
     </header>
     <main>
         <div class="overlay">
-            <nav class="horizontalNavigation" aria-label="Smartphone Navigation">
+            <nav class="horizontalNavigation" aria-label="Smartphone navigation">
                 <div class="mainNavigationLink">
                     <span>Portfolio</span>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a aria-label="Open Portfolio" href="{% url 'stock:portfolio' %}"></a>
+                    <a aria-label="Open portfolio" href="{% url 'stock:portfolio' %}"></a>
                 </div>
                 <div class="mainNavigationLink">
                     <span>Lists</span>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a aria-label="Open Lists" href="{% url 'list:lists' %}"></a>
+                    <a aria-label="Open lists" href="{% url 'list:lists' %}"></a>
                 </div>
                 <div class="mainNavigationLink">
                     <span>Sources</span>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a aria-label="Open Sources" href="{% url 'source:source_ranking' %}"></a>
+                    <a aria-label="Open sources" href="{% url 'source:source_ranking' %}"></a>
                 </div>
                 <div class="mainNavigationLink">
                     <span>Guide</span>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a aria-label="Open Guid" href="{% url 'home:guide' %}"></a>
+                    <a aria-label="Open guide" href="{% url 'home:guide' %}"></a>
                 </div>
                 {% if request.user.is_authenticated %}
                 <div class="mainNavigationLink">
                     <span>Settings</span>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a aria-label="Open Settings" href="{% url 'accounts:settings' %}"></a>
+                    <a aria-label="Open settings" href="{% url 'accounts:settings' %}"></a>
                 </div>
                 <div class="mainNavigationLink">
                     <span>Notifications</span>
                     <i class="fa-solid fa-chevron-right"></i>
-                    <a aria-label="Open Notifications" href="{% url 'home:notifications' %}"></a>
+                    <a aria-label="Open notifications" href="{% url 'home:notifications' %}"></a>
                 </div>
                 <form method="post" action="{% url 'account_logout' %}">
                     {% csrf_token %}
@@ -577,7 +579,7 @@
 
             {% block content %}
             {% endblock %}
-            <script src="{% static 'home/min_base_script_v30.js' %}"></script>
+            <script src="{% static 'home/min_base_script_v31.js' %}"></script>
         </div>
 
     </main>
@@ -586,15 +588,15 @@
 
 
 <footer>
-    <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}" alt="Large FinBrowser Logo">
+    <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}" alt="FinBrowser logo">
     <ul>
-        <li><a aria-label="Open Contact" href="{% url 'support:contact' %}">Contact</a></li>
-        <li><a aria-label="Open Cookie Statement" href="{% url 'support:cookie-statement' %}">Cookie Statement</a></li>
-        <li><a aria-label="Open Privacy Policy" href="{% url 'support:privacy-policy' %}">Privacy Policy</a></li>
-        <li><a aria-label="Open Terms Of Service" href="{% url 'support:terms-of-service' %}">Terms Of Service</a></li>
+        <li><a aria-label="Open contact" href="{% url 'support:contact' %}">Contact</a></li>
+        <li><a aria-label="Open cookie statement" href="{% url 'support:cookie-statement' %}">Cookie Statement</a></li>
+        <li><a aria-label="Open privacy policy" href="{% url 'support:privacy-policy' %}">Privacy Policy</a></li>
+        <li><a aria-label="Open terms of service" href="{% url 'support:terms-of-service' %}">Terms Of Service</a></li>
     </ul>
     <div class="twitterFollowContainer"><i class="fa-brands fa-twitter"></i>Follow me on Twitter<a
-            href="https://twitter.com/ebirdmax99" target="_blank" aria-label="Open my twitter account"></a></div>
+            href="https://twitter.com/ebirdmax99" target="_blank" aria-label="Open my Twitter profile"></a></div>
 </footer>
 
 

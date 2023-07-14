@@ -2,12 +2,15 @@
 <link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v16.css' %}" />
 {% if request.user.is_authenticated %}
 <title>{{ list.name }} | FinBrowser</title>
-<meta name="description" content="Easily create themed lists on your favorite stock market topics">
+<meta name="description" content="FinBrowser list created by {{ request.user.username }}">
+<link rel="canonical" href="https://www.finbrowser.io/list/{{ list.list_id }}">
 {% else %}
 <title>Lists | FinBrowser</title>
-<meta name="description" content="FinBrowser list created by {{ request.user.username }}">
+<meta name="description" content="Easily create themed lists on your favorite stock market topics">
+<link rel="canonical" href="https://www.finbrowser.io/lists">
 {% endif %}
-{% endblock %} {% block content %}
+{% endblock %}
+{% block content %}
 
 {% if request.user.is_authenticated %}
 
@@ -15,12 +18,13 @@
     <div class="menuContainer">
         <div class="addSourceContainer">
             <div class="header">
-                <h2>Add Sources</h2><i class="fas fa-times closeAddSourceContainer"></i>
+                <h2>Add Sources</h2><i role="button" aria-label="Close form"
+                    class="fas fa-times closeAddSourceContainer"></i>
             </div>
             <div class="actionWrapper">
                 <div class="searchWrapper">
-                    <i class="fas fa-search"></i>
-                    <input id="textInput" type="search" autocomplete="off" spellcheck="false">
+                    <i role="search" class="fas fa-search"></i>
+                    <input id="addSources" type="search" autocomplete="off" spellcheck="false">
                 </div>
                 <div class="searchResultWrapper">
                     <div id="searchResultsContainer"></div>
@@ -34,20 +38,21 @@
         </div>
         <div class="editMenu">
             <div class="header">
-                <h2>Edit Menu</h2> <i class="fas fa-times"></i>
+                <h2>Edit Menu</h2> <i role="button" aria-label="Close form" class="fas fa-times"></i>
             </div>
             <div class="listNameContainer">
-                <label>List Name</label>
-                <input minlength="1" maxlength="30" value="{{ list.name }}" autocomplete="off" spellcheck="false">
+                <label for="listName">List Name</label>
+                <input id="listName" minlength="1" maxlength="30" value="{{ list.name }}" autocomplete="off"
+                    spellcheck="false">
             </div>
             <div class="mainListContainer">
-                <label>Main List</label>
+                <label for="mainList">Main List</label>
                 {% if list.main %}
-                <input type="checkbox" checked="True" disabled>
+                <input id="mainList" type="checkbox" checked="True" disabled>
                 {% else %}
-                <input type="checkbox">
+                <input id="mainList" type="checkbox">
                 {% endif %}
-                <span class="infoLink"><i class="fas fa-info"></i></span>
+                <span class="infoLink"><i role="button" aria-label="Open explanation" class="fas fa-info"></i></span>
             </div>
             <button class="saveEditsButton finButtonBlue">Save</button>
             <button class="deleteListButton">Delete List</button>
@@ -73,7 +78,7 @@
                     {% for llist in lists %}
                     <div id="list{{llist.list_id}}" class="listOption">
                         <span>{{ llist.name }}</span>
-                        <a href="{{ llist.get_absolute_url }}" aria-label="Open list {{ llist.name }}"></a>
+                        <a href="{{ llist.get_absolute_url }}" aria-label="Open {{ llist.name }}"></a>
                     </div>
                     {% endfor %}
                     <div class="listOption">
@@ -129,7 +134,7 @@
         </div>
     </div>
     {% endif %}
-    <div class="tabsContainer" id="content" role="navigation" aria-label="Stock Content Navigation">
+    <div class="tabsContainer" id="content" role="navigation" aria-label="Content navigation">
         <button class="activatedTab" data-for-tab="0">Analysis</button>
         <button data-for-tab="1">Commentary</button>
         <button data-for-tab="2">News</button>
@@ -157,6 +162,19 @@
     <div class="tabsContent" data-tab="1">
         <div class="contentColumnWrapper">
             {% if commentary %}
+            <div class="emptyInformationContainer twitterUpdate">
+                <h3>Twitter Update</h3>
+                <div>
+                    Hey there! Due to the recent policy changes implemented by Twitter, I regret to inform you that
+                    FinBrowser is currently unable to display any new Tweets. I know this might be disappointing, as
+                    Twitter
+                    is a valuable source of information and updates for many of us. However, I want to assure you that I
+                    am
+                    actively working on finding alternative solutions and exploring ways to reintegrate Twitter sources
+                    into
+                    this website. I appreciate your patience and understanding during this time of transition.
+                </div>
+            </div>
             <div class="contentColumnContainer">
                 {% create_content_container commentary request highlighted_content_ids "commentary" %}
             </div>
@@ -218,7 +236,7 @@
     {% endif %}
 </div>
 
-<script src="{% static 'list/min_list_details_script_v18.js' %}"></script>
+<script src="{% static 'list/min_list_details_script_v19.js' %}"></script>
 
 {% else %}
 
@@ -248,7 +266,7 @@
                 gain instant access to a wealth of knowledge. Don't miss out on this incredible opportunity — sign up
                 with
                 FinBrowser today!</p>
-            <a href="{% url 'account_login' %}" class="signUpButton finButtonBlue" aria-label="Sign Up"><i
+            <a href="{% url 'account_login' %}" class="signUpButton finButtonBlue" aria-label="Sign up"><i
                     class="fa-solid fa-right-to-bracket"></i> Get Started</a>
         </div>
     </section>

@@ -1,109 +1,91 @@
-let contentIsLoading = false;
+/**************************************************************
+    1. API Calls
+**************************************************************/
 
-// function createTwitterPart(content, rightContentSide) {
-//     if (content.tweet_type.type === 'Retweet') {
-//         const retweetWrapper = document.createElement('div');
-//         retweetWrapper.className = 'retweetWrapper';
-//         const author = document.createElement('span');
-//         author.textContent = `@${content.tweet_type.author}`;
-//         retweetWrapper.appendChild(document.createTextNode('Retweeted post by '));
-//         retweetWrapper.appendChild(author);
-//         rightContentSide.appendChild(retweetWrapper);
-//     }
+async function createRecommendedContent() {
+    try {
+        const position = document.querySelectorAll(
+            '.pageWrapper .longFormContentContainer .recommendedContentContainer .smallFormContentWrapper .articleContainer'
+        ).length;
+        const res = await fetch(
+            `../../api/articles/?feed_content=${position}`,
+            getFetchSettings('GET')
+        );
+        if (!res.ok) {
+            showMessage('Error: Network request failed unexpectedly!', 'Error');
+        } else {
+            const context = await res.json();
+            context.forEach((article) => addNewContentToContainer(article));
+            document.querySelector('.recommendedContentContainer .loader').remove();
+            isContentLoading = false;
+        }
+    } catch (e) {
+        showMessage('Error: Unexpected error has occurred!', 'Error');
+    }
+}
 
-//     if (content.tweet_type.type === 'Reply') {
-//         const replyWrapper = document.createElement('div');
-//         replyWrapper.className = 'replyWrapper';
-//         const author = document.createElement('span');
-//         author.textContent = `@${content.tweet_type.author}`;
-//         replyWrapper.appendChild(document.createTextNode('Replying to '));
-//         replyWrapper.appendChild(author);
-//         rightContentSide.appendChild(replyWrapper);
-//     }
+async function createStockPitches() {
+    try {
+        const position = document.querySelectorAll(
+            '.pageWrapper .tweetsContainer .smallFormContentWrapper .articleContainer'
+        ).length;
+        const res = await fetch(
+            `../../api/articles/?stock_pitches=${position}`,
+            getFetchSettings('GET')
+        );
+        if (!res.ok) {
+            showMessage('Error: Network request failed unexpectedly!', 'Error');
+        } else {
+            const context = await res.json();
+            context.forEach((article) => addNewContentToContainer(article, true));
+            document
+                .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper .loader')
+                .remove();
+            isContentLoading = false;
+        }
+    } catch (e) {
+        showMessage('Error: Unexpected error has occurred!', 'Error');
+    }
+}
 
-//     if (content.tweet_type.image_path) {
-//         const tweetImage = document.createElement('img');
-//         tweetImage.className = 'tweetImage';
-//         tweetImage.setAttribute(
-//             'src',
-//             'https://finbrowser.s3.us-east-2.amazonaws.com/static/' + content.tweet_type.image_path
-//         );
-//         tweetImage.setAttribute('alt', 'Tweet Image');
-//         // open image functionality
-//         tweetImage.addEventListener('click', () => {
-//             setModalStyle();
-//             const fullScreenPlaceholder = document.querySelector('.fullScreenPlaceholder');
-//             fullScreenPlaceholder.style.display = 'flex';
-//             const img = document.createElement('img');
-//             img.classList.add('fullScreenImage');
-//             img.src = tweetImage.src;
-//             fullScreenPlaceholder.appendChild(img);
-//             fullScreenPlaceholder.querySelector('.outerCloseButton').style.display = 'flex';
-//             document.onclick = function (e) {
-//                 if (e.target.nodeName !== 'IMG') {
-//                     closeFullScreenImage();
-//                 }
-//             };
-//         });
-//         rightContentSide.appendChild(tweetImage);
-//     }
+/**************************************************************
+    2. Functions
+**************************************************************/
 
-//     if (
-//         content.tweet_type.type === 'Quote' ||
-//         content.tweet_type.type === 'Retweet' ||
-//         content.tweet_type.type === 'Reply'
-//     ) {
-//         const quoteWrapper = document.createElement('div');
-//         quoteWrapper.className = 'quoteWrapper';
+function stockPitchesScroll() {
+    if (
+        Math.ceil(STOCK_PITCHES_CONTAINER.scrollTop + STOCK_PITCHES_CONTAINER.clientHeight) >=
+            STOCK_PITCHES_CONTAINER.scrollHeight &&
+        !isContentLoading
+    ) {
+        const loader = document.createElement('div');
+        loader.classList.add('loader');
+        document
+            .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
+            .appendChild(loader);
+        createStockPitches();
+        isContentLoading = true;
+    }
+}
 
-//         const quoteUpperContainer = document.createElement('div');
-//         quoteUpperContainer.className = 'quoteUpperContainer';
-
-//         const quoteAuthor = document.createElement('div');
-//         quoteAuthor.className = 'quoteAuthor';
-//         quoteAuthor.textContent = content.tweet_type.author;
-
-//         quoteUpperContainer.appendChild(quoteAuthor);
-//         quoteWrapper.appendChild(quoteUpperContainer);
-
-//         const quoteText = document.createElement('div');
-//         quoteText.className = 'quoteText';
-//         quoteText.textContent = content.tweet_type.text;
-//         quoteWrapper.appendChild(quoteText);
-
-//         if (content.tweet_type.initial_tweet_img_path) {
-//             const tweetImage = document.createElement('img');
-//             tweetImage.className = 'tweetImage';
-//             tweetImage.setAttribute(
-//                 'src',
-//                 'https://finbrowser.s3.us-east-2.amazonaws.com/static/' +
-//                     content.tweet_type.initial_tweet_img_path
-//             );
-//             tweetImage.setAttribute('alt', 'Tweet Reply Image');
-//             // open image functionality
-//             tweetImage.addEventListener('click', () => {
-//                 setModalStyle();
-//                 const fullScreenPlaceholder = document.querySelector('.fullScreenPlaceholder');
-//                 fullScreenPlaceholder.style.display = 'flex';
-//                 const img = document.createElement('img');
-//                 img.classList.add('fullScreenImage');
-//                 img.src = tweetImage.src;
-//                 fullScreenPlaceholder.appendChild(img);
-//                 fullScreenPlaceholder.querySelector('.outerCloseButton').style.display = 'flex';
-//                 document.onclick = function (e) {
-//                     if (e.target.nodeName !== 'IMG') {
-//                         closeFullScreenImage();
-//                     }
-//                 };
-//             });
-//             quoteWrapper.appendChild(tweetImage);
-//         }
-
-//         rightContentSide.appendChild(quoteWrapper);
-
-//         rightContentSide.appendChild(contentLink);
-//     }
-// }
+function contentScroll() {
+    const activeTab = document.querySelector(
+        '.pageWrapper .longFormContentContainer .activatedTab'
+    )?.innerText;
+    const loader = document.createElement('div');
+    loader.classList.add('loader');
+    if (!isContentLoading) {
+        isContentLoading = true;
+        const targetContainer =
+            activeTab === 'Stock Pitches'
+                ? document.querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
+                : document.querySelector(
+                      '.pageWrapper .longFormContentContainer .recommendedContentContainer'
+                  );
+        targetContainer.appendChild(loader);
+        activeTab === 'Stock Pitches' ? createStockPitches() : createRecommendedContent();
+    }
+}
 
 function addNewContentToContainer(article, stock_pitch = false) {
     const articleContainer = document.createElement('div');
@@ -150,13 +132,9 @@ function addNewContentToContainer(article, stock_pitch = false) {
             .classList.contains('openAuthPrompt')
     ) {
         ellipsis.classList.add('openAuthPrompt', 'ap6');
-        ellipsis.addEventListener('click', () => {
-            openAuthPrompt(ellipsis);
-        });
+        ellipsis.addEventListener('click', () => openAuthPrompt(ellipsis));
     }
-    ellipsis.addEventListener('click', (e) => {
-        openContentOptionsMenu(e, ellipsis);
-    });
+    ellipsis.addEventListener('click', (e) => openContentOptionsMenu(e, ellipsis));
     const articleOptionsContainer = document.createElement('div');
     articleOptionsContainer.classList.add('articleOptionsContainer');
     const addToListButton = document.createElement('div');
@@ -166,9 +144,7 @@ function addNewContentToContainer(article, stock_pitch = false) {
     const spanTag1 = document.createElement('span');
     spanTag1.innerText = 'Add to list';
     addToListButton.append(faList, spanTag1);
-    addToListButton.addEventListener('click', (e) => {
-        openAddToListMenu(e);
-    });
+    addToListButton.addEventListener('click', (e) => openAddToListMenu(e));
     const addToHighlightedButton = document.createElement('div');
     addToHighlightedButton.classList.add('addToHighlightedButton');
     const faHighlighter = document.createElement('i');
@@ -180,9 +156,9 @@ function addNewContentToContainer(article, stock_pitch = false) {
         spanTag2.innerText = 'Highlight article';
     }
     addToHighlightedButton.append(faHighlighter, spanTag2);
-    addToHighlightedButton.addEventListener('click', () => {
-        highlightContent(addToHighlightedButton);
-    });
+    addToHighlightedButton.addEventListener('click', () =>
+        highlightContent(addToHighlightedButton)
+    );
     articleOptionsContainer.append(addToListButton, addToHighlightedButton);
     contentInfoContainer.append(ellipsis, articleOptionsContainer);
     const contentBody = document.createElement('div');
@@ -218,180 +194,45 @@ function addNewContentToContainer(article, stock_pitch = false) {
     tooltipContainer.appendChild(paywallIcon);
     tooltipContainer.appendChild(paywallText);
     timeContainer.appendChild(tooltipContainer);
-    contentLink = document.createElement('a');
+    const contentLink = document.createElement('a');
     contentLink.classList.add('contentLink');
     contentLink.href = article.link;
     contentLink.target = '_blank';
     rightContentSide.append(contentInfoContainer, contentBody, contentLink);
     rightContentSide.appendChild(timeContainer);
     articleContainer.appendChild(rightContentSide);
-    if (stock_pitch) {
-        document
-            .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
-            .appendChild(articleContainer);
-    } else {
-        document
-            .querySelector(
-                '.pageWrapper .longFormContentContainer .recommendedContentContainer .smallFormContentWrapper'
-            )
-            .appendChild(articleContainer);
-    }
+    const targetContainer = stock_pitch
+        ? document.querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
+        : document.querySelector(
+              '.pageWrapper .longFormContentContainer .recommendedContentContainer .smallFormContentWrapper'
+          );
+    targetContainer.appendChild(articleContainer);
 }
 
-const scrollableContentContainer = document.querySelector(
-    '.pageWrapper .recommendedContentContainer .smallFormContentWrapper'
-);
-
-const scrollableTweetContainer = document.querySelector(
-    '.pageWrapper .tweetsContainer .smallFormContentWrapper'
-);
-
-async function createContent() {
-    try {
-        const position = document.querySelectorAll(
-            '.pageWrapper .longFormContentContainer .recommendedContentContainer .smallFormContentWrapper .articleContainer'
-        ).length;
-        const res = await fetch(
-            `../../api/articles/?feed_content=${position}`,
-            get_fetch_settings('GET')
-        );
-        if (!res.ok) {
-            showMessage('Error: Network request failed unexpectedly!', 'Error');
-        } else {
-            const context = await res.json();
-            context.forEach((article) => {
-                addNewContentToContainer(article);
-            });
-            document.querySelector('.recommendedContentContainer .loader').remove();
-            contentIsLoading = false;
-        }
-    } catch (e) {
-        // showMessage("Error: Unexpected error has occurred!", "Error");
-    }
-}
-
-async function createStockPitches() {
-    try {
-        const position = document.querySelectorAll(
-            '.pageWrapper .tweetsContainer .smallFormContentWrapper .articleContainer'
-        ).length;
-        const res = await fetch(
-            `../../api/articles/?stock_pitches=${position}`,
-            get_fetch_settings('GET')
-        );
-        if (!res.ok) {
-            showMessage('Error: Network request failed unexpectedly!', 'Error');
-        } else {
-            const context = await res.json();
-            context.forEach((article) => {
-                addNewContentToContainer(article, true);
-            });
-            document
-                .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper .loader')
-                .remove();
-            contentIsLoading = false;
-        }
-    } catch (e) {
-        // showMessage("Error: Unexpected error has occurred!", "Error");
-    }
-}
-
-// async function createTweets() {
-//     try {
-//         const position = document.querySelectorAll(
-//             '.pageWrapper .tweetsContainer .smallFormContentWrapper .articleContainer'
-//         ).length;
-//         const res = await fetch(
-//             `../../api/articles/?best_tweets=${position}`,
-//             get_fetch_settings('GET')
-//         );
-//         if (!res.ok) {
-//             showMessage('Error: Network request failed unexpectedly!', 'Error');
-//         } else {
-//             const context = await res.json();
-//             context.forEach((article) => {
-//                 addNewContentToContainer(article, true);
-//             });
-//             document
-//                 .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper .loader')
-//                 .remove();
-//             contentIsLoading = false;
-//         }
-//     } catch (e) {
-//         // showMessage("Error: Unexpected error has occurred!", "Error");
-//     }
-// }
-
-// function twitterScroll() {
-//     if (
-//         Math.ceil(scrollableTweetContainer.scrollTop + scrollableTweetContainer.clientHeight) >=
-//             scrollableTweetContainer.scrollHeight &&
-//         !contentIsLoading
-//     ) {
-//         const loader = document.createElement('div');
-//         loader.classList.add('loader');
-//         document
-//             .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
-//             .appendChild(loader);
-//         createTweets();
-//         contentIsLoading = true;
-//     }
-// }
-
-function stockPitchesScroll() {
-    if (
-        Math.ceil(scrollableTweetContainer.scrollTop + scrollableTweetContainer.clientHeight) >=
-            scrollableTweetContainer.scrollHeight &&
-        !contentIsLoading
-    ) {
-        const loader = document.createElement('div');
-        loader.classList.add('loader');
-        document
-            .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
-            .appendChild(loader);
-        createStockPitches();
-        contentIsLoading = true;
-    }
-}
-
-function contentScroll() {
-    const activeTab = document.querySelector(
-        '.pageWrapper .longFormContentContainer .activatedTab'
-    )?.innerText;
-    const loader = document.createElement('div');
-    loader.classList.add('loader');
-    if (!contentIsLoading) {
-        if (activeTab === 'Stock Pitches') {
-            contentIsLoading = true;
-            document
-                .querySelector('.pageWrapper .tweetsContainer .smallFormContentWrapper')
-                .appendChild(loader);
-            createStockPitches();
-        } else {
-            contentIsLoading = true;
-            document
-                .querySelector(
-                    '.pageWrapper .longFormContentContainer .recommendedContentContainer'
-                )
-                .appendChild(loader);
-            createContent();
-        }
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    const footer = document.querySelector('footer');
+function observeDOM() {
     const observer = new IntersectionObserver(
-        function (entries) {
-            if (entries[0].isIntersecting) {
-                contentScroll();
-            }
+        (entries) => {
+            entries[0].isIntersecting && contentScroll();
         },
         { threshold: 0, rootMargin: '0px 0px 30px 0px' }
     );
-    observer.observe(footer);
-});
+    observer.observe(document.querySelector('footer'));
+}
 
-scrollableTweetContainer.addEventListener('scroll', function () {
-    stockPitchesScroll();
-});
+/**************************************************************
+    3. Other
+**************************************************************/
+
+let isContentLoading = false;
+
+const STOCK_PITCHES_CONTAINER = document.querySelector(
+    '.pageWrapper .tweetsContainer .smallFormContentWrapper'
+);
+
+/**************************************************************
+    4. EventListener
+**************************************************************/
+
+document.addEventListener('DOMContentLoaded', observeDOM);
+
+STOCK_PITCHES_CONTAINER.addEventListener('scroll', stockPitchesScroll);

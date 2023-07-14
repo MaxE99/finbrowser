@@ -6,10 +6,12 @@
 {% if request.user.is_authenticated %}
 <title>{{ selected_portfolio.name }} | FinBrowser</title>
 <meta name="description" content="FinBrowser portfolio created by {{ request.user.username }}">
+<link rel="canonical" href="https://www.finbrowser.io/portfolio/{{ stock.stock_id }}">
 {% else %}
 <title>Portfolio | FinBrowser</title>
 <meta name="description"
     content="Stay informed on the latest analysis, commentary, and breaking news for the stocks in your portfolio with FinBrowser Portfolio.">
+<link rel="canonical" href="https://www.finbrowser.io/portfolio/">
 {% endif %}
 {% endblock %}
 {% block content %}
@@ -20,12 +22,13 @@
     <div class="menuContainer">
         <div class="addStocksContainer">
             <div class="header addStocksHeader">
-                <h2>Add Stocks</h2><i class="fas fa-times closeAddStockContainer"></i>
+                <h2>Add Stocks</h2><i role="button" aria-label="Close form"
+                    class="fas fa-times closeAddStockContainer"></i>
             </div>
             <div class="actionWrapper">
                 <div class="searchWrapper">
-                    <i class="fas fa-search"></i>
-                    <input id="textInput" type="search" autocomplete="off" spellcheck="false">
+                    <i role="search" class="fas fa-search"></i>
+                    <input id="addStocks" type="search" autocomplete="off" spellcheck="false">
                 </div>
                 <div class="searchResultWrapper">
                     <div id="searchResultsContainer"></div>
@@ -40,18 +43,19 @@
         <div class="editMenu">
             <div class="header editHeader">
                 <h2>Edit Menu</h2>
-                <i class="fas fa-times"></i>
+                <i role="button" aria-label="Close form" class="fas fa-times"></i>
             </div>
             <div class="portfolioNameContainer">
-                <label>Portfolio Name</label>
-                <input autocomplete="off" spellcheck="false" minlength="1" maxlength="30"
+                <label for="portfolioName">Portfolio Name</label>
+                <input id="portfolioName" autocomplete="off" spellcheck="false" minlength="1" maxlength="30"
                     value="{{ selected_portfolio.name }}">
             </div>
             <div class="blacklistSourceContainer">
-                <div class="header">Blacklist Sources<span class="infoLink"><i class="fas fa-info"></i></span></div>
+                <div class="header">Blacklist Sources<span class="infoLink"><i role="button"
+                            aria-label="Open explanation" class="fas fa-info"></i></span></div>
                 <div class="actionWrapper">
                     <div class="searchWrapper">
-                        <i class="fas fa-search"></i>
+                        <i role="search" class="fas fa-search"></i>
                         <input id="textInput" type="search" autocomplete="off" spellcheck="false">
                     </div>
                     <div class="searchResultWrapper">
@@ -59,9 +63,9 @@
                         <div class="selectionContainer">
                             {% for source in selected_portfolio.blacklisted_sources.all %}
                             <div id="blsid#{{source.source_id}}" class="blacklistedSourceContainer">
-                                <img src="{% static source.favicon_path %}" alt="Source Picture" />
+                                <img src="{% static source.favicon_path %}" alt="Picture of {{ source.name }}" />
                                 <span>{{ source.name }}</span>
-                                <i class="fas fa-times"></i>
+                                <i role="button" aria-label="Close form" class="fas fa-times"></i>
                             </div>
                             {% endfor %}
                         </div>
@@ -69,27 +73,28 @@
                 </div>
             </div>
             <div class="mainPortfolioContainer">
-                <label>Main Portfolio</label>
+                <label for="mainPortfolio">Main Portfolio</label>
                 {% if selected_portfolio.main %}
-                <input type="checkbox" checked="True" disabled>
+                <input id="mainPortfolio" type="checkbox" checked="True" disabled>
                 {% else %}
-                <input type="checkbox">
+                <input id="mainPortfolio" type="checkbox">
                 {% endif %}
-                <span class="infoLink"><i class="fas fa-info"></i></span>
+                <span class="infoLink"><i role="button" aria-label="Open explanation" class="fas fa-info"></i></span>
             </div>
             <button class="saveEditsButton finButtonBlue">Save</button>
             <button class="deletePortfolioButton">Delete Portfolio</button>
         </div>
         <div class="keywordModal">
-            <div class="keywordHeader">Keywords for <span></span><i class="fas fa-times"></i>
+            <div class="keywordHeader">Keywords for <span></span><i role="button" aria-label="Close form"
+                    class="fas fa-times"></i>
             </div>
             <div class="createKeywordsContainer">
-                <label>Create New Keyword</label>
+                <label for="createNewKeyword">Create New Keyword</label>
                 <div class="inputContainer">
-                    <input minlength="3" maxlength="30" placeholder="Enter keyword..." autocomplete="off"
-                        spellcheck="false">
+                    <input id="createNewKeyword" minlength="3" maxlength="30" placeholder="Enter keyword..."
+                        autocomplete="off" spellcheck="false">
                 </div>
-                <span class="infoLink"><i class="fas fa-info"></i></span>
+                <span class="infoLink"><i role="button" aria-label="Open explanation" class="fas fa-info"></i></span>
             </div>
             <div class="keywordsContainer"></div>
             <button class="addButton finButtonBlue">Add</button>
@@ -114,7 +119,7 @@
                     {% for portfolio in user_portfolios %}
                     <div id="wlist{{portfolio.portfolio_id}}" class="portfolioOption">
                         <span>{{ portfolio.name }}</span>
-                        <a href="{{ portfolio.get_absolute_url }}" aria-label="Open portfolio {{ portfolio.name }}"></a>
+                        <a href="{{ portfolio.get_absolute_url }}" aria-label="Open {{ portfolio.name }}"></a>
                     </div>
                     {% endfor %}
                 </div>
@@ -132,12 +137,12 @@
         <table>
             <thead>
                 <tr>
-                    <th>Ticker</th>
-                    <th>Company</th>
-                    <th>Last Content</th>
-                    <th>Coverage</th>
-                    <th>Keywords</th>
-                    <th>Action</th>
+                    <th scope="col">Ticker</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Last Content</th>
+                    <th scope="col">Coverage</th>
+                    <th scope="col">Keywords</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -146,17 +151,17 @@
                     <td>
                         <span class="ticker">{{ stock.stock.ticker }}</span>
                         <a href="{{ stock.absolute_path }}"
-                            aria-label="Open Profile Of {{ stock.stock.full_company_name }}"></a>
+                            aria-label="Open profile of {{ stock.stock.full_company_name }}"></a>
                     </td>
                     <td class="companyNameContainer">
                         <span>{{ stock.stock.full_company_name }}</span>
                         <a href="{{ stock.absolute_path }}"
-                            aria-label="Open Profile Of {{ stock.stock.full_company_name }}"></a>
+                            aria-label="Open profile of {{ stock.stock.full_company_name }}"></a>
                     </td>
                     <td>
                         <span>{{ stock.last_article|get_time_since_last_content_published }}</span>
                         <a href="{{ stock.absolute_path }}"
-                            aria-label="Open Profile Of {{ stock.stock.full_company_name }}"></a>
+                            aria-label="Open profile of {{ stock.stock.full_company_name }}"></a>
                     </td>
                     <td>
                         {% if stock.articles_last_7d < 3 %}
@@ -167,16 +172,16 @@
                         <span class="high">High</span>
                         {% endif %}
                         <a href="{{ stock.absolute_path }}"
-                            aria-label="Open Profile Of {{ stock.stock.full_company_name }}"></a>
+                            aria-label="Open profile of {{ stock.stock.full_company_name }}"></a>
                     </td>
                     <td>
                         <span class="keywordButton">{{ stock.keywords|length }}</span>
                         <a href="{{ stock.absolute_path }}"
-                            aria-label="Open Profile Of {{ stock.stock.full_company_name }}"></a>
+                            aria-label="Open profile of {{ stock.stock.full_company_name }}"></a>
                     </td>
                     <td class="actionContainer">
                         <a href="{{ stock.absolute_path }}" class="openStockButton finButtonWhite">Open</a>
-                        <i class="fa-regular fa-trash-can"></i>
+                        <i role="button" aria-label="Remove stock from portfolio" class="fa-regular fa-trash-can"></i>
                     </td>
 
                 </tr>
@@ -184,7 +189,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tabsContainer" id="content" role="navigation" aria-label="Stock Content Navigation">
+    <div class="tabsContainer" id="content" role="navigation" aria-label="Content navigation">
         <button class="activatedTab" data-for-tab="0">Analysis</button>
         <button data-for-tab="1">Commentary</button>
         <button data-for-tab="2">News</button>
@@ -214,6 +219,19 @@
     <div class="tabsContent" data-tab="1">
         <div class="contentColumnWrapper">
             {% if commentary %}
+            <div class="emptyInformationContainer twitterUpdate">
+                <h3>Twitter Update</h3>
+                <div>
+                    Hey there! Due to the recent policy changes implemented by Twitter, I regret to inform you that
+                    FinBrowser is currently unable to display any new Tweets. I know this might be disappointing, as
+                    Twitter
+                    is a valuable source of information and updates for many of us. However, I want to assure you that I
+                    am
+                    actively working on finding alternative solutions and exploring ways to reintegrate Twitter sources
+                    into
+                    this website. I appreciate your patience and understanding during this time of transition.
+                </div>
+            </div>
             <div class="contentColumnContainer">
                 {% create_content_container commentary request highlighted_content_ids "commentary" %}
             </div>
@@ -264,14 +282,14 @@
     </div>
     {% endif %}
 </div>
-<script src="{% static 'stock/min_portfolio_script_v12.js' %}"></script>
+<script src="{% static 'stock/min_portfolio_script_v13.js' %}"></script>
 
 {% else %}
 
 <main class="main">
     <section class="landingSection">
         <div class="landingSectionContainer">
-            <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}">
+            <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}" alt="FinBrowser logo">
             <p>
                 Are you tired of feeling like you're missing out on crucial information about the stocks in your
                 portfolio? Have you ever experienced sudden shifts in the businesses of your invested companies, leaving
@@ -294,7 +312,7 @@
                 password, and you'll gain instant access to a wealth of knowledge. Don't miss out on this incredible
                 opportunity — sign up with FinBrowser today!
             </p>
-            <a href="{% url 'account_login' %}" class="signUpButton finButtonBlue" aria-label="Sign Up"><i
+            <a href="{% url 'account_login' %}" class="signUpButton finButtonBlue" aria-label="Sign up"><i
                     class="fa-solid fa-right-to-bracket"></i> Get Started</a>
         </div>
     </section>

@@ -3,6 +3,15 @@
 <title>Source Ranking | FinBrowser</title>
 <meta name="description"
     content="Discover the top-rated stock market resources available on the open web with our rankings">
+<link rel="canonical" href="https://www.finbrowser.io/sources">
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Source Ranking",
+        "description": "Discover the top-rated stock market resources available on the open web with our rankings."
+    }
+</script>
 {% endblock %}
 {% block content %}
 
@@ -11,7 +20,7 @@
         <div class="ratingsContainer">
             <div class="header">
                 <h3></h3>
-                <i class="fas fa-times"></i>
+                <i role="button" aria-label="Close form" class="fas fa-times"></i>
             </div>
             <span>How would you rate this source in terms of content quality?</span>
             <div class="ratingsButtonContainer">
@@ -40,48 +49,48 @@
         <div class="selectContainer">
             <label for="website">Website</label>
             <div class="dropdown websiteDropdown">Select Websites
-                <i class="fa-solid fa-chevron-down"></i>
+                <i role="button" aria-label="Open website selection" class="fa-solid fa-chevron-down"></i>
                 <ul class="websiteList">
                     <li value="Forbes">
                         <input type="checkbox" {% check_param_selected search_parameters "website" "Forbes" %}
                             name="website" value="Forbes"></input>
-                        <img src="{% static 'home/media/forbes_logo.png' %}" alt="Forbes Logo">
+                        <img src="{% static 'home/media/forbes_logo.png' %}" alt="Forbes logo">
                         Forbes
                     </li>
                     <li value="SeekingAlpha">
                         <input type="checkbox" {% check_param_selected search_parameters "website" "SeekingAlpha" %}
                             name="website" value="SeekingAlpha"></input>
-                        <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">
+                        <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha logo">
                         SeekingAlpha
                     </li>
                     <li value="Spotify">
                         <input type="checkbox" {% check_param_selected search_parameters "website" "Spotify" %}
                             name="website" value="Spotify"></input>
-                        <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">
+                        <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify logo">
                         Spotify
                     </li>
                     <li value="Substack">
                         <input type="checkbox" {% check_param_selected search_parameters "website" "Substack" %}
                             name="website" value="Substack"></input>
-                        <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">
+                        <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack logo">
                         Substack
                     </li>
                     <li value="Twitter">
                         <input type="checkbox" {% check_param_selected search_parameters "website" "Twitter" %}
                             name="website" value="Twitter"></input>
-                        <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">
+                        <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter logo">
                         Twitter
                     </li>
                     <li value="YouTube">
                         <input type="checkbox" {% check_param_selected search_parameters "website" "YouTube" %}
                             name="website" value="YouTube"></input>
-                        <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">
+                        <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube logo">
                         YouTube
                     </li>
                     <li value="Other">
                         <input type="checkbox" {% check_param_selected search_parameters "website" "Other" %}
                             name="website" value="Other"></input>
-                        <img src="{% static 'home/media/default_favicon.png' %}" alt="Website Logo">
+                        <img src="{% static 'home/media/default_favicon.png' %}" alt="Website logo">
                         Other
                     </li>
                 </ul>
@@ -90,7 +99,7 @@
         <div class="selectContainer">
             <label for="sector">Sector</label>
             <div class="dropdown sectorDropdown">Select Sectors
-                <i class="fa-solid fa-chevron-down"></i>
+                <i role="button" aria-label="Open sector selection" class="fa-solid fa-chevron-down"></i>
                 <ul class="sectorList">
                     {% for sector in sectors %}
                     <li value="{{ sector.name }}">
@@ -104,7 +113,7 @@
         <div class="selectContainer">
             <label for="tag">Tag</label>
             <div class="dropdown tagDropdown">Select Tags
-                <i class="fa-solid fa-chevron-down"></i>
+                <i role="button" aria-label="Open tag selection" class="fa-solid fa-chevron-down"></i>
                 <ul class="tagList">
                     {% for tag in tags %}
                     <li value="{{ tag.name }}">
@@ -175,27 +184,28 @@
         {% for source in sources %}
         <div class="sourceRankingContainer" id="src?si#{{ source.source_id }}">
             <div class="leftSide {% if source.top_source %}topSource{% endif %}">
-                <img class="profilePicture" src="{% static source.favicon_path %}" alt="Source Picture" />
+                <img class="profilePicture" src="{% static source.favicon_path %}" alt="Picture of {{ source.name }}" />
                 <div class="rating">{{ source.average_rating }}</div>
-                <a href="{{ source.get_absolute_url }}" aria-label="Open Profile Of {{ source.name }}"></a>
+                <a href="{{ source.get_absolute_url }}" aria-label="Open profile of {{ source.name }}"></a>
             </div>
             <div class="rightSide">
                 <div class="firstRow">
                     <a class="name" href="{{ source.get_absolute_url }}"
-                        aria-label="Open Profile Of {{ source.name }}"><span
+                        aria-label="Open profile of {{ source.name }}"><span
                             class="rank">{{ forloop.counter|calc_ranking:sources.number }}.</span><span>{{ source.name }}</span></a>
                 </div>
                 <div class="secondRow">
                     <div class="leftSide leftSideSecondRow {% if source.top_source %}topSource{% endif %}">
-                        <img class="profilePicture" src="{% static source.favicon_path %}" alt="Source Picture" />
+                        <img class="profilePicture" src="{% static source.favicon_path %}"
+                            alt="Picture of {{ source.name }}" />
                         <div class="rating">{{ source.average_rating }}</div>
-                        <a href="{{ source.get_absolute_url }}" aria-label="Open Profile Of {{ source.name }}"></a>
+                        <a href="{{ source.get_absolute_url }}" aria-label="Open profile of {{ source.name }}"></a>
                     </div>
                     <div class="infoWrapper">
                         <div class="infoContainer sectorInfoContainer">
                             <span>Sector</span>
                             <a href="{{ source.sector.get_absolute_url }}"
-                                aria-label="Open Sector - {{ source.sector.name }}">{{ source.sector.name }}</a>
+                                aria-label="Open {{ source.sector.name }} sector overview">{{ source.sector.name }}</a>
                         </div>
                         <div class="infoContainer">
                             <span>Content Type</span>
@@ -204,7 +214,7 @@
                         <div class="infoContainer websiteInfoContainer">
                             <span>Website</span>
                             <a href="{{ source.url }}" target="_blank"
-                                aria-label="Open External Profile Of {{ source.name }}">{{ source.website }} <i
+                                aria-label="Open external website of {{ source.name }}">{{ source.website }} <i
                                     class="fa-solid fa-arrow-up-right-from-square"></i></a>
                         </div>
                         <div class="infoContainer">
@@ -260,28 +270,28 @@
                 {{ sources.paginator.count }} Results</div>
             <span class="step-links">
                 {% if sources.number == 1 %}
-                <button aria-label="no previous page" class="backButton notClickable finButtonWhite"><i
+                <button aria-label="No previous page exists" class="backButton notClickable finButtonWhite"><i
                         class="fas fa-chevron-left"></i></button>
                 {% else %}
-                <a role="button" aria-label="go to previous page" class="backButton finButtonWhite"
+                <a role="button" aria-label="Go to previous page" class="backButton finButtonWhite"
                     href="?page={{ sources.number|add:'-1' }}"><i class="fas fa-chevron-left"></i></a>
                 {% endif %}
                 <div class="paginationButtonsContainer">
                     {% for i in sources.paginator.page_range %}
                     {% if sources.number == i %}
-                    <button aria-label="current page"
+                    <button aria-label="Current page"
                         class="currentPagination finButtonBlue">{{ sources.number }}</button>
                     {% elif i > sources.number|add:'-3' and i < sources.number|add:'3' %}
-                    <a role="button" aria-label="go to page {{ i }}" class="finButtonWhite"
+                    <a role="button" aria-label="Go to page nr.{{ i }}" class="finButtonWhite"
                         href="?{% query_transform page=i %}">{{ i }}</a>
                     {% endif %}
                     {% endfor %}
                 </div>
                 {% if sources.number == sources.paginator.num_pages %}
-                <button aria-label="no next page" class="nextButton notClickable finButtonWhite"><i
+                <button aria-label="No next page exists" class="nextButton notClickable finButtonWhite"><i
                         class="fas fa-chevron-right"></i></button>
                 {% else %}
-                <a role="button" aria-label="go to next page" class="nextButton finButtonWhite"
+                <a role="button" aria-label="Go to next page" class="nextButton finButtonWhite"
                     href="?page={{ sources.number|add:'1' }}"><i class="fas fa-chevron-right"></i></a>
                 {% endif %}
             </span>
@@ -301,48 +311,48 @@
             <div class="selectContainer">
                 <label for="website">Website</label>
                 <div class="dropdown websiteDropdown">Select Websites
-                    <i class="fa-solid fa-chevron-down"></i>
+                    <i role="button" aria-label="Open website selection" class="fa-solid fa-chevron-down"></i>
                     <ul class="websiteList">
                         <li value="Forbes">
                             <input type="checkbox" {% check_param_selected search_parameters "website" "Forbes" %}
                                 name="website" value="Forbes"></input>
-                            <img src="{% static 'home/media/forbes_logo.png' %}" alt="Forbes Logo">
+                            <img src="{% static 'home/media/forbes_logo.png' %}" alt="Forbes logo">
                             Forbes
                         </li>
                         <li value="SeekingAlpha">
                             <input type="checkbox" {% check_param_selected search_parameters "website" "SeekingAlpha" %}
                                 name="website" value="SeekingAlpha"></input>
-                            <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">
+                            <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha logo">
                             SeekingAlpha
                         </li>
                         <li value="Spotify">
                             <input type="checkbox" {% check_param_selected search_parameters "website" "Spotify" %}
                                 name="website" value="Spotify"></input>
-                            <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">
+                            <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify logo">
                             Spotify
                         </li>
                         <li value="Substack">
                             <input type="checkbox" {% check_param_selected search_parameters "website" "Substack" %}
                                 name="website" value="Substack"></input>
-                            <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">
+                            <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack logo">
                             Substack
                         </li>
                         <li value="Twitter">
                             <input type="checkbox" {% check_param_selected search_parameters "website" "Twitter" %}
                                 name="website" value="Twitter"></input>
-                            <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">
+                            <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter logo">
                             Twitter
                         </li>
                         <li value="YouTube">
                             <input type="checkbox" {% check_param_selected search_parameters "website" "YouTube" %}
                                 name="website" value="YouTube"></input>
-                            <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">
+                            <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube logo">
                             YouTube
                         </li>
                         <li value="Other">
                             <input type="checkbox" {% check_param_selected search_parameters "website" "Other" %}
                                 name="website" value="Other"></input>
-                            <img src="{% static 'home/media/default_favicon.png' %}" alt="Website Logo">
+                            <img src="{% static 'home/media/default_favicon.png' %}" alt="Website logo">
                             Other
                         </li>
                     </ul>
@@ -351,7 +361,7 @@
             <div class="selectContainer">
                 <label for="sector">Sector</label>
                 <div class="dropdown sectorDropdown">Select Sectors
-                    <i class="fa-solid fa-chevron-down"></i>
+                    <i role="button" aria-label="Open sector selection" class="fa-solid fa-chevron-down"></i>
                     <ul class="sectorList">
                         {% for sector in sectors %}
                         <li value="{{ sector.name }}">
@@ -365,7 +375,7 @@
             <div class="selectContainer">
                 <label for="tag">Tag</label>
                 <div class="dropdown tagDropdown">Select Tags
-                    <i class="fa-solid fa-chevron-down"></i>
+                    <i role="button" aria-label="Open tag selection" class="fa-solid fa-chevron-down"></i>
                     <ul class="tagList">
                         {% for tag in tags %}
                         <li value="{{ tag.name }}">
@@ -423,5 +433,5 @@
     </div>
 </div>
 
-<script src="{% static 'source/min_source_ranking_script_v7.js' %}"></script>
+<script src="{% static 'source/min_source_ranking_script_v8.js' %}"></script>
 {% endblock content %}

@@ -6,40 +6,43 @@
     <div class="articleContainer" id="cc#{{ content.article_id }}">
         <div class="leftContentSide">
             <div class="profileImageContainer">
-                <img src="{% static content.source.favicon_path %}" alt="Source Picture" />
+                <img src="{% static content.source.favicon_path %}" alt="Picture of {{ content.source.name }}" />
                 <a class="sourceProfile" href="{{ content.source.get_absolute_url }}"
-                    aria-label="Open Profile Of {{ content.source.name }}"></a>
+                    aria-label="Open profile of {{ content.source.name }}"></a>
             </div>
         </div>
         <div class="rightContentSide">
             <div class="contentInfoContainer">
                 <div class="sourceAndWebsiteContainer">
                     <a class="sourceProfile" href="{{ content.source.get_absolute_url }}"
-                        aria-label="Open Profile Of {{ content.source.name }}">{{ content.source.name }}</a>
+                        aria-label="Open profile of {{ content.source.name }}">{{ content.source.name }}</a>
                     <div class="sourceWebsiteProfileContainer">
                         {% if content.source.website.name == "YouTube" %}
-                        <img class="youtubeLogo" src="{% static content.source.website.logo %}" alt="Website Logo" />
+                        <img class="youtubeLogo" src="{% static content.source.website.logo %}" alt="Website logo" />
                         {% else %}
-                        <img src="{% static content.source.website.logo %}" alt="Website Logo" />
+                        <img src="{% static content.source.website.logo %}" alt="Website logo" />
                         {% endif %}
                         <a href="{{ content.source.url }}"
-                            aria-label="Open External Profile Of {{ content.source.name }}" target="_blank"></a>
+                            aria-label="Open external website of {{ content.source.name }}" target="_blank"></a>
                     </div>
                 </div>
                 {% if request.user.is_authenticated %}
-                <i class="fas fa-ellipsis-h" role="button" aria-label="Open Article Interactions"></i>
+                <i class="fas fa-ellipsis-h" role="button" aria-label="Open article interactions menu"></i>
                 {% else %}
                 <i class="fas fa-ellipsis-h openAuthPrompt ap6" role="button"
-                    aria-label="Open Article Interactions"></i>
+                    aria-label="Open article interactions menu"></i>
                 {% endif %}
                 <div class="articleOptionsContainer">
                     {% if request.user.is_authenticated %}
-                    <div class="addToListButton" role="button"><i class="fas fa-list"></i>Add to List</div>
+                    <div class="addToListButton" role="button" aria-label="Open add to list modal"><i
+                            class="fas fa-list"></i>Add to List</div>
                     {% if content.article_id in highlighted_content_ids %}
-                    <div class="addToHighlightedButton" role="button"><i class="fas fa-times"></i><span>Unhighlight
+                    <div class="addToHighlightedButton" role="button" aria-label="Unhighlight article"><i
+                            class="fas fa-times"></i><span>Unhighlight
                             article</span></div>
                     {% else %}
-                    <div class="addToHighlightedButton" role="button"><i class="fas fa-highlighter"></i><span>Highlight
+                    <div class="addToHighlightedButton" role="button" aria-label="Highlight article"><i
+                            class="fas fa-highlighter"></i><span>Highlight
                             article</span></div>
                     {% endif %}
                     {% endif %}
@@ -57,7 +60,7 @@
             </div>
             {% endif %}
             {% if content.tweet_type.image_path %}
-            <img class="tweetImage" src="{% static content.tweet_type.image_path %}" alt="Tweet Image">
+            <img class="tweetImage" src="{% static content.tweet_type.image_path %}" alt="Tweet image">
             {% endif %}
             {% if content.tweet_type.type == "Quote" or content.tweet_type.type == "Retweet" or content.tweet_type.type == "Reply" %}
             <div class="quoteWrapper">
@@ -67,7 +70,7 @@
                 <div class="quoteText">{{ content.tweet_type.text }}</div>
                 {% if content.tweet_type.initial_tweet_img_path %}
                 <img class="tweetImage" src="{% static content.tweet_type.initial_tweet_img_path %}"
-                    alt="Tweet Reply Image">
+                    alt="Tweet reply image">
                 {% endif %}
             </div>
             {% endif %}
@@ -90,7 +93,7 @@
                 </div>
                 {% endif %}
             </div>
-            <a class="contentLink" href="{{ content.link }}" target="_blank" aria-label="Open Content"></a>
+            <a class="contentLink" href="{{ content.link }}" target="_blank" aria-label="Open link to content"></a>
         </div>
     </div>
     {% endfor %}
@@ -102,27 +105,27 @@
         {{ qs.paginator.count }} Results</div>
     <span class="step-links">
         {% if qs.number == 1 %}
-        <button aria-label="no previous page" class="backButton notClickable finButtonWhite"><i
+        <button aria-label="No previous page exists" class="backButton notClickable finButtonWhite"><i
                 class="fas fa-chevron-left"></i></button>
         {% else %}
-        <a role="button" aria-label="go to previous page" class="backButton finButtonWhite"
+        <a role="button" aria-label="Go to previous page" class="backButton finButtonWhite"
             href="?{{qs_name}}={{ qs.number|add:'-1' }}#content"><i class="fas fa-chevron-left"></i></a>
         {% endif %}
         <div class="paginationButtonsContainer">
             {% for i in qs.paginator.page_range %}
             {% if qs.number == i %}
-            <button aria-label="current page" class="currentPagination finButtonBlue">{{ qs.number }}</button>
+            <button aria-label="Current page" class="currentPagination finButtonBlue">{{ qs.number }}</button>
             {% elif i > qs.number|add:'-3' and i < qs.number|add:'3' %}
-            <a role="button" aria-label="go to page {{ i }}" class="finButtonWhite"
+            <a role="button" aria-label="Go to page nr.{{ i }}" class="finButtonWhite"
                 href="?{{qs_name}}={{ i }}#content">{{ i }}</a>
             {% endif %}
             {% endfor %}
         </div>
         {% if qs.number == qs.paginator.num_pages %}
-        <button aria-label="no next page" class="nextButton notClickable finButtonWhite"><i
+        <button aria-label="No next page exists" class="nextButton notClickable finButtonWhite"><i
                 class="fas fa-chevron-right"></i></button>
         {% else %}
-        <a role="button" aria-label="go to next page" class="nextButton finButtonWhite"
+        <a role="button" aria-label="Go to next page" class="nextButton finButtonWhite"
             href="?{{qs_name}}={{ qs.number|add:'1' }}#content"><i class="fas fa-chevron-right"></i></a>
         {% endif %}
     </span>

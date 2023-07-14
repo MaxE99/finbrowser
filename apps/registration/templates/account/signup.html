@@ -14,13 +14,14 @@
     <title>Register | FinBrowser</title>
     <meta name="description"
         content="Join FinBrowser and get an overview of great stock market content from across the open web.">
+    <link rel="canonical" href="https://www.finbrowser.io/registration/signup/">
 </head>
 
 <body>
     <main>
         <div class="signupForm">
             <div id="form-wrapper">
-                <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}" alt="Finbrowser logo large">
+                <img class="logoLarge" src="{% static 'home/media/finbrowser-logo.png' %}" alt="Finbrowser logo">
                 <div class="loginAccount">Already have an account? <a href="{{ login_url }}">Go to login</a></div>
                 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
                     {% csrf_token %}

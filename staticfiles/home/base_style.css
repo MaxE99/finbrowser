@@ -1055,9 +1055,11 @@ footer .twitterFollowContainer i {
 .sliderWrapper .sliderContentContainer .slider .contentWrapper .nameContainer {
     position: relative;
     font-size: 2.1rem;
-    height: 4.7rem;
+    height: 3rem;
     margin: 0 1rem;
     line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .sliderWrapper .sliderContentContainer .slider .contentWrapper .nameContainer span {
@@ -1096,6 +1098,7 @@ footer .twitterFollowContainer i {
 .contentColumnWrapper {
     display: flex;
     justify-content: center;
+    flex-direction: column;
 }
 
 .contentColumnWrapper .contentColumnContainer {
@@ -1385,15 +1388,15 @@ footer .twitterFollowContainer i {
     padding: 0 1rem 1rem;
 }
 
-.formContainer .formHeaderContainer h2,
-.addToListForm .formHeaderContainer h2 {
+.formContainer .formHeaderContainer h3,
+.addToListForm .formHeaderContainer h3 {
     font-size: 2rem;
     max-width: 90%;
     text-align: justify;
 }
 
-.formContainer .formHeaderContainer h2 span,
-.addToListForm .formHeaderContainer h2 span {
+.formContainer .formHeaderContainer h3 span,
+.addToListForm .formHeaderContainer h3 span {
     color: var(--primary-fontColor);
 }
 
@@ -1772,6 +1775,12 @@ footer .twitterFollowContainer i {
     margin-right: auto;
     user-select: none;
     border: 0.2rem solid var(--border-fontColor);
+}
+
+.twitterUpdate {
+    max-width: 100%;
+    margin-bottom: 2rem;
+    border: 0.3rem solid red;
 }
 
 .emptyInformationContainer h3 {

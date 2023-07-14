@@ -5,6 +5,15 @@
 <link rel="stylesheet" type="text/css" href="{% static 'home/min_guide_style_v7.css' %}">
 <title>Guide | FinBrowser</title>
 <meta name="description" content="Uncover valuable sources for financial analysis with FinBrowser's guide.">
+<link rel="canonical" href="https://www.finbrowser.io/guide/">
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Guide",
+        "description": "Uncover valuable sources for financial analysis with FinBrowser's guide."
+    }
+</script>
 {% endblock %}
 {% block content %}
 
@@ -23,7 +32,8 @@
     <div class="sliderHeader">
         <h2>Long-Form</h2>
         <div>
-            <a href="/sources?website=SeekingAlpha&website=Substack&website=Other">VIEW ALL</a>
+            <a href="/sources?website=SeekingAlpha&website=Substack&website=Other"
+                aria-label="Show more long-form content sources">VIEW ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -35,7 +45,8 @@
     <div class="sliderHeader">
         <h2>Podcasts</h2>
         <div>
-            <a href="/sources?website=Spotify&website=YouTube">VIEW ALL</a>
+            <a href="/sources?website=Spotify&website=YouTube" aria-label="Show more podcasts">VIEW
+                ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -47,7 +58,7 @@
     <div class="sliderHeader">
         <h2>Twitter</h2>
         <div>
-            <a href="/sources?website=Twitter">VIEW ALL</a>
+            <a href="/sources?website=Twitter" aria-label="Show more Twitter sources">VIEW ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -59,7 +70,7 @@
     <div class="sliderHeader">
         <h2>Industry News Provider</h2>
         <div>
-            <a href="/sources?website=Other&content=News">VIEW ALL</a>
+            <a href="/sources?website=Other&content=News" aria-label="Show more industry news providers">VIEW ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -76,7 +87,7 @@
     <div class="sliderHeader">
         <h2>Industry Insider</h2>
         <div>
-            <a href="/sources?tag=Industry+Insider">VIEW ALL</a>
+            <a href="/sources?tag=Industry+Insider" aria-label="Show more industry insider">VIEW ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -84,7 +95,8 @@
     <div class="sliderHeader">
         <h2>Investment Funds</h2>
         <div>
-            <a href="/sources?tag=Investment+Fund&tag=Venture+Capital+Fund">VIEW ALL</a>
+            <a href="/sources?tag=Investment+Fund&tag=Venture+Capital+Fund" aria-label="Show more investment funds">VIEW
+                ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -92,8 +104,8 @@
     <div class="sliderHeader">
         <h2>Financial Professionals</h2>
         <div>
-            <a
-                href="/sources?tag=Investment+Banker&tag=Financial+Analyst&tag=Former+Finance+Career&tag=Chief+Investment+Officer&tag=Economist&tag=Senior+Finance+Role&tag=Investment+Fund+Partner">VIEW
+            <a href="/sources?tag=Investment+Banker&tag=Financial+Analyst&tag=Former+Finance+Career&tag=Chief+Investment+Officer&tag=Economist&tag=Senior+Finance+Role&tag=Investment+Fund+Partner"
+                aria-label="Show more financial professionals">VIEW
                 ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
@@ -105,24 +117,28 @@
 
     <div class="desc">When it comes to tech, FinBrowser offers a treasure trove of exceptional content creators. <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/not-boring-by-packy-mccormick.webp"
-            alt="Source Picture"> <a href="/source/not-boring-by-packy-mccormick">Not
+            alt="Picture of Not Boring by Packy McCormick"> <a href="/source/not-boring-by-packy-mccormick"
+            aria-label="Open profile of Not Boring by Packy McCormick">Not
             Boring</a> stands out with his engaging and in-depth deep dives, where he explores various aspects of
         emerging technologies. <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/software-stack-investing.webp"
-            alt="Source Picture"><a href="/source/software-stack-investing">SoftwareStackInvesting</a>, on the other
+            alt="Picture of Software Stack Investing"><a href="/source/software-stack-investing"
+            aria-label="Open profile of Software Stack Investing">SoftwareStackInvesting</a>, on the other
         hand,
         offers
         insightful analysis of the latest happenings in
         the software industry, providing valuable information that investors would typically pay exorbitant amounts of
         money for. And let's not forget the <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/all-in-podcast.webp"
-            alt="Source Picture"> <a href="/source/all-in-podcast">All-In-Podcast</a>, a must-watch for anyone
+            alt="Picture of All-In-Podcast"> <a href="/source/all-in-podcast"
+            aria-label="Open profile of All-In-Podcast">All-In-Podcast</a>, a must-watch for
+        anyone
         interested in the tech sector, as it features discussions and insights from four of the most influential figures
         in the industry.</div>
     <div class="sliderHeader">
         <h2>Tech</h2>
         <div>
-            <a href="/sources?sector=Tech">VIEW ALL</a>
+            <a href="/sources?sector=Tech" aria-label="Show more tech sources">VIEW ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -138,16 +154,19 @@
         on the up-and-coming unicorn startups that are shaping the field. I highly recommend checking out the
         thought-provoking long-form articles from <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/fintech-brain-food.webp"
-            alt="Source Picture"><a href="/source/fintech-brain-food">Fintech Brain Food</a> and staying in
+            alt="Picture of Fintech Brain Food"><a href="/source/fintech-brain-food"
+            aria-label="Open profile of Fintech Brain Food">Fintech Brain Food</a> and staying
+        in
         the loop with the latest happenings
         through <img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/popular-fintech.webp"
-            alt="Source Picture"><a href="/source/popular-fintech">Popular Fintech's</a>
+            alt="Picture of Popular Fintech's"><a href="/source/popular-fintech"
+            aria-label="Open profile of Popular Fintech's">Popular Fintech's</a>
         coverage.
     </div>
     <div class="sliderHeader">
         <h2>FinTech</h2>
         <div>
-            <a href="/sources?sector=Fintech">VIEW ALL</a>
+            <a href="/sources?sector=Fintech" aria-label="Show more fintech sources">VIEW ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -159,13 +178,14 @@
         Small-cap stocks don't receive as much coverage from financial analysts, which means there's a greater
         opportunity to uncover hidden gems or potential disasters. Fortunately, the internet and platforms like <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/ian-cassel.webp"
-            alt="Source Picture"><a href="/source/ian-cassel">Ian
+            alt="Picture of Ian Cassel"><a href="/source/ian-cassel" aria-label="Open profile of Ian Cassel">Ian
             Cassel's</a> MicrocapClub provide some reliable research to rely on. Moreover, writers on Substack, such as
         <img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/vestrule.webp"
-            alt="Source Picture"><a href="/source/vestrule">Vestrule</a>
+            alt="Picture of Vestrule"><a href="/source/vestrule" aria-label="Open profile of Vestrule">Vestrule</a>
         and <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/the-superinvestors-of-augustusville.webp"
-            alt="Source Picture"><a href="/source/the-superinvestors-of-augustusville">The Superinvestors of
+            alt="Picture of The Superinvestors of Augustusville"><a href="/source/the-superinvestors-of-augustusville"
+            aria-label="Open profile of The Superinvestors of Augustusville">The Superinvestors of
             Augustusville</a>, offer
         fantastic insights into lesser-known businesses that may have
         flown under your radar.
@@ -173,7 +193,7 @@
     <div class="sliderHeader">
         <h2>Small Cap</h2>
         <div>
-            <a href="/sources?sector=Small+Cap">VIEW ALL</a>
+            <a href="/sources?sector=Small+Cap" aria-label="Show more small cap sources">VIEW ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -187,30 +207,36 @@
         informed about this industry. Fortunately, there is a wealth of excellent sources covering the sector. You may
         already be familiar with <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/asianometry.webp"
-            alt="Source Picture"><a href="/source/asianometry">Asianometry</a>, a popular YouTube channel known for its
+            alt="Picture of Asianometry"><a href="/source/asianometry"
+            aria-label="Open profile of Asianometry">Asianometry</a>, a popular YouTube channel known
+        for its
         exceptional and engaging coverage
         of the semiconductor industry. Additionally, Substack newsletters like <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/fabricated-knowledge-substack.webp"
-            alt="Source Picture"><a href="/source/fabricated-knowledge-substack">Fabricated Knowledge</a>, <a
-            href="/source/semianalysis">SemiAnalysis</a>, and <img
-            src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/semianalysis.webp"
-            alt="Source Picture"><a href="/source/semi-literate">SemiLiterate</a>
+            alt="Picture of Fabricated Knowledge"><a href="/source/fabricated-knowledge-substack"
+            aria-label="Open profile of Fabricated Knowledge">Fabricated
+            Knowledge</a>, <a href="/source/semianalysis" aria-label="Open profile of SemiAnalysis">SemiAnalysis</a>,
+        and <img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/semianalysis.webp"
+            alt="Picture of SemiAnalysis"><a href="/source/semi-literate"
+            aria-label="Open profile of SemiLiterate">SemiLiterate</a>
         offer valuable insights, providing a comprehensive overview of trends and individual companies
         within the sector. But let's not overlook the multitude of top analysts who provide insightful commentary on
         recent activities in the semiconductor sector on Twitter. <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/sravan-kundojjala.webp"
-            alt="Source Picture"><a href="/source/sravan-kundojjala">Sravan
-            Kundojjala</a>, <img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/dnystedt.webp"
-            alt="Source Picture"><a href="/source/dan-nystedt">Dan
+            alt="Picture of Sravan Kundojjala"><a href="/source/sravan-kundojjala"
+            aria-label="Open profile of Sravan Kundojjala">Sravan Kundojjala</a>, <img
+            src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/dnystedt.webp"
+            alt="Picture of Dan Nystedt"><a href="/source/dan-nystedt" aria-label="Open profile of Dan Nystedt">Dan
             Nystedt</a>, and <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/dylan522p.webp"
-            alt="Source Picture"><a href="/source/dylan-patel">Dylan Patel</a> are
+            alt="Picture of Dylan Patel"><a href="/source/dylan-patel" aria-label="Open profile of Dylan Patel">Dylan
+            Patel</a> are
         just a few of the experts you should consider following.
     </div>
     <div class="sliderHeader">
         <h2>Semiconductor</h2>
         <div>
-            <a href="/sources?sector=Semiconductor">VIEW ALL</a>
+            <a href="/sources?sector=Semiconductor" aria-label="Show more semiconductor sources">VIEW ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -221,13 +247,16 @@
         of the Russia/Ukraine conflict in 2022, it has taken center stage in discussions. Just like the semiconductor
         industry, Energy also has a vibrant Twitter community, with financial professionals like <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/Energy_Tidbits.webp"
-            alt="Source Picture"><a href="/source/dan-tsubouchi">Dan Tsubouchi</a> and <img
+            alt="Picture of Dan Tsubouchi"><a href="/source/dan-tsubouchi"
+            aria-label="Open profile of Dan Tsubouchi">Dan Tsubouchi</a> and <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/staunovo.webp"
-            alt="Source Picture"><a href="/source/giovanni-staunovo">Giovanni Staunovo</a>
+            alt="Picture of Giovanni Staunovo"><a href="/source/giovanni-staunovo"
+            aria-label="Open profile of Giovanni Staunovo">Giovanni Staunovo</a>
         sharing valuable insights on the sector's latest developments. Another notable source that
         deserves mention in the Energy space is <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/doomberg.webp"
-            alt="Source Picture"><a href="/source/doomberg">Doomberg</a>, a Substack publication that has
+            alt="Picture of Doomberg"><a href="/source/doomberg" aria-label="Open profile of Doomberg">Doomberg</a>, a
+        Substack publication that has
         gained
         significant traction.
         While you may not always agree with his perspectives, reading his articles will undoubtedly leave you with a
@@ -236,7 +265,7 @@
     <div class="sliderHeader">
         <h2>Energy</h2>
         <div>
-            <a href="/sources?sector=Energy">VIEW ALL</a>
+            <a href="/sources?sector=Energy" aria-label="Show more energy sources">VIEW ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -245,21 +274,24 @@
     <div class="desc">FinBrowser also offers a diverse selection of sources that specialize in covering the macroeconomy
         in general. What sets these sources apart is their comprehensive global coverage, going beyond the U.S. market.
         For example, <img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/SofiaHCBBG.webp"
-            alt="Source Picture"><a href="/source/sofia-horta-e-costa">Sofia Horta e Costa</a>
+            alt="Picture of Sofia Horta e Costa"><a href="/source/sofia-horta-e-costa"
+            aria-label="Open profile of Sofia Horta e Costa">Sofia Horta e Costa</a>
         delivers a weekly summary of key
         developments in China, which I
         personally find
         essential to stay informed. If you're seeking in-depth analysis of current macroeconomic topics, <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/apricitas-economics.webp"
-            alt="Source Picture"><a href="/source/apricitas-economics">Apricitas Economics</a> and <img
+            alt="Picture of Apricitas Economics"><a href="/source/apricitas-economics"
+            aria-label="Open profile of Apricitas Economics">Apricitas Economics</a> and <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/chartbook.webp"
-            alt="Source Picture"><a href="/source/chartbook">Chartbook</a> are
+            alt="Picture of Chartbook"><a href="/source/chartbook" aria-label="Open profile of Chartbook">Chartbook</a>
+        are
         exceptional sources. Their detailed explanations provide valuable perspectives on economic trends and events.
     </div>
     <div class="sliderHeader">
         <h2>Macro</h2>
         <div>
-            <a href="/sources?sector=Macroeconomics">VIEW ALL</a>
+            <a href="/sources?sector=Macroeconomics" aria-label="Show more macro sources">VIEW ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -270,21 +302,26 @@
         surrounding Taiwan serve as reminders that we haven't reached the "end of history." To gain insights into
         geopolitical dynamics, I've carefully curated renowned think tanks such as the <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/foreign-policy-research-institute.webp"
-            alt="Source Picture"><a href="/source/foreign-policy-research-institute">Foreign Policy Institute</a>
+            alt="Picture of Foreign Policy Institute"><a href="/source/foreign-policy-research-institute"
+            aria-label="Open profile of Foreign Policy Institute">Foreign Policy
+            Institute</a>
         and the <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/center-for-strategic-international-studies.webp"
-            alt="Source Picture"><a href="/source/center-for-strategic-international-studies">Center for Strategic &
+            alt="Picture of Center for Strategic & International Studies"><a
+            href="/source/center-for-strategic-international-studies"
+            aria-label="Open profile of Center for Strategic & International Studies">Center for Strategic &
             International Studies</a>
         . Their publications hold significant influence over policymakers
         and offer valuable perspectives. Additionally, I highly recommend <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/palladium.webp"
-            alt="Source Picture"><a href="/source/palladium">Palladium</a> for its
+            alt="Picture of Palladium"><a href="/source/palladium" aria-label="Open profile of Palladium">Palladium</a>
+        for its
         informative,
         thought-provoking articles that often shed light on non-mainstream viewpoints.</div>
     <div class="sliderHeader">
         <h2>Geopolitics</h2>
         <div>
-            <a href="/sources?sector=Geopolitics">VIEW ALL</a>
+            <a href="/sources?sector=Geopolitics" aria-label="Show more geopolitics sources">VIEW ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>
@@ -297,21 +334,25 @@
         delving deeper and exploring the possibility of shorting companies yourself, I highly recommend taking a closer
         look at several reputable short selling entities that have gained prominence in this field. Some notable ones
         include <img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/muddywatersre.webp"
-            alt="Source Picture"><a href="/source/muddy-waters-research-blog">Muddy Waters Research</a>,
+            alt="Picture of Muddy Waters Research"><a href="/source/muddy-waters-research-blog"
+            aria-label="Open profile of Muddy Waters Research">Muddy Waters Research</a>,
         <img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/HindenburgRes.webp"
-            alt="Source Picture"><a href="/source/hindenburg-research">Hindenburg Research</a>
+            alt="Picture of Hindenburg Research"><a href="/source/hindenburg-research"
+            aria-label="Open profile of Hindenburg Research">Hindenburg Research</a>
         , and <img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/CitronResearch.webp"
-            alt="Source Picture"><a href="/source/citron-research-blog">Citron Research</a>.
+            alt="Picture of Citron Research"><a href="/source/citron-research-blog"
+            aria-label="Open profile of Citron Research">Citron Research</a>.
         Additionally, it's worth keeping an eye
         on Edwin Dorsey's popular publication, <img
             src="https://finbrowser.s3.us-east-2.amazonaws.com/static/home/favicons/the-bear-cave.webp"
-            alt="Source Picture"><a href="/source/the-bear-cave">The Bear Cave</a>, for
+            alt="Picture of The Bear Cave"><a href="/source/the-bear-cave"
+            aria-label="Open profile of The Bear Cave">The Bear Cave</a>, for
         valuable insights.
     </div>
     <div class="sliderHeader">
         <h2>Shorts</h2>
         <div>
-            <a href="/sources?sector=Shorts">VIEW ALL</a>
+            <a href="/sources?sector=Shorts" aria-label="Show more shorts sources">VIEW ALL</a>
             <i class="fa-solid fa-chevron-right"></i>
         </div>
     </div>

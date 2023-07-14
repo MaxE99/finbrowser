@@ -6,13 +6,22 @@
 <title>Feed | FinBrowser</title>
 <meta name="description"
     content="Stay up-to-date with the latest stock market news and analysis curated by FinBrowser. This platform features content from top sources like Substack, Twitter, SeekingAlpha, and more.">
+<link rel="canonical" href="https://www.finbrowser.io/">
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Feed",
+        "description": "Stay up-to-date with the latest stock market news and analysis curated by FinBrowser. This platform features content from top sources like Substack, Twitter, SeekingAlpha, and more."
+    }
+</script>
 {% endblock %}
 
 {% block content %}
 
 {% if error_page %}
 <div class="errorContainer">
-    <img src="{% static 'home/media/404_image.png' %}" alt="404 Image">
+    <img src="{% static 'home/media/404_image.png' %}" alt="404 image">
     <div class="errorMessageContainer">
         <h2>404 ERROR</h2>
         <span>Page not found!</span>
@@ -30,9 +39,10 @@
                 <h3>Latest Analysis</h3>
                 {% for content in latest_analysis %}
                 <div class="smallContentContainer">
-                    <img src="{% static content.source.favicon_path %}" alt="Source Picture" />
+                    <img src="{% static content.source.favicon_path %}" alt="Picture of {{ content.source.name }}" />
                     <div>{{ content.title }}</div>
-                    <a class="contentLink" href="{{ content.link }}" target="_blank" aria-label="Open Content"></a>
+                    <a class="contentLink" href="{{ content.link }}" target="_blank"
+                        aria-label="Open link to content"></a>
                 </div>
                 {% endfor %}
             </div>
@@ -40,9 +50,10 @@
                 <h3>Latest News</h3>
                 {% for content in latest_news %}
                 <div class="smallContentContainer">
-                    <img src="{% static content.source.favicon_path %}" alt="Source Picture" />
+                    <img src="{% static content.source.favicon_path %}" alt="Picture of {{ content.source.name }}" />
                     <div>{{ content.title }}</div>
-                    <a class="contentLink" href="{{ content.link }}" target="_blank" aria-label="Open Content"></a>
+                    <a class="contentLink" href="{{ content.link }}" target="_blank"
+                        aria-label="Open link to content"></a>
                 </div>
                 {% endfor %}
             </div>
@@ -53,7 +64,7 @@
         </div>
         <h3>Recommended Sources</h3>
         {% create_source_container recommended_sources subscribed_sources request %}
-        <div class="tabsContainer" id="content" role="navigation" aria-label="Stock Content Navigation">
+        <div class="tabsContainer" id="content" role="navigation" aria-label="Content navigation">
             <button class="activatedTab" data-for-tab="0">Recommended Content</button>
             <button data-for-tab="1">Stock Pitches</button>
         </div>
@@ -69,6 +80,6 @@
 </div>
 
 
-<script src="{% static 'home/min_feed_script_v9.js' %}"></script>
+<script src="{% static 'home/min_feed_script_v10.js' %}"></script>
 
 {% endblock content %}

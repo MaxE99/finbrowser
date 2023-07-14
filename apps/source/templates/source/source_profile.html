@@ -2,6 +2,25 @@
 <link rel="stylesheet" type="text/css" href="{% static 'source/min_source_profile_style_v11.css' %}" />
 <title>{{ source.name }} | FinBrowser</title>
 <meta name="description" content="Discover the latest content from {{ source.name }}">
+<link rel="canonical" href="https://www.finbrowser.io/source/{{ source.slug }}">
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "{{ source.name }} - Latest Content",
+      "description": "Discover the latest content from {{ source.name }}",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "{{ sim_source.average_rating }}",
+        "reviewCount": "{{ source.ammount_of_ratings }}"
+      },
+      "mainEntity": {
+          "@type": "WebPage",
+          "name": "{{ source.name }}",
+          "url": "https://www.finbrowser.io/source/{{ source.slug }}"
+        }
+  }
+</script>
 {% endblock %} {% block content %}
 
 
@@ -10,7 +29,7 @@
     <div class="ratingsContainer">
       <div class="header">
         <h3></h3>
-        <i class="fas fa-times"></i>
+        <i role="button" aria-label="Close form" class="fas fa-times"></i>
       </div>
       <span>How would you rate this source in terms of content quality?</span>
       <div class="ratingsButtonContainer">
@@ -41,12 +60,12 @@
     <h2 id="source#{{source.source_id}}">{{ source.name }}</h2>
     <div class="notificationAndSubscribtionContainer">
       {% if request.user.is_authenticated %}
-      <button aria-label="Add Source To Lists" class="addSourceToListButton"><i class="fas fa-ellipsis-h"></i></button>
+      <button aria-label="Add source to lists" class="addSourceToListButton"><i class="fas fa-ellipsis-h"></i></button>
       {% if notification_id %}
-      <i id="nid#{{notification_id}}" role="button" aria-label="Activated Notification"
+      <i id="nid#{{notification_id}}" role="button" aria-label="Activate notifications"
         class="fas fa-bell-slash notificationButton notificationActivated"></i>
       {% else %}
-      <i role="button" aria-label="Deactive Notification" class="fas fa-bell notificationButton"></i>
+      <i role="button" aria-label="Deactivate notifications" class="fas fa-bell notificationButton"></i>
       {% endif %}
       {% if subscribed %}
       <button class="subscribeButton subscribed finButtonBlue">Subscribed</button>
@@ -54,10 +73,9 @@
       <button class="subscribeButton unsubscribed finButtonWhite">Subscribe</button>
       {% endif %}
       {% else %}
-      <button aria-label="Add Source To Lists" class="addSourceToListButton openAuthPrompt ap1"><i
+      <button aria-label="Add source to lists" class="addSourceToListButton openAuthPrompt ap1"><i
           class="fas fa-ellipsis-h openAuthPrompt ap1 finButtonBlue"></i></button>
-      <i role="button" aria-label="Deactivate Notifications"
-        class="fas fa-bell notificationButton openAuthPrompt ap3"></i>
+      <i role="button" class="fas fa-bell notificationButton openAuthPrompt ap3"></i>
       <button class="subscribeButton unsubscribed openAuthPrompt ap2 finButtonWhite">Subscribe</button>
       {% endif %}
     </div>
@@ -65,7 +83,7 @@
   <div class="secondRow">
     <div class="leftSideContainer">
       <div class="sourcePicContainer">
-        <img class="profilePicture" src="{% static source.favicon_path %}" alt="Source Picture" />
+        <img class="profilePicture" src="{% static source.favicon_path %}" alt="Picture of {{ source.name }}" />
       </div>
       {% if source.tags.exists %}
       <h3>Tags</h3>
@@ -80,7 +98,8 @@
         {% for sim_source in similiar_sources %}
         <div class="simSourceContainer">
           <div class="imageContainer">
-            <img class="profilePicture" src="{% static sim_source.favicon_path %}" alt="Source Picture" />
+            <img class="profilePicture" src="{% static sim_source.favicon_path %}"
+              alt="Picture of {{ sim_source.name }}" />
           </div>
           <div class="simSourceInfoContainer">
             <span class="sourceName">{{ sim_source.name }}</span>
@@ -90,13 +109,13 @@
             </div>
           </div>
           <i class="fa-solid fa-chevron-right"></i>
-          <a href="{{ sim_source.get_absolute_url }}" aria-label="Open Profile Of {{ sim_source.name }}"></a>
+          <a href="{{ sim_source.get_absolute_url }}" aria-label="Open profile of {{ sim_source.name }}"></a>
         </div>
         {% endfor %}
       </div>
     </div>
     <div class="rightSideContainer">
-      <div class="tabsContainer" id="content" role="navigation" aria-label="Stock Content Navigation">
+      <div class="tabsContainer" id="content" role="navigation" aria-label="Content navigation">
         <button class="activatedTab" data-for-tab="0">Summary</button>
         <button data-for-tab="1">Ratings</button>
       </div>
@@ -105,7 +124,7 @@
         <div class="infoContainer sectorInfoContainer">
           <span>Sector</span>
           <a href="{{ source.sector.get_absolute_url }}"
-            aria-label="Open Sector - {{ source.sector.name }}">{{ source.sector.name }}</a>
+            aria-label="Open {{ source.sector.name }} sector overview">{{ source.sector.name }}</a>
         </div>
         <div class="infoContainer">
           <span>Content Type</span>
@@ -114,7 +133,7 @@
         <div class="infoContainer websiteInfoContainer">
           <span>Website</span>
           <a href="{{ source.url }}" target="_blank"
-            aria-label="Open External Profile Of {{ source.name }}">{{ source.website }} <i
+            aria-label="Open external website of {{ source.name }}">{{ source.website }} <i
               class="fa-solid fa-arrow-up-right-from-square"></i></a>
         </div>
         <div class="infoContainer">
@@ -152,6 +171,21 @@
 
       {% if latest_content %}
       <h3>Content</h3>
+      {% if source.website|stringformat:"s" == "Twitter" %}
+      <div class="emptyInformationContainer twitterUpdate">
+        <h3>Twitter Update</h3>
+        <div>
+          Hey there! Due to the recent policy changes implemented by Twitter, I regret to inform you that
+          FinBrowser is currently unable to display any new Tweets. I know this might be disappointing, as
+          Twitter
+          is a valuable source of information and updates for many of us. However, I want to assure you that I
+          am
+          actively working on finding alternative solutions and exploring ways to reintegrate Twitter sources
+          into
+          this website. I appreciate your patience and understanding during this time of transition.
+        </div>
+      </div>
+      {% endif %}
       <div class="contentColumnWrapper">
         <div class="contentColumnContainer">
           {% create_content_container latest_content request highlighted_content_ids "latest_content" %}
@@ -170,5 +204,5 @@
   </div>
 </div>
 
-<script src="{% static 'source/min_source_profile_script_v11.js' %}"></script>
+<script src="{% static 'source/min_source_profile_script_v12.js' %}"></script>
 {% endblock content %}
