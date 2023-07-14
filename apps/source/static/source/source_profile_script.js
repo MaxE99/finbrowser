@@ -1,229 +1,221 @@
-const subscribeButtons = document.querySelectorAll('.subscribeButton');
+/**************************************************************
+    1. API Calls
+**************************************************************/
 
-subscribeButtons.forEach((subscribeButton) => {
-    subscribeButton.addEventListener('click', async () => {
-        if (!subscribeButton.classList.contains('openAuthPrompt')) {
-            try {
-                const source_id = subscribeButton
-                    .closest('.firstRow')
-                    .querySelector('h2')
-                    .id.split('#')[1];
-                const action = subscribeButton.innerText;
-                const res = await fetch(
-                    `../../api/sources/${source_id}/`,
-                    get_fetch_settings('PATCH')
-                );
-                if (!res.ok) {
-                    showMessage('Error: Network request failed unexpectedly!', 'Error');
-                } else {
-                    if (action == 'Subscribe') {
-                        subscribeButton.classList.replace('unsubscribed', 'subscribed');
-                        subscribeButton.classList.replace('finButtonWhite', 'finButtonBlue');
-                        subscribeButton.innerText = 'Subscribed';
-                        showMessage((context = 'SOURCE HAS BEEN SUBSCRIBED!'), 'Success');
-                    } else {
-                        subscribeButton.classList.replace('subscribed', 'unsubscribed');
-                        subscribeButton.classList.replace('finButtonBlue', 'finButtonWhite');
-                        subscribeButton.innerText = 'Subscribe';
-                        showMessage((context = 'SOURCE HAS BEEN UNSUBSCRIBED!'), 'Remove');
-                    }
-                }
-            } catch (e) {
-                // showMessage("Error: Unexpected error has occurred!", "Error");
+async function changeSubscriptionStatus(subscribeButton) {
+    if (!subscribeButton.classList.contains('openAuthPrompt')) {
+        try {
+            const source_id = subscribeButton
+                .closest('.firstRow')
+                .querySelector('h2')
+                .id.split('#')[1];
+            const res = await fetch(`../../api/sources/${source_id}/`, getFetchSettings('PATCH'));
+            if (!res.ok) {
+                showMessage('Error: Network request failed unexpectedly!', 'Error');
+            } else {
+                showSubscriptionStatus(subscribeButton);
             }
+        } catch (e) {
+            showMessage('Error: Unexpected error has occurred!', 'Error');
         }
-    });
-});
-
-//add/remove notifications
-const notificationButton = document.querySelector('.firstRow .notificationButton');
-if (!notificationButton.classList.contains('openAuthPrompt')) {
-    notificationButton.addEventListener('click', async () => {
-        if (notificationButton.classList.contains('fa-bell')) {
-            try {
-                const source_id = notificationButton
-                    .closest('.firstRow')
-                    .querySelector('h2')
-                    .id.split('#')[1];
-                const data = { source: source_id };
-                const res = await fetch(`../../api/notifications/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken'),
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    mode: 'same-origin',
-                    body: JSON.stringify(data),
-                });
-                if (!res.ok) {
-                    showMessage('Error: Network request failed unexpectedly!', 'Error');
-                } else {
-                    const context = await res.json();
-                    notificationButton.id = 'nid#' + context.notification_id;
-                    notificationButton.classList.add('notificationActivated');
-                    notificationButton.classList.replace('fa-bell', 'fa-bell-slash');
-                    showMessage('Notification has been added!', 'Success');
-                }
-            } catch (e) {
-                // showMessage("Error: Unexpected error has occurred!", "Error");
-            }
-        } else {
-            const notification_id = notificationButton.id.split('#')[1];
-            try {
-                const res = await fetch(
-                    `../../api/notifications/${notification_id}/`,
-                    get_fetch_settings('DELETE')
-                );
-                if (!res.ok) {
-                    showMessage('Error: Network request failed unexpectedly!', 'Error');
-                } else {
-                    notificationButton.classList.remove('notificationActivated');
-                    notificationButton.classList.replace('fa-bell-slash', 'fa-bell');
-                    showMessage((context = 'Notification has been removed!'), 'Remove');
-                }
-            } catch (e) {
-                // showMessage("Error: Unexpected error has occurred!", "Error");
-            }
-        }
-    });
+    }
 }
 
-// open source ratings modal
-document
-    .querySelectorAll('.rightSideContainer .ratingContainer .infoContainer .rateSpan')
-    .forEach((rateSpan) => {
-        if (!rateSpan.classList.contains('openAuthPrompt')) {
-            rateSpan.addEventListener('click', () => {
-                const sourceName = document.querySelector('.pageWrapper .firstRow h2').innerText;
-                document.querySelector('.sourceRatingsWrapper').style.display = 'flex';
-                document.querySelector(
-                    '.sourceRatingsWrapper .header h3'
-                ).innerHTML = `Rate <span>${sourceName}</span>`;
-                setModalStyle();
-                const initialUserRating = document.querySelector(
-                    '.sourceRatingsContainer .ratingsButtonContainer .selectedRating'
-                )?.innerText;
-                // cancel/reset source rating form
-                document
-                    .querySelector('.sourceRatingsWrapper .ratingsContainer .cancelButton')
-                    ?.addEventListener('click', () => {
-                        document
-                            .querySelectorAll(
-                                '.sourceRatingsContainer .ratingsButtonContainer button'
-                            )
-                            .forEach((button) => {
-                                button.classList.remove('selectedRating');
-                                if (button.innerText == initialUserRating) {
-                                    button.classList.add('selectedRating');
-                                }
-                            });
-                    });
-            });
+async function createNotification() {
+    try {
+        const sourceId = NOITIFICATION_BUTTON.closest('.firstRow')
+            .querySelector('h2')
+            .id.split('#')[1];
+        const data = { source: sourceId };
+        const res = await fetch(`../../api/notifications/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            mode: 'same-origin',
+            body: JSON.stringify(data),
+        });
+        if (!res.ok) {
+            showMessage('Error: Network request failed unexpectedly!', 'Error');
+        } else {
+            const context = await res.json();
+            NOITIFICATION_BUTTON.id = 'nid#' + context.notification_id;
+            NOITIFICATION_BUTTON.classList.add('notificationActivated');
+            NOITIFICATION_BUTTON.classList.replace('fa-bell', 'fa-bell-slash');
+            showMessage('Notification has been added!', 'Success');
         }
-    });
+    } catch (e) {
+        showMessage('Error: Unexpected error has occurred!', 'Error');
+    }
+}
 
-// close source ratings modal
-document
-    .querySelector('.sourceRatingsWrapper .ratingsContainer .header .fa-times')
-    .addEventListener('click', () => {
-        document.querySelector('.sourceRatingsWrapper').style.display = 'none';
-        removeModalStyle();
-    });
+async function deleteNotification() {
+    const notificationId = NOITIFICATION_BUTTON.id.split('#')[1];
+    try {
+        const res = await fetch(
+            `../../api/notifications/${notificationId}/`,
+            getFetchSettings('DELETE')
+        );
+        if (!res.ok) {
+            showMessage('Error: Network request failed unexpectedly!', 'Error');
+        } else {
+            NOITIFICATION_BUTTON.classList.remove('notificationActivated');
+            NOITIFICATION_BUTTON.classList.replace('fa-bell-slash', 'fa-bell');
+            showMessage('Notification has been removed!', 'Remove');
+        }
+    } catch (e) {
+        showMessage('Error: Unexpected error has occurred!', 'Error');
+    }
+}
 
-// select source rating
-const ratingsButtons = document.querySelectorAll(
+async function rateSource() {
+    const sourceId = document.querySelector('.firstRow h2').id.split('#')[1];
+    const rating = document.querySelector(
+        '.sourceRatingsWrapper .ratingsContainer .ratingsButtonContainer .selectedRating'
+    )?.innerText;
+    const body = {
+        source: sourceId,
+        rating: rating,
+    };
+    if (rating && !isSourceBeingRated) {
+        isSourceBeingRated = true;
+        try {
+            const res = await fetch(`../../api/source_ratings/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                mode: 'same-origin',
+                body: JSON.stringify(body),
+            });
+            if (!res.ok) {
+                showMessage('Error: Network request failed unexpectedly!', 'Error');
+            } else {
+                showMessage('Rating has been saved!', 'Success');
+                window.location.reload();
+            }
+        } catch (e) {
+            showMessage('Error: Unexpected error has occurred!', 'Error');
+        }
+    } else if (!rating && !isSourceBeingRated) {
+        showMessage('Select a rating!', 'Error');
+    }
+}
+
+/**************************************************************
+    2. Functions
+**************************************************************/
+
+function openAddSourceToListsMenu(target) {
+    if (!target.classList.contains('openAuthPrompt')) {
+        setModalStyle();
+        const sourceId = document.querySelector('.pageWrapper .firstRow h2').id.split('#')[1];
+        const sourceName = document.querySelector('.pageWrapper .firstRow h2').innerText;
+        document.querySelector('.fullScreenPlaceholder .addToListForm h3 span').innerText =
+            sourceName;
+        document.querySelector('.fullScreenPlaceholder').style.display = 'flex';
+        document.querySelector('.fullScreenPlaceholder .addSourceToListForm').style.display =
+            'block';
+        document.querySelector('.fullScreenPlaceholder .addSourceToListForm').id =
+            'source_id' + sourceId;
+        resetAddSourceToListsForm(sourceId);
+        document
+            .querySelector('.fullScreenPlaceholder .addSourceToListForm .cancelButton')
+            ?.addEventListener('click', () => resetAddSourceToListsForm(sourceId));
+    }
+}
+
+function openSourceRatingsMenu() {
+    const sourceName = document.querySelector('.pageWrapper .firstRow h2').innerText;
+    document.querySelector('.sourceRatingsWrapper').style.display = 'flex';
+    document.querySelector(
+        '.sourceRatingsWrapper .header h3'
+    ).innerHTML = `Rate <span>${sourceName}</span>`;
+    setModalStyle();
+    document
+        .querySelector('.sourceRatingsWrapper .ratingsContainer .cancelButton')
+        ?.addEventListener('click', () => resetSourceRatingsMenu());
+}
+
+function closeSourceRatingsMenu() {
+    document.querySelector('.sourceRatingsWrapper').style.display = 'none';
+    removeModalStyle();
+}
+
+function resetSourceRatingsMenu() {
+    document
+        .querySelectorAll('.sourceRatingsContainer .ratingsButtonContainer button')
+        .forEach((button) => {
+            button.classList.remove('selectedRating');
+            if (button.innerText == INITIAL_USER_RATING) {
+                button.classList.add('selectedRating');
+            }
+        });
+}
+
+function selectSourceRating(ratingButton) {
+    RATING_BUTTONS.forEach((button) => button.classList.remove('selectedRating'));
+    ratingButton.classList.add('selectedRating');
+}
+
+/**************************************************************
+    3. Other
+**************************************************************/
+
+const NOITIFICATION_BUTTON = document.querySelector('.firstRow .notificationButton');
+
+const RATING_BUTTONS = document.querySelectorAll(
     '.sourceRatingsWrapper .ratingsContainer .ratingsButtonContainer button'
 );
-ratingsButtons.forEach((ratingButton) =>
-    ratingButton.addEventListener('click', () => {
-        ratingsButtons.forEach((button) => button.classList.remove('selectedRating'));
-        ratingButton.classList.add('selectedRating');
-    })
+
+const INITIAL_USER_RATING = document.querySelector(
+    '.sourceRatingsContainer .ratingsButtonContainer .selectedRating'
+)?.innerText;
+
+let isSourceBeingRated = false;
+
+/**************************************************************
+    4. EventListener
+**************************************************************/
+
+document
+    .querySelectorAll('.subscribeButton')
+    .forEach((subscribeButton) =>
+        subscribeButton.addEventListener('click', () => changeSubscriptionStatus(subscribeButton))
+    );
+
+if (!NOITIFICATION_BUTTON.classList.contains('openAuthPrompt')) {
+    NOITIFICATION_BUTTON.addEventListener('click', () =>
+        NOITIFICATION_BUTTON.classList.contains('fa-bell')
+            ? createNotification()
+            : deleteNotification()
+    );
+}
+
+document
+    .querySelectorAll('.rightSideContainer .ratingContainer .infoContainer .rateSpan')
+    .forEach(
+        (rateSpan) =>
+            !rateSpan.classList.contains('openAuthPrompt') &&
+            rateSpan.addEventListener('click', () => openSourceRatingsMenu())
+    );
+
+document
+    .querySelector('.sourceRatingsWrapper .ratingsContainer .header .fa-times')
+    .addEventListener('click', () => closeSourceRatingsMenu());
+
+RATING_BUTTONS.forEach((ratingButton) =>
+    ratingButton.addEventListener('click', () => selectSourceRating(ratingButton))
 );
 
-// rate source
-let activatedButton = false;
 document
     .querySelector('.sourceRatingsWrapper .ratingsContainer .rateSourceButton')
-    .addEventListener('click', async () => {
-        const source_id = document.querySelector('.firstRow h2').id.split('#')[1];
-        const rating = document.querySelector(
-            '.sourceRatingsWrapper .ratingsContainer .ratingsButtonContainer .selectedRating'
-        )?.innerText;
-        body = {
-            source: source_id,
-            rating: rating,
-        };
-        if (rating && !activatedButton) {
-            activatedButton = true;
-            try {
-                const res = await fetch(`../../api/source_ratings/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken'),
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    mode: 'same-origin',
-                    body: JSON.stringify(body),
-                });
-                if (!res.ok) {
-                    showMessage('Error: Network request failed unexpectedly!', 'Error');
-                } else {
-                    showMessage((context = 'Rating has been saved!'), 'Success');
-                    window.location.reload();
-                }
-            } catch (e) {
-                // showMessage("Error: Unexpected error has occurred!", "Error");
-            }
-        } else if (!rating && !activatedButton) {
-            showMessage('Select a rating!', 'Error');
-        }
-    });
+    .addEventListener('click', () => rateSource());
 
-//open add list to sources form
 document
     .querySelector('.pageWrapper .firstRow .notificationAndSubscribtionContainer  .fa-ellipsis-h')
-    .addEventListener('click', (e) => {
-        if (!e.target.classList.contains('openAuthPrompt')) {
-            setModalStyle();
-            const sourceId = document.querySelector('.pageWrapper .firstRow h2').id.split('#')[1];
-            const sourceName = document.querySelector('.pageWrapper .firstRow h2').innerText;
-            document.querySelector('.fullScreenPlaceholder .addToListForm h2 span').innerText =
-                sourceName;
-            document.querySelector('.fullScreenPlaceholder').style.display = 'flex';
-            document.querySelector('.fullScreenPlaceholder .addSourceToListForm').style.display =
-                'block';
-            document.querySelector('.fullScreenPlaceholder .addSourceToListForm').id =
-                'source_id' + sourceId;
-            const checkboxes = document.querySelectorAll(
-                '.fullScreenPlaceholder .listContainer input:first-of-type'
-            );
-            checkboxes.forEach((checkbox) => {
-                const sourcesInList = checkbox
-                    .closest('.listContainer')
-                    .querySelector('.sourcesInList').value;
-                if (JSON.parse(sourcesInList).includes(parseInt(sourceId))) {
-                    checkbox.checked = true;
-                } else {
-                    checkbox.checked = false;
-                }
-            });
-            // cancel/reset add to sources form
-            document
-                .querySelector('.fullScreenPlaceholder .addSourceToListForm .cancelButton')
-                ?.addEventListener('click', () => {
-                    checkboxes.forEach((checkbox) => {
-                        const sourcesInList = checkbox
-                            .closest('.listContainer')
-                            .querySelector('.sourcesInList').value;
-                        if (JSON.parse(sourcesInList).includes(parseInt(sourceId))) {
-                            checkbox.checked = true;
-                        } else {
-                            checkbox.checked = false;
-                        }
-                    });
-                });
-        }
-    });
+    .addEventListener('click', (e) => openAddSourceToListsMenu(e.target));

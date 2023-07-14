@@ -6,6 +6,7 @@
 <title>{{ search_term }} - Search Results | FinBrowser</title>
 <meta name="description"
     content="Find what you're looking for with FinBrowser's powerful search tool. Discover content, stocks, sources and more.">
+<link rel="canonical" href="https://www.finbrowser.io/search_results/">
 {% endblock %}
 {% block content %}
 
@@ -19,7 +20,7 @@
             </div>
             <div id="autocomplete_list_results"></div>
         </div>
-        <div class="tabsContainer" id="content" role="navigation" aria-label="Search Results Navigation">
+        <div class="tabsContainer" id="content" role="navigation" aria-label="Search results navigation">
             <button class="activatedTab" data-for-tab="0">Analysis</button>
             <button data-for-tab="1">Commentary</button>
             <button data-for-tab="2">News</button>
@@ -46,6 +47,21 @@
         <div class="tabsContent" data-tab="1">
             <div class="contentColumnWrapper">
                 {% if commentary %}
+                <div class="emptyInformationContainer twitterUpdate">
+                    <h3>Twitter Update</h3>
+                    <div>
+                        Hey there! Due to the recent policy changes implemented by Twitter, I regret to inform you that
+                        FinBrowser is currently unable to display any new Tweets. I know this might be disappointing, as
+                        Twitter
+                        is a valuable source of information and updates for many of us. However, I want to assure you
+                        that I
+                        am
+                        actively working on finding alternative solutions and exploring ways to reintegrate Twitter
+                        sources
+                        into
+                        this website. I appreciate your patience and understanding during this time of transition.
+                    </div>
+                </div>
                 <div class="contentColumnContainer">
                     {% create_content_container commentary request highlighted_content_ids "commentary" %}
                 </div>
@@ -100,7 +116,7 @@
                     <div class="companyName">{{ stock.full_company_name }}</div>
                     <i class="fa-solid fa-chevron-right"></i>
                     <a href="{{ stock.get_absolute_url }}"
-                        aria-label="Open Profile Of {{ stock.full_company_name }}"></a>
+                        aria-label="Open profile of {{ stock.full_company_name }}"></a>
                 </div>
                 {% endfor %}
             </div>
@@ -120,58 +136,58 @@
         <h2>Search On Other Websites</h2>
         <div class="websiteSearchWrapper">
             <div class="websiteSearchContainer finButtonWhite">
-                <img src="{% static 'home/media/bloomberg_icon.png' %}" alt="Bloomberg Logo">Search on Bloomberg
+                <img src="{% static 'home/media/bloomberg_icon.png' %}" alt="Bloomberg logo">Search on Bloomberg
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://www.bloomberg.com/search?query={{ search_term }}" target="_blank"
-                    aria-label="Redirect Search To Bloomberg"></a>
+                    aria-label="Redirect search to Bloomberg"></a>
             </div>
             <div class="websiteSearchContainer finButtonWhite">
-                <img src="{% static 'home/media/google_icon.png' %}" alt="SeekingAlpha Logo">Search on Google
+                <img src="{% static 'home/media/google_icon.png' %}" alt="Google logo">Search on Google
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://www.google.com/search?q={{ search_term }}" target="_blank"
-                    aria-label="Redirect Search To Google"></a>
+                    aria-label="Redirect search to Google"></a>
             </div>
             <div class="websiteSearchContainer finButtonWhite">
-                <img src="{% static 'home/media/reuters_icon.png' %}" alt="Bloomberg Logo">Search on Reuters
+                <img src="{% static 'home/media/reuters_icon.png' %}" alt="Reuters logo">Search on Reuters
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://www.reuters.com/site-search/?query={{ search_term }}" target="_blank"
-                    aria-label="Redirect Search To Reuters"></a>
+                    aria-label="Redirect search to Reuters"></a>
             </div>
             <div class="websiteSearchContainer finButtonWhite">
-                <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha Logo">Search on Seeking
+                <img src="{% static 'home/media/seekingalpha_logo.png' %}" alt="SeekingAlpha logo">Search on Seeking
                 Alpha
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://seekingalpha.com/search?q={{ search_term }}&tab=headlines" target="_blank"
-                    aria-label="Redirect Search To SeekingAlpha"></a>
+                    aria-label="Redirect search to SeekingAlpha"></a>
             </div>
             <div class="websiteSearchContainer finButtonWhite">
-                <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify Logo">Search on Spotify
+                <img src="{% static 'home/media/spotify_favicon.png' %}" alt="Spotify logo">Search on Spotify
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://open.spotify.com/search/{{ search_term }}" target="_blank"
-                    aria-label="Redirect Search To Spotify"></a>
+                    aria-label="Redirect search to Spotify"></a>
             </div>
             <div class="websiteSearchContainer finButtonWhite">
-                <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack Logo">Search on Substack
+                <img src="{% static 'home/media/substack_logo.png' %}" alt="Substack logo">Search on Substack
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://substack.com/search/{{ search_term }}" target="_blank"
-                    aria-label="Redirect Search To Substack"></a>
+                    aria-label="Redirect search to Substack"></a>
             </div>
             <div class="websiteSearchContainer finButtonWhite">
-                <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter Logo">Search on Twitter
+                <img src="{% static 'home/media/twitter_logo.png' %}" alt="Twitter logo">Search on Twitter
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://twitter.com/search?q={{ search_term }}" target="_blank"
-                    aria-label="Redirect Search To Twitter"></a>
+                    aria-label="Redirect search to Twitter"></a>
             </div>
             <div class="websiteSearchContainer finButtonWhite">
-                <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube Logo">Search on YouTube
+                <img src="{% static 'home/media/youtube_logo.png' %}" alt="YouTube logo">Search on YouTube
                 <i class="fa-solid fa-chevron-right"></i>
                 <a href="https://www.youtube.com/results?search_query={{ search_term }}" target="_blank"
-                    aria-label="Redirect Search To YouTube"></a>
+                    aria-label="Redirect search to YouTube"></a>
             </div>
         </div>
     </div>
 </div>
 
 
-<script src="{% static 'home/min_search_results_script_v10.js' %}"></script>
+<script src="{% static 'home/min_search_results_script_v11.js' %}"></script>
 {% endblock content %}

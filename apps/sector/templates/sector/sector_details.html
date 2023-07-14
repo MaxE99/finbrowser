@@ -1,13 +1,28 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'sector/sector_details_style.css' %}">
 <title>{{ sector.name }} | FinBrowser</title>
-<meta name="description" content="Discover the latest content related to the {{ sector }} industry.">
+<meta name="description"
+    content="Discover the latest analysis, news and commentary related to the {{ sector }} industry.">
+<link rel="canonical" href="https://www.finbrowser.io/sector/{{ sector.slug }}">
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "{{ sector }} - Analysis, News, and Commentary",
+        "description": "Discover the latest content analysis, news and commentary to the {{ sector }} industry.",
+        "mainEntity": {
+            "@type": "WebPage",
+            "name": "{{ sector }}",
+            "url": "https://www.finbrowser.io/sector/{{ sector.slug }}"
+          }
+    }
+</script>
 {% endblock %} {% block content %}
 
 <div class="pageWrapper">
     <h2>{{sector.name}}</h2>
 
-    <div class="tabsContainer" id="content">
+    <div class="tabsContainer" id="content" role="navigation" aria-label="Content navigation">
         <button class="activatedTab" data-for-tab="0">Analysis</button>
         <button data-for-tab="1">Commentary</button>
         <button data-for-tab="2">News</button>
@@ -29,6 +44,19 @@
         {% if commentary_sources %}
         <div class="contentColumnContainer halfPageContainer">
             {% create_source_container commentary_sources subscribed_sources request %}
+            <div class="emptyInformationContainer twitterUpdate">
+                <h3>Twitter Update</h3>
+                <div>
+                    Hey there! Due to the recent policy changes implemented by Twitter, I regret to inform you that
+                    FinBrowser is currently unable to display any new Tweets. I know this might be disappointing, as
+                    Twitter
+                    is a valuable source of information and updates for many of us. However, I want to assure you that I
+                    am
+                    actively working on finding alternative solutions and exploring ways to reintegrate Twitter sources
+                    into
+                    this website. I appreciate your patience and understanding during this time of transition.
+                </div>
+            </div>
             {% create_content_container commentary request highlighted_content_ids "commentary" %}
         </div>
         {% else %}

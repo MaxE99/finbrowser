@@ -1,0 +1,28 @@
+{
+    "rules": {},
+    "extends": "eslint:recommended",
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "globals": {
+        "showMessage": "readonly",
+        "getFetchSettings": "readonly",
+        "getCookie": "readonly",
+        "openAuthPrompt": "readonly",
+        "openContentOptionsMenu": "readonly",
+        "openAddToListMenu": "readonly",
+        "highlightContent": "readonly",
+        "setModalStyle": "readonly",
+        "removeModalStyle": "readonly",
+        "showSearchResults": "readonly",
+        "createExplanationContainer": "readonly",
+        "resetAddSourceToListsForm": "readonly",
+        "showSubscriptionStatus": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2023
+    },
+    "plugins": [],
+    "reportUnusedDisableDirectives": true
+}

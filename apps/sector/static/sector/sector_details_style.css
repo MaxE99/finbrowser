@@ -7,7 +7,6 @@
 .tabsContent .smallFormContentWrapper {
     background: white;
     border-radius: 0.45rem;
-    box-shadow: var(--box-shadowScheme);
 }
 
 @media (max-width: 550px) {

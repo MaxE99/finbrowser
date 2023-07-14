@@ -6,12 +6,13 @@
 <title>Settings | FinBrowser</title>
 <meta name="description"
     content="Easily customize your profile and control your notifications with our user-friendly settings panel.">
+<link rel="canonical" href="https://www.finbrowser.io/profile/settings">
 {% endblock %}
 
 {% block content %}
 <div class="pageWrapper">
     <h1>Account Settings</h1>
-    <div class="tabsContainer" role="navigation" aria-label="Settings Menu">
+    <div class="tabsContainer" role="navigation" aria-label="Settings menu">
         <button class="activatedTab" data-for-tab="0">Profile</button>
         <button data-for-tab="1">Password</button>
         <button data-for-tab="2">Notifications</button>
@@ -34,9 +35,9 @@
                 <div class="profilePicContainer">
                     <div class="profilePicInnerContainer">
                         {% if user.profile.profile_pic %}
-                        <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture">
+                        <img src="{{ user.profile.profile_pic.url }}" alt="Your profile picture">
                         {% else %}
-                        <img src="{% static 'home/media/favicon.png' %}" alt="Profile Picture">
+                        <img src="{% static 'home/media/favicon.png' %}" alt="Your profile picture">
                         {% endif %}
                         <input hidden="true" type="file" accept="image/*" />
                         <button type="button" class="changeProfilePicButton finButtonWhite">Change</button>
@@ -70,13 +71,14 @@
             <div class="notificationContainer">
                 <div class="sliderWrapper">
                     <div class="sliderContentContainer">
-                        <button aria-label="Slide Left" class="handle leftHandle finButtonWhite">
+                        <button aria-label="Slide left" class="handle leftHandle finButtonWhite">
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <div class="slider">
                             {% for notification in user_source_notifications %}
                             <div class="contentWrapper" id="fsss?si#{{ notification.source.source_id }}">
-                                <img src="{% static notification.source.favicon_path %}" alt="Source Picture" />
+                                <img src="{% static notification.source.favicon_path %}"
+                                    alt="Picture of {{ notification.source.name }}" />
                                 <div class="contentRatingContainer">
                                     <i class="fa fa-star"></i>
                                     <span>{{ notification.source.average_rating }}</span>
@@ -93,7 +95,7 @@
                                     class="notificationButton notificationActivated finButtonBlue">Notification
                                     Off</button>
                                 <a class="contentLink" href="{{ notification.source.get_absolute_url }}"
-                                    aria-label="Open Profile Of {{ notification.source.name }}"></a>
+                                    aria-label="Open profile of {{ notification.source.name }}"></a>
                             </div>
                             {% endfor %}
                         </div>
@@ -112,7 +114,7 @@
                     <i class="fas fa-check"></i>
                     {{ notification.stock.ticker }}
                     <i class="fas fa-times" id="stni#{{ notification.notification_id }}" role="button"
-                        aria-label="Delete Notification">
+                        aria-label="Delete notification">
                     </i>
                 </div>
                 {% endfor %}
@@ -126,7 +128,7 @@
                     <i class="fas fa-check"></i>
                     {{ notification.keyword }}
                     <i class="fas fa-times" id="kni#{{ notification.notification_id }}" role="button"
-                        aria-label="Delete Notification">
+                        aria-label="Delete notification">
                     </i>
                 </div>
                 {% endfor %}
@@ -151,7 +153,7 @@
         {% endif %}
     </div>
 
-    <script src="{% static 'accounts/min_settings_script_v9.js' %}"></script>
+    <script src="{% static 'accounts/min_settings_script_v10.js' %}"></script>
 
 </div>
 {% endblock content %}

@@ -7,7 +7,6 @@ from django import forms
 
 # Local imports
 from apps.accounts.models import Profile
-from apps.base_logger import logger
 
 User = get_user_model()
 
@@ -49,8 +48,8 @@ class UserCreationForm(forms.ModelForm):
             if commit:
                 user.save()
             return user
-        except:
-            logger.exception("User save method failed!")
+        except Exception as error:
+            print(f"User creation has caused this error: {error}")
 
 
 class UserChangeForm(forms.ModelForm):

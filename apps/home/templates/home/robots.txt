@@ -4,4 +4,11 @@ Disallow: /static/
 Disallow: /media/
 Disallow: /search_results/
 Disallow: /api/
+Disallow: ?latest_content
+Disallow: ?analysis
+Disallow: ?commentary
+Disallow: ?news
+Disallow: /?analysis
+Disallow: /?commentary
+Disallow: /?news
 Sitemap: https://www.finbrowser.io/sitemap.xml

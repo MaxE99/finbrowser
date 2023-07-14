@@ -3,13 +3,13 @@
 {% if sources %}
 <div class="sliderWrapper">
     <div class="sliderContentContainer">
-        <button aria-label="Slide Left" class="handle leftHandle finButtonWhite">
+        <button aria-label="Slide left" class="handle leftHandle finButtonWhite">
             <i class="fas fa-chevron-left"></i>
         </button>
         <div class="slider">
             {% for source in sources %}
             <div class="contentWrapper" id="ssc?si#{{ source.source_id }}">
-                <img src="{% static source.favicon_path %}" alt="Source Picture" />
+                <img src="{% static source.favicon_path %}" alt="Picture of {{ source.name }}" />
                 <div class="contentRatingContainer">
                     <i class="fa fa-star"></i>
                     <span>{{ source.average_rating }}</span>

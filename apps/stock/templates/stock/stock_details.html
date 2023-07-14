@@ -1,7 +1,21 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'stock/min_stock_details_style_v8.css' %}" />
 <title>{{ stock.full_company_name }} | FinBrowser</title>
-<meta name="description" content="Discover the latest content from {{ stock.full_company_name }}">
+<meta name="description" content="Discover the latest analysis, news and commentary for {{ stock.full_company_name }}">
+<link rel="canonical" href="https://www.finbrowser.io/stock/{{ stock.ticker }}/">
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "{{ stock.full_company_name }} - Analysis, News, and Commentary",
+        "description": "Discover the latest analysis, news and commentary for {{ stock.full_company_name }}",
+        "mainEntity": {
+            "@type": "WebPage",
+            "name": "{{ stock.full_company_name }}",
+            "url": "https://www.finbrowser.io/stock/{{ stock.ticker }}"
+          }
+    }
+</script>
 {% endblock %} {% block content %}
 
 
@@ -10,7 +24,7 @@
         <div role="form" class="addStockContainer">
             <div class="formHeaderContainer">
                 <h2>Add <span>{{ stock.ticker }}</span> to your portfolios</h2>
-                <i class="fas fa-times closeFormContainerButton"></i>
+                <i role="button" aria-label="Close form" class="fas fa-times closeFormContainerButton"></i>
             </div>
             {% if portfolios %}
             <div class="descContainer">
@@ -20,7 +34,7 @@
             <div class="portfolioSelectionContainer">
                 {% for portfolio in portfolios %}
                 <div class="portfolioContainer">
-                    <label>{{ portfolio.name }}</label>
+                    <label for="id_portfolio_{{ portfolio.portfolio_id }}">{{ portfolio.name }}</label>
                     {% if stock.stock_id in portfolio.stocks %}
                     <input id="id_portfolio_{{ portfolio.portfolio_id }}" class="portfolioInList" type="checkbox"
                         name="portfolios" value="{{ portfolio.portfolio_id }}" checked>
@@ -50,10 +64,11 @@
         </div>
         <div class="stockActionContainer">
             {% if request.user.is_authenticated %}
-            <button aria-label="Add Stock To Lists" class="addStockToListButton"><i
+            <button aria-label="Add stock to lists" class="addStockToListButton"><i
                     class="fas fa-ellipsis-h"></i></button>
             <div role="form" class="addToListForm addStockToListForm">
-                <div class="formHeaderContainer">Add To portfolios<i class="fas fa-times closeFormContainerButton"></i>
+                <div class="formHeaderContainer">Add To portfolios<i role="button" aria-label="Close form"
+                        class="fas fa-times closeFormContainerButton"></i>
                 </div>
                 <div class="listSelectionContainer">
                     {% for portfolio in portfolios %}
@@ -65,20 +80,20 @@
                         <input id="portfolio_{{portfolio.portfolio_id}}" type="checkbox"
                             value="{{portfolio.portfolio_id}}">
                         {% endif %}
-                        <label>{{ portfolio.name }}</label>
+                        <label for="portfolio_{{portfolio.portfolio_id}}">{{ portfolio.name }}</label>
                     </div>
                     {% endfor %}
                 </div>
                 <button class="saveButton">Save</button>
             </div>
             {% if notification_id %}
-            <i id="nid#{{notification_id}}" aria-label="Active Notification"
+            <i id="nid#{{notification_id}}" role="button" aria-label="Deactivate notifications"
                 class="fas fa-bell-slash notificationButton notificationActivated"></i>
             {% else %}
-            <i role="button" aria-label="Inactive Notification" class="fas fa-bell notificationButton"></i>
+            <i role="button" aria-label="Activate notifications" class="fas fa-bell notificationButton"></i>
             {% endif %}
             {% else %}
-            <button aria-label="Add Stock To Lists" class="addStockToListButton openAuthPrompt ap4"><i
+            <button aria-label="Add stock to lists" class="addStockToListButton openAuthPrompt ap4"><i
                     class="fas fa-ellipsis-h openAuthPrompt ap4"></i></button>
             <i aria-label="Activate Notifications"
                 class="fas fa-bell-slash notificationButton notificationActivated openAuthPrompt ap3"></i>
@@ -86,7 +101,7 @@
         </div>
     </div>
 
-    <div class="tabsContainer" id="content" role="navigation" aria-label="Stock Content Navigation">
+    <div class="tabsContainer" id="content" role="navigation" aria-label="Content navigation">
         <button class="activatedTab" data-for-tab="0">Analysis</button>
         <button data-for-tab="1">Commentary</button>
         <button data-for-tab="2">News</button>
@@ -114,6 +129,19 @@
         {% create_source_container commentary_sources subscribed_sources request %}
         <div class="contentColumnWrapper">
             {% if commentary %}
+            <div class="emptyInformationContainer twitterUpdate">
+                <h3>Twitter Update</h3>
+                <div>
+                    Hey there! Due to the recent policy changes implemented by Twitter, I regret to inform you that
+                    FinBrowser is currently unable to display any new Tweets. I know this might be disappointing, as
+                    Twitter
+                    is a valuable source of information and updates for many of us. However, I want to assure you that I
+                    am
+                    actively working on finding alternative solutions and exploring ways to reintegrate Twitter sources
+                    into
+                    this website. I appreciate your patience and understanding during this time of transition.
+                </div>
+            </div>
             <div class="contentColumnContainer">
                 {% create_content_container commentary request highlighted_content_ids "commentary" %}
             </div>
@@ -148,5 +176,5 @@
     </div>
 </div>
 
-<script src="{% static 'stock/min_stock_details_script_v6.js' %}"></script>
+<script src="{% static 'stock/min_stock_details_script_v7.js' %}"></script>
 {% endblock content %}
