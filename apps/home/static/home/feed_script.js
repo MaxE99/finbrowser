@@ -144,7 +144,7 @@ function addNewContentToContainer(article, stock_pitch = false) {
     const spanTag1 = document.createElement('span');
     spanTag1.innerText = 'Add to list';
     addToListButton.append(faList, spanTag1);
-    addToListButton.addEventListener('click', (e) => openAddToListMenu(e));
+    addToListButton.addEventListener('click', (e) => openAddArticleToListMenu(e));
     const addToHighlightedButton = document.createElement('div');
     addToHighlightedButton.classList.add('addToHighlightedButton');
     const faHighlighter = document.createElement('i');
@@ -157,7 +157,7 @@ function addNewContentToContainer(article, stock_pitch = false) {
     }
     addToHighlightedButton.append(faHighlighter, spanTag2);
     addToHighlightedButton.addEventListener('click', () =>
-        highlightContent(addToHighlightedButton)
+        changeHighlightedStatus(addToHighlightedButton)
     );
     articleOptionsContainer.append(addToListButton, addToHighlightedButton);
     contentInfoContainer.append(ellipsis, articleOptionsContainer);
