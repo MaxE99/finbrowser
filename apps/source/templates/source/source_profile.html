@@ -11,7 +11,7 @@
       "description": "Discover the latest content from {{ source.name }}",
       "aggregateRating": {
         "@type": "AggregateRating",
-        "ratingValue": "{{ sim_source.average_rating }}",
+        "ratingValue": "{{ source.average_rating }}",
         "reviewCount": "{{ source.ammount_of_ratings }}"
       },
       "mainEntity": {
@@ -22,7 +22,6 @@
   }
 </script>
 {% endblock %} {% block content %}
-
 
 <div class="sourceRatingsWrapper">
   <div class="sourceRatingsContainer">
