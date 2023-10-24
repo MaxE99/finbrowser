@@ -7,6 +7,7 @@ from apps.stock.views import StockDetailView, PortfolioView, PortfolioDetailView
 
 app_name = "stock"
 
+
 # Define a custom route converter to accept a slug with a point
 class SlugWithPointConverter:
     regex = r"[\w\-\.]+"
@@ -14,7 +15,7 @@ class SlugWithPointConverter:
 
 urlpatterns = [
     re_path(
-        r"^stock/(?P<slug_with_point>[\w\-\.]+)/$",
+        r"^stock/(?P<slug_with_point>[\w\-\.]+)$",
         StockDetailView.as_view(),
         name="stock-details",
     ),
