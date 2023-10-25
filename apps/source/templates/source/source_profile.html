@@ -6,16 +6,18 @@
 <script type="application/ld+json">
   {
       "@context": "https://schema.org",
-      "@type": "CreativeWork",
+      "@type": "MediaReview",
       "name": "{{ source.name }} - Latest Content",
       "description": "Discover the latest content from {{ source.name }}",
       "aggregateRating": {
         "@type": "AggregateRating",
-        "ratingValue": "{{ source.average_rating }}",
-        "reviewCount": "{{ source.ammount_of_ratings }}"
+        "ratingValue": {{ source.average_rating }},
+        "ratingCount": {{ source.ammount_of_ratings }},
+        "worstRating": 1,
+        "bestRating": 10
       },
       "mainEntity": {
-          "@type": "CreativeWork",
+          "@type": "MediaReview",
           "name": "{{ source.name }}",
           "url": "https://www.finbrowser.io/source/{{ source.slug }}"
         }
