@@ -6,9 +6,14 @@
 <script type="application/ld+json">
   {
       "@context": "https://schema.org",
-      "@type": "MediaReview",
+      "@type": "MediaObject",
       "name": "{{ source.name }} - Latest Content",
       "description": "Discover the latest content from {{ source.name }}",
+      "itemReviewed": {
+        "@type": "MediaObject",
+        "name": "Stock market content from {{ source.name }}",
+        "url": "{{ source.url }}"
+      },
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": {{ source.average_rating }},
@@ -17,8 +22,8 @@
         "bestRating": 10
       },
       "mainEntity": {
-          "@type": "MediaReview",
-          "name": "{{ source.name }}",
+          "@type": "MediaObject",
+          "author": "{{ source.name }}",
           "url": "https://www.finbrowser.io/source/{{ source.slug }}"
         }
   }
