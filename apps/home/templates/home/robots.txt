@@ -4,6 +4,7 @@ Disallow: /static/
 Disallow: /media/
 Disallow: /search_results/
 Disallow: /api/
+Disallow: /*?*
 Disallow: ?latest_content
 Disallow: ?analysis
 Disallow: ?commentary
