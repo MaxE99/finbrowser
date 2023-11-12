@@ -7,6 +7,7 @@ from apps.home.views import (
     FeedView,
     SearchResultView,
     GuideView,
+    FaviconView,
 )
 
 app_name = "home"
@@ -20,4 +21,5 @@ urlpatterns = [
         name="search-results",
     ),
     path("guide/", GuideView.as_view(), name="guide"),
+    path("favicon.ico", FaviconView.as_view(), name="favicon"),
 ]
