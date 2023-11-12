@@ -4,7 +4,7 @@ from django.views.generic import TemplateView, View
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from researchbrowserproject.settings import STATIC_ROOT
+from researchbrowserproject.settings import STATIC_URL
 
 # Python imports
 import os
@@ -328,7 +328,7 @@ class SearchResultView(TemplateView, BaseMixin):
 
 class FaviconView(View):
     def get(self, request, *args, **kwargs):
-        favicon_path = os.path.join(STATIC_ROOT, "home/media/favicon.ico")
+        favicon_path = os.path.join(STATIC_URL, "home/media/favicon.ico")
         if os.path.exists(favicon_path):
             with open(favicon_path, "rb") as f:
                 favicon = f.read()
