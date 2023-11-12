@@ -1,8 +1,13 @@
 # Django imports
 from django.contrib.auth import get_user_model
-from django.views.generic import TemplateView
-from django.shortcuts import render
+from django.views.generic import TemplateView, View
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
+from researchbrowserproject.settings import STATIC_ROOT
+
+# Python imports
+import os
 
 # Local imports
 from apps.logic.pure_logic import paginator_create
@@ -319,6 +324,17 @@ class SearchResultView(TemplateView, BaseMixin):
             "news",
         )
         return context
+
+
+class FaviconView(View):
+    def get(self, request, *args, **kwargs):
+        favicon_path = os.path.join(STATIC_ROOT, "home/media/favicon.ico")
+        if os.path.exists(favicon_path):
+            with open(favicon_path, "rb") as f:
+                favicon = f.read()
+            return HttpResponse(favicon, content_type="image/x-icon")
+        else:
+            return HttpResponse(status=404)
 
 
 def error_view_500(request):
