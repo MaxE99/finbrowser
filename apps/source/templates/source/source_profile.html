@@ -1,14 +1,15 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'source/min_source_profile_style_v11.css' %}" />
 <title>{{ source.name }} | FinBrowser</title>
-<meta name="description" content="Discover the latest content from {{ source.name }}">
+<meta name="description"
+  content="Explore the latest content from {{ source.name }} on FinBrowser. Discover valuable insights on the stock market and rate the content for quality.">
 <link rel="canonical" href="https://www.finbrowser.io/source/{{ source.slug }}">
 <script type="application/ld+json">
   {
       "@context": "https://schema.org",
       "@type": "MediaObject",
       "name": "{{ source.name }} - Latest Content",
-      "description": "Discover the latest content from {{ source.name }}",
+      "description": "Explore the latest content from {{ source.name }} on FinBrowser. Discover valuable insights on the stock market and rate the content for quality.",
       "itemReviewed": {
         "@type": "MediaObject",
         "name": "Stock market content from {{ source.name }}",
