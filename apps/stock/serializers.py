@@ -5,7 +5,7 @@ from datetime import timedelta
 from django.utils import timezone
 
 # Local imports
-from apps.scrapper.english_words import english_words
+from data.english_words import english_words
 from apps.stock.models import Stock, PortfolioKeyword, PortfolioStock, Portfolio
 
 
