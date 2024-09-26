@@ -3,7 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
 # Local imports
-from apps.scrapper.english_words import english_words
+from data.english_words import english_words
 from apps.stock.models import PortfolioStock
 
 

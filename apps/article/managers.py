@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models import Q
 
 # Local imports
-from apps.scrapper.english_words import english_words
+from data.english_words import english_words
 
 
 class ArticleManager(models.Manager):
