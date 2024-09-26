@@ -145,5 +145,3 @@ deployment.zip
 
 # Ignore AWS deployment history
 deployments/
-
-tfplan
