@@ -1,98 +1,98 @@
-# Python Imports
 import os
 import environ
 
 env = environ.Env()
 environ.Env.read_env()
 
+SECRET_KEY = os.environ.get("SECRET_KEY")
+DEBUG = os.environ.get("DEBUG_MODE")
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-FAVICON_FILE_DIRECTORY = "static/home/favicons"
 TWEET_IMG_FILE_DIRECTORY = "static/home/tweet_imgs"
 INITIAL_TWEET_IMG_FILE_DIRECTORY = "static/home/initial_tweet_imgs"
-
-DEBUG = False
+FAVICON_FILE_DIRECTORY = "static/home/favicons"
 
 if DEBUG:
     ALLOWED_HOSTS = []
+
     STATIC_URL = "/static/"
-    SECRET_KEY = env("SECRET_KEY")
-    FAVICON_FILE_DIRECTORY = os.path.join(BASE_DIR, "apps/home/static/home/favicons")
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "testdb",
-            "USER": "postgres",
-            "PASSWORD": "post123gres",
-            "HOST": "localhost",
-            "PORT": "5432",
-        }
-    }
     MEDIA_ROOT = os.path.join(BASE_DIR, "uploads/")
     MEDIA_URL = "/uploads/"
+
 else:
-    SECRET_KEY = os.environ.get("SECRET_KEY")
-    ALLOWED_HOSTS = ["researchbrowser.herokuapp.com", ".finbrowser.io"]
-    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-    AWS_STORAGE_BUCKET_NAME = "finbrowser"
-    AWS_S3_CUSTOM_DOMAIN = "%s.s3.us-east-2.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
-    AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
-    AWS_LOCATION = "static"
-    STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    DEFAULT_FILE_STORAGE = "researchbrowserproject.storages.MediaStore"
+    ALLOWED_HOSTS = [".finbrowser.io"]
+
     # HTTPS Settings
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_SSL_REDIRECT = True
     SECURE_REFERRER_POLICY = "strict-origin"
+
     # HSTS Settings
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+
     # CSP Settings
     CSP_DEFAULT_SRC = (
         "'self'",
-        "https://finbrowser.s3.us-east-2.amazonaws.com/",
+        "https://finbrowser-staticfiles-bucket.s3.us-east-2.amazonaws.com/",
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
         "*.analytics.google.com",
     )
-    CSP_STYLE_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/")
+    CSP_STYLE_SRC = (
+        "'self'",
+        "https://finbrowser-staticfiles-bucket.s3.us-east-2.amazonaws.com/",
+    )
     CSP_SCRIPT_SRC = (
         "'self'",
-        "https://finbrowser.s3.us-east-2.amazonaws.com/",
+        "https://finbrowser-staticfiles-bucket.s3.us-east-2.amazonaws.com/",
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
         "*.analytics.google.com",
     )
-    CSP_FONT_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/")
-    CSP_IMG_SRC = ("'self'", "https://finbrowser.s3.us-east-2.amazonaws.com/")
+    CSP_FONT_SRC = (
+        "'self'",
+        "https://finbrowser-staticfiles-bucket.s3.us-east-2.amazonaws.com/",
+    )
+    CSP_IMG_SRC = (
+        "'self'",
+        "https://finbrowser-staticfiles-bucket.s3.us-east-2.amazonaws.com/",
+    )
     CSC_CONNECT_SRC = (
         "'self'",
-        "https://finbrowser.s3.us-east-2.amazonaws.com/",
+        "https://finbrowser-staticfiles-bucket.s3.us-east-2.amazonaws.com/",
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
         "*.analytics.google.com",
     )
     CSP_INCLUDE_NONCE_IN = ["script-src"]
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": os.environ.get("DATABASE_NAME"),
-            "USER": os.environ.get("DATABASE_USER"),
-            "PASSWORD": os.environ.get("DATABASE_PASSWORD"),
-            "HOST": os.environ.get("DATABASE_HOST"),
-            "PORT": "5432",
-        }
+
+    # AWS Settings
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = "finbrowser-staticfiles-bucket"
+    AWS_S3_CUSTOM_DOMAIN = "%s.s3.us-east-2.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
+    AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+    AWS_LOCATION = "static"
+    STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    DEFAULT_FILE_STORAGE = "researchbrowserproject.storages.MediaStore"
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_MASTER_PASSWORD"),
+        "HOST": os.environ.get("DB_HOSTNAME"),
+        "PORT": "5432",
     }
-    broker_url = os.environ.get("REDIS_URL")
-    CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+}
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -106,7 +106,6 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework",
     "django.contrib.sitemaps",
-    "django_celery_beat",
     # 'debug_toolbar',
     "django_cleanup.apps.CleanupConfig",
     "apps.accounts",
@@ -117,8 +116,8 @@ INSTALLED_APPS = [
     "apps.sector",
     "apps.list",
     "apps.article",
-    "apps.scrapper",
     "apps.stock",
+    "apps.tasks",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -213,14 +212,13 @@ AUTHENTICATION_BACKENDS = [
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = env("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
-
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
@@ -233,7 +231,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-# Only for django debug_toolbar
+# needed for django debug_toolbar
 # INTERNAL_IPS = [
 #     "127.0.0.1",
 # ]
