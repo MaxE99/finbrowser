@@ -1,12 +1,34 @@
+from typing import Any
+
 from django.core.management.base import BaseCommand
 
-# Local imports
-from apps.tasks.helpers import scrape_sources
+from apps.tasks.utils import scrape_sources
 
 
 class Command(BaseCommand):
-    help = "Scrapes Substack"
+    """
+    Django management command to scrape articles from Substack.
 
-    def handle(self, *args, **kwargs):
+    This command initiates the scraping process for articles from
+    the Substack platform.
+    """
+
+    help = "Scrapes articles from Substack."
+
+    def handle(self, *args: Any, **kwargs: Any):
+        """
+        Executes the command to scrape articles from Substack.
+
+        This method calls the `scrape_sources` function with the specific
+        parameters for the Substack source.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
         scrape_sources("Substack", "feed", 10),
-        self.stdout.write("Finished scraping substack!")
+        self.stdout.write(
+            self.style.SUCCESS(
+                "Successfully completed scraping articles from Substack!"
+            )
+        )

@@ -1,17 +1,24 @@
-# Django Imports
 from django.contrib import admin
-from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import Group
 
-# Local imports
-from apps.accounts.forms import UserCreationForm, UserChangeForm
+from apps.accounts.forms import UserChangeForm, UserCreationForm
 from apps.accounts.models import Profile, Website
 
 User = get_user_model()
 
 
 class UserAdmin(BaseUserAdmin):
+    """
+    Custom admin interface for the User model.
+
+    This class extends the default Django UserAdmin to use custom forms
+    for adding and changing users (UserCreationForm and UserChangeForm).
+    It also customizes the list display, filters, fieldsets, search fields,
+    and ordering for the User model in the admin interface.
+    """
+
     form = UserChangeForm
     add_form = UserCreationForm
     list_display = ("username", "email")

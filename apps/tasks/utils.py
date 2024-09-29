@@ -1,29 +1,82 @@
-# Standard import
 import html
-from urllib.request import Request, urlopen
+from urllib.request import Request, urlopen, urlretrieve
 import xml.etree.ElementTree as ET
 from time import sleep
+from typing import Optional, List, Dict, Union
+from io import BytesIO
+import os
 
-# External imports
+from PIL import Image
+import boto3
 from dateutil import parser
 
-# Django import
 from django.shortcuts import get_object_or_404
+from django.db import models
 from django.db.models import Q
+from django.conf import settings
 from django.utils import timezone
 
-# local imports
 from apps.article.models import Article
 from apps.source.models import Source
 from apps.accounts.models import Website
 from apps.home.models import Notification, NotificationMessage
+from apps.article.models import Article
+
+s3 = boto3.client("s3")
 
 
-def article_components_get(item, description=False):
-    """Goes through xml item and returns title, link and publishing date of article."""
+def create_source_profile_img(source, file_url: str):
+    """
+    Downloads an image from a given URL, resizes it, and uploads it to S3.
 
-    # some titles in the xml files have been escaped twice which makes it necesseary to ecape the titles more than once
-    def double_escaped_string_unescape(title):
+    Args:
+        source (Source): The source object to update with the new favicon.
+        file_url (str): The URL of the image to be downloaded.
+    """
+    urlretrieve(file_url, "temp_file.png")
+
+    with Image.open("temp_file.png") as image:
+        output = BytesIO()
+        image = image.resize((175, 175))
+        image.save(output, format="WEBP", quality=99)
+        output.seek(0)
+
+        s3.upload_fileobj(
+            output,
+            "finbrowser",
+            os.path.join(settings.FAVICON_FILE_DIRECTORY, f"{source.slug}.webp"),
+        )
+
+    source.favicon_path = f"home/favicons/{source.slug}.webp"
+    source.save()
+
+
+def get_article_components(
+    item, description: bool = False
+) -> Dict[str, Union[str, timezone.datetime]]:
+    """
+    Extract components from an article item, including title, link, publication date,
+    and optionally a description.
+
+    Args:
+        item: The XML element representing the article.
+        description (bool): Whether to include the description in the output.
+
+    Returns:
+        Dict[str, Union[str, timezone.datetime]]: A dictionary containing the
+        title, original title, link, and publication date.
+    """
+
+    def fully_unescape_string(title: str) -> str:
+        """
+        Unescape a double-escaped string.
+
+        Args:
+            title (str): The string to unescape.
+
+        Returns:
+            str: The unescaped string.
+        """
         unescaped = ""
         while unescaped != title:
             title = html.unescape(title)
@@ -31,28 +84,56 @@ def article_components_get(item, description=False):
         return title
 
     link = item.find(".//link").text
-
     date_string = item.find(".//pubDate").text
     parsed_date = parser.parse(date_string)
-    if timezone.is_aware(parsed_date):
-        pub_date = parsed_date
-    else:
-        pub_date = timezone.make_aware(
-            parsed_date, timezone=timezone.get_default_timezone()
-        )
-    title = double_escaped_string_unescape(item.find(".//title").text)
+
+    pub_date = (
+        parsed_date
+        if timezone.is_aware(parsed_date)
+        else timezone.make_aware(parsed_date, timezone=timezone.get_default_timezone())
+    )
+    title = fully_unescape_string(item.find(".//title").text)
+    title_with_desc = None
+
     if description:
-        description = double_escaped_string_unescape(item.find(".//description").text)
+        description = fully_unescape_string(item.find(".//description").text)
         title_with_desc = f"{title}: {description}"[0:500]
-        return title_with_desc, title, link, pub_date
-    return None, title, link, pub_date
+
+    return {
+        "title": title_with_desc,
+        "original_title": title,
+        "link": link,
+        "pub_date": pub_date,
+    }
 
 
-def article_creation_check(
-    creation_list, articles, title, source, link, pub_date=timezone.now()
-):
-    """Checks if article already exists and if so if changed need to be made. Otherwise appends to creation list"""
+def perform_article_status_check(
+    creation_list: List[dict],
+    articles,
+    title: str,
+    source: str,
+    link: str,
+    pub_date: Optional[timezone.datetime] = timezone.now(),
+) -> Dict[str, List]:
+    """
+    Checks if an article already exists in the database. If it does,
+    updates the article if there are changes. If not, appends the
+    article details to the creation list.
+
+    Args:
+        creation_list (List[dict]): The list of articles to be created.
+        articles (QuerySet): The queryset of existing articles.
+        title (str): The title of the article.
+        source (str): The source of the article.
+        link (str): The link to the article.
+        pub_date (Optional[timezone.datetime]): The publication date of the article.
+
+    Returns:
+        Dict[str, List]: A tuple containing the updated creation list
+        and a boolean indicating if the article already exists.
+    """
     article_exists = False
+
     if articles.filter(link=link, source=source).exists():
         article = articles.filter(link=link, source=source).first()
         if article.title != title:
@@ -60,6 +141,7 @@ def article_creation_check(
             article.pub_date = pub_date
             article.save()
         article_exists = True
+
     elif articles.filter(title=title, source=source).exists():
         article = articles.filter(title=title, source=source).first()
         if article.link != link:
@@ -67,7 +149,8 @@ def article_creation_check(
             article.pub_date = pub_date
             article.save()
         article_exists = True
-    if article_exists is False:
+
+    if not article_exists:
         creation_list.append(
             {
                 "title": title,
@@ -76,16 +159,25 @@ def article_creation_check(
                 "source": source,
             }
         )
-    return creation_list, article_exists
+
+    return {"creation_list": creation_list, "article_exists": article_exists}
 
 
-def notifications_create(created_articles):
+def create_notifications(created_articles: List[Article]):
+    """
+    Creates notifications based on the articles that were created.
+
+    Args:
+        created_articles (List[Article]): A list of articles that were recently created.
+    """
+
     notifications_creation_list = []
     notifications = Notification.objects.all()
     source_notifications = notifications.filter(source__isnull=False)
     articles = Article.objects.filter(
         article_id__in=[article.article_id for article in created_articles]
     )
+
     for notification in notifications.exclude(source__isnull=False).select_related(
         "stock"
     ):
@@ -101,6 +193,7 @@ def notifications_create(created_articles):
                         "user": notification.user,
                     }
                 )
+
         else:
             for article in articles.filter(
                 Q(search_vector=notification.stock.ticker)
@@ -114,6 +207,7 @@ def notifications_create(created_articles):
                         "user": notification.user,
                     }
                 )
+
     for article in articles:
         for notification in source_notifications.filter(
             source=article.source
@@ -126,12 +220,14 @@ def notifications_create(created_articles):
                     "user": notification.user,
                 }
             )
+
     existing_dicts = set()
     filtered_list = []
     for ncl_dict in notifications_creation_list:
         if (ncl_dict["article"], ncl_dict["user"]) not in existing_dicts:
             existing_dicts.add((ncl_dict["article"], ncl_dict["user"]))
             filtered_list.append(ncl_dict)
+
     new_notification_messages = [
         NotificationMessage(
             notification=new_notification["notification"],
@@ -143,10 +239,14 @@ def notifications_create(created_articles):
     NotificationMessage.objects.bulk_create(new_notification_messages)
 
 
-def bulk_create_articles_and_notifications(creation_list):
-    from apps.article.models import Article
+def bulk_create_articles_and_notifications(creation_list: List[Dict[str, str]]):
+    """
+    Bulk creates articles and their corresponding notifications.
 
-    if len(creation_list):
+    Args:
+        creation_list (List[Dict[str, str]]): A list of article details to be created.
+    """
+    if creation_list:
         new_articles = [
             Article(
                 title=article_new["title"][:500],
@@ -157,11 +257,20 @@ def bulk_create_articles_and_notifications(creation_list):
             for article_new in creation_list
         ]
         articles = Article.objects.bulk_create(new_articles)
-        notifications_create(articles)
+        create_notifications(articles)
 
 
-def create_articles_from_feed(source, feed_url, articles):
+def create_articles_from_feed(source, feed_url: str, articles: models.QuerySet):
+    """
+    Creates articles from an RSS feed and generates notifications for them.
+
+    Args:
+        source (Source): The source of the articles.
+        feed_url (str): The URL of the RSS feed.
+        articles (QuerySet): The queryset of existing articles to check against.
+    """
     create_article_list = []
+
     try:
         req = Request(
             feed_url,
@@ -169,47 +278,55 @@ def create_articles_from_feed(source, feed_url, articles):
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
             },
         )
-        website_data = urlopen(req)
-        website_xml = website_data.read()
-        website_data.close()
+        with urlopen(req) as website_data:
+            website_xml = website_data.read()
+
         items = ET.fromstring(website_xml).findall(".//item")
         for item in items:
             try:
                 if str(source.website) in ["Substack", "Forbes"]:
-                    title, originial_title, link, pub_date = article_components_get(
-                        item, description=True
-                    )
+                    components = get_article_components(item, description=True)
                     # in previous versions I didn't include the description in the title
                     if articles.filter(
-                        title=originial_title, pub_date=pub_date, source=source
+                        title=components["originial_title"],
+                        pub_date=components["pub_date"],
+                        source=source,
                     ).exists():
                         break
                 else:
-                    _, title, link, pub_date = article_components_get(item)
+                    components = get_article_components(item)
+
                 title = html.unescape(title)
-                create_article_list, article_exists = article_creation_check(
+                lists = perform_article_status_check(
                     create_article_list,
                     articles,
                     title,
                     source,
-                    link,
-                    pub_date=pub_date,
+                    components["link"],
+                    pub_date=components["pub_date"],
                 )
-                if article_exists:
+                create_article_list = lists["creation_list"]
+
+                if lists["article_exists"]:
                     break
+
             except Exception as error:
                 print(error)
                 continue
+
     except Exception as error:
         print(error)
-        pass
+
     bulk_create_articles_and_notifications(create_article_list)
 
 
-##################################################################
+def get_alt_feed_sources() -> List[Source]:
+    """
+    Retrieves a list of alternative feed sources.
 
-
-def get_alt_feed_sources():
+    Returns:
+        List[Source]: A queryset of sources with alternative feeds.
+    """
     alt_feed_sources = (
         Source.objects.filter(website__name="Other", alt_feed__isnull=False)
         .exclude(alt_feed="none")
@@ -218,45 +335,67 @@ def get_alt_feed_sources():
     return alt_feed_sources
 
 
-def scrape_sources(source_name, extension, alt_feed=False, timeout=0):
+def scrape_sources(
+    source_name: str, extension: str, alt_feed: bool = False, timeout: int = 0
+):
+    """
+    Scrapes articles from specified sources based on the source name and feed type.
+
+    Args:
+        source_name (str): The name of the source website.
+        extension (str): The extension to append to the source URL.
+        alt_feed (bool): Flag to indicate if alternative feeds should be used.
+        timeout (int): The number of seconds to wait between requests.
+    """
     if alt_feed:
         sources = get_alt_feed_sources()
     else:
         sources = Source.objects.filter(
             website=get_object_or_404(Website, name=source_name)
         ).only("source_id", "url", "website")
+
     articles = Article.objects.filter(source__in=sources).only(
         "title", "pub_date", "source", "link"
     )
+
     for source in sources:
-        if source.alt_feed:
-            feed_url = source.alt_feed
-        else:
-            feed_url = f"{source.url}{extension}"
+        feed_url = source.alt_feed if source.alt_feed else f"{source.url}{extension}"
+
         try:
             create_articles_from_feed(source, feed_url, articles)
             if timeout:
                 sleep(timeout)
         except Exception as error:
             print(f"Scrapping {source} failed due to this error: {error}")
-            continue
 
 
-def get_youtube_sources_and_articles():
+def get_youtube_sources_and_articles() -> Dict[str, models.QuerySet]:
+    """
+    Retrieves YouTube sources and their associated articles.
+
+    Returns:
+        Dict[str, models.QuerySet]: A tuple containing a list of YouTube sources and their articles.
+    """
     youtube_sources = Source.objects.filter(
         website=get_object_or_404(Website, name="YouTube")
     ).only("source_id", "external_id")
     articles = Article.objects.filter(source__in=youtube_sources).only(
         "title", "pub_date", "link", "source"
     )
-    return youtube_sources, articles
+    return {"sources": youtube_sources, "articles": articles}
 
 
-def get_spotify_sources_and_articles():
+def get_spotify_sources_and_articles() -> Dict[str, models.QuerySet]:
+    """
+    Retrieves Spotify sources and their associated articles.
+
+    Returns:
+        Dict[str, models.QuerySet]: A tuple containing a list of Spotify sources and their articles.
+    """
     spotify_sources = Source.objects.filter(
         website=get_object_or_404(Website, name="Spotify")
     ).only("source_id", "external_id")
     articles = Article.objects.filter(source__in=spotify_sources).only(
         "title", "link", "source"
     )
-    return spotify_sources, articles
+    return {"sources": spotify_sources, "articles": articles}

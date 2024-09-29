@@ -16,26 +16,24 @@ User = get_user_model()
 class TestArticleManager(CreateTestInstances, TestCase):
     def test_get_list_content_by_content_type(self):
         selected_list = get_object_or_404(List, name="List1")
-        analysis, commentary, news = Article.objects.get_list_content_by_content_type(
+        content = Article.objects.get_list_content_by_content_type(
             selected_list.sources.all()
         )
-        self.assertEqual(analysis.count(), 7)
-        self.assertEqual(commentary.count(), 2)
-        self.assertEqual(news.count(), 0)
+        self.assertEqual(content["analysis"].count(), 7)
+        self.assertEqual(content["commentary"].count(), 2)
+        self.assertEqual(content["news"].count(), 0)
 
     def test_get_subscribed_content_by_content_type(self):
         user = get_object_or_404(User, username="TestUser1")
         subscribed_sources = Source.objects.filter_subscribed_sources_by_content_type(
             user
         )
-        (
-            analysis_content,
-            commentary_content,
-            news_content,
-        ) = Article.objects.get_subscribed_content_by_content_type(subscribed_sources)
-        self.assertEqual(analysis_content.count(), 7)
-        self.assertEqual(commentary_content.count(), 2)
-        self.assertEqual(news_content.count(), 3)
+        subscribed_content = Article.objects.get_subscribed_content_by_content_type(
+            subscribed_sources
+        )
+        self.assertEqual(subscribed_content["analysis"].count(), 7)
+        self.assertEqual(subscribed_content["commentary"].count(), 2)
+        self.assertEqual(subscribed_content["news"].count(), 3)
 
     # def test_get_portfolio_content(self): # makes no sense to test because of dependence
     #     pass

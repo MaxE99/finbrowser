@@ -1,7 +1,5 @@
-# Django imports
 from django.urls import path
 
-# Local imports
 from apps.sector.views import SectorDetailView
 
 app_name = "sector"

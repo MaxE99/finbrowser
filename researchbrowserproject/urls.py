@@ -1,4 +1,3 @@
-# Django imports
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -6,7 +5,6 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic.base import TemplateView
 
-# Local imports
 from researchbrowserproject.sitemaps import (
     SectorSitemap,
     RegistrationSitemaps,
@@ -14,8 +12,7 @@ from researchbrowserproject.sitemaps import (
     ContentSitemaps,
     StockSitemap,
 )
-
-from apps.home.views import NotFoundView, error_view_500, error_view_503
+from apps.home.views import NotFoundView
 
 sitemaps = {
     "sources": SourceSitemap,
@@ -53,5 +50,3 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = NotFoundView.as_view()
-# handler500 = error_view_500
-# handler503 = error_view_503

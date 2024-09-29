@@ -1,7 +1,5 @@
-# Django Imports
 from django.contrib import admin
 
-# Local imports
 from apps.article.models import (
     Article,
     HighlightedArticle,
@@ -12,6 +10,13 @@ from apps.article.models import (
 
 
 class ArticleSearch(admin.ModelAdmin):
+    """
+    Admin view for searching Articles.
+
+    This admin class enables searching Articles by their title
+    and provides a filter option by source.
+    """
+
     search_fields = [
         "title",
     ]
@@ -21,12 +26,25 @@ class ArticleSearch(admin.ModelAdmin):
 
 
 class SearchInsteadOfDropdown(admin.ModelAdmin):
+    """
+    Admin view with autocomplete for Article selection.
+
+    This admin class enables the use of an autocomplete field
+    for selecting articles.
+    """
+
     autocomplete_fields = [
         "article",
     ]
 
 
 class StockPitchDropdown(admin.ModelAdmin):
+    """
+    Admin view for stock pitches with an autocomplete feature.
+
+    This admin class provides an autocomplete selection for articles.
+    """
+
     autocomplete_fields = ["article"]
 
 

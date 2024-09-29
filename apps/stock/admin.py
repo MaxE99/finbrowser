@@ -1,11 +1,13 @@
-# Django Imports
 from django.contrib import admin
 
-# Local Imports
 from apps.stock.models import Stock, Portfolio, PortfolioStock, PortfolioKeyword
 
 
 class StockSearch(admin.ModelAdmin):
+    """
+    Admin view for searching stocks in the admin interface.
+    """
+
     search_fields = [
         "ticker",
     ]
