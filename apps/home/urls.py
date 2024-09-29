@@ -1,7 +1,5 @@
-# Django imports
 from django.urls import path
 
-# Local imports
 from apps.home.views import (
     NotificationView,
     FeedView,

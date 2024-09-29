@@ -1,7 +1,5 @@
-# Django imports
 from django.urls import path, re_path
 
-# Local imports
 from apps.stock.views import StockDetailView, PortfolioView, PortfolioDetailView
 
 

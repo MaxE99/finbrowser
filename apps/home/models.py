@@ -1,10 +1,7 @@
-# Django imports
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
-
-# Local imports
 from apps.source.models import Source
 from apps.article.models import Article
 from apps.stock.models import Stock
@@ -14,6 +11,10 @@ User = get_user_model()
 
 
 class Notification(models.Model):
+    """
+    Represents a notification for a user based on source, keyword, or stock.
+    """
+
     notification_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True)
@@ -42,7 +43,13 @@ class Notification(models.Model):
 
     objects = NotificationManager()
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Returns a string representation of the notification instance.
+
+        Returns:
+            str: A string representing the user and the relevant notification content.
+        """
         if self.stock:
             return f"{self.user} - {self.stock}"
         elif self.source:
@@ -52,6 +59,10 @@ class Notification(models.Model):
 
 
 class NotificationMessage(models.Model):
+    """
+    Represents a message associated with a notification, linked to an article.
+    """
+
     notification_message_id = models.AutoField(primary_key=True)
     notification = models.ForeignKey(Notification, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
@@ -68,11 +79,21 @@ class NotificationMessage(models.Model):
 
     objects = NotificationMessageManager()
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Returns a string representation of the notification message instance.
+
+        Returns:
+            str: A string in the format '<notification> - <article>'.
+        """
         return f"{self.notification} - {self.article}"
 
 
 class UserFeed(models.Model):
+    """
+    Represents a personalized feed for a user.
+    """
+
     feed_id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     interested_sectors = models.JSONField(default=dict)
@@ -82,5 +103,11 @@ class UserFeed(models.Model):
     )
     last_content_update = models.DateTimeField()
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Returns a string representation of the user feed instance.
+
+        Returns:
+            str: A string in the format '<feed_id> - <user>'.
+        """
         return f"{self.feed_id} - {self.user}"

@@ -1,7 +1,5 @@
-# Django imports
 from django.urls import path
 
-# Local imports
 from apps.accounts.views import SettingsView
 
 app_name = "accounts"

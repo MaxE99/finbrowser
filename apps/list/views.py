@@ -1,12 +1,11 @@
-# Django imports
+from typing import Any, Dict
+
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-# Local imports
-from apps.logic.pure_logic import paginator_create
+from apps.utils import create_paginator
 from apps.mixins import BaseMixin
 from apps.list.models import List
 from apps.article.models import Article, HighlightedArticle
@@ -17,15 +16,29 @@ User = get_user_model()
 
 
 class HighlightedContentView(LoginRequiredMixin, TemplateView, BaseMixin):
+    """
+    View to display highlighted content for the authenticated user.
+
+    This view fetches highlighted articles related to the user and displays them
+    with pagination. Only available to authenticated users.
+    """
+
     model = List
     context_object_name = "list"
     template_name = "list/highlighted_content_list.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Retrieves context data for the highlighted content view.
+
+        Returns:
+            Dict[str, Any]: The context data containing lists and highlighted articles
+            related to the authenticated user.
+        """
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             context["lists"] = List.objects.filter(creator=self.request.user)
-            context["highlighted_content"] = paginator_create(
+            context["highlighted_content"] = create_paginator(
                 self.request,
                 HighlightedArticle.objects.filter(user=self.request.user)
                 .select_related(
@@ -39,11 +52,25 @@ class HighlightedContentView(LoginRequiredMixin, TemplateView, BaseMixin):
 
 
 class SubscribedSourcesView(LoginRequiredMixin, TemplateView, BaseMixin):
+    """
+    View to display subscribed sources and categorized content for the authenticated user.
+
+    This view fetches sources and content (analysis, commentary, news) subscribed by the user,
+    and applies pagination.
+    """
+
     model = List
     context_object_name = "list"
     template_name = "list/subscribed_sources_list.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Retrieves context data for the subscribed sources view.
+
+        Returns:
+            Dict[str, Any]: The context data containing lists, subscribed sources,
+            and categorized content (analysis, commentary, news).
+        """
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             subscribed_sources = (
@@ -51,32 +78,29 @@ class SubscribedSourcesView(LoginRequiredMixin, TemplateView, BaseMixin):
                     self.request.user
                 )
             )
-            (
-                analysis_content,
-                commentary_content,
-                news_content,
-            ) = Article.objects.get_subscribed_content_by_content_type(
+            subscribed_content = Article.objects.get_subscribed_content_by_content_type(
                 subscribed_sources
             )
+
             context["lists"] = List.objects.filter(creator=self.request.user)
             context["analysis_sources"] = subscribed_sources["analysis"]
             context["commentary_sources"] = subscribed_sources["commentary"]
             context["news_sources"] = subscribed_sources["news"]
-            context["analysis"] = paginator_create(
+            context["analysis"] = create_paginator(
                 self.request,
-                analysis_content,
+                subscribed_content["analysis"],
                 25,
                 "analysis",
             )
-            context["commentary"] = paginator_create(
+            context["commentary"] = create_paginator(
                 self.request,
-                commentary_content,
+                subscribed_content["commentary"],
                 25,
                 "commentary",
             )
-            context["news"] = paginator_create(
+            context["news"] = create_paginator(
                 self.request,
-                news_content,
+                subscribed_content["news"],
                 25,
                 "news",
             )
@@ -84,60 +108,94 @@ class SubscribedSourcesView(LoginRequiredMixin, TemplateView, BaseMixin):
 
 
 class ListDetailView(LoginRequiredMixin, TemplateView, BaseMixin):
+    """
+    View to display detailed information about a specific list for the authenticated user.
+
+    The view fetches saved content, articles categorized by content type, and applies pagination.
+    """
+
     model = List
     context_object_name = "list"
     template_name = "list/list_details.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Retrieves context data for the list detail view.
+
+        Returns:
+            Dict[str, Any]: The context data containing the selected list, saved content,
+            and categorized articles (analysis, commentary, news).
+        """
         context = super().get_context_data(**kwargs)
         selected_list = get_object_or_404(List, list_id=self.kwargs["list_id"])
+        content = Article.objects.get_list_content_by_content_type(
+            selected_list.sources.all()
+        )
+
         context["lists"] = List.objects.filter(creator=self.request.user)
         context["list"] = selected_list
-        context["saved_content"] = paginator_create(
+        context["saved_content"] = create_paginator(
             self.request,
             List.objects.get_highlighted_content(selected_list),
             25,
             "saved_content",
         )
-        analysis, commentary, news = Article.objects.get_list_content_by_content_type(
-            selected_list.sources.all()
+        context["analysis"] = create_paginator(
+            self.request, content["analysis"], 25, "analysis"
         )
-        context["analysis"] = paginator_create(self.request, analysis, 25, "analysis")
-        context["commentary"] = paginator_create(
-            self.request, commentary, 25, "commentary"
+        context["commentary"] = create_paginator(
+            self.request, content["commentary"], 25, "commentary"
         )
-        context["news"] = paginator_create(self.request, news, 25, "news")
+        context["news"] = create_paginator(self.request, content["news"], 25, "news")
         return context
 
 
 class ListView(TemplateView, BaseMixin):
+    """
+    View to display the main list for the authenticated user.
+
+    The view retrieves the user's main list, saved content, and articles categorized
+    by content type, and applies pagination.
+    """
+
     model = List
     context_object_name = "list"
     template_name = "list/list_details.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Retrieves context data for the main list view.
+
+        Returns:
+            Dict[str, Any]: The context data containing the main list, saved content,
+            and categorized articles (analysis, commentary, news).
+        """
         context = super().get_context_data(**kwargs)
         if not self.request.user.is_authenticated:
             return context
+
         selected_list = get_object_or_404(
             List,
             creator=self.request.user,
             main=True,
         )
+        content = Article.objects.get_list_content_by_content_type(
+            selected_list.sources.all()
+        )
+
         context["lists"] = List.objects.filter(creator=self.request.user)
         context["list"] = selected_list
-        context["saved_content"] = paginator_create(
+        context["saved_content"] = create_paginator(
             self.request,
             List.objects.get_highlighted_content(selected_list),
             25,
             "saved_content",
         )
-        analysis, commentary, news = Article.objects.get_list_content_by_content_type(
-            selected_list.sources.all()
+        context["analysis"] = create_paginator(
+            self.request, content["analysis"], 25, "analysis"
         )
-        context["analysis"] = paginator_create(self.request, analysis, 25, "analysis")
-        context["commentary"] = paginator_create(
-            self.request, commentary, 25, "commentary"
+        context["commentary"] = create_paginator(
+            self.request, content["commentary"], 25, "commentary"
         )
-        context["news"] = paginator_create(self.request, news, 25, "news")
+        context["news"] = create_paginator(self.request, content["news"], 25, "news")
         return context

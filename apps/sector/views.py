@@ -1,8 +1,8 @@
-# Django import
+from typing import Dict, Any
+
 from django.views.generic.detail import DetailView
 
-# Local imports
-from apps.logic.pure_logic import paginator_create
+from apps.utils import create_paginator
 from apps.mixins import BaseMixin
 from apps.article.models import Article
 from apps.sector.models import Sector
@@ -10,17 +10,33 @@ from apps.source.models import Source
 
 
 class SectorDetailView(DetailView, BaseMixin):
+    """
+    View for displaying details of a specific sector, including related sources
+    and articles such as analysis, commentary, and news.
+    """
+
     model = Sector
     context_object_name = "sector"
     template_name = "sector/sector_details.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Retrieves and returns the context data for rendering the template.
+
+        Args:
+            **kwargs: Additional keyword arguments to pass to the context.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the context data for the template.
+        """
+
         context = super().get_context_data(**kwargs)
         sources_by_sector = Source.objects.filter_by_sector(self.get_object())
+
         context["analysis_sources"] = sources_by_sector["analysis_sources"]
         context["commentary_sources"] = sources_by_sector["commentary_sources"]
         context["news_sources"] = sources_by_sector["news_sources"]
-        context["analysis"] = paginator_create(
+        context["analysis"] = create_paginator(
             self.request,
             Article.objects.filter(
                 source__in=sources_by_sector["analysis_sources"]
@@ -28,7 +44,7 @@ class SectorDetailView(DetailView, BaseMixin):
             50,
             "analysis",
         )
-        context["commentary"] = paginator_create(
+        context["commentary"] = create_paginator(
             self.request,
             Article.objects.filter(
                 source__in=sources_by_sector["commentary_sources"]
@@ -36,7 +52,7 @@ class SectorDetailView(DetailView, BaseMixin):
             50,
             "commentary",
         )
-        context["news"] = paginator_create(
+        context["news"] = create_paginator(
             self.request,
             Article.objects.filter(
                 source__in=sources_by_sector["news_sources"]

@@ -1,26 +1,45 @@
+from typing import Any
 from html import unescape
 import os
 
-# from requests import get as request_get
 import requests
+
 from django.core.management.base import BaseCommand
 
-# Local imports
-from apps.tasks.helpers import (
+from apps.tasks.utils import (
     bulk_create_articles_and_notifications,
-    article_creation_check,
+    perform_article_status_check,
     get_youtube_sources_and_articles,
 )
 
 
 class Command(BaseCommand):
-    help = "Scrapes YouTube"
+    """
+    Django management command to scrape YouTube channels for videos.
 
-    def handle(self, *args, **kwargs):
+    This command retrieves videos from YouTube sources and
+    creates corresponding articles and notifications in the database.
+    """
+
+    help = "Scrapes YouTube channels for videos and updates the database."
+
+    def handle(self, *args: Any, **kwargs: Any):
+        """
+        Executes the command to scrape YouTube videos and create articles.
+
+        This method fetches YouTube sources, retrieves videos for each
+        source, checks if articles already exist for those videos, and
+        bulk creates articles and notifications.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
         api_key = os.environ.get("YOUTUBE_API_KEY")
-        sources, articles = get_youtube_sources_and_articles()
+        youtube_data = get_youtube_sources_and_articles()
         youtube_creation_list = []
-        for source in sources:
+
+        for source in youtube_data["sources"]:
             try:
                 channel_data = requests.get(
                     f"https://www.googleapis.com/youtube/v3/channels?id={source.external_id}&key={api_key}&part=contentDetails",
@@ -29,26 +48,34 @@ class Command(BaseCommand):
                 upload_id = channel_data["items"][0]["contentDetails"][
                     "relatedPlaylists"
                 ]["uploads"]
+
                 url = f"https://www.googleapis.com/youtube/v3/playlistItems?playlistId={upload_id}&key={api_key}&part=snippet&maxResults=50"
                 request = requests.get(url, timeout=10)
                 data = request.json()
                 items = data["items"]
+
                 for item in items:
                     title = unescape(item["snippet"]["title"])
                     link = f"https://www.youtube.com/watch?v={item['snippet']['resourceId']['videoId']}"
                     pub_date = item["snippet"]["publishedAt"]
-                    youtube_creation_list, article_exists = article_creation_check(
+                    lists = perform_article_status_check(
                         youtube_creation_list,
-                        articles,
+                        youtube_data["articles"],
                         title,
                         source,
                         link,
                         pub_date=pub_date,
                     )
-                    if article_exists:
+                    youtube_creation_list = lists["creation_list"]
+
+                    if lists["article_exists"]:
                         break
+
             except Exception as error:
                 print(f"Scrapping {source} has caused this error: {error}")
                 continue
+
         bulk_create_articles_and_notifications(youtube_creation_list)
-        self.stdout.write("Finished scraping youtube!")
+        self.stdout.write(
+            self.style.SUCCESS("Successfully completed scraping YouTube channels!")
+        )
