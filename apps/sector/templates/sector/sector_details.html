@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'sector/sector_details_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'sector/min_sector_details_style_v1.css' %}">
 <title>{{ sector.name }} | FinBrowser</title>
 <meta name="description"
     content="Discover the latest analysis, news and commentary related to the {{ sector }} industry.">
@@ -81,5 +81,5 @@
 
 
 
-<script src="{% static 'sector/sector_details_script.js' %}"></script>
+<script src="{% static 'sector/min_sector_details_script_v1.js' %}"></script>
 {% endblock content %}

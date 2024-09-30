@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'stock/min_stock_details_style_v8.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'stock/min_stock_details_style_v1.css' %}" />
 <title>{{ stock.full_company_name }} | FinBrowser</title>
 <meta name="description" content="Discover the latest analysis, news and commentary for {{ stock.full_company_name }}">
 <link rel="canonical" href="https://www.finbrowser.io/stock/{{ stock.ticker }}">
@@ -176,5 +176,5 @@
     </div>
 </div>
 
-<script src="{% static 'stock/min_stock_details_script_v7.js' %}"></script>
+<script src="{% static 'stock/min_stock_details_script_v1.js' %}"></script>
 {% endblock content %}

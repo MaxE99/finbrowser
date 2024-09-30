@@ -2,7 +2,7 @@
 {% load static %}
 {% load tags %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'stock/min_portfolio_style_v5.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'stock/min_portfolio_style_v1.css' %}">
 {% if request.user.is_authenticated %}
 <title>{{ selected_portfolio.name }} | FinBrowser</title>
 <meta name="description" content="FinBrowser portfolio created by {{ request.user.username }}">
@@ -282,7 +282,7 @@
     </div>
     {% endif %}
 </div>
-<script src="{% static 'stock/min_portfolio_script_v13.js' %}"></script>
+<script src="{% static 'stock/min_portfolio_script_v1.js' %}"></script>
 
 {% else %}
 
