@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any
 
 from django.http import HttpResponse, Http404
 from django.db import models
@@ -492,7 +492,7 @@ class FilteredSite(APIView):
     authentication_classes = [SessionAuthentication]
     permission_classes = [AllowAny]
 
-    def get(self, request, search_term: str) -> Dict[str, Any]:
+    def get(self, request, search_term: str) -> Response:
         """
         Retrieve filtered search results for stocks, sources, and articles based on a search term.
 
@@ -501,7 +501,7 @@ class FilteredSite(APIView):
             search_term (str): The search term to filter stocks, sources, and articles.
 
         Returns:
-            Dict[str, Any]: response containing serialized stock, source, and article data.
+            Response: response containing serialized stock, source, and article data.
         """
         filtered_stocks = Stock.objects.filter_by_search_term_search(search_term, 9)
         filtered_sources = Source.objects.filter_by_search_term(search_term)[:9]
@@ -513,11 +513,13 @@ class FilteredSite(APIView):
             filtered_stocks, filtered_sources, filtered_articles
         )
 
-        return {
-            "stocks": balanced_results["stock_serializer"].data,
-            "sources": balanced_results["sources_serializer"].data,
-            "articles": balanced_results["articles_serializer"].data,
-        }
+        return Response(
+            {
+                "stocks": balanced_results["stock_serializer"].data,
+                "sources": balanced_results["sources_serializer"].data,
+                "articles": balanced_results["articles_serializer"].data,
+            }
+        )
 
 
 class ArticleViewSet(viewsets.ModelViewSet):

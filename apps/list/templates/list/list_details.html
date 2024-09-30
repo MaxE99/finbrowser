@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v16.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v1.css' %}" />
 {% if request.user.is_authenticated %}
 <title>{{ list.name }} | FinBrowser</title>
 <meta name="description" content="FinBrowser list created by {{ request.user.username }}">
@@ -236,7 +236,7 @@
     {% endif %}
 </div>
 
-<script src="{% static 'list/min_list_details_script_v19.js' %}"></script>
+<script src="{% static 'list/min_list_details_script_v1.js' %}"></script>
 
 {% else %}
 

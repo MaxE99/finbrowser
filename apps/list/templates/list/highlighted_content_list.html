@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v16.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v1.css' %}" />
 <title>Highlighted Content | FinBrowser</title>
 <meta name="description" content="Highlighted content by {{ request.user.username }}">
 <link rel="canonical" href="https://www.finbrowser.io/list/highlighted_content">
@@ -50,5 +50,5 @@
 </div>
 
 
-<script src="{% static 'list/highlighted_content_script.js' %}"></script>
+<script src="{% static 'list/min_highlighted_content_script_v1.js' %}"></script>
 {% endblock content %}

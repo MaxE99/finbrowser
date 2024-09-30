@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %} {% load static %} {% load tags %} {% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v16.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'list/min_list_details_style_v1.css' %}" />
 <title>Subscribed Sources | FinBrowser</title>
 <meta name="description" content="Subscribed sources of {{ request.user.username }}">
 <link rel="canonical" href="https://www.finbrowser.io/list/subscribed_sources">
@@ -148,6 +148,5 @@
     {% endif %}
 </div>
 
-
-<script src="{% static 'list/min_subscribed_sources_script_v6.js' %}"></script>
+<script src="{% static 'list/min_subscribed_sources_script_v1.js' %}"></script>
 {% endblock content %}
