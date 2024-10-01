@@ -43,11 +43,6 @@ variable "database_hostname" {
   sensitive = true
 }
 
-variable "django_settings_module" {
-  type      = string
-  sensitive = true
-}
-
 variable "email_host_user" {
   type      = string
   sensitive = true

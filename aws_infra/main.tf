@@ -26,14 +26,13 @@ module "secrets" {
 
   project = var.project
   secrets = {
-    FINB_DB_NAME            = var.db_name
-    FINB_DB_USER            = var.db_username
-    FINB_DB_MASTER_PASSWORD = var.db_password
-    FINB_DB_HOSTNAME        = var.database_hostname
-    FINB_SETTINGS_MODULE    = var.django_settings_module
-    FINB_EMAIL_USER         = var.email_host_user
-    FINB_EMAIL_PW           = var.email_host_password
-    FINB_SECRET_KEY         = var.secret_key
+    DB_NAME            = var.db_name
+    DB_USER            = var.db_username
+    DB_MASTER_PASSWORD = var.db_password
+    DB_HOSTNAME        = var.database_hostname
+    EMAIL_USER         = var.email_host_user
+    EMAIL_PW           = var.email_host_password
+    SECRET_KEY         = var.secret_key
   }
 }
 
@@ -100,35 +99,31 @@ module "service" {
   lb_sg_id           = module.load_balancer.lb_sg_id 
   env_variables = [
     {
-      name  = "FINB_DB_NAME"
+      name  = "DB_NAME"
       value = var.db_name
     },
     {
-      name  = "FINB_DB_USER"
+      name  = "DB_USER"
       value = var.db_username
     },
     {
-      name  = "FINB_DB_MASTER_PASSWORD"
+      name  = "DB_MASTER_PASSWORD"
       value = var.db_password
     },
     {
-      name  = "FINB_DB_HOSTNAME"
+      name  = "DB_HOSTNAME"
       value = var.database_hostname
     },
     {
-      name  = "FINB_SETTINGS_MODULE"
-      value = var.django_settings_module
-    },
-    {
-      name  = "FINB_EMAIL_USER"
+      name  = "EMAIL_USER"
       value = var.email_host_user
     },
     {
-      name  = "FINB_EMAIL_PW"
+      name  = "EMAIL_PW"
       value = var.email_host_password
     },
     {
-      name  = "FINB_SECRET_KEY"
+      name  = "SECRET_KEY"
       value = var.secret_key
     }
   ]
@@ -291,35 +286,31 @@ module "workers" {
   execution_role_arn = module.cluster.execution_role_arn
   env_variables = [
     {
-      name  = "FINB_DB_NAME"
+      name  = "DB_NAME"
       value = var.db_name
     },
     {
-      name  = "FINB_DB_USER"
+      name  = "DB_USER"
       value = var.db_username
     },
     {
-      name  = "FINB_DB_MASTER_PASSWORD"
+      name  = "DB_MASTER_PASSWORD"
       value = var.db_password
     },
     {
-      name  = "FINB_DB_HOSTNAME"
+      name  = "DB_HOSTNAME"
       value = var.database_hostname
     },
     {
-      name  = "FINB_SETTINGS_MODULE"
-      value = var.django_settings_module
-    },
-    {
-      name  = "FINB_EMAIL_USER"
+      name  = "EMAIL_USER"
       value = var.email_host_user
     },
     {
-      name  = "FINB_EMAIL_PW"
+      name  = "EMAIL_PW"
       value = var.email_host_password
     },
     {
-      name  = "FINB_SECRET_KEY"
+      name  = "SECRET_KEY"
       value = var.secret_key
     }
   ]
