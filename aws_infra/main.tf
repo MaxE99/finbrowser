@@ -33,6 +33,7 @@ module "secrets" {
     EMAIL_USER         = var.email_host_user
     EMAIL_PW           = var.email_host_password
     SECRET_KEY         = var.secret_key
+    S3_BUCKET          = module.bucket.bucket_url
   }
 }
 
@@ -125,6 +126,10 @@ module "service" {
     {
       name  = "SECRET_KEY"
       value = var.secret_key
+    },
+    {
+      name  = "S3_BUCKET"
+      value = module.bucket.bucket_url
     }
   ]
   security_groups = [
@@ -312,6 +317,10 @@ module "workers" {
     {
       name  = "SECRET_KEY"
       value = var.secret_key
+    },
+    {
+      name  = "S3_BUCKET"
+      value = module.bucket.bucket_url
     }
   ]
   security_groups = [

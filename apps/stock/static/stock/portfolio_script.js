@@ -450,7 +450,7 @@ function showNewBlacklistedSources(resultsList, selectedList, source) {
     blacklistedSourceContainer.classList.add('blacklistedSourceContainer');
     blacklistedSourceContainer.id = `blsid#${source.source_id}`;
     const img = document.createElement('img');
-    img.src = `https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}`;
+    img.src = `${ENV.S3_BUCKET}/${source.favicon_path}`;
     const span = document.createElement('span');
     span.innerText = source.name;
     const timesButton = document.createElement('i');
@@ -473,7 +473,7 @@ function showBlacklistSearchResults(resultsList, selectedList, context) {
                 const searchResult = document.createElement('div');
                 searchResult.classList.add('searchResult');
                 const resultImage = document.createElement('img');
-                resultImage.src = `https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}`;
+                resultImage.src = `${ENV.S3_BUCKET}/${source.favicon_path}`;
                 const sourceName = document.createElement('span');
                 sourceName.innerText = source.name;
                 sourceName.id = `source_id_${source.source_id}`;

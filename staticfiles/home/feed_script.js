@@ -96,8 +96,7 @@ function addNewContentToContainer(article, stock_pitch = false) {
     const profileImageContainer = document.createElement('div');
     profileImageContainer.classList.add('profileImageContainer');
     const imgTag1 = document.createElement('img');
-    imgTag1.src =
-        'https://finbrowser.s3.us-east-2.amazonaws.com/static/' + article.source.favicon_path;
+    imgTag1.src = `${ENV.S3_BUCKET}/` + article.source.favicon_path;
     const sourceProfile1 = document.createElement('a');
     sourceProfile1.classList.add('sourceProfile');
     sourceProfile1.href = '/source/' + article.source.slug;
@@ -117,8 +116,7 @@ function addNewContentToContainer(article, stock_pitch = false) {
     const sourceWebsiteProfileContainer = document.createElement('div');
     sourceWebsiteProfileContainer.classList.add('sourceWebsiteProfileContainer');
     const imgTag2 = document.createElement('img');
-    imgTag2.src =
-        'https://finbrowser.s3.us-east-2.amazonaws.com/static/' + article.source.website.logo;
+    imgTag2.src = `${ENV.S3_BUCKET}/` + article.source.website.logo;
     const aTag1 = document.createElement('a');
     aTag1.href = article.source.url;
     sourceWebsiteProfileContainer.append(imgTag2, aTag1);

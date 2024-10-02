@@ -36,7 +36,7 @@ else:
     # CSP Settings
     CSP_DEFAULT_SRC = (
         "'self'",
-        "https://finbrowser-assets.s3.us-east-2.amazonaws.com/",
+        os.environ.get("S3_BUCKET"),
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
@@ -44,11 +44,11 @@ else:
     )
     CSP_STYLE_SRC = (
         "'self'",
-        "https://finbrowser-assets.s3.us-east-2.amazonaws.com/",
+        os.environ.get("S3_BUCKET"),
     )
     CSP_SCRIPT_SRC = (
         "'self'",
-        "https://finbrowser-assets.s3.us-east-2.amazonaws.com/",
+        os.environ.get("S3_BUCKET"),
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
@@ -56,15 +56,15 @@ else:
     )
     CSP_FONT_SRC = (
         "'self'",
-        "https://finbrowser-assets.s3.us-east-2.amazonaws.com/",
+        os.environ.get("S3_BUCKET"),
     )
     CSP_IMG_SRC = (
         "'self'",
-        "https://finbrowser-assets.s3.us-east-2.amazonaws.com/",
+        os.environ.get("S3_BUCKET"),
     )
     CSC_CONNECT_SRC = (
         "'self'",
-        "https://finbrowser-assets.s3.us-east-2.amazonaws.com/",
+        os.environ.get("S3_BUCKET"),
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
