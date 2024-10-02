@@ -36,7 +36,7 @@ else:
     # CSP Settings
     CSP_DEFAULT_SRC = (
         "'self'",
-        "https://finbrowser-staticfiles-bucket.s3.us-east-2.amazonaws.com/",
+        "https://finbrowser-assets.s3.us-east-2.amazonaws.com/",
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
@@ -44,11 +44,11 @@ else:
     )
     CSP_STYLE_SRC = (
         "'self'",
-        "https://finbrowser-staticfiles-bucket.s3.us-east-2.amazonaws.com/",
+        "https://finbrowser-assets.s3.us-east-2.amazonaws.com/",
     )
     CSP_SCRIPT_SRC = (
         "'self'",
-        "https://finbrowser-staticfiles-bucket.s3.us-east-2.amazonaws.com/",
+        "https://finbrowser-assets.s3.us-east-2.amazonaws.com/",
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
@@ -56,15 +56,15 @@ else:
     )
     CSP_FONT_SRC = (
         "'self'",
-        "https://finbrowser-staticfiles-bucket.s3.us-east-2.amazonaws.com/",
+        "https://finbrowser-assets.s3.us-east-2.amazonaws.com/",
     )
     CSP_IMG_SRC = (
         "'self'",
-        "https://finbrowser-staticfiles-bucket.s3.us-east-2.amazonaws.com/",
+        "https://finbrowser-assets.s3.us-east-2.amazonaws.com/",
     )
     CSC_CONNECT_SRC = (
         "'self'",
-        "https://finbrowser-staticfiles-bucket.s3.us-east-2.amazonaws.com/",
+        "https://finbrowser-assets.s3.us-east-2.amazonaws.com/",
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
@@ -75,7 +75,7 @@ else:
     # AWS Settings
     AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-    AWS_STORAGE_BUCKET_NAME = "finbrowser-staticfiles-bucket"
+    AWS_STORAGE_BUCKET_NAME = "finbrowser-assets"
     AWS_S3_CUSTOM_DOMAIN = "%s.s3.us-east-2.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
     AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
     AWS_LOCATION = "static"

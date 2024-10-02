@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "main" {
-  bucket        = "${var.project}-staticfiles-bucket"
+  bucket        = "${var.project}-assets"
   force_destroy = true
 }
 
