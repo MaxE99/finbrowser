@@ -84,6 +84,18 @@ module "cluster" {
   project = var.project
 }
 
+resource "aws_ecr_repository" "main" {
+  name = "${var.project}-django-app"
+  image_tag_mutability = "MUTABLE"
+  force_delete = true
+
+  tags = {
+    Project = var.project
+    Name = "ECR Repository"
+    Description = "Image of the Django app for the cluster to spin up and execute"
+  }
+}
+
 module "service" {
   source = "./modules/service"
 
@@ -136,6 +148,7 @@ module "service" {
     module.network.default_security_group_id,
     module.database.security_group_id
   ]
+  repository_url = aws_ecr_repository.main.repository_url
 }
 
 data "aws_iam_policy_document" "worker_assume_role" {
@@ -195,17 +208,6 @@ resource "aws_vpc_security_group_egress_rule" "worker" {
   security_group_id = aws_security_group.worker.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = -1
-}
-
-resource "aws_ecr_repository" "workers" {
-  name = "${var.project}-django-workers"
-  image_tag_mutability = "MUTABLE"
-  force_delete = true
-
-  tags = {
-    Project = var.project
-    Name = "ECR Worker Repository"
-  }
 }
 
 variable "workers" {
@@ -328,7 +330,7 @@ module "workers" {
     module.database.security_group_id,
     aws_security_group.worker.id
   ]
-  repository_url      = aws_ecr_repository.workers.repository_url
+  repository_url      = aws_ecr_repository.main.repository_url
   worker              = each.key
   task_role_arn       = aws_iam_role.worker.arn
   command             = each.value.command

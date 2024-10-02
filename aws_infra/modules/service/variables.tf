@@ -49,3 +49,7 @@ variable "lb_sg_id" {
 variable "cluster_arn" {
   type = string
 }
+
+variable "repository_url" {
+  type = string
+}
