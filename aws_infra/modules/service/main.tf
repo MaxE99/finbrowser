@@ -79,18 +79,6 @@ resource "aws_vpc_security_group_egress_rule" "cluster" {
 # ECS Service - WebServer      #
 ################################
 
-resource "aws_ecr_repository" "server" {
-  name = "${var.project}-django-app"
-  image_tag_mutability = "MUTABLE"
-  force_delete = true
-
-  tags = {
-    Project = var.project
-    Name = "ECR Repository"
-    Description = "Image of the Django app for the cluster to spin up and execute"
-  }
-}
-
 resource "aws_ecs_task_definition" "server" {
   family                   = "${var.project}-django-app"
   requires_compatibilities = ["FARGATE"]
@@ -102,8 +90,9 @@ resource "aws_ecs_task_definition" "server" {
   container_definitions = jsonencode([
     {
       name      = "${var.project}-django-app"
-      image     = aws_ecr_repository.server.repository_url
+      image     = var.repository_url
       environment = var.env_variables
+      command = ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "3", "researchbrowserproject.wsgi:application"]
       portMappings = [{
           protocol      = "tcp"
           containerPort = 5000
