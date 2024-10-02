@@ -1,4 +1,12 @@
 /**************************************************************
+    0. ENV Variables
+**************************************************************/
+
+const ENV = {
+    S3_BUCKET: 'https://finbrowser-assets.s3.us-east-2.amazonaws.com/static',
+};
+
+/**************************************************************
     1. API Calls
 **************************************************************/
 
@@ -203,7 +211,7 @@ function showSearchResults(context, resultsList) {
     if (context['sources'].length) {
         resultsList.innerHTML += `<div class="searchResultHeader">Sources</div>`;
         context['sources'].forEach((source) => {
-            const sourceRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}"><span>${source.name}</span><a href="../../../../../../source/${source.slug}"></a></div>`;
+            const sourceRes = `<div class="searchResult"><img src="${ENV.S3_BUCKET}/${source.favicon_path}"><span>${source.name}</span><a href="../../../../../../source/${source.slug}"></a></div>`;
             resultsList.innerHTML += sourceRes;
         });
     }
@@ -213,7 +221,7 @@ function showSearchResults(context, resultsList) {
             let xfavicon = context['articles'][i].source.favicon_path;
             let xtitle = context['articles'][i].title;
             let xlink = context['articles'][i].link;
-            const articleRes = `<div class="searchResult"><img src="https://finbrowser.s3.us-east-2.amazonaws.com/static/${xfavicon}"><span>${xtitle}</span><a href="${xlink}" target="_blank"></a></div>`;
+            const articleRes = `<div class="searchResult"><img src="${ENV.S3_BUCKET}/${xfavicon}"><span>${xtitle}</span><a href="${xlink}" target="_blank"></a></div>`;
             resultsList.innerHTML += articleRes;
         }
     }

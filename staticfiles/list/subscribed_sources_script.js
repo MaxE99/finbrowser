@@ -104,7 +104,7 @@ function showNewSubscribedSources(source, resultsList, selectedList) {
     const searchResult = document.createElement('div');
     searchResult.classList.add('searchResult');
     const resultImage = document.createElement('img');
-    resultImage.src = `https://finbrowser.s3.us-east-2.amazonaws.com/static/${source.favicon_path}`;
+    resultImage.src = `${ENV.S3_BUCKET}/${source.favicon_path}`;
     const sourceName = document.createElement('span');
     sourceName.innerText = source.name;
     sourceName.id = `source_id#${source.source_id}`;
