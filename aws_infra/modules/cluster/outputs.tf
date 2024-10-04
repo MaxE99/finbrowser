@@ -1,13 +1,13 @@
-output "cluster_name" {
-  value = aws_ecs_cluster.main.name
+output "cluster" {
+  value = {
+    id   = aws_ecs_cluster.main.id
+    arn  = aws_ecs_cluster.main.arn
+    name = aws_ecs_cluster.main.name
+  }
 }
 
-output "cluster_id" {
-  value = aws_ecs_cluster.main.id
-}
-
-output "cluster_arn" {
-  value = aws_ecs_cluster.main.arn
+output "security_group" {
+  value = aws_security_group.main.id
 }
 
 output "execution_role_arn" {

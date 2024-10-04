@@ -1,3 +1,19 @@
+variable "cluster" {
+  type = object({
+    id   = string
+    arn  = string
+    name = string
+  })
+}
+
+variable "env_variables" {
+  type = list(map(string))
+}
+
+variable "execution_role_arn" {
+  type = string
+}
+
 variable "project" {
   type = string
 }
@@ -6,50 +22,30 @@ variable "region" {
   type = string
 }
 
-variable "vpc_id" {
+variable "repository_url" {
   type = string
-}
-
-variable "service_subnet_ids" {
-  type = list(string)
 }
 
 variable "security_groups" {
   type = list(string)
 }
 
-variable "env_variables" {
-  type = list(map(string))
+variable "service" {
+  type = object({
+    name                = string
+    command             = list(string)
+    schedule_expression = string
+  })
 }
 
-variable "cluster_id" {
-  type = string
-}
-
-variable "cluster_name" {
-  type = string
+variable "service_subnet_ids" {
+  type = list(string)
 }
 
 variable "target_group_arn" {
   type = string
 }
 
-variable "execution_role_arn" {
-  type = string
-}
-
-variable "policies" {
-  type = list(string)
-}
-
-variable "lb_sg_id" {
-  type = string
-}
-
-variable "cluster_arn" {
-  type = string
-}
-
-variable "repository_url" {
+variable "vpc_id" {
   type = string
 }
