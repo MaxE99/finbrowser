@@ -1,7 +1,11 @@
-variable "zone_id" {
+variable "domain" {
   type = string
 }
 
-variable "domain" {
+variable "project" {
+  type = string
+}
+
+variable "zone_id" {
   type = string
 }

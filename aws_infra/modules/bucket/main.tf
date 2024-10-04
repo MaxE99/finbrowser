@@ -1,6 +1,12 @@
 resource "aws_s3_bucket" "main" {
   bucket        = "${var.project}-assets"
   force_destroy = true
+
+  tags = {
+    Project     = var.project
+    Name        = "${var.project} S3 bucket"
+    Description = "S3 bucket for storing project assets"
+  }
 }
 
 resource "aws_s3_bucket_ownership_controls" "main" {
@@ -50,7 +56,7 @@ resource "aws_s3_bucket_cors_configuration" "main" {
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["GET"]
-    allowed_origins = ["https://ebert-test-domain.com"]
+    allowed_origins = [var.domain]
     expose_headers  = []
   }
 }
