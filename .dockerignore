@@ -145,3 +145,8 @@ deployment.zip
 
 # Ignore AWS deployment history
 deployments/
+
+# Django project files
+staticfiles/
+media/
+aws_infra/
