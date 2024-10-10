@@ -5,7 +5,7 @@ env = environ.Env()
 environ.Env.read_env()
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
-DEBUG = os.environ.get("DEBUG_MODE")
+DEBUG = os.environ.get("DEBUG_MODE", False)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
@@ -21,7 +21,10 @@ if DEBUG:
     MEDIA_URL = "/uploads/"
 
 else:
-    ALLOWED_HOSTS = [".finbrowser.io"]
+    S3_BUCKET = os.environ.get("S3_BUCKET")
+
+    # ALLOWED_HOSTS = [".finbrowser.io"]
+    ALLOWED_HOSTS = ["ebert-test-domain.com"]
 
     # HTTPS Settings
     SESSION_COOKIE_SECURE = True
@@ -36,7 +39,7 @@ else:
     # CSP Settings
     CSP_DEFAULT_SRC = (
         "'self'",
-        os.environ.get("S3_BUCKET"),
+        S3_BUCKET,
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
@@ -44,11 +47,11 @@ else:
     )
     CSP_STYLE_SRC = (
         "'self'",
-        os.environ.get("S3_BUCKET"),
+        S3_BUCKET,
     )
     CSP_SCRIPT_SRC = (
         "'self'",
-        os.environ.get("S3_BUCKET"),
+        S3_BUCKET,
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
@@ -56,15 +59,15 @@ else:
     )
     CSP_FONT_SRC = (
         "'self'",
-        os.environ.get("S3_BUCKET"),
+        S3_BUCKET,
     )
     CSP_IMG_SRC = (
         "'self'",
-        os.environ.get("S3_BUCKET"),
+        S3_BUCKET,
     )
-    CSC_CONNECT_SRC = (
+    CSP_CONNECT_SRC = (
         "'self'",
-        os.environ.get("S3_BUCKET"),
+        S3_BUCKET,
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
@@ -141,6 +144,7 @@ AUTH_USER_MODEL = "accounts.User"
 SITE_ID = 2
 
 MIDDLEWARE = [
+    "researchbrowserproject.middleware.health_check_middleware.AliveCheck",
     "django.middleware.gzip.GZipMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "csp.middleware.CSPMiddleware",
