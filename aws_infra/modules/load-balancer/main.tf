@@ -3,7 +3,7 @@
 ################################################################################
 
 resource "aws_security_group" "main" {
-  name        = "${var.project}-egress-cluster"
+  name        = "${var.project}-cluster-access"
   description = "Allows services with this security group to access the tasks in the cluster"
   vpc_id      = var.vpc_id
 
