@@ -53,7 +53,7 @@ resource "aws_lb_target_group" "main" {
     protocol            = "HTTP"
     matcher             = "200"
     timeout             = 10
-    path                = "/" # endpoint of the django app for health check
+    path                = "/health-check" # endpoint of the django app for health check
     unhealthy_threshold = 2
   }
 
@@ -75,8 +75,6 @@ resource "aws_lb" "main" {
   security_groups                  = [aws_security_group.main.id]
   subnets                          = var.lb_subnet_ids
   idle_timeout                     = 600
-  enable_deletion_protection       = false
-  enable_cross_zone_load_balancing = true
 
   tags = {
     Project     = var.project
@@ -105,9 +103,8 @@ resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.main.id
   port              = 443
   protocol          = "HTTPS"
-
-  ssl_policy      = "ELBSecurityPolicy-2016-08"
-  certificate_arn = var.aws_acm_certificate
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = var.aws_acm_certificate
 
   default_action {
     target_group_arn = aws_lb_target_group.main.id
