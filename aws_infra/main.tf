@@ -122,41 +122,41 @@ module "web" {
   vpc_id             = module.network.vpc_id
 }
 
-# module "workers" {
-#   for_each = { for worker in var.workers : worker.name => worker }
+module "workers" {
+  for_each = { for worker in var.workers : worker.name => worker }
 
-#   source = "./modules/service"
+  source = "./modules/service"
 
-#   cluster            = module.cluster.cluster
-#   env_variables      = local.env_variables
-#   execution_role_arn = module.cluster.execution_role_arn
-#   project            = var.project
-#   region             = var.region
-#   repository_url     = aws_ecr_repository.main.repository_url
-#   security_groups = [
-#     module.network.default_security_group,
-#     module.database.security_group,
-#     module.cluster.security_group
-#   ]
-#   service = {
-#     name                = each.key
-#     command             = each.value.command
-#     schedule_expression = each.value.schedule_expression
-#   }
-#   service_subnet_ids = module.network.public_subnet_ids
-#   target_group_arn   = module.load_balancer.target_group_arn
-#   vpc_id             = module.network.vpc_id
-# }
-
-module "bastion_host" {
-  source = "./modules/bastion"
-
-  project        = var.project
-  public_ssh_key = file(var.public_ssh_key_file_path)
+  cluster            = module.cluster.cluster
+  env_variables      = local.env_variables
+  execution_role_arn = module.cluster.execution_role_arn
+  project            = var.project
+  region             = var.region
+  repository_url     = aws_ecr_repository.main.repository_url
   security_groups = [
     module.network.default_security_group,
-    module.database.security_group
+    module.database.security_group,
+    module.cluster.security_group
   ]
-  subnet_id = module.network.public_subnet_ids[0]
-  vpc_id    = module.network.vpc_id
+  service = {
+    name                = each.key
+    command             = each.value.command
+    schedule_expression = each.value.schedule_expression
+  }
+  service_subnet_ids = module.network.public_subnet_ids
+  target_group_arn   = module.load_balancer.target_group_arn
+  vpc_id             = module.network.vpc_id
 }
+
+# module "bastion_host" {
+#   source = "./modules/bastion"
+
+#   project        = var.project
+#   public_ssh_key = file(var.public_ssh_key_file_path)
+#   security_groups = [
+#     module.network.default_security_group,
+#     module.database.security_group
+#   ]
+#   subnet_id = module.network.public_subnet_ids[0]
+#   vpc_id    = module.network.vpc_id
+# }

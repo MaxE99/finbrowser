@@ -23,8 +23,7 @@ if DEBUG:
 else:
     S3_BUCKET = os.environ.get("S3_BUCKET")
 
-    # ALLOWED_HOSTS = [".finbrowser.io"]
-    ALLOWED_HOSTS = ["ebert-test-domain.com"]
+    ALLOWED_HOSTS = ["finbrowser.io"]
 
     # HTTPS Settings
     SESSION_COOKIE_SECURE = True

@@ -20,7 +20,6 @@ async function getSearchResults(searchTerm, resultsList, smallScreen = false) {
             showMessage('Error: Network request failed unexpectedly!', 'Error');
         } else {
             const context = await res.json();
-            console.log(context);
             if (
                 (smallScreen && context['stocks'].length) ||
                 context['sources'].length ||

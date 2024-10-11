@@ -1,6 +1,6 @@
 variable "domain" {
   type    = string
-  default = "ebert-test-domain.com"
+  default = "finbrowser.io"
 }
 
 variable "db_name" {
@@ -35,7 +35,7 @@ variable "public_ssh_key_file_path" {
 
 variable "prod_zone_id" {
   type    = string
-  default = "Z03766462O143CYRIVTVM"
+  default = "Z0063739EBD6ODRQ14EA"
 }
 
 variable "project" {
