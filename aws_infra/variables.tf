@@ -1,56 +1,67 @@
 variable "domain" {
   type    = string
   default = "finbrowser.io"
+  description = "The domain name for the project, used for DNS configuration."
 }
 
 variable "db_name" {
   type      = string
   sensitive = true
+  description = "The name of the database to create within the database instance."
 }
 
 variable "db_password" {
   type      = string
   sensitive = true
+  description = "The password for the database user."
 }
 
 variable "db_username" {
   type      = string
   sensitive = true
+  description = "The username for the database, which will have access to the specified database."
 }
 
 variable "email_host_password" {
   type      = string
   sensitive = true
+  description = "The password for the email host user."
 }
 
 variable "email_host_user" {
   type      = string
   sensitive = true
+  description = "The username for the email host."
 }
 
 variable "public_ssh_key_file_path" {
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
+  description = "The file path to the public SSH key for accessing resources."
 }
 
 variable "prod_zone_id" {
   type    = string
   default = "Z0063739EBD6ODRQ14EA"
+  description = "The ID of the Route 53 hosted zone for the production environment, used for DNS record management."
 }
 
 variable "project" {
   type    = string
   default = "finbrowser"
+  description = "The name of the project."
 }
 
 variable "region" {
   type    = string
   default = "us-east-2"
+  description = "The AWS region where the resources will be created, which determines resource availability and proximity."
 }
 
 variable "secret_key" {
   type      = string
   sensitive = true
+  description = "The secret key used for authentication and encryption purposes."
 }
 
 variable "workers" {
@@ -121,4 +132,5 @@ variable "workers" {
       schedule_expression = "rate(28 days)"
     }
   ]
+  description = "A list of worker configurations, each with a name, command to execute, and schedule for execution."
 }
