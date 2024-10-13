@@ -94,6 +94,18 @@ locals {
     {
       name  = "S3_BUCKET"
       value = module.bucket.bucket_url
+    },
+    {
+      name  = "SPOTIFY_CLIENT_ID"
+      value = var.spotify_client_id
+    },
+    {
+      name  = "SPOTIFY_CLIENT_SECRET"
+      value = var.spotify_client_secret
+    },
+    {
+      name  = "YOUTUBE_API_KEY"
+      value = var.youtube_api_key
     }
   ]
 }
