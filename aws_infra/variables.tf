@@ -64,6 +64,18 @@ variable "secret_key" {
   description = "The secret key used for authentication and encryption purposes."
 }
 
+variable "spotify_client_id" {
+  type        = string
+  sensitive   = true
+  description = "Spotify Client ID for authenticating API requests."
+}
+
+variable "spotify_client_secret" {
+  type        = string
+  sensitive   = true
+  description = "Spotify Client Secret for securing API requests."
+}
+
 variable "workers" {
   type = list(object({
     name                = string
@@ -133,4 +145,10 @@ variable "workers" {
     }
   ]
   description = "A list of worker configurations, each with a name, command to execute, and schedule for execution."
+}
+
+variable "youtube_api_key" {
+  type        = string
+  sensitive   = true
+  description = "YouTube API Key for accessing YouTube data via the API."
 }
