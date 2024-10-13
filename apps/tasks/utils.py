@@ -296,7 +296,7 @@ def create_articles_from_feed(source, feed_url: str, articles: models.QuerySet):
                 else:
                     components = get_article_components(item)
 
-                title = html.unescape(title)
+                title = html.unescape(components["title"])
                 lists = perform_article_status_check(
                     create_article_list,
                     articles,
