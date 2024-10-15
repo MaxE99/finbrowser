@@ -26,5 +26,5 @@ class Command(BaseCommand):
             *args: Variable length argument list.
             **kwargs: Arbitrary keyword arguments.
         """
-        scrape_sources("Forbes", "feed", 10),
+        scrape_sources("Forbes", "feed", timeout=10),
         self.stdout.write(self.style.SUCCESS("Successfully scraped Forbes articles!"))

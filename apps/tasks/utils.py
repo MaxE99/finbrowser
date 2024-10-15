@@ -67,7 +67,7 @@ def get_article_components(
         title, original title, link, and publication date.
     """
 
-    def fully_unescape_string(title: str) -> str:
+    def fully_unescape_string(text: str) -> str:
         """
         Unescape a double-escaped string.
 
@@ -78,10 +78,10 @@ def get_article_components(
             str: The unescaped string.
         """
         unescaped = ""
-        while unescaped != title:
-            title = html.unescape(title)
-            unescaped = html.unescape(title)
-        return title
+        while unescaped != text:
+            text = html.unescape(text)
+            unescaped = html.unescape(text)
+        return text
 
     link = item.find(".//link").text
     date_string = item.find(".//pubDate").text
@@ -93,15 +93,15 @@ def get_article_components(
         else timezone.make_aware(parsed_date, timezone=timezone.get_default_timezone())
     )
     title = fully_unescape_string(item.find(".//title").text)
-    title_with_desc = None
+    original_title = title
 
     if description:
         description = fully_unescape_string(item.find(".//description").text)
-        title_with_desc = f"{title}: {description}"[0:500]
+        title = f"{title}: {description}"[0:500]
 
     return {
-        "title": title_with_desc,
-        "original_title": title,
+        "title": title,
+        "original_title": original_title,
         "link": link,
         "pub_date": pub_date,
     }
@@ -249,12 +249,12 @@ def bulk_create_articles_and_notifications(creation_list: List[Dict[str, str]]):
     if creation_list:
         new_articles = [
             Article(
-                title=article_new["title"][:500],
-                link=article_new["link"][:500],
-                pub_date=article_new["pub_date"],
-                source=article_new["source"],
+                title=new_article["title"][:500],
+                link=new_article["link"][:500],
+                pub_date=new_article["pub_date"],
+                source=new_article["source"],
             )
-            for article_new in creation_list
+            for new_article in creation_list
         ]
         articles = Article.objects.bulk_create(new_articles)
         create_notifications(articles)
@@ -288,7 +288,7 @@ def create_articles_from_feed(source, feed_url: str, articles: models.QuerySet):
                     components = get_article_components(item, description=True)
                     # in previous versions I didn't include the description in the title
                     if articles.filter(
-                        title=components["originial_title"],
+                        title=components["original_title"],
                         pub_date=components["pub_date"],
                         source=source,
                     ).exists():
