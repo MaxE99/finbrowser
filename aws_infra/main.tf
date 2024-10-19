@@ -19,6 +19,14 @@ module "certificate" {
   zone_id = var.prod_zone_id
 }
 
+module "redirect" {
+  source = "./modules/redirect"
+
+  domain  = var.domain
+  project = var.project
+  zone_id = var.prod_zone_id
+}
+
 module "load_balancer" {
   source = "./modules/load-balancer"
 
