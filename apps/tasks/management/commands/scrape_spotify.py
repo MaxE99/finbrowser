@@ -1,6 +1,7 @@
 from typing import Any
 import os
 from html import unescape
+import traceback
 
 from django.core.management.base import BaseCommand
 
@@ -67,6 +68,8 @@ class Command(BaseCommand):
                         break
 
             except Exception as _:
+                print(f"Fetching items from {source} failed due to: ")
+                traceback.print_exc()
                 continue
 
         bulk_create_articles_and_notifications(spotify_creation_list)
