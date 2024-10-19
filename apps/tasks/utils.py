@@ -5,6 +5,7 @@ from time import sleep
 from typing import Optional, List, Dict, Union
 from io import BytesIO
 import os
+import traceback
 
 from PIL import Image
 import boto3
@@ -96,8 +97,10 @@ def get_article_components(
     original_title = title
 
     if description:
-        description = fully_unescape_string(item.find(".//description").text)
-        title = f"{title}: {description}"[0:500]
+        desc_item = item.find(".//description")
+        if desc_item:
+            description = fully_unescape_string(desc_item.text)
+            title = f"{title}: {description}"[0:500]
 
     return {
         "title": title,
@@ -310,12 +313,14 @@ def create_articles_from_feed(source, feed_url: str, articles: models.QuerySet):
                 if lists["article_exists"]:
                     break
 
-            except Exception as error:
-                print(error)
+            except Exception as _:
+                print(f"Parsing feed for {source.name} failed due to: ")
+                traceback.print_exc()
                 continue
 
-    except Exception as error:
-        print(error)
+    except Exception as _:
+        print(f"Fetching items from feed for {source.name} failed due to: ")
+        traceback.print_exc()
 
     bulk_create_articles_and_notifications(create_article_list)
 
@@ -361,12 +366,9 @@ def scrape_sources(
     for source in sources:
         feed_url = source.alt_feed if source.alt_feed else f"{source.url}{extension}"
 
-        try:
-            create_articles_from_feed(source, feed_url, articles)
-            if timeout:
-                sleep(timeout)
-        except Exception as error:
-            print(f"Scrapping {source} failed due to this error: {error}")
+        create_articles_from_feed(source, feed_url, articles)
+        if timeout:
+            sleep(timeout)
 
 
 def get_youtube_sources_and_articles() -> Dict[str, models.QuerySet]:
