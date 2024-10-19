@@ -57,7 +57,7 @@ class SpotifyAPI(object):
         Returns:
             dict: A dictionary containing the authorization header.
         """
-        client_creds_b64 = self.get_client_credientals()
+        client_creds_b64 = self.get_client_credentials()
         return {"Authorization": f"Basic {client_creds_b64}"}
 
     def get_token_data(self) -> Dict[str, str]:
