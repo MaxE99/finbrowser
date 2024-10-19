@@ -1,7 +1,6 @@
 resource "aws_acm_certificate" "main" {
-  domain_name               = var.domain
-  validation_method         = "DNS"
-  subject_alternative_names = ["www.${var.domain}"]
+  domain_name       = var.domain
+  validation_method = "DNS"
 
   tags = {
     Project     = var.project
