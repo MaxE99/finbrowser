@@ -114,7 +114,7 @@ resource "aws_appautoscaling_policy" "memory" {
     predefined_metric_specification {
       predefined_metric_type = "ECSServiceAverageMemoryUtilization"
     }
-    target_value = 30
+    target_value = 60
   }
 }
 
@@ -130,7 +130,7 @@ resource "aws_appautoscaling_policy" "cpu" {
     predefined_metric_specification {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
-    target_value = 30
+    target_value = 60
   }
 }
 
