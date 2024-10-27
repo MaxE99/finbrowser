@@ -1,6 +1,7 @@
 {% extends 'home/base.html' %}
 {% load static %}
 {% load tags %}
+{% load cache %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'home/min_feed_style_v1.css' %}">
 <title>Feed | FinBrowser</title>
@@ -34,6 +35,7 @@
 
 <div class="pageWrapper">
     <div class="longFormContentContainer">
+        {% cache 21600 latest %}
         <div class="firstRow">
             <div class="smallLatestContainer">
                 <h3>Latest Analysis</h3>
@@ -58,6 +60,7 @@
                 {% endfor %}
             </div>
         </div>
+        {% endcache %}
         <h3>Trending Topics</h3>
         <div class="trendingTopicsContainer">
             {% create_fk_content_container trending_topics request highlighted_content_ids "trending_topics" %}
@@ -68,10 +71,12 @@
             <button class="activatedTab" data-for-tab="0">Recommended Content</button>
             <button data-for-tab="1">Stock Pitches</button>
         </div>
+        {% cache 21600 recommended %}
         <h3 class="recommendedHeader">Recommended Content</h3>
         <div class="recommendedContentContainer tabsContent tabsContentActive">
             {% create_content_container recommended_content request highlighted_content_ids "recommended_content" %}
         </div>
+        {% endcache %}
     </div>
     <div class="tweetsContainer tabsContent">
         <h3 class="recommendedHeader">Stock Pitches</h3>
