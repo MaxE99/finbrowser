@@ -200,7 +200,7 @@ function showListSearchResults(source, resultsList, selectedList) {
     const searchResult = document.createElement('div');
     searchResult.classList.add('searchResult');
     const resultImage = document.createElement('img');
-    resultImage.src = `${ENV.S3_BUCKET}/${source.favicon_path}`;
+    resultImage.src = `${ENV.CLOUDFRONT_DIST}/${source.favicon_path}`;
     const sourceName = document.createElement('span');
     sourceName.innerText = source.name;
     sourceName.id = `source_id#${source.source_id}`;

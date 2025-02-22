@@ -100,8 +100,12 @@ locals {
       value = var.secret_key
     },
     {
-      name  = "S3_BUCKET"
-      value = module.bucket.bucket_url
+      name  = "CLOUDFRONT_DIST"
+      value = module.bucket.cloudfront_domain
+    },
+    {
+      name  = "S3_BUCKET_NAME"
+      value = module.bucket.bucket_name
     },
     {
       name  = "SPOTIFY_CLIENT_ID"
@@ -116,6 +120,57 @@ locals {
       value = var.youtube_api_key
     }
   ]
+}
+
+resource "aws_iam_role" "task_role" {
+  name               = "${var.project}-ecs-task-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = "sts:AssumeRole"
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+      }
+    ]
+  })
+
+  tags = {
+    Project     = var.project
+    Name        = "${var.project} ECS Task Role"
+    Description = "Role that ECS Fargate tasks assume to access AWS services like S3"
+  }
+}
+
+resource "aws_iam_policy" "full_s3_access" {
+  name        = "${var.project}-s3-full-access"
+  description = "Policy granting full S3 access (Put, Get, Delete, List) to a specific bucket and its objects."
+  policy      = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action = [
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:DeleteObject",
+          "s3:HeadObject",
+          "s3:ListBucket"
+        ],
+      Resource = [
+          module.bucket.bucket_arn,
+          "${module.bucket.bucket_arn}/*"
+        ]
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "task_role_policy_attachment" {
+  role       = aws_iam_role.task_role.name
+  policy_arn = aws_iam_policy.full_s3_access.arn
 }
 
 module "web" {
@@ -139,6 +194,7 @@ module "web" {
   }
   service_subnet_ids = module.network.public_subnet_ids
   target_group_arn   = module.load_balancer.target_group_arn
+  task_role_arn      = aws_iam_role.task_role.arn
   vpc_id             = module.network.vpc_id
 }
 

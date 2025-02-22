@@ -92,7 +92,7 @@ class GuideView(TemplateView, BaseMixin):
         context["shorts"] = Source.objects.filter(
             name__in=sources_dict["shorts"]
         ).order_by("name")
-        context["s3_bucket"] = os.environ.get("S3_BUCKET") + "static"
+        context["cloudfront_dist"] = STATIC_URL
         return context
 
 
