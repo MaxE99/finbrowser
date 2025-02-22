@@ -56,6 +56,12 @@ variable "target_group_arn" {
   description = "The Amazon Resource Name (ARN) of the load balancer target group to which the service will register its tasks."
 }
 
+variable "task_role_arn" {
+  type = string
+  default = null
+  description = "The ARN of the IAM role that ECS tasks will assume for accessing AWS resources such as S3."
+}
+
 variable "vpc_id" {
   type        = string
   description = "The ID of the VPC in which the ECS service will be deployed, necessary for network configuration."

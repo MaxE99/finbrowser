@@ -21,6 +21,7 @@ resource "aws_ecs_task_definition" "main" {
   family                   = "${var.project}-${var.service.name}"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = var.execution_role_arn
+  task_role_arn            = var.task_role_arn
   network_mode             = "awsvpc"
   cpu                      = var.service.schedule_expression == null ? 512 : 256
   memory                   = var.service.schedule_expression == null ? 1024 : 512

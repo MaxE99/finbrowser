@@ -1,16 +1,24 @@
 import os
-import environ
-
-env = environ.Env()
-environ.Env.read_env()
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG_MODE", False)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# AWS
+CLOUDFRONT_DIST = os.environ.get("CLOUDFRONT_DIST")
+S3_BUCKET_NAME = os.environ.get("S3_BUCKET_NAME")
+
+# Database
+DB_NAME = os.environ.get("DB_NAME")
+DB_USER = os.environ.get("DB_USER")
+DB_MASTER_PASSWORD = os.environ.get("DB_MASTER_PASSWORD")
+DB_HOSTNAME = os.environ.get("DB_HOSTNAME")
+
+# Email
+EMAIL_HOST_USER = os.environ.get("EMAIL_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PW")
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-TWEET_IMG_FILE_DIRECTORY = "static/home/tweet_imgs"
-INITIAL_TWEET_IMG_FILE_DIRECTORY = "static/home/initial_tweet_imgs"
 FAVICON_FILE_DIRECTORY = "static/home/favicons"
 
 if DEBUG:
@@ -21,8 +29,6 @@ if DEBUG:
     MEDIA_URL = "/uploads/"
 
 else:
-    S3_BUCKET = os.environ.get("S3_BUCKET")
-
     ALLOWED_HOSTS = ["finbrowser.io"]
 
     # HTTPS Settings
@@ -38,35 +44,26 @@ else:
     # CSP Settings
     CSP_DEFAULT_SRC = (
         "'self'",
-        S3_BUCKET,
+        CLOUDFRONT_DIST,
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
         "*.analytics.google.com",
     )
-    CSP_STYLE_SRC = (
-        "'self'",
-        S3_BUCKET,
-    )
+    CSP_STYLE_SRC = ("'self'", CLOUDFRONT_DIST)
     CSP_SCRIPT_SRC = (
         "'self'",
-        S3_BUCKET,
+        CLOUDFRONT_DIST,
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
         "*.analytics.google.com",
     )
-    CSP_FONT_SRC = (
-        "'self'",
-        S3_BUCKET,
-    )
-    CSP_IMG_SRC = (
-        "'self'",
-        S3_BUCKET,
-    )
+    CSP_FONT_SRC = ("'self'", CLOUDFRONT_DIST)
+    CSP_IMG_SRC = ("'self'", CLOUDFRONT_DIST)
     CSP_CONNECT_SRC = (
         "'self'",
-        S3_BUCKET,
+        CLOUDFRONT_DIST,
         "https://www.googletagmanager.com",
         "https://www.google-analytics.com",
         "*.google-analytics.com",
@@ -75,10 +72,8 @@ else:
     CSP_INCLUDE_NONCE_IN = ["script-src"]
 
     # AWS Settings
-    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-    AWS_STORAGE_BUCKET_NAME = "finbrowser-assets"
-    AWS_S3_CUSTOM_DOMAIN = "%s.s3.us-east-2.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
+    AWS_STORAGE_BUCKET_NAME = S3_BUCKET_NAME
+    AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT_DIST
     AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
     AWS_LOCATION = "static"
     STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
@@ -88,10 +83,10 @@ else:
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_MASTER_PASSWORD"),
-        "HOST": os.environ.get("DB_HOSTNAME"),
+        "NAME": DB_NAME,
+        "USER": DB_USER,
+        "PASSWORD": DB_MASTER_PASSWORD,
+        "HOST": DB_HOSTNAME,
         "PORT": "5432",
     }
 }
@@ -215,8 +210,8 @@ AUTHENTICATION_BACKENDS = [
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get("EMAIL_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PW")
+EMAIL_HOST_USER = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 EMAIL_USE_TLS = True
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
@@ -228,7 +223,6 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
     ],
-    # Deactivates Browsable API
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
     ],
