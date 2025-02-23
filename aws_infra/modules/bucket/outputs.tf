@@ -1,5 +1,5 @@
 output "bucket_arn" {
-  value = aws_s3_bucket.main.arn
+  value       = aws_s3_bucket.main.arn
   description = "The ARN of the S3 bucket used for storing FinBrowser assets."
 }
 
@@ -9,6 +9,12 @@ output "bucket_name" {
 }
 
 output "cloudfront_domain" {
-  value = aws_cloudfront_distribution.main.domain_name
-  description = "The CloudFront distribution domain for accessing media assets securely."
+  value       = aws_cloudfront_distribution.main.domain_name
+  description = "The CloudFront distribution domain for accessing FinBrowser assets."
+}
+
+output "cloudfront_arn" {
+  value       = aws_cloudfront_distribution.main.arn
+  description = "The CloudFront distribution arn for accessing FinBrowser assets."
+
 }

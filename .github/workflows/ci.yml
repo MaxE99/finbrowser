@@ -1,0 +1,72 @@
+name: Deploy Django to AWS
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        permissions:
+          id-token: write # Required for OIDC authentication
+          contents: read # Required for accessing the repository contents
+
+        env:
+          AWS_REGION: us-east-2
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v3
+              with:
+                  role-to-assume: ${{ secrets.ROLE_ARN }}
+                  role-session-name: GitHubActions
+                  aws-region: ${{ env.AWS_REGION }}
+
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: '3.12.3'
+
+            - name: Cache dependencies
+              uses: actions/cache@v3
+              with:
+                  path: ~/.cache/pip
+                  key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pip-
+                
+            - name: Install dependencies
+              run: |
+                  python -m venv venv
+                  source venv/bin/activate
+                  pip install --cache-dir ~/.cache/pip -r requirements.txt
+                
+            - name: Run collectstatic
+              env:
+                SECRET_KEY: ${{ secrets.SECRET_KEY }}
+                S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+              run: |
+                  source venv/bin/activate
+                  python manage.py collectstatic --noinput
+
+            - name: Invalidate CloudFront cache
+              run: |
+                  aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+
+            - name: Log in to Amazon ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v1
+
+            - name: Build and push Docker image
+              run: |
+                  docker build --cache-from=type=registry,ref=${{ secrets.ECR_REGISTRY }}:latest -t ${{ secrets.ECR_REGISTRY }}:latest .
+                  docker push ${{ secrets.ECR_REGISTRY }}:latest
+
+            - name: Deploy to Amazon ECS
+              run: |
+                  aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER }} --service ${{ secrets.ECS_SERVICE }} --region ${{ env.AWS_REGION }} --force-new-deploy
