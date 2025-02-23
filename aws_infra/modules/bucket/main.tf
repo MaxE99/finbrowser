@@ -60,7 +60,7 @@ resource "aws_s3_bucket_cors_configuration" "main" {
 }
 
 resource "aws_cloudfront_distribution" "main" {
-  enabled             = true
+  enabled = true
 
   origin {
     origin_id   = "${var.project}-origin"
@@ -78,7 +78,7 @@ resource "aws_cloudfront_distribution" "main" {
 
     forwarded_values {
       query_string = true
-      headers = ["Origin"]  # Forward the Origin header / required for proper CORS handling
+      headers      = ["Origin"] # Forward the Origin header / required for proper CORS handling
 
       cookies {
         forward = "none"
@@ -105,7 +105,7 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true  # use acm_certificate for media if you don't want to use the default cloudfront domain
+    cloudfront_default_certificate = true # use acm_certificate for media if you don't want to use the default cloudfront domain
   }
 
   price_class = "PriceClass_100"

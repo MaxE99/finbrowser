@@ -123,13 +123,13 @@ locals {
 }
 
 resource "aws_iam_role" "task_role" {
-  name               = "${var.project}-ecs-task-role"
+  name = "${var.project}-ecs-task-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
-        Action   = "sts:AssumeRole"
+        Effect = "Allow"
+        Action = "sts:AssumeRole"
         Principal = {
           Service = "ecs-tasks.amazonaws.com"
         }
@@ -147,11 +147,11 @@ resource "aws_iam_role" "task_role" {
 resource "aws_iam_policy" "full_s3_access" {
   name        = "${var.project}-s3-full-access"
   description = "Policy granting full S3 access (Put, Get, Delete, List) to a specific bucket and its objects."
-  policy      = jsonencode({
+  policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
+        Effect = "Allow"
         Action = [
           "s3:PutObject",
           "s3:GetObject",
@@ -159,7 +159,7 @@ resource "aws_iam_policy" "full_s3_access" {
           "s3:HeadObject",
           "s3:ListBucket"
         ],
-      Resource = [
+        Resource = [
           module.bucket.bucket_arn,
           "${module.bucket.bucket_arn}/*"
         ]
@@ -222,6 +222,17 @@ module "workers" {
   service_subnet_ids = module.network.public_subnet_ids
   target_group_arn   = module.load_balancer.target_group_arn
   vpc_id             = module.network.vpc_id
+}
+
+module "ci_cd_pipeline" {
+  source = "./modules/ci_cd_pipeline"
+
+  bucket_arn         = module.bucket.bucket_arn
+  cloudfront_arn     = module.bucket.cloudfront_arn
+  ecr_repository_arn = aws_ecr_repository.main.arn
+  github_repository  = "repo:MaxE99/finbrowser:*"
+  project            = var.project
+  service_arn        = module.web.service_arn
 }
 
 # module "bastion_host" {
