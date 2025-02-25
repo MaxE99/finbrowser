@@ -18,6 +18,7 @@ resource "aws_iam_role" "main" {
           StringLike = {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
             "token.actions.githubusercontent.com:sub" = var.github_repository
+            "token.actions.githubusercontent.com:ref" = "refs/heads/master"
           }
         }
       }
