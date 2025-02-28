@@ -53,12 +53,6 @@ class GuideView(TemplateView, BaseMixin):
         context["podcast"] = Source.objects.filter(
             name__in=sources_dict["podcast"]
         ).order_by("name")
-        context["twitter"] = Source.objects.filter(
-            name__in=sources_dict["twitter"]
-        ).order_by("name")
-        context["industry_news_provider"] = Source.objects.filter(
-            name__in=sources_dict["industry_news_provider"]
-        ).order_by("name")
         context["insider"] = Source.objects.filter(
             name__in=sources_dict["insider"]
         ).order_by("name")
@@ -88,9 +82,6 @@ class GuideView(TemplateView, BaseMixin):
         ).order_by("name")
         context["geopolitics"] = Source.objects.filter(
             name__in=sources_dict["geopolitics"]
-        ).order_by("name")
-        context["shorts"] = Source.objects.filter(
-            name__in=sources_dict["shorts"]
         ).order_by("name")
         context["cloudfront_dist"] = STATIC_URL
         return context
