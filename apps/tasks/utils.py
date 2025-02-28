@@ -23,6 +23,8 @@ from apps.accounts.models import Website
 from apps.home.models import Notification, NotificationMessage
 from apps.article.models import Article
 
+BUCKET_NAME = os.environ.get("S3_BUCKET_NAME")
+
 s3 = boto3.client("s3")
 
 
@@ -44,7 +46,7 @@ def create_source_profile_img(source, file_url: str):
 
         s3.upload_fileobj(
             output,
-            "finbrowser",
+            BUCKET_NAME,
             os.path.join(settings.FAVICON_FILE_DIRECTORY, f"{source.slug}.webp"),
         )
 
