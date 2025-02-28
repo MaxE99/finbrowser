@@ -51,30 +51,6 @@
         </div>
     </div>
     {% create_source_container podcast subscribed_sources request %}
-    <div class="desc">And that's not all! Twitter has become a hub for industry experts to share their market insights
-        and opinions. That's why I've compiled a list of the finest stock market content creators on Twitter. By
-        following these sources, you'll be in the know and stay ahead of the curve with the latest buzz in the industry.
-    </div>
-    <div class="sliderHeader">
-        <h2>Twitter</h2>
-        <div>
-            <a href="/sources?website=Twitter" aria-label="Show more Twitter sources">VIEW ALL</a>
-            <i class="fa-solid fa-chevron-right"></i>
-        </div>
-    </div>
-    {% create_source_container twitter subscribed_sources request %}
-    <div class="desc">But wait, there's more! In addition to these incredible sources, FinBrowser also brings you
-        content from a vast array of online publications from industry news providers. Stay updated with breaking news,
-        analysis, and market trends from a wide range of trusted sources, all in one place.
-    </div>
-    <div class="sliderHeader">
-        <h2>Industry News Provider</h2>
-        <div>
-            <a href="/sources?website=Other&content=News" aria-label="Show more industry news providers">VIEW ALL</a>
-            <i class="fa-solid fa-chevron-right"></i>
-        </div>
-    </div>
-    {% create_source_container industry_news_provider subscribed_sources request %}
     <div class="desc">
         At FinBrowser, I place a high priority on curating quality sources for the platform. Many of the selected
         sources have backgrounds as industry insiders, bringing extensive experience and knowledge from their years of
@@ -116,23 +92,19 @@
         FinBrowser and the top sources within these industries.</div>
 
     <div class="desc">When it comes to tech, FinBrowser offers a treasure trove of exceptional content creators. <img
-            src="{{ cloudfront_dist }}/home/favicons/not-boring-by-packy-mccormick.webp"
+            src="{{ cloudfront_dist }}home/favicons/not-boring-by-packy-mccormick.webp"
             alt="Picture of Not Boring by Packy McCormick"> <a href="/source/not-boring-by-packy-mccormick"
             aria-label="Open profile of Not Boring by Packy McCormick">Not
             Boring</a> stands out with his engaging and in-depth deep dives, where he explores various aspects of
-        emerging technologies. <img src="{{ cloudfront_dist }}/home/favicons/software-stack-investing.webp"
+        emerging technologies. <img src="{{ cloudfront_dist }}home/favicons/software-stack-investing.webp"
             alt="Picture of Software Stack Investing"><a href="/source/software-stack-investing"
             aria-label="Open profile of Software Stack Investing">SoftwareStackInvesting</a>, on the other
         hand,
         offers
         insightful analysis of the latest happenings in
         the software industry, providing valuable information that investors would typically pay exorbitant amounts of
-        money for. And let's not forget the <img src="{{ cloudfront_dist }}/home/favicons/all-in-podcast.webp"
-            alt="Picture of All-In-Podcast"> <a href="/source/all-in-podcast"
-            aria-label="Open profile of All-In-Podcast">All-In-Podcast</a>, a must-watch for
-        anyone
-        interested in the tech sector, as it features discussions and insights from four of the most influential figures
-        in the industry.</div>
+        money for.
+    </div>
     <div class="sliderHeader">
         <h2>Tech</h2>
         <div>
@@ -150,14 +122,13 @@
         traditional financial institutions for innovative options. This shift is definitely here to stay. Given how
         disruptive this industry is, it's important to not just focus on the big FinTech players, but also keep an eye
         on the up-and-coming unicorn startups that are shaping the field. I highly recommend checking out the
-        thought-provoking long-form articles from <img src="{{ cloudfront_dist }}/home/favicons/fintech-brain-food.webp"
+        thought-provoking long-form articles from <img src="{{ cloudfront_dist }}home/favicons/fintech-brain-food.webp"
             alt="Picture of Fintech Brain Food"><a href="/source/fintech-brain-food"
             aria-label="Open profile of Fintech Brain Food">Fintech Brain Food</a> and staying
         in
         the loop with the latest happenings
-        through <img src="{{ cloudfront_dist }}/home/favicons/popular-fintech.webp"
-            alt="Picture of Popular Fintech's"><a href="/source/popular-fintech"
-            aria-label="Open profile of Popular Fintech's">Popular Fintech's</a>
+        through <img src="{{ cloudfront_dist }}home/favicons/popular-fintech.webp" alt="Picture of Popular Fintech's"><a
+            href="/source/popular-fintech" aria-label="Open profile of Popular Fintech's">Popular Fintech's</a>
         coverage.
     </div>
     <div class="sliderHeader">
@@ -173,13 +144,10 @@
         always like that. Back in the day, many new investors cut their teeth in the small-cap sector. While some lost
         their hard-earned money, those who persisted and learned the ropes became some of the most well-known investors.
         Small-cap stocks don't receive as much coverage from financial analysts, which means there's a greater
-        opportunity to uncover hidden gems or potential disasters. Fortunately, the internet and platforms like <img
-            src="{{ cloudfront_dist }}/home/favicons/ian-cassel.webp" alt="Picture of Ian Cassel"><a
-            href="/source/ian-cassel" aria-label="Open profile of Ian Cassel">Ian
-            Cassel's</a> MicrocapClub provide some reliable research to rely on. Moreover, writers on Substack, such as
-        <img src="{{ cloudfront_dist }}/home/favicons/vestrule.webp" alt="Picture of Vestrule"><a
-            href="/source/vestrule" aria-label="Open profile of Vestrule">Vestrule</a>
-        and <img src="{{ cloudfront_dist }}/home/favicons/the-superinvestors-of-augustusville.webp"
+        opportunity to uncover hidden gems or potential disasters. Fortunately, writers on Substack, such as
+        <img src="{{ cloudfront_dist }}home/favicons/vestrule.webp" alt="Picture of Vestrule"><a href="/source/vestrule"
+            aria-label="Open profile of Vestrule">Vestrule</a>
+        and <img src="{{ cloudfront_dist }}home/favicons/the-superinvestors-of-augustusville.webp"
             alt="Picture of The Superinvestors of Augustusville"><a href="/source/the-superinvestors-of-augustusville"
             aria-label="Open profile of The Superinvestors of Augustusville">The Superinvestors of
             Augustusville</a>, offer
@@ -201,29 +169,20 @@
         underscored the criticality of semiconductors for the global economy. It's no wonder
         that experts often refer to them as the "oil" of the 21st century. As an investor, it's imperative to stay
         informed about this industry. Fortunately, there is a wealth of excellent sources covering the sector. You may
-        already be familiar with <img src="{{ cloudfront_dist }}/home/favicons/asianometry.webp"
+        already be familiar with <img src="{{ cloudfront_dist }}home/favicons/asianometry.webp"
             alt="Picture of Asianometry"><a href="/source/asianometry"
             aria-label="Open profile of Asianometry">Asianometry</a>, a popular YouTube channel known
         for its
         exceptional and engaging coverage
         of the semiconductor industry. Additionally, Substack newsletters like <img
-            src="{{ cloudfront_dist }}/home/favicons/fabricated-knowledge-substack.webp"
+            src="{{ cloudfront_dist }}home/favicons/fabricated-knowledge-substack.webp"
             alt="Picture of Fabricated Knowledge"><a href="/source/fabricated-knowledge-substack"
             aria-label="Open profile of Fabricated Knowledge">Fabricated
             Knowledge</a>, <a href="/source/semianalysis" aria-label="Open profile of SemiAnalysis">SemiAnalysis</a>,
-        and <img src="{{ cloudfront_dist }}/home/favicons/semianalysis.webp" alt="Picture of SemiAnalysis"><a
+        and <img src="{{ cloudfront_dist }}home/favicons/semianalysis.webp" alt="Picture of SemiAnalysis"><a
             href="/source/semi-literate" aria-label="Open profile of SemiLiterate">SemiLiterate</a>
         offer valuable insights, providing a comprehensive overview of trends and individual companies
-        within the sector. But let's not overlook the multitude of top analysts who provide insightful commentary on
-        recent activities in the semiconductor sector on Twitter. <img
-            src="{{ cloudfront_dist }}/home/favicons/sravan-kundojjala.webp" alt="Picture of Sravan Kundojjala"><a
-            href="/source/sravan-kundojjala" aria-label="Open profile of Sravan Kundojjala">Sravan Kundojjala</a>, <img
-            src="{{ cloudfront_dist }}/home/favicons/dnystedt.webp" alt="Picture of Dan Nystedt"><a
-            href="/source/dan-nystedt" aria-label="Open profile of Dan Nystedt">Dan
-            Nystedt</a>, and <img src="{{ cloudfront_dist }}/home/favicons/dylan522p.webp"
-            alt="Picture of Dylan Patel"><a href="/source/dylan-patel" aria-label="Open profile of Dylan Patel">Dylan
-            Patel</a> are
-        just a few of the experts you should consider following.
+        within the sector.
     </div>
     <div class="sliderHeader">
         <h2>Semiconductor</h2>
@@ -236,20 +195,14 @@
 
     <div class="desc">
         Speaking of sectors with a significant impact on the global economy, Energy cannot be overlooked. With the onset
-        of the Russia/Ukraine conflict in 2022, it has taken center stage in discussions. Just like the semiconductor
-        industry, Energy also has a vibrant Twitter community, with financial professionals like <img
-            src="{{ cloudfront_dist }}/home/favicons/Energy_Tidbits.webp" alt="Picture of Dan Tsubouchi"><a
-            href="/source/dan-tsubouchi" aria-label="Open profile of Dan Tsubouchi">Dan Tsubouchi</a> and <img
-            src="{{ cloudfront_dist }}/home/favicons/staunovo.webp" alt="Picture of Giovanni Staunovo"><a
-            href="/source/giovanni-staunovo" aria-label="Open profile of Giovanni Staunovo">Giovanni Staunovo</a>
-        sharing valuable insights on the sector's latest developments. Another notable source that
-        deserves mention in the Energy space is <img src="{{ cloudfront_dist }}/home/favicons/doomberg.webp"
+        of the Russia/Ukraine conflict in 2022, it has taken center stage in discussions. A notable source that
+        deserves mention in the Energy space is <img src="{{ cloudfront_dist }}home/favicons/doomberg.webp"
             alt="Picture of Doomberg"><a href="/source/doomberg" aria-label="Open profile of Doomberg">Doomberg</a>, a
         Substack publication that has
         gained
         significant traction.
         While you may not always agree with his perspectives, reading his articles will undoubtedly leave you with a
-        fresh outlook and an enjoyable experience.
+        fresh outlook.
     </div>
     <div class="sliderHeader">
         <h2>Energy</h2>
@@ -260,21 +213,14 @@
     </div>
     {% create_source_container energy subscribed_sources request %}
 
-    <div class="desc">FinBrowser also offers a diverse selection of sources that specialize in covering the macroeconomy
-        in general. What sets these sources apart is their comprehensive global coverage, going beyond the U.S. market.
-        For example, <img src="{{ cloudfront_dist }}/home/favicons/SofiaHCBBG.webp"
-            alt="Picture of Sofia Horta e Costa"><a href="/source/sofia-horta-e-costa"
-            aria-label="Open profile of Sofia Horta e Costa">Sofia Horta e Costa</a>
-        delivers a weekly summary of key
-        developments in China, which I
-        personally find
-        essential to stay informed. If you're seeking in-depth analysis of current macroeconomic topics, <img
-            src="{{ cloudfront_dist }}/home/favicons/apricitas-economics.webp" alt="Picture of Apricitas Economics"><a
-            href="/source/apricitas-economics" aria-label="Open profile of Apricitas Economics">Apricitas Economics</a>
-        and <img src="{{ cloudfront_dist }}/home/favicons/chartbook.webp" alt="Picture of Chartbook"><a
-            href="/source/chartbook" aria-label="Open profile of Chartbook">Chartbook</a>
-        are
-        exceptional sources. Their detailed explanations provide valuable perspectives on economic trends and events.
+    <div class="desc">
+        FinBrowser offers a diverse selection of sources specializing in macroeconomics, with a focus on global coverage
+        that extends beyond the U.S. market. For in-depth analysis of current macroeconomic topics, <img
+            src="{{ cloudfront_dist }}home/favicons/apricitas-economics.webp" alt="Apricitas Economics logo">
+        <a href="/source/apricitas-economics" aria-label="Open profile of Apricitas Economics">Apricitas Economics</a>
+        and <img src="{{ cloudfront_dist }}home/favicons/chartbook.webp" alt="Chartbook logo">
+        <a href="/source/chartbook" aria-label="Open profile of Chartbook">Chartbook</a> stand out as exceptional
+        resources. Their detailed explanations offer valuable insights into economic trends and events.
     </div>
     <div class="sliderHeader">
         <h2>Macro</h2>
@@ -289,18 +235,12 @@
         as it drives the global economy. Recent events like the Russia/Ukraine conflict and the unresolved tensions
         surrounding Taiwan serve as reminders that we haven't reached the "end of history." To gain insights into
         geopolitical dynamics, I've carefully curated renowned think tanks such as the <img
-            src="{{ cloudfront_dist }}/home/favicons/foreign-policy-research-institute.webp"
+            src="{{ cloudfront_dist }}home/favicons/foreign-policy-research-institute.webp"
             alt="Picture of Foreign Policy Institute"><a href="/source/foreign-policy-research-institute"
             aria-label="Open profile of Foreign Policy Institute">Foreign Policy
-            Institute</a>
-        and the <img src="{{ cloudfront_dist }}/home/favicons/center-for-strategic-international-studies.webp"
-            alt="Picture of Center for Strategic & International Studies"><a
-            href="/source/center-for-strategic-international-studies"
-            aria-label="Open profile of Center for Strategic & International Studies">Center for Strategic &
-            International Studies</a>
-        . Their publications hold significant influence over policymakers
-        and offer valuable perspectives. Additionally, I highly recommend <img
-            src="{{ cloudfront_dist }}/home/favicons/palladium.webp" alt="Picture of Palladium"><a
+            Institute</a>. Their publication hold significant influence over policymakers
+        and offers valuable perspectives. Additionally, I highly recommend <img
+            src="{{ cloudfront_dist }}home/favicons/palladium.webp" alt="Picture of Palladium"><a
             href="/source/palladium" aria-label="Open profile of Palladium">Palladium</a>
         for its
         informative,
@@ -313,35 +253,6 @@
         </div>
     </div>
     {% create_source_container geopolitics subscribed_sources request %}
-
-    <div class="desc">Lastly, it is crucial for me to provide you with diverse perspectives. As an investor, it's
-        important to consider alternative viewpoints and thoroughly examine the other side of the argument. That's where
-        short sellers come into play. Short sellers often uncover irregularities and questionable practices at
-        companies, as demonstrated in high-profile cases like Wirecard and Nikola Motors. If you're interested in
-        delving deeper and exploring the possibility of shorting companies yourself, I highly recommend taking a closer
-        look at several reputable short selling entities that have gained prominence in this field. Some notable ones
-        include <img src="{{ cloudfront_dist }}/home/favicons/muddywatersre.webp"
-            alt="Picture of Muddy Waters Research"><a href="/source/muddy-waters-research-blog"
-            aria-label="Open profile of Muddy Waters Research">Muddy Waters
-            Research</a>,
-        <img src="{{ cloudfront_dist }}/home/favicons/HindenburgRes.webp" alt="Picture of Hindenburg Research"><a
-            href="/source/hindenburg-research" aria-label="Open profile of Hindenburg Research">Hindenburg Research</a>
-        , and <img src="{{ cloudfront_dist }}/home/favicons/CitronResearch.webp" alt="Picture of Citron Research"><a
-            href="/source/citron-research-blog" aria-label="Open profile of Citron Research">Citron Research</a>.
-        Additionally, it's worth keeping an eye
-        on Edwin Dorsey's popular publication, <img src="{{ cloudfront_dist }}/home/favicons/the-bear-cave.webp"
-            alt="Picture of The Bear Cave"><a href="/source/the-bear-cave"
-            aria-label="Open profile of The Bear Cave">The Bear Cave</a>, for
-        valuable insights.
-    </div>
-    <div class="sliderHeader">
-        <h2>Shorts</h2>
-        <div>
-            <a href="/sources?sector=Shorts" aria-label="Show more shorts sources">VIEW ALL</a>
-            <i class="fa-solid fa-chevron-right"></i>
-        </div>
-    </div>
-    {% create_source_container shorts subscribed_sources request %}
 
     <div class="desc">
         I hope that you've discovered numerous new intriguing sources that will enhance your knowledge of the stock
