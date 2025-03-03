@@ -289,7 +289,7 @@ def create_articles_from_feed(source, feed_url: str, articles: models.QuerySet):
         items = ET.fromstring(website_xml).findall(".//item")
         for item in items:
             try:
-                if str(source.website) in ["Substack", "Forbes"]:
+                if str(source.website) == "Substack":
                     components = get_article_components(item, description=True)
                     # in previous versions I didn't include the description in the title
                     if articles.filter(

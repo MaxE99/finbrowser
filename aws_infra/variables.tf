@@ -94,11 +94,6 @@ variable "workers" {
       schedule_expression = "rate(24 hours)"
     },
     {
-      name                = "forbes"
-      command             = ["python", "manage.py", "scrape_forbes"]
-      schedule_expression = "rate(24 hours)"
-    },
-    {
       name                = "calc-sim"
       command             = ["python", "manage.py", "calculate_similiar_sources"]
       schedule_expression = "rate(28 days)"

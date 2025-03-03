@@ -176,17 +176,6 @@ class ArticleManager(models.Manager):
             "source", "source__website", "tweet_type"
         )
 
-    def get_best_tweets_anon(self) -> models.QuerySet:
-        """
-        Retrieve the best tweets from top sources.
-
-        Returns:
-            QuerySet: Filtered articles representing the best tweets.
-        """
-        return self.filter(
-            source__top_source=True, source__website__name="Twitter"
-        ).select_related("source", "source__website", "tweet_type")
-
     def get_latest_analysis(self) -> models.QuerySet:
         """
         Retrieve the latest analysis articles.
@@ -209,15 +198,13 @@ class ArticleManager(models.Manager):
 
     def get_top_content_anon(self) -> models.QuerySet:
         """
-        Retrieve top content articles excluding Twitter.
+        Retrieve top content articles
 
         Returns:
-            QuerySet: Filtered top articles excluding those from Twitter.
+            QuerySet: Filtered top articles.
         """
-        return (
-            self.filter(source__top_source=True)
-            .exclude(source__website__name="Twitter")
-            .select_related("source", "source__website")
+        return self.filter(source__top_source=True).select_related(
+            "source", "source__website"
         )
 
     def get_stock_pitches(self) -> models.QuerySet:
