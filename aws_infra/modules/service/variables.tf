@@ -8,7 +8,7 @@ variable "cluster" {
 }
 
 variable "env_variables" {
-  type = list(map(string))
+  type        = list(map(string))
   description = "A list of environment variables to pass to the container when the service is run. This allows for configuration without changing the container image."
 }
 
@@ -57,12 +57,17 @@ variable "target_group_arn" {
 }
 
 variable "task_role_arn" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "The ARN of the IAM role that ECS tasks will assume for accessing AWS resources such as S3."
 }
 
 variable "vpc_id" {
   type        = string
   description = "The ID of the VPC in which the ECS service will be deployed, necessary for network configuration."
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "A map of tags to apply to all resources."
 }

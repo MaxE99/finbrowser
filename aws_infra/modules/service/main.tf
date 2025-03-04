@@ -5,12 +5,7 @@
 resource "aws_cloudwatch_log_group" "main" {
   name              = "${var.project}-${var.service.name}"
   retention_in_days = 30
-
-  tags = {
-    Project     = var.project
-    Name        = "CloudWatch Log Group"
-    Description = "Log group for ECS service logs"
-  }
+  tags              = var.tags
 }
 
 ################################################################################
@@ -46,12 +41,7 @@ resource "aws_ecs_task_definition" "main" {
       }
     }
   ])
-
-  tags = {
-    Project     = var.project
-    Name        = "${var.project} ${var.service.name} ecs task definition"
-    Description = "Task definition of the django app for the cluster to spin up"
-  }
+  tags = var.tags
 }
 
 resource "aws_ecs_service" "main" {
@@ -76,12 +66,7 @@ resource "aws_ecs_service" "main" {
       container_port   = 5000
     }
   }
-
-  tags = {
-    Project     = var.project
-    Name        = "${var.project} ${var.service.name} ecs service"
-    Description = "Service of the Django app"
-  }
+  tags = var.tags
 }
 
 ################################################################################
@@ -95,12 +80,7 @@ resource "aws_appautoscaling_target" "main" {
   resource_id        = "service/${var.cluster.name}/${aws_ecs_service.main.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
-
-  tags = {
-    Project     = var.project
-    Name        = "Appautoscaling Target"
-    Description = "Autoscaling for the fargate cluster"
-  }
+  tags               = var.tags
 }
 
 resource "aws_appautoscaling_policy" "memory" {
@@ -154,12 +134,7 @@ resource "aws_iam_role" "main" {
   count              = var.service.schedule_expression != null ? 1 : 0
   name               = "${var.project}-${var.service.name}-ecs-eventbridge-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
-
-  tags = {
-    Project     = var.project
-    Name        = "${var.project} ${var.service.name} IAM Role for EventBridge"
-    Description = "Role for ECS tasks triggered by EventBridge"
-  }
+  tags               = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "main" {
@@ -198,12 +173,7 @@ resource "aws_cloudwatch_event_rule" "main" {
   count               = var.service.schedule_expression != null ? 1 : 0
   name                = "${var.project}-${var.service.name}-worker"
   schedule_expression = var.service.schedule_expression
-
-  tags = {
-    Project     = var.project
-    Name        = "${var.project} ${var.service.name} CloudWatch Event Rule"
-    Description = "CloudWatch event rule for scheduling ECS tasks"
-  }
+  tags                = var.tags
 }
 
 resource "aws_cloudwatch_event_target" "main" {

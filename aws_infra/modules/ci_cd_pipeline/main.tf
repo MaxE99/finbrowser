@@ -23,6 +23,7 @@ resource "aws_iam_role" "main" {
       }
     ]
   })
+  tags = var.tags
 }
 
 resource "aws_iam_policy" "main" {

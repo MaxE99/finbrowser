@@ -1,12 +1,7 @@
 resource "aws_acm_certificate" "main" {
   domain_name       = var.domain
   validation_method = "DNS"
-
-  tags = {
-    Project     = var.project
-    Name        = "${var.project} ACM certificate"
-    Description = "ACM certificate for ${var.domain}"
-  }
+  tags              = var.tags
 }
 
 resource "aws_route53_record" "main" {

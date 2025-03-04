@@ -27,3 +27,8 @@ variable "service_arn" {
   type        = string
   description = "The ARN of the ECS service that GitHub Actions will update"
 }
+
+variable "tags" {
+  type        = map(string)
+  description = "A map of tags to apply to all resources."
+}

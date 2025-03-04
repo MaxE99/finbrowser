@@ -6,24 +6,14 @@ resource "aws_security_group" "outbound" {
   name        = "${var.project}-rds-egress"
   description = "Allows services with this security group to access the RDS instance"
   vpc_id      = var.vpc_id
-
-  tags = {
-    Project     = var.project
-    Name        = "Outbound security group"
-    Description = "Allows services with this security group to access the RDS instance"
-  }
+  tags        = var.tags
 }
 
 resource "aws_security_group" "inbound" {
   name        = "${var.project}-rds-ingress"
   description = "Allows RDS instance to be accessed by services"
   vpc_id      = var.vpc_id
-
-  tags = {
-    Project     = var.project
-    Name        = "Inbound security group"
-    Description = "Allows RDS instance to be accessed by services"
-  }
+  tags        = var.tags
 }
 
 resource "aws_vpc_security_group_egress_rule" "outbound" {
@@ -63,10 +53,5 @@ resource "aws_db_instance" "main" {
   db_subnet_group_name        = var.subnet_group_name
   vpc_security_group_ids      = [aws_security_group.inbound.id]
   deletion_protection         = true
-
-  tags = {
-    Project     = var.project
-    Name        = "RDS"
-    Description = "PostgreSQL RDS database"
-  }
+  tags                        = var.tags
 }

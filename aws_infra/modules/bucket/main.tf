@@ -1,12 +1,7 @@
 resource "aws_s3_bucket" "main" {
   bucket        = "${var.project}-assets"
   force_destroy = true
-
-  tags = {
-    Project     = var.project
-    Name        = "${var.project} S3 bucket"
-    Description = "S3 bucket for storing project assets"
-  }
+  tags          = var.tags
 }
 
 resource "aws_s3_bucket_public_access_block" "main" {
@@ -109,10 +104,5 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   price_class = "PriceClass_100"
-
-  tags = {
-    Project     = var.project
-    Name        = "${var.project} Cloudfront distribution"
-    Description = "Cloudfront distribution for distributing project assets"
-  }
+  tags        = var.tags
 }

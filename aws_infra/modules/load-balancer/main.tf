@@ -6,12 +6,7 @@ resource "aws_security_group" "main" {
   name        = "${var.project}-cluster-access"
   description = "Allows services with this security group to access the tasks in the cluster"
   vpc_id      = var.vpc_id
-
-  tags = {
-    Project     = var.project
-    Name        = "Load balancer security group"
-    Description = "Allows services with this security group to access the tasks in the cluster"
-  }
+  tags        = var.tags
 }
 
 resource "aws_vpc_security_group_ingress_rule" "http" {
@@ -56,12 +51,7 @@ resource "aws_lb_target_group" "main" {
     path                = "/health-check" # endpoint of the django app for health check
     unhealthy_threshold = 2
   }
-
-  tags = {
-    Project     = var.project
-    Name        = "LB Target Group"
-    Description = "Target group for the web app load balancer"
-  }
+  tags = var.tags
 }
 
 ################################################################################
@@ -69,18 +59,13 @@ resource "aws_lb_target_group" "main" {
 ################################################################################
 
 resource "aws_lb" "main" {
-  name                             = "${var.project}-alb"
-  internal                         = false
-  load_balancer_type               = "application"
-  security_groups                  = [aws_security_group.main.id]
-  subnets                          = var.lb_subnet_ids
-  idle_timeout                     = 600
-
-  tags = {
-    Project     = var.project
-    Name        = "Application load balancer"
-    Description = "Application load balancer for the web app"
-  }
+  name               = "${var.project}-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.main.id]
+  subnets            = var.lb_subnet_ids
+  idle_timeout       = 600
+  tags               = var.tags
 }
 
 resource "aws_lb_listener" "http" {

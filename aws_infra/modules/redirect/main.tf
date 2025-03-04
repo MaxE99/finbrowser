@@ -12,6 +12,7 @@ resource "aws_acm_certificate" "main" {
   validation_method         = "DNS"
   provider                  = aws.virginia
   subject_alternative_names = ["www.${var.domain}"]
+  tags                      = var.tags
 }
 
 resource "aws_route53_record" "validation" {
@@ -44,12 +45,7 @@ resource "aws_cloudfront_origin_access_identity" "main" {
 resource "aws_s3_bucket" "www_redirect" {
   bucket        = local.fqdn
   force_destroy = true
-
-  tags = {
-    Project     = var.project
-    Name        = "${var.project} S3 redirect bucket"
-    Description = "S3 bucket for redirecting www traffic to apex domain"
-  }
+  tags          = var.tags
 }
 
 resource "aws_s3_bucket_public_access_block" "main" {
@@ -157,12 +153,7 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   price_class = "PriceClass_100"
-
-  tags = {
-    Project     = var.project
-    Name        = "${var.project} CloudFront distribution"
-    Description = "CloudFornt for redirecting www. to apex domain"
-  }
+  tags        = var.tags
 }
 
 resource "aws_route53_record" "redirect" {

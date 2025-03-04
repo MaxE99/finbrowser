@@ -7,11 +7,7 @@ resource "aws_security_group" "main" {
   description = "Allow SSH tunnel connection to bastion host"
   vpc_id      = var.vpc_id
 
-  tags = {
-    Project     = var.project
-    Name        = "Bastion host security group"
-    Description = "SSH access to bastion host"
-  }
+  tags = var.tags
 }
 
 resource "aws_vpc_security_group_ingress_rule" "main" {
@@ -50,10 +46,7 @@ resource "aws_key_pair" "main" {
   key_name   = "${var.project}-bastion-host"
   public_key = var.public_ssh_key
 
-  tags = {
-    Project = var.project
-    Name    = "Bastion host key pair"
-  }
+  tags = var.tags
 }
 
 resource "aws_instance" "bastion" {
@@ -64,9 +57,5 @@ resource "aws_instance" "bastion" {
   associate_public_ip_address = true
   key_name                    = aws_key_pair.main.id
 
-  tags = {
-    Project     = var.project
-    Name        = "Bastion host"
-    Description = "Bastion host for secure access to RDS database"
-  }
+  tags = var.tags
 }

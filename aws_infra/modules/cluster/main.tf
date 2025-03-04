@@ -16,12 +16,7 @@ data "aws_iam_policy_document" "assume_role" {
 resource "aws_iam_role" "main" {
   name               = "${var.project}-ecs-execution"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
-
-  tags = {
-    Project     = var.project
-    Name        = "IAM Execution Role"
-    Description = "Execution role for ECS cluster tasks to pull images"
-  }
+  tags               = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "main" {
@@ -37,12 +32,7 @@ resource "aws_security_group" "main" {
   name        = "${var.project}-sg-ecs"
   description = "Allows all egress and ingress for either a load balancer or services which assume the exported SG to the service holding this SG."
   vpc_id      = var.vpc_id
-
-  tags = {
-    Project     = var.project
-    Name        = "ECS Security Group"
-    Description = "Security group for ECS cluster and related services"
-  }
+  tags        = var.tags
 }
 
 resource "aws_vpc_security_group_ingress_rule" "main" {
@@ -59,10 +49,5 @@ resource "aws_vpc_security_group_ingress_rule" "main" {
 
 resource "aws_ecs_cluster" "main" {
   name = "${var.project}-ecs-cluster"
-
-  tags = {
-    Project     = var.project
-    Name        = "ECS Cluster"
-    Description = "Cluster to manage the Django application"
-  }
+  tags = var.tags
 }

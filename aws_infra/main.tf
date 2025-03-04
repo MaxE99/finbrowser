@@ -1,41 +1,118 @@
+locals {
+  domain       = "finbrowser.io"
+  prod_zone_id = "Z0063739EBD6ODRQ14EA"
+  project      = "finbrowser"
+  region       = "us-east-2"
+  workers = [
+    {
+      name                = "youtube"
+      command             = ["python", "manage.py", "scrape_youtube"]
+      schedule_expression = "rate(24 hours)"
+    },
+    {
+      name                = "spotify"
+      command             = ["python", "manage.py", "scrape_spotify"]
+      schedule_expression = "rate(24 hours)"
+    },
+    {
+      name                = "calc-sim"
+      command             = ["python", "manage.py", "calculate_similiar_sources"]
+      schedule_expression = "rate(28 days)"
+    },
+    {
+      name                = "expired-notifications"
+      command             = ["python", "manage.py", "delete_expired_notifications"]
+      schedule_expression = "rate(24 hours)"
+    },
+    {
+      name                = "innacurate_youtube_articles"
+      command             = ["python", "manage.py", "delete_innacurate_youtube_articles"]
+      schedule_expression = "rate(28 days)"
+    },
+    {
+      name                = "other_websites"
+      command             = ["python", "manage.py", "scrape_other_websites"]
+      schedule_expression = "rate(24 hours)"
+    },
+    {
+      name                = "problematic_feeds"
+      command             = ["python", "manage.py", "scrape_problematic_feeds"]
+      schedule_expression = "rate(24 hours)"
+    },
+    {
+      name                = "seeking_alpha"
+      command             = ["python", "manage.py", "scrape_seeking_alpha"]
+      schedule_expression = "rate(24 hours)"
+    },
+    {
+      name                = "substack"
+      command             = ["python", "manage.py", "scrape_substack"]
+      schedule_expression = "rate(24 hours)"
+    },
+    {
+      name                = "spotify_profile_imgs"
+      command             = ["python", "manage.py", "update_spotify_profile_imgs"]
+      schedule_expression = "rate(28 days)"
+    },
+    {
+      name                = "youtube_profile_imgs"
+      command             = ["python", "manage.py", "update_youtube_profile_imgs"]
+      schedule_expression = "rate(28 days)"
+    }
+  ]
+
+  common_tags = {
+    Author      = "Max Ebert"
+    Environment = "Production"
+    ManagedBy   = "Terraform"
+    Repository  = "https://github.com/MaxE99/finbrowser/"
+    Project     = "finbrowser"
+  }
+}
+
 module "bucket" {
   source = "./modules/bucket"
 
-  domain  = "https://${var.domain}"
-  project = var.project
+  domain  = "https://${local.domain}"
+  project = local.project
+  tags    = local.common_tags
 }
 
 module "network" {
   source = "./modules/network"
 
-  project = var.project
+  project = local.project
+  tags    = local.common_tags
 }
 
 module "certificate" {
   source = "./modules/certificate"
 
-  domain  = var.domain
-  project = var.project
-  zone_id = var.prod_zone_id
+  domain  = local.domain
+  project = local.project
+  zone_id = local.prod_zone_id
+  tags    = local.common_tags
 }
 
 module "redirect" {
   source = "./modules/redirect"
 
-  domain  = var.domain
-  project = var.project
-  zone_id = var.prod_zone_id
+  domain  = local.domain
+  project = local.project
+  zone_id = local.prod_zone_id
+  tags    = local.common_tags
 }
 
 module "load_balancer" {
   source = "./modules/load-balancer"
 
   aws_acm_certificate = module.certificate.acm_arn
-  domain              = var.domain
+  domain              = local.domain
   lb_subnet_ids       = module.network.public_subnet_ids
-  prod_zone_id        = var.prod_zone_id
-  project             = var.project
+  prod_zone_id        = local.prod_zone_id
+  project             = local.project
   vpc_id              = module.network.vpc_id
+  tags                = local.common_tags
 }
 
 module "database" {
@@ -44,29 +121,27 @@ module "database" {
   db_name           = var.db_name
   db_password       = var.db_password
   db_username       = var.db_username
-  project           = var.project
+  project           = local.project
   subnet_group_name = module.network.private_subnet_group_name
   vpc_id            = module.network.vpc_id
+  tags              = local.common_tags
 }
 
 module "cluster" {
   source = "./modules/cluster"
 
   lb_security_group = module.load_balancer.security_group
-  project           = var.project
+  project           = local.project
   vpc_id            = module.network.vpc_id
+  tags              = local.common_tags
 }
 
 resource "aws_ecr_repository" "main" {
-  name                 = "${var.project}-django-app"
+  name                 = "${local.project}-django-app"
   image_tag_mutability = "MUTABLE"
   force_delete         = true
 
-  tags = {
-    Project     = var.project
-    Name        = "ECR Repository"
-    Description = "Image of the Django app for the cluster to spin up and execute"
-  }
+  tags = local.common_tags
 }
 
 locals {
@@ -123,7 +198,7 @@ locals {
 }
 
 resource "aws_iam_role" "task_role" {
-  name = "${var.project}-ecs-task-role"
+  name = "${local.project}-ecs-task-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -137,15 +212,11 @@ resource "aws_iam_role" "task_role" {
     ]
   })
 
-  tags = {
-    Project     = var.project
-    Name        = "${var.project} ECS Task Role"
-    Description = "Role that ECS Fargate tasks assume to access AWS services like S3"
-  }
+  tags = local.common_tags
 }
 
 resource "aws_iam_policy" "full_s3_access" {
-  name        = "${var.project}-s3-full-access"
+  name        = "${local.project}-s3-full-access"
   description = "Policy granting full S3 access (Put, Get, Delete, List) to a specific bucket and its objects."
   policy = jsonencode({
     Version = "2012-10-17"
@@ -179,8 +250,8 @@ module "web" {
   cluster            = module.cluster.cluster
   env_variables      = local.env_variables
   execution_role_arn = module.cluster.execution_role_arn
-  project            = var.project
-  region             = var.region
+  project            = local.project
+  region             = local.region
   repository_url     = aws_ecr_repository.main.repository_url
   security_groups = [
     module.network.default_security_group,
@@ -196,18 +267,19 @@ module "web" {
   target_group_arn   = module.load_balancer.target_group_arn
   task_role_arn      = aws_iam_role.task_role.arn
   vpc_id             = module.network.vpc_id
+  tags               = local.common_tags
 }
 
 module "workers" {
-  for_each = { for worker in var.workers : worker.name => worker }
+  for_each = { for worker in local.workers : worker.name => worker }
 
   source = "./modules/service"
 
   cluster            = module.cluster.cluster
   env_variables      = local.env_variables
   execution_role_arn = module.cluster.execution_role_arn
-  project            = var.project
-  region             = var.region
+  project            = local.project
+  region             = local.region
   repository_url     = aws_ecr_repository.main.repository_url
   security_groups = [
     module.network.default_security_group,
@@ -222,6 +294,7 @@ module "workers" {
   service_subnet_ids = module.network.public_subnet_ids
   target_group_arn   = module.load_balancer.target_group_arn
   vpc_id             = module.network.vpc_id
+  tags               = local.common_tags
 }
 
 module "ci_cd_pipeline" {
@@ -231,8 +304,9 @@ module "ci_cd_pipeline" {
   cloudfront_arn     = module.bucket.cloudfront_arn
   ecr_repository_arn = aws_ecr_repository.main.arn
   github_repository  = "repo:MaxE99/finbrowser:*"
-  project            = var.project
+  project            = local.project
   service_arn        = module.web.service_arn
+  tags               = local.common_tags
 }
 
 # module "bastion_host" {
