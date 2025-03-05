@@ -3,11 +3,11 @@
 {% if request.user.is_authenticated %}
 <title>{{ list.name }} | FinBrowser</title>
 <meta name="description" content="FinBrowser list created by {{ request.user.username }}">
-<link rel="canonical" href="https://www.finbrowser.io/list/{{ list.list_id }}">
+<link rel="canonical" href="https://finbrowser.io/list/{{ list.list_id }}">
 {% else %}
 <title>Lists | FinBrowser</title>
 <meta name="description" content="Easily create themed lists on your favorite stock market topics">
-<link rel="canonical" href="https://www.finbrowser.io/lists">
+<link rel="canonical" href="https://finbrowser.io/lists">
 {% endif %}
 {% endblock %}
 {% block content %}

@@ -5,7 +5,7 @@ Welcome to FinBrowser! I'm Max, a Software Developer from Berlin, and I'm thrill
 ## Bug Reports
 
 If you find a bug in FinBrowser you can always report it:
-https://www.finbrowser.io/support/contact
+https://finbrowser.io/support/contact
 
 Please, before reporting a bug, write down how can we reproduce it, your operating system and your browser.
 

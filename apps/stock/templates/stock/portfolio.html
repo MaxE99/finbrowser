@@ -6,12 +6,12 @@
 {% if request.user.is_authenticated %}
 <title>{{ selected_portfolio.name }} | FinBrowser</title>
 <meta name="description" content="FinBrowser portfolio created by {{ request.user.username }}">
-<link rel="canonical" href="https://www.finbrowser.io/portfolio/{{ stock.stock_id }}">
+<link rel="canonical" href="https://finbrowser.io/portfolio/{{ stock.stock_id }}">
 {% else %}
 <title>Portfolio | FinBrowser</title>
 <meta name="description"
     content="Stay informed on the latest analysis, commentary, and breaking news for the stocks in your portfolio with FinBrowser Portfolio.">
-<link rel="canonical" href="https://www.finbrowser.io/portfolio/">
+<link rel="canonical" href="https://finbrowser.io/portfolio/">
 {% endif %}
 {% endblock %}
 {% block content %}

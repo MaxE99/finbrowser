@@ -12,4 +12,4 @@ Disallow: ?news
 Disallow: /?analysis
 Disallow: /?commentary
 Disallow: /?news
-Sitemap: https://www.finbrowser.io/sitemap.xml
+Sitemap: https://finbrowser.io/sitemap.xml
