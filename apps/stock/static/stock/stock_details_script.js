@@ -128,10 +128,17 @@ function saveStockPortfolioStatuses() {
                 : portfoliosWithStockRemoved.push(portfolioIds[i]);
         }
     }
-    portfoliosWithStockAdded.length && addStockToPortfolios(portfoliosWithStockAdded);
-    portfoliosWithStockRemoved.length && removeStockFromPortfolios(portfoliosWithStockRemoved);
-    showMessage('Portfolios have been updated!', 'Success');
-    window.location.reload();
+    const promises = [];
+    if (portfoliosWithStockAdded.length) {
+        promises.push(addStockToPortfolios(portfoliosWithStockAdded));
+    }
+    if (portfoliosWithStockRemoved.length) {
+        promises.push(removeStockFromPortfolios(portfoliosWithStockRemoved));
+    }
+    Promise.all(promises).then(() => {
+        showMessage('Portfolios have been updated!', 'Success');
+        window.location.reload();
+    });
 }
 
 function changeStockNotificationStatus() {

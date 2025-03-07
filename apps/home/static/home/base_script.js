@@ -190,10 +190,14 @@ function saveSourceListsStatus(saveButton) {
     if (addToListForm.id.includes('source_id')) {
         const sourceId = addToListForm.id.replace('source_id', '');
         const [addLists, removeLists] = checkListStatus(saveButton);
-        addLists.forEach((list) => addSourceToList(sourceId, list));
-        removeLists.forEach((list) => removeSourceFromList(sourceId, list));
-        showMessage('Lists have been updated!', 'Success');
-        window.location.reload();
+        const promises = [
+            ...addLists.map((list) => addSourceToList(sourceId, list)),
+            ...removeLists.map((list) => removeSourceFromList(sourceId, list)),
+        ];
+        Promise.all(promises).then(() => {
+            showMessage('Lists have been updated!', 'Success');
+            window.location.reload();
+        });
     }
 }
 
@@ -549,6 +553,7 @@ function removeModalStyle() {
 
 function saveArticleToListSelection(saveButton, articleId) {
     if (document.querySelector('.fullScreenPlaceholder .addToListForm').id.includes('article_id')) {
+        const promises = [];
         const input_list = saveButton
             .closest('.addSourceToListForm')
             .querySelectorAll('.listContainer input:first-of-type');
@@ -562,11 +567,15 @@ function saveArticleToListSelection(saveButton, articleId) {
                 (checkbox.checked &&
                     !JSON.parse(articlesOriginallyInList).includes(parseInt(articleId)))
             ) {
-                updateArticleStatusesInList(checkbox.id.split('id_list_')[1], articleId);
+                promises.push(
+                    updateArticleStatusesInList(checkbox.id.split('id_list_')[1], articleId)
+                );
             }
         });
-        showMessage('Lists have been updated!', 'Success');
-        window.location.reload();
+        Promise.all(promises).then(() => {
+            showMessage('Lists have been updated!', 'Success');
+            window.location.reload();
+        });
     }
 }
 
