@@ -53,6 +53,14 @@ def balance_search_results(
             display_spots_stocks + display_spots_sources + display_spots_articles
         )
 
+        # Break if there are no more items left to increment
+        if (
+            display_spots_stocks == len_filtered_stocks
+            and display_spots_sources == len_filtered_sources
+            and display_spots_articles == len_filtered_articles
+        ):
+            break
+
     stock_serializer = StockSerializer(
         filtered_stocks[:display_spots_stocks], many=True
     )
