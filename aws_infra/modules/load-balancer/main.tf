@@ -37,7 +37,7 @@ resource "aws_vpc_security_group_egress_rule" "main" {
 
 resource "aws_lb_target_group" "main" {
   name        = "${var.project}-lb-target-group"
-  port        = 80
+  port        = 5000
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
