@@ -1,10 +1,18 @@
+locals {
+  azs             = ["us-east-2a", "us-east-2b", "us-east-2c"]
+  public_subnets  = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  private_subnets = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+}
+
 ################################################################################
 # VPC
 ################################################################################
 
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
-  tags       = var.tags
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+  tags                 = var.tags
 }
 
 resource "aws_internet_gateway" "main" {
@@ -103,25 +111,25 @@ resource "aws_flow_log" "main" {
 ################################################################################
 
 resource "aws_subnet" "public" {
-  count             = length(["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"])
-  cidr_block        = element(["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"], count.index)
+  count             = length(local.public_subnets)
+  cidr_block        = local.public_subnets[count.index]
   vpc_id            = aws_vpc.main.id
-  availability_zone = element(["us-east-2a", "us-east-2b", "us-east-2c"], count.index)
+  availability_zone = local.azs[count.index]
   tags              = var.tags
 }
 
 resource "aws_subnet" "private" {
-  count             = length(["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"])
-  cidr_block        = element(["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"], count.index)
+  count             = length(local.private_subnets)
+  cidr_block        = local.private_subnets[count.index]
   vpc_id            = aws_vpc.main.id
-  availability_zone = element(["us-east-2a", "us-east-2b"], count.index)
+  availability_zone = local.azs[count.index]
   tags              = var.tags
 }
 
 resource "aws_db_subnet_group" "private" {
   name        = "${var.project}-database"
   description = "Groups private subnets for RDS instance"
-  subnet_ids  = aws_subnet.private.*.id
+  subnet_ids  = aws_subnet.private[*].id
   tags        = var.tags
 }
 
@@ -132,16 +140,17 @@ resource "aws_db_subnet_group" "private" {
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
   tags   = var.tags
+}
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.main.id
-  }
+resource "aws_route" "public" {
+  route_table_id         = aws_route_table.public.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.main.id
 }
 
 resource "aws_route_table_association" "public" {
-  count          = length(["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"])
-  subnet_id      = element(aws_subnet.public[*].id, count.index)
+  count          = length(aws_subnet.public)
+  subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
 }
 
@@ -151,7 +160,7 @@ resource "aws_route_table" "private" {
 }
 
 resource "aws_route_table_association" "private" {
-  count          = length(["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"])
-  subnet_id      = element(aws_subnet.private[*].id, count.index)
+  count          = length(aws_subnet.private)
+  subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private.id
 }
